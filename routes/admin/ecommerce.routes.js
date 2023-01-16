@@ -7,7 +7,7 @@ const customerController = require('../../controller/admin/customer.controller')
 const couponController = require('../../controller/admin/coupons.controller')
 
 const multer = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const upload = multer({ dest: 'temp/' })
 
 router.group('/orders', (router) => {
     router.get('/', orderController.orderListing)

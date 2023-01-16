@@ -4,7 +4,7 @@ const router = express.Router()
 const settingsController = require('../../controller/admin/settings.controller')
 
 const multer = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const upload = multer({ dest: 'temp/' })
 
 router.group('/', (router) => {
     // Switch brand

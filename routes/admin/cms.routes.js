@@ -1,6 +1,7 @@
 const express = require('express')
 require('express-group-routes')
 const router = express.Router()
+
 const cmsContentController = require('../../controller/admin/cmsContent.controller')
 const customFormController = require('../../controller/admin/customForm.controller')
 const menuController = require('../../controller/admin/menu.controller')
@@ -10,12 +11,13 @@ const galleryController = require('../../controller/admin/gallery.controller')
 const { contentTypeCheck } = require('../../middleware/cms.middleware')
 
 const multer = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const upload = multer({ dest: 'temp/' })
 
 router.group('/', (router) => {
     // Menu management Routes
     router.group('/media', (router) => {
         router.get('/', mediaController.list)
+        router.post('/upload', upload.any(), mediaController.fileUpload)
     })
 
     // Media management Routes

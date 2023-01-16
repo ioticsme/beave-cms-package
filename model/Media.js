@@ -2,13 +2,18 @@ const { mongoose } = require('mongoose')
 
 const MediaSchema = new mongoose.Schema(
     {
+        drive: {
+            type: String,
+            required: true,
+			default: 'imagekit',
+            enum: ['embed', 'imagekit', 'cloudinary'],
+        },
         url: {
             type: String,
             required: true,
         },
         response: {
             type: Object,
-            required: true,
         },
     },
     {
