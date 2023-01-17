@@ -103,69 +103,69 @@
                                 span.menu-bullet
                                     span.bullet.bullet-dot
                                 span.menu-title Add #{navItem.title}
-                .menu-item.menu-accordion(data-kt-menu-trigger='click' class=`${activeNav.includes(`/admin/cms/banner`) ? 'here show' : ''}`)
-                    span.menu-link
-                        span.menu-icon
-                            //- <i class="fonticon-bicycle"></i>
-                            span.svg-icon.svg-icon-2
-                                //- svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-                                //- #{navItem.admin_icon}
-                                svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-                                    path(opacity='0.3' d='M20 21H3C2.4 21 2 20.6 2 20V10C2 9.4 2.4 9 3 9H20C20.6 9 21 9.4 21 10V20C21 20.6 20.6 21 20 21Z' fill='currentColor')
-                                    path(d='M20 7H3C2.4 7 2 6.6 2 6V3C2 2.4 2.4 2 3 2H20C20.6 2 21 2.4 21 3V6C21 6.6 20.6 7 20 7Z' fill='currentColor')
-                        span.menu-title Banner
-                        span.menu-arrow
-                    .menu-sub.menu-sub-accordion
-                        .menu-item
-                            a.menu-link(href=`/admin/cms/banner` class=`${activeNav == `/admin/cms/banner` ? 'active' : ''}`)
-                                span.menu-bullet
-                                    span.bullet.bullet-dot
-                                span.menu-title All Banner Group
-                        .menu-item
-                            a.menu-link(href=`/admin/cms/banner/add` class=`${activeNav == `/admin/cms/banner/add` ? 'active' : ''}`)
-                                span.menu-bullet
-                                    span.bullet.bullet-dot
-                                span.menu-title Add Banner Group
-                .menu-item.menu-accordion(data-kt-menu-trigger='click' class=`${activeNav.includes(`/admin/cms/gallery`) ? 'here show' : ''}`)
-                    span.menu-link
-                        span.menu-icon
-                            //- <i class="fonticon-bicycle"></i>
-                            span.svg-icon.svg-icon-2
-                                //- svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-                                //- #{navItem.admin_icon}
-                                svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-                                    path(d="M2.07664 4.94999L2.87663 3.15C3.07663 2.65 3.67665 2.45 4.17665 2.65L5.07664 3.05C7.17664 3.95 9.17662 3.95 11.2766 3.05C14.3766 1.65 17.4766 1.65 20.5766 3.05L21.4766 3.44999C21.9766 3.64999 22.1766 4.25 21.9766 4.75L21.1766 6.55C20.9766 7.05 20.3766 7.25 19.8766 7.05L18.9766 6.65C16.8766 5.75 14.8766 5.75 12.7766 6.65C9.67662 8.05 6.57663 8.05 3.47663 6.65L2.57664 6.25C2.07664 6.05 1.87664 5.44999 2.07664 4.94999Z" fill="currentColor")
-                                    path(opacity="0.3" d="M2.07664 11.85L2.87663 10.05C3.07663 9.55003 3.67665 9.35003 4.17665 9.55003L5.07664 9.95002C7.17664 10.85 9.17662 10.85 11.2766 9.95002C14.3766 8.55002 17.4766 8.55002 20.5766 9.95002L21.4766 10.35C21.9766 10.55 22.1766 11.15 21.9766 11.65L21.1766 13.45C20.9766 13.95 20.3766 14.15 19.8766 13.95L18.9766 13.55C16.8766 12.65 14.8766 12.65 12.7766 13.55C9.67662 14.95 6.57663 14.95 3.47663 13.55L2.57664 13.15C2.07664 12.95 1.87664 12.35 2.07664 11.85ZM2.57664 20.05L3.47663 20.45C6.57663 21.85 9.67662 21.85 12.7766 20.45C14.8766 19.55 16.8766 19.55 18.9766 20.45L19.8766 20.85C20.3766 21.05 20.9766 20.85 21.1766 20.35L21.9766 18.55C22.1766 18.05 21.9766 17.45 21.4766 17.25L20.5766 16.85C17.4766 15.45 14.3766 15.45 11.2766 16.85C9.17662 17.75 7.17664 17.75 5.07664 16.85L4.17665 16.45C3.67665 16.25 3.07663 16.45 2.87663 16.95L2.07664 18.75C1.87664 19.25 2.07664 19.85 2.57664 20.05Z" fill="currentColor")
-                        span.menu-title Gallery
-                        span.menu-arrow
-                    .menu-sub.menu-sub-accordion
-                        .menu-item
-                            a.menu-link(href=`/admin/cms/gallery` class=`${activeNav == `/admin/cms/gallery` ? 'active' : ''}`)
-                                span.menu-bullet
-                                    span.bullet.bullet-dot
-                                span.menu-title All Gallery Group
-                        .menu-item
-                            a.menu-link(href=`/admin/cms/gallery/add` class=`${activeNav == `/admin/cms/gallery/add` ? 'active' : ''}`)
-                                span.menu-bullet
-                                    span.bullet.bullet-dot
-                                span.menu-title Add Gallery Group
-                .menu-item
-                    a.menu-link(href=`/admin/cms/menu` class=`${activeNav == `/admin/cms/menu` ? 'active' : ''}`)
-                        span.menu-icon
-                            span.svg-icon.svg-icon-2
-                                svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-                                    path(d='M20 14H18V10H20C20.6 10 21 10.4 21 11V13C21 13.6 20.6 14 20 14ZM21 19V17C21 16.4 20.6 16 20 16H18V20H20C20.6 20 21 19.6 21 19ZM21 7V5C21 4.4 20.6 4 20 4H18V8H20C20.6 8 21 7.6 21 7Z' fill='currentColor')
-                                    path(opacity='0.3' d='M17 22H3C2.4 22 2 21.6 2 21V3C2 2.4 2.4 2 3 2H17C17.6 2 18 2.4 18 3V21C18 21.6 17.6 22 17 22ZM10 7C8.9 7 8 7.9 8 9C8 10.1 8.9 11 10 11C11.1 11 12 10.1 12 9C12 7.9 11.1 7 10 7ZM13.3 16C14 16 14.5 15.3 14.3 14.7C13.7 13.2 12 12 10.1 12C8.10001 12 6.49999 13.1 5.89999 14.7C5.59999 15.3 6.19999 16 7.39999 16H13.3Z' fill='currentColor')
-                        span.menu-title Menu
-                .menu-item
-                    a.menu-link(href=`/admin/cms/media` class=`${activeNav == `/admin/cms/media` ? 'active' : ''}`)
-                        span.menu-icon
-                            span.svg-icon.svg-icon-2
-                                svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-                                    path(opacity='0.3' d='M22 5V19C22 19.6 21.6 20 21 20H19.5L11.9 12.4C11.5 12 10.9 12 10.5 12.4L3 20C2.5 20 2 19.5 2 19V5C2 4.4 2.4 4 3 4H21C21.6 4 22 4.4 22 5ZM7.5 7C6.7 7 6 7.7 6 8.5C6 9.3 6.7 10 7.5 10C8.3 10 9 9.3 9 8.5C9 7.7 8.3 7 7.5 7Z' fill='currentColor')
-                                    path(d='M19.1 10C18.7 9.60001 18.1 9.60001 17.7 10L10.7 17H2V19C2 19.6 2.4 20 3 20H21C21.6 20 22 19.6 22 19V12.9L19.1 10Z' fill='currentColor')
-                        span.menu-title Media
-                
+            //- .menu-item.menu-accordion(data-kt-menu-trigger='click' class=`${activeNav.includes(`/admin/cms/banner`) ? 'here show' : ''}`)
+            //-     span.menu-link
+            //-         span.menu-icon
+            //-             //- <i class="fonticon-bicycle"></i>
+            //-             span.svg-icon.svg-icon-2
+            //-                 //- svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
+            //-                 //- #{navItem.admin_icon}
+            //-                 svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
+            //-                     path(opacity='0.3' d='M20 21H3C2.4 21 2 20.6 2 20V10C2 9.4 2.4 9 3 9H20C20.6 9 21 9.4 21 10V20C21 20.6 20.6 21 20 21Z' fill='currentColor')
+            //-                     path(d='M20 7H3C2.4 7 2 6.6 2 6V3C2 2.4 2.4 2 3 2H20C20.6 2 21 2.4 21 3V6C21 6.6 20.6 7 20 7Z' fill='currentColor')
+            //-         span.menu-title Banner
+            //-         span.menu-arrow
+            //-     .menu-sub.menu-sub-accordion
+            //-         .menu-item
+            //-             a.menu-link(href=`/admin/cms/banner` class=`${activeNav == `/admin/cms/banner` ? 'active' : ''}`)
+            //-                 span.menu-bullet
+            //-                     span.bullet.bullet-dot
+            //-                 span.menu-title All Banner Group
+            //-         .menu-item
+            //-             a.menu-link(href=`/admin/cms/banner/add` class=`${activeNav == `/admin/cms/banner/add` ? 'active' : ''}`)
+            //-                 span.menu-bullet
+            //-                     span.bullet.bullet-dot
+            //-                 span.menu-title Add Banner Group
+            //- .menu-item.menu-accordion(data-kt-menu-trigger='click' class=`${activeNav.includes(`/admin/cms/gallery`) ? 'here show' : ''}`)
+            //-     span.menu-link
+            //-         span.menu-icon
+            //-             //- <i class="fonticon-bicycle"></i>
+            //-             span.svg-icon.svg-icon-2
+            //-                 //- svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
+            //-                 //- #{navItem.admin_icon}
+            //-                 svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
+            //-                     path(d="M2.07664 4.94999L2.87663 3.15C3.07663 2.65 3.67665 2.45 4.17665 2.65L5.07664 3.05C7.17664 3.95 9.17662 3.95 11.2766 3.05C14.3766 1.65 17.4766 1.65 20.5766 3.05L21.4766 3.44999C21.9766 3.64999 22.1766 4.25 21.9766 4.75L21.1766 6.55C20.9766 7.05 20.3766 7.25 19.8766 7.05L18.9766 6.65C16.8766 5.75 14.8766 5.75 12.7766 6.65C9.67662 8.05 6.57663 8.05 3.47663 6.65L2.57664 6.25C2.07664 6.05 1.87664 5.44999 2.07664 4.94999Z" fill="currentColor")
+            //-                     path(opacity="0.3" d="M2.07664 11.85L2.87663 10.05C3.07663 9.55003 3.67665 9.35003 4.17665 9.55003L5.07664 9.95002C7.17664 10.85 9.17662 10.85 11.2766 9.95002C14.3766 8.55002 17.4766 8.55002 20.5766 9.95002L21.4766 10.35C21.9766 10.55 22.1766 11.15 21.9766 11.65L21.1766 13.45C20.9766 13.95 20.3766 14.15 19.8766 13.95L18.9766 13.55C16.8766 12.65 14.8766 12.65 12.7766 13.55C9.67662 14.95 6.57663 14.95 3.47663 13.55L2.57664 13.15C2.07664 12.95 1.87664 12.35 2.07664 11.85ZM2.57664 20.05L3.47663 20.45C6.57663 21.85 9.67662 21.85 12.7766 20.45C14.8766 19.55 16.8766 19.55 18.9766 20.45L19.8766 20.85C20.3766 21.05 20.9766 20.85 21.1766 20.35L21.9766 18.55C22.1766 18.05 21.9766 17.45 21.4766 17.25L20.5766 16.85C17.4766 15.45 14.3766 15.45 11.2766 16.85C9.17662 17.75 7.17664 17.75 5.07664 16.85L4.17665 16.45C3.67665 16.25 3.07663 16.45 2.87663 16.95L2.07664 18.75C1.87664 19.25 2.07664 19.85 2.57664 20.05Z" fill="currentColor")
+            //-         span.menu-title Gallery
+            //-         span.menu-arrow
+            //-     .menu-sub.menu-sub-accordion
+            //-         .menu-item
+            //-             a.menu-link(href=`/admin/cms/gallery` class=`${activeNav == `/admin/cms/gallery` ? 'active' : ''}`)
+            //-                 span.menu-bullet
+            //-                     span.bullet.bullet-dot
+            //-                 span.menu-title All Gallery Group
+            //-         .menu-item
+            //-             a.menu-link(href=`/admin/cms/gallery/add` class=`${activeNav == `/admin/cms/gallery/add` ? 'active' : ''}`)
+            //-                 span.menu-bullet
+            //-                     span.bullet.bullet-dot
+            //-                 span.menu-title Add Gallery Group
+            .menu-item
+                a.menu-link(href=`/admin/cms/menu` class=`${activeNav == `/admin/cms/menu` ? 'active' : ''}`)
+                    span.menu-icon
+                        span.svg-icon.svg-icon-2
+                            svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
+                                path(d='M20 14H18V10H20C20.6 10 21 10.4 21 11V13C21 13.6 20.6 14 20 14ZM21 19V17C21 16.4 20.6 16 20 16H18V20H20C20.6 20 21 19.6 21 19ZM21 7V5C21 4.4 20.6 4 20 4H18V8H20C20.6 8 21 7.6 21 7Z' fill='currentColor')
+                                path(opacity='0.3' d='M17 22H3C2.4 22 2 21.6 2 21V3C2 2.4 2.4 2 3 2H17C17.6 2 18 2.4 18 3V21C18 21.6 17.6 22 17 22ZM10 7C8.9 7 8 7.9 8 9C8 10.1 8.9 11 10 11C11.1 11 12 10.1 12 9C12 7.9 11.1 7 10 7ZM13.3 16C14 16 14.5 15.3 14.3 14.7C13.7 13.2 12 12 10.1 12C8.10001 12 6.49999 13.1 5.89999 14.7C5.59999 15.3 6.19999 16 7.39999 16H13.3Z' fill='currentColor')
+                    span.menu-title Menu
+            .menu-item
+                a.menu-link(href=`/admin/cms/media` class=`${activeNav == `/admin/cms/media` ? 'active' : ''}`)
+                    span.menu-icon
+                        span.svg-icon.svg-icon-2
+                            svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
+                                path(opacity='0.3' d='M22 5V19C22 19.6 21.6 20 21 20H19.5L11.9 12.4C11.5 12 10.9 12 10.5 12.4L3 20C2.5 20 2 19.5 2 19V5C2 4.4 2.4 4 3 4H21C21.6 4 22 4.4 22 5ZM7.5 7C6.7 7 6 7.7 6 8.5C6 9.3 6.7 10 7.5 10C8.3 10 9 9.3 9 8.5C9 7.7 8.3 7 7.5 7Z' fill='currentColor')
+                                path(d='M19.1 10C18.7 9.60001 18.1 9.60001 17.7 10L10.7 17H2V19C2 19.6 2.4 20 3 20H21C21.6 20 22 19.6 22 19V12.9L19.1 10Z' fill='currentColor')
+                    span.menu-title Media
+            
             //- .menu-item
             //-     a.menu-link(href=`/admin/cms/store`)
             //-         span.menu-icon

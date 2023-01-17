@@ -11,15 +11,14 @@ const list = async (req, res) => {
     try {
         const cache_key = `data-content-${req.brand.code}-${req.brand.country_code}-${req.params.contentType}`
 
+        const contentType = await ContentType.findOne({
+            slug: req.params.contentType,
+        })
         const contents = await getCache(cache_key)
             .then(async (data) => {
                 if (process.env.CACHE_LOCAL_DATA == 'true' && data) {
                     return JSON.parse(data)
                 } else {
-                    const contentType = await ContentType.findOne({
-                        slug: req.params.contentType,
-                    })
-
                     let allContents
                     let liveData
 
@@ -44,7 +43,6 @@ const list = async (req, res) => {
                         .populate('banner')
                         .populate('gallery')
 
-                        
                     let liveContent = []
                     if (liveData?.length) {
                         // Looping through contents
@@ -115,7 +113,9 @@ const list = async (req, res) => {
 
         res.status(200).json({
             [req.params.contentType]: contents,
-            navigation: req.navigation,
+            navigation: contentType.nav_on_collection_api
+                ? req.navigation
+                : undefined,
         })
     } catch (error) {
         return res.status(500).json({ error: `Something went wrong` })
@@ -125,14 +125,14 @@ const list = async (req, res) => {
 const detail = async (req, res) => {
     try {
         const cache_key = `data-content-${req.brand.code}-${req.brand.country_code}-${req.params.contentType}-${req.params.slug}`
+        const contentType = await ContentType.findOne({
+            slug: req.params.contentType,
+        })
         const contents = await getCache(cache_key)
             .then(async (data) => {
                 if (process.env.CACHE_LOCAL_DATA == 'true' && data) {
                     return JSON.parse(data)
                 } else {
-                    const contentType = await ContentType.findOne({
-                        slug: req.params.contentType,
-                    })
                     const liveData = await Content.findOne({
                         type_id: contentType._id,
                         slug: req.params.slug,
@@ -255,7 +255,9 @@ const detail = async (req, res) => {
 
         res.status(200).json({
             [req.params.contentType]: contents,
-            navigation: req.navigation,
+            navigation: contentType.nav_on_collection_api
+                ? req.navigation
+                : undefined,
         })
     } catch (error) {
         console.log(error)
