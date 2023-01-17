@@ -80,6 +80,10 @@ block customScript
 		});
 		// Hide the total progress bar when nothing's uploading anymore
 		myDropzone.on("complete", function (progress) {
+			//- console.log(progress.status)
+			if(progress.status == 'success') {
+			location.reload()
+			}
 		const progressBars = dropzone.querySelectorAll(".dz-complete");
 		setTimeout(function () {
 		progressBars.forEach((progressBar) => {
@@ -167,8 +171,8 @@ block content
 
 		#kt_app_content.app-content.flex-column-fluid
 			#kt_app_content_container.app-container.container
-				.row.g-5.g-xl-10.mb-xl-10
-					.col-12.col-md-8.mx-auto.my-5
+				.row.g-5.g-10.mb-10
+					.col-12.col-md-8.mx-auto.my-5.border.border-primary.border-active.active
 						form.form(action='#' method='post')
 							.form-group.row
 								label.col-lg-2.col-form-label.text-lg-right Upload Files:
@@ -201,12 +205,12 @@ block content
 									span.form-text.text-muted Max file size is 1MB and max number of files is 5.
 
 
-				.row.g-5.g-xl-10.mb-xl-10
+				.row.g-5.g-10.mb-10
 					each item,i in media
 						input(id=`img-${i}` value=`${item.url}` hidden)
-						.col-12.col-sm-6.col-md-4.col-lg-3.col-xl-3.col-xxl-3.text-center
+						.col-12.col-sm-4.col-md-3.col-lg-2.col-xl-2.col-xxl-2.text-center
 							.mb-2.mb-xl-2.copy-btn(data-clipboard-target=`#img-${i}` data-bs-toggle="tooltip" data-bs-placement="top" title="Click to copy Image URL")
-								img.lazy.img-thumbnail.w-200px.h-200px.cursor-pointer(src="/admin/assets/media/svg/files/blank-image.svg" data-src=`${item.url}`  alt="image", srcset="")
+								img.lazy.img-thumbnail.ursor-pointer(src="/admin/assets/media/svg/files/blank-image.svg" data-src=`${item.url}` alt="image", srcset="" style="width: 120px; height: 120px; object-fit: cover;")
 					else
 						.text-center 
 							h4.mt-10 No images available

@@ -27,7 +27,7 @@ const uploadMedia = async (media, folder, new_name) => {
     let baseFolder = `${process.env.IMAGEKIT_FOLDER}/${
         nodeEnv.charAt(0).toUpperCase() + nodeEnv.slice(1)
     }`
-    const uploaded = imagekit
+    const uploaded = await imagekit
         .upload({
             folder: `${baseFolder}/${folder}`,
             file: media,
