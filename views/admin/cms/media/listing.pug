@@ -28,24 +28,18 @@ block jslib
 block customScript
 	script.
 		var myDropzone = new Dropzone("#kt_dropzonejs_example_1", {
-			url: "/admin/cms/media/upload"",
+			url: "/admin/cms/media/upload", // Set the url for your upload script location
 			paramName: "file", // The name that will be used to transfer the file
 			maxFiles: 10,
 			maxFilesize: 10, // MB
 			addRemoveLinks: true,
-			uploadMultiple: true,
 			accept: function(file, done) {
-				console.log(file)
 				if (file.name == "wow.jpg") {
 					done("Naha, you don't.");
 				} else {
 					done();
 				}
 			}
-		});
-		myDropzone.on("complete", function(file) {
-			console.log(file)
-			myDropzone.removeFile(file);
 		});
 
 	script.
