@@ -133,7 +133,11 @@ block content
 										.form-group.mt-10
 											div(data-repeater-list='kt_docs_repeater_nested_outer')
 												each cfg,i in contentType.custom_field_groups
-													div(data-repeater-item='')
+													div(data-repeater-item='' style='background-color: #ebebeb').border.rounded.p-6.pt-12.mb-4.position-relative
+														.position-absolute(style='top:10px; right:10px;')
+															a.btn.btn-sm.btn-light-danger.border.border-danger.py-2.px-3(href='javascript:;' data-repeater-delete='')
+																i.la.la-trash-o.fs-4
+																| Delete Row
 														.form-group.row.mb-5.mt-2
 															.col-md-6
 																label.form-label Row Label:
@@ -153,12 +157,16 @@ block content
 																	option(value="" ) Select language type
 																	option(value="true" selected=cfg && cfg.bilingual == true) Bilingual
 																	option(value="false" selected=cfg && cfg.bilingual == false) English Only
-														hr
-														.row
+														//- hr
+														div
 															.inner-repeater
 																.mb-5(data-repeater-list='kt_docs_repeater_nested_inner')
 																	each cf,j in cfg.fields
-																		div(data-repeater-item='')
+																		div(data-repeater-item='').position-relative.border.rounded.p-6.pt-10.bg-white.mt-4
+																			.position-absolute(style='top:10px; right:10px;')
+																				button.btn-sm.btn.btn-light-danger.border.border-danger.py-2.px-3(data-repeater-delete='' type='button')
+																					i.la.la-trash-o.fs-4
+																					| Delete field
 																			label.form-label Field:
 																			.row
 																				.mt-2.col-md-6
@@ -197,20 +205,20 @@ block content
 																					.fv-plugins-message-container.invalid-feedback(id=`field-error-option_value`)
 																				//- button.border.border-secondary.btn.btn-icon.btn-light-danger(data-repeater-delete='' type='button')
 																				//- i.la.la-trash-o.fs-3
-																			.text-center.mb-3.mt-2
+																			//- .text-center.mb-3.mt-2
 																				button.btn-sm.btn.btn-light-danger(data-repeater-delete='' type='button')
 																					i.la.la-trash-o.fs-3
 																					| Delete field
 																.text-center
-																	button.btn.btn-sm.btn-light-primary(data-repeater-create='' type='button')
+																	button.btn.btn-sm.btn-light-primary.border.border-primary.py-2.px-3(data-repeater-create='' type='button')
 																		i.la.la-plus
 																		|  Add Field
-															.text-center
+															//- .text-center
 																a.btn.btn-sm.btn-light-danger.mt-3.mt-md-9(href='javascript:;' data-repeater-delete='')
 																	i.la.la-trash-o.fs-3
 																	| Delete Row
-											.form-group.mt-2.text-center
-												a.btn.btn-light-primary(href='javascript:;' data-repeater-create='')
+											.form-group.mt-4.text-center
+												a.btn.btn-sm.btn-light-primary.border.border-primary.py-2.px-3(href='javascript:;' data-repeater-create='')
 													i.la.la-plus
 													| Add Row			
 									else
@@ -297,7 +305,7 @@ block content
 																	i.la.la-plus
 																	|  Add Field
 														
-										.form-group.mt-2.text-center.mt-4
+										.form-group.mt-4.text-center
 											a.btn.btn-sm.btn-light-primary.border.border-primary.py-2.px-3(href='javascript:;' data-repeater-create='')
 												i.la.la-plus
 												| Add Row
@@ -342,8 +350,4 @@ block content
 											label.form-check-label(for='hide_meta') Hide Meta
 
 							.card-footer.d-flex.justify-content-end.py-6.px-9
-								button#kt_account_profile_details_submit.btn.btn-primary.form-submit-btn(type='submit') 
-									span.preloader.d-none
-										| Saving...
-									span.label
-										| Save
+								
