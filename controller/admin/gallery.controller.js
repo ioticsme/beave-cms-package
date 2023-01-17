@@ -162,7 +162,10 @@ const save = async (req, res) => {
 const addItems = async (req, res) => {
     try {
         const { id } = req.params
-        res.render(`admin/cms/gallery/add-items`, { groupId: id })
+        const galleryGroup = await Gallery.findOne({
+            _id: id,
+        })
+        res.render(`admin/cms/gallery/add-items`, { groupId: id, galleryGroup })
     } catch (error) {
         return res.render(`admin/error-404`)
     }
@@ -173,13 +176,16 @@ const saveItems = async (req, res) => {
     try {
         session = req.authUser
         // BEGIN:: Validation rule
+        const imageValidationObj = {}
+        req.authUser.selected_brand.languages.forEach((lang) => {
+            _.assign(imageValidationObj, {
+                [lang.prefix]: Joi.string().required(),
+            })
+        })
         const schema = Joi.object({
             id: Joi.optional(),
             position: Joi.number().required(),
-            image: Joi.object({
-                en: Joi.string().required(),
-                ar: Joi.string().required(),
-            }),
+            image: imageValidationObj,
         })
 
         const validationResult = schema.validate(req.body, {
@@ -191,7 +197,7 @@ const saveItems = async (req, res) => {
                 for (i = 0; i < req.files.length; i++) {
                     let file = req.files[i]
                     // Deleting the image saved to uploads/
-                    fs.unlinkSync(`uploads/${file.filename}`)
+                    fs.unlinkSync(`temp/${file.filename}`)
                 }
             }
             res.status(422).json(validationResult.error)
@@ -216,7 +222,7 @@ const saveItems = async (req, res) => {
                     file.filename
                 ) //file.originalname
                 // Deleting the image saved to uploads/
-                fs.unlinkSync(`uploads/${file.filename}`)
+                fs.unlinkSync(`temp/${file.filename}`)
                 if (media && media._id) {
                     images = {
                         ...images,
@@ -254,8 +260,13 @@ const saveItems = async (req, res) => {
         }
         return res
             .status(200)
-            .json({ message: 'Gallery item added successfully' })
+            .json({
+                message: 'Gallery item added successfully',
+                redirect_to:
+                    '/admin/cms/gallery/detail/63c63e92670f238e315f7500',
+            })
     } catch (error) {
+        console.log(error)
         return res.status(404).json({ error: 'Something went wrong' })
     }
 }
