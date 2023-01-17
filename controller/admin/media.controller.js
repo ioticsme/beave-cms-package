@@ -35,7 +35,7 @@ const fileUpload = async (req, res) => {
                         media_id: media._id,
                     },
                 }
-                console.log(media)
+                // console.log(media)
             } else {
                 return res.status(503).json({
                     error: 'Some error occured while uploading the image',

@@ -72,6 +72,7 @@ block content
 											i.fas.fa-exclamation-circle.ms-2.fs-7(data-bs-toggle='tooltip' aria-label='Specify a target name for future usage and reference' data-kt-initialized='1')
 										input.form-control(type='text' placeholder='Enter Target Title' name=`title` value=galleryDetail.title)
 										.fv-plugins-message-container.invalid-feedback(id=`field-error-title`)
+										.fv-plugins-message-container.invalid-feedback(id=`field-error-slug`)
 									ul.nav.nav-tabs.nav-line-tabs.mb-5.fs-6
 										each brandLanguage, i in authUser.selected_brand.languages
 											li.nav-item

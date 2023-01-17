@@ -1,6 +1,6 @@
 const { mongoose, Schema } = require('mongoose')
 // const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
-const uniqueValidator = require('mongoose-unique-validator');
+const uniqueValidator = require('mongoose-unique-validator')
 
 const AdminSchema = new mongoose.Schema(
     {

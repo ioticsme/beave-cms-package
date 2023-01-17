@@ -78,16 +78,25 @@ const edit = async (req, res) => {
 
 // Add new Gallery group
 const save = async (req, res) => {
+    // console.log(req.body)
     try {
         session = req.authUser
         // BEGIN:: Validation rule
+        const titleValidationObj = {}
+        const descriptionValidationObj = {}
+        req.authUser.selected_brand.languages.forEach((lang) => {
+            _.assign(titleValidationObj, {
+                [lang.prefix]: Joi.string().required(),
+            })
+            _.assign(descriptionValidationObj, {
+                [lang.prefix]: Joi.string().required(),
+            })
+        })
+
         const schema = Joi.object({
             id: Joi.optional(),
             title: Joi.string().required(),
-            description: Joi.object({
-                en: Joi.string().required(),
-                ar: Joi.string().required(),
-            }),
+            description: descriptionValidationObj,
             in_home: Joi.string().required().valid('true', 'false'),
             published: Joi.string().required(),
         })
@@ -129,10 +138,6 @@ const save = async (req, res) => {
                 .status(201)
                 .json({ message: 'Gallery updated successfully' })
         } else {
-            const isExist = await Gallery.findOne({ slug: data.slug })
-            if (isExist) {
-                return res.status(404).json({ error: 'Gallery already exist' })
-            }
             // Create gallery
             const save = await Gallery.create(data)
             if (!save?._id) {
@@ -142,8 +147,13 @@ const save = async (req, res) => {
                 .status(200)
                 .json({ message: 'Gallery added successfully' })
         }
-    } catch (error) {
-        // console.log(error)
+    } catch (e) {
+        // console.log(e)
+        if (e.errors) {
+            return res.status(422).json({
+                details: e.errors,
+            })
+        }
         return res.status(404).json({ error: 'Something went wrong' })
     }
 }

@@ -1,26 +1,22 @@
 const { mongoose, Schema } = require('mongoose')
 const { formatInTimeZone } = require('date-fns-tz')
 const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
+const uniqueValidator = require('mongoose-unique-validator');
 
 const GallerySchema = new mongoose.Schema(
     {
         slug: {
             type: String,
-            // unique: true,
+            required: true,
+            unique: true,
         },
         title: {
             type: String,
             required: true,
         },
         description: {
-            en: {
-                type: String,
-                required: true,
-            },
-            ar: {
-                type: String,
-                required: true,
-            },
+            type: Object,
+            required: true,
         },
         in_home: {
             type: Boolean,
@@ -71,6 +67,7 @@ const GallerySchema = new mongoose.Schema(
 )
 
 GallerySchema.plugin(softDeletePlugin)
+GallerySchema.plugin(uniqueValidator)
 
 GallerySchema.virtual('date_created').get(function () {
     return formatInTimeZone(

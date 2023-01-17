@@ -13,15 +13,15 @@ const uploadMedia = async (media, folder, new_name) => {
     })
 
     // URL generation
-    const imageURL = imagekit.url({
-        path: '/default-image.jpg',
-        transformation: [
-            {
-                height: '300',
-                width: '400',
-            },
-        ],
-    })
+    // const imageURL = imagekit.url({
+    //     path: '/default-image.jpg',
+    //     transformation: [
+    //         {
+    //             height: '300',
+    //             width: '400',
+    //         },
+    //     ],
+    // })
 
     let nodeEnv = process.env.NODE_ENV
     let baseFolder = `${process.env.IMAGEKIT_FOLDER}/${

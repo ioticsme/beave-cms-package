@@ -27,101 +27,25 @@ block jslib
 
 block customScript
 	script.
-		// set the dropzone container id
-		const id = "#media_queue_uploader";
-		const dropzone = document.querySelector(id);
-		// set the preview element template
-		var previewNode = dropzone.querySelector(".dropzone-item");
-		previewNode.id = "";
-		var previewTemplate = previewNode.parentNode.innerHTML;
-		previewNode.parentNode.removeChild(previewNode);
-		var myDropzone = new Dropzone(id, {
-		// Make the whole body a dropzone
-		url: "/admin/cms/media/upload", // Set the url for your upload script location
-		parallelUploads: 20,
-		previewTemplate: previewTemplate,
-		maxFilesize: 1, // Max filesize in MB
-		autoQueue: false, // Make sure the files aren't queued until manually added
-		previewsContainer: id + " .dropzone-items", // Define the container to display the previews
-		clickable: id + " .dropzone-select", // Define the element that should be used as click trigger to select files.
-		});
-		myDropzone.on("addedfile", function (file) {
-		// Hookup the start button
-		file.previewElement.querySelector(id + " .dropzone-start").onclick =
-		function () {
-		myDropzone.enqueueFile(file);
-		};
-		const dropzoneItems = dropzone.querySelectorAll(".dropzone-item");
-		dropzoneItems.forEach((dropzoneItem) => {
-		dropzoneItem.style.display = "";
-		});
-		dropzone.querySelector(".dropzone-upload").style.display =
-		"inline-block";
-		dropzone.querySelector(".dropzone-remove-all").style.display =
-		"inline-block";
-		});
-		// Update the total progress bar
-		myDropzone.on("totaluploadprogress", function (progress) {
-		const progressBars = dropzone.querySelectorAll(".progress-bar");
-		progressBars.forEach((progressBar) => {
-		progressBar.style.width = progress + "%";
-		});
-		});
-		myDropzone.on("sending", function (file) {
-		// Show the total progress bar when upload starts
-		const progressBars = dropzone.querySelectorAll(".progress-bar");
-		progressBars.forEach((progressBar) => {
-		progressBar.style.opacity = "1";
-		});
-		// And disable the start button
-		file.previewElement
-		.querySelector(id + " .dropzone-start")
-		.setAttribute("disabled", "disabled");
-		});
-		// Hide the total progress bar when nothing's uploading anymore
-		myDropzone.on("complete", function (progress) {
-			//- console.log(progress.status)
-			if(progress.status == 'success') {
-			location.reload()
+		var myDropzone = new Dropzone("#kt_dropzonejs_example_1", {
+			url: "/admin/cms/media/upload"",
+			paramName: "file", // The name that will be used to transfer the file
+			maxFiles: 10,
+			maxFilesize: 10, // MB
+			addRemoveLinks: true,
+			uploadMultiple: true,
+			accept: function(file, done) {
+				console.log(file)
+				if (file.name == "wow.jpg") {
+					done("Naha, you don't.");
+				} else {
+					done();
+				}
 			}
-		const progressBars = dropzone.querySelectorAll(".dz-complete");
-		setTimeout(function () {
-		progressBars.forEach((progressBar) => {
-		progressBar.querySelector(".progress-bar").style.opacity = "0";
-		progressBar.querySelector(".progress").style.opacity = "0";
-		progressBar.querySelector(".dropzone-start").style.opacity = "0";
 		});
-		}, 300);
-		});
-		// Setup the buttons for all transfers
-		dropzone
-		.querySelector(".dropzone-upload")
-		.addEventListener("click", function () {
-		myDropzone.enqueueFiles(
-		myDropzone.getFilesWithStatus(Dropzone.ADDED)
-		);
-		});
-		// Setup the button for remove all files
-		dropzone
-		.querySelector(".dropzone-remove-all")
-		.addEventListener("click", function () {
-		dropzone.querySelector(".dropzone-upload").style.display = "none";
-		dropzone.querySelector(".dropzone-remove-all").style.display = "none";
-		myDropzone.removeAllFiles(true);
-		});
-		// On all files completed upload
-		myDropzone.on("queuecomplete", function (progress) {
-		const uploadIcons = dropzone.querySelectorAll(".dropzone-upload");
-		uploadIcons.forEach((uploadIcon) => {
-		uploadIcon.style.display = "none";
-		});
-		});
-		// On all files removed
-		myDropzone.on("removedfile", function (file) {
-		if (myDropzone.files.length < 1) {
-		dropzone.querySelector(".dropzone-upload").style.display = "none";
-		dropzone.querySelector(".dropzone-remove-all").style.display = "none";
-		}
+		myDropzone.on("complete", function(file) {
+			console.log(file)
+			myDropzone.removeFile(file);
 		});
 
 	script.
@@ -166,43 +90,23 @@ block content
 						li.breadcrumb-item
 							span.bullet.bg-gray-400.w-5px.h-2px
 						li.breadcrumb-item.text-muted Media
-				.d-flex.align-items-center.gap-2.gap-lg-3
+				//- .d-flex.align-items-center.gap-2.gap-lg-3
 					a.btn.btn-sm.fw-bold.btn-primary(href='#' data-bs-toggle='modal' data-bs-target='#media_uploader_modal') Upload Media
 
 		#kt_app_content.app-content.flex-column-fluid
 			#kt_app_content_container.app-container.container
 				.row.g-5.g-10.mb-10
-					.col-12.col-md-8.mx-auto.my-5.border.border-primary.border-active.active
+					.col-12.col-md-8.mx-auto.my-5
+						// begin::Form
 						form.form(action='#' method='post')
-							.form-group.row
-								label.col-lg-2.col-form-label.text-lg-right Upload Files:
-								.col-lg-10
-									#media_queue_uploader.dropzone.dropzone-queue.mb-2
-										.dropzone-panel.mb-lg-0.mb-2
-											a.dropzone-select.btn.btn-sm.btn-primary.me-2 Attach files
-											a.dropzone-upload.btn.btn-sm.btn-light-primary.me-2 Upload All
-											a.dropzone-remove-all.btn.btn-sm.btn-light-primary Remove All
-										.dropzone-items.wm-200px
-											.dropzone-item(style='display:none')
-												.dropzone-file
-													.dropzone-filename(title='some_image_file_name.jpg')
-														span(data-dz-name='') some_image_file_name.jpg
-														strong
-															| (
-															span(data-dz-size='') 340kb
-															| )
-													.dropzone-error(data-dz-errormessage='')
-												.dropzone-progress
-													.progress
-														.progress-bar.bg-primary(role='progressbar' aria-valuemin='0' aria-valuemax='100' aria-valuenow='0' data-dz-uploadprogress='')
-												.dropzone-toolbar
-													span.dropzone-start
-														i.bi.bi-play-fill.fs-3
-													span.dropzone-cancel(data-dz-remove='' style='display: none;')
-														i.bi.bi-x.fs-3
-													span.dropzone-delete(data-dz-remove='')
-														i.bi.bi-x.fs-1
-									span.form-text.text-muted Max file size is 1MB and max number of files is 5.
+							.fv-row
+								#kt_dropzonejs_example_1.dropzone
+									.dz-message.needsclick
+										i.bi.bi-file-earmark-arrow-up.text-primary.fs-3x
+										.ms-4
+											h3.fs-5.fw-bold.text-gray-900.mb-1 Drop files here or click to upload.
+											span.fs-7.fw-semibold.text-gray-400 Upload up to 10 files
+
 
 
 				.row.g-5.g-10.mb-10
