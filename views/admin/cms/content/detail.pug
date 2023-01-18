@@ -83,7 +83,36 @@ block content
                                                                 .text-gray-500.fw-semibold.fs-5.mb-5 Nil
                                             //- END::Custom Fields
 
-                                    //- BEGIN::Custom Fields without Multi langiguage
+                                            //- BEGIN::Custom group Fields with Multi language
+                                            each cfg, cfg_i in reqContentType.custom_field_groups
+                                                if cfg.bilingual == true
+                                                    h2 #{cfg.row_label }
+                                                    each cf in cfg.fields                                        
+                                                        .d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container
+                                                            h5.fw-bold !{cf.field_label }
+                                                            if cf.field_type === 'file'
+                                                                if contentDetail.group_content[brandLanguage.prefix] && contentDetail.group_content[brandLanguage.prefix][cfg.row_name] && contentDetail.group_content[brandLanguage.prefix][cfg.row_name].values && contentDetail.group_content[brandLanguage.prefix][cfg.row_name].values[cf.field_name]
+                                                                    if Array.isArray(contentDetail.group_content[brandLanguage.prefix][cfg.row_name].values[cf.field_name])
+                                                                        each image in contentDetail.group_content[brandLanguage.prefix][cfg.row_name].values[cf.field_name]
+                                                                            img.img-fluid.rounded.mw-100.m-2(style="height: 500px;"  src=`${image.media_url}` alt='Media')
+                                                                    else 
+                                                                        img.img-fluid.rounded.mw-100(style="height: 500px;"  src=`${contentDetail.group_content[brandLanguage.prefix][cfg.row_name].values[cf.field_name].media_url}` alt='Media')
+                                                                else 
+                                                                    .text-gray-500.fw-semibold.fs-5.mb-5 Nil
+                                                            else
+                                                                if (contentDetail.group_content[brandLanguage.prefix] && contentDetail.group_content[brandLanguage.prefix][cfg.row_name] && contentDetail.group_content[brandLanguage.prefix][cfg.row_name].values && contentDetail.group_content[brandLanguage.prefix][cfg.row_name].values[cf.field_name] )
+                                                                    .text-gray-500.fw-semibold.fs-5.mb-5
+                                                                        if Array.isArray(contentDetail.group_content[brandLanguage.prefix][cfg.row_name].values[cf.field_name])
+                                                                            ul 
+                                                                                each val in contentDetail.group_content[brandLanguage.prefix][cfg.row_name].values[cf.field_name]
+                                                                                    li #{val}
+                                                                        else 
+                                                                            | !{contentDetail.group_content[brandLanguage.prefix][cfg.row_name].values[cf.field_name] }
+                                                                else
+                                                                    .text-gray-500.fw-semibold.fs-5.mb-5 Nil
+                                            //- END::Custom group Fields
+
+                                    //- BEGIN::Custom Fields without Multi language
                                     each cf, cf_i in reqContentType.custom_fields
                                         if cf.bilingual == false                                                     
                                             .d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container
@@ -101,6 +130,35 @@ block content
                                                     else 
                                                         .text-gray-500.fw-semibold.fs-5.mb-5 Nil
                                     //- END::Custom Fields
+
+                                    //- BEGIN::Custom group Fields without Multi language
+                                    each cfg, cfg_i in reqContentType.custom_field_groups
+                                        if cfg.bilingual == false
+                                            h2 #{cfg.row_label }
+                                            each cf in cfg.fields                                        
+                                                .d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container
+                                                    h5.fw-bold !{cf.field_label }
+                                                    if cf.field_type === 'file'
+                                                        if contentDetail.group_content.common && contentDetail.group_content.common[cfg.row_name] && contentDetail.group_content.common[cfg.row_name].values && contentDetail.group_content.common[cfg.row_name].values[cf.field_name]
+                                                            if Array.isArray(contentDetail.group_content.common[cfg.row_name].values[cf.field_name])
+                                                                each image in contentDetail.group_content.common[cfg.row_name].values[cf.field_name]
+                                                                    img.img-fluid.rounded.mw-100.m-2(style="height: 500px;"  src=`${image.media_url}` alt='Media')
+                                                            else 
+                                                                img.img-fluid.rounded.mw-100(style="height: 500px;"  src=`${contentDetail.group_content.common[cfg.row_name].values[cf.field_name].media_url}` alt='Media')
+                                                        else 
+                                                            .text-gray-500.fw-semibold.fs-5.mb-5 Nil
+                                                    else
+                                                        if (contentDetail.group_content.common && contentDetail.group_content.common[cfg.row_name] && contentDetail.group_content.common[cfg.row_name].values && contentDetail.group_content.common[cfg.row_name].values[cf.field_name] )
+                                                            .text-gray-500.fw-semibold.fs-5.mb-5
+                                                                if Array.isArray(contentDetail.group_content.common[cfg.row_name].values[cf.field_name])
+                                                                    ul 
+                                                                        each val in contentDetail.group_content.common[cfg.row_name].values[cf.field_name]
+                                                                            li #{val}
+                                                                else 
+                                                                    | !{contentDetail.group_content.common[cfg.row_name].values[cf.field_name] }
+                                                        else
+                                                            .text-gray-500.fw-semibold.fs-5.mb-5 Nil
+                                    //- END::Custom group Fields
 
                         .card.card-flush.pt-3.mb-5.mb-lg-10
                             .card-header
