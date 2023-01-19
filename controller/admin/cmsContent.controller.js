@@ -11,7 +11,6 @@ const Banner = require('../../model/Banner')
 const Gallery = require('../../model/Gallery')
 const { default: collect } = require('collect.js')
 const Redis = require('../../helper/Redis.helper')
-const ContentField = require('../../model/ContentField')
 
 let session
 
@@ -449,7 +448,7 @@ const save = async (req, res) => {
         let content_fields_to_insert = []
         session?.selected_brand?.languages.map((lang, langIndex) => {
             req.contentType.custom_fields?.map((cf, cfIndex) => {
-                if (cfg.bilingual) {
+                if (cf.bilingual) {
                     customData[lang.prefix] = {
                         ...customData[lang.prefix],
                         field_name: cf.field_name || '',

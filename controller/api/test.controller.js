@@ -1,5 +1,4 @@
 const ContentType = require('../../model/ContentType')
-const ContentField = require('../../model/ContentField')
 const Content = require('../../model/Content')
 const ContentResource = require('../../resources/api/content.resource')
 const populateTest = async (req, res) => {
