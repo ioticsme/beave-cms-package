@@ -75,6 +75,10 @@ const ContentSchema = new mongoose.Schema(
                     type: String,
                     required: true,
                 },
+                is_repeated: {
+                    type: Boolean,
+                    default: false,
+                },
                 field: {
                     type: String,
                     required: true,
