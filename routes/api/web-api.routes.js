@@ -6,6 +6,7 @@ const generalController = require('../../controller/api/general.controller')
 const customFormController = require('../../controller/api/customForm.controller')
 const checkoutController = require('../../controller/api/checkout.controller')
 const userController = require('../../controller/api/user.controller')
+const testController = require('../../controller/api/test.controller')
 
 // Middleware
 // const { checkHasCMS } = require('../../middleware/global.middleware')
@@ -34,12 +35,12 @@ router.group('/', (router) => {
         res.redirect('/health')
     })
 
-    // router.group('/test', (router) => {
-    //     // router.get('/brand', testController.brandList)
-    //     // router.get('/country', testController.countryList)
-    //     router.get('/test', testController.test)
-    //     router.get('/pdf', testController.pdfGenerate)
-    // })
+    router.group('/test', (router) => {
+        // router.get('/brand', testController.brandList)
+        // router.get('/country', testController.countryList)
+        router.get('/test', testController.populateTest)
+        // router.get('/pdf', testController.pdfGenerate)
+    })
 
     // CMS Related Routes
     router.use('/cms', cmsRoutes)

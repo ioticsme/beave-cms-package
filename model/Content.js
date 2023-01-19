@@ -56,7 +56,7 @@ const ContentSchema = new mongoose.Schema(
         },
         position: {
             type: Number,
-            default:0,
+            default: 0,
         },
         // template_name: {
         //     type: String,
@@ -65,14 +65,26 @@ const ContentSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
-        content: {
-            type: Object,
-            required: true,
-        },
-        group_content: {
-            type: Object,
-            required: true,
-        },
+        content: [
+            {
+                language: {
+                    type: String,
+                    required: true,
+                },
+                group_name: {
+                    type: String,
+                    required: true,
+                },
+                field: {
+                    type: String,
+                    required: true,
+                },
+                value: {
+                    type: Schema.Types.Mixed,
+                    required: true,
+                },
+            },
+        ],
         // custom_fields: Object,
         meta: {
             en: {

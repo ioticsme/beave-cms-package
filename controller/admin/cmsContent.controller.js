@@ -11,6 +11,7 @@ const Banner = require('../../model/Banner')
 const Gallery = require('../../model/Gallery')
 const { default: collect } = require('collect.js')
 const Redis = require('../../helper/Redis.helper')
+const ContentField = require('../../model/ContentField')
 
 let session
 
@@ -199,7 +200,7 @@ const changeStatus = async (req, res) => {
 
 const save = async (req, res) => {
     try {
-        console.log(req.body)
+        // console.log(req.body)
         // console.log(req.files)
         session = req.authUser
         // BEGIN:: Generating default field validation rule for content type (title, description)
@@ -239,57 +240,57 @@ const save = async (req, res) => {
 
         // END:: Generating default field validation rule for content type (title, description)
         // BEGIN:: Generating custom field validation rule for content type
-        let cfValidationObj = {}
-        req.contentType.custom_fields.forEach((element) => {
-            let validationRules = ''
-            element.validation.forEach((validationRule) => {
-                validationRules += `.${validationRule}`
-            })
-            if (validationRules) {
-                if (element.bilingual) {
-                    const validationObject = {}
-                    const URLvalidationObject = {}
-                    if (element.field_type == 'file') {
-                        req.authUser.selected_brand.languages.forEach(
-                            (lang) => {
-                                _.assign(validationObject, {
-                                    [lang.prefix]: eval(
-                                        req.body.method == 'add'
-                                            ? element.addValidation ||
-                                                  'Joi.optional().allow(null,"")'
-                                            : element.editValidation ||
-                                                  'Joi.optional().allow(null,"")'
-                                    ),
-                                })
-                                _.assign(URLvalidationObject, {
-                                    [lang.prefix]: eval(`Joi.optional()`),
-                                })
-                            }
-                        )
-                        cfValidationObj[element.field_name] =
-                            Joi.object(validationObject)
-                        cfValidationObj[`${element.field_name}-url`] =
-                            Joi.object(URLvalidationObject)
-                    } else {
-                        req.authUser.selected_brand.languages.forEach(
-                            (lang) => {
-                                _.assign(validationObject, {
-                                    [lang.prefix]: eval(
-                                        `Joi${validationRules}`
-                                    ),
-                                })
-                            }
-                        )
-                        cfValidationObj[element.field_name] =
-                            Joi.object(validationObject)
-                    }
-                } else {
-                    cfValidationObj[element.field_name] = eval(
-                        `Joi${validationRules}`
-                    )
-                }
-            }
-        })
+        // let cfValidationObj = {}
+        // req.contentType.custom_fields.forEach((element) => {
+        //     let validationRules = ''
+        //     element.validation.forEach((validationRule) => {
+        //         validationRules += `.${validationRule}`
+        //     })
+        //     if (validationRules) {
+        //         if (element.bilingual) {
+        //             const validationObject = {}
+        //             const URLvalidationObject = {}
+        //             if (element.field_type == 'file') {
+        //                 req.authUser.selected_brand.languages.forEach(
+        //                     (lang) => {
+        //                         _.assign(validationObject, {
+        //                             [lang.prefix]: eval(
+        //                                 req.body.method == 'add'
+        //                                     ? element.addValidation ||
+        //                                           'Joi.optional().allow(null,"")'
+        //                                     : element.editValidation ||
+        //                                           'Joi.optional().allow(null,"")'
+        //                             ),
+        //                         })
+        //                         _.assign(URLvalidationObject, {
+        //                             [lang.prefix]: eval(`Joi.optional()`),
+        //                         })
+        //                     }
+        //                 )
+        //                 cfValidationObj[element.field_name] =
+        //                     Joi.object(validationObject)
+        //                 cfValidationObj[`${element.field_name}-url`] =
+        //                     Joi.object(URLvalidationObject)
+        //             } else {
+        //                 req.authUser.selected_brand.languages.forEach(
+        //                     (lang) => {
+        //                         _.assign(validationObject, {
+        //                             [lang.prefix]: eval(
+        //                                 `Joi${validationRules}`
+        //                             ),
+        //                         })
+        //                     }
+        //                 )
+        //                 cfValidationObj[element.field_name] =
+        //                     Joi.object(validationObject)
+        //             }
+        //         } else {
+        //             cfValidationObj[element.field_name] = eval(
+        //                 `Joi${validationRules}`
+        //             )
+        //         }
+        //     }
+        // })
         // END:: Generating custom field validation rule for content type
         // BEGIN:: Generating custom field group validation rule for content type
         let cgfValidationObj = {}
@@ -315,10 +316,10 @@ const save = async (req, res) => {
                                 })
                             }
                         )
-                        cfValidationObj[field.field_name] =
-                            Joi.object(validationObject)
-                        cfValidationObj[`${field.field_name}-url`] =
-                            Joi.object(URLvalidationObject)
+                        // cfValidationObj[field.field_name] =
+                        //     Joi.object(validationObject)
+                        // cfValidationObj[`${field.field_name}-url`] =
+                        //     Joi.object(URLvalidationObject)
                     } else {
                         req.authUser.selected_brand.languages.forEach(
                             (lang) => {
@@ -327,14 +328,14 @@ const save = async (req, res) => {
                                 })
                             }
                         )
-                        cfValidationObj[field.field_name] =
-                            Joi.object(validationObject)
+                        // cfValidationObj[field.field_name] =
+                        //     Joi.object(validationObject)
                     }
                 })
             } else {
-                element.fields.forEach((field) => {
-                    cfValidationObj[field.field_name] = eval(field.validation)
-                })
+                // element.fields.forEach((field) => {
+                //     cfValidationObj[field.field_name] = eval(field.validation)
+                // })
             }
         })
         // END:: Generating custom field group validation rule for content type
@@ -344,8 +345,8 @@ const save = async (req, res) => {
             _id: Joi.optional(),
             method: Joi.string().valid('add', 'edit'),
             ...defaultValidationObj,
-            ...cfValidationObj,
-            ...cgfValidationObj,
+            // ...cfValidationObj,
+            // ...cgfValidationObj,
             slug: Joi.object({
                 en: Joi.optional(),
                 ar: Joi.optional(),
@@ -377,15 +378,15 @@ const save = async (req, res) => {
         })
 
         if (validationResult.error) {
-            if (req.files && req.files.length) {
-                for (i = 0; i < req.files.length; i++) {
-                    let file = req.files[i]
-                    // Deleting the image saved to uploads/
-                    fs.unlinkSync(`uploads/${file.filename}`)
-                }
-            }
-            res.status(422).json(validationResult.error)
-            return
+            // if (req.files && req.files.length) {
+            //     for (i = 0; i < req.files.length; i++) {
+            //         let file = req.files[i]
+            //         // Deleting the image saved to uploads/
+            //         fs.unlinkSync(`temp/${file.filename}`)
+            //     }
+            // }
+            console.log(validationResult.error)
+            return res.status(422).json(validationResult.error)
         }
         let isEdit = false
         let body = req.body
@@ -401,472 +402,274 @@ const save = async (req, res) => {
         let metaData = {}
         let images = {}
         // Upload image to imagekit
-        if (req.files && req.files.length) {
-            let files = collect(req.files).groupBy('fieldname')
-            files = JSON.parse(JSON.stringify(files))
-            for (let key in files) {
-                let imagesToUpload = files[key]
-                let uploaded = []
-                for (i = 0; i < imagesToUpload.length; i++) {
-                    let file = imagesToUpload[i]
-                    const base64 = Buffer.from(
-                        fs.readFileSync(file.path)
-                    ).toString('base64')
-                    const media = await uploadMedia(
-                        base64,
-                        'Content',
-                        file.filename
-                    )
-                    if (media?._id) {
-                        uploaded.push({
-                            media_url: media.url,
-                            media_id: media._id,
-                        })
-                    }
-                }
-                let keyName = key.split('.')[0]
-                let keyLang = key.split('.')[1]
-                if (keyLang) {
-                    images[keyName] = {
-                        ...images[keyName],
-                        [keyLang]:
-                            uploaded.length == 1 ? uploaded[0] : uploaded,
-                    }
-                } else {
-                    images = {
-                        ...images,
-                        [keyName]:
-                            uploaded.length == 1 ? uploaded[0] : uploaded,
-                    }
-                }
-            }
-        }
+        // if (req.files && req.files.length) {
+        //     let files = collect(req.files).groupBy('fieldname')
+        //     files = JSON.parse(JSON.stringify(files))
+        //     for (let key in files) {
+        //         let imagesToUpload = files[key]
+        //         let uploaded = []
+        //         for (i = 0; i < imagesToUpload.length; i++) {
+        //             let file = imagesToUpload[i]
+        //             const base64 = Buffer.from(
+        //                 fs.readFileSync(file.path)
+        //             ).toString('base64')
+        //             const media = await uploadMedia(
+        //                 base64,
+        //                 'Content',
+        //                 file.filename
+        //             )
+        //             if (media?._id) {
+        //                 uploaded.push({
+        //                     media_url: media.url,
+        //                     media_id: media._id,
+        //                 })
+        //             }
+        //         }
+        //         let keyName = key.split('.')[0]
+        //         let keyLang = key.split('.')[1]
+        //         if (keyLang) {
+        //             images[keyName] = {
+        //                 ...images[keyName],
+        //                 [keyLang]:
+        //                     uploaded.length == 1 ? uploaded[0] : uploaded,
+        //             }
+        //         } else {
+        //             images = {
+        //                 ...images,
+        //                 [keyName]:
+        //                     uploaded.length == 1 ? uploaded[0] : uploaded,
+        //             }
+        //         }
+        //     }
+        // }
         // console.log('images :>> ', images)
         let customErrors = []
         // If image files are present
-        if (Object.keys(images) && Object.keys(images).length) {
-            // Looping through the languages
-            session?.selected_brand?.languages.map((lang) => {
-                // Looping through content type custom fields
-                req.contentType.custom_fields?.map((cf) => {
-                    // If field type is file take value from images object o.w from req.body
-                    if (cf.field_type === 'file') {
-                        if (isEdit) {
-                            // if user upload new image
-                            if (images?.[cf.field_name]?.[lang.prefix]) {
-                                customData[lang.prefix] = {
-                                    ...customData[lang.prefix],
-                                    [cf.field_name]:
-                                        images[cf.field_name][lang.prefix] ||
-                                        '',
-                                }
-                                // if image content have already uploaded image
-                            } else if (
-                                body?.[`${[cf.field_name]}-url`]?.[lang.prefix]
-                            ) {
-                                // this image data is in stringified form so it is parsing to json
-                                let val = JSON.parse(
-                                    body[`${[cf.field_name]}-url`][lang.prefix]
-                                )
-                                customData[lang.prefix] = {
-                                    ...customData[lang.prefix],
-                                    [cf.field_name]: val || '',
-                                }
-                            } else {
-                                // If no image is uploaded and content have no image then the error object will push to customError array
-                                customErrors.push({
-                                    message: `${cf.field_name}.${lang.prefix} is not allowed to be empty`,
-                                    path: [
-                                        `${cf.field_name}`,
-                                        `${lang.prefix}`,
-                                    ],
-                                })
-                            }
-                        } else {
-                            if (images[cf.field_name]?.[lang.prefix]) {
-                                customData[lang.prefix] = {
-                                    ...customData[lang.prefix],
-                                    [cf.field_name]:
-                                        images[cf.field_name][lang.prefix] ||
-                                        '',
-                                }
-                            }
-                        }
-                    } else {
-                        if (cfg.bilingual) {
-                            customData[lang.prefix] = {
-                                ...customData[lang.prefix],
-                                [cf.field_name]:
-                                    body[cf.field_name]?.[lang.prefix] || '',
-                            }
-                        } else {
-                            customData['common'] = {
-                                ...customData['common'],
-                                [cf.field_name]: body[cf.field_name] || '',
-                            }
-                        }
-                    }
-                })
-                // Field group map
-                req.contentType.custom_field_groups?.map((cfg) => {
-                    if (cfg.repeater_group) {
-                        if (cfg.bilingual) {
-                            fieldGroupData[lang.prefix] = {
-                                ...fieldGroupData[lang.prefix],
-                                [cfg.row_name]: {
-                                    is_repeater: true,
-                                    values: {},
-                                },
-                            }
-                        } else {
-                            fieldGroupData['common'] = {
-                                ...fieldGroupData['common'],
-                                [cfg.row_name]: {
-                                    is_repeater: true,
-                                    values: {},
-                                },
-                            }
-                        }
-                    } else {
-                        if (cfg.bilingual) {
-                            fieldGroupData[lang.prefix] = {
-                                ...fieldGroupData[lang.prefix],
-                                [cfg.row_name]: {
-                                    is_repeater: false,
-                                    values: {},
-                                },
-                            }
-                        } else {
-                            fieldGroupData['common'] = {
-                                ...fieldGroupData['common'],
-                                [cfg.row_name]: {
-                                    is_repeater: false,
-                                    values: {},
-                                },
-                            }
-                        }
-                    }
-                    cfg.fields?.map((cf) => {
-                        // If field type is file take value from images object o.w from req.body
-                        if (cf.field_type === 'file') {
-                            if (isEdit) {
-                                // if user upload new image
-                                if (images?.[cf.field_name]?.[lang.prefix]) {
-                                    customData[lang.prefix] = {
-                                        ...customData[lang.prefix],
-                                        [cf.field_name]:
-                                            images[cf.field_name][
-                                                lang.prefix
-                                            ] || '',
-                                    }
-                                    // if image content have already uploaded image
-                                } else if (
-                                    body?.[`${[cf.field_name]}-url`]?.[
-                                        lang.prefix
-                                    ]
-                                ) {
-                                    // this image data is in stringified form so it is parsing json
-                                    let val = JSON.parse(
-                                        body[`${[cf.field_name]}-url`][
-                                            lang.prefix
-                                        ]
-                                    )
-                                    customData[lang.prefix] = {
-                                        ...customData[lang.prefix],
-                                        [cf.field_name]: val || '',
-                                    }
-                                } else {
-                                    // If no image is uploaded and content have no image then the error object will push to customError array
-                                    customErrors.push({
-                                        message: `${cf.field_name}.${lang.prefix} is not allowed to be empty`,
-                                        path: [
-                                            `${cf.field_name}`,
-                                            `${lang.prefix}`,
-                                        ],
-                                    })
-                                }
-                            } else {
-                                if (cfg.bilingual) {
-                                    if (
-                                        images?.[cf.field_name]?.[lang.prefix]
-                                    ) {
-                                        fieldGroupData[lang.prefix][
-                                            cfg.row_name
-                                        ]['values'] = {
-                                            ...fieldGroupData[lang.prefix]?.[
-                                                cfg.row_name
-                                            ]?.['values'],
-                                            [cf.field_name]:
-                                                images[cf.field_name][
-                                                    lang.prefix
-                                                ] || '',
-                                        }
-                                    }
-                                } else {
-                                    fieldGroupData['common'][cfg.row_name][
-                                        'values'
-                                    ] = {
-                                        ...fieldGroupData['common']?.[
-                                            cfg.row_name
-                                        ]?.['values'],
-                                        [cf.field_name]:
-                                            images[cf.field_name] || '',
-                                    }
-                                }
-                            }
-                        } else {
-                            if (cfg.bilingual) {
-                                fieldGroupData[lang.prefix][cfg.row_name][
-                                    'values'
-                                ] = {
-                                    ...fieldGroupData[lang.prefix]?.[
-                                        cfg.row_name
-                                    ]?.['values'],
-                                    [cf.field_name]:
-                                        body[cf.field_name]?.[lang.prefix] ||
-                                        '',
-                                }
-                            } else {
-                                fieldGroupData['common'][cfg.row_name][
-                                    'values'
-                                ] = {
-                                    ...fieldGroupData['common']?.[
-                                        cfg.row_name
-                                    ]?.['values'],
-                                    [cf.field_name]: body[cf.field_name] || '',
-                                }
-                            }
-                        }
-                    })
-                })
-                customData[lang.prefix] = {
-                    ...customData[lang.prefix],
-                    title: body.title?.[lang.prefix],
-                    body_content: body.body_content?.[lang.prefix],
-                    excerpt: body.excerpt?.[lang.prefix],
-                }
-                if (req.contentType.hide_meta == false) {
-                    metaData[lang.prefix] = {
-                        title: body.meta_title[lang.prefix],
-                        description: body.meta_description[lang.prefix],
-                        keywords: body.meta_keywords[lang.prefix],
-                    }
-                }
-            })
-        } else {
-            session?.selected_brand?.languages.map((lang, langIndex) => {
-                req.contentType.custom_fields?.map((cf, cfIndex) => {
-                    if (cf.field_type === 'file') {
-                        // Image editing start
-                        if (isEdit) {
-                            // if user upload new image
-                            if (images?.[cf.field_name]?.[lang.prefix]) {
-                                customData[lang.prefix] = {
-                                    ...customData[lang.prefix],
-                                    [cf.field_name]:
-                                        images[cf.field_name][lang.prefix] ||
-                                        '',
-                                }
-                                // if image content have already uploaded image
-                            } else if (
-                                body?.[`${[cf.field_name]}-url`]?.[lang.prefix]
-                            ) {
-                                // this image data is in stringified form so it is parsing json
-                                let val = JSON.parse(
-                                    body[`${[cf.field_name]}-url`][lang.prefix]
-                                )
-                                customData[lang.prefix] = {
-                                    ...customData[lang.prefix],
-                                    [cf.field_name]: val || '',
-                                }
-                            } else {
-                                // If no image is uploaded and content have no image then the error object will push to customError array
-                                customErrors.push({
-                                    message: `${cf.field_name}.${lang.prefix} is not allowed to be empty`,
-                                    path: [
-                                        `${cf.field_name}`,
-                                        `${lang.prefix}`,
-                                    ],
-                                })
-                            }
-                        }
-                    } else {
-                        if (cfg.bilingual) {
-                            customData[lang.prefix] = {
-                                ...customData[lang.prefix],
-                                [cf.field_name]:
-                                    body?.[cf.field_name]?.[lang.prefix] || '',
-                            }
-                        } else {
-                            customData['common'] = {
-                                ...customData['common'],
-                                [cf.field_name]: body[cf.field_name] || '',
-                            }
-                        }
-                    }
-                })
 
-                // Field group
-                req.contentType.custom_field_groups?.map((cfg, cfgIndex) => {
-                    if (cfg.repeater_group) {
-                        if (cfg.bilingual) {
-                            fieldGroupData[lang.prefix] = {
-                                ...fieldGroupData[lang.prefix],
-                                [cfg.row_name]: {
-                                    is_repeater: true,
-                                    values: {},
-                                },
-                            }
-                        } else {
-                            fieldGroupData['common'] = {
-                                ...fieldGroupData['common'],
-                                [cfg.row_name]: {
-                                    is_repeater: false,
-                                    values: {},
-                                },
-                            }
-                        }
-                    } else {
-                        if (cfg.bilingual) {
-                            fieldGroupData[lang.prefix] = {
-                                ...fieldGroupData[lang.prefix],
-                                [cfg.row_name]: {
-                                    is_repeater: false,
-                                    values: {},
-                                },
-                            }
-                        } else {
-                            fieldGroupData['common'] = {
-                                ...fieldGroupData['common'],
-                                [cfg.row_name]: {
-                                    is_repeater: false,
-                                    values: {},
-                                },
-                            }
-                        }
+        let content_fields_to_insert = []
+        session?.selected_brand?.languages.map((lang, langIndex) => {
+            req.contentType.custom_fields?.map((cf, cfIndex) => {
+                if (cfg.bilingual) {
+                    customData[lang.prefix] = {
+                        ...customData[lang.prefix],
+                        field_name: cf.field_name || '',
+                        field_value: body?.[cf.field_name]?.[lang.prefix] || '',
+                        [cf.field_name]:
+                            body?.[cf.field_name]?.[lang.prefix] || '',
                     }
-                    cfg.fields?.map((cf) => {
-                        if (cf.field_type === 'file') {
-                            // Image editing start
-                            if (isEdit) {
-                                if (cfg.bilingual) {
-                                    // if user upload new image
-                                    if (
-                                        images?.[cf.field_name]?.[lang.prefix]
-                                    ) {
-                                        fieldGroupData[lang.prefix] = {
-                                            ...fieldGroupData[lang.prefix],
-                                            [cf.field_name]:
-                                                images[cf.field_name][
-                                                    lang.prefix
-                                                ] || '',
-                                        }
-                                        // if image content have already uploaded image
-                                    } else if (
-                                        body?.[`${[cf.field_name]}-url`]?.[
-                                            lang.prefix
-                                        ]
-                                    ) {
-                                        // this image data is in stringified form so it is parsing to json
-                                        let val = JSON.parse(
-                                            body[`${[cf.field_name]}-url`][
-                                                lang.prefix
-                                            ]
-                                        )
-                                        fieldGroupData[lang.prefix] = {
-                                            ...fieldGroupData[lang.prefix],
-                                            [cf.field_name]: val || '',
-                                        }
-                                    } else {
-                                        // If no image is uploaded and content have no image then the error object will push to customError array
-                                        customErrors.push({
-                                            message: `${cf.field_name}.${lang.prefix} is not allowed to be empty`,
-                                            path: [
-                                                `${cf.field_name}`,
-                                                `${lang.prefix}`,
-                                            ],
-                                        })
-                                    }
-                                } else {
-                                    // Single language
-                                    // if user upload new image
-                                    if (images?.[cf.field_name]) {
-                                        fieldGroupData['common'] = {
-                                            ...fieldGroupData['common'],
-                                            [cf.field_name]:
-                                                images[cf.field_name] || '',
-                                        }
-                                        // if image content have already uploaded image
-                                    } else if (
-                                        body?.[`${[cf.field_name]}-url`]
-                                    ) {
-                                        // this image data is in stringified form so it is parsing to json
-                                        let val = JSON.parse(
-                                            body[`${[cf.field_name]}-url`]
-                                        )
-                                        fieldGroupData['common'] = {
-                                            ...fieldGroupData['common'],
-                                            [cf.field_name]: val || '',
-                                        }
-                                    } else {
-                                        // If no image is uploaded and content have no image then the error object will push to customError array
-                                        customErrors.push({
-                                            message: `${cf.field_name}.${lang.prefix} is not allowed to be empty`,
-                                            path: [
-                                                `${cf.field_name}`,
-                                                `${lang.prefix}`,
-                                            ],
-                                        })
-                                    }
-                                }
-                            }
-                        } else {
-                            if (cfg.bilingual) {
-                                fieldGroupData[lang.prefix][cfg.row_name][
-                                    'values'
-                                ] = {
-                                    ...fieldGroupData[lang.prefix]?.[
-                                        cfg.row_name
-                                    ]?.['values'],
-                                    [cf.field_name]:
-                                        body[cf.field_name]?.[lang.prefix] ||
-                                        '',
-                                }
-                            } else {
-                                fieldGroupData['common'][cfg.row_name][
-                                    'values'
-                                ] = {
-                                    ...fieldGroupData['common']?.[
-                                        cfg.row_name
-                                    ]?.['values'],
-                                    [cf.field_name]: body[cf.field_name] || '',
-                                }
-                            }
-                        }
-                    })
-                })
-                customData[lang.prefix] = {
-                    ...customData[lang.prefix],
-                    title: body.title?.[lang.prefix],
-                    body_content: body.body_content?.[lang.prefix],
-                    excerpt: body.excerpt?.[lang.prefix],
-                }
-                if (req.contentType.hide_meta == false) {
-                    metaData[lang.prefix] = {
-                        title: body.meta_title[lang.prefix] || undefined,
-                        description:
-                            body.meta_description[lang.prefix] || undefined,
-                        keywords: body.meta_keywords?.[lang.prefix],
+                } else {
+                    customData['common'] = {
+                        ...customData['common'],
+                        field_name: cf.field_name || '',
+                        field_value: body?.[cf.field_name]?.[lang.prefix] || '',
+                        [cf.field_name]: body[cf.field_name] || '',
                     }
                 }
             })
-        }
+
+            content_fields_to_insert = [
+                ...content_fields_to_insert,
+                {
+                    language: lang.prefix,
+                    group_name: 'general',
+                    field: 'title',
+                    value: body.title[lang.prefix],
+                },
+                {
+                    language: lang.prefix,
+                    group_name: 'general',
+                    field: 'description',
+                    value: body.body_content[lang.prefix],
+                },
+                {
+                    language: lang.prefix,
+                    group_name: 'general',
+                    field: 'description',
+                    value: body.excerpt[lang.prefix],
+                },
+            ]
+
+            // Field group
+            // req.contentType.custom_field_groups?.map((cfg, cfgIndex) => {
+            //     if (cfg.repeater_group) {
+            //         if (cfg.bilingual) {
+            //             fieldGroupData[lang.prefix] = {
+            //                 ...fieldGroupData[lang.prefix],
+            //                 [cfg.row_name]: {
+            //                     is_repeater: true,
+            //                     values: {},
+            //                 },
+            //             }
+            //         } else {
+            //             fieldGroupData['common'] = {
+            //                 ...fieldGroupData['common'],
+            //                 [cfg.row_name]: {
+            //                     is_repeater: false,
+            //                     values: {},
+            //                 },
+            //             }
+            //         }
+            //     } else {
+            //         if (cfg.bilingual) {
+            //             fieldGroupData[lang.prefix] = {
+            //                 ...fieldGroupData[lang.prefix],
+            //                 [cfg.row_name]: {
+            //                     is_repeater: false,
+            //                     values: {},
+            //                 },
+            //             }
+            //         } else {
+            //             fieldGroupData['common'] = {
+            //                 ...fieldGroupData['common'],
+            //                 [cfg.row_name]: {
+            //                     is_repeater: false,
+            //                     values: {},
+            //                 },
+            //             }
+            //         }
+            //     }
+            //     cfg.fields?.map((cf) => {
+            //         if (cf.field_type === 'file') {
+            //             // Image editing start
+            //             if (isEdit) {
+            //                 if (cfg.bilingual) {
+            //                     // if user upload new image
+            //                     if (images?.[cf.field_name]?.[lang.prefix]) {
+            //                         fieldGroupData[lang.prefix] = {
+            //                             ...fieldGroupData[lang.prefix],
+            //                             [cf.field_name]:
+            //                                 images[cf.field_name][
+            //                                     lang.prefix
+            //                                 ] || '',
+            //                         }
+            //                         // if image content have already uploaded image
+            //                     } else if (
+            //                         body?.[`${[cf.field_name]}-url`]?.[
+            //                             lang.prefix
+            //                         ]
+            //                     ) {
+            //                         // this image data is in stringified form so it is parsing to json
+            //                         let val = JSON.parse(
+            //                             body[`${[cf.field_name]}-url`][
+            //                                 lang.prefix
+            //                             ]
+            //                         )
+            //                         fieldGroupData[lang.prefix] = {
+            //                             ...fieldGroupData[lang.prefix],
+            //                             [cf.field_name]: val || '',
+            //                         }
+            //                     } else {
+            //                         // If no image is uploaded and content have no image then the error object will push to customError array
+            //                         customErrors.push({
+            //                             message: `${cf.field_name}.${lang.prefix} is not allowed to be empty`,
+            //                             path: [
+            //                                 `${cf.field_name}`,
+            //                                 `${lang.prefix}`,
+            //                             ],
+            //                         })
+            //                     }
+            //                 } else {
+            //                     // Single language
+            //                     // if user upload new image
+            //                     if (images?.[cf.field_name]) {
+            //                         fieldGroupData['common'] = {
+            //                             ...fieldGroupData['common'],
+            //                             [cf.field_name]:
+            //                                 images[cf.field_name] || '',
+            //                         }
+            //                         // if image content have already uploaded image
+            //                     } else if (body?.[`${[cf.field_name]}-url`]) {
+            //                         // this image data is in stringified form so it is parsing to json
+            //                         let val = JSON.parse(
+            //                             body[`${[cf.field_name]}-url`]
+            //                         )
+            //                         fieldGroupData['common'] = {
+            //                             ...fieldGroupData['common'],
+            //                             [cf.field_name]: val || '',
+            //                         }
+            //                     } else {
+            //                         // If no image is uploaded and content have no image then the error object will push to customError array
+            //                         customErrors.push({
+            //                             message: `${cf.field_name}.${lang.prefix} is not allowed to be empty`,
+            //                             path: [
+            //                                 `${cf.field_name}`,
+            //                                 `${lang.prefix}`,
+            //                             ],
+            //                         })
+            //                     }
+            //                 }
+            //             }
+            //         } else {
+            //             if (cfg.bilingual) {
+            //                 fieldGroupData[lang.prefix][cfg.row_name][
+            //                     'values'
+            //                 ] = {
+            //                     ...fieldGroupData[lang.prefix]?.[
+            //                         cfg.row_name
+            //                     ]?.['values'],
+            //                     [cf.field_name]:
+            //                         body[cf.field_name]?.[lang.prefix] || '',
+            //                 }
+            //             } else {
+            //                 fieldGroupData['common'][cfg.row_name]['values'] = {
+            //                     ...fieldGroupData['common']?.[cfg.row_name]?.[
+            //                         'values'
+            //                     ],
+            //                     [cf.field_name]: body[cf.field_name] || '',
+            //                 }
+            //             }
+            //         }
+            //     })
+            // })
+            customData = [
+                {
+                    // ...customData[lang.prefix],
+                    lang: lang.prefix,
+                    field_group: {
+                        // name: 'test',
+                        rows: [
+                            {
+                                fields: [
+                                    {
+                                        name: 'title',
+                                        value: body.title[lang.prefix],
+                                    },
+                                    {
+                                        name: 'body_content',
+                                        value: body.body_content[lang.prefix],
+                                    },
+                                    {
+                                        name: 'excerpt',
+                                        value: body.excerpt[lang.prefix],
+                                        model_ref: 'User',
+                                    },
+                                    // title: body.title?.[lang.prefix],
+                                    // body_content: body.body_content?.[lang.prefix],
+                                    // excerpt: body.excerpt?.[lang.prefix],
+                                ],
+                            },
+                        ],
+                    },
+                },
+            ]
+
+            if (req.contentType.hide_meta == false) {
+                metaData[lang.prefix] = {
+                    title: body.meta_title[lang.prefix] || undefined,
+                    description:
+                        body.meta_description[lang.prefix] || undefined,
+                    keywords: body.meta_keywords?.[lang.prefix],
+                }
+            }
+        })
         if (customErrors?.length) {
             return res.status(422).json({
                 _original: req.body,
                 details: customErrors,
             })
         }
+        // console.log(content_fields_to_insert)
+        // return false
         // Data object to insert
         let data = {
             type_id: type._id,
@@ -881,7 +684,7 @@ const save = async (req, res) => {
             position: body.position,
             // template_name: type.template_name,
             custom_fields: type.custom_fields,
-            content: customData,
+            content: content_fields_to_insert,
             group_content: fieldGroupData,
             meta: metaData,
             in_home: body.in_home || false,
