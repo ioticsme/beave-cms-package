@@ -77,6 +77,12 @@ block content
 					.card-header.border-0.cursor-pointer(role='button' data-bs-toggle='collapse' data-bs-target='#kt_account_profile_details' aria-expanded='true' aria-controls='kt_account_profile_details')
 						.card-title.m-0
 							h3.fw-bold.m-0 Content Type Form
+						.card-toolbar 
+							button#kt_account_profile_details_submit.btn.btn-primary.form-submit-btn(type='submit') 
+								span.preloader.d-none
+									| Saving...
+								span.label
+									| Save
 					#kt_account_settings_profile_details.collapse.show
 							input(type='hidden' name='id' value=`${contentType ? contentType._id : ''}`)
 							.card-body.border-top.p-9
