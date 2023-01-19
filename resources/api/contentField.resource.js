@@ -5,7 +5,9 @@ class ContentFieldResource extends Resource {
         return {
             // field: this.field,
             // value: this.related_model.length ? this.related_model : this.value,
-            [this.field]: this.related_model.length ? AttachedMediaResource.collection(this.related_model) : this.value,
+            [this.field]: this.related_model?.length
+                ? AttachedMediaResource.collection(this.related_model)
+                : this.value,
             // related_model: this.related_model.length ? this.related_model : undefined,
         }
     }

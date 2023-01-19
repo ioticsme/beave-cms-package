@@ -2,8 +2,9 @@ const ContentType = require('../../model/ContentType')
 const Content = require('../../model/Content')
 const ContentResource = require('../../resources/api/content.resource')
 const populateTest = async (req, res) => {
+    console.log("Call");
     let cf = await Content.aggregate([
-        { $match: { type_slug: 'post', published: true } },
+        { $match: { type_slug: 'test', published: true } },
         {
             $lookup: {
                 from: 'countries',
@@ -21,7 +22,13 @@ const populateTest = async (req, res) => {
             },
         },
         { $unwind: '$content' },
-        { $match: { 'content.language': 'en' } },
+        {
+            $match: {
+                'content.language': {
+                    $in: ['en', 'common'],
+                },
+            },
+        },
         {
             $lookup: {
                 from: 'media',

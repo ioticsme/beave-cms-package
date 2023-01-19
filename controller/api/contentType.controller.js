@@ -6,6 +6,8 @@ const Content = require('../../model/Content')
 const ContentResource = require('../../resources/api/content.resource')
 const ContentPathResource = require('../../resources/api/contentPath.resource')
 const { default: collect } = require('collect.js')
+const { default: mongoose } = require('mongoose')
+const ContentFieldResource = require('../../resources/api/contentField.resource')
 
 const list = async (req, res) => {
     try {
@@ -22,26 +24,191 @@ const list = async (req, res) => {
                     let allContents
                     let liveData
 
-                    allContents = await Content.find({
-                        type_id: { $ne: contentType?._id },
-                        brand: req.brand._id,
-                        country: req.country._id,
-                        published: true,
-                    })
-                    liveData = await Content.find({
-                        type_id: contentType?._id,
-                        brand: req.brand._id,
-                        country: req.country._id,
-                        published: true,
-                    })
-                        .populate('brand', 'name code')
-                        .populate('country', 'name')
-                        .sort('position')
-                        .select(
-                            '-type_id -author -__v -in_home -isDeleted -deletedAt -created_at -updated_at -meta'
-                        )
-                        .populate('banner')
-                        .populate('gallery')
+                    allContents = await Content.aggregate([
+                        {
+                            $match: {
+                                type_id: {
+                                    $ne: mongoose.Types.ObjectId(
+                                        contentType?._id
+                                    ),
+                                },
+                                brand: mongoose.Types.ObjectId(req.brand._id),
+                                country: mongoose.Types.ObjectId(
+                                    req.country._id
+                                ),
+                                published: true,
+                            },
+                        },
+                        {
+                            $lookup: {
+                                from: 'countries',
+                                localField: 'country',
+                                foreignField: '_id',
+                                as: 'country',
+                            },
+                        },
+                        {
+                            $lookup: {
+                                from: 'brands',
+                                localField: 'brand',
+                                foreignField: '_id',
+                                as: 'brand',
+                            },
+                        },
+                        { $unwind: '$content' },
+                        {
+                            $match: {
+                                'content.language': {
+                                    $in: ['en', 'common'],
+                                },
+                            },
+                        },
+                        {
+                            $lookup: {
+                                from: 'media',
+                                localField: 'content.value',
+                                foreignField: '_id',
+                                as: 'content.related_model',
+                            },
+                        },
+                        {
+                            $group: {
+                                _id: '$_id',
+                                slug: { $first: '$slug' },
+                                type_slug: { $first: '$type_slug' },
+                                type_id: { $first: '$type_id' },
+                                author: { $first: '$author' },
+                                brand: { $first: '$brand' },
+                                country: { $first: '$country' },
+                                position: { $first: '$position' },
+                                attached_content: {
+                                    $first: '$attached_content',
+                                },
+                                fields: {
+                                    $push: '$content',
+                                },
+                            },
+                        },
+                        {
+                            $project: {
+                                _id: 1,
+                                slug: 1,
+                                type_id: 1,
+                                type_slug: 1,
+                                author: 1,
+                                published: 1,
+                                position: 1,
+                                'brand._id': 1,
+                                'brand.name': 1,
+                                'brand.code': 1,
+                                'country._id': 1,
+                                'country.name': 1,
+                                'country.code': 1,
+                                // 'fields.language': 1,
+                                // 'fields.group_name': 1,
+                                'fields.field': 1,
+                                'fields.value': 1,
+                                'fields.related_model': 1,
+                                attached_type: 1,
+                                // 'content.language': 1,
+                                // 'content.group_name': 1,
+                                // 'content.field': 1,
+                                // 'content.value': 1,
+                            },
+                        },
+                    ]).exec()
+
+                    liveData = await Content.aggregate([
+                        {
+                            $match: {
+                                type_id: mongoose.Types.ObjectId(
+                                    contentType?._id
+                                ),
+                                brand: mongoose.Types.ObjectId(req.brand._id),
+                                country: mongoose.Types.ObjectId(
+                                    req.country._id
+                                ),
+                                published: true,
+                            },
+                        },
+                        {
+                            $lookup: {
+                                from: 'countries',
+                                localField: 'country',
+                                foreignField: '_id',
+                                as: 'country',
+                            },
+                        },
+                        {
+                            $lookup: {
+                                from: 'brands',
+                                localField: 'brand',
+                                foreignField: '_id',
+                                as: 'brand',
+                            },
+                        },
+                        { $unwind: '$content' },
+                        {
+                            $match: {
+                                'content.language': {
+                                    $in: ['en', 'common'],
+                                },
+                            },
+                        },
+                        {
+                            $lookup: {
+                                from: 'media',
+                                localField: 'content.value',
+                                foreignField: '_id',
+                                as: 'content.related_model',
+                            },
+                        },
+                        {
+                            $group: {
+                                _id: '$_id',
+                                slug: { $first: '$slug' },
+                                type_slug: { $first: '$type_slug' },
+                                type_id: { $first: '$type_id' },
+                                author: { $first: '$author' },
+                                brand: { $first: '$brand' },
+                                country: { $first: '$country' },
+                                position: { $first: '$position' },
+                                attached_content: {
+                                    $first: '$attached_content',
+                                },
+                                fields: {
+                                    $push: '$content',
+                                },
+                            },
+                        },
+                        {
+                            $project: {
+                                _id: 1,
+                                slug: 1,
+                                type_id: 1,
+                                type_slug: 1,
+                                author: 1,
+                                published: 1,
+                                position: 1,
+                                'brand._id': 1,
+                                'brand.name': 1,
+                                'brand.code': 1,
+                                'country._id': 1,
+                                'country.name': 1,
+                                'country.code': 1,
+                                // 'fields.language': 1,
+                                // 'fields.group_name': 1,
+                                'fields.field': 1,
+                                'fields.value': 1,
+                                'fields.related_model': 1,
+                                attached_type: 1,
+                                // 'content.language': 1,
+                                // 'content.group_name': 1,
+                                // 'content.field': 1,
+                                // 'content.value': 1,
+                            },
+                        },
+                    ]).exec()
 
                     let liveContent = []
                     if (liveData?.length) {
@@ -133,22 +300,99 @@ const detail = async (req, res) => {
                 if (process.env.CACHE_LOCAL_DATA == 'true' && data) {
                     return JSON.parse(data)
                 } else {
-                    const liveData = await Content.findOne({
-                        type_id: contentType._id,
-                        slug: req.params.slug,
-                        brand: req.brand._id,
-                        country: req.country._id,
-                        published: true,
-                        deletedAt: null,
-                    })
-                        .populate('banner')
-                        .populate('gallery')
-                        .populate('brand', 'name')
-                        .populate('country', 'name')
-                        .select(
-                            '-type_id -author -__v -in_home -isDeleted -deletedAt -created_at -updated_at'
-                        )
-
+                    const liveData = await Content.aggregate([
+                        {
+                            $match: {
+                                type_id: mongoose.Types.ObjectId(
+                                    contentType?._id
+                                ),
+                                slug: req.params.slug,
+                                brand: mongoose.Types.ObjectId(req.brand._id),
+                                country: mongoose.Types.ObjectId(
+                                    req.country._id
+                                ),
+                                published: true,
+                                deletedAt: null,
+                            },
+                        },
+                        {
+                            $lookup: {
+                                from: 'countries',
+                                localField: 'country',
+                                foreignField: '_id',
+                                as: 'country',
+                            },
+                        },
+                        {
+                            $lookup: {
+                                from: 'brands',
+                                localField: 'brand',
+                                foreignField: '_id',
+                                as: 'brand',
+                            },
+                        },
+                        { $unwind: '$content' },
+                        {
+                            $match: {
+                                'content.language': {
+                                    $in: ['en', 'common'],
+                                },
+                            },
+                        },
+                        {
+                            $lookup: {
+                                from: 'media',
+                                localField: 'content.value',
+                                foreignField: '_id',
+                                as: 'content.related_model',
+                            },
+                        },
+                        {
+                            $group: {
+                                _id: '$_id',
+                                slug: { $first: '$slug' },
+                                type_slug: { $first: '$type_slug' },
+                                type_id: { $first: '$type_id' },
+                                author: { $first: '$author' },
+                                brand: { $first: '$brand' },
+                                country: { $first: '$country' },
+                                position: { $first: '$position' },
+                                attached_content: {
+                                    $first: '$attached_content',
+                                },
+                                fields: {
+                                    $push: '$content',
+                                },
+                            },
+                        },
+                        {
+                            $project: {
+                                _id: 1,
+                                slug: 1,
+                                type_id: 1,
+                                type_slug: 1,
+                                author: 1,
+                                published: 1,
+                                position: 1,
+                                'brand._id': 1,
+                                'brand.name': 1,
+                                'brand.code': 1,
+                                'country._id': 1,
+                                'country.name': 1,
+                                'country.code': 1,
+                                // 'fields.language': 1,
+                                // 'fields.group_name': 1,
+                                'fields.field': 1,
+                                'fields.value': 1,
+                                'fields.related_model': 1,
+                                attached_type: 1,
+                                // 'content.language': 1,
+                                // 'content.group_name': 1,
+                                // 'content.field': 1,
+                                // 'content.value': 1,
+                            },
+                        },
+                    ]).exec()
                     // BEGIN:: Fetching Attached Contents
                     let attached_contents
                     if (liveData?.attached_type?.length) {
@@ -171,7 +415,7 @@ const detail = async (req, res) => {
                     // END:: Fetching Attached Contents
 
                     const liveDataCollection = new ContentResource(
-                        liveData
+                        liveData?.[0]
                     ).exec()
 
                     if (liveDataCollection?.meta) {
