@@ -3,7 +3,7 @@ const Resource = require('resources.js')
 class ContentFieldResource extends Resource {
     toArray() {
         return {
-            // field: this.field,
+            // group: this.group_name,
             // value: this.related_model.length ? this.related_model : this.value,
             [this.field]: this.related_model?.length
                 ? AttachedMediaResource.collection(this.related_model)

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
 
 const ContentTypeSchema = new mongoose.Schema(
     {
@@ -9,6 +10,7 @@ const ContentTypeSchema = new mongoose.Schema(
         slug: {
             type: String,
             required: true,
+            unique: true,
         },
         admin_icon: {
             type: String,
@@ -105,14 +107,6 @@ const ContentTypeSchema = new mongoose.Schema(
             type: Boolean,
             default: true,
         },
-        has_banner: {
-            type: Boolean,
-            default: false,
-        },
-        has_gallery: {
-            type: Boolean,
-            default: false,
-        },
         has_form: {
             type: Boolean,
             default: false,
@@ -120,18 +114,6 @@ const ContentTypeSchema = new mongoose.Schema(
         has_api_endpoint: {
             type: Boolean,
             default: true,
-        },
-        hide_title: {
-            type: Boolean,
-            default: false,
-        },
-        hide_body: {
-            type: Boolean,
-            default: false,
-        },
-        hide_excerpt: {
-            type: Boolean,
-            default: false,
         },
         hide_meta: {
             type: Boolean,
@@ -145,5 +127,7 @@ const ContentTypeSchema = new mongoose.Schema(
         },
     }
 )
+
+ContentTypeSchema.plugin(uniqueValidator)
 
 module.exports = mongoose.model('ContentType', ContentTypeSchema)

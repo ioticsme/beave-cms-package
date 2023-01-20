@@ -7,7 +7,6 @@ const ContentResource = require('../../resources/api/content.resource')
 const ContentPathResource = require('../../resources/api/contentPath.resource')
 const { default: collect } = require('collect.js')
 const { default: mongoose } = require('mongoose')
-const ContentFieldResource = require('../../resources/api/contentField.resource')
 
 const list = async (req, res) => {
     try {
@@ -104,8 +103,8 @@ const list = async (req, res) => {
                                 'country._id': 1,
                                 'country.name': 1,
                                 'country.code': 1,
-                                // 'fields.language': 1,
-                                // 'fields.group_name': 1,
+                                'fields.language': 1,
+                                'fields.group_name': 1,
                                 'fields.field': 1,
                                 'fields.value': 1,
                                 'fields.related_model': 1,
@@ -196,8 +195,8 @@ const list = async (req, res) => {
                                 'country._id': 1,
                                 'country.name': 1,
                                 'country.code': 1,
-                                // 'fields.language': 1,
-                                // 'fields.group_name': 1,
+                                'fields.language': 1,
+                                'fields.group_name': 1,
                                 'fields.field': 1,
                                 'fields.value': 1,
                                 'fields.related_model': 1,

@@ -293,54 +293,55 @@ const changeStatus = async (req, res) => {
 const save = async (req, res) => {
     try {
         // console.log(req.body)
+        // return false
         // console.log(req.files)
         session = req.authUser
         // BEGIN:: Generating default field validation rule for content type (title, description)
-        let defaultValidationObj = {}
-        let metaValidationObj = {}
-        const titleValidationRules = `Joi.string().required()`
-        const descriptionValidationRules = `Joi.string().required().min(10)`
-        const excerptValidationRules = `Joi.string().allow('',null)`
-        const metaValidationRules = 'Joi.optional()'
-        const titleValidationObj = {}
-        const descriptionValidationObj = {}
-        const excerptValidationObj = {}
-        const metaTitleValidationObj = {}
-        const metaDescriptionValidationObj = {}
-        const metaKeywordsValidationObj = {}
-        req.authUser.selected_brand.languages.forEach((lang) => {
-            _.assign(titleValidationObj, {
-                [lang.prefix]: eval(titleValidationRules),
-            })
-            _.assign(descriptionValidationObj, {
-                [lang.prefix]: eval(descriptionValidationRules),
-            })
-            _.assign(excerptValidationObj, {
-                [lang.prefix]: eval(excerptValidationRules),
-            })
-            _.assign(metaTitleValidationObj, {
-                [lang.prefix]: eval(metaValidationRules),
-            })
-            _.assign(metaDescriptionValidationObj, {
-                [lang.prefix]: eval(metaValidationRules),
-            })
-            _.assign(metaKeywordsValidationObj, {
-                [lang.prefix]: eval(metaValidationRules),
-            })
-        })
+        // let defaultValidationObj = {}
+        // let metaValidationObj = {}
+        // const titleValidationRules = `Joi.string().required()`
+        // const descriptionValidationRules = `Joi.string().required().min(10)`
+        // const excerptValidationRules = `Joi.string().allow('',null)`
+        // const metaValidationRules = 'Joi.optional()'
+        // const titleValidationObj = {}
+        // const descriptionValidationObj = {}
+        // const excerptValidationObj = {}
+        // const metaTitleValidationObj = {}
+        // const metaDescriptionValidationObj = {}
+        // const metaKeywordsValidationObj = {}
+        // req.authUser.selected_brand.languages.forEach((lang) => {
+        //     _.assign(titleValidationObj, {
+        //         [lang.prefix]: eval(titleValidationRules),
+        //     })
+        //     _.assign(descriptionValidationObj, {
+        //         [lang.prefix]: eval(descriptionValidationRules),
+        //     })
+        //     _.assign(excerptValidationObj, {
+        //         [lang.prefix]: eval(excerptValidationRules),
+        //     })
+        //     // _.assign(metaTitleValidationObj, {
+        //     //     [lang.prefix]: eval(metaValidationRules),
+        //     // })
+        //     // _.assign(metaDescriptionValidationObj, {
+        //     //     [lang.prefix]: eval(metaValidationRules),
+        //     // })
+        //     // _.assign(metaKeywordsValidationObj, {
+        //     //     [lang.prefix]: eval(metaValidationRules),
+        //     // })
+        // })
 
-        defaultValidationObj['title'] = Joi.object(titleValidationObj)
-        defaultValidationObj['body_content'] = Joi.object(
-            descriptionValidationObj
-        )
-        defaultValidationObj['excerpt'] = Joi.object(excerptValidationObj)
-        metaValidationObj['meta_title'] = Joi.object(metaTitleValidationObj)
-        metaValidationObj['meta_description'] = Joi.object(
-            metaDescriptionValidationObj
-        )
-        metaValidationObj['meta_keywords'] = Joi.object(
-            metaKeywordsValidationObj
-        )
+        // defaultValidationObj['title'] = Joi.object(titleValidationObj)
+        // defaultValidationObj['body_content'] = Joi.object(
+        //     descriptionValidationObj
+        // )
+        // defaultValidationObj['excerpt'] = Joi.object(excerptValidationObj)
+        // metaValidationObj['meta_title'] = Joi.object(metaTitleValidationObj)
+        // metaValidationObj['meta_description'] = Joi.object(
+        //     metaDescriptionValidationObj
+        // )
+        // metaValidationObj['meta_keywords'] = Joi.object(
+        //     metaKeywordsValidationObj
+        // )
         // ========= Output of the above code is : ==========
         // title: Joi.object({
         // 	en: Joi.string().required().max(200),
@@ -403,8 +404,8 @@ const save = async (req, res) => {
         const schema = Joi.object({
             _id: Joi.optional(),
             method: Joi.string().valid('add', 'edit'),
-            ...defaultValidationObj,
-            ...metaValidationObj,
+            // ...defaultValidationObj,
+            // ...metaValidationObj,
             ...cfgValidationObj,
             slug: Joi.object({
                 en: Joi.optional(),
@@ -435,9 +436,9 @@ const save = async (req, res) => {
             isEdit = true
         }
         let type = req.contentType
-        const country = await Country.findOne({
-            code: session.selected_brand.country_code,
-        })
+        // const country = await Country.findOne({
+        //     code: session.selected_brand.country_code,
+        // })
 
         let fieldGroupData = {}
         let metaData = {}

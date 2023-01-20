@@ -20,7 +20,7 @@ block jslib
 	//- script(src='/cms-static/admin/assets/js/custom/apps/ecommerce/sales/save-order.js')
 	//- script(src='/cms-static/admin/assets/js/custom/apps/chat/chat.js')
 	//- script(src='/cms-static/admin/assets/js/custom/utilities/modals/upgrade-plan.js')
-	script(src='/cms-static/admin/assets/js/custom/utilities/modals/create-app.js')
+	//- script(src='/cms-static/admin/assets/js/custom/utilities/modals/create-app.js')
 	script(src='/cms-static/admin/assets/js/custom/utilities/modals/new-card.js')
 	script(src='/cms-static/admin/assets/js/custom/utilities/modals/users-search.js')
 	script(src='/cms-static/admin/assets/plugins/custom/formrepeater/formrepeater.bundle.js')
@@ -123,33 +123,6 @@ block content
 								#myTabContent.tab-content.tab-content-fields
 									each brandLanguage, i in authUser.selected_brand.languages
 										.tab-pane.fade(class= (i== 0 ? 'active show' : '') role='tabpanel' id=`kt_tab_pane_${brandLanguage.prefix}`)
-											.d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container
-												input(hidden name="method" value="add")
-												// begin::Label
-												label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
-													span.required #{reqContentType.title} Title (#{brandLanguage.prefix})
-													i.fas.fa-exclamation-circle.ms-2.fs-7(data-bs-toggle='tooltip' aria-label='Specify a target name for future usage and reference' data-kt-initialized='1')
-												// end::Label
-												input.form-control.form-control-solid(type='text' placeholder='Enter Target Title' name=`title[${brandLanguage.prefix}]`)
-												.fv-plugins-message-container.invalid-feedback(id=`field-error-title_${brandLanguage.prefix}`)
-											.d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container
-												// begin::Label
-												label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
-													span.required #{reqContentType.title} Content (#{brandLanguage.prefix})
-													i.fas.fa-exclamation-circle.ms-2.fs-7(data-bs-toggle='tooltip' aria-label='Specify a target name for future usage and reference' data-kt-initialized='1')
-												// end::Label
-												textarea.content_wysiwyg(name=`body_content[${brandLanguage.prefix}]` id=`wysiwyg-${brandLanguage.prefix}-${i}`)
-												.fv-plugins-message-container.invalid-feedback(id=`field-error-body_content_${brandLanguage.prefix}`)
-											if reqContentType.hide_excerpt == false
-												.d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container
-													// begin::Label
-													label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
-														span.required #{reqContentType.title} Excerpt (#{brandLanguage.prefix})
-														i.fas.fa-exclamation-circle.ms-2.fs-7(data-bs-toggle='tooltip' aria-label='Specify a target name for future usage and reference' data-kt-initialized='1')
-													// end::Label
-													textarea.form-control(name=`excerpt[${brandLanguage.prefix}]`  ) 
-													.fv-plugins-message-container.invalid-feedback(id=`field-error-excerpt_${brandLanguage.prefix}`)
-
 											//- BEGIN::Custom Fields with Bilingual
 											each cfg, cfg_i in reqContentType.custom_field_groups
 												if cfg.repeater_group == true && cfg.bilingual

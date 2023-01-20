@@ -2,6 +2,7 @@ const Resource = require('resources.js')
 // const BannerResource = require('./banner.resource')
 // const GalleryResource = require('./gallery.resources')
 const ContentFieldResource = require('./contentField.resource')
+const { default: collect } = require('collect.js')
 // const UserAddressResource = require('./userAddress.resource');
 
 class ContentResource extends Resource {
@@ -22,6 +23,7 @@ class ContentResource extends Resource {
                     return { ...acc, ...curr }
                 }
             ),
+            // content_test: collect(this.fields).groupBy('group_name'),
             // group_content: this.group_content,
             attached_content: this.attached_content,
             // banner: this.banner ? new BannerResource(this.banner).exec() : undefined,
