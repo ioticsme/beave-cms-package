@@ -62,8 +62,9 @@ block content
 							.row.mb-6
 								label.col-lg-4.col-form-label.required.fw-semibold.fs-6 Attachable type
 								.col-lg-8.pt-2
-									each ct in contentType.allowed_type
-										span.badge.badge-dark.mr-1 #{ct}
+									if contentType.allowed_type
+										each ct in contentType.allowed_type
+											span.badge.badge-dark.mr-1 #{ct}
 
 				//- include field-config-form	
 
