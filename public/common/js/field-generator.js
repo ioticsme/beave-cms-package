@@ -101,7 +101,7 @@ document
             `#field-section-form #section_repeater`
         ).checked
         const sectionExist = _.find(jData, function (d) {
-            return d.section == section_name
+            return _.toLower(d.section)  == section_name.toLowerCase()
         })
         if (sectionExist) {
             alert('Section Name Already Exist')
@@ -148,11 +148,11 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
         e.preventDefault()
         // const section_name = document.querySelector(`#field-form #field_name`).value
         const selected_section = e.target.section_name_field.value
-        console.log(selected_section)
+        // console.log(selected_section)
         const slected_field_type = e.target.field_type.value
-        console.log(slected_field_type)
+        // console.log(slected_field_type)
         const selected_field_name = e.target.field_name.value
-        console.log(selected_field_name)
+        // console.log(selected_field_name)
         const newField = {
             id: 'timestamp',
             type: slected_field_type,
@@ -167,7 +167,7 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
                 min_length: 5,
             },
         }
-        console.log(jData)
+        // console.log(jData)
         const fieldSection = _.find(jData, { section: selected_section })
         _.set(fieldSection, 'fields', fieldSection.fields.concat([newField]))
         // console.log(jData)
