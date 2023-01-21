@@ -473,35 +473,27 @@ const save = async (req, res) => {
                     }
                 })
             })
-            content_fields_to_insert = [
-                ...content_fields_to_insert,
-                {
-                    language: lang.prefix,
-                    group_name: 'general',
-                    field: 'title',
-                    value: body.title[lang.prefix],
-                },
-                {
-                    language: lang.prefix,
-                    group_name: 'general',
-                    field: 'description',
-                    value: body.body_content[lang.prefix],
-                },
-                {
-                    language: lang.prefix,
-                    group_name: 'general',
-                    field: 'description',
-                    value: body.excerpt[lang.prefix],
-                },
-            ]
-            if (req.contentType.hide_meta == false) {
-                metaData[lang.prefix] = {
-                    title: body.meta_title[lang.prefix] || undefined,
-                    description:
-                        body.meta_description[lang.prefix] || undefined,
-                    keywords: body.meta_keywords?.[lang.prefix],
-                }
-            }
+            // content_fields_to_insert = [
+            //     ...content_fields_to_insert,
+            //     {
+            //         language: lang.prefix,
+            //         group_name: 'general',
+            //         field: 'title',
+            //         value: body.title[lang.prefix],
+            //     },
+            //     {
+            //         language: lang.prefix,
+            //         group_name: 'general',
+            //         field: 'description',
+            //         value: body.body_content[lang.prefix],
+            //     },
+            //     {
+            //         language: lang.prefix,
+            //         group_name: 'general',
+            //         field: 'description',
+            //         value: body.excerpt[lang.prefix],
+            //     },
+            // ]
         })
 
         console.log('content', content_fields_to_insert)
@@ -511,8 +503,8 @@ const save = async (req, res) => {
             type_id: type._id,
             type_slug: type.slug,
             author: session.admin_id,
-            banner: body?.banner || null, // If Requested content type has banner required
-            gallery: body?.gallery || null, // If Requested content type has gallery required
+            // banner: body?.banner || null, // If Requested content type has banner required
+            // gallery: body?.gallery || null, // If Requested content type has gallery required
             brand: req.authUser.selected_brand._id,
             country: req.authUser.selected_brand.country,
             published: body.published === 'true',
@@ -521,7 +513,7 @@ const save = async (req, res) => {
             custom_fields: type.custom_fields,
             content: content_fields_to_insert,
             // group_content: fieldGroupData,
-            meta: metaData,
+            // meta: metaData,
             in_home: body.in_home || false,
         }
         console.log('fieldGroupData :>> ', fieldGroupData)
