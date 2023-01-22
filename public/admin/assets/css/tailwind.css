@@ -13,6 +13,10 @@
     }
 
     input[type='text'] {
-        @apply border border-gray-300 rounded-lg p-4 !h-20;
+        /* @apply border border-gray-300 rounded-lg p-4 !h-20; */
+    }
+
+    .menu-link {
+        @apply text-gray-200 hover:text-gray-400;
     }
   }
