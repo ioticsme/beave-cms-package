@@ -24,7 +24,7 @@ block customScript
 		document.addEventListener('DOMContentLoaded', function () {
 			//- console.log('#{fields_to_map}')
 			//- alert('ss')
-			console.log(`#{fields_to_map}`);
+			console.log(`#{fields_to_map[0].section}`);
 			fields_to_map.forEach(function(jsonObject) {
 				console.log(jsonObject);
 			});
