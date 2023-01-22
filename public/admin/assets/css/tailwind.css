@@ -13,6 +13,6 @@
     }
 
     input[type='text'] {
-        @apply border border-gray-300 rounded-lg p-4 text-xl !h-20;
+        @apply border border-gray-300 rounded-lg p-4 !h-20;
     }
   }

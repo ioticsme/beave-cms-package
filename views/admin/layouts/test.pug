@@ -1,0 +1,17 @@
+.menu-item.menu-accordion(data-kt-menu-trigger='click' class=`${[].includes(`/admin/cms/${'navItem.slug'}`) ? 'here show' : ''}`)
+    span.menu-link
+        span.menu-icon
+            span.svg-icon.svg-icon-2 !{'navItem.admin_icon'}
+        span.menu-title #{'navItem.title'}
+        span.menu-arrow
+    .menu-sub.menu-sub-accordion
+        .menu-item
+            a.menu-link(href=`/admin/cms/${'navItem.slug'}` class=`${'activeNav' == `/admin/cms/${'navItem.slug'}` ? 'active' : ''}`)
+                span.menu-bullet
+                    span.bullet.bullet-dot
+                span.menu-title All #{'navItem.title'}
+        .menu-item
+            a.menu-link(href=`/admin/cms/${'navItem.slug'}/add` class=`${'activeNav' == `/admin/cms/${'navItem.slug'}/add` ? 'active' : ''}`)
+                span.menu-bullet
+                    span.bullet.bullet-dot
+                span.menu-title Add #{'navItem.title'}

@@ -22,16 +22,18 @@ block jslib
 block customScript
 	script.
 		document.addEventListener('DOMContentLoaded', function () {
-			//- console.log('#{fields_to_map}')
+			console.log('TT')
+			console.log(!{JSON.stringify(fields_to_map)})
 			//- alert('ss')
-			console.log(`#{fields_to_map[0].section}`);
-			fields_to_map.forEach(function(jsonObject) {
-				console.log(jsonObject);
-			});
+			//- console.log(JSON.parse(`#${fields_to_map}`));
+			//- fields_to_map.forEach(function(jsonObject) {
+			//- 	console.log(jsonObject);
+			//- });
 
 			//- console.log(fieldSchemaJson.)
-			//- var bkupDataJson = _.cloneDeep(fieldSchemaJson)
-			//- generateField()
+			var fieldSchemaJson = !{JSON.stringify(fields_to_map)}
+			var bkupDataJson = _.cloneDeep(fieldSchemaJson)
+			generateField()
 		})
 
 block content

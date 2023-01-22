@@ -77,7 +77,7 @@ block content
 					.card-header.border-0.cursor-pointer(role='button' data-bs-toggle='collapse' data-bs-target='#kt_account_profile_details' aria-expanded='true' aria-controls='kt_account_profile_details')
 						.card-title.m-0
 							h3.fw-bold.m-0 Content Type Form
-					#kt_account_settings_profile_details.collapse.show
+					#kt_account_settings_profile_details
 						input(type='hidden' name='id' value=`${contentType ? contentType._id : ''}`)
 						.card-body.border-top.p-9
 							.row.mb-6
@@ -124,7 +124,7 @@ block content
 					.card-header.border-0.cursor-pointer(role='button' data-bs-toggle='collapse' data-bs-target='#kt_account_profile_details' aria-expanded='true' aria-controls='kt_account_profile_details')
 						.card-title.m-0
 							h3.fw-bold.m-0 Features Checklist
-					#kt_account_settings_profile_details.collapse.show
+					#kt_account_settings_profile_details
 						.card-body.border-top.p-9
 							.row.mb-6
 								span.col-lg-4.col-form-label.required.fw-semibold.fs-6 Features Checklist
