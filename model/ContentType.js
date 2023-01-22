@@ -25,46 +25,46 @@ const ContentTypeSchema = new mongoose.Schema(
             type: Boolean,
             default: true,
         },
-        custom_fields: [
-            {
-                field_label: String,
-                field_name: String,
-                field_type: String, // TextInput, TextArea, Radio, Checkbox, Dropdown, File, Wysiwyg
-                placeholder: String,
-                bilingual: {
-                    type: Boolean,
-                    default: true,
-                },
-                options: [
-                    {
-                        label: String,
-                        value: String,
-                    },
-                ],
-                // values: [
-                //     {
-                //         key: {
-                //             en: String,
-                //             ar: String,
-                //         },
-                //         val: String
-                //     }
-                // ],
-                addValidation: String,
-                editValidation: String,
-                validation: [
-                    {
-                        type: String,
-                    },
-                ],
-                info: [
-                    {
-                        type: String,
-                    },
-                ],
-            },
-        ],
-        custom_field_groups: [
+        // custom_fields: [
+        //     {
+        //         field_label: String,
+        //         field_name: String,
+        //         field_type: String, // TextInput, TextArea, Radio, Checkbox, Dropdown, File, Wysiwyg
+        //         placeholder: String,
+        //         bilingual: {
+        //             type: Boolean,
+        //             default: true,
+        //         },
+        //         options: [
+        //             {
+        //                 label: String,
+        //                 value: String,
+        //             },
+        //         ],
+        //         // values: [
+        //         //     {
+        //         //         key: {
+        //         //             en: String,
+        //         //             ar: String,
+        //         //         },
+        //         //         val: String
+        //         //     }
+        //         // ],
+        //         addValidation: String,
+        //         editValidation: String,
+        //         validation: [
+        //             {
+        //                 type: String,
+        //             },
+        //         ],
+        //         info: [
+        //             {
+        //                 type: String,
+        //             },
+        //         ],
+        //     },
+        // ],
+        field_groups: [
             {
                 row_name: String,
                 row_label: String,
@@ -76,15 +76,19 @@ const ContentTypeSchema = new mongoose.Schema(
                         field_name: String,
                         field_type: String, // TextInput, TextArea, Radio, Checkbox, Dropdown, File, Wysiwyg
                         placeholder: String,
+                        position: {
+                            type: Number,
+                            default: 0,
+                        },
                         options: [
                             {
                                 label: String,
                                 value: String,
                             },
                         ],
-                        addValidation: String,
-                        editValidation: String,
-                        validation: String,
+                        // addValidation: String,
+                        // editValidation: String,
+                        validation: {},
                         info: [
                             {
                                 type: String,

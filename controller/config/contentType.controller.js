@@ -144,17 +144,13 @@ const saveFields = async (req, res) => {
         // console.log(req.body.kt_docs_repeater_nested_outer)
         const schema = Joi.object({
             id: Joi.string().required(),
-            repeater_group_label: Joi.array().optional(),
-            repeater_group_name: Joi.array().optional(),
-            field_label: Joi.array().optional(),
-            field_name: Joi.array().optional(),
-            placeholder: Joi.array().optional(),
-            validation: Joi.array().optional(),
-            bilingual: Joi.array().optional(),
-            field_type: Joi.array().optional(),
-            option_label: Joi.array().optional(),
-            option_value: Joi.array().optional(),
-            kt_docs_repeater_nested_outer: Joi.array().optional(),
+            fieldSchemaJson: Joi.array().items(
+                Joi.object({
+                    section: Joi.string().required(),
+                    repeater: Joi.boolean().required(),
+                    fields: Joi.array().optional(),
+                })
+            ),
         })
 
         const validationResult = schema.validate(req.body, {
@@ -162,8 +158,7 @@ const saveFields = async (req, res) => {
         })
 
         if (validationResult.error) {
-            res.status(422).json(validationResult.error)
-            return
+            return res.status(422).json(validationResult.error)
         }
 
         let customFieldGroups = []
@@ -205,8 +200,36 @@ const saveFields = async (req, res) => {
                 fields: fields,
             })
         })
-        let data = {
-            custom_field_groups: customFieldGroups,
+
+        const fields_to_update = []
+        req.body.fieldSchemaJson.forEach((eachGroup)=> {
+            const fields = []
+            eachGroup.fields.forEach((field) => {
+                fields.push({
+                    field_label: field.label,
+                    field_name: field.name,
+                    field_type: field.type,
+                    placeholder: field.label,
+                    position: field.position,
+                    validation: field.validation,
+                    options: field.options,
+                })
+            })
+            const group = {
+                row_name: eachGroup.section,
+                row_label: eachGroup.section,
+                repeater_group: eachGroup.repeater,
+                bilingual: true,
+                fields: fields,
+            }
+            fields_to_update.push(group)
+        })
+        // console.log(fields_to_update)
+        // return false
+        let update = {
+            $set: {
+                'field_groups': fields_to_update
+              }
         }
 
         await ContentType.updateOne(
@@ -214,13 +237,13 @@ const saveFields = async (req, res) => {
                 _id: req.body.id,
             },
             {
-                $set: data,
+                $set: update,
             }
         )
 
         return res.status(200).json({ message: 'Content Type added' })
     } catch (e) {
-        // console.log(e)
+        console.log(e)
         if (e.errors) {
             return res.status(422).json({
                 details: e.errors,

@@ -12,6 +12,7 @@ block jslib
 	script(src='/cms-static/admin/assets/js/custom/widgets.js')
 	//- script(src='/cms-static/admin/assets/js/custom/utilities/modals/offer-a-deal/main.js')
 	script(src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js')
+	script(src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js')
 	// end::Custom Javascript
 
 	script(src='/cms-static/common/js/field-generator.js')
@@ -20,7 +21,60 @@ block jslib
 
 block customScript
 	script.
-		//- generateField()
+		var fieldSchemaJson = [
+		//- 	{
+		//- 		section: 'General',
+		//- 		repeater: true,
+		//- 		fields: [
+		//- 			{
+		//- 				id: 'timestamp',
+		//- 				type: 'text',
+		//- 				label: 'First name',
+		//- 				name: 'f_name',
+		//- 				position: 0,
+		//- 				localization: true,
+		//- 				validation: {
+		//- 					required: true,
+		//- 					private: false,
+		//- 					max_length: 30,
+		//- 					min_length: 5,
+		//- 				},
+		//- 			},
+		//- 			{
+		//- 				id: 'timestamp',
+		//- 				type: 'email',
+		//- 				label: 'First Email',
+		//- 				name: 'email',
+		//- 				position: 0,
+		//- 				localization: true,
+		//- 				validation: {
+		//- 					required: true,
+		//- 					private: true,
+		//- 					max_length: 30,
+		//- 					min_length: 5,
+		//- 				},
+		//- 			},
+		//- 			{
+		//- 				id: 'timestamp',
+		//- 				type: 'select',
+		//- 				label: 'Gender',
+		//- 				name: 'gender',
+		//- 				position: 0,
+		//- 				localization: true,
+		//- 				validation: {
+		//- 					required: true,
+		//- 					private: false,
+		//- 				},
+		//- 				options: [
+		//- 					{ label: 'Male', value: 'm' },
+		//- 					{ label: 'Female', value: 'f' },
+		//- 				],
+		//- 			},
+		//- 		],
+		//- },
+		]
+		const bkupDataJson = _.cloneDeep(fieldSchemaJson)
+		generateField()
 
 block content
 	.d-flex.flex-column.flex-column-fluid
@@ -70,6 +124,10 @@ block content
 									.card-header.border-0.cursor-pointer(role='button' data-bs-toggle='collapse' data-bs-target='#kt_account_profile_details' aria-expanded='true' aria-controls='kt_account_profile_details')
 										.card-title.m-0
 											h3.fw-bold.m-0 Content Fields
+										.card-toolbar.pt-5
+											button.btn.btn-sm.btn-success(type='button' disabled=true id="schema-save-btn")
+												i.las.la-save
+												| Save
 									input(type='hidden' name='id' value=`${contentType ? contentType._id : ''}`)
 									.card-body.border-top.p-9
 										.form-field-holder
