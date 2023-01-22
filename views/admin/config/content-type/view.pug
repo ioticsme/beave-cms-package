@@ -21,20 +21,9 @@ block jslib
 
 block customScript
 	script.
-		document.addEventListener('DOMContentLoaded', function () {
-			console.log('TT')
-			console.log(!{JSON.stringify(fields_to_map)})
-			//- alert('ss')
-			//- console.log(JSON.parse(`#${fields_to_map}`));
-			//- fields_to_map.forEach(function(jsonObject) {
-			//- 	console.log(jsonObject);
-			//- });
-
-			//- console.log(fieldSchemaJson.)
-			var fieldSchemaJson = !{JSON.stringify(fields_to_map)}
-			var bkupDataJson = _.cloneDeep(fieldSchemaJson)
-			generateField()
-		})
+		var fieldSchemaJson = !{JSON.stringify(fields_to_map)} || []
+		var bkupDataJson = _.cloneDeep(fieldSchemaJson)
+		generateField()
 
 block content
 	.d-flex.flex-column.flex-column-fluid
@@ -42,7 +31,7 @@ block content
 			#kt_app_toolbar_container.app-container.container-xxl.d-flex.flex-stack
 				.page-title.d-flex.flex-column.justify-content-center.flex-wrap.me-3
 					h1.page-heading.d-flex.text-dark.fw-bold.fs-3.flex-column.justify-content-center.my-0
-						| Content Type Details #{fields_to_map[0].section}
+						| Content Type Details
 					ul.breadcrumb.breadcrumb-separatorless.fw-semibold.fs-7.my-0.pt-1
 						li.breadcrumb-item.text-muted
 							a.text-muted.text-hover-primary(href='/admin/dashboard') Dashboard

@@ -33,7 +33,7 @@ const generateField = async () => {
 									</tr>
 								</thead>
 								<tbody>`
-    _.forEach(fieldSchemaJson, function (group) {
+    await _.forEach(fieldSchemaJson, function (group) {
         const currGroup = `<tr><td colspn="3">
         <h3 class="mb-1">${group.section}
         ${
@@ -66,10 +66,12 @@ const generateField = async () => {
         `.form-field-holder`
     ).innerHTML = `${htmlData} </tbody></table></div>`
 
-    if (!_.isEqual(bkupDataJson, fieldSchemaJson)) {
-        document.getElementById('schema-save-btn').disabled = false
-    } else {
+    if (_.isEqual(bkupDataJson, fieldSchemaJson)) {
         document.getElementById('schema-save-btn').disabled = true
+        console.log(`Match`)
+    } else {
+        document.getElementById('schema-save-btn').disabled = false
+        console.log(`Not Match`)
     }
 }
 
@@ -114,6 +116,7 @@ document
             const sectionName = event.target.getAttribute('data-section')
             const fieldName = event.target.getAttribute('data-field')
 
+            console.log(sectionName, fieldName)
             const index = _.findIndex(fieldSchemaJson, { section: sectionName })
             _.remove(
                 fieldSchemaJson[index].fields,
@@ -174,10 +177,10 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
 document
     .querySelector('#schema-save-btn')
     .addEventListener('click', function () {
-        let route = location.pathname;
-        let parts = route.split("/");
+        let route = location.pathname
+        let parts = route.split('/')
         // console.log(parts); // Output: ["", "users", "123"]
-        let content_type_id = parts[parts.length-1];
+        let content_type_id = parts[parts.length - 1]
         axios
             .post('/admin/config/content-type/save-fields', {
                 id: content_type_id,
@@ -185,7 +188,7 @@ document
             })
             .then(async function (res) {
                 // location.reload()
-                if(res.status === 200) {
+                if (res.status === 200) {
                     bkupDataJson = fieldSchemaJson
                     generateField()
                 }

@@ -174,6 +174,7 @@ const saveFields = async (req, res) => {
                     section: Joi.string().required(),
                     repeater: Joi.boolean().required(),
                     fields: Joi.array().optional(),
+                    bilingual: Joi.boolean().optional(),
                 })
             ),
         })
@@ -183,48 +184,49 @@ const saveFields = async (req, res) => {
         })
 
         if (validationResult.error) {
+            // console.log(validationResult.error)
             return res.status(422).json(validationResult.error)
         }
 
-        let customFieldGroups = []
-        req.body.kt_docs_repeater_nested_outer?.map((repeater) => {
-            let fields = []
-            repeater.kt_docs_repeater_nested_inner?.map((inner) => {
-                let obj = {
-                    field_label: inner.field_label,
-                    field_name: inner.field_name,
-                    placeholder: inner.placeholder,
-                    validation: inner.validation,
-                    bilingual: inner.bilingual || false,
-                    field_type: inner.field_type,
-                }
-                let options = []
-                for (
-                    let j = 0;
-                    j < inner.option_label?.split(',').length;
-                    j++
-                ) {
-                    if (inner.option_value?.split(',')?.[j]) {
-                        options.push({
-                            label: inner.option_label?.split(',')?.[j],
-                            value: inner.option_value.split(',')[j],
-                        })
-                    }
-                }
-                if (options.length) {
-                    obj.options = options
-                }
-                fields.push(obj)
-            })
-            customFieldGroups.push({
-                row_name: repeater.name,
-                row_label: repeater.label,
-                repeater_group:
-                    repeater.repeater_group == 'true' ? true : false,
-                bilingual: repeater.bilingual == 'true' ? true : false,
-                fields: fields,
-            })
-        })
+        // let customFieldGroups = []
+        // req.body.kt_docs_repeater_nested_outer?.map((repeater) => {
+        //     let fields = []
+        //     repeater.kt_docs_repeater_nested_inner?.map((inner) => {
+        //         let obj = {
+        //             field_label: inner.field_label,
+        //             field_name: inner.field_name,
+        //             placeholder: inner.placeholder,
+        //             validation: inner.validation,
+        //             bilingual: inner.bilingual || false,
+        //             field_type: inner.field_type,
+        //         }
+        //         let options = []
+        //         for (
+        //             let j = 0;
+        //             j < inner.option_label?.split(',').length;
+        //             j++
+        //         ) {
+        //             if (inner.option_value?.split(',')?.[j]) {
+        //                 options.push({
+        //                     label: inner.option_label?.split(',')?.[j],
+        //                     value: inner.option_value.split(',')[j],
+        //                 })
+        //             }
+        //         }
+        //         if (options.length) {
+        //             obj.options = options
+        //         }
+        //         fields.push(obj)
+        //     })
+        //     customFieldGroups.push({
+        //         row_name: repeater.name,
+        //         row_label: repeater.label,
+        //         repeater_group:
+        //             repeater.repeater_group == 'true' ? true : false,
+        //         bilingual: repeater.bilingual == 'true' ? true : false,
+        //         fields: fields,
+        //     })
+        // })
 
         const fields_to_update = []
         req.body.fieldSchemaJson.forEach((eachGroup) => {
@@ -252,7 +254,7 @@ const saveFields = async (req, res) => {
         // console.log(fields_to_update)
         // return false
 
-        console.log(fields_to_update)
+        // console.log(fields_to_update)
         await ContentType.updateOne(
             {
                 _id: req.body.id,
