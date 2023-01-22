@@ -21,13 +21,18 @@ block jslib
 
 block customScript
 	script.
-		//- document.addEventListener('DOMContentLoaded', function () {
-			console.lolg(#{fields_to_map})
-			//- var fieldSchemaJson = fields_to_map
-			//- console.log(fieldSchemaJson)
+		document.addEventListener('DOMContentLoaded', function () {
+			//- console.log('#{fields_to_map}')
+			//- alert('ss')
+			console.log(JSON.parse(`#${fields_to_map}`));
+			fields_to_map.forEach(function(jsonObject) {
+				console.log(jsonObject);
+			});
+
+			//- console.log(fieldSchemaJson.)
 			//- var bkupDataJson = _.cloneDeep(fieldSchemaJson)
 			//- generateField()
-		//- })
+		})
 
 block content
 	.d-flex.flex-column.flex-column-fluid
