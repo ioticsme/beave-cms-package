@@ -80,7 +80,7 @@ block content
 							h3.fw-bold.m-0 Fields
 					form#kt_account_profile_details_form.form.es-form(action=`/admin/config/content-type/save-fields` data-redirect-url=`/admin/config/content-type`  method='post' autocomplete="off")
 						input(type="hidden" name="id" value=`${contentType._id}`)
-						#kt_account_settings_profile_details.collapse.show
+						#kt_account_settings_profile_details
 							.card-body.border-top
 								.row#kt_docs_repeater_nested
 									if(contentType && contentType.custom_field_groups && contentType.custom_field_groups.length)
