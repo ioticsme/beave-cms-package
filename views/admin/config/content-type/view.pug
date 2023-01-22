@@ -21,60 +21,13 @@ block jslib
 
 block customScript
 	script.
-		var fieldSchemaJson = [
-		//- 	{
-		//- 		section: 'General',
-		//- 		repeater: true,
-		//- 		fields: [
-		//- 			{
-		//- 				id: 'timestamp',
-		//- 				type: 'text',
-		//- 				label: 'First name',
-		//- 				name: 'f_name',
-		//- 				position: 0,
-		//- 				localization: true,
-		//- 				validation: {
-		//- 					required: true,
-		//- 					private: false,
-		//- 					max_length: 30,
-		//- 					min_length: 5,
-		//- 				},
-		//- 			},
-		//- 			{
-		//- 				id: 'timestamp',
-		//- 				type: 'email',
-		//- 				label: 'First Email',
-		//- 				name: 'email',
-		//- 				position: 0,
-		//- 				localization: true,
-		//- 				validation: {
-		//- 					required: true,
-		//- 					private: true,
-		//- 					max_length: 30,
-		//- 					min_length: 5,
-		//- 				},
-		//- 			},
-		//- 			{
-		//- 				id: 'timestamp',
-		//- 				type: 'select',
-		//- 				label: 'Gender',
-		//- 				name: 'gender',
-		//- 				position: 0,
-		//- 				localization: true,
-		//- 				validation: {
-		//- 					required: true,
-		//- 					private: false,
-		//- 				},
-		//- 				options: [
-		//- 					{ label: 'Male', value: 'm' },
-		//- 					{ label: 'Female', value: 'f' },
-		//- 				],
-		//- 			},
-		//- 		],
-		//- },
-		]
-		const bkupDataJson = _.cloneDeep(fieldSchemaJson)
-		generateField()
+		//- document.addEventListener('DOMContentLoaded', function () {
+			console.lolg(#{fields_to_map})
+			//- var fieldSchemaJson = fields_to_map
+			//- console.log(fieldSchemaJson)
+			//- var bkupDataJson = _.cloneDeep(fieldSchemaJson)
+			//- generateField()
+		//- })
 
 block content
 	.d-flex.flex-column.flex-column-fluid
@@ -82,7 +35,7 @@ block content
 			#kt_app_toolbar_container.app-container.container-xxl.d-flex.flex-stack
 				.page-title.d-flex.flex-column.justify-content-center.flex-wrap.me-3
 					h1.page-heading.d-flex.text-dark.fw-bold.fs-3.flex-column.justify-content-center.my-0
-						| Content Type Details
+						| Content Type Details #{fields_to_map[0].section}
 					ul.breadcrumb.breadcrumb-separatorless.fw-semibold.fs-7.my-0.pt-1
 						li.breadcrumb-item.text-muted
 							a.text-muted.text-hover-primary(href='/admin/dashboard') Dashboard

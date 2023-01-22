@@ -184,7 +184,12 @@ document
                 fieldSchemaJson,
             })
             .then(async function (res) {
-                location.reload()
+                // location.reload()
+                if(res.status === 200) {
+                    bkupDataJson = fieldSchemaJson
+                    generateField()
+                }
+                // console.log(res)
             })
             .catch(function (error) {
                 console.log(error)

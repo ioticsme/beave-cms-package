@@ -37,10 +37,35 @@ const view = async (req, res) => {
     const contentType = await ContentType.findOne({
         _id: req.params.id,
     })
+    // const fields_to_map = []
+    const fields_to_map = await contentType.field_groups.map((eachGroup) => {
+        const fields = []
+        eachGroup.fields.forEach((field) => {
+            fields.push({
+                label: field.field_label,
+                name: field.field_name,
+                type: field.field_type,
+                position: field.position,
+                validation: field.validation,
+                options: field.options,
+            })
+        })
+        const group = {
+            section: eachGroup.row_name,
+            repeater: eachGroup.repeater_group,
+            bilingual: eachGroup.bilingual,
+            fields: fields,
+        }
+        return group
+    })
+
+    // return res.json(fields_to_map)
+
     // console.log('contentType :>> ', contentType)
     // const contentTypes = await ContentType.find()
     return res.render('admin/config/content-type/view', {
         contentType,
+        fields_to_map,
         // contentTypes,
     })
 }
@@ -202,7 +227,7 @@ const saveFields = async (req, res) => {
         })
 
         const fields_to_update = []
-        req.body.fieldSchemaJson.forEach((eachGroup)=> {
+        req.body.fieldSchemaJson.forEach((eachGroup) => {
             const fields = []
             eachGroup.fields.forEach((field) => {
                 fields.push({
@@ -226,18 +251,16 @@ const saveFields = async (req, res) => {
         })
         // console.log(fields_to_update)
         // return false
-        let update = {
-            $set: {
-                'field_groups': fields_to_update
-              }
-        }
 
+        console.log(fields_to_update)
         await ContentType.updateOne(
             {
                 _id: req.body.id,
             },
             {
-                $set: update,
+                $set: {
+                    field_groups: fields_to_update,
+                },
             }
         )
 
