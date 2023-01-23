@@ -68,10 +68,10 @@ const generateField = async () => {
 
     if (_.isEqual(bkupDataJson, fieldSchemaJson)) {
         document.getElementById('schema-save-btn').disabled = true
-        console.log(`Match`)
+        // console.log(`Match`)
     } else {
         document.getElementById('schema-save-btn').disabled = false
-        console.log(`Not Match`)
+        // console.log(`Not Match`)
     }
 }
 
@@ -103,6 +103,8 @@ document
         })
         generateField()
         document.getElementById('field-section-form').reset()
+        $('#field_section_form_modal').modal('hide')
+        // document.querySelector('#field_section_form_modal').classList.remove('fade')
     })
 
 document
@@ -130,6 +132,11 @@ document
 $('#field_form_modal').on('show.bs.modal', function (e) {
     var section = $(e.relatedTarget).attr('data-section')
     $('#field_form_modal .section_name_field').val(section)
+    document.querySelectorAll('#field_form_modal .modal-field-sections').forEach((field_section) => {
+        console.log(field_section)
+        field_section.classList.add('d-none')
+    })
+    document.querySelector('#field_form_modal #field-list-section').classList.remove('d-none')
 })
 
 document.querySelectorAll('#field-list-section .btn').forEach((fieldBtn) => {
@@ -171,6 +178,7 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
         _.set(fieldSection, 'fields', fieldSection.fields.concat([newField]))
         generateField()
         fieldForm.reset()
+        $('#field_form_modal').modal('hide')
     })
 })
 

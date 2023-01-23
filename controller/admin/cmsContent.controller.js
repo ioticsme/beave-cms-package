@@ -18,6 +18,7 @@ let session
 const list = async (req, res) => {
     try {
         session = req.authUser
+        // return res.send(req.contentType._id)
         const contentList = await Content.find({
             type_id: req.contentType._id,
             brand: session.selected_brand._id,
@@ -25,101 +26,16 @@ const list = async (req, res) => {
             isDeleted: false,
         }).sort('position')
 
-        // let contentList = await Content.aggregate([
-        //     {
-        //         $match: {
-        //             type_id: req.contentType._id,
-        //             brand: mongoose.Types.ObjectId(session.selected_brand._id),
-        //             country: mongoose.Types.ObjectId(
-        //                 session.selected_brand.country
-        //             ),
-        //             isDeleted: false,
-        //         },
-        //     },
-        //     {
-        //         $lookup: {
-        //             from: 'countries',
-        //             localField: 'country',
-        //             foreignField: '_id',
-        //             as: 'country',
-        //         },
-        //     },
-        //     {
-        //         $lookup: {
-        //             from: 'brands',
-        //             localField: 'brand',
-        //             foreignField: '_id',
-        //             as: 'brand',
-        //         },
-        //     },
-        //     { $unwind: '$content' },
-        //     // {
-        //     //     $match: {
-        //     //         'content.language': {
-        //     //             $in: ['en', 'common'],
-        //     //         },
-        //     //     },
-        //     // },
-        //     {
-        //         $lookup: {
-        //             from: 'media',
-        //             localField: 'content.value',
-        //             foreignField: '_id',
-        //             as: 'content.related_model',
-        //         },
-        //     },
-        //     {
-        //         $group: {
-        //             _id: '$_id',
-        //             slug: { $first: '$slug' },
-        //             type_slug: { $first: '$type_slug' },
-        //             type_id: { $first: '$type_id' },
-        //             author: { $first: '$author' },
-        //             brand: { $first: '$brand' },
-        //             country: { $first: '$country' },
-        //             position: { $first: '$position' },
-        //             attached_content: { $first: '$attached_content' },
-        //             fields: {
-        //                 $push: '$content',
-        //             },
-        //         },
-        //     },
-        //     {
-        //         $project: {
-        //             _id: 1,
-        //             slug: 1,
-        //             type_id: 1,
-        //             type_slug: 1,
-        //             author: 1,
-        //             published: 1,
-        //             position: 1,
-        //             'brand._id': 1,
-        //             'brand.name': 1,
-        //             'brand.code': 1,
-        //             'country._id': 1,
-        //             'country.name': 1,
-        //             'country.code': 1,
-        //             // 'fields.language': 1,
-        //             // 'fields.group_name': 1,
-        //             'fields.field': 1,
-        //             'fields.value': 1,
-        //             'fields.related_model': 1,
-        //             attached_type: 1,
-        //             // 'content.language': 1,
-        //             // 'content.group_name': 1,
-        //             // 'content.field': 1,
-        //             // 'content.value': 1,
-        //         },
-        //     },
-        // ]).exec()
-        console.log('contentList :>> ', contentList[1])
-        res.render(`admin/cms/content/listing`, {
+        if (!contentList) {
+            return res.render(`admin/error-404`)
+        }
+        return res.render(`admin/cms/content/listing`, {
             reqContentType: req.contentType,
             data: contentList,
         })
     } catch (error) {
         console.log(error)
-        return res.render(`admin/error-404`)
+        return res.render(`admin/error-500`)
     }
 }
 
@@ -146,17 +62,6 @@ const add = async (req, res) => {
     try {
         session = req.authUser
         let allowed_content = {}
-        const banners = await Banner.find({
-            brand: session?.selected_brand?._id,
-            country: session?.selected_brand?.country,
-            banner_type: 'web',
-            published: true,
-        })
-        const gallery = await Gallery.find({
-            brand: session?.selected_brand?._id,
-            country: session?.selected_brand?.country,
-            published: true,
-        })
         if (req.contentType?.allowed_type?.length) {
             const data = await Content.find({
                 brand: session?.selected_brand?._id,
@@ -168,19 +73,17 @@ const add = async (req, res) => {
             const grouped = collection.groupBy('type_slug')
             allowed_content = JSON.parse(JSON.stringify(grouped.items))
         }
-        const has_common_field_groups = collect(
-            req.contentType.custom_field_groups
-        )
+        const has_common_field_groups = collect(req.contentType.field_groups)
             .where('bilingual', false)
             .count()
-        res.render(`admin/cms/content/add`, {
+        // return res.send(req.contentType._id)
+        return res.render(`admin/cms/content/add`, {
             reqContentType: req.contentType,
             has_common_field_groups: has_common_field_groups ? true : false,
             allowed_content,
-            banners,
-            gallery,
         })
     } catch (error) {
+        console.log(error)
         return res.render(`admin/error-500`)
     }
 }
@@ -496,7 +399,7 @@ const save = async (req, res) => {
             // ]
         })
 
-        console.log('content', content_fields_to_insert)
+        // console.log('content', content_fields_to_insert)
 
         // Data object to insert
         let data = {

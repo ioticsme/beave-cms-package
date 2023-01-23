@@ -116,7 +116,7 @@ block content
 									each brandLanguage, i in authUser.selected_brand.languages
 										.tab-pane.fade(class= (i== 0 ? 'active show' : '') role='tabpanel' id=`kt_tab_pane_${brandLanguage.prefix}`)
 											//- BEGIN::Custom Fields with Bilingual
-											each cfg, cfg_i in reqContentType.custom_field_groups
+											each cfg, cfg_i in reqContentType.field_groups
 												if cfg.repeater_group == true && cfg.bilingual
 													hr
 													h4 #{cfg.row_label}
@@ -251,7 +251,7 @@ block content
 								//- BEGIN::Custom Fields without Bilingual
 								.row.mt-5.pt-5
 									.col-12.mt-5
-										each cfg, cfg_i in reqContentType.custom_field_groups
+										each cfg, cfg_i in reqContentType.field_groups
 											if cfg.bilingual == false 
 												if cfg.repeater_group == true
 													h4 #{cfg.row_label}
@@ -375,38 +375,6 @@ block content
 
 								//- END::Custom Fields without Bilingual
 					.d-flex.flex-column.gap-7.gap-lg-10.w-100.w-lg-300px.mb-7.ms-lg-10
-						if reqContentType.has_banner == true	
-							.card.card-flush.py-4
-								.card-header
-									.card-title
-										h3 Select Banner
-								.card-body.pt-0
-									label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
-										span.required Banner
-										i.fas.fa-exclamation-circle.ms-2.fs-7(data-bs-toggle='tooltip' aria-label='Specify a target name for future usage and reference' data-kt-initialized='1')
-									select#kt_ecommerce_add_category_status_select.form-select.mb-2(data-control='select2' data-allow-clear="true" data-hide-search='true' data-placeholder='Select an option' name=`banner`)
-										option(value="")
-											| - SELECT A BANNER -
-										each banner in banners
-											option(value=`${banner._id}`) #{banner.title}
-									.text-muted.fs-7 Select the banner group
-									.fv-plugins-message-container.invalid-feedback(id=`field-error-banner`)
-						if reqContentType.has_gallery == true	
-							.card.card-flush.py-4
-								.card-header
-									.card-title
-										h3 Select Gallery
-								.card-body.pt-0
-									label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
-										span.required Gallery
-										i.fas.fa-exclamation-circle.ms-2.fs-7(data-bs-toggle='tooltip' aria-label='Specify a target name for future usage and reference' data-kt-initialized='1')
-									select#kt_ecommerce_add_gallery_status_select.form-select.mb-2(data-control='select2' data-allow-clear="true" data-hide-search='true' data-placeholder='Select an option' name=`gallery`)
-										option(value="")
-											| - SELECT A GALLERY -
-										each item in gallery
-											option(value=`${item._id}`) #{item.title}
-									.text-muted.fs-7 Select the gallery group
-									.fv-plugins-message-container.invalid-feedback(id=`field-error-gallery`)
 						.card.card-flush.py-4
 							.card-header
 								.card-title

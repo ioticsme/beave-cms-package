@@ -25,20 +25,17 @@ const authCheck = async (req, res, next) => {
 
 const contentTypeCheck = async (req, res, next) => {
     if (!req.params.contentType) {
-        res.json('Not Found')
-        return
+        return res.json('Not Found')
     }
     try {
         const contentType = await ContentType.findOne({
             slug: req.params.contentType,
         })
         req.contentType = contentType
+        next()
     } catch (err) {
-        res.json('Not Found')
-        return
+        return res.json('Not Found')
     }
-
-    next()
 }
 
 const authUser = async (req, res, next) => {
