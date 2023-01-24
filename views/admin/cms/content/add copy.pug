@@ -131,9 +131,9 @@ block content
 													textarea.form-control(name=`excerpt[${brandLanguage.prefix}]`  ) 
 													.fv-plugins-message-container.invalid-feedback(id=`field-error-excerpt_${brandLanguage.prefix}`)
 
-											//- BEGIN::Custom Fields with Bilingual
+											//- BEGIN::Custom Fields with localisation
 											each cf, cf_i in reqContentType.custom_fields
-												if cf.bilingual
+												if cf.localisation
 													.d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container
 														// begin::Label
 														label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
@@ -185,7 +185,7 @@ block content
 																	option(value=`${dropdown.value}`) #{dropdown.key[brandLanguage.prefix]}
 															.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}_${brandLanguage.prefix}`)
 
-											//- END::Custom Fields with Bilingual
+											//- END::Custom Fields with localisation
 
 											//- BEGIN::Repeater group Fields 
 											if  has_common_repeater_group
@@ -196,7 +196,7 @@ block content
 											.row.mb-8
 												each rg, rg_i in reqContentType.repeater_groups
 													each cf,cf_i in rg.fields
-														if cf.bilingual
+														if cf.localisation
 															.d-flex.flex-column.fv-row.fv-plugins-icon-container.mt-10
 																// begin::Label
 																label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
@@ -331,13 +331,13 @@ block content
 								if has_common_custom_fields
 									.ribbon.ribbon-start.ribbon-clip
 										.ribbon-label
-											| General Fields (No Bilingual)
+											| General Fields (No localisation)
 											span.ribbon-inner.bg-success
-								//- BEGIN::Custom Fields without Bilingual
+								//- BEGIN::Custom Fields without localisation
 								.row.mt-5.pt-5
 									.col-12.mt-5
 										each cf, cf_i in reqContentType.custom_fields
-											if cf.bilingual == false
+											if cf.localisation == false
 												.d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container
 													// begin::Label
 													label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
@@ -389,7 +389,7 @@ block content
 																option(value=`${dropdown.value}`) #{dropdown.key}
 														.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}`)
 
-								//- END::Custom Fields without Bilingual
+								//- END::Custom Fields without localisation
 					.d-flex.flex-column.gap-7.gap-lg-10.w-100.w-lg-300px.mb-7.ms-lg-10
 						if reqContentType.has_banner == true	
 							.card.card-flush.py-4

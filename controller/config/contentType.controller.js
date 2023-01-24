@@ -52,8 +52,8 @@ const view = async (req, res) => {
         })
         const group = {
             section: eachGroup.row_name,
-            repeater: eachGroup.repeater_group,
-            bilingual: eachGroup.bilingual,
+            repeater_group: eachGroup.repeater_group,
+            localisation: eachGroup.localisation,
             fields: fields,
         }
         return group
@@ -166,15 +166,15 @@ const addFields = async (req, res) => {
 
 const saveFields = async (req, res) => {
     try {
-        // console.log(req.body.kt_docs_repeater_nested_outer)
+        // console.log(req.body)
         const schema = Joi.object({
             id: Joi.string().required(),
             fieldSchemaJson: Joi.array().items(
                 Joi.object({
                     section: Joi.string().required(),
-                    repeater: Joi.boolean().required(),
+                    repeater_group: Joi.boolean().required(),
+                    localisation: Joi.boolean().optional(),
                     fields: Joi.array().optional(),
-                    bilingual: Joi.boolean().optional(),
                 })
             ),
         })
@@ -197,7 +197,7 @@ const saveFields = async (req, res) => {
         //             field_name: inner.field_name,
         //             placeholder: inner.placeholder,
         //             validation: inner.validation,
-        //             bilingual: inner.bilingual || false,
+        //             localisation: inner.localisation || false,
         //             field_type: inner.field_type,
         //         }
         //         let options = []
@@ -223,7 +223,7 @@ const saveFields = async (req, res) => {
         //         row_label: repeater.label,
         //         repeater_group:
         //             repeater.repeater_group == 'true' ? true : false,
-        //         bilingual: repeater.bilingual == 'true' ? true : false,
+        //         localisation: repeater.localisation == 'true' ? true : false,
         //         fields: fields,
         //     })
         // })
@@ -245,8 +245,8 @@ const saveFields = async (req, res) => {
             const group = {
                 row_name: eachGroup.section,
                 row_label: eachGroup.section,
-                repeater_group: eachGroup.repeater,
-                bilingual: true,
+                repeater_group: eachGroup.repeater_group,
+                localisation: eachGroup.localisation,
                 fields: fields,
             }
             fields_to_update.push(group)

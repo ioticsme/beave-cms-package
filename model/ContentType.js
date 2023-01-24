@@ -31,7 +31,7 @@ const ContentTypeSchema = new mongoose.Schema(
         //         field_name: String,
         //         field_type: String, // TextInput, TextArea, Radio, Checkbox, Dropdown, File, Wysiwyg
         //         placeholder: String,
-        //         bilingual: {
+        //         localisation: {
         //             type: Boolean,
         //             default: true,
         //         },
@@ -69,7 +69,7 @@ const ContentTypeSchema = new mongoose.Schema(
                 row_name: String,
                 row_label: String,
                 repeater_group: Boolean,
-                bilingual: Boolean,
+                localisation: Boolean,
                 fields: [
                     {
                         field_label: String,

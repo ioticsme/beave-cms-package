@@ -21,8 +21,8 @@ block jslib
 
 block customScript
 	script.
-		var fieldSchemaJson = !{JSON.stringify(fields_to_map)} || []
-		var bkupDataJson = _.cloneDeep(fieldSchemaJson)
+		fieldSchemaJson = !{JSON.stringify(fields_to_map)} || []
+		bkupDataJson = _.cloneDeep(fieldSchemaJson)
 		generateField()
 
 block content
@@ -151,7 +151,11 @@ block widgets
 					.modal-body
 						input(type="text" name="section_name" id="section_name" class="form-control" placeholder="Field Section Name")
 						.form-check.form-check-custom.form-check-solid.mt-5
-							input#section_repeater.form-check-input(type='checkbox')
+							input#section_localisation.form-check-input(type='checkbox' name="localisation")
+							label.form-check-label(for='flexCheckChecked')
+								| Localisation
+						.form-check.form-check-custom.form-check-solid.mt-5
+							input#section_repeater.form-check-input(type='checkbox' name="repeater_group")
 							label.form-check-label(for='flexCheckChecked')
 								| Repeater
 					.modal-footer

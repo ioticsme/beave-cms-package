@@ -208,11 +208,11 @@ block content
 														input.form-control.form-control-lg.form-control-solid(type='text' name='validation[]' placeholder='Validation' value=`${cf.validation || ''}`)
 														.fv-plugins-message-container.invalid-feedback(id=`field-error-validation[]`)
 													.mt-2.col-md-6
-														select.form-select.form-select-lg.form-select-solid.mb-2(name="bilingual[]"  data-control='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select language type' )
+														select.form-select.form-select-lg.form-select-solid.mb-2(name="localisation[]"  data-control='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select language type' )
 															//- TODO::edit selection list item
 															option(value="" ) Select language type
-															option(value="true" selected=cf && cf.bilingual == true) Bilingual
-															option(value="false" selected=cf && cf.bilingual == false) English Only
+															option(value="true" selected=cf && cf.localisation == true) localisation
+															option(value="false" selected=cf && cf.localisation == false) English Only
 													.mt-2.col-md-6
 														select.form-select.form-select-lg.form-select-solid.mb-2(name="field_type[]"  data-control='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select field type' )
 															option(value='') Select Field Type
@@ -262,11 +262,11 @@ block content
 															input.form-control.form-control-lg.form-control-solid(type='text' name='validation[]' placeholder='Validation' value=`${cf.validation || ''}`)
 															.fv-plugins-message-container.invalid-feedback(id=`field-error-validation[]`)
 														.mt-2.col-md-6
-															select.form-select.form-select-lg.form-select-solid.mb-2(name="bilingual[]"  data-control='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select language type' )
+															select.form-select.form-select-lg.form-select-solid.mb-2(name="localisation[]"  data-control='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select language type' )
 																//- TODO::edit selection list item
 																option(value="" ) Select language type
-																option(value="true" selected=cf && cf.bilingual == true) Bilingual
-																option(value="false" selected=cf && cf.bilingual == false) English Only
+																option(value="true" selected=cf && cf.localisation == true) localisation
+																option(value="false" selected=cf && cf.localisation == false) English Only
 														.mt-2.col-md-6
 															select.form-select.form-select-lg.form-select-solid.mb-2(name="field_type[]"  data-control='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select field type' )
 																option(value='') Select Field Type
@@ -310,12 +310,12 @@ block content
 											input.form-control.form-control-lg.form-control-solid(type='text' name='validation[]' placeholder='Validation' )
 											.fv-plugins-message-container.invalid-feedback(id=`field-error-validation[]`)
 										.mt-2.col-md-6
-											//- select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="bilingual[]"  data-control='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select language type' )
-											select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="bilingual[]"  placeholder='Select language type' )
+											//- select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="localisation[]"  data-control='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select language type' )
+											select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="localisation[]"  placeholder='Select language type' )
 												//- TODO::edit selection list item
 												option(value="" ) Select language type
-												option(value="true" selected=contentType && contentType.bilingual == true) Bilingual
-												option(value="false" selected=contentType && contentType.bilingual == false) English Only
+												option(value="true" selected=contentType && contentType.localisation == true) localisation
+												option(value="false" selected=contentType && contentType.localisation == false) English Only
 										.mt-2.col-md-6
 											//- select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="field_type[]"  data-control='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select field type' )
 											select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="field_type[]"  placeholder='Select field type' )

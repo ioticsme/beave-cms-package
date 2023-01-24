@@ -108,10 +108,10 @@ block content
 																	option(value="true" selected=cfg && cfg.repeater_group == true) Repeater
 															.mt-2.col-md-6
 																label.form-label Row Language type
-																select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="bilingual"  )
+																select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="localisation"  )
 																	option(value="" ) Select language type
-																	option(value="true" selected=cfg && cfg.bilingual == true) Bilingual
-																	option(value="false" selected=cfg && cfg.bilingual == false) English Only
+																	option(value="true" selected=cfg && cfg.localisation == true) localisation
+																	option(value="false" selected=cfg && cfg.localisation == false) English Only
 														//- hr
 														div
 															h5.badge.badge-success
@@ -197,19 +197,19 @@ block content
 														.col-md-6
 															label.form-label Row Type:
 															select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2.mb-md-0(name="repeater_group" data-kt-repeater='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select row type' )
-																//- select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="bilingual[]" placeholder='Select language type' )
+																//- select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="localisation[]" placeholder='Select language type' )
 																//- TODO::edit selection list item
 																option(value="" ) Select Row type
 																option(value="false" selected=contentType && contentType.repeater_group == false) Normal
 																option(value="true" selected=contentType && contentType.repeater_group == true) Repeater
 														.mt-2.col-md-6
 															label.form-label Row Language type
-															select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="bilingual" data-kt-repeater='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select language type' )
-																//- select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="bilingual[]" placeholder='Select language type' )
+															select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="localisation" data-kt-repeater='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select language type' )
+																//- select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="localisation[]" placeholder='Select language type' )
 																//- TODO::edit selection list item
 																option(value="" ) Select language type
-																option(value="true" selected=contentType && contentType.bilingual == true) Bilingual
-																option(value="false" selected=contentType && contentType.bilingual == false) English Only
+																option(value="true" selected=contentType && contentType.localisation == true) localisation
+																option(value="false" selected=contentType && contentType.localisation == false) English Only
 													div
 														h5.badge.badge-success Fields
 														.inner-repeater

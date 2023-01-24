@@ -143,7 +143,7 @@ block content
 
 											//- BEGIN::Custom Fields
 											each cf, cf_i in reqContentType.custom_fields
-												if cf.bilingual
+												if cf.localisation
 													.d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container
 														// begin::Label
 														label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
@@ -226,13 +226,13 @@ block content
 								if has_common_custom_fields
 									.ribbon.ribbon-start.ribbon-clip
 										.ribbon-label
-											| General Fields (No Bilingual)
+											| General Fields (No localisation)
 											span.ribbon-inner.bg-success
-								//- BEGIN::Custom Fields without Bilingual
+								//- BEGIN::Custom Fields without localisation
 								.row.mt-5.pt-5
 									.col-12.mt-5
 										each cf, cf_i in reqContentType.custom_fields
-											if cf.bilingual == false 
+											if cf.localisation == false 
 												.d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container
 													// begin::Label
 													label.d-flex.align-items-center.fs-6.fw-semibold.mb-2

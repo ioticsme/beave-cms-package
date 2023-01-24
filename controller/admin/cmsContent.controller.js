@@ -34,7 +34,7 @@ const list = async (req, res) => {
             data: contentList,
         })
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         return res.render(`admin/error-500`)
     }
 }
@@ -74,7 +74,7 @@ const add = async (req, res) => {
             allowed_content = JSON.parse(JSON.stringify(grouped.items))
         }
         const has_common_field_groups = collect(req.contentType.field_groups)
-            .where('bilingual', false)
+            .where('localisation', false)
             .count()
         // return res.send(req.contentType._id)
         return res.render(`admin/cms/content/add`, {
@@ -83,7 +83,7 @@ const add = async (req, res) => {
             allowed_content,
         })
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         return res.render(`admin/error-500`)
     }
 }
@@ -121,7 +121,7 @@ const edit = async (req, res) => {
             allowed_content = JSON.parse(JSON.stringify(grouped.items))
         }
         const has_common_custom_fields = collect(req.contentType.custom_fields)
-            .where('bilingual', false)
+            .where('localisation', false)
             .count()
         res.render(`admin/cms/content/edit`, {
             reqContentType: req.contentType,
@@ -258,7 +258,7 @@ const save = async (req, res) => {
         // BEGIN:: Generating custom field group validation rule for content type
         let cfgValidationObj = {}
         req.contentType.custom_field_groups.forEach((element) => {
-            if (element.bilingual) {
+            if (element.localisation) {
                 element.fields.forEach((field) => {
                     const validationObject = {}
                     const URLvalidationObject = {}
@@ -351,7 +351,7 @@ const save = async (req, res) => {
             // Field group
             req.contentType.custom_field_groups?.map((cfg, cfgIndex) => {
                 cfg.fields?.map((cf) => {
-                    if (cfg.bilingual) {
+                    if (cfg.localisation) {
                         content_fields_to_insert = [
                             ...content_fields_to_insert,
                             {

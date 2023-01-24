@@ -177,9 +177,9 @@ block content
 
 											//- BEGIN::Custom Fields
 											each cfg, cfg_i in reqContentType.custom_field_groups
-												if cfg.repeater_group == true && cfg.bilingual
+												if cfg.repeater_group == true && cfg.localisation
 													h4 #{cfg.row_label}
-													//- if cfg.bilingual
+													//- if cfg.localisation
 													.group_repeater(id=`kt_docs_repeater_${brandLanguage.prefix}_${cfg._id}_${cfg_i}`)
 														.row(id=`form_repeater_child_${brandLanguage.prefix}_${cfg._id}-${cfg_i}` class=`form-repeater-group-${cfg._id}-${brandLanguage.prefix}`)
 															each cf,cf_idx in cfg.fields
@@ -245,7 +245,7 @@ block content
 															i.la.la-plus
 															| Add		
 												else
-													if cfg.bilingual
+													if cfg.localisation
 														each cf in cfg.fields
 															.d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container
 																// begin::Label
@@ -332,13 +332,13 @@ block content
 								if has_common_custom_fields
 									.ribbon.ribbon-start.ribbon-clip
 										.ribbon-label
-											| General Fields (No Bilingual)
+											| General Fields (No localisation)
 											span.ribbon-inner.bg-success
-								//- BEGIN::Custom Fields without Bilingual
+								//- BEGIN::Custom Fields without localisation
 								.row.mt-5.pt-5
 									.col-12.mt-5
 										each cfg, cfg_i in reqContentType.custom_field_groups
-											if cfg.bilingual == false 
+											if cfg.localisation == false 
 												if cfg.repeater_group == true
 													h4 #{cfg.row_label}
 													.group_repeater(id=`kt_docs_repeater_${cfg._id}_${cfg_i}`)

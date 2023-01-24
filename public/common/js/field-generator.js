@@ -21,7 +21,8 @@
 //     //     ],
 //     // },
 // ]
-
+var fieldSchemaJson
+var bkupDataJson
 const generateField = async () => {
     let htmlData = `<div class="table-responsive">
 							<table class="table gs-7 gy-7 gx-7">
@@ -37,7 +38,7 @@ const generateField = async () => {
         const currGroup = `<tr><td colspn="3">
         <h3 class="mb-1">${group.section}
         ${
-            group.repeater
+            group.repeater_group
                 ? '<span class="badge badge-warning">Repeater</span>'
                 : ''
         }
@@ -66,6 +67,12 @@ const generateField = async () => {
         `.form-field-holder`
     ).innerHTML = `${htmlData} </tbody></table></div>`
 
+    dataObjectComparison(bkupDataJson, fieldSchemaJson)
+
+    return true
+}
+
+const dataObjectComparison = (bkupDataJson, fieldSchemaJson) => {
     if (_.isEqual(bkupDataJson, fieldSchemaJson)) {
         document.getElementById('schema-save-btn').disabled = true
         // console.log(`Match`)
@@ -77,7 +84,7 @@ const generateField = async () => {
 
 document
     .getElementById('field-section-form')
-    .addEventListener('submit', function (e) {
+    .addEventListener('submit', async function (e) {
         e.preventDefault()
         const section_name = document.querySelector(
             `#field-section-form #section_name`
@@ -86,8 +93,11 @@ document
             alert('Need atleast 2 charecters')
             return false
         }
-        const section_repeater = document.querySelector(
+        const repeater_group = document.querySelector(
             `#field-section-form #section_repeater`
+        ).checked
+        const localisation = document.querySelector(
+            `#field-section-form #section_localisation`
         ).checked
         const sectionExist = _.find(fieldSchemaJson, function (d) {
             return _.toLower(d.section) == section_name.toLowerCase()
@@ -98,10 +108,12 @@ document
         }
         fieldSchemaJson.push({
             section: section_name,
-            repeater: section_repeater ? true : false,
+            repeater_group: repeater_group ? true : false,
+            localisation: localisation ? true : false,
             fields: [],
         })
-        generateField()
+
+        await generateField()
         document.getElementById('field-section-form').reset()
         $('#field_section_form_modal').modal('hide')
         // document.querySelector('#field_section_form_modal').classList.remove('fade')
@@ -118,7 +130,6 @@ document
             const sectionName = event.target.getAttribute('data-section')
             const fieldName = event.target.getAttribute('data-field')
 
-            console.log(sectionName, fieldName)
             const index = _.findIndex(fieldSchemaJson, { section: sectionName })
             _.remove(
                 fieldSchemaJson[index].fields,
@@ -132,11 +143,15 @@ document
 $('#field_form_modal').on('show.bs.modal', function (e) {
     var section = $(e.relatedTarget).attr('data-section')
     $('#field_form_modal .section_name_field').val(section)
-    document.querySelectorAll('#field_form_modal .modal-field-sections').forEach((field_section) => {
-        console.log(field_section)
-        field_section.classList.add('d-none')
-    })
-    document.querySelector('#field_form_modal #field-list-section').classList.remove('d-none')
+    document
+        .querySelectorAll('#field_form_modal .modal-field-sections')
+        .forEach((field_section) => {
+            // console.log(field_section)
+            field_section.classList.add('d-none')
+        })
+    document
+        .querySelector('#field_form_modal #field-list-section')
+        .classList.remove('d-none')
 })
 
 document.querySelectorAll('#field-list-section .btn').forEach((fieldBtn) => {
@@ -197,7 +212,7 @@ document
             .then(async function (res) {
                 // location.reload()
                 if (res.status === 200) {
-                    bkupDataJson = fieldSchemaJson
+                    bkupDataJson = _.cloneDeep(fieldSchemaJson)
                     generateField()
                 }
                 // console.log(res)
