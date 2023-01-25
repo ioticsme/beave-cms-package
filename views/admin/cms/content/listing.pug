@@ -181,7 +181,7 @@ block content
 											.form-check.form-check-sm.form-check-custom.form-check-solid
 												input.form-check-input(type='checkbox' value='1')
 										td
-											a.text-gray-800.text-hover-primary.mb-1(href=`/admin/cms/${reqContentType.slug}/detail/${item._id}`) #{item.content.en.title}
+											a.text-gray-800.text-hover-primary.mb-1(href=`/admin/cms/${reqContentType.slug}/detail/${item._id}`) #{item.content[0].value}
 										td
 											//- if reqContentType.has_api_endpoint
 											a.badge.badge-light-primary(href=`/admin/cms/${reqContentType.slug}/detail/${item._id}`) /#{item.slug}

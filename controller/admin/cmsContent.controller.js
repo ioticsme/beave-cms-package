@@ -21,7 +21,7 @@ const list = async (req, res) => {
         // return res.send(req.contentType._id)
         const contentList = await Content.find({
             type_id: req.contentType._id,
-            brand: session.selected_brand._id,
+            // brand: session.selected_brand._id,
             country: session.selected_brand.country,
             isDeleted: false,
         }).sort('position')
@@ -45,13 +45,44 @@ const detail = async (req, res) => {
         const contentDetail = await Content.findOne({
             _id: req.params.id,
             type_id: req.contentType._id,
-            brand: session.selected_brand._id,
+            // brand: session.selected_brand._id,
             country: session.selected_brand.country,
         }).populate('author')
+
+        // const groupedArray = _.groupBy(contentDetail.content, 'language')
+        // for (const language in groupedArray) {
+        //     groupedArray[language] = _.groupBy(
+        //         groupedArray[language],
+        //         'group_name'
+        //     )
+        //     for (const group_name in groupedArray[language]) {
+        //         groupedArray[language][group_name] = _.groupBy(
+        //             groupedArray[language][group_name],
+        //             'field'
+        //         )
+        //     }
+        // }
+
+        const groupedData = _.groupBy(contentDetail.content, (item) => {
+            return item.language
+        })
+
+        // const groupNameGroup = {}
+        const findalContentFieldsGroup = {}
+
+        Object.keys(groupedData).forEach((key) => {
+            findalContentFieldsGroup[key] = _.groupBy(
+                groupedData[key],
+                'group_name'
+            )
+        })
+
+        // return res.send(findalContentFieldsGroup)
 
         res.render(`admin/cms/content/detail`, {
             reqContentType: req.contentType,
             contentDetail,
+            findalContentFieldsGroup,
         })
     } catch (error) {
         return res.render(`admin/error-404`)
@@ -92,26 +123,15 @@ const edit = async (req, res) => {
     try {
         session = req.authUser
         let allowed_content = {}
-        const banners = await Banner.find({
-            brand: session?.selected_brand?._id,
-            country: session?.selected_brand?.country,
-            banner_type: 'web',
-            published: true,
-        })
-        const gallery = await Gallery.find({
-            brand: session?.selected_brand?._id,
-            country: session?.selected_brand?.country,
-            published: true,
-        })
         const contentDetail = await Content.findOne({
             _id: req.params.id,
             type_id: req.contentType._id,
-            brand: session.selected_brand._id,
+            // brand: session.selected_brand._id,
             country: session.selected_brand.country,
         })
         if (req.contentType?.allowed_type?.length) {
             const data = await Content.find({
-                brand: session?.selected_brand?._id,
+                // brand: session?.selected_brand?._id,
                 country: session?.selected_brand?.country,
                 published: true,
                 type_slug: { $in: req.contentType.allowed_type },
@@ -128,8 +148,6 @@ const edit = async (req, res) => {
             has_common_custom_fields: has_common_custom_fields ? true : false,
             contentDetail,
             allowed_content,
-            banners,
-            gallery,
         })
     } catch (error) {
         return res.render(`admin/error-404`)
@@ -147,7 +165,7 @@ const deleteContent = async (req, res) => {
 
         await Content.softDelete({
             _id: id,
-            brand: req.authUser.selected_brand._id,
+            // brand: req.authUser.selected_brand._id,
             country: req.authUser.selected_brand.country,
         })
         return res.status(200).json({
@@ -171,7 +189,7 @@ const changeStatus = async (req, res) => {
         const update = await Content.findOneAndUpdate(
             {
                 _id: id,
-                brand: req.authUser.selected_brand._id,
+                // brand: req.authUser.selected_brand._id,
                 country: req.authUser.selected_brand.country,
             },
             {
