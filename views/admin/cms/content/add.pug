@@ -132,7 +132,7 @@ block content
 																	if cf.field_type === 'text'
 																		input.form-control.form-control-solid(type='text' placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}][]]`)
 																		
-																	else if cf.field_type === 'wysiwyg'
+																	else if cf.field_type === 'richtext'
 																		textarea.content_wysiwyg(name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}][]]` id=`wysiwyg-cf-${brandLanguage.prefix}-${cf_i}`)
 																		
 																	else if cf.field_type === 'textarea'
@@ -186,7 +186,7 @@ block content
 																if cf.field_type === 'text'
 																	input.form-control.form-control-solid(type='text' placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]`)
 																	.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}_${brandLanguage.prefix}`)
-																else if cf.field_type === 'wysiwyg'
+																else if cf.field_type === 'richtext'
 																	textarea.content_wysiwyg(name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]` id=`wysiwyg-cf-${brandLanguage.prefix}-${cf_i}`)
 																	.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}_${brandLanguage.prefix}`)
 																else if cf.field_type === 'textarea'
@@ -240,7 +240,7 @@ block content
 																	if cf.field_type === 'text'
 																		input.form-control.form-control-solid(type='text' placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[]]`)
 																		.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}`)
-																	else if cf.field_type === 'wysiwyg'
+																	else if cf.field_type === 'richtext'
 																		textarea.content_wysiwyg(name=`${cfg.row_name}[${cf.field_name}]` id=`wysiwyg-cf-${cf_i}`)
 																		.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}`)
 																	else if cf.field_type === 'textarea'
@@ -290,7 +290,7 @@ block content
 															if cf.field_type === 'text'
 																input.form-control.form-control-solid(type='text' placeholder=`Enter  ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}]`)
 																.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}`)
-															else if cf.field_type === 'wysiwyg'
+															else if cf.field_type === 'richtext'
 																textarea.content_wysiwyg(name=`${cfg.row_name}[${cf.field_name}]` id=`wysiwyg-cf-${cf_i}`)
 																.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}`)
 															else if cf.field_type === 'textarea'

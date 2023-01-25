@@ -178,47 +178,65 @@ block widgets
 						a.btn.btn-secondary.m-1(href='#' data-value="email")
 							i.bi.bi-chat-square-text-fill.fs-4.me-2
 							|  Email
-						a.btn.btn-success.m-1(href='#')
+						a.btn.btn-success.m-1(href='#' data-value="number")
 							i.bi.bi-chat-square-text-fill.fs-4.me-2
 							|  Number
-						a.btn.btn-info.m-1(href='#')
+						a.btn.btn-info.m-1(href='#' data-value="textarea")
 							i.bi.bi-chat-square-text-fill.fs-4.me-2
 							|  Textarea
-						a.btn.btn-warning.m-1(href='#')
+						a.btn.btn-warning.m-1(href='#' data-value="richtext")
 							i.bi.bi-chat-square-text-fill.fs-4.me-2
 							|  Rich Text
-						a.btn.btn-danger.m-1(href='#')
-							i.bi.bi-chat-square-text-fill.fs-4.me-2
-							|  Radio
-						a.btn.btn-dark.m-1(href='#')
-							i.bi.bi-chat-square-text-fill.fs-4.me-2
-							|  Dropdown
+						//- a.btn.btn-danger.m-1(href='#')
+						//- 	i.bi.bi-chat-square-text-fill.fs-4.me-2
+						//- 	|  Radio
+						//- a.btn.btn-dark.m-1(href='#')
+						//- 	i.bi.bi-chat-square-text-fill.fs-4.me-2
+						//- 	|  Dropdown
 					#text-field-section.modal-field-sections.d-none
 						form(class="field-form")
 							input(type="hidden" name="section_name_field" class="section_name_field")
 							input(type="hidden" name="field_type" value="text")
 							input(type="text" name="field_name" id="field_name" class="form-control" placeholder="Field Name")
-							.form-check.form-check-custom.form-check-solid
-								input#flexRadioDefault.form-check-input(type='radio' value='')
-								label.form-check-label(for='flexRadioDefault')
-									| Text
-								input#flexRadioDefault.form-check-input(type='radio' value='')
-								label.form-check-label(for='flexRadioDefault')
-									| Email
 							.row.mt-5
 								.col-12
 									button.btn.btn-light(type='reset' data-bs-dismiss='modal') Back
 									button.btn.btn-primary(type='submit') Add Field
+
 					#email-field-section.modal-field-sections.d-none
 						form(class="field-form")
 							input(type="hidden" name="section_name_field" class="section_name_field")
 							input(type="hidden" name="field_type" value="email")
 							input(type="text" name="field_name" id="field_name" class="form-control" placeholder="Field Name")
-							.form-check.form-check-custom.form-check-solid.mt-5
-								input#flexRadioDefault.form-check-input(type='checkbox' value='')
-								label.form-check-label(for='flexRadioDefault')
-									| Required
 							.row.mt-5
 								.col-12
 									button.btn.btn-light(type='reset' data-bs-dismiss='modal') Back
 									button.btn.btn-primary(type='submit') Add Field
+					#number-field-section.modal-field-sections.d-none
+						form(class="field-form")
+							input(type="hidden" name="section_name_field" class="section_name_field")
+							input(type="hidden" name="field_type" value="number")
+							input(type="text" name="field_name" id="field_name" class="form-control" placeholder="Field Name")
+							.row.mt-5
+								.col-12
+									button.btn.btn-light(type='reset' data-bs-dismiss='modal') Back
+									button.btn.btn-primary(type='submit') Add Field
+					#textarea-field-section.modal-field-sections.d-none
+						form(class="field-form")
+							input(type="hidden" name="section_name_field" class="section_name_field")
+							input(type="hidden" name="field_type" value="textarea")
+							input(type="text" name="field_name" id="field_name" class="form-control" placeholder="Field Name")
+							.row.mt-5
+								.col-12
+									button.btn.btn-light(type='reset' data-bs-dismiss='modal') Back
+									button.btn.btn-primary(type='submit') Add Field
+					#richtext-field-section.modal-field-sections.d-none
+						form(class="field-form")
+							input(type="hidden" name="section_name_field" class="section_name_field")
+							input(type="hidden" name="field_type" value="richtext")
+							input(type="text" name="field_name" id="field_name" class="form-control" placeholder="Field Name")
+							.row.mt-5
+								.col-12
+									button.btn.btn-light(type='reset' data-bs-dismiss='modal') Back
+									button.btn.btn-primary(type='submit') Add Field
+					
