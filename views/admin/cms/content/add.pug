@@ -30,6 +30,7 @@ block jslib
 block customScript
 	script.
 		document.querySelectorAll('.content_wysiwyg').forEach(function(e) {
+			//- console.log(e.getAttribute('id'))
 			ClassicEditor
 			.create(document.querySelector(`#${e.getAttribute('id')}`))
 			.then(editor => {
@@ -126,14 +127,13 @@ block content
 														.row(id=`form_repeater_child_${brandLanguage.prefix}_${cfg._id}-${cfg_i}` class=`form-repeater-group-${cfg._id}-${brandLanguage.prefix}`)
 															each cf,cf_idx in cfg.fields
 																.d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container
-																	//- if cf.field_type !='file'
 																	label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
 																		span.required #{cf.field_label} (#{brandLanguage.prefix})
 																	if cf.field_type === 'text'
 																		input.form-control.form-control-solid(type='text' placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}][]]`)
 																		
 																	else if cf.field_type === 'richtext'
-																		textarea.content_wysiwyg(name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}][]]` id=`wysiwyg-cf-${brandLanguage.prefix}-${cf_i}`)
+																		textarea.content_wysiwyg(name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}][]]` id=`wysiwyg-cf-${brandLanguage.prefix}-${cfg.row_name}-${cf.field_name}`)
 																		
 																	else if cf.field_type === 'textarea'
 																		textarea.form-control.form-control-solid(rows='6' name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}][]]` placeholder='' spellcheck='false')
@@ -187,7 +187,7 @@ block content
 																	input.form-control.form-control-solid(type='text' placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]`)
 																	.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}_${brandLanguage.prefix}`)
 																else if cf.field_type === 'richtext'
-																	textarea.content_wysiwyg(name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]` id=`wysiwyg-cf-${brandLanguage.prefix}-${cf_i}`)
+																	textarea.content_wysiwyg(name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]` id=`wysiwyg-cf-${brandLanguage.prefix}-${cfg.row_name}-${cf.field_name}`)
 																	.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}_${brandLanguage.prefix}`)
 																else if cf.field_type === 'textarea'
 																	textarea.form-control.form-control-solid(rows='6' name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]` placeholder='' spellcheck='false')
