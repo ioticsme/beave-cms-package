@@ -1,10 +1,50 @@
+const { default: mongoose } = require('mongoose')
+
 const ContentType = require('../../model/ContentType')
 const Content = require('../../model/Content')
 const ContentResource = require('../../resources/api/content.resource')
 const populateTest = async (req, res) => {
-    console.log("Call");
+    // console.log("Call");
+    // const testData = await Content.findOne({
+    //     _id: '63a3e86334101cb21d6cc75a',
+    // })
+    // testData.content = [
+    //     {
+    //         language: 'en',
+    //         group_name: 'general',
+    //         is_repeated: true,
+    //         field: 'name',
+    //         value: 'Ebrahim',
+    //     },
+    //     {
+    //         language: 'en',
+    //         group_name: 'general',
+    //         is_repeated: true,
+    //         field: 'thumb',
+    //         value: mongoose.Types.ObjectId('63c657873f7bb4fd6a91956e'),
+    //     },
+    //     {
+    //         language: 'en',
+    //         group_name: 'features',
+    //         is_repeated: true,
+    //         field: 'points',
+    //         value: ['Point 1', 'Point 2'],
+    //     },
+    //     {
+    //         language: 'en',
+    //         group_name: 'features',
+    //         is_repeated: true,
+    //         field: 'featured_image',
+    //         value: [
+    //             mongoose.Types.ObjectId('63c61ee9bd299f576dd6b2c0'),
+    //             mongoose.Types.ObjectId('63c657873f7bb4fd6a91956e'),
+    //         ],
+    //     },
+    // ]
+    // await testData.save()
+    // return res.json(testData)
     let cf = await Content.aggregate([
-        { $match: { type_slug: 'test', published: true } },
+        { $match: { type_slug: 'services', published: true } },
         {
             $lookup: {
                 from: 'countries',
@@ -13,19 +53,19 @@ const populateTest = async (req, res) => {
                 as: 'country',
             },
         },
-        {
-            $lookup: {
-                from: 'brands',
-                localField: 'brand',
-                foreignField: '_id',
-                as: 'brand',
-            },
-        },
+        // {
+        //     $lookup: {
+        //         from: 'brands',
+        //         localField: 'brand',
+        //         foreignField: '_id',
+        //         as: 'brand',
+        //     },
+        // },
         { $unwind: '$content' },
         {
             $match: {
                 'content.language': {
-                    $in: ['en', 'common'],
+                    $in: [req.language, 'common'],
                 },
             },
         },
@@ -68,8 +108,8 @@ const populateTest = async (req, res) => {
                 'country._id': 1,
                 'country.name': 1,
                 'country.code': 1,
-                // 'fields.language': 1,
-                // 'fields.group_name': 1,
+                'fields.language': 1,
+                'fields.group_name': 1,
                 'fields.field': 1,
                 'fields.value': 1,
                 'fields.related_model': 1,

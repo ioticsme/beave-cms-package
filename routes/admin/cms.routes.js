@@ -124,7 +124,8 @@ router.group('/', (router) => {
         '/:contentType/save',
         contentTypeCheck,
         upload.any(),
-        cmsContentController.save
+        // cmsContentController.save
+        cmsContentController.saveTemp
     )
     router.post(
         '/:contentType/delete',

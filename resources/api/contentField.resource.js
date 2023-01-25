@@ -15,10 +15,11 @@ class ContentFieldResource extends Resource {
 
 class AttachedMediaResource extends Resource {
     toArray() {
-        return {
-            url: this.url,
-            info: this.response,
-        }
+        return this.url
+        // return {
+        //     url: this.url,
+        //     // info: this.response,
+        // }
     }
 }
 

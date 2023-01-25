@@ -16,14 +16,26 @@ class ContentResource extends Resource {
             position: this.position,
             // template_name: this.template_name,
             // published: this.published,
-            brand: this.brand,
-            country: this.country,
-            content: ContentFieldResource.collection(this.fields).reduce(
-                (acc, curr) => {
-                    return { ...acc, ...curr }
-                }
-            ),
-            // content_test: collect(this.fields).groupBy('group_name'),
+            // brand: this.brand,
+            country: this.country[0],
+            content: collect(this.fields)
+                .groupBy('group_name')
+                .map((group) => {
+                    return ContentFieldResource.collection(group).reduce(
+                        (acc, curr) => {
+                            return { ...acc, ...curr }
+                        }
+                    )
+                }),
+            // content_test: collect(this.fields)
+            //     .groupBy('group_name')
+            //     .map((group) => {
+            //         return ContentFieldResource.collection(group).reduce(
+            //             (acc, curr) => {
+            //                 return { ...acc, ...curr }
+            //             }
+            //         )
+            //     }),
             // group_content: this.group_content,
             attached_content: this.attached_content,
             // banner: this.banner ? new BannerResource(this.banner).exec() : undefined,

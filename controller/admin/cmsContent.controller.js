@@ -195,8 +195,39 @@ const changeStatus = async (req, res) => {
 
 const save = async (req, res) => {
     try {
-        // console.log(req.body)
+        const language_codes = collect(req.authUser.selected_brand.languages)
+            .pluck('prefix')
+            .toArray()
+        // console.log(req.contentType.field_groups)
+        const validationSchema = {}
+
+        _.forEach(req.contentType.field_groups, (row) => {
+            _.forEach(row.fields, (field) => {
+                validationSchema[field.field_name] = Joi.object({
+                    en: Joi.string()
+                        .required(field.validation.required)
+                        .min(field.validation.min_length)
+                        .max(field.validation.max_length),
+                })
+            })
+        })
+        console.log(validationSchema)
+
+        // createValidationSchema(req.contentType.field_groups)
+
+        // const customValidationResult = createValidationSchema(
+        //     req.contentType.field_groups
+        // ).validate(req.body, {
+        //     abortEarly: false,
+        // })
+
+        // if (customValidationResult.error) {
+        //     console.log(customValidationResult.error)
+        //     return res.status(422).json(customValidationResult.error)
+        // }
+
         // return false
+
         // console.log(req.files)
         session = req.authUser
         // BEGIN:: Generating default field validation rule for content type (title, description)
@@ -256,75 +287,75 @@ const save = async (req, res) => {
         // }),
 
         // BEGIN:: Generating custom field group validation rule for content type
-        let cfgValidationObj = {}
-        req.contentType.custom_field_groups.forEach((element) => {
-            if (element.localisation) {
-                element.fields.forEach((field) => {
-                    const validationObject = {}
-                    const URLvalidationObject = {}
-                    if (element.field_type == 'file') {
-                        req.authUser.selected_brand.languages.forEach(
-                            (lang) => {
-                                _.assign(validationObject, {
-                                    [lang.prefix]: eval(
-                                        req.body.method == 'add'
-                                            ? field.addValidation ||
-                                                  'Joi.optional().allow(null,"")'
-                                            : field.editValidation ||
-                                                  'Joi.optional().allow(null,"")'
-                                    ),
-                                })
-                                _.assign(URLvalidationObject, {
-                                    [lang.prefix]: eval(`Joi.optional()`),
-                                })
-                            }
-                        )
-                        cfgValidationObj[field.field_name] =
-                            Joi.object(validationObject)
-                        cfgValidationObj[`${field.field_name}-url`] =
-                            Joi.object(URLvalidationObject)
-                    } else {
-                        req.authUser.selected_brand.languages.forEach(
-                            (lang) => {
-                                _.assign(validationObject, {
-                                    [lang.prefix]: eval(`${field.validation}`),
-                                })
-                            }
-                        )
-                        cfgValidationObj[field.field_name] =
-                            Joi.object(validationObject)
-                    }
-                })
-            } else {
-                element.fields.forEach((field) => {
-                    cfgValidationObj[field.field_name] = eval(field.validation)
-                })
-            }
-        })
+        // let cfgValidationObj = {}
+        // req.contentType.custom_field_groups.forEach((element) => {
+        //     if (element.localisation) {
+        //         element.fields.forEach((field) => {
+        //             const validationObject = {}
+        //             const URLvalidationObject = {}
+        //             if (element.field_type == 'file') {
+        //                 req.authUser.selected_brand.languages.forEach(
+        //                     (lang) => {
+        //                         _.assign(validationObject, {
+        //                             [lang.prefix]: eval(
+        //                                 req.body.method == 'add'
+        //                                     ? field.addValidation ||
+        //                                           'Joi.optional().allow(null,"")'
+        //                                     : field.editValidation ||
+        //                                           'Joi.optional().allow(null,"")'
+        //                             ),
+        //                         })
+        //                         _.assign(URLvalidationObject, {
+        //                             [lang.prefix]: eval(`Joi.optional()`),
+        //                         })
+        //                     }
+        //                 )
+        //                 cfgValidationObj[field.field_name] =
+        //                     Joi.object(validationObject)
+        //                 cfgValidationObj[`${field.field_name}-url`] =
+        //                     Joi.object(URLvalidationObject)
+        //             } else {
+        //                 req.authUser.selected_brand.languages.forEach(
+        //                     (lang) => {
+        //                         _.assign(validationObject, {
+        //                             [lang.prefix]: eval(`${field.validation}`),
+        //                         })
+        //                     }
+        //                 )
+        //                 cfgValidationObj[field.field_name] =
+        //                     Joi.object(validationObject)
+        //             }
+        //         })
+        //     } else {
+        //         element.fields.forEach((field) => {
+        //             cfgValidationObj[field.field_name] = eval(field.validation)
+        //         })
+        //     }
+        // })
         // END:: Generating custom field group validation rule for content type
 
         // BEGIN:: Validation rule
-        const schema = Joi.object({
-            _id: Joi.optional(),
-            method: Joi.string().valid('add', 'edit'),
-            // ...defaultValidationObj,
-            // ...metaValidationObj,
-            ...cfgValidationObj,
-            slug: Joi.object({
-                en: Joi.optional(),
-                ar: Joi.optional(),
-            }),
-            banner: Joi.optional(),
-            gallery: Joi.optional(),
-            attached_type: Joi.optional(),
-            published: Joi.string().required().valid('true', 'false'),
-            in_home: Joi.string().required().valid('true', 'false'),
-            position: Joi.number().required(),
-            repeater_field: Joi.array(),
-        })
+        // const schema = Joi.object({
+        //     _id: Joi.optional(),
+        //     method: Joi.string().valid('add', 'edit'),
+        //     // ...defaultValidationObj,
+        //     // ...metaValidationObj,
+        //     ...cfgValidationObj,
+        //     slug: Joi.object({
+        //         en: Joi.optional(),
+        //         ar: Joi.optional(),
+        //     }),
+        //     banner: Joi.optional(),
+        //     gallery: Joi.optional(),
+        //     attached_type: Joi.optional(),
+        //     published: Joi.string().required().valid('true', 'false'),
+        //     in_home: Joi.string().required().valid('true', 'false'),
+        //     position: Joi.number().required(),
+        //     repeater_field: Joi.array(),
+        // })
         // END:: Validation rule
 
-        const validationResult = schema.validate(req.body, {
+        const validationResult = validationSchema.validate(req.body, {
             abortEarly: false,
         })
 
@@ -480,6 +511,140 @@ const save = async (req, res) => {
     }
 }
 
+const saveTemp = async (req, res) => {
+    try {
+        // Data object to insert
+        let type = req.contentType
+        let body = req.body
+        let content_to_insert = _.omit(body, [
+            'published',
+            'in_home',
+            'position',
+        ])
+
+        const restructuredJson = []
+
+        _.forEach(content_to_insert, (group, groupName) => {
+            const group_info = collect(type.field_groups)
+                .where('row_name', groupName)
+                .first()
+            if (group_info.localisation) {
+                _.forEach(group, (field, fieldName) => {
+                    _.forEach(field, (value, language) => {
+                        restructuredJson.push({
+                            language: language || 'common',
+                            group_name: groupName,
+                            is_repeated: group_info['repeater_group'] || false,
+                            field: fieldName,
+                            value: value,
+                        })
+                    })
+                })
+            } else {
+                if (group_info['repeater_group']) {
+                    _.forEach(group, (field, fieldName) => {
+                        _.forEach(field, (value) => {
+                            restructuredJson.push({
+                                language: 'common',
+                                group_name: groupName,
+                                is_repeated:
+                                    group_info['repeater_group'] || false,
+                                field: fieldName,
+                                value: value,
+                            })
+                        })
+                    })
+                } else {
+                    _.forEach(group, (field, fieldName) => {
+                        restructuredJson.push({
+                            language: 'common',
+                            group_name: groupName,
+                            is_repeated: group_info['repeater_group'] || false,
+                            field: fieldName,
+                            value: field,
+                        })
+                    })
+                }
+            }
+        })
+        // console.log(restructuredJson)
+        let data = {
+            type_id: type._id,
+            type_slug: type.slug,
+            author: req.authUser.admin_id,
+            // banner: body?.banner || null, // If Requested content type has banner required
+            // gallery: body?.gallery || null, // If Requested content type has gallery required
+            // brand: req.authUser.selected_brand._id,
+            country: req.authUser.selected_brand.country,
+            published: body.published === 'true',
+            position: body.position,
+            // template_name: type.template_name,
+            content: restructuredJson,
+            // group_content: fieldGroupData,
+            // meta: metaData,
+            in_home: body.in_home || false,
+        }
+
+        // console.log(data)
+        //  console.log(req.body)
+        // return false
+
+        if (
+            Object?.keys(body.attached_type ? body.attached_type : {})?.length
+        ) {
+            attachedData = []
+            Object.keys(body.attached_type).map((item) => {
+                const itemDataType = typeof body.attached_type[item]
+                if (body.attached_type?.[item]?.length) {
+                    let obj = {
+                        content_type: item,
+                        items:
+                            itemDataType == 'string'
+                                ? body.attached_type[item].split(',')
+                                : body.attached_type[item],
+                    }
+                    attachedData.push(obj)
+                }
+            })
+            if (attachedData.length) {
+                data.attached_type = attachedData
+            }
+        }
+        const brandCode = req.authUser.selected_brand?.code
+        const countryCode = req.authUser.selected_brand?.country_code
+
+        if (req.body._id) {
+            data.slug = body.slug?.en
+                ? slugify(body.slug?.en?.toLowerCase())
+                : slugify(body.title.en.toLowerCase())
+            const cache_key = `content-${brandCode}-${countryCode}-${type.slug}-${data.slug}`
+            // Update content
+            const update = await Content.updateOne({ _id: body._id }, data)
+            Redis.removeCache([cache_key])
+            return res.status(201).json({
+                message: 'Content updated successfully',
+                redirect_to: `/admin/cms/${type.slug}/detail/${req.body._id}`,
+            })
+        } else {
+            data.slug = slugify(restructuredJson[0].value.toLowerCase())
+            // Create content
+            const save = await Content.create(data)
+            if (!save?._id) {
+                return res.status(400).json({ error: 'Something went wrong' })
+            }
+            const cache_key = `content-${brandCode}-${countryCode}-${type.slug}`
+            Redis.removeCache([cache_key])
+            return res.status(200).json({
+                message: 'Content added successfully',
+                redirect_to: `/admin/cms/${type.slug}/detail/${save._id}`,
+            })
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ error: 'Something went wrong' })
+    }
+}
+
 module.exports = {
     list,
     detail,
@@ -488,4 +653,5 @@ module.exports = {
     changeStatus,
     add,
     save,
+    saveTemp,
 }

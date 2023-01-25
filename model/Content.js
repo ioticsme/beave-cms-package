@@ -22,11 +22,11 @@ const ContentSchema = new mongoose.Schema(
             ref: 'Admin',
             required: true,
         },
-        brand: {
-            type: Schema.ObjectId,
-            ref: 'Brand',
-            required: true,
-        },
+        // brand: {
+        //     type: Schema.ObjectId,
+        //     ref: 'Brand',
+        //     required: true,
+        // },
         country: {
             type: Schema.ObjectId,
             ref: 'Country',
@@ -90,20 +90,20 @@ const ContentSchema = new mongoose.Schema(
             },
         ],
         // custom_fields: Object,
-        meta: {
-            en: {
-                title: String,
-                keywords: String,
-                description: String,
-                og_image: String,
-            },
-            ar: {
-                title: String,
-                keywords: String,
-                description: String,
-                og_image: String,
-            },
-        },
+        // meta: {
+        //     en: {
+        //         title: String,
+        //         keywords: String,
+        //         description: String,
+        //         og_image: String,
+        //     },
+        //     ar: {
+        //         title: String,
+        //         keywords: String,
+        //         description: String,
+        //         og_image: String,
+        //     },
+        // },
     },
     {
         timestamps: {
