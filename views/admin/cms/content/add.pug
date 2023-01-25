@@ -117,7 +117,7 @@ block content
 										.tab-pane.fade(class= (i== 0 ? 'active show' : '') role='tabpanel' id=`kt_tab_pane_${brandLanguage.prefix}`)
 											//- BEGIN::Fields with localisation
 											each cfg, cfg_i in reqContentType.field_groups
-												h4.badge.badge-warning #{cfg.row_name}
+												h4.badge.badge-warning.mb-2 #{cfg.row_label}
 												if cfg.repeater_group == true && cfg.localisation
 													h4 #{cfg.row_label}
 													//- h1 Test

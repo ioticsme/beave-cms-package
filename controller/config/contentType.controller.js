@@ -3,7 +3,7 @@ const express = require('express')
 const Joi = require('joi')
 const bcrypt = require('bcrypt')
 const ContentType = require('../../model/ContentType')
-const { default: slugify } = require('slugify')
+const slugify = require('slugify')
 
 const list = async (req, res) => {
     const contentTypes = await ContentType.find()
@@ -78,7 +78,7 @@ const save = async (req, res) => {
             slug: Joi.string().required().min(3).max(60),
             // template_name: Joi.string().required().min(3).max(60),
             position: Joi.number().required(),
-            admin_icon: Joi.string().required(),
+            admin_icon: Joi.string().optional().allow(null, ''),
             in_use: Joi.boolean().optional(),
             nav_on_collection_api: Joi.boolean().optional(),
             nav_on_single_api: Joi.boolean().optional(),
@@ -103,7 +103,9 @@ const save = async (req, res) => {
             slug: slugify(req.body.slug.toLowerCase()),
             // template_name: req.body.template_name,
             position: req.body.position,
-            admin_icon: req.body.admin_icon,
+            admin_icon: req.body.admin_icon.length
+                ? req.body.admin_icon
+                : undefined,
             allowed_type: req.body.allowed_type || [],
             has_form: req.body?.has_form || false,
             in_use: req.body.in_use || false,
@@ -234,16 +236,16 @@ const saveFields = async (req, res) => {
             eachGroup.fields.forEach((field) => {
                 fields.push({
                     field_label: field.label,
-                    field_name: field.name,
-                    field_type: field.type,
+                    field_name: slugify(field.name, '_').toLowerCase(),
+                    field_type: field.type.toLowerCase(),
                     placeholder: field.label,
-                    position: field.position,
+                    position: field.position || 0,
                     validation: field.validation,
                     options: field.options,
                 })
             })
             const group = {
-                row_name: eachGroup.section,
+                row_name: slugify(eachGroup.section, '_').toLowerCase(),
                 row_label: eachGroup.section,
                 repeater_group: eachGroup.repeater_group,
                 localisation: eachGroup.localisation,
@@ -251,7 +253,6 @@ const saveFields = async (req, res) => {
             }
             fields_to_update.push(group)
         })
-        // console.log(fields_to_update)
         // return false
 
         // console.log(fields_to_update)

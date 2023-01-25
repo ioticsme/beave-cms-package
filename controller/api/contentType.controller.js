@@ -31,7 +31,6 @@ const list = async (req, res) => {
                                         contentType?._id
                                     ),
                                 },
-                                brand: mongoose.Types.ObjectId(req.brand._id),
                                 country: mongoose.Types.ObjectId(
                                     req.country._id
                                 ),
@@ -46,19 +45,19 @@ const list = async (req, res) => {
                                 as: 'country',
                             },
                         },
-                        {
-                            $lookup: {
-                                from: 'brands',
-                                localField: 'brand',
-                                foreignField: '_id',
-                                as: 'brand',
-                            },
-                        },
+                        // {
+                        //     $lookup: {
+                        //         from: 'brands',
+                        //         localField: 'brand',
+                        //         foreignField: '_id',
+                        //         as: 'brand',
+                        //     },
+                        // },
                         { $unwind: '$content' },
                         {
                             $match: {
                                 'content.language': {
-                                    $in: ['en', 'common'],
+                                    $in: [req.language, 'common'],
                                 },
                             },
                         },
@@ -97,9 +96,6 @@ const list = async (req, res) => {
                                 author: 1,
                                 published: 1,
                                 position: 1,
-                                'brand._id': 1,
-                                'brand.name': 1,
-                                'brand.code': 1,
                                 'country._id': 1,
                                 'country.name': 1,
                                 'country.code': 1,
@@ -123,7 +119,6 @@ const list = async (req, res) => {
                                 type_id: mongoose.Types.ObjectId(
                                     contentType?._id
                                 ),
-                                brand: mongoose.Types.ObjectId(req.brand._id),
                                 country: mongoose.Types.ObjectId(
                                     req.country._id
                                 ),
@@ -138,19 +133,19 @@ const list = async (req, res) => {
                                 as: 'country',
                             },
                         },
-                        {
-                            $lookup: {
-                                from: 'brands',
-                                localField: 'brand',
-                                foreignField: '_id',
-                                as: 'brand',
-                            },
-                        },
+                        // {
+                        //     $lookup: {
+                        //         from: 'brands',
+                        //         localField: 'brand',
+                        //         foreignField: '_id',
+                        //         as: 'brand',
+                        //     },
+                        // },
                         { $unwind: '$content' },
                         {
                             $match: {
                                 'content.language': {
-                                    $in: ['en', 'common'],
+                                    $in: [req.language, 'common'],
                                 },
                             },
                         },
@@ -189,9 +184,6 @@ const list = async (req, res) => {
                                 author: 1,
                                 published: 1,
                                 position: 1,
-                                'brand._id': 1,
-                                'brand.name': 1,
-                                'brand.code': 1,
                                 'country._id': 1,
                                 'country.name': 1,
                                 'country.code': 1,
@@ -306,7 +298,6 @@ const detail = async (req, res) => {
                                     contentType?._id
                                 ),
                                 slug: req.params.slug,
-                                brand: mongoose.Types.ObjectId(req.brand._id),
                                 country: mongoose.Types.ObjectId(
                                     req.country._id
                                 ),
@@ -322,19 +313,19 @@ const detail = async (req, res) => {
                                 as: 'country',
                             },
                         },
-                        {
-                            $lookup: {
-                                from: 'brands',
-                                localField: 'brand',
-                                foreignField: '_id',
-                                as: 'brand',
-                            },
-                        },
+                        // {
+                        //     $lookup: {
+                        //         from: 'brands',
+                        //         localField: 'brand',
+                        //         foreignField: '_id',
+                        //         as: 'brand',
+                        //     },
+                        // },
                         { $unwind: '$content' },
                         {
                             $match: {
                                 'content.language': {
-                                    $in: ['en', 'common'],
+                                    $in: [req.language, 'common'],
                                 },
                             },
                         },
@@ -373,14 +364,11 @@ const detail = async (req, res) => {
                                 author: 1,
                                 published: 1,
                                 position: 1,
-                                'brand._id': 1,
-                                'brand.name': 1,
-                                'brand.code': 1,
                                 'country._id': 1,
                                 'country.name': 1,
                                 'country.code': 1,
-                                // 'fields.language': 1,
-                                // 'fields.group_name': 1,
+                                'fields.language': 1,
+                                'fields.group_name': 1,
                                 'fields.field': 1,
                                 'fields.value': 1,
                                 'fields.related_model': 1,
