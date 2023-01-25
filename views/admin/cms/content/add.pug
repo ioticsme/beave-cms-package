@@ -131,6 +131,9 @@ block content
 																		span.required #{cf.field_label} (#{brandLanguage.prefix})
 																	if cf.field_type === 'text'
 																		input.form-control.form-control-solid(type='text' placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}][]]`)
+
+																	else if cf.field_type === 'email'
+																		input.form-control.form-control-solid(type='email' placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}][]]`)
 																		
 																	else if cf.field_type === 'richtext'
 																		textarea.content_wysiwyg(name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}][]]` id=`wysiwyg-cf-${brandLanguage.prefix}-${cfg.row_name}-${cf.field_name}`)
@@ -185,6 +188,9 @@ block content
 																// end::Label
 																if cf.field_type === 'text'
 																	input.form-control.form-control-solid(type='text' placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]`)
+																	.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}_${brandLanguage.prefix}`)
+																else if cf.field_type === 'email'
+																	input.form-control.form-control-solid(type='email' placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]`)
 																	.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}_${brandLanguage.prefix}`)
 																else if cf.field_type === 'richtext'
 																	textarea.content_wysiwyg(name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]` id=`wysiwyg-cf-${brandLanguage.prefix}-${cfg.row_name}-${cf.field_name}`)
