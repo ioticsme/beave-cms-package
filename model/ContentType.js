@@ -27,45 +27,6 @@ const ContentTypeSchema = new mongoose.Schema(
             type: Boolean,
             default: true,
         },
-        // custom_fields: [
-        //     {
-        //         field_label: String,
-        //         field_name: String,
-        //         field_type: String, // TextInput, TextArea, Radio, Checkbox, Dropdown, File, Wysiwyg
-        //         placeholder: String,
-        //         localisation: {
-        //             type: Boolean,
-        //             default: true,
-        //         },
-        //         options: [
-        //             {
-        //                 label: String,
-        //                 value: String,
-        //             },
-        //         ],
-        //         // values: [
-        //         //     {
-        //         //         key: {
-        //         //             en: String,
-        //         //             ar: String,
-        //         //         },
-        //         //         val: String
-        //         //     }
-        //         // ],
-        //         addValidation: String,
-        //         editValidation: String,
-        //         validation: [
-        //             {
-        //                 type: String,
-        //             },
-        //         ],
-        //         info: [
-        //             {
-        //                 type: String,
-        //             },
-        //         ],
-        //     },
-        // ],
         field_groups: [
             {
                 row_name: String,
@@ -111,6 +72,10 @@ const ContentTypeSchema = new mongoose.Schema(
         //     type: String,
         //     default: 'page',
         // },
+        single_type: {
+            type: Boolean,
+            default: false,
+        },
         position: {
             type: Number,
             default: 0,

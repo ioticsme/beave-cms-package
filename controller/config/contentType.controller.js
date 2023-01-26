@@ -85,6 +85,7 @@ const save = async (req, res) => {
             has_form: Joi.boolean().optional(),
             hide_meta: Joi.boolean().optional(),
             has_api_endpoint: Joi.boolean().optional(),
+            single_type: Joi.boolean().optional(),
             attachable_type: Joi.array(),
             id: Joi.optional(),
         })
@@ -112,6 +113,7 @@ const save = async (req, res) => {
             hide_meta: req.body.hide_meta || false,
             nav_on_collection_api: req.body.nav_on_collection_api || false,
             nav_on_single_api: req.body.nav_on_single_api || false,
+            single_type: req.body.single_type || false,
             allowed_type: req.body.attachable_type?.length
                 ? req.body.attachable_type
                 : null,

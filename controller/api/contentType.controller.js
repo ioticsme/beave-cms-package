@@ -270,7 +270,7 @@ const list = async (req, res) => {
             })
 
         res.status(200).json({
-            [req.params.contentType]: contents,
+            [req.params.contentType]: contentType.single_type ? contents[0] : contents,
             navigation: contentType.nav_on_collection_api
                 ? req.navigation
                 : undefined,

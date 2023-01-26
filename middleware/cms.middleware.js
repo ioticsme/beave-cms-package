@@ -3,6 +3,7 @@ const Brand = require('../model/Brand')
 const Settings = require('../model/Settings')
 const ContentType = require('../model/ContentType')
 var session = require('express-session')
+const { default: collect } = require('collect.js')
 
 const baseConfig = async (req, res, next) => {
     res.locals.baseURL = `${process.env.DOMAIN}`
@@ -74,13 +75,24 @@ const authUser = async (req, res, next) => {
 
 const mainNavGenerator = async (req, res, next) => {
     const ContentType = require('../model/ContentType')
-    const contentTypes = await ContentType.find({ in_use: true }).sort([
-        ['position', 'ascending'],
-    ])
+    const contentTypes = await ContentType.find({
+        // single_type: false,
+        in_use: true,
+    })
+        .select('_id title slug admin_icon position in_use single_type')
+        .sort([['position', 'ascending']])
     // app.locals.mainNav = contentTypes
-    res.locals.mainNav = contentTypes
+    const listTypeItems = collect(contentTypes).filter(
+        (item) => item.single_type === false
+    ).all()
+    const singleTypeItems = collect(contentTypes).filter(
+        (item) => item.single_type === true
+    ).all()
+    res.locals.mainNav = listTypeItems
+    res.locals.hasSingleType = singleTypeItems.length ? true : false
+    res.locals.singleTypeNav = singleTypeItems
     res.locals.activeNav = req.originalUrl
-    // console.log(req.originalUrl)
+    // console.log(singleTypeItems)
     next()
 }
 

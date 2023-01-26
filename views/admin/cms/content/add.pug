@@ -356,13 +356,14 @@ block content
 										span.ms-5
 											label.form-label(for="true") Yes
 								.text-muted.fs-7 Add to the home page API
-						.card.card-flush.py-4
-							.card-header
-								.card-title
-									h3 Position
-							.card-body.pt-0
-								input.form-control(type='number' placeholder='Enter position'  name=`position` value="0")
-								.fv-plugins-message-container.invalid-feedback(id=`field-error-position`)
+						if reqContentType.single_type == false
+							.card.card-flush.py-4
+								.card-header
+									.card-title
+										h3 Position
+								.card-body.pt-0
+									input.form-control(type='number' placeholder='Enter position'  name=`position` value="0")
+									.fv-plugins-message-container.invalid-feedback(id=`field-error-position`)
 					#kt_modal_create_app.modal.fade(tabindex='-1' aria-hidden='true')
 						// begin::Modal dialog
 						.modal-dialog.modal-dialog-centered.mw-900px

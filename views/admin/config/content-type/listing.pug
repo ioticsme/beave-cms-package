@@ -57,6 +57,7 @@ block content
 											input.form-check-input(type='checkbox' data-kt-check='true' data-kt-check-target='#kt_subscriptions_table .form-check-input' value='1')
 									th.min-w-125px Title
 									th.min-w-125px Slug
+									th.min-w-125px Type
 									th.text-end.min-w-70px Actions
 							tbody.text-gray-600.fw-semibold
 								//- BEGIN::Data Loop
@@ -68,6 +69,7 @@ block content
 										td
 											a.text-gray-800.text-hover-primary.mb-1(href=`/admin/config/content-type/view/${ct._id}`) #{ct.title}
 										td #{ct.slug}
+										td #{ct.single_type == true ? 'Single' : 'Collection'}
 										td.text-end
 											a.btn.btn-light.btn-active-light-primary.btn-sm(href='#' data-kt-menu-trigger='click' data-kt-menu-placement='bottom-end')
 												| Actions

@@ -92,11 +92,13 @@ block content
 								.col-lg-8.fv-row
 									input.form-control.form-control-lg.form-control-solid(type='text' name='slug' placeholder='URL' value=`${contentType ? contentType.slug : ''}`)
 									.fv-plugins-message-container.invalid-feedback(id=`field-error-slug`)
-							//- .row.mb-6
-							//- 	label.col-lg-4.col-form-label.required.fw-semibold.fs-6 Template Name
-							//- 	.col-lg-8.fv-row
-							//- 		input.form-control.form-control-lg.form-control-solid(type='text' name='template_name' placeholder='Template Name' value=`${contentType ? contentType.template_name : ''}`)
-							//- 		.fv-plugins-message-container.invalid-feedback(id=`field-error-template_name`)
+							.row.mb-6
+								label.col-lg-4.col-form-label.required.fw-semibold.fs-6 Single Type
+								.col-lg-8.fv-row
+									.form-check.form-switch.form-check-custom.form-check-success.form-check-solid
+										input#kt_flexSwitchCustomDefault_1_1.form-check-input(type='checkbox' name='single_type' value='true' checked=contentType && contentType.single_type)
+										label.form-check-label(for='kt_flexSwitchCustomDefault_1_1')
+									.fv-plugins-message-container.invalid-feedback(id=`field-error-single_type`)
 							.row.mb-6
 								label.col-lg-4.col-form-label.required.fw-semibold.fs-6 Position
 								.col-lg-8.fv-row

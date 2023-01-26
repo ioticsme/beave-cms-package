@@ -26,6 +26,17 @@ const list = async (req, res) => {
             isDeleted: false,
         }).sort('position')
 
+        if (req.contentType.single_type) {
+            if (contentList.length) {
+                // return res.send(contentList[0]._id)
+                return res.redirect(
+                    `/admin/cms/${req.contentType.slug}/detail/${contentList[0]._id}`
+                )
+            } else {
+                return res.redirect(`/admin/cms/${req.contentType.slug}/add`)
+            }
+        }
+
         if (!contentList) {
             return res.render(`admin/error-404`)
         }
@@ -34,7 +45,7 @@ const list = async (req, res) => {
             data: contentList,
         })
     } catch (error) {
-        // console.log(error)
+        console.log(error)
         return res.render(`admin/error-500`)
     }
 }
@@ -130,21 +141,24 @@ const edit = async (req, res) => {
             country: session.selected_brand.country,
         })
 
-        const groupedData = _.groupBy(contentDetail.content, (item) => {
-            return item.language
-        })
-
-        // const groupNameGroup = {}
-        const findalContentFieldsGroup = {}
-
-        Object.keys(groupedData).forEach((key) => {
-            findalContentFieldsGroup[key] = _.groupBy(
-                groupedData[key],
+        const findalContentFieldsGroup = _.groupBy(
+            contentDetail.content,
+            'language'
+        )
+        for (const language in findalContentFieldsGroup) {
+            findalContentFieldsGroup[language] = _.groupBy(
+                findalContentFieldsGroup[language],
                 'group_name'
             )
-        })
+            for (const group_name in findalContentFieldsGroup[language]) {
+                findalContentFieldsGroup[language][group_name] = _.groupBy(
+                    findalContentFieldsGroup[language][group_name],
+                    'field'
+                )
+            }
+        }
 
-        return res.send(findalContentFieldsGroup)
+        // return res.send(findalContentFieldsGroup)
 
         if (req.contentType?.allowed_type?.length) {
             const data = await Content.find({
@@ -168,7 +182,8 @@ const edit = async (req, res) => {
             allowed_content,
         })
     } catch (error) {
-        return res.render(`admin/error-404`)
+        console.log(error)
+        return res.render(`admin/error-500`)
     }
 }
 

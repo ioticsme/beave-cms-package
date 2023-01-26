@@ -94,6 +94,9 @@ block content
 												label.col-lg-4.col-form-label.required.fw-semibold.fs-6 URL
 												.col-lg-8.pt-2 #{contentType.slug}
 											.row.mb-6
+												label.col-lg-4.col-form-label.required.fw-semibold.fs-6 Type
+												.col-lg-8.pt-2 #{contentType.single_type == true ? 'Single' : 'Collection'}
+											.row.mb-6
 												label.col-lg-4.col-form-label.required.fw-semibold.fs-6 Position
 												.col-lg-8.pt-2 #{contentType.position}
 											.row.mb-6

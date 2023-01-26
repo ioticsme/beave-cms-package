@@ -103,7 +103,7 @@ block content
 		#kt_app_toolbar.app-toolbar.py-3.py-lg-6
 			#kt_app_toolbar_container.app-container.container-xxl.d-flex.flex-stack
 				.page-title.d-flex.flex-column.justify-content-center.flex-wrap.me-3
-					h1.page-heading.d-flex.text-dark.fw-bold.fs-3.flex-column.justify-content-center.my-0 Add #{reqContentType.title}
+					h1.page-heading.d-flex.text-dark.fw-bold.fs-3.flex-column.justify-content-center.my-0 Edit #{reqContentType.title}
 					ul.breadcrumb.breadcrumb-separatorless.fw-semibold.fs-7.my-0.pt-1
 						li.breadcrumb-item.text-muted
 							a.text-muted.text-hover-primary(href=`/admin/cms/${reqContentType.slug}`) #{reqContentType.title}
@@ -195,20 +195,22 @@ block content
 																// begin::Label
 																label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
 																	span.required #{cf.field_label} (#{brandLanguage.prefix})
-																	i.fas.fa-exclamation-circle.ms-2.fs-7(data-bs-toggle='tooltip' aria-label='Specify a target name for future usage and reference' data-kt-initialized='1')
+																	i.fas.fa-exclamation-circle.ms-2.fs-7(data-bs-toggle='tooltip' aria-label='Specify a target name for future usage and reference' data-kt-initialized='1') 
 																// end::Label
 																if cf.field_type === 'text' || cf.field_type === 'email' || cf.field_type === 'number'
-																	input.form-control.form-control-solid(type=`${cf.field_type}` placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]`)
+																	input.form-control.form-control-solid(type=`${cf.field_type}` placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]` value=findalContentFieldsGroup[`${brandLanguage.prefix}`][`${cfg.row_name}`][`${cf.field_name}`][0].value)
 																	.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}_${brandLanguage.prefix}`)
 																else if cf.field_type === 'richtext'
 																	textarea.content_wysiwyg(name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]` id=`wysiwyg-cf-${brandLanguage.prefix}-${cfg.row_name}-${cf.field_name}`)
+																		| !{value=findalContentFieldsGroup[`${brandLanguage.prefix}`][`${cfg.row_name}`][`${cf.field_name}`][0].value}
 																	.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}_${brandLanguage.prefix}`)
 																else if cf.field_type === 'textarea'
 																	textarea.form-control.form-control-solid(rows='6' name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]` placeholder='' spellcheck='false')
+																		| #{value=findalContentFieldsGroup[`${brandLanguage.prefix}`][`${cfg.row_name}`][`${cf.field_name}`][0].value}
 																	.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}_${brandLanguage.prefix}`)
 																else if cf.field_type === 'date'
 																	.kt_daterangepicker
-																		input.form-control.mb-2(id=`kt_daterangepicker_${brandLanguage.prefix}-${cf_i}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]` placeholder=`${cf.placeholder}` value='')
+																		input.form-control.mb-2(id=`kt_daterangepicker_${brandLanguage.prefix}-${cf_i}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]` placeholder=`${cf.placeholder}` value=findalContentFieldsGroup[`${brandLanguage.prefix}`][`${cfg.row_name}`][`${cf.field_name}`][0].value)
 																		.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}_${brandLanguage.prefix}`)
 																else if cf.field_type === 'radio'
 																	.row.row-cols-1.row-cols-md-3.row-cols-lg-1.row-cols-xl-3.g-9(data-kt-buttons='true' data-kt-buttons-target="[data-kt-button='true']")
@@ -302,17 +304,19 @@ block content
 																span.required #{cf.field_label}
 																i.fas.fa-exclamation-circle.ms-2.fs-7(data-bs-toggle='tooltip' aria-label='Specify a target name for future usage and reference' data-kt-initialized='1')
 															if cf.field_type === 'text' || cf.field_type === 'email' || cf.field_type === 'number'
-																input.form-control.form-control-solid(type=`${cf.field_type}` placeholder=`Enter  ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}]`)
+																input.form-control.form-control-solid(type=`${cf.field_type}` placeholder=`Enter  ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}]` value=findalContentFieldsGroup[`common`][`${cfg.row_name}`][`${cf.field_name}`][0].value)
 																.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}`)
 															else if cf.field_type === 'richtext'
 																textarea.content_wysiwyg(name=`${cfg.row_name}[${cf.field_name}]` id=`wysiwyg-cf-${cf_i}`)
+																	| !{value=findalContentFieldsGroup[`common`][`${cfg.row_name}`][`${cf.field_name}`][0].value}
 																.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}`)
 															else if cf.field_type === 'textarea'
 																textarea.form-control.form-control-solid(rows='6' name=`${cfg.row_name}[${cf.field_name}]` placeholder='' spellcheck='false')
+																	| #{value=findalContentFieldsGroup[`common`][`${cfg.row_name}`][`${cf.field_name}`][0].value}
 																.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}`)
 															else if cf.field_type === 'date'
 																.kt_daterangepicker
-																	input.form-control.mb-2(id=`kt_daterangepicker_${cf_i}` name=`${cfg.row_name}[${cf.field_name}]` placeholder=`${cf.placeholder}` value='')
+																	input.form-control.mb-2(id=`kt_daterangepicker_${cf_i}` name=`${cfg.row_name}[${cf.field_name}]` placeholder=`${cf.placeholder}` value=findalContentFieldsGroup[`common`][`${cfg.row_name}`][`${cf.field_name}`][0].value)
 																	.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}`)
 															else if cf.field_type === 'radio'
 																.row.row-cols-1.row-cols-md-3.row-cols-lg-1.row-cols-xl-3.g-9(data-kt-buttons='true' data-kt-buttons-target="[data-kt-button='true']")
