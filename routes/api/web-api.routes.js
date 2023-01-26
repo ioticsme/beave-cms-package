@@ -4,7 +4,6 @@ require('express-group-routes')
 const authController = require('../../controller/api/auth.controller')
 const generalController = require('../../controller/api/general.controller')
 const customFormController = require('../../controller/api/customForm.controller')
-const checkoutController = require('../../controller/api/checkout.controller')
 const userController = require('../../controller/api/user.controller')
 const testController = require('../../controller/api/test.controller')
 
@@ -22,7 +21,6 @@ const { getNav } = require('../../middleware/api.middleware')
 
 // BEGIN::Route Files
 const cmsRoutes = require('./_cms.routes')
-const ecommerceRoutes = require('./_ecommerce.routes')
 // END::Route Files
 
 router.use(BrandWithCountryCheck)
@@ -78,13 +76,6 @@ router.group('/', (router) => {
     })
     // custom forms
     router.post('/custom-forms/submit', customFormController.customFormSubmit)
-    router.group('/payfort-webhook', (router) => {
-        router.all('/feedback', checkoutController.payfortWebHookFeedback)
-        router.all(
-            '/notification',
-            checkoutController.payfortWebHookNotification
-        )
-    })
 })
 
 // user
