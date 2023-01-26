@@ -40,37 +40,43 @@ const contentTypeCheck = async (req, res, next) => {
 }
 
 const authUser = async (req, res, next) => {
-    if (!req.session.selected_brand) {
-        const brand = await Brand.findOne()
-            .populate({
-                path: 'languages',
-                options: { sort: { is_default: -1 } },
-            })
-            .populate('domains.country')
-        if (brand) {
-            const settings = await Settings.findOne({
-                brand: brand,
-                country: brand.domains[0].country._id,
-            }).select('-brand -country -__v -created_at -updated_at -author')
+    try {
+        if (!req.session.selected_brand) {
+            const brand = await Brand.findOne()
+                .populate({
+                    path: 'languages',
+                    options: { sort: { is_default: -1 } },
+                })
+                .populate('domains.country')
+            if (brand) {
+                const settings = await Settings.findOne({
+                    brand: brand,
+                    country: brand.domains[0].country._id,
+                }).select(
+                    '-brand -country -__v -created_at -updated_at -author'
+                )
 
-            req.session.selected_brand = {
-                _id: brand._id,
-                name: brand.name,
-                code: brand.code,
-                languages: brand.languages,
-                country: brand.domains[0].country._id,
-                country_name: brand.domains[0].country.name.en,
-                country_code: brand.domains[0].country.code,
-                country_currency: brand.domains[0].country.currency,
-                country_currency_symbol:
-                    brand.domains[0].country.currency_symbol,
-                settings: settings ? settings : {},
+                req.session.selected_brand = {
+                    _id: brand._id,
+                    name: brand.name,
+                    code: brand.code,
+                    languages: brand.languages,
+                    country: brand.domains[0].country._id,
+                    country_name: brand.domains[0].country.name.en,
+                    country_code: brand.domains[0].country.code,
+                    country_currency: brand.domains[0].country.currency,
+                    country_currency_symbol:
+                        brand.domains[0].country.currency_symbol,
+                    settings: settings ? settings : {},
+                }
             }
         }
+        res.locals.authUser = req.session
+        // console.log(req.session)
+        next()
+    } catch (e) {
+        return res.redirect('/admin/auth/login')
     }
-    res.locals.authUser = req.session
-    // console.log(req.session)
-    next()
 }
 
 const mainNavGenerator = async (req, res, next) => {
@@ -82,12 +88,12 @@ const mainNavGenerator = async (req, res, next) => {
         .select('_id title slug admin_icon position in_use single_type')
         .sort([['position', 'ascending']])
     // app.locals.mainNav = contentTypes
-    const listTypeItems = collect(contentTypes).filter(
-        (item) => item.single_type === false
-    ).all()
-    const singleTypeItems = collect(contentTypes).filter(
-        (item) => item.single_type === true
-    ).all()
+    const listTypeItems = collect(contentTypes)
+        .filter((item) => item.single_type === false)
+        .all()
+    const singleTypeItems = collect(contentTypes)
+        .filter((item) => item.single_type === true)
+        .all()
     res.locals.mainNav = listTypeItems
     res.locals.hasSingleType = singleTypeItems.length ? true : false
     res.locals.singleTypeNav = singleTypeItems
