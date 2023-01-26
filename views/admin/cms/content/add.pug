@@ -2,7 +2,7 @@ extends ../../layouts/master.pug
 
 block csslib
 	link(href='/cms-static/admin/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css' rel='stylesheet' type='text/css')
-	link(href='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css' rel='stylesheet' type='text/css')
+	//- link(href='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css' rel='stylesheet' type='text/css')
 	link(href='/cms-static/admin/assets/plugins/global/plugins.bundle.css' rel='stylesheet' type='text/css')
 	link(href='/cms-static/admin/assets/css/style.bundle.css' rel='stylesheet' type='text/css')
 
@@ -11,11 +11,11 @@ block jslib
 	//- script(src='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.js')
 	// end::Vendors Javascript
 	// begin::Custom Javascript(used by this page)
-	script(src='/cms-static/admin/assets/js/widgets.bundle.js')
-	script(src='/cms-static/admin/assets/js/custom/widgets.js')
+	//- script(src='/cms-static/admin/assets/js/widgets.bundle.js')
+	//- script(src='/cms-static/admin/assets/js/custom/widgets.js')
 	script(src='/cms-static/admin/assets/js/custom/utilities/modals/new-card.js')
 	//- script(src='/cms-static/admin/assets/js/custom/utilities/modals/users-search.js')
-	script(src='/cms-static/admin/assets/plugins/custom/formrepeater/formrepeater.bundle.js')
+	//- script(src='/cms-static/admin/assets/plugins/custom/formrepeater/formrepeater.bundle.js')
 	// end::Custom Javascript
 
 	// CKEditor Build Bundles
@@ -97,7 +97,6 @@ block content
 		#kt_app_content.app-content.flex-column-fluid
 			#kt_app_content_container.app-container.container-xxl
 				form#kt_subscriptions_create_new.form.es-form.d-flex.flex-column.flex-lg-row(action=`/admin/cms/${reqContentType.slug}/save` data-kt-redirect-url=`/admin/cms/${reqContentType.slug}` enctype='multipart/form-data' method='post')
-
 					.d-flex.flex-column.flex-row-fluid.gap-7.gap-lg-10
 						//- .card.card-flush.pt-3.mb-5.mb-lg-10
 						.card.card-flush.py-4
@@ -120,7 +119,7 @@ block content
 											each cfg, cfg_i in reqContentType.field_groups
 												h4.badge.badge-warning.mb-2 #{cfg.row_label}
 												if cfg.repeater_group == true && cfg.localisation
-													h4 #{cfg.row_label}
+													//- h4 #{cfg.row_label}
 													//- h1 Test
 													//- if cfg.localisation
 													.group_repeater(id=`kt_docs_repeater_${brandLanguage.prefix}_${cfg._id}_${cfg_i}`)
@@ -234,8 +233,8 @@ block content
 																	label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
 																		span.required #{cf.field_label}
 																		i.fas.fa-exclamation-circle.ms-2.fs-7(data-bs-toggle='tooltip' aria-label='Specify a target name for future usage and reference' data-kt-initialized='1')
-																	if cf.field_type === 'text'
-																		input.form-control.form-control-solid(type='text' placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[]]`)
+																	if cf.field_type === 'text' || cf.field_type === 'email' || cf.field_type === 'number'
+																		input.form-control.form-control-solid(type=`${cf.field_type}` placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[]]`)
 																		.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}`)
 																	else if cf.field_type === 'richtext'
 																		textarea.content_wysiwyg(name=`${cfg.row_name}[${cf.field_name}]` id=`wysiwyg-cf-${cf_i}`)
@@ -284,8 +283,8 @@ block content
 															label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
 																span.required #{cf.field_label}
 																i.fas.fa-exclamation-circle.ms-2.fs-7(data-bs-toggle='tooltip' aria-label='Specify a target name for future usage and reference' data-kt-initialized='1')
-															if cf.field_type === 'text'
-																input.form-control.form-control-solid(type='text' placeholder=`Enter  ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}]`)
+															if cf.field_type === 'text' || cf.field_type === 'email' || cf.field_type === 'number'
+																input.form-control.form-control-solid(type=`${cf.field_type}` placeholder=`Enter  ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}]`)
 																.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}`)
 															else if cf.field_type === 'richtext'
 																textarea.content_wysiwyg(name=`${cfg.row_name}[${cf.field_name}]` id=`wysiwyg-cf-${cf_i}`)
@@ -330,7 +329,7 @@ block content
 									option
 									option(value='false' selected='selected') Un-Published
 									option(value='true' ) Published
-								.text-muted.fs-7 Set the product status
+								.text-muted.fs-7 Set the status
 
 						if reqContentType.allowed_type && reqContentType.allowed_type.length
 							.card.card-flush.py-4

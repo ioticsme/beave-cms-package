@@ -129,6 +129,23 @@ const edit = async (req, res) => {
             // brand: session.selected_brand._id,
             country: session.selected_brand.country,
         })
+
+        const groupedData = _.groupBy(contentDetail.content, (item) => {
+            return item.language
+        })
+
+        // const groupNameGroup = {}
+        const findalContentFieldsGroup = {}
+
+        Object.keys(groupedData).forEach((key) => {
+            findalContentFieldsGroup[key] = _.groupBy(
+                groupedData[key],
+                'group_name'
+            )
+        })
+
+        return res.send(findalContentFieldsGroup)
+
         if (req.contentType?.allowed_type?.length) {
             const data = await Content.find({
                 // brand: session?.selected_brand?._id,
@@ -147,6 +164,7 @@ const edit = async (req, res) => {
             reqContentType: req.contentType,
             has_common_custom_fields: has_common_custom_fields ? true : false,
             contentDetail,
+            findalContentFieldsGroup,
             allowed_content,
         })
     } catch (error) {

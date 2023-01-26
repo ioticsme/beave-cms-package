@@ -49,73 +49,20 @@ block content
                                     each brandLanguage, i in authUser.selected_brand.languages
                                         .tab-pane.fade(class= (i== 0 ? 'active show' : '') role='tabpanel' id=`kt_tab_pane_${brandLanguage.prefix}`)
                                             .card-title
-                                                //- if contentDetail.content[brandLanguage.prefix]
-                                                //-     h2.fw-bold #{contentDetail.content[0].value}
-                                                //- else 
-                                                //-     h2.fw-bold Title
                                                 //- BEGIN::Custom group Fields with Multi language
                                                 each cfg, cfg_i in reqContentType.field_groups
                                                     if cfg.localisation == true
                                                         h1.mt-5.mb-2 #{cfg.row_label}
-                                                        each cf in findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name]
-                                                            span.badge.badge-info.mt-5 #{cf.field.toUpperCase()}
-                                                            br
-                                                            .card !{cf.value}
+                                                        if cfg.repeater_group
+                                                            each package, index in findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][0].value
+                                                                ul
+                                                                    li package : #{package}
+                                                                    li price : #{findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][1].value[index]}
+                                                                    li details : #{findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][2].value[index]}
+                                                        else
+                                                            each cf in findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name]
+                                                                span.badge.badge-light-success.mt-5 #{cf.field.toUpperCase()}
+                                                                br
+                                                                .card
+                                                                    | !{cf.value}
                                                 //- END::Custom group Fields
-                            
-
-                    //- .card.card-flush.pt-3.mb-5.mb-lg-10
-                    //-     .card-header
-                    //-         .card-title
-                    //-             h2.fw-bold Versions
-                    //-     .card-body.pt-0
-                    //-         .table-responsive
-                    //-             table#kt_subscription_products_table.table.align-middle.table-row-dashed.fs-6.fw-semibold.gy-4
-                    //-                 thead
-                    //-                     tr.text-start.text-muted.fw-bold.fs-7.text-uppercase.gs-0
-                    //-                         th.min-w-300px Author
-                    //-                         th.min-w-300px Version
-                    //-                         th.min-w-100px Date
-                    //-                 tbody.text-gray-600
-                    //-                     tr
-                    //-                         td Admin
-                    //-                         td 1
-                    //-                         td 25/07/2023 11:00 AM
-                    //- .flex-column.flex-lg-row-auto.w-100.w-lg-250px.w-xl-300px.mb-10.order-1.order-lg-2
-                    //-     .card.card-flush.pt-3.mb-0(data-kt-sticky='true' data-kt-sticky-name='subscription-summary' data-kt-sticky-offset="{default: false, lg: '200px'}" data-kt-sticky-width="{lg: '250px', xl: '300px'}" data-kt-sticky-left='auto' data-kt-sticky-top='150px' data-kt-sticky-animation='false' data-kt-sticky-zindex='95')
-                    //-         .card-header
-                    //-             .card-title
-                    //-                 h2 Summary
-                    //-         .card-body.pt-0.fs-6
-                    //-             .mb-7
-                    //-                 h5.mb-3 Author details
-                    //-                 if(contentDetail.author && contentDetail.author._id)
-                    //-                     .d-flex.align-items-center.mb-1
-                    //-                         a.fw-bold.text-gray-800.text-hover-primary.me-2(href='#') #{contentDetail.author ? contentDetail.author.name : "Author Name"}
-                    //-                         span.badge.badge-light-success.text-capitalize  #{contentDetail.author ? contentDetail.author.role : "Author Role"}
-                    //-                     a.fw-semibold.text-gray-600.text-hover-primary(href=``) #{contentDetail.author ? contentDetail.author.email : "Author Email"}
-                    //-                     br
-                    //-                     span.fw-semibold.text-gray-600 #{contentDetail.date_created}
-                    //-                 else
-                    //-                     .d-flex.align-items-center.mb-1
-                    //-                         a.fw-bold.text-gray-800.text-hover-primary.me-2(href='#') Author name
-                    //-                         span.badge.badge-light-success.text-capitalize  Author Role
-                    //-                     a.fw-semibold.text-gray-600.text-hover-primary(href=``) Author email
-                    //-                     br
-                    //-                     span.fw-semibold.text-gray-600 #{contentDetail.date_created}
-                    //-             .separator.separator-dashed.mb-7
-                    //-             .mb-7
-                    //-                 h5.mb-3 Update details
-                    //-                 .d-flex.align-items-center.mb-1
-                    //-                     a.fw-bold.text-gray-800.text-hover-primary.me-2(href='#') Thaha
-                    //-                     span.badge.badge-light-info Editor
-                    //-                 a.fw-semibold.text-gray-600.text-hover-primary(href='mailto:thaha@landmarkleisure.com') thaha@landmarkleisure.com
-                    //-                 br
-                    //-                 span.fw-semibold.text-gray-600 27/07/2023 11:39 AM
-                    //-             .separator.separator-dashed.mb-7
-                    //-             //- .mb-0
-                    //-                 button#kt_subscriptions_create_button.btn.btn-primary(type='submit')
-                    //-                     span.indicator-label Publish
-                    //-                     span.indicator-progress
-                    //-                         | Please wait...
-                    //-                         span.spinner-border.spinner-border-sm.align-middle.ms-2
