@@ -129,21 +129,15 @@ block content
 																.d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container
 																	label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
 																		span.required #{cf.field_label} (#{brandLanguage.prefix})
-																	if cf.field_type === 'text'
-																		input.form-control.form-control-solid(type='text' placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}][]]`)
-
-																	else if cf.field_type === 'email'
-																		input.form-control.form-control-solid(type='email' placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}][]]`)
-																		
+																	if cf.field_type === 'text' || cf.field_type === 'email' || cf.field_type === 'number'
+																		input.form-control.form-control-solid(type=`${cf.field_type}` placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}][]]`)
 																	else if cf.field_type === 'richtext'
 																		textarea.content_wysiwyg(name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}][]]` id=`wysiwyg-cf-${brandLanguage.prefix}-${cfg.row_name}-${cf.field_name}`)
-																		
 																	else if cf.field_type === 'textarea'
 																		textarea.form-control.form-control-solid(rows='6' name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}][]]` placeholder='' spellcheck='false')
 																	else if cf.field_type === 'date'
 																		.kt_daterangepicker
 																			input.form-control.mb-2(id=`kt_daterangepicker_${brandLanguage.prefix}-${cf_i}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}][]]` placeholder=`${cf.placeholder}` value='')
-																			
 																	else if cf.field_type === 'radio'
 																		.row.row-cols-1.row-cols-md-3.row-cols-lg-1.row-cols-xl-3.g-9(data-kt-buttons='true' data-kt-buttons-target="[data-kt-button='true']")
 																			each option,i in cf.options 
@@ -186,11 +180,8 @@ block content
 																	span.required #{cf.field_label} (#{brandLanguage.prefix})
 																	i.fas.fa-exclamation-circle.ms-2.fs-7(data-bs-toggle='tooltip' aria-label='Specify a target name for future usage and reference' data-kt-initialized='1')
 																// end::Label
-																if cf.field_type === 'text'
-																	input.form-control.form-control-solid(type='text' placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]`)
-																	.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}_${brandLanguage.prefix}`)
-																else if cf.field_type === 'email'
-																	input.form-control.form-control-solid(type='email' placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]`)
+																if cf.field_type === 'text' || cf.field_type === 'email' || cf.field_type === 'number'
+																	input.form-control.form-control-solid(type=`${cf.field_type}` placeholder=`Enter ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]`)
 																	.fv-plugins-message-container.invalid-feedback(id=`field-error-${cf.field_name}_${brandLanguage.prefix}`)
 																else if cf.field_type === 'richtext'
 																	textarea.content_wysiwyg(name=`${cfg.row_name}[${cf.field_name}[${brandLanguage.prefix}]]` id=`wysiwyg-cf-${brandLanguage.prefix}-${cfg.row_name}-${cf.field_name}`)
