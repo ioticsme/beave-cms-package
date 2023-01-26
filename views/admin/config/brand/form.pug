@@ -11,10 +11,10 @@ block jslib
 	//- script(src='/cms-static/admin/assets/js/custom/apps/subscriptions/add/advanced.js')
 	//- script(src='/cms-static/admin/assets/js/custom/apps/subscriptions/add/customer-select.js')
 	//- script(src='/cms-static/admin/assets/js/custom/apps/subscriptions/add/products.js')
-	script(src='/cms-static/admin/assets/js/widgets.bundle.js')
-	script(src='/cms-static/admin/assets/js/custom/widgets.js')
-	script(src='/cms-static/admin/assets/js/custom/apps/chat/chat.js')
-	script(src='/cms-static/admin/assets/js/custom/utilities/modals/upgrade-plan.js')
+	//- script(src='/cms-static/admin/assets/js/widgets.bundle.js')
+	//- script(src='/cms-static/admin/assets/js/custom/widgets.js')
+	
+	
 	script(src='/cms-static/admin/assets/js/custom/utilities/modals/create-app.js')
 	script(src='/cms-static/admin/assets/js/custom/utilities/modals/offer-a-deal/type.js')
 	script(src='/cms-static/admin/assets/js/custom/utilities/modals/offer-a-deal/details.js')
@@ -47,7 +47,7 @@ block content
 					.card-header.border-0.cursor-pointer(role='button' data-bs-toggle='collapse' data-bs-target='#kt_account_profile_details' aria-expanded='true' aria-controls='kt_account_profile_details')
 						.card-title.m-0
 							h3.fw-bold.m-0 Brand Form
-					#kt_account_settings_profile_details.collapse.show
+					#kt_account_settings_profile_details
 						form#kt_account_profile_details_form.form.es-form(action=`/admin/config/brand/save` data-redirect-url=`/admin/config/brand`  method='post' autocomplete="off")
 							input(type="hidden" name="id" value=`${brand ? brand._id : ''}`)
 							.card-body.border-top.p-9

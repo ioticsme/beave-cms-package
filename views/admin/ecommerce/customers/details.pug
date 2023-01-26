@@ -16,13 +16,11 @@ block jslib
 	script(src='/cms-static/admin/assets/js/custom/apps/ecommerce/customers/details/update-phone.js')
 	script(src='/cms-static/admin/assets/js/custom/apps/ecommerce/customers/details/update-address.js')
 	script(src='/cms-static/admin/assets/js/custom/apps/ecommerce/customers/details/update-profile.js')
-	script(src='/cms-static/admin/assets/js/widgets.bundle.js')
-	script(src='/cms-static/admin/assets/js/custom/widgets.js')
-	script(src='/cms-static/admin/assets/js/custom/apps/chat/chat.js')
-	script(src='/cms-static/admin/assets/js/custom/utilities/modals/upgrade-plan.js')
-	script(src='/cms-static/admin/assets/js/custom/utilities/modals/create-app.js')
-	script(src='/cms-static/admin/assets/js/custom/utilities/modals/new-card.js')
-	script(src='/cms-static/admin/assets/js/custom/utilities/modals/users-search.js')
+	//- script(src='/cms-static/admin/assets/js/widgets.bundle.js')
+	//- script(src='/cms-static/admin/assets/js/custom/widgets.js')
+	
+	
+	
 	// end::Custom Javascript
 
 
@@ -529,7 +527,7 @@ block content
 													.menu.menu-sub.menu-sub-dropdown.menu-column.menu-rounded.menu-gray-600.menu-state-bg-light-primary.fw-semibold.w-150px.py-3(data-kt-menu='true')
 														.menu-item.px-3
 															a.menu-link.px-3(href='#' data-kt-payment-mehtod-action='set_as_primary') Set as Primary
-											#kt_customer_view_payment_method_1.collapse.show.fs-6.ps-10(data-bs-parent='#kt_customer_view_payment_method')
+											#kt_customer_view_payment_method_1.fs-6.ps-10(data-bs-parent='#kt_customer_view_payment_method')
 												.d-flex.flex-wrap.py-5
 													.flex-equal.me-5
 														table.table.table-flush.fw-semibold.gy-1
@@ -589,7 +587,7 @@ block content
 													.me-3
 														.d-flex.align-items-center
 															.text-gray-800.fw-bold Visa
-														.text-muted Expires Feb 2022
+														.text-muted Expires Feb 2023
 												.d-flex.my-3.ms-9
 													a.btn.btn-icon.btn-active-light-primary.w-30px.h-30px.me-3(href='#' data-bs-toggle='modal' data-bs-target='#kt_modal_new_card')
 														span(data-bs-toggle='tooltip' data-bs-trigger='hover' title='Edit')
@@ -623,7 +621,7 @@ block content
 																td.text-gray-800 **** 7432
 															tr
 																td.text-muted.min-w-125px.w-125px Expires
-																td.text-gray-800 02/2022
+																td.text-gray-800 02/2023
 															tr
 																td.text-muted.min-w-125px.w-125px Type
 																td.text-gray-800 Visa credit card
@@ -761,7 +759,7 @@ block content
 												span.svg-icon.svg-icon-3
 													svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
 														path(d='M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z' fill='currentColor')
-										#kt_modal_update_address_billing_info.collapse.show
+										#kt_modal_update_address_billing_info
 											.d-flex.flex-column.mb-7.fv-row
 												label.fs-6.fw-semibold.mb-2.required Address Line 1
 												input.form-control.form-control-solid(placeholder='' name='address1' value='101, Collins Street')
@@ -1114,7 +1112,7 @@ block content
 												span.svg-icon.svg-icon-3
 													svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
 														path(d='M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z' fill='currentColor')
-										#kt_modal_add_address_billing_info.collapse.show
+										#kt_modal_add_address_billing_info
 											.d-flex.flex-column.mb-7.fv-row
 												label.fs-6.fw-semibold.mb-2.required Address Name
 												input.form-control.form-control-solid(placeholder='' name='name' value='')

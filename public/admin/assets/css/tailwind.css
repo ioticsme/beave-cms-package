@@ -1,0 +1,22 @@
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
+@layer base {
+    h1 {
+      @apply text-2xl;
+    }
+    h2 {
+      @apply text-xl;
+    }
+
+    input[type='text'] {
+        /* @apply border border-gray-300 rounded-lg p-4 !h-20; */
+    }
+
+    .menu-link {
+        @apply text-gray-200 hover:text-gray-400;
+    }
+  }

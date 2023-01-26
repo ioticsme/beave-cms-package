@@ -8,31 +8,27 @@ const Country = require('../model/Country')
 const Settings = require('../model/Settings')
 const User = require('../model/User')
 const Menu = require('../model/Menu')
+const Language = require('../model/Language')
 
 const BrandWithCountryCheck = async (req, res, next) => {
     // req.headers.brand = 'FC'
     // req.headers.locale = 'en-ae'
     try {
-        if (!req.headers.brand || !req.headers.locale) {
-            return res.status(400).json({ error: 'Invalid Header' })
-        }
-
         const apiSourceList = ['app', 'web']
         const apiSource = apiSourceList.includes(req.headers?.source)
             ? req.headers?.source
             : 'web'
 
         // Splitting code and lang from req.headers.locale
-        const lang = req.headers.locale.split('-')[0].toLowerCase()
-        const countryCode = req.headers.locale.split('-')[1].toLowerCase()
+        const countryCode =
+            req.query.country?.toLowerCase() ||
+            req.headers.country?.toLowerCase()
 
-        const country = await Country.findOne({ code: countryCode })
+        const country = countryCode
+            ? await Country.findOne({ code: countryCode })
+            : await Country.findOne()
+
         const brand = await Brand.aggregate([
-            {
-                $match: {
-                    code: req.headers.brand.toLowerCase(),
-                },
-            },
             {
                 $unwind: '$domains',
             },
@@ -42,6 +38,18 @@ const BrandWithCountryCheck = async (req, res, next) => {
                 },
             },
         ])
+
+        let lang
+        if (req.query.lang?.toLowerCase()) {
+            lang = req.query.lang?.toLowerCase()
+        } else if (req.headers.lang?.toLowerCase()) {
+            lang = req.headers.lang?.toLowerCase()
+        } else {
+            const language = await Language.findOne({
+                is_default: true,
+            })
+            lang = language.prefix
+        }
 
         if (!brand?.length) {
             return res.status(400).json({ error: 'Invalid Brand' })
@@ -69,6 +77,7 @@ const BrandWithCountryCheck = async (req, res, next) => {
         req.language = lang
         req.source = apiSource
     } catch (err) {
+        // console.log(err)
         return res.status(400).json({ error: 'Invalid Header' })
     }
 
@@ -255,7 +264,7 @@ const getNav = async (req, res, next) => {
         req.navigation = { ...navigation.data, meta: newGlobalMeta }
     } catch (error) {
         console.log(error)
-        return res.status(400).json('Not found')
+        return res.status(400).json('Not foundssss')
     }
     next()
 }

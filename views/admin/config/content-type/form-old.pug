@@ -11,10 +11,10 @@ block jslib
 	//- script(src='/cms-static/admin/assets/js/custom/apps/subscriptions/add/advanced.js')
 	//- script(src='/cms-static/admin/assets/js/custom/apps/subscriptions/add/customer-select.js')
 	//- script(src='/cms-static/admin/assets/js/custom/apps/subscriptions/add/products.js')
-	script(src='/cms-static/admin/assets/js/widgets.bundle.js')
-	script(src='/cms-static/admin/assets/js/custom/widgets.js')
-	script(src='/cms-static/admin/assets/js/custom/apps/chat/chat.js')
-	script(src='/cms-static/admin/assets/js/custom/utilities/modals/upgrade-plan.js')
+	//- script(src='/cms-static/admin/assets/js/widgets.bundle.js')
+	//- script(src='/cms-static/admin/assets/js/custom/widgets.js')
+	
+	
 	script(src='/cms-static/admin/assets/js/custom/utilities/modals/create-app.js')
 	script(src='/cms-static/admin/assets/js/custom/utilities/modals/offer-a-deal/type.js')
 	script(src='/cms-static/admin/assets/js/custom/utilities/modals/offer-a-deal/details.js')
@@ -140,7 +140,7 @@ block content
 					.card-header.border-0.cursor-pointer(role='button' data-bs-toggle='collapse' data-bs-target='#kt_account_profile_details' aria-expanded='true' aria-controls='kt_account_profile_details')
 						.card-title.m-0
 							h3.fw-bold.m-0 Content Type Form
-					#kt_account_settings_profile_details.collapse.show
+					#kt_account_settings_profile_details
 						form#kt_account_profile_details_form.form.es-form(action=`/admin/config/content-type/save` data-redirect-url=`/admin/config/content-type`  method='post' autocomplete="off")
 							input(type='hidden' name='id' value=`${contentType ? contentType._id : ''}`)
 							.card-body.border-top.p-9
@@ -208,16 +208,16 @@ block content
 														input.form-control.form-control-lg.form-control-solid(type='text' name='validation[]' placeholder='Validation' value=`${cf.validation || ''}`)
 														.fv-plugins-message-container.invalid-feedback(id=`field-error-validation[]`)
 													.mt-2.col-md-6
-														select.form-select.form-select-lg.form-select-solid.mb-2(name="bilingual[]"  data-control='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select language type' )
+														select.form-select.form-select-lg.form-select-solid.mb-2(name="localisation[]"  data-control='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select language type' )
 															//- TODO::edit selection list item
 															option(value="" ) Select language type
-															option(value="true" selected=cf && cf.bilingual == true) Bilingual
-															option(value="false" selected=cf && cf.bilingual == false) English Only
+															option(value="true" selected=cf && cf.localisation == true) localisation
+															option(value="false" selected=cf && cf.localisation == false) English Only
 													.mt-2.col-md-6
 														select.form-select.form-select-lg.form-select-solid.mb-2(name="field_type[]"  data-control='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select field type' )
 															option(value='') Select Field Type
 															option(value='text' selected=cf.field_type=='text') Text
-															option(value='wysiwig' selected=cf.field_type=='wysiwig') WYSIWYG
+															option(value='wysiwyg' selected=cf.field_type=='wysiwyg') WYSIWYG
 															option(value='textarea' selected=cf.field_type=='textarea') Textarea
 															option(value='date' selected=cf.field_type=='date') Date
 															option(value='dropdown' selected=cf.field_type=='dropdown') Dropdown
@@ -262,16 +262,16 @@ block content
 															input.form-control.form-control-lg.form-control-solid(type='text' name='validation[]' placeholder='Validation' value=`${cf.validation || ''}`)
 															.fv-plugins-message-container.invalid-feedback(id=`field-error-validation[]`)
 														.mt-2.col-md-6
-															select.form-select.form-select-lg.form-select-solid.mb-2(name="bilingual[]"  data-control='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select language type' )
+															select.form-select.form-select-lg.form-select-solid.mb-2(name="localisation[]"  data-control='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select language type' )
 																//- TODO::edit selection list item
 																option(value="" ) Select language type
-																option(value="true" selected=cf && cf.bilingual == true) Bilingual
-																option(value="false" selected=cf && cf.bilingual == false) English Only
+																option(value="true" selected=cf && cf.localisation == true) localisation
+																option(value="false" selected=cf && cf.localisation == false) English Only
 														.mt-2.col-md-6
 															select.form-select.form-select-lg.form-select-solid.mb-2(name="field_type[]"  data-control='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select field type' )
 																option(value='') Select Field Type
 																option(value='text' selected=cf.field_type=='text') Text
-																option(value='wysiwig' selected=cf.field_type=='wysiwig') WYSIWYG
+																option(value='wysiwyg' selected=cf.field_type=='wysiwyg') WYSIWYG
 																option(value='textarea' selected=cf.field_type=='textarea') Textarea
 																option(value='date' selected=cf.field_type=='date') Date
 																option(value='dropdown' selected=cf.field_type=='dropdown') Dropdown
@@ -310,19 +310,19 @@ block content
 											input.form-control.form-control-lg.form-control-solid(type='text' name='validation[]' placeholder='Validation' )
 											.fv-plugins-message-container.invalid-feedback(id=`field-error-validation[]`)
 										.mt-2.col-md-6
-											//- select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="bilingual[]"  data-control='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select language type' )
-											select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="bilingual[]"  placeholder='Select language type' )
+											//- select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="localisation[]"  data-control='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select language type' )
+											select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="localisation[]"  placeholder='Select language type' )
 												//- TODO::edit selection list item
 												option(value="" ) Select language type
-												option(value="true" selected=contentType && contentType.bilingual == true) Bilingual
-												option(value="false" selected=contentType && contentType.bilingual == false) English Only
+												option(value="true" selected=contentType && contentType.localisation == true) localisation
+												option(value="false" selected=contentType && contentType.localisation == false) English Only
 										.mt-2.col-md-6
 											//- select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="field_type[]"  data-control='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select field type' )
 											select.form-select.form-control.select2.form-select-lg.form-select-solid.mb-2(name="field_type[]"  placeholder='Select field type' )
 												//- TODO::edit selection list item
 												option(value='') Select Field Type
 												option(value='text' ) Text
-												option(value='wysiwig' ) WYSIWYG
+												option(value='wysiwyg' ) WYSIWYG
 												option(value='textarea' ) Textarea
 												option(value='date' ) Date
 												option(value='dropdown' ) Dropdown

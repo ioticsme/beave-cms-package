@@ -6,8 +6,8 @@ const cmsContentController = require('../../controller/admin/cmsContent.controll
 const customFormController = require('../../controller/admin/customForm.controller')
 const menuController = require('../../controller/admin/menu.controller')
 const mediaController = require('../../controller/admin/media.controller')
-const bannerController = require('../../controller/admin/banner.controller')
-const galleryController = require('../../controller/admin/gallery.controller')
+// const bannerController = require('../../controller/admin/banner.controller')
+// const galleryController = require('../../controller/admin/gallery.controller')
 const { contentTypeCheck } = require('../../middleware/cms.middleware')
 
 const multer = require('multer')
@@ -31,64 +31,64 @@ router.group('/', (router) => {
     })
 
     // Banner management Routes
-    router.group('/banner', (router) => {
-        router.get('/', bannerController.list)
-        router.get('/add', bannerController.add)
-        router.get('/edit/:id', bannerController.edit)
-        router.get('/detail/:id', bannerController.detail)
+    // router.group('/banner', (router) => {
+    //     router.get('/', bannerController.list)
+    //     router.get('/add', bannerController.add)
+    //     router.get('/edit/:id', bannerController.edit)
+    //     router.get('/detail/:id', bannerController.detail)
 
-        router.post('/delete', bannerController.deleteBanner)
+    //     router.post('/delete', bannerController.deleteBanner)
 
-        router.post('/save', bannerController.save)
+    //     router.post('/save', bannerController.save)
 
-        router.post('/change-status', bannerController.changeStatus)
+    //     router.post('/change-status', bannerController.changeStatus)
 
-        router.group('/items', (router) => {
-            router.get('/add/:id', bannerController.addItems)
-            router.post(
-                '/add/:id/save',
-                upload.any(),
-                bannerController.saveItems
-            )
-            router.get('/edit/:id/:itemId', bannerController.editItems)
-            router.post(
-                '/edit/save',
-                upload.any(),
-                bannerController.saveEditItems
-            )
-            router.post('/delete', bannerController.deleteBannerItem)
-        })
-    })
+    //     router.group('/items', (router) => {
+    //         router.get('/add/:id', bannerController.addItems)
+    //         router.post(
+    //             '/add/:id/save',
+    //             upload.any(),
+    //             bannerController.saveItems
+    //         )
+    //         router.get('/edit/:id/:itemId', bannerController.editItems)
+    //         router.post(
+    //             '/edit/save',
+    //             upload.any(),
+    //             bannerController.saveEditItems
+    //         )
+    //         router.post('/delete', bannerController.deleteBannerItem)
+    //     })
+    // })
 
     // Gallery management Routes
-    router.group('/gallery', (router) => {
-        router.get('/', galleryController.list)
-        router.get('/add', galleryController.add)
-        router.get('/edit/:id', galleryController.edit)
-        router.get('/detail/:id', galleryController.detail)
+    // router.group('/gallery', (router) => {
+    //     router.get('/', galleryController.list)
+    //     router.get('/add', galleryController.add)
+    //     router.get('/edit/:id', galleryController.edit)
+    //     router.get('/detail/:id', galleryController.detail)
 
-        router.post('/delete', galleryController.deleteGallery)
+    //     router.post('/delete', galleryController.deleteGallery)
 
-        router.post('/save', galleryController.save)
+    //     router.post('/save', galleryController.save)
 
-        router.post('/change-status', galleryController.changeStatus)
+    //     router.post('/change-status', galleryController.changeStatus)
 
-        router.group('/items', (router) => {
-            router.get('/add/:id', galleryController.addItems)
-            router.post(
-                '/add/:id/save',
-                upload.any(),
-                galleryController.saveItems
-            )
-            router.get('/edit/:id/:itemId', galleryController.editItems)
-            router.post(
-                '/edit/save',
-                upload.any(),
-                galleryController.saveEditItems
-            )
-            router.post('/delete', galleryController.deleteGalleryItem)
-        })
-    })
+    //     router.group('/items', (router) => {
+    //         router.get('/add/:id', galleryController.addItems)
+    //         router.post(
+    //             '/add/:id/save',
+    //             upload.any(),
+    //             galleryController.saveItems
+    //         )
+    //         router.get('/edit/:id/:itemId', galleryController.editItems)
+    //         router.post(
+    //             '/edit/save',
+    //             upload.any(),
+    //             galleryController.saveEditItems
+    //         )
+    //         router.post('/delete', galleryController.deleteGalleryItem)
+    //     })
+    // })
 
     // Custom Forms
     // router.group('/store', (router) => {
@@ -124,7 +124,8 @@ router.group('/', (router) => {
         '/:contentType/save',
         contentTypeCheck,
         upload.any(),
-        cmsContentController.save
+        // cmsContentController.save
+        cmsContentController.saveTemp
     )
     router.post(
         '/:contentType/delete',

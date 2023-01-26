@@ -7,8 +7,8 @@ var session = require('express-session')
 const baseConfig = async (req, res, next) => {
     res.locals.baseURL = `${process.env.DOMAIN}`
     res.locals.clientName = `${process.env.CLIENT_NAME}`
-    res.locals.cmsLogoLarge = `${process.env.CMS_LOGO_LARGE}`
-    res.locals.cmsLogoSmall = `${process.env.CMS_LOGO_SMALL}`
+    res.locals.cmsLogoLarge = `#`
+    res.locals.cmsLogoSmall = `#`
     res.locals.globalModuleConfig = globalModuleConfig
     next()
 }
@@ -25,20 +25,17 @@ const authCheck = async (req, res, next) => {
 
 const contentTypeCheck = async (req, res, next) => {
     if (!req.params.contentType) {
-        res.json('Not Found')
-        return
+        return res.json('Not Found')
     }
     try {
         const contentType = await ContentType.findOne({
             slug: req.params.contentType,
         })
         req.contentType = contentType
+        next()
     } catch (err) {
-        res.json('Not Found')
-        return
+        return res.json('Not Found')
     }
-
-    next()
 }
 
 const authUser = async (req, res, next) => {
