@@ -38,32 +38,56 @@ block content
                     a.btn.btn-sm.fw-bold.btn-primary(href=`/admin/cms/${reqContentType.slug}/edit/${contentDetail._id}`) Edit #{reqContentType.title}
         #kt_app_content.app-content.flex-column-fluid
             #kt_app_content_container.app-container.container-xxl
-                .d-flex.flex-column.flex-lg-row
-                    .flex-lg-row-fluid.me-lg-15.order-2.order-lg-1.mb-10.mb-lg-0
+                .row
+                    .col-12.col-sm-8
+                        .d-flex.flex-column.flex-lg-row
+                            .flex-lg-row-fluid.me-lg-15.order-2.order-lg-1.mb-10.mb-lg-0
+                                .card.card-flush.pt-3.mb-5.mb-lg-10                                
+                                    .card-body.pt-0
+                                        ul.nav.nav-tabs.nav-line-tabs.mb-5.fs-6
+                                            each brandLanguage, i in authUser.selected_brand.languages
+                                                li.nav-item
+                                                    a.nav-link(class= (i== 0 ? 'active' : '') data-bs-toggle='tab' href=`#kt_tab_pane_${brandLanguage.prefix}`) #{brandLanguage.name}
+                                        #myTabContent.tab-content.tab-content-fields
+                                            each brandLanguage, i in authUser.selected_brand.languages
+                                                .tab-pane.fade(class= (i== 0 ? 'active show' : '') role='tabpanel' id=`kt_tab_pane_${brandLanguage.prefix}`)
+                                                    .card-title
+                                                        //- BEGIN::Custom group Fields with Multi language
+                                                        each cfg, cfg_i in reqContentType.field_groups
+                                                            if cfg.localisation == true
+                                                                h1.mt-5.mb-2 #{cfg.row_label}
+                                                                if cfg.repeater_group
+                                                                    each package, index in findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][0].value
+                                                                        ul
+                                                                            li package : #{package}
+                                                                            li price : #{findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][1].value[index]}
+                                                                            li details : #{findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][2].value[index]}
+                                                                else
+                                                                    each cf in findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name]
+                                                                        span.badge.badge-light-success.mt-5 #{cf.field.toUpperCase()}
+                                                                        br
+                                                                        .card
+                                                                            | !{cf.value}
+                    .col-12.col-sm-4
                         .card.card-flush.pt-3.mb-5.mb-lg-10                                
-                            .card-body.pt-0
-                                ul.nav.nav-tabs.nav-line-tabs.mb-5.fs-6
-                                    each brandLanguage, i in authUser.selected_brand.languages
-                                        li.nav-item
-                                            a.nav-link(class= (i== 0 ? 'active' : '') data-bs-toggle='tab' href=`#kt_tab_pane_${brandLanguage.prefix}`) #{brandLanguage.name}
-                                #myTabContent.tab-content.tab-content-fields
-                                    each brandLanguage, i in authUser.selected_brand.languages
-                                        .tab-pane.fade(class= (i== 0 ? 'active show' : '') role='tabpanel' id=`kt_tab_pane_${brandLanguage.prefix}`)
-                                            .card-title
-                                                //- BEGIN::Custom group Fields with Multi language
-                                                each cfg, cfg_i in reqContentType.field_groups
-                                                    if cfg.localisation == true
-                                                        h1.mt-5.mb-2 #{cfg.row_label}
-                                                        if cfg.repeater_group
-                                                            each package, index in findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][0].value
-                                                                ul
-                                                                    li package : #{package}
-                                                                    li price : #{findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][1].value[index]}
-                                                                    li details : #{findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][2].value[index]}
-                                                        else
-                                                            each cf in findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name]
-                                                                span.badge.badge-light-success.mt-5 #{cf.field.toUpperCase()}
-                                                                br
-                                                                .card
-                                                                    | !{cf.value}
-                                                //- END::Custom group Fields
+                            .card-body
+                                | Status : 
+                                span(class=`badge badge-light-${contentDetail.published ? 'success' : 'danger'}`)
+                                    | #{contentDetail.published ? 'Published' : 'Unpublished'}
+                                p
+                                    small
+                                        if reqContentType.single_type
+                                            | API Endpoint : 
+                                            br
+                                            code
+                                                |#{baseURL}/api/cms/#{reqContentType.slug}
+                                        else
+                                            | API Endpoint (Collection) :
+                                            br
+                                            code
+                                                |#{baseURL}/api/cms/#{reqContentType.slug}
+                                            br
+                                            | API Endpoint (Detail) :
+                                            br
+                                            code
+                                                |#{baseURL}/api/cms/#{reqContentType.slug}/#{contentDetail.slug}

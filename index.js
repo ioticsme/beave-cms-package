@@ -29,6 +29,11 @@ const {
 } = require('./middleware/cms.middleware')
 // END::Service Providers
 
+app.use((req, res, next) => {
+    app.locals.baseURL = (process.env.DOMAIN || req.protocol + '://' + req.get('host'))
+    app.locals.clientName = process.env.CLIENT_NAME
+    next()
+})
 // BEGIN::Security Headers
 // app.use(helmet())
 app.use(helmet.hsts({ maxAge: 31536000, includeSubDomains: true }))

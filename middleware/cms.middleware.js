@@ -6,10 +6,9 @@ var session = require('express-session')
 const { default: collect } = require('collect.js')
 
 const baseConfig = async (req, res, next) => {
-    res.locals.baseURL = `${process.env.DOMAIN}`
-    res.locals.clientName = `${process.env.CLIENT_NAME}`
-    res.locals.cmsLogoLarge = `#`
-    res.locals.cmsLogoSmall = `#`
+    // res.locals.clientName = `${process.env.CLIENT_NAME}`
+    // res.locals.cmsLogoLarge = `#`
+    // res.locals.cmsLogoSmall = `#`
     res.locals.globalModuleConfig = globalModuleConfig
     next()
 }
