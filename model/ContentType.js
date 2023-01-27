@@ -107,4 +107,4 @@ const ContentTypeSchema = new mongoose.Schema(
 
 ContentTypeSchema.plugin(uniqueValidator)
 
-module.exports = mongoose.model('ContentType', ContentTypeSchema)
+module.exports = mongoose.model('beave_ContentType', ContentTypeSchema)

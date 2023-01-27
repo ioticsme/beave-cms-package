@@ -1,20 +1,23 @@
 const { formatInTimeZone } = require('date-fns-tz')
 const { mongoose, Schema } = require('mongoose')
 const Double = require('@mongoosejs/double');
+const Brand = require('./Brand')
+const Country = require('./Country')
+const Admin = require('./Admin')
 
 const SettingsSchema = new mongoose.Schema(
     {
         brand: {
             type: Schema.ObjectId,
-            ref: 'Brand',
+            ref: Brand,
         },
         country: {
             type: Schema.ObjectId,
-            ref: 'Country',
+            ref: Country,
         },
         author: {
             type: Schema.ObjectId,
-            ref: 'Admin',
+            ref: Admin,
         },
         cache_expiry_time: {
             type: String,
@@ -125,4 +128,4 @@ SettingsSchema.virtual('date_updated').get(() => {
     )
 })
 
-module.exports = mongoose.model('Settings', SettingsSchema)
+module.exports = mongoose.model('beave_Settings', SettingsSchema)

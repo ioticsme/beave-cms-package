@@ -2,6 +2,9 @@ const { formatInTimeZone } = require('date-fns-tz')
 const { mongoose, Schema } = require('mongoose')
 const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
 
+const Brand = require('./Brand')
+const Country = require('./Country')
+
 const CustomFormSchema = new mongoose.Schema(
     {
         type: {
@@ -37,12 +40,12 @@ const CustomFormSchema = new mongoose.Schema(
         },
         brand: {
             type: Schema.ObjectId,
-            ref: 'Brand',
+            ref: Brand,
             required: true,
         },
         country: {
             type: Schema.ObjectId,
-            ref: 'Country',
+            ref: Country,
             required: true,
         },
     },
@@ -79,4 +82,4 @@ CustomFormSchema.virtual('date_updated').get(function () {
     )
 })
 
-module.exports = mongoose.model('CustomForm', CustomFormSchema)
+module.exports = mongoose.model('beave_CustomForm', CustomFormSchema)

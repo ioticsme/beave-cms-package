@@ -1,11 +1,14 @@
 const { formatInTimeZone } = require('date-fns-tz')
 const { mongoose, Schema } = require('mongoose')
+const CustomForm = require('./CustomForm')
+const Brand = require('./Brand')
+const Country = require('./Country')
 
 const CustomFormDataSchema = new mongoose.Schema(
     {
         form_id:{
             type: Schema.ObjectId,
-            ref: 'CustomForm',
+            ref: CustomForm,
             required: true,
         },
         type: {
@@ -15,12 +18,12 @@ const CustomFormDataSchema = new mongoose.Schema(
         field_values: Object,
         brand: {
             type: Schema.ObjectId,
-            ref: 'Brand',
+            ref: Brand,
             required: true,
         },
         country: {
             type: Schema.ObjectId,
-            ref: 'Country',
+            ref: Country,
             required: true,
         },
     },
@@ -55,4 +58,4 @@ CustomFormDataSchema.virtual('date_updated').get(function () {
     )
 })
 
-module.exports = mongoose.model('CustomFormData', CustomFormDataSchema)
+module.exports = mongoose.model('beave_CustomFormData', CustomFormDataSchema)

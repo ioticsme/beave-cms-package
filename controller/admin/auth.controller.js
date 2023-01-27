@@ -74,7 +74,8 @@ const login = async (req, res) => {
         }
         return res.render(`admin/authentication/sign-in`)
     } catch (error) {
-        return res.render(`admin/error-404`)
+        console.log(error)
+        return res.render(`admin/error-500`)
     }
 }
 

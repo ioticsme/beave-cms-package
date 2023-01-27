@@ -69,40 +69,6 @@ const UserSchema = new Schema(
         social_auth_key: {
             type: String,
         },
-        cards: [
-            {
-                type: Schema.ObjectId,
-                ref: 'UserCard',
-            },
-        ],
-        payment_cards: [
-            new mongoose.Schema({
-                token_name: {
-                    type: String,
-                    // required: true,
-                },
-                card_bin: {
-                    type: String,
-                    // required: true,
-                },
-                expiry_date: {
-                    type: String,
-                    // required: true,
-                },
-                card_number: {
-                    type: String,
-                    // required: true,
-                },
-                merchant_reference: {
-                    type: String,
-                    // required: true,
-                },
-                saved: {
-                    type: Boolean,
-                    default: false,
-                },
-            }),
-        ],
         log: {
             last_login: {
                 brand: String,
@@ -151,4 +117,4 @@ UserSchema.virtual('date_updated').get(function () {
     )
 })
 
-module.exports = mongoose.model('User', UserSchema)
+module.exports = mongoose.model('beave_User', UserSchema)

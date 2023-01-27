@@ -1,15 +1,17 @@
 const { mongoose, Schema } = require('mongoose')
+const Brand = require('./Brand')
+const Country = require('./Country')
 
 const MenuSchema = new mongoose.Schema(
     {
         brand: {
             type: Schema.ObjectId,
-            ref: 'Brand',
+            ref: Brand,
             required: true,
         },
         country: {
             type: Schema.ObjectId,
-            ref: 'Country',
+            ref: Country,
             required: true,
         },
         nav_label: {
@@ -149,4 +151,4 @@ const MenuSchema = new mongoose.Schema(
     }
 )
 
-module.exports = mongoose.model('Menu', MenuSchema)
+module.exports = mongoose.model('beave_Menu', MenuSchema)

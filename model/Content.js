@@ -2,6 +2,10 @@ const { mongoose, Schema } = require('mongoose')
 const { formatInTimeZone } = require('date-fns-tz')
 const { format } = require('date-fns')
 const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
+const ContentType = require('./ContentType')
+const Admin = require('./Admin')
+const Country = require('./Country')
+// const Content = require('./Content')
 
 const ContentSchema = new mongoose.Schema(
     {
@@ -10,7 +14,7 @@ const ContentSchema = new mongoose.Schema(
         },
         type_id: {
             type: Schema.ObjectId,
-            ref: 'ContentType',
+            ref: ContentType,
             required: true,
         },
         type_slug: {
@@ -19,7 +23,7 @@ const ContentSchema = new mongoose.Schema(
         },
         author: {
             type: Schema.ObjectId,
-            ref: 'Admin',
+            ref: Admin,
             required: true,
         },
         // brand: {
@@ -29,25 +33,15 @@ const ContentSchema = new mongoose.Schema(
         // },
         country: {
             type: Schema.ObjectId,
-            ref: 'Country',
+            ref: Country,
             required: true,
-        },
-        banner: {
-            type: Schema.ObjectId,
-            ref: 'Banner',
-            required: false,
-        },
-        gallery: {
-            type: Schema.ObjectId,
-            ref: 'Gallery',
-            required: false,
         },
         attached_type: [
             {
                 content_type: {
                     type: String,
                 },
-                items: [{ type: Schema.ObjectId, ref: 'Content' }],
+                items: [{ type: Schema.ObjectId }],
             },
         ],
         published: {
@@ -131,4 +125,4 @@ ContentSchema.virtual('date_updated').get(function () {
     )
 })
 
-module.exports = mongoose.model('Content', ContentSchema)
+module.exports = mongoose.model('beave_Content', ContentSchema)

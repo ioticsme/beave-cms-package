@@ -1,6 +1,8 @@
 const { mongoose, Schema } = require('mongoose')
 // const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
+const Brand = require('./Brand')
+const Country = require('./Country')
 
 const AdminSchema = new mongoose.Schema(
     {
@@ -25,11 +27,11 @@ const AdminSchema = new mongoose.Schema(
         selected_brand: {
             brand: {
                 type: Schema.ObjectId,
-                ref: 'Brand',
+                ref: Brand,
             },
             country: {
                 type: Schema.ObjectId,
-                ref: 'Country',
+                ref: Country,
             },
         },
         firebase_tokens: [{ type: String }],
@@ -49,4 +51,4 @@ const AdminSchema = new mongoose.Schema(
 // AdminSchema.plugin(softDeletePlugin)
 AdminSchema.plugin(uniqueValidator)
 
-module.exports = mongoose.model('Admin', AdminSchema)
+module.exports = mongoose.model('beave_Admin', AdminSchema)

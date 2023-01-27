@@ -33,4 +33,4 @@ const CountrySchema = new mongoose.Schema(
     }
 )
 
-module.exports = mongoose.model('Country', CountrySchema)
+module.exports = mongoose.model('beave_Country', CountrySchema)

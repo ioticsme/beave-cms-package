@@ -1,4 +1,6 @@
 const { mongoose, Schema } = require('mongoose')
+const Language = require('./Language')
+const Country = require('./Country')
 
 const BrandSchema = new mongoose.Schema(
     {
@@ -39,7 +41,7 @@ const BrandSchema = new mongoose.Schema(
         languages: [
             {
                 type: Schema.ObjectId,
-                ref: 'Language',
+                ref: Language,
             },
         ],
         domains: [
@@ -49,7 +51,7 @@ const BrandSchema = new mongoose.Schema(
                 },
                 country: {
                     type: Schema.ObjectId,
-                    ref: 'Country',
+                    ref: Country,
                 },
                 maintenance_mode: {
                     type: Boolean,
@@ -91,4 +93,4 @@ const BrandSchema = new mongoose.Schema(
     }
 )
 
-module.exports = mongoose.model('Brand', BrandSchema)
+module.exports = mongoose.model('beave_Brand', BrandSchema)
