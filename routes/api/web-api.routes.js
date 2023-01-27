@@ -8,7 +8,6 @@ const userController = require('../../controller/api/user.controller')
 const testController = require('../../controller/api/test.controller')
 
 // Middleware
-// const { checkHasCMS } = require('../../middleware/global.middleware')
 const {
     BrandWithCountryCheck,
     webDefaultHeader,

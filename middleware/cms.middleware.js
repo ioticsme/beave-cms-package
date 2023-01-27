@@ -107,7 +107,6 @@ const allBrands = async (req, res, next) => {
         .populate('languages')
         .populate('domains.country')
     res.locals.allBrands = allBrands
-    console.log(allBrands[0].domains[0].country.name.en)
     next()
 }
 
