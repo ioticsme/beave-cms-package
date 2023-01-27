@@ -55,14 +55,16 @@ block content
                                                         //- BEGIN::Custom group Fields with Multi language
                                                         each cfg, cfg_i in reqContentType.field_groups
                                                             if cfg.localisation == true
-                                                                h1.mt-5.mb-2 #{cfg.row_label}
-                                                                if cfg.repeater_group
-                                                                    each package, index in findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][0].value
-                                                                        ul
-                                                                            li package : #{package}
-                                                                            li price : #{findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][1].value[index]}
-                                                                            li details : #{findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][2].value[index]}
-                                                                else
+                                                                h1.mt-5.mb-2 #{cfg.row_label.toUpperCase()}
+                                                                if cfg.repeater_group && findalContentFieldsGroup && findalContentFieldsGroup[brandLanguage.prefix] && findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name] && findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][0]
+                                                                    .row
+                                                                        each eachVal, vIndex in findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][0].value
+                                                                            .col-12.col-sm-6
+                                                                                each eachField, fIndex in findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name]
+                                                                                    span.badge.badge-light #{findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][fIndex].field.toUpperCase()} :
+                                                                                    span.badge.badge-light-info #{findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][fIndex].value[vIndex]}
+                                                                                    br
+                                                                else if findalContentFieldsGroup[brandLanguage.prefix] && findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name]
                                                                     each cf in findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name]
                                                                         span.badge.badge-light-success.mt-5 #{cf.field.toUpperCase()}
                                                                         br

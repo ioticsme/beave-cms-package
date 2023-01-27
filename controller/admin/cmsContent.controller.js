@@ -566,18 +566,22 @@ const saveTemp = async (req, res) => {
         let type = req.contentType
         let body = req.body
         let content_to_insert = _.omit(body, [
+            '_id',
             'published',
             'in_home',
             'position',
         ])
 
+        // console.log(req.body)
         const restructuredJson = []
 
         _.forEach(content_to_insert, (group, groupName) => {
             const group_info = collect(type.field_groups)
                 .where('row_name', groupName)
                 .first()
-            if (group_info.localisation) {
+
+            // console.log(group_info)
+            if (group_info?.localisation) {
                 _.forEach(group, (field, fieldName) => {
                     _.forEach(field, (value, language) => {
                         restructuredJson.push({
@@ -590,7 +594,7 @@ const saveTemp = async (req, res) => {
                     })
                 })
             } else {
-                if (group_info['repeater_group']) {
+                if (group_info && group_info['repeater_group']) {
                     _.forEach(group, (field, fieldName) => {
                         _.forEach(field, (value) => {
                             restructuredJson.push({
@@ -608,7 +612,7 @@ const saveTemp = async (req, res) => {
                         restructuredJson.push({
                             language: 'common',
                             group_name: groupName,
-                            is_repeated: group_info['repeater_group'] || false,
+                            is_repeated: (group_info && group_info['repeater_group']) ? group_info['repeater_group'] : false,
                             field: fieldName,
                             value: field,
                         })
@@ -616,7 +620,7 @@ const saveTemp = async (req, res) => {
                 }
             }
         })
-        // console.log(restructuredJson)
+        
         let data = {
             type_id: type._id,
             type_slug: type.slug,
@@ -663,12 +667,16 @@ const saveTemp = async (req, res) => {
         const countryCode = req.authUser.selected_brand?.country_code
 
         if (req.body._id) {
-            data.slug = body.slug?.en
-                ? slugify(body.slug?.en?.toLowerCase())
-                : slugify(body.title.en.toLowerCase())
-            const cache_key = `content-${brandCode}-${countryCode}-${type.slug}-${data.slug}`
+            console.log(data)
+            // data.slug = body.slug?.en
+            //     ? slugify(body.slug?.en?.toLowerCase())
+            //     : slugify(body.title?.en?.toLowerCase())
+            const existingContent = await Content.findOne({
+                _id: req.body._id
+            })
+            const cache_key = `content-${brandCode}-${countryCode}-${type.slug}-${existingContent.slug}`
             // Update content
-            const update = await Content.updateOne({ _id: body._id }, data)
+            await Content.updateOne({ _id: body._id }, data)
             Redis.removeCache([cache_key])
             return res.status(201).json({
                 message: 'Content updated successfully',

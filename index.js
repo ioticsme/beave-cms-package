@@ -30,7 +30,7 @@ const {
 // END::Service Providers
 
 app.use((req, res, next) => {
-    app.locals.baseURL = (process.env.DOMAIN || req.protocol + '://' + req.get('host'))
+    app.locals.baseURL = (process.env.DOMAIN || req.protocol + '://' + req.get('host') || `{{domain}}`)
     app.locals.clientName = process.env.CLIENT_NAME
     next()
 })
