@@ -1,9 +1,12 @@
 require('dotenv').config()
+const fs = require('fs')
+const _ = require('lodash')
 const Brand = require('../model/Brand')
 const Settings = require('../model/Settings')
 const ContentType = require('../model/ContentType')
 var session = require('express-session')
 const { default: collect } = require('collect.js')
+const { navConfig, customNav } = require('../config/admin.config')
 
 const baseConfig = async (req, res, next) => {
     // res.locals.clientName = `${process.env.CLIENT_NAME}`
@@ -84,18 +87,64 @@ const mainNavGenerator = async (req, res, next) => {
         // single_type: false,
         in_use: true,
     })
-        .select('_id title slug admin_icon position in_use single_type')
+        .select('-_id title slug admin_icon position in_use single_type')
         .sort([['position', 'ascending']])
     // app.locals.mainNav = contentTypes
     const listTypeItems = collect(contentTypes)
         .filter((item) => item.single_type === false)
+        .map((item) => {
+            return {
+                label: item.title,
+                expandable: true,
+                icon: item.admin_icon,
+                position: item.position,
+                child: [
+                    {
+                        label: `All ${item.title}`,
+                        path: `/admin/cms/${item.slug}`,
+                    },
+                    {
+                        label: `Add ${item.title}`,
+                        path: `/admin/cms/${item.slug}/add`,
+                    },
+                ],
+            }
+        })
         .all()
+
     const singleTypeItems = collect(contentTypes)
         .filter((item) => item.single_type === true)
         .all()
-    res.locals.mainNav = listTypeItems
-    res.locals.hasSingleType = singleTypeItems.length ? true : false
-    res.locals.singleTypeNav = singleTypeItems
+
+    const contentSection = _.find(navConfig, { section: 'Content' })
+    contentSection.items = _.uniqBy(
+        _.concat(contentSection.items, listTypeItems),
+        (item) => {
+            return item.label
+        }
+    )
+    if (!singleTypeItems.length) {
+        _.remove(contentSection.items, (item) => item.label === 'Single Type')
+    } else {
+        const single_type_nav = _.find(contentSection.items, {
+            label: 'Single Type',
+        })
+        single_type_nav.child = _.map(singleTypeItems, single_item => {
+            return {
+                label: single_item.title,
+                path: `/admin/cms/${single_item.slug}`,
+            }
+        })
+        // console.log(singleTypeItems)
+        // single_type_nav.child = [
+        //     {
+        //         label: 'Marketing Tool',
+        //         path: '/admin/settings/integrations/marketing',
+        //     },
+        // ]
+    }
+    const mixed_nav = _.sortBy(_.concat(navConfig, customNav), 'position')
+    res.locals.mainNav = mixed_nav
     res.locals.activeNav = req.originalUrl
     // console.log(singleTypeItems)
     next()

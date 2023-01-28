@@ -53,154 +53,32 @@
                                 span.bullet.bullet-dot
                             span.menu-title App Settings
             hr
-        .menu-item
-            a.menu-link(href=`/admin/dashboard` class=`${activeNav == `/admin/dashboard` ? 'active' : ''}`)
-                span.menu-icon
-                    span.svg-icon.svg-icon-2
-                        svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-                            rect(x='2' y='2' width='9' height='9' rx='2' fill='currentColor')
-                            rect(opacity='0.3' x='13' y='2' width='9' height='9' rx='2' fill='currentColor')
-                            rect(opacity='0.3' x='13' y='13' width='9' height='9' rx='2' fill='currentColor')
-                            rect(opacity='0.3' x='2' y='13' width='9' height='9' rx='2' fill='currentColor')
-                span.menu-title Dashboards
-        .menu-item.pt-5
-            .menu-content
-                span.menu-heading.fw-bold.text-uppercase.fs-7 Content
-        if hasSingleType
-            .menu-item.menu-accordion(data-kt-menu-trigger='click' class=`${activeNav.includes(`/admin/cms/single_type`) ? 'here show' : ''}`)
-                span.menu-link
-                    span.menu-icon
-                        //- <i class="fonticon-bicycle"></i>
-                        span.svg-icon.svg-icon-2
-                            svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-                                path(opacity='0.3' d='M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM12.5 18C12.5 17.4 12.6 17.5 12 17.5H8.5C7.9 17.5 8 17.4 8 18C8 18.6 7.9 18.5 8.5 18.5L12 18C12.6 18 12.5 18.6 12.5 18ZM16.5 13C16.5 12.4 16.6 12.5 16 12.5H8.5C7.9 12.5 8 12.4 8 13C8 13.6 7.9 13.5 8.5 13.5H15.5C16.1 13.5 16.5 13.6 16.5 13ZM12.5 8C12.5 7.4 12.6 7.5 12 7.5H8C7.4 7.5 7.5 7.4 7.5 8C7.5 8.6 7.4 8.5 8 8.5H12C12.6 8.5 12.5 8.6 12.5 8Z' fill='currentColor')
-                                rect(x='7' y='17' width='6' height='2' rx='1' fill='currentColor')
-                                rect(x='7' y='12' width='10' height='2' rx='1' fill='currentColor')
-                                rect(x='7' y='7' width='6' height='2' rx='1' fill='currentColor')
-                                path(d='M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z' fill='currentColor')
-                    span.menu-title Single Type
-                    span.menu-arrow
-                each singleNavItem, i in singleTypeNav
-                    .menu-sub.menu-sub-accordion
-                        .menu-item
-                            a.menu-link(href=`/admin/cms/${singleNavItem.slug}` class=`${activeNav == `/admin/cms/${singleNavItem.slug}` ? 'active' : ''}`)
-                                span.menu-bullet
-                                    span.bullet.bullet-dot
-                                span.menu-title #{singleNavItem.title}
-        each navItem, i in mainNav
-            .menu-item.menu-accordion(data-kt-menu-trigger='click' class=`${activeNav.includes(`/admin/cms/${navItem.slug}`) ? 'here show' : ''}`)
-                span.menu-link
-                    span.menu-icon
-                        //- <i class="fonticon-bicycle"></i>
-                        span.svg-icon.svg-icon-2 !{navItem.admin_icon}
-                    span.menu-title #{navItem.title}
-                    span.menu-arrow
-                .menu-sub.menu-sub-accordion
+        each navSection, section_index in mainNav
+            .menu-item.pt-5
+                .menu-content
+                    span.menu-heading.fw-bold.text-uppercase.fs-7 #{navSection.section}
+            each navItem, item_index in navSection.items
+                if navItem.expandable
+                    .menu-item.menu-accordion(data-kt-menu-trigger='click' class=`${activeNav.includes(`${navItem.path}`) ? 'here show' : ''}`)
+                        span.menu-link
+                            span.menu-icon
+                                //- <i class="fonticon-bicycle"></i>
+                                span.svg-icon.svg-icon-2 !{navItem.icon}
+                            span.menu-title #{navItem.label}
+                            span.menu-arrow
+                        .menu-sub.menu-sub-accordion
+                            each child, child_index in navItem.child
+                                .menu-item
+                                    a.menu-link(href=`${child.path}` class=`${activeNav == `${child.path}` ? 'active' : ''}`)
+                                        span.menu-bullet
+                                            span.bullet.bullet-dot
+                                        span.menu-title #{child.label}
+                else
                     .menu-item
-                        a.menu-link(href=`/admin/cms/${navItem.slug}` class=`${activeNav == `/admin/cms/${navItem.slug}` ? 'active' : ''}`)
-                            span.menu-bullet
-                                span.bullet.bullet-dot
-                            span.menu-title All #{navItem.title}
-                    .menu-item
-                        a.menu-link(href=`/admin/cms/${navItem.slug}/add` class=`${activeNav == `/admin/cms/${navItem.slug}/add` ? 'active' : ''}`)
-                            span.menu-bullet
-                                span.bullet.bullet-dot
-                            span.menu-title Add #{navItem.title}
-        .menu-item
-            a.menu-link(href=`/admin/cms/menu` class=`${activeNav == `/admin/cms/menu` ? 'active' : ''}`)
-                span.menu-icon
-                    span.svg-icon.svg-icon-2
-                        svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-                            path(d='M20 14H18V10H20C20.6 10 21 10.4 21 11V13C21 13.6 20.6 14 20 14ZM21 19V17C21 16.4 20.6 16 20 16H18V20H20C20.6 20 21 19.6 21 19ZM21 7V5C21 4.4 20.6 4 20 4H18V8H20C20.6 8 21 7.6 21 7Z' fill='currentColor')
-                            path(opacity='0.3' d='M17 22H3C2.4 22 2 21.6 2 21V3C2 2.4 2.4 2 3 2H17C17.6 2 18 2.4 18 3V21C18 21.6 17.6 22 17 22ZM10 7C8.9 7 8 7.9 8 9C8 10.1 8.9 11 10 11C11.1 11 12 10.1 12 9C12 7.9 11.1 7 10 7ZM13.3 16C14 16 14.5 15.3 14.3 14.7C13.7 13.2 12 12 10.1 12C8.10001 12 6.49999 13.1 5.89999 14.7C5.59999 15.3 6.19999 16 7.39999 16H13.3Z' fill='currentColor')
-                span.menu-title Menu
-        .menu-item
-            a.menu-link(href=`/admin/cms/media` class=`${activeNav == `/admin/cms/media` ? 'active' : ''}`)
-                span.menu-icon
-                    span.svg-icon.svg-icon-2
-                        svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-                            path(opacity='0.3' d='M22 5V19C22 19.6 21.6 20 21 20H19.5L11.9 12.4C11.5 12 10.9 12 10.5 12.4L3 20C2.5 20 2 19.5 2 19V5C2 4.4 2.4 4 3 4H21C21.6 4 22 4.4 22 5ZM7.5 7C6.7 7 6 7.7 6 8.5C6 9.3 6.7 10 7.5 10C8.3 10 9 9.3 9 8.5C9 7.7 8.3 7 7.5 7Z' fill='currentColor')
-                            path(d='M19.1 10C18.7 9.60001 18.1 9.60001 17.7 10L10.7 17H2V19C2 19.6 2.4 20 3 20H21C21.6 20 22 19.6 22 19V12.9L19.1 10Z' fill='currentColor')
-                span.menu-title Media
-        
-        .menu-item.pt-5
-            .menu-content
-                span.menu-heading.fw-bold.text-uppercase.fs-7 Custom Forms
-        .menu-item
-            a.menu-link(href='/admin/custom-forms' class=`${activeNav == `/admin/custom-forms` ? 'active' : ''}`)
-                span.menu-icon
-                    span.svg-icon.svg-icon-2
-                        svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-                            path(opacity='0.3' d='M22.1 11.5V12.6C22.1 13.2 21.7 13.6 21.2 13.7L19.9 13.9C19.7 14.7 19.4 15.5 18.9 16.2L19.7 17.2999C20 17.6999 20 18.3999 19.6 18.7999L18.8 19.6C18.4 20 17.8 20 17.3 19.7L16.2 18.9C15.5 19.3 14.7 19.7 13.9 19.9L13.7 21.2C13.6 21.7 13.1 22.1 12.6 22.1H11.5C10.9 22.1 10.5 21.7 10.4 21.2L10.2 19.9C9.4 19.7 8.6 19.4 7.9 18.9L6.8 19.7C6.4 20 5.7 20 5.3 19.6L4.5 18.7999C4.1 18.3999 4.1 17.7999 4.4 17.2999L5.2 16.2C4.8 15.5 4.4 14.7 4.2 13.9L2.9 13.7C2.4 13.6 2 13.1 2 12.6V11.5C2 10.9 2.4 10.5 2.9 10.4L4.2 10.2C4.4 9.39995 4.7 8.60002 5.2 7.90002L4.4 6.79993C4.1 6.39993 4.1 5.69993 4.5 5.29993L5.3 4.5C5.7 4.1 6.3 4.10002 6.8 4.40002L7.9 5.19995C8.6 4.79995 9.4 4.39995 10.2 4.19995L10.4 2.90002C10.5 2.40002 11 2 11.5 2H12.6C13.2 2 13.6 2.40002 13.7 2.90002L13.9 4.19995C14.7 4.39995 15.5 4.69995 16.2 5.19995L17.3 4.40002C17.7 4.10002 18.4 4.1 18.8 4.5L19.6 5.29993C20 5.69993 20 6.29993 19.7 6.79993L18.9 7.90002C19.3 8.60002 19.7 9.39995 19.9 10.2L21.2 10.4C21.7 10.5 22.1 11 22.1 11.5ZM12.1 8.59998C10.2 8.59998 8.6 10.2 8.6 12.1C8.6 14 10.2 15.6 12.1 15.6C14 15.6 15.6 14 15.6 12.1C15.6 10.2 14 8.59998 12.1 8.59998Z' fill='currentColor')
-                            path(d='M17.1 12.1C17.1 14.9 14.9 17.1 12.1 17.1C9.30001 17.1 7.10001 14.9 7.10001 12.1C7.10001 9.29998 9.30001 7.09998 12.1 7.09998C14.9 7.09998 17.1 9.29998 17.1 12.1ZM12.1 10.1C11 10.1 10.1 11 10.1 12.1C10.1 13.2 11 14.1 12.1 14.1C13.2 14.1 14.1 13.2 14.1 12.1C14.1 11 13.2 10.1 12.1 10.1Z' fill='currentColor')
-                span.menu-title View Forms
-        .menu-item
-            a.menu-link(href='/admin/custom-forms/add' class=`${activeNav == `/admin/custom-forms/add` ? 'active' : ''}`)
-                span.menu-icon
-                    span.svg-icon.svg-icon-2
-                        svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-                            path(opacity='0.3' d='M22.1 11.5V12.6C22.1 13.2 21.7 13.6 21.2 13.7L19.9 13.9C19.7 14.7 19.4 15.5 18.9 16.2L19.7 17.2999C20 17.6999 20 18.3999 19.6 18.7999L18.8 19.6C18.4 20 17.8 20 17.3 19.7L16.2 18.9C15.5 19.3 14.7 19.7 13.9 19.9L13.7 21.2C13.6 21.7 13.1 22.1 12.6 22.1H11.5C10.9 22.1 10.5 21.7 10.4 21.2L10.2 19.9C9.4 19.7 8.6 19.4 7.9 18.9L6.8 19.7C6.4 20 5.7 20 5.3 19.6L4.5 18.7999C4.1 18.3999 4.1 17.7999 4.4 17.2999L5.2 16.2C4.8 15.5 4.4 14.7 4.2 13.9L2.9 13.7C2.4 13.6 2 13.1 2 12.6V11.5C2 10.9 2.4 10.5 2.9 10.4L4.2 10.2C4.4 9.39995 4.7 8.60002 5.2 7.90002L4.4 6.79993C4.1 6.39993 4.1 5.69993 4.5 5.29993L5.3 4.5C5.7 4.1 6.3 4.10002 6.8 4.40002L7.9 5.19995C8.6 4.79995 9.4 4.39995 10.2 4.19995L10.4 2.90002C10.5 2.40002 11 2 11.5 2H12.6C13.2 2 13.6 2.40002 13.7 2.90002L13.9 4.19995C14.7 4.39995 15.5 4.69995 16.2 5.19995L17.3 4.40002C17.7 4.10002 18.4 4.1 18.8 4.5L19.6 5.29993C20 5.69993 20 6.29993 19.7 6.79993L18.9 7.90002C19.3 8.60002 19.7 9.39995 19.9 10.2L21.2 10.4C21.7 10.5 22.1 11 22.1 11.5ZM12.1 8.59998C10.2 8.59998 8.6 10.2 8.6 12.1C8.6 14 10.2 15.6 12.1 15.6C14 15.6 15.6 14 15.6 12.1C15.6 10.2 14 8.59998 12.1 8.59998Z' fill='currentColor')
-                            path(d='M17.1 12.1C17.1 14.9 14.9 17.1 12.1 17.1C9.30001 17.1 7.10001 14.9 7.10001 12.1C7.10001 9.29998 9.30001 7.09998 12.1 7.09998C14.9 7.09998 17.1 9.29998 17.1 12.1ZM12.1 10.1C11 10.1 10.1 11 10.1 12.1C10.1 13.2 11 14.1 12.1 14.1C13.2 14.1 14.1 13.2 14.1 12.1C14.1 11 13.2 10.1 12.1 10.1Z' fill='currentColor')
-                span.menu-title Add New Form
-        
-        .menu-item.pt-5
-            .menu-content
-                span.menu-heading.fw-bold.text-uppercase.fs-7 Settings
-        .menu-item
-            a.menu-link(href='/admin/settings/general' class=`${activeNav == `/admin/settings/general` ? 'active' : ''}`)
-                span.menu-icon
-                    span.svg-icon.svg-icon-2
-                        svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-                            path(opacity='0.3' d='M22.1 11.5V12.6C22.1 13.2 21.7 13.6 21.2 13.7L19.9 13.9C19.7 14.7 19.4 15.5 18.9 16.2L19.7 17.2999C20 17.6999 20 18.3999 19.6 18.7999L18.8 19.6C18.4 20 17.8 20 17.3 19.7L16.2 18.9C15.5 19.3 14.7 19.7 13.9 19.9L13.7 21.2C13.6 21.7 13.1 22.1 12.6 22.1H11.5C10.9 22.1 10.5 21.7 10.4 21.2L10.2 19.9C9.4 19.7 8.6 19.4 7.9 18.9L6.8 19.7C6.4 20 5.7 20 5.3 19.6L4.5 18.7999C4.1 18.3999 4.1 17.7999 4.4 17.2999L5.2 16.2C4.8 15.5 4.4 14.7 4.2 13.9L2.9 13.7C2.4 13.6 2 13.1 2 12.6V11.5C2 10.9 2.4 10.5 2.9 10.4L4.2 10.2C4.4 9.39995 4.7 8.60002 5.2 7.90002L4.4 6.79993C4.1 6.39993 4.1 5.69993 4.5 5.29993L5.3 4.5C5.7 4.1 6.3 4.10002 6.8 4.40002L7.9 5.19995C8.6 4.79995 9.4 4.39995 10.2 4.19995L10.4 2.90002C10.5 2.40002 11 2 11.5 2H12.6C13.2 2 13.6 2.40002 13.7 2.90002L13.9 4.19995C14.7 4.39995 15.5 4.69995 16.2 5.19995L17.3 4.40002C17.7 4.10002 18.4 4.1 18.8 4.5L19.6 5.29993C20 5.69993 20 6.29993 19.7 6.79993L18.9 7.90002C19.3 8.60002 19.7 9.39995 19.9 10.2L21.2 10.4C21.7 10.5 22.1 11 22.1 11.5ZM12.1 8.59998C10.2 8.59998 8.6 10.2 8.6 12.1C8.6 14 10.2 15.6 12.1 15.6C14 15.6 15.6 14 15.6 12.1C15.6 10.2 14 8.59998 12.1 8.59998Z' fill='currentColor')
-                            path(d='M17.1 12.1C17.1 14.9 14.9 17.1 12.1 17.1C9.30001 17.1 7.10001 14.9 7.10001 12.1C7.10001 9.29998 9.30001 7.09998 12.1 7.09998C14.9 7.09998 17.1 9.29998 17.1 12.1ZM12.1 10.1C11 10.1 10.1 11 10.1 12.1C10.1 13.2 11 14.1 12.1 14.1C13.2 14.1 14.1 13.2 14.1 12.1C14.1 11 13.2 10.1 12.1 10.1Z' fill='currentColor')
-                span.menu-title General settings
-        .menu-item.menu-accordion(data-kt-menu-trigger='click' class=`${activeNav.includes(`/admin/settings/integrations`) ? 'here show' : ''}`)
-            span.menu-link
-                span.menu-icon
-                    //- <i class="fonticon-bicycle"></i>
-                    span.svg-icon.svg-icon-2
-                        svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-                            path(opacity='0.3' d='M18 22C19.7 22 21 20.7 21 19C21 18.5 20.9 18.1 20.7 17.7L15.3 6.30005C15.1 5.90005 15 5.5 15 5C15 3.3 16.3 2 18 2H6C4.3 2 3 3.3 3 5C3 5.5 3.1 5.90005 3.3 6.30005L8.7 17.7C8.9 18.1 9 18.5 9 19C9 20.7 7.7 22 6 22H18Z' fill='currentColor')
-                            path(d='M18 2C19.7 2 21 3.3 21 5H9C9 3.3 7.7 2 6 2H18Z' fill='currentColor')
-                            path(d='M9 19C9 20.7 7.7 22 6 22C4.3 22 3 20.7 3 19H9Z' fill='currentColor')
-                span.menu-title Integrations
-                span.menu-arrow
-            .menu-sub.menu-sub-accordion
-                .menu-item
-                    a.menu-link(href=`/admin/settings/integrations/marketing` class=`${activeNav == `/admin/settings/integrations/marketing` ? 'active' : ''}`)
-                        span.menu-bullet
-                            span.bullet.bullet-dot
-                        span.menu-title Marketing Tools
-        .menu-item
-            a.menu-link(href='/admin/settings/seo' class=`${activeNav == `/admin/settings/seo` ? 'active' : ''}`)
-                span.menu-icon
-                    span.svg-icon.svg-icon-2
-                        svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-                            path(opacity='0.3' d='M18 22C19.7 22 21 20.7 21 19C21 18.5 20.9 18.1 20.7 17.7L15.3 6.30005C15.1 5.90005 15 5.5 15 5C15 3.3 16.3 2 18 2H6C4.3 2 3 3.3 3 5C3 5.5 3.1 5.90005 3.3 6.30005L8.7 17.7C8.9 18.1 9 18.5 9 19C9 20.7 7.7 22 6 22H18Z' fill='currentColor')
-                            path(d='M18 2C19.7 2 21 3.3 21 5H9C9 3.3 7.7 2 6 2H18Z' fill='currentColor')
-                            path(d='M9 19C9 20.7 7.7 22 6 22C4.3 22 3 20.7 3 19H9Z' fill='currentColor')
-                span.menu-title SEO settings
-        .menu-item
-            a.menu-link(href='/admin/settings/notification' class=`${activeNav == `/admin/settings/notification` ? 'active' : ''}`)
-                span.menu-icon
-                    span.svg-icon.svg-icon-2
-                        svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-                            path(opacity='0.3' d='M18 22C19.7 22 21 20.7 21 19C21 18.5 20.9 18.1 20.7 17.7L15.3 6.30005C15.1 5.90005 15 5.5 15 5C15 3.3 16.3 2 18 2H6C4.3 2 3 3.3 3 5C3 5.5 3.1 5.90005 3.3 6.30005L8.7 17.7C8.9 18.1 9 18.5 9 19C9 20.7 7.7 22 6 22H18Z' fill='currentColor')
-                            path(d='M18 2C19.7 2 21 3.3 21 5H9C9 3.3 7.7 2 6 2H18Z' fill='currentColor')
-                            path(d='M9 19C9 20.7 7.7 22 6 22C4.3 22 3 20.7 3 19H9Z' fill='currentColor')
-                span.menu-title Notification settings
-        .menu-item.pt-5
-            .menu-content
-                span.menu-heading.fw-bold.text-uppercase.fs-7 Logs
-        .menu-item
-            //- a.menu-link(href='/admin/log/files')
-            a.menu-link(href='#')
-                span.menu-icon
-                    span.svg-icon.svg-icon-2
-                        svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-                            path(d='M16.95 18.9688C16.75 18.9688 16.55 18.8688 16.35 18.7688C15.85 18.4688 15.75 17.8688 16.05 17.3688L19.65 11.9688L16.05 6.56876C15.75 6.06876 15.85 5.46873 16.35 5.16873C16.85 4.86873 17.45 4.96878 17.75 5.46878L21.75 11.4688C21.95 11.7688 21.95 12.2688 21.75 12.5688L17.75 18.5688C17.55 18.7688 17.25 18.9688 16.95 18.9688ZM7.55001 18.7688C8.05001 18.4688 8.15 17.8688 7.85 17.3688L4.25001 11.9688L7.85 6.56876C8.15 6.06876 8.05001 5.46873 7.55001 5.16873C7.05001 4.86873 6.45 4.96878 6.15 5.46878L2.15 11.4688C1.95 11.7688 1.95 12.2688 2.15 12.5688L6.15 18.5688C6.35 18.8688 6.65 18.9688 6.95 18.9688C7.15 18.9688 7.35001 18.8688 7.55001 18.7688Z' fill='currentColor')
-                            path(opacity='0.3' d='M10.45 18.9687C10.35 18.9687 10.25 18.9687 10.25 18.9687C9.75 18.8687 9.35 18.2688 9.55 17.7688L12.55 5.76878C12.65 5.26878 13.25 4.8687 13.75 5.0687C14.25 5.1687 14.65 5.76878 14.45 6.26878L11.45 18.2688C11.35 18.6688 10.85 18.9687 10.45 18.9687Z' fill='currentColor')
-                span.menu-title App Log
+                        a.menu-link(href=`${navItem.path}` class=`${activeNav == `${navItem.path}` ? 'active' : ''}`)
+                            span.menu-icon
+                                span.svg-icon.svg-icon-2 !{navItem.icon}
+                            span.menu-title #{navItem.label}
 </div>
 <div class="app-navbar-item align-items-stretch absolute p-2 left-0 bottom-0 w-full bg-slate-600">
     <div class="app-navbar-item ms-1 ms-lg-3 relative" id="kt_header_user_menu_toggle">
