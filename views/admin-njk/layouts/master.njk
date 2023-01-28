@@ -55,7 +55,7 @@
 
 						<div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="kt_app_header_wrapper">
 							//- BEGIN:: Top Navigation
-							include ../partials/_top-nav
+							{% include '../partials/_top-nav' %}
 							//- END:: Top Navigation
 						</div>
 
@@ -63,7 +63,7 @@
 							<div class="app-navbar-item align-items-stretch ms-1 ms-lg-3 me-10">
 
 								//- BEGIN:: Top Search Toggle
-								//- include ../partials/_selected-brand
+								{# {% include '../partials/_selected-brand' %} #}
 								//- END:: Top Search Toggle
 							</div>
 
@@ -110,7 +110,7 @@
 			<div class="flex flex-1 flex-row flex-row-fluid" id="kt_app_wrapper">
 				<div class="flex flex-column w-[230px] bg-slate-700 overflow-hidden h-screen relative pb-20">
 					//- BEGIN:: Main Navigation
-					include ../partials/_side-nav
+					{% include '../partials/_side-nav' %}
 					//- END:: Main Navigation
 				</div>
 
