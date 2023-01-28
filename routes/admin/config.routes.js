@@ -6,6 +6,7 @@ const countryController = require('../../controller/config/country.controller')
 const languageController = require('../../controller/config/language.controller')
 const brandController = require('../../controller/config/brand.controller')
 const contentTypeController = require('../../controller/config/contentType.controller')
+const adminNavController = require('../../controller/config/adminNav.controller')
 const appSettingsController = require('../../controller/config/appSettings.controller')
 
 router.group('/', (router) => {
@@ -50,8 +51,19 @@ router.group('/', (router) => {
         router.post('/delete', contentTypeController.deleteItem)
     })
 
+    router.group('/admin-nav', (router) => {
+        router.get('/', adminNavController.list)
+        router.post('/section/save', adminNavController.saveSection)
+        router.get('/section/delete/:id', adminNavController.deleteSection)
+        router.post('/item/save', adminNavController.saveItem)
+        router.get('/item/delete/:section/:id', adminNavController.deleteItem)
+        router.post('/child/save', adminNavController.saveChild)
+        router.get('/child/delete/:section/:item/:id', adminNavController.deleteChild)
+        // router.post('/delete', adminNavController.deleteItem)
+    })
+
     router.group('/app-settings', (router) => {
-        router.get('', appSettingsController.list)
+        router.get('/', appSettingsController.list)
         router.post('/save', appSettingsController.save)
     })
 })

@@ -4,6 +4,7 @@ const _ = require('lodash')
 const Brand = require('../model/Brand')
 const Settings = require('../model/Settings')
 const ContentType = require('../model/ContentType')
+const AdminNav = require('../model/AdminNav')
 var session = require('express-session')
 const { default: collect } = require('collect.js')
 const { navConfig, customNav } = require('../config/admin.config')
@@ -82,7 +83,7 @@ const authUser = async (req, res, next) => {
 }
 
 const mainNavGenerator = async (req, res, next) => {
-    const ContentType = require('../model/ContentType')
+    const admin_nav = await AdminNav.find().select('-_id -created_at -updated_at -__v')
     const contentTypes = await ContentType.find({
         // single_type: false,
         in_use: true,
@@ -143,7 +144,8 @@ const mainNavGenerator = async (req, res, next) => {
         //     },
         // ]
     }
-    const mixed_nav = _.sortBy(_.concat(navConfig, customNav), 'position')
+    const mixed_nav = _.sortBy(_.concat(navConfig, admin_nav), 'position')
+    console.log(mixed_nav)
     res.locals.mainNav = mixed_nav
     res.locals.activeNav = req.originalUrl
     // console.log(singleTypeItems)

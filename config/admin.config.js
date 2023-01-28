@@ -156,7 +156,7 @@ const customNav = [
                 child: [
                     {
                         label: 'Categories',
-                        path: '/admin/ecommerce/categories',
+                        path: '/admin/ecommerce/list',
                     },
                     {
                         label: 'Products',

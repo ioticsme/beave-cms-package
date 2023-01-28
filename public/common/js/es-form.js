@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Converting the form data to JSON for validation purpose
-        let sendData = FormDataJson.toJson(document.querySelector('.es-form'))
+        let sendData = FormDataJson.toJson(document.querySelector(`#${form.getAttribute('id')}`))
 
         let formData = new FormData()
         let images = {}
@@ -312,6 +312,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('.es-form').forEach(function (sourceForm) {
         sourceForm.addEventListener('submit', function (e) {
+            // console.log(sourceForm.getAttribute('id'))
             e.preventDefault()
             sourceForm.querySelector('.form-submit-btn').disabled = true
             sourceForm
