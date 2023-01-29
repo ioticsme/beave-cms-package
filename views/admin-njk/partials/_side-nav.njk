@@ -96,7 +96,7 @@
                 <div class=`menu-item menu-accordion ${activeNav.includes(`${navItem.path}`) ? 'here show' : ''}` data-kt-menu-trigger="click">
                     <span class="menu-link">
                         <span class="menu-icon">
-                            <span class="svg-icon svg-icon-2">{{navItem.icon|raw}}</span>
+                            <span class="svg-icon svg-icon-2">{{navItem.icon|safe}}</span>
                         </span>
                         <span class="menu-title">{{navItem.label}}</span>
                         <span class="menu-arrow"></span>
@@ -118,7 +118,7 @@
                 <div class="menu-item">
                     <a class=`menu-link ${navItem.path}` class=`${activeNav == `${navItem.path}` ? 'active' : ''}` href="{{navItem.path}}">
                         <span class="menu-icon">
-                            <span class="svg-icon svg-icon-2">{{navItem.icon|raw}}</span>
+                            <span class="svg-icon svg-icon-2">{{navItem.icon|safe}}</span>
                         </span>
                         <span class="menu-title">{{navItem.label}}</span>
                     </a>
