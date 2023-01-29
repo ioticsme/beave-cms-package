@@ -105,7 +105,8 @@ block content
 															<div class="menu-link px-3" url="#{url}" id="#{item._id}" onClick=changeStatus(this,#{item.published})>Publish</div>
 														</div>
 												<div class="menu-item px-3">
-													<div class="menu-link px-3" id=`${item._id}` url=`/admin/cms/${reqContentType.slug}/delete` data-kt-subscriptions-table-filter="delete_row" onClick="deleteItem(this)">Delete</div>
+													div.menu-link.px-3(id=`${item._id}` url=`/admin/cms/${reqContentType.slug}/delete` 'data-kt-subscriptions-table-filter'="delete_row" onClick="deleteItem(this)")
+														| Delete
 												</div>
 											</div>
 										</td>

@@ -204,6 +204,7 @@ const deleteContent = async (req, res) => {
             url: `/cms/${slug}`,
         })
     } catch (error) {
+        // console.log(error)
         return res.status(404).json({ error: 'Something went wrong' })
     }
 }
@@ -612,7 +613,10 @@ const saveTemp = async (req, res) => {
                         restructuredJson.push({
                             language: 'common',
                             group_name: groupName,
-                            is_repeated: (group_info && group_info['repeater_group']) ? group_info['repeater_group'] : false,
+                            is_repeated:
+                                group_info && group_info['repeater_group']
+                                    ? group_info['repeater_group']
+                                    : false,
                             field: fieldName,
                             value: field,
                         })
@@ -620,7 +624,7 @@ const saveTemp = async (req, res) => {
                 }
             }
         })
-        
+
         let data = {
             type_id: type._id,
             type_slug: type.slug,
@@ -672,7 +676,7 @@ const saveTemp = async (req, res) => {
             //     ? slugify(body.slug?.en?.toLowerCase())
             //     : slugify(body.title?.en?.toLowerCase())
             const existingContent = await Content.findOne({
-                _id: req.body._id
+                _id: req.body._id,
             })
             const cache_key = `content-${brandCode}-${countryCode}-${type.slug}-${existingContent.slug}`
             // Update content
