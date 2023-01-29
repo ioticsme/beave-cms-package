@@ -82,8 +82,81 @@ const authUser = async (req, res, next) => {
     }
 }
 
+// const mainNavGenerator = async (req, res, next) => {
+//     const admin_nav = await AdminNav.find().select('-_id -created_at -updated_at -__v')
+//     const contentTypes = await ContentType.find({
+//         // single_type: false,
+//         in_use: true,
+//     })
+//         .select('-_id title slug admin_icon position in_use single_type')
+//         .sort([['position', 'ascending']])
+//     // app.locals.mainNav = contentTypes
+//     const listTypeItems = collect(contentTypes)
+//         .filter((item) => item.single_type === false)
+//         .map((item) => {
+//             return {
+//                 label: item.title,
+//                 expandable: true,
+//                 icon: item.admin_icon,
+//                 position: item.position,
+//                 child: [
+//                     {
+//                         label: `All ${item.title}`,
+//                         path: `/admin/cms/${item.slug}`,
+//                     },
+//                     {
+//                         label: `Add ${item.title}`,
+//                         path: `/admin/cms/${item.slug}/add`,
+//                     },
+//                 ],
+//             }
+//         })
+//         .all()
+
+//     const singleTypeItems = collect(contentTypes)
+//         .filter((item) => item.single_type === true)
+//         .all()
+
+//     const contentSection = _.find(navConfig, { section: 'Content' })
+//     contentSection.items = _.uniqBy(
+//         _.concat(contentSection.items, listTypeItems),
+//         (item) => {
+//             return item.label
+//         }
+//     )
+//     if (!singleTypeItems.length) {
+//         _.remove(contentSection.items, (item) => item.label === 'Single Type')
+//     } else {
+//         const single_type_nav = _.find(contentSection.items, {
+//             label: 'Single Type',
+//         })
+//         single_type_nav.child = _.map(singleTypeItems, single_item => {
+//             return {
+//                 label: single_item.title,
+//                 path: `/admin/cms/${single_item.slug}`,
+//             }
+//         })
+//         // console.log(singleTypeItems)
+//         // single_type_nav.child = [
+//         //     {
+//         //         label: 'Marketing Tool',
+//         //         path: '/admin/settings/integrations/marketing',
+//         //     },
+//         // ]
+//     }
+//     const mixed_nav = _.sortBy(_.concat(navConfig, admin_nav), 'position')
+//     // console.log(mixed_nav)
+//     res.locals.mainNav = mixed_nav
+//     res.locals.activeNav = req.originalUrl
+//     // console.log(singleTypeItems)
+//     next()
+// }
+
 const mainNavGenerator = async (req, res, next) => {
-    const admin_nav = await AdminNav.find().select('-_id -created_at -updated_at -__v')
+    let preBuildnav = navConfig
+    const admin_nav = await AdminNav.find().select(
+        '-_id -created_at -updated_at -__v'
+    )
     const contentTypes = await ContentType.find({
         // single_type: false,
         in_use: true,
@@ -117,20 +190,23 @@ const mainNavGenerator = async (req, res, next) => {
         .filter((item) => item.single_type === true)
         .all()
 
-    const contentSection = _.find(navConfig, { section: 'Content' })
-    contentSection.items = _.uniqBy(
-        _.concat(contentSection.items, listTypeItems),
-        (item) => {
-            return item.label
-        }
-    )
+    const contentSection = _.find(preBuildnav, { section: 'Content' })
+    if (contentSection?.items?.length) {
+        contentSection.items = _.uniqBy(
+            _.concat(contentSection.items, listTypeItems),
+            (item) => {
+                return item.label
+            }
+        )
+    }
+
     if (!singleTypeItems.length) {
-        _.remove(contentSection.items, (item) => item.label === 'Single Type')
+        _.remove(contentSection?.items, (item) => item.label === 'Single Type')
     } else {
         const single_type_nav = _.find(contentSection.items, {
             label: 'Single Type',
         })
-        single_type_nav.child = _.map(singleTypeItems, single_item => {
+        single_type_nav.child = _.map(singleTypeItems, (single_item) => {
             return {
                 label: single_item.title,
                 path: `/admin/cms/${single_item.slug}`,
@@ -144,9 +220,35 @@ const mainNavGenerator = async (req, res, next) => {
         //     },
         // ]
     }
-    const mixed_nav = _.sortBy(_.concat(navConfig, admin_nav), 'position')
-    console.log(mixed_nav)
-    res.locals.mainNav = mixed_nav
+    // const mixed_nav = _.sortBy(_.concat(preBuildnav, admin_nav), 'position')
+    
+
+    const findSection = (section) => {
+        return _.findIndex(preBuildnav, { section })
+    }
+
+    _.forEach(admin_nav, (customSection) => {
+        const sectionIndex = findSection(customSection.section)
+        if (sectionIndex !== -1) {
+            _.forEach(customSection.items, (customItem) => {
+                const itemIndex = _.findIndex(preBuildnav[sectionIndex].items, {
+                    label: customItem.label,
+                })
+                if (itemIndex === -1) {
+                    console.log(`sectionIndex (${customSection.section}): ${sectionIndex}`)
+                    preBuildnav[sectionIndex].items.push(customItem)
+                }
+            })
+        } else {
+            preBuildnav.push(customSection)
+        }
+    })
+
+    _.sortBy(preBuildnav, 'position')
+    // console.log(mixed_nav[4].items[4].child)
+    // console.log(preBuildnav)
+
+    res.locals.mainNav = preBuildnav
     res.locals.activeNav = req.originalUrl
     // console.log(singleTypeItems)
     next()
