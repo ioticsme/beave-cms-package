@@ -16,7 +16,7 @@
 		//- <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
 	</head>
 
-	//- body#kt_app_body.app-default(data-kt-name="metronic" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true")
+	{# //- body#kt_app_body.app-default(data-kt-name="metronic" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true") #}
 	<body id="kt_app_body" class="app-default" data-kt-name="metronic" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true">
 		<script type="text/javascript">
 			//- if (document.documentElement) {
@@ -34,7 +34,7 @@
 			//- 	document.documentElement.setAttribute("data-theme", themeMode);
 			//- }
 		</script>
-		//- #kt_app_root.d-flex.flex-column.flex-root.app-root
+		{# //- #kt_app_root.d-flex.flex-column.flex-root.app-root #}
 		<div id="kt_app_root" class="flex flex-column flex-root app-root">
 			<div class="app-page flex-column flex-column-fluid hidden" id="kt_app_page">
 				<div id="kt_app_header" class="app-header">
@@ -54,17 +54,17 @@
 						</div>
 
 						<div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="kt_app_header_wrapper">
-							//- BEGIN:: Top Navigation
+							{# //- BEGIN:: Top Navigation #}
 							{% include '../partials/_top-nav' %}
-							//- END:: Top Navigation
+							{# //- END:: Top Navigation #}
 						</div>
 
 						<div class="app-navbar flex-shrink-0">
 							<div class="app-navbar-item align-items-stretch ms-1 ms-lg-3 me-10">
 
-								//- BEGIN:: Top Search Toggle
+								{# //- BEGIN:: Top Search Toggle #}
 								{# {% include '../partials/_selected-brand' %} #}
-								//- END:: Top Search Toggle
+								{# //- END:: Top Search Toggle #}
 							</div>
 
 							<div class="app-navbar-item align-items-stretch ms-1 ms-lg-3">
@@ -77,7 +77,9 @@
 													<img alt="Logo" src="/cms-static/admin/assets/media/avatars/blank.png">
 												</div>
 												<div class="d-flex flex-column">
-													<div class="fw-bold d-flex align-items-center fs-5">#{authUser.admin_name}<span class="badge badge-success ms-2">#{authUser.admin_role}</span>
+													<div class="fw-bold d-flex align-items-center fs-5">
+														{{authUser.admin_name}}
+														<span class="badge badge-success ms-2">{{authUser.admin_role}}</span>
 													</div>
 												</div>
 											</div>
@@ -109,16 +111,16 @@
 
 			<div class="flex flex-1 flex-row flex-row-fluid" id="kt_app_wrapper">
 				<div class="flex flex-column w-[230px] bg-slate-700 overflow-hidden h-screen relative pb-20">
-					//- BEGIN:: Main Navigation
+					{# //- BEGIN:: Main Navigation #}
 					{% include '../partials/_side-nav' %}
-					//- END:: Main Navigation
+					{# //- END:: Main Navigation #}
 				</div>
 
 				<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
 
-					//- BEGIN::LOADING MAIN PAGE CONTENT PART
+					{# //- BEGIN::LOADING MAIN PAGE CONTENT PART #}
 					{% block content %}{% endblock %} 
-					//- END::LOADING MAIN PAGE CONTENT PART
+					{# //- END::LOADING MAIN PAGE CONTENT PART #}
 
 
 					<div class="app-footer" id="kt_app_footer">
