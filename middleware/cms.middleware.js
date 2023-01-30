@@ -1,6 +1,7 @@
 require('dotenv').config()
 const fs = require('fs')
 const _ = require('lodash')
+const path = require('path')
 const Brand = require('../model/Brand')
 const Settings = require('../model/Settings')
 const ContentType = require('../model/ContentType')
