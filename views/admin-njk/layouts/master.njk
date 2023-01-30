@@ -146,6 +146,15 @@
 
 		<script>
 			var hostUrl = "assets/";
+			{# //- BEGIN:: Active accordion nav #}
+			document.querySelectorAll('.menu-accordion').forEach((mainAccordion) => {
+				mainAccordion.querySelectorAll('.menu-sub-accordion .menu-item .menu-link').forEach((subAccordionItem)=> {
+					if(subAccordionItem.classList.contains('active')) {
+						mainAccordion.classList.add('here', 'show')
+					}
+				})
+			})
+			{# //- END:: Active accordion nav #}
 		</script>
 		<script src='/cms-static/admin/assets/plugins/global/plugins.bundle.js'></script>
 		<script src='/cms-static/admin/assets/js/scripts.bundle.js'></script>
