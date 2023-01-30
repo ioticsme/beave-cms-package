@@ -7,7 +7,17 @@ const ContentType = require('../model/ContentType')
 const AdminNav = require('../model/AdminNav')
 var session = require('express-session')
 const { default: collect } = require('collect.js')
-const { navConfig, customNav } = require('../config/admin.config')
+const { navConfig } = require('../config/admin.config')
+let customNavConfig
+try {
+    customNavConfig = require(path.resolve(
+        __dirname,
+        '../../../../',
+        './config/admin.config.js'
+    ))
+} catch (error) {
+    customNavConfig = []
+}
 
 const baseConfig = async (req, res, next) => {
     // res.locals.clientName = `${process.env.CLIENT_NAME}`
@@ -154,6 +164,7 @@ const authUser = async (req, res, next) => {
 
 const mainNavGenerator = async (req, res, next) => {
     let preBuildnav = _.cloneDeep(navConfig)
+    let customBuildnav = _.cloneDeep(customNavConfig || [])
     const admin_nav_db_data = await AdminNav.find().select(
         '-_id -created_at -updated_at -__v'
     )
@@ -233,6 +244,23 @@ const mainNavGenerator = async (req, res, next) => {
         return _.findIndex(preBuildnav, { section })
     }
 
+    _.forEach(customBuildnav, (customSection) => {
+        const sectionIndex = findSection(customSection.section)
+        if (sectionIndex !== -1) {
+            _.forEach(customSection.items, (customItem) => {
+                const itemIndex = _.findIndex(preBuildnav[sectionIndex].items, {
+                    label: customItem.label,
+                })
+                if (itemIndex === -1) {
+                    // console.log(`sectionIndex (${customSection.section}): ${sectionIndex}`)
+                    preBuildnav[sectionIndex].items.push(customItem)
+                }
+            })
+        } else {
+            preBuildnav.push(customSection)
+        }
+    })
+
     _.forEach(adminNav, (customSection) => {
         const sectionIndex = findSection(customSection.section)
         if (sectionIndex !== -1) {
@@ -261,7 +289,6 @@ const mainNavGenerator = async (req, res, next) => {
     // console.log(singleTypeItems)
     next()
 }
-
 const allBrands = async (req, res, next) => {
     const allBrands = await Brand.find()
         .populate('languages')
