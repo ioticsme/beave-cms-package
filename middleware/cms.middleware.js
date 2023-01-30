@@ -252,11 +252,11 @@ const mainNavGenerator = async (req, res, next) => {
 
     // console.log(preBuildnav)
 
-    _.sortBy(preBuildnav, 'position')
+    const mixed_nav = _.sortBy(preBuildnav, 'position')
     // console.log(mixed_nav[4].items[4].child)
-    // console.log(preBuildnav)
+    // console.log(mixed_nav)
 
-    res.locals.mainNav = preBuildnav
+    res.locals.mainNav = mixed_nav
     res.locals.activeNav = req.originalUrl
     // console.log(singleTypeItems)
     next()

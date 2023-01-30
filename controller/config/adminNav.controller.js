@@ -43,7 +43,7 @@ const saveSection = async (req, res) => {
 }
 
 const saveItem = async (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
     const schema = Joi.object({
         section: Joi.string().required(),
         label: Joi.string().required(),
@@ -83,7 +83,7 @@ const saveItem = async (req, res) => {
 }
 
 const saveChild = async (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
     const schema = Joi.object({
         section: Joi.string().required(),
         item: Joi.string().required(),
