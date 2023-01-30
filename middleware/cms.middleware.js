@@ -153,10 +153,17 @@ const authUser = async (req, res, next) => {
 // }
 
 const mainNavGenerator = async (req, res, next) => {
-    let preBuildnav = navConfig
-    const admin_nav = await AdminNav.find().select(
+    let preBuildnav = _.cloneDeep(navConfig)
+    const admin_nav_db_data = await AdminNav.find().select(
         '-_id -created_at -updated_at -__v'
     )
+    const adminNav = _.cloneDeep(admin_nav_db_data)
+
+    // const path = req.path;
+    // console.log(`The request path is: ${path}`);
+    // console.log('DB Fetch Begin')
+    // console.log(admin_nav)
+    // console.log('DB Fetch END')
     const contentTypes = await ContentType.find({
         // single_type: false,
         in_use: true,
@@ -221,13 +228,12 @@ const mainNavGenerator = async (req, res, next) => {
         // ]
     }
     // const mixed_nav = _.sortBy(_.concat(preBuildnav, admin_nav), 'position')
-    
 
     const findSection = (section) => {
         return _.findIndex(preBuildnav, { section })
     }
 
-    _.forEach(admin_nav, (customSection) => {
+    _.forEach(adminNav, (customSection) => {
         const sectionIndex = findSection(customSection.section)
         if (sectionIndex !== -1) {
             _.forEach(customSection.items, (customItem) => {
@@ -235,7 +241,7 @@ const mainNavGenerator = async (req, res, next) => {
                     label: customItem.label,
                 })
                 if (itemIndex === -1) {
-                    console.log(`sectionIndex (${customSection.section}): ${sectionIndex}`)
+                    // console.log(`sectionIndex (${customSection.section}): ${sectionIndex}`)
                     preBuildnav[sectionIndex].items.push(customItem)
                 }
             })
@@ -243,6 +249,8 @@ const mainNavGenerator = async (req, res, next) => {
             preBuildnav.push(customSection)
         }
     })
+
+    // console.log(preBuildnav)
 
     _.sortBy(preBuildnav, 'position')
     // console.log(mixed_nav[4].items[4].child)
