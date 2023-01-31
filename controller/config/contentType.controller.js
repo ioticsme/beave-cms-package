@@ -179,6 +179,7 @@ const saveFields = async (req, res) => {
                     repeater_group: Joi.boolean().required(),
                     localisation: Joi.boolean().optional(),
                     fields: Joi.array().optional(),
+                    options: Joi.array().optional(),
                 })
             ),
         })

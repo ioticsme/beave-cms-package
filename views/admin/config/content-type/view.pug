@@ -193,9 +193,9 @@ block widgets
 						//- a.btn.btn-danger.m-1(href='#')
 						//- 	i.bi.bi-chat-square-text-fill.fs-4.me-2
 						//- 	|  Radio
-						//- a.btn.btn-dark.m-1(href='#')
-						//- 	i.bi.bi-chat-square-text-fill.fs-4.me-2
-						//- 	|  Dropdown
+						a.btn.btn-dark.m-1(href='#' data-value="dropdown")
+							i.bi.bi-chat-square-text-fill.fs-4.me-2
+							|  Dropdown
 					#text-field-section.modal-field-sections.d-none
 						form(class="field-form")
 							input(type="hidden" name="section_name_field" class="section_name_field")
@@ -238,6 +238,16 @@ block widgets
 							input(type="hidden" name="section_name_field" class="section_name_field")
 							input(type="hidden" name="field_type" value="richtext")
 							input(type="text" name="field_name" id="field_name" class="form-control" placeholder="Field Name")
+							.row.mt-5
+								.col-12
+									button.btn.btn-light(type='reset' data-bs-dismiss='modal') Back
+									button.btn.btn-primary(type='submit') Add Field
+					#dropdown-field-section.modal-field-sections.d-none
+						form(class="field-form")
+							input(type="hidden" name="section_name_field" class="section_name_field")
+							input(type="hidden" name="field_type" value="dropdown")
+							input(type="text" name="field_name" id="field_name" class="form-control" placeholder="Field Name")
+							textarea(name="field_options" id="field_options" class="form-control mt-2" placeholder="Field option Values")
 							.row.mt-5
 								.col-12
 									button.btn.btn-light(type='reset' data-bs-dismiss='modal') Back

@@ -173,6 +173,18 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
         const selected_section = e.target.section_name_field.value
         const slected_field_type = e.target.field_type.value
         const selected_field_name = e.target.field_name.value
+        const selected_field_options = e.target.field_options.value.trim()
+        const options = []
+        selected_field_options.split(',').map((option) => {
+            if (option.length) {
+                const label = option.split('|')[0].trim()
+                const value = option.split('|')[1].trim()
+                if (label.length) {
+                    options.push({ label, value })
+                }
+            }
+        })
+
         const newField = {
             id: 'timestamp',
             type: slected_field_type,
@@ -180,6 +192,7 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
             name: selected_field_name,
             position: 1,
             localization: true,
+            options: options,
             validation: {
                 required: true,
                 private: false,
@@ -191,6 +204,7 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
             section: selected_section,
         })
         _.set(fieldSection, 'fields', fieldSection.fields.concat([newField]))
+        console.log(fieldSchemaJson)
         generateField()
         fieldForm.reset()
         $('#field_form_modal').modal('hide')
