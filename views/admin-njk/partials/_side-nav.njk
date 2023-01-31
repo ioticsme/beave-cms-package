@@ -107,7 +107,7 @@
                         <div class="menu-sub menu-sub-accordion">
                             {% for child in navItem.child %}
                                 <div class="menu-item">
-                                    <a class="menu-link {{ 'active' if activeNav.includes(child.path) }}" href="{{child.path}}">
+                                    <a class="menu-link {{ 'active' if activeNav == child.path }}" href="{{child.path}}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
@@ -119,7 +119,7 @@
                     </div>
                 {% else %}
                     <div class="menu-item">
-                        <a class="menu-link {{ 'active' if activeNav.includes(navItem.path) }}" href="{{navItem.path}}">
+                        <a class="menu-link {{ 'active' if activeNav == navItem.path }}" href="{{navItem.path}}">
                             <span class="menu-icon">
                                 <span class="svg-icon svg-icon-2">{{navItem.icon|safe}}</span>
                             </span>
