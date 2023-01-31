@@ -23,7 +23,7 @@ const switchBrand = async (req, res) => {
                 country: country?._id,
             }).select('-brand -country -__v -created_at -updated_at -author')
 
-            session.selected_brand = {
+            session.brand = {
                 _id: brand?._id,
                 name: brand?.name,
                 code: brand.code,
@@ -46,10 +46,10 @@ const switchBrand = async (req, res) => {
 const generalList = async (req, res) => {
     try {
         session = req.authUser
-        const country = session.selected_brand.country
+        const country = session.brand.country
         const brand = await Brand.findOne({
-            _id: session.selected_brand._id,
-            'domains.country': session.selected_brand.country,
+            _id: session.brand._id,
+            'domains.country': session.brand.country,
         }).populate('domains.country')
         let domain = {}
         if (brand?._id) {
@@ -73,13 +73,13 @@ const editLogo = async (req, res) => {
         let isBrand = false
         if (req.query.brand == 'true') {
             data = await Brand.findOne({
-                _id: session.selected_brand._id,
+                _id: session.brand._id,
             })
             isBrand = true
         } else if (req.query.domain == 'true') {
             const country = req.params.id
             const brand = await Brand.findOne({
-                _id: session.selected_brand._id,
+                _id: session.brand._id,
                 'domains.country': country,
             }).populate('domains.country')
 
@@ -104,7 +104,7 @@ const changeLogo = async (req, res) => {
         const session = req.authUser
         let nameValidationObj = {}
         let imageValidationObj = {}
-        req.authUser.selected_brand.languages.forEach((lang) => {
+        req.authUser.brand.languages.forEach((lang) => {
             _.assign(nameValidationObj, {
                 [lang.prefix]: eval(`Joi.string().required().min(3).max(60)`),
             })
@@ -171,7 +171,7 @@ const changeLogo = async (req, res) => {
         if (req.body.is_brand == 'true') {
             update = await Brand.findOneAndUpdate(
                 {
-                    _id: session.selected_brand._id,
+                    _id: session.brand._id,
                 },
                 {
                     $set: {
@@ -182,7 +182,7 @@ const changeLogo = async (req, res) => {
         } else {
             update = await Brand.findOneAndUpdate(
                 {
-                    _id: session.selected_brand._id,
+                    _id: session.brand._id,
                     'domains.country': req.body.id,
                 },
                 {
@@ -211,8 +211,8 @@ const changeBrandStatus = async (req, res) => {
         }
         const update = await Brand.findOneAndUpdate(
             {
-                _id: session.selected_brand._id,
-                'domains.country': session.selected_brand.country,
+                _id: session.brand._id,
+                'domains.country': session.brand.country,
             },
             {
                 $set: {
@@ -240,15 +240,15 @@ const seoList = async (req, res) => {
     try {
         session = req.authUser
         const brand = await Brand.findOne({
-            _id: session.selected_brand._id,
-            'domains.country': session.selected_brand.country,
+            _id: session.brand._id,
+            'domains.country': session.brand.country,
         }).populate('domains.country')
         let data = {}
         if (brand?._id) {
             data = brand.domains.find(
                 (dom) =>
                     dom.country?._id.toString() ==
-                    session.selected_brand.country.toString()
+                    session.brand.country.toString()
             )
         }
         return res.render('admin/settings/seo/list', { data })
@@ -260,15 +260,15 @@ const seoEdit = async (req, res) => {
     try {
         session = req.authUser
         const brand = await Brand.findOne({
-            _id: session.selected_brand._id,
-            'domains.country': session.selected_brand.country,
+            _id: session.brand._id,
+            'domains.country': session.brand.country,
         }).populate('domains.country')
         let data = {}
         if (brand?._id) {
             data = brand.domains.find(
                 (dom) =>
                     dom.country?._id.toString() ==
-                    session.selected_brand.country.toString()
+                    session.brand.country.toString()
             )
         }
         return res.render('admin/settings/seo/form', { data })
@@ -284,7 +284,7 @@ const seoSave = async (req, res) => {
         let descValidationObj = {}
         let imageValidationObj = {}
         let keyValidationObj = {}
-        req?.authUser?.selected_brand?.languages.forEach((lang) => {
+        req?.authUser?.brand?.languages.forEach((lang) => {
             _.assign(titleValidationObj, {
                 [lang.prefix]: eval(`Joi.string().required()`),
             })
@@ -329,8 +329,8 @@ const seoSave = async (req, res) => {
         }
 
         let body = req.body
-        const brand = session.selected_brand._id
-        const country = session.selected_brand.country
+        const brand = session.brand._id
+        const country = session.brand.country
         const author = session.admin_id
 
         //BEGIN:: Media upload
@@ -365,7 +365,7 @@ const seoSave = async (req, res) => {
 
         // Getting multi language data dynamically
         let keywords = {}
-        req.authUser.selected_brand.languages.forEach((lang) => {
+        req.authUser.brand.languages.forEach((lang) => {
             _.assign(keywords, {
                 [lang.prefix]: body.keywords?.[lang.prefix],
             })
@@ -379,8 +379,8 @@ const seoSave = async (req, res) => {
 
         const update = await Brand.findOneAndUpdate(
             {
-                _id: session.selected_brand._id,
-                'domains.country': session.selected_brand.country,
+                _id: session.brand._id,
+                'domains.country': session.brand.country,
             },
             {
                 $set: {
@@ -403,7 +403,7 @@ const marketingList = async (req, res) => {
     try {
         session = req.authUser
         const brand = await Brand.findOne({
-            _id: session.selected_brand._id,
+            _id: session.brand._id,
         })
 
         return res.render('admin/settings/marketing/list', { data: brand })
@@ -415,7 +415,7 @@ const marketingEdit = async (req, res) => {
     try {
         session = req.authUser
         const brand = await Brand.findOne({
-            _id: session.selected_brand._id,
+            _id: session.brand._id,
         })
         return res.render('admin/settings/marketing/form', { data: brand })
     } catch (error) {
@@ -441,7 +441,7 @@ const marketingSave = async (req, res) => {
         }
 
         let body = req.body
-        const brand = session.selected_brand._id
+        const brand = session.brand._id
 
         const obj = {
             gtm_id: body.gtm_id,
@@ -474,8 +474,8 @@ const ecommerceList = async (req, res) => {
     try {
         session = req.authUser
         const settings = await Settings.findOne({
-            brand: session.selected_brand._id,
-            country: session.selected_brand.country,
+            brand: session.brand._id,
+            country: session.brand.country,
         })
         return res.render('admin/settings/ecommerce/listing', {
             data: settings?.ecommerce_settings || {},
@@ -488,8 +488,8 @@ const invoiceEdit = async (req, res) => {
     try {
         session = req.authUser
         const settings = await Settings.findOne({
-            brand: session.selected_brand._id,
-            country: session.selected_brand.country,
+            brand: session.brand._id,
+            country: session.brand.country,
         })
         return res.render('admin/settings/ecommerce/edit-invoice', {
             data: settings?.ecommerce_settings || {},
@@ -505,7 +505,7 @@ const invoiceSave = async (req, res) => {
         let addressValidationObj = {}
         let termsValidationObj = {}
         let footerValidationObj = {}
-        req?.authUser?.selected_brand?.languages.forEach((lang) => {
+        req?.authUser?.brand?.languages.forEach((lang) => {
             _.assign(addressValidationObj, {
                 [lang.prefix]: eval(`Joi.string().required()`),
             })
@@ -544,8 +544,8 @@ const invoiceSave = async (req, res) => {
         // Update settings
         const update = await Settings.findOneAndUpdate(
             {
-                brand: session.selected_brand._id,
-                country: session.selected_brand.country,
+                brand: session.brand._id,
+                country: session.brand.country,
             },
             {
                 $set: {
@@ -565,7 +565,7 @@ const invoiceSave = async (req, res) => {
                 upsert: true,
             }
         )
-        session.selected_brand.settings = update
+        session.brand.settings = update
         return res.status(200).json({ message: 'Settings updated' })
     } catch (error) {
         return res.status(400).json({ error: 'Something went wrong' })
@@ -577,8 +577,8 @@ const notificationList = async (req, res) => {
     try {
         session = req.authUser
         const settings = await Settings.findOne({
-            brand: session.selected_brand._id,
-            country: session.selected_brand.country,
+            brand: session.brand._id,
+            country: session.brand.country,
         })
         return res.render('admin/settings/notification/listing', {
             data: settings?.notification_settings || {
@@ -596,8 +596,8 @@ const editNotificationSettings = async (req, res) => {
     try {
         session = req.authUser
         const settings = await Settings.findOne({
-            brand: session.selected_brand._id,
-            country: session.selected_brand.country,
+            brand: session.brand._id,
+            country: session.brand.country,
         })
         return res.render('admin/settings/notification/edit', {
             title: req.params.type.replace('_', ' ').toUpperCase(),
@@ -654,8 +654,8 @@ const saveNoticationSettings = async (req, res) => {
         // Update settings
         const update = await Settings.findOneAndUpdate(
             {
-                brand: session.selected_brand._id,
-                country: session.selected_brand.country,
+                brand: session.brand._id,
+                country: session.brand.country,
             },
             {
                 $set: {
@@ -667,7 +667,7 @@ const saveNoticationSettings = async (req, res) => {
                 upsert: true,
             }
         )
-        session.selected_brand.settings = update
+        session.brand.settings = update
         return res.status(200).json({ message: 'Settings updated' })
     } catch (error) {
         return res.status(400).json({ error: 'Something went wrong' })

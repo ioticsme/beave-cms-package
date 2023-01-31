@@ -24,7 +24,7 @@ const AdminSchema = new mongoose.Schema(
             default: 'admin',
             enum: ['super_admin', 'admin', 'editor', 'finance'],
         },
-        selected_brand: {
+        brand: {
             brand: {
                 type: Schema.ObjectId,
                 ref: Brand,

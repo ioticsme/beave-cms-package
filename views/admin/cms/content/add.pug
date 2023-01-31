@@ -126,7 +126,7 @@ block content
 							</div>
 							<div class="card-body pt-0">
 								<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
-									each brandLanguage, i in authUser.selected_brand.languages
+									each brandLanguage, i in authUser.brand.languages
 										<li class="nav-item">
 											<a class="nav-link #{(i== 0 ? 'active' : '')}" data-bs-toggle="tab" href="#kt_tab_pane_#{brandLanguage.prefix}">#{brandLanguage.name}</a>
 										</li>
@@ -134,7 +134,7 @@ block content
 										//- 	a.nav-link(class= (i== 0 ? 'active' : '') data-bs-toggle='tab' href=`#kt_tab_pane_${brandLanguage.prefix}`) #{brandLanguage.name}
 								</ul>
 								<div class="tab-content tab-content-fields" id="myTabContent">
-									each brandLanguage, i in authUser.selected_brand.languages
+									each brandLanguage, i in authUser.brand.languages
 										<div class="tab-pane fade #{(i== 0 ? 'active show' : '')}" role="tabpanel" id="kt_tab_pane_#{brandLanguage.prefix}">
 											//- BEGIN::Fields with localisation
 											each cfg, cfg_i in reqContentType.field_groups

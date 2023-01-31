@@ -161,7 +161,7 @@ const UserAuthCheck = async (req, res, next) => {
                 })
             req.authPublicUser = {
                 ...decodedUser.data?.user,
-                selected_brand: {
+                brand: {
                     ...req.brand,
                     country_name: req.country.name.en,
                     country_code: req.country.code,

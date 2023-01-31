@@ -73,11 +73,11 @@ block content
                                         span.preloader.d-none Saving...
                             .card-body.pt-0
                                 ul.nav.nav-tabs.nav-line-tabs.mb-5.fs-6
-                                    each brandLanguage, i in authUser.selected_brand.languages
+                                    each brandLanguage, i in authUser.brand.languages
                                         li.nav-item
                                             a.nav-link(class= (i== 0 ? 'active' : '') data-bs-toggle='tab' href=`#kt_tab_pane_${brandLanguage.prefix}`) #{brandLanguage.name}
                                 #myTabContent.tab-content.tab-content-fields
-                                    each brandLanguage, i in authUser.selected_brand.languages
+                                    each brandLanguage, i in authUser.brand.languages
                                         .tab-pane.fade(class= (i== 0 ? 'active show' : '') role='tabpanel' id=`kt_tab_pane_${brandLanguage.prefix}`)
                                             .d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container
                                                 label.d-flex.align-items-center.fs-6.fw-semibold.mb-2

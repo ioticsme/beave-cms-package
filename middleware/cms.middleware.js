@@ -55,7 +55,7 @@ const contentTypeCheck = async (req, res, next) => {
 
 const authUser = async (req, res, next) => {
     try {
-        if (!req.session.selected_brand) {
+        if (!req.session.brand) {
             const brand = await Brand.findOne()
                 .populate({
                     path: 'languages',
@@ -70,7 +70,7 @@ const authUser = async (req, res, next) => {
                     '-brand -country -__v -created_at -updated_at -author'
                 )
 
-                req.session.selected_brand = {
+                req.session.brand = {
                     _id: brand._id,
                     name: brand.name,
                     code: brand.code,

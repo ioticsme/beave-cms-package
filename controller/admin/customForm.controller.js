@@ -16,8 +16,8 @@ const list = async (req, res) => {
         session = req.authUser
 
         const forms = await CustomForm.find({
-            brand: session.selected_brand._id,
-            country: session.selected_brand.country,
+            brand: session.brand._id,
+            country: session.brand.country,
         })
         res.render(`admin/custom-forms/listing`, {
             data: forms,
@@ -32,8 +32,8 @@ const edit = async (req, res) => {
         session = req.authUser
         const form = await CustomForm.findOne({
             _id: req.params.id,
-            brand: session.selected_brand._id,
-            country: session.selected_brand.country,
+            brand: session.brand._id,
+            country: session.brand.country,
             isDeleted: false,
         })
         const domainTemplates = await mailGunTemplates(
@@ -135,8 +135,8 @@ const save = async (req, res) => {
             recepient_email_template: req.body.recepient_email_template,
             slack_url: req.body.slack_url,
             custom_fields,
-            brand: session.selected_brand._id,
-            country: session.selected_brand.country,
+            brand: session.brand._id,
+            country: session.brand.country,
         }
 
         if (isEdit) {
@@ -174,8 +174,8 @@ const changeStatus = async (req, res) => {
         const update = await CustomForm.findOneAndUpdate(
             {
                 _id: id,
-                brand: req.authUser.selected_brand._id,
-                country: req.authUser.selected_brand.country,
+                brand: req.authUser.brand._id,
+                country: req.authUser.brand.country,
             },
             {
                 $set: {
@@ -205,8 +205,8 @@ const deleteForm = async (req, res) => {
 
         await CustomForm.softDelete({
             _id: id,
-            brand: req.authUser.selected_brand._id,
-            country: req.authUser.selected_brand.country,
+            brand: req.authUser.brand._id,
+            country: req.authUser.brand.country,
         })
         return res.status(200).json({
             message: 'Custom form deleted',
@@ -222,8 +222,8 @@ const viewSubmissions = async (req, res) => {
 
         const submissions = await CustomFormData.find({
             form_id: req.params.id,
-            brand: session.selected_brand._id,
-            country: session.selected_brand.country,
+            brand: session.brand._id,
+            country: session.brand.country,
         })
         res.render(`admin/custom-forms/submissions`, {
             data: submissions,

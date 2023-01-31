@@ -8,8 +8,8 @@ const { Types } = require('mongoose')
 const listMenu = async (req, res) => {
     try {
         const menus = await Menu.find({
-            brand: req.authUser?.selected_brand?._id,
-            country: req.authUser?.selected_brand?.country,
+            brand: req.authUser?.brand?._id,
+            country: req.authUser?.brand?.country,
         }).sort({ position: 1 })
         res.render(`admin/cms/menu/listing`, { menulist: menus })
     } catch (e) {
@@ -23,7 +23,7 @@ const addMenu = async (req, res) => {
         session = req.authUser
         let labelValidationObj = {}
         let pathValidationObj = {}
-        req.authUser.selected_brand.languages.forEach((lang) => {
+        req.authUser.brand.languages.forEach((lang) => {
             _.assign(labelValidationObj, {
                 [lang.prefix]: eval(`Joi.string().required()`),
             })
@@ -54,7 +54,7 @@ const addMenu = async (req, res) => {
         let body = req.body
         let label = {}
         let path = {}
-        req.authUser.selected_brand.languages.forEach((lang) => {
+        req.authUser.brand.languages.forEach((lang) => {
             _.assign(label, {
                 [lang.prefix]: body.label[lang.prefix],
             })
@@ -76,8 +76,8 @@ const addMenu = async (req, res) => {
         const update = await Menu.findOneAndUpdate(
             {
                 nav_position: body.menu_position,
-                brand: req.authUser?.selected_brand?._id,
-                country: req.authUser?.selected_brand?.country,
+                brand: req.authUser?.brand?._id,
+                country: req.authUser?.brand?.country,
             },
             {
                 $push: {
@@ -106,8 +106,8 @@ const editMenu = async (req, res) => {
         let { position, id, level } = req.params
         // Findong all menis from DB
         const menus = await Menu.find({
-            brand: req.authUser?.selected_brand?._id,
-            country: req.authUser?.selected_brand?.country,
+            brand: req.authUser?.brand?._id,
+            country: req.authUser?.brand?.country,
         }).sort({ position: 1 })
         // Finding menu with menu position
         const menuDetail = menus.find((menu) => menu.nav_position == position)
@@ -186,8 +186,8 @@ const saveEditMenu = async (req, res) => {
             // FInding the menu item with child level and index of the menu item in child array
             // After finding delete the menu item from the child array then push the new menu item to the index position
             const menu = await Menu.findOne({
-                brand: req.authUser?.selected_brand?._id,
-                country: req.authUser?.selected_brand?.country,
+                brand: req.authUser?.brand?._id,
+                country: req.authUser?.brand?.country,
                 nav_position: position,
             })
             let menuItem = {}
@@ -211,8 +211,8 @@ const saveEditMenu = async (req, res) => {
             }
             let deleteItem = await Menu.findOneAndUpdate(
                 {
-                    brand: req.authUser?.selected_brand?._id,
-                    country: req.authUser?.selected_brand?.country,
+                    brand: req.authUser?.brand?._id,
+                    country: req.authUser?.brand?.country,
                     nav_position: position,
                 },
                 {
@@ -230,8 +230,8 @@ const saveEditMenu = async (req, res) => {
             update = await Menu.findOneAndUpdate(
                 {
                     nav_position: position,
-                    brand: req.authUser?.selected_brand?._id,
-                    country: req.authUser?.selected_brand?.country,
+                    brand: req.authUser?.brand?._id,
+                    country: req.authUser?.brand?.country,
                     'nav_items.$._id': id,
                 },
                 {
@@ -246,8 +246,8 @@ const saveEditMenu = async (req, res) => {
         } else if (level == '1') {
             const menu = await Menu.findOne({
                 nav_position: position,
-                brand: req.authUser?.selected_brand?._id,
-                country: req.authUser?.selected_brand?.country,
+                brand: req.authUser?.brand?._id,
+                country: req.authUser?.brand?.country,
             })
             let menuItem = {}
             let menuIndex
@@ -272,8 +272,8 @@ const saveEditMenu = async (req, res) => {
             let deleteItem = await Menu.findOneAndUpdate(
                 {
                     nav_position: position,
-                    brand: req.authUser?.selected_brand?._id,
-                    country: req.authUser?.selected_brand?.country,
+                    brand: req.authUser?.brand?._id,
+                    country: req.authUser?.brand?.country,
                 },
                 {
                     $pull: {
@@ -290,8 +290,8 @@ const saveEditMenu = async (req, res) => {
             update = await Menu.findOneAndUpdate(
                 {
                     nav_position: position,
-                    brand: req.authUser?.selected_brand?._id,
-                    country: req.authUser?.selected_brand?.country,
+                    brand: req.authUser?.brand?._id,
+                    country: req.authUser?.brand?.country,
                     [`nav_items.${body.parent_index}.child.$._id`]: id,
                 },
                 {
@@ -309,8 +309,8 @@ const saveEditMenu = async (req, res) => {
         } else if (level == '2') {
             const menu = await Menu.findOne({
                 nav_position: position,
-                brand: req.authUser?.selected_brand?._id,
-                country: req.authUser?.selected_brand?.country,
+                brand: req.authUser?.brand?._id,
+                country: req.authUser?.brand?.country,
             })
             let menuItem = {}
             let menuIndex
@@ -335,8 +335,8 @@ const saveEditMenu = async (req, res) => {
             let deleteItem = await Menu.findOneAndUpdate(
                 {
                     nav_position: position,
-                    brand: req.authUser?.selected_brand?._id,
-                    country: req.authUser?.selected_brand?.country,
+                    brand: req.authUser?.brand?._id,
+                    country: req.authUser?.brand?.country,
                 },
                 {
                     $pull: {
@@ -353,8 +353,8 @@ const saveEditMenu = async (req, res) => {
             update = await Menu.findOneAndUpdate(
                 {
                     nav_position: position,
-                    brand: req.authUser?.selected_brand?._id,
-                    country: req.authUser?.selected_brand?.country,
+                    brand: req.authUser?.brand?._id,
+                    country: req.authUser?.brand?.country,
                     [`nav_items.${body.parent_index}.child.${body.sec_parent_index}.child.$._id`]:
                         id,
                 },
@@ -408,8 +408,8 @@ const deleteMenu = async (req, res) => {
             update = await Menu.findOneAndUpdate(
                 {
                     nav_position,
-                    brand: req.authUser?.selected_brand?._id,
-                    country: req.authUser?.selected_brand?.country,
+                    brand: req.authUser?.brand?._id,
+                    country: req.authUser?.brand?.country,
                 },
                 {
                     $pull: {
@@ -423,8 +423,8 @@ const deleteMenu = async (req, res) => {
             update = await Menu.findOneAndUpdate(
                 {
                     nav_position,
-                    brand: req.authUser?.selected_brand?._id,
-                    country: req.authUser?.selected_brand?.country,
+                    brand: req.authUser?.brand?._id,
+                    country: req.authUser?.brand?.country,
                 },
                 {
                     $pull: {
@@ -438,8 +438,8 @@ const deleteMenu = async (req, res) => {
             update = await Menu.findOneAndUpdate(
                 {
                     nav_position,
-                    brand: req.authUser?.selected_brand?._id,
-                    country: req.authUser?.selected_brand?.country,
+                    brand: req.authUser?.brand?._id,
+                    country: req.authUser?.brand?.country,
                 },
                 {
                     $pull: {
@@ -515,8 +515,8 @@ const saveMenu = async (req, res) => {
         const save = await Menu.findOneAndUpdate(
             {
                 nav_position: navName,
-                brand: req.authUser?.selected_brand?._id,
-                country: req.authUser?.selected_brand?.country,
+                brand: req.authUser?.brand?._id,
+                country: req.authUser?.brand?.country,
             },
             {
                 $set: {

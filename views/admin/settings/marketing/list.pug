@@ -44,11 +44,11 @@ block content
                                     h3 Marketing Tools
                             .card-body.pt-0
                                 //- ul.nav.nav-tabs.nav-line-tabs.mb-5.fs-6
-                                //-     each brandLanguage, i in authUser.selected_brand.languages
+                                //-     each brandLanguage, i in authUser.brand.languages
                                 //-         li.nav-item
                                 //-             a.nav-link(class= (i== 0 ? 'active' : '') data-bs-toggle='tab' href=`#kt_tab_pane_${brandLanguage.prefix}`) #{brandLanguage.name}
                                 //- #myTabContent.tab-content.tab-content-fields
-                                //-     each brandLanguage, i in authUser.selected_brand.languages
+                                //-     each brandLanguage, i in authUser.brand.languages
                                 //-         .tab-pane.fade(class= (i== 0 ? 'active show' : '') role='tabpanel' id=`kt_tab_pane_${brandLanguage.prefix}`)
                                 //-             form#kt_subscriptions_create_new.form(action='#')                                                
                                 h5.mb-5 GTM ID

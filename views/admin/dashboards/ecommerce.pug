@@ -97,7 +97,7 @@ block customScript
 									},
 									y: {
 										formatter: function (e) {
-											return e + "#{authUser.selected_brand.country_currency_symbol.toUpperCase()}";
+											return e + "#{authUser.brand.country_currency_symbol.toUpperCase()}";
 										},
 									},
 								},
@@ -193,7 +193,7 @@ block customScript
 									labels: {
 										style: { colors: l, fontSize: '12px' },
 										formatter: function (e) {
-											return '#{authUser.selected_brand.country_currency_symbol.toUpperCase()}' + e + 'K'
+											return '#{authUser.brand.country_currency_symbol.toUpperCase()}' + e + 'K'
 										},
 									},
 								},
@@ -209,7 +209,7 @@ block customScript
 									style: { fontSize: '12px' },
 									y: {
 										formatter: function (e) {
-											return '#{authUser.selected_brand.country_currency_symbol.toUpperCase()}' + e + 'K'
+											return '#{authUser.brand.country_currency_symbol.toUpperCase()}' + e + 'K'
 										},
 									},
 								},
@@ -269,7 +269,7 @@ block content
 							.card-header.pt-5
 								.card-title.d-flex.flex-column
 									.d-flex.align-items-center
-										span.fs-4.fw-semibold.text-gray-400.me-1.align-self-start #{authUser.selected_brand.country_currency_symbol.toUpperCase()}
+										span.fs-4.fw-semibold.text-gray-400.me-1.align-self-start #{authUser.brand.country_currency_symbol.toUpperCase()}
 										span.fs-2hx.fw-bold.text-dark.me-2.lh-1.ls-n2 #{orderSummary.currentMonth.toLocaleString()}
 										span.badge.fs-base(class=`${orderSummary.monthlyDifferenceInPercentage >= 0 ? 'badge-light-success' : 'badge-light-danger'}`)
 											span.svg-icon.svg-icon-5.ms-n1(class=`${orderSummary.monthlyDifferenceInPercentage >= 0 ? 'svg-icon-success' : 'svg-icon-danger'}`)
@@ -318,7 +318,7 @@ block content
 							.card-header.pt-5
 								.card-title.d-flex.flex-column
 									.d-flex.align-items-center
-										span.fs-4.fw-semibold.text-gray-400.me-1.align-self-start #{authUser.selected_brand.country_currency_symbol.toUpperCase()}
+										span.fs-4.fw-semibold.text-gray-400.me-1.align-self-start #{authUser.brand.country_currency_symbol.toUpperCase()}
 										span.fs-2hx.fw-bold.text-dark.me-2.lh-1.ls-n2 #{orderSummary.dayOrderSummary.yesterday}
 										span.badge.fs-base(class=`${orderSummary.dailyDifferenceInPercentage >= 0 ? 'badge-light-success' : 'badge-light-danger'}`)
 											span.svg-icon.svg-icon-5.ms-n1(class=`${orderSummary.dailyDifferenceInPercentage >= 0 ? 'svg-icon-success' : 'svg-icon-danger'}`)
@@ -400,7 +400,7 @@ block content
 							.card-body.d-flex.justify-content-between.flex-column.pb-1.px-0
 								.px-9.mb-5
 									.d-flex.mb-2
-										span.fs-4.fw-semibold.text-gray-400.me-1 #{authUser.selected_brand.country_currency_symbol.toUpperCase()}
+										span.fs-4.fw-semibold.text-gray-400.me-1 #{authUser.brand.country_currency_symbol.toUpperCase()}
 										span.fs-2hx.fw-bold.text-gray-800.me-2.lh-1.ls-n2 #{orderSummary.currentMonth.toLocaleString()}
 									//- span.fs-6.fw-semibold.text-gray-400 Another AED48,346 to Goal
 								#month_sales_line_chart.min-h-auto.ps-4.pe-6(style='height: 300px')
@@ -751,7 +751,7 @@ block content
 							.card-body.d-flex.justify-content-between.flex-column.pb-1.px-0
 								.px-9.mb-5
 									.d-flex.align-items-center.mb-2
-										span.fs-4.fw-semibold.text-gray-400.align-self-start.me-1 #{authUser.selected_brand.country_currency_symbol.toUpperCase()}
+										span.fs-4.fw-semibold.text-gray-400.align-self-start.me-1 #{authUser.brand.country_currency_symbol.toUpperCase()}
 										span.fs-2hx.fw-bold.text-gray-800.me-2.lh-1.ls-n2 3,706
 										span.badge.badge-light-success.fs-base
 											span.svg-icon.svg-icon-5.svg-icon-success.ms-n1

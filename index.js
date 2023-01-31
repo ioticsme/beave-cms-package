@@ -30,7 +30,10 @@ const {
 // END::Service Providers
 
 app.use((req, res, next) => {
-    app.locals.baseURL = (process.env.DOMAIN || req.protocol + '://' + req.get('host') || `{{domain}}`)
+    app.locals.baseURL =
+        process.env.DOMAIN ||
+        req.protocol + '://' + req.get('host') ||
+        `{{domain}}`
     app.locals.clientName = process.env.CLIENT_NAME
     next()
 })
@@ -190,7 +193,7 @@ if (process.env.NODE_ENV == 'development') {
     const Admin = require('./model/Admin')
     const Brand = require('./model/Brand')
     const devAuth = async (req, res, next) => {
-        if (!req.session?.selected_brand?._id) {
+        if (!req.session?.brand?._id) {
             const admin = await Admin.findOne()
             const brand = await Brand.findOne({ code: 'fc' })
                 .populate({
@@ -211,7 +214,7 @@ if (process.env.NODE_ENV == 'development') {
                     '-brand -country -__v -created_at -updated_at -author'
                 )
 
-                session.selected_brand = {
+                session.brand = {
                     _id: brand._id, //TODO: id should be _id for the consistency
                     name: brand.name,
                     code: brand.code,

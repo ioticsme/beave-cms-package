@@ -19,8 +19,8 @@ const list = async (req, res) => {
         session = req.authUser
         const contentList = await Content.find({
             type_id: req.contentType._id,
-            brand: session.selected_brand._id,
-            country: session.selected_brand.country,
+            brand: session.brand._id,
+            country: session.brand.country,
         }).sort('position')
         res.render(`admin/cms/content/listing`, {
             reqContentType: req.contentType,
@@ -37,8 +37,8 @@ const detail = async (req, res) => {
         const contentDetail = await Content.findOne({
             _id: req.params.id,
             type_id: req.contentType._id,
-            brand: session.selected_brand._id,
-            country: session.selected_brand.country,
+            brand: session.brand._id,
+            country: session.brand.country,
         }).populate('author')
         res.render(`admin/cms/content/detail`, {
             reqContentType: req.contentType,
@@ -54,20 +54,20 @@ const add = async (req, res) => {
         session = req.authUser
         let allowed_content = {}
         const banners = await Banner.find({
-            brand: session?.selected_brand?._id,
-            country: session?.selected_brand?.country,
+            brand: session?.brand?._id,
+            country: session?.brand?.country,
             banner_type: 'web',
             published: true,
         })
         const gallery = await Gallery.find({
-            brand: session?.selected_brand?._id,
-            country: session?.selected_brand?.country,
+            brand: session?.brand?._id,
+            country: session?.brand?.country,
             published: true,
         })
         if (req.contentType?.allowed_type?.length) {
             const data = await Content.find({
-                brand: session?.selected_brand?._id,
-                country: session?.selected_brand?.country,
+                brand: session?.brand?._id,
+                country: session?.brand?.country,
                 published: true,
                 type_slug: { $in: req.contentType.allowed_type },
             })
@@ -100,26 +100,26 @@ const edit = async (req, res) => {
         session = req.authUser
         let allowed_content = {}
         const banners = await Banner.find({
-            brand: session?.selected_brand?._id,
-            country: session?.selected_brand?.country,
+            brand: session?.brand?._id,
+            country: session?.brand?.country,
             banner_type: 'web',
             published: true,
         })
         const gallery = await Gallery.find({
-            brand: session?.selected_brand?._id,
-            country: session?.selected_brand?.country,
+            brand: session?.brand?._id,
+            country: session?.brand?.country,
             published: true,
         })
         const contentDetail = await Content.findOne({
             _id: req.params.id,
             type_id: req.contentType._id,
-            brand: session.selected_brand._id,
-            country: session.selected_brand.country,
+            brand: session.brand._id,
+            country: session.brand.country,
         })
         if (req.contentType?.allowed_type?.length) {
             const data = await Content.find({
-                brand: session?.selected_brand?._id,
-                country: session?.selected_brand?.country,
+                brand: session?.brand?._id,
+                country: session?.brand?.country,
                 published: true,
                 type_slug: { $in: req.contentType.allowed_type },
             })
@@ -155,8 +155,8 @@ const deleteContent = async (req, res) => {
 
         await Content.softDelete({
             _id: id,
-            brand: req.authUser.selected_brand._id,
-            country: req.authUser.selected_brand.country,
+            brand: req.authUser.brand._id,
+            country: req.authUser.brand.country,
         })
         return res.status(200).json({
             message: 'Content deleted',
@@ -178,8 +178,8 @@ const changeStatus = async (req, res) => {
         const update = await Content.findOneAndUpdate(
             {
                 _id: id,
-                brand: req.authUser.selected_brand._id,
-                country: req.authUser.selected_brand.country,
+                brand: req.authUser.brand._id,
+                country: req.authUser.brand.country,
             },
             {
                 $set: {
@@ -214,7 +214,7 @@ const save = async (req, res) => {
         const titleValidationObj = {}
         const descriptionValidationObj = {}
         const excerptValidationObj = {}
-        req.authUser.selected_brand.languages.forEach((lang) => {
+        req.authUser.brand.languages.forEach((lang) => {
             _.assign(titleValidationObj, {
                 [lang.prefix]: eval(titleValidationRules),
             })
@@ -254,7 +254,7 @@ const save = async (req, res) => {
                     const validationObject = {}
                     const URLvalidationObject = {}
                     if (element.field_type == 'file') {
-                        req.authUser.selected_brand.languages.forEach(
+                        req.authUser.brand.languages.forEach(
                             (lang) => {
                                 _.assign(validationObject, {
                                     [lang.prefix]: eval(
@@ -275,7 +275,7 @@ const save = async (req, res) => {
                         cfValidationObj[`${element.field_name}-url`] =
                             Joi.object(URLvalidationObject)
                     } else {
-                        req.authUser.selected_brand.languages.forEach(
+                        req.authUser.brand.languages.forEach(
                             (lang) => {
                                 _.assign(validationObject, {
                                     [lang.prefix]: eval(
@@ -303,7 +303,7 @@ const save = async (req, res) => {
                     const validationObject = {}
                     const URLvalidationObject = {}
                     if (element.field_type == 'file') {
-                        req.authUser.selected_brand.languages.forEach(
+                        req.authUser.brand.languages.forEach(
                             (lang) => {
                                 _.assign(validationObject, {
                                     [lang.prefix]: eval(
@@ -324,7 +324,7 @@ const save = async (req, res) => {
                         cfValidationObj[`${field.field_name}-url`] =
                             Joi.object(URLvalidationObject)
                     } else {
-                        req.authUser.selected_brand.languages.forEach(
+                        req.authUser.brand.languages.forEach(
                             (lang) => {
                                 _.assign(validationObject, {
                                     [lang.prefix]: eval(field.validation),
@@ -398,7 +398,7 @@ const save = async (req, res) => {
         }
         let type = req.contentType
         const country = await Country.findOne({
-            code: session.selected_brand.country_code,
+            code: session.brand.country_code,
         })
         let customData = {}
         let metaData = {}
@@ -440,7 +440,7 @@ const save = async (req, res) => {
         // If image files are present
         if (Object.keys(images) && Object.keys(images).length) {
             // Looping through the languages
-            session?.selected_brand?.languages.map((lang) => {
+            session?.brand?.languages.map((lang) => {
                 // Looping through content tyep custom fields
                 req.contentType.custom_fields?.map((cf) => {
                     // If field type is file take value from images object o.w from req.body
@@ -513,7 +513,7 @@ const save = async (req, res) => {
                 }
             })
         } else {
-            session?.selected_brand?.languages.map((lang, langIndex) => {
+            session?.brand?.languages.map((lang, langIndex) => {
                 req.contentType.custom_fields?.map((cf, cfIndex) => {
                     if (cf.field_type === 'file') {
                         // Image editing start
@@ -591,11 +591,11 @@ const save = async (req, res) => {
             type_id: type._id,
             type_slug: type.slug,
             author: session.admin_id,
-            // brand: session.selected_brand._id,
+            // brand: session.brand._id,
             banner: body?.banner || null, // If Requested content type has banner required
             gallery: body?.gallery || null, // If Requested content type has gallery required
-            brand: req.authUser.selected_brand._id,
-            country: req.authUser.selected_brand.country,
+            brand: req.authUser.brand._id,
+            country: req.authUser.brand.country,
             published: body.published === 'true',
             position: body.position,
             // template_name: type.template_name,
@@ -628,8 +628,8 @@ const save = async (req, res) => {
                 data.attached_type = attachedData
             }
         }
-        const brandCode = req.authUser.selected_brand?.code
-        const countryCode = req.authUser.selected_brand?.country_code
+        const brandCode = req.authUser.brand?.code
+        const countryCode = req.authUser.brand?.country_code
 
         if (isEdit) {
             data.slug = body.slug?.en

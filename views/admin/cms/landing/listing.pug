@@ -43,11 +43,11 @@ block content
 										h2.fw-bold Banner Section 1                            
 								.card-body.pt-0
 									ul.nav.nav-tabs.nav-line-tabs.mb-5.fs-6
-										each brandLanguage, i in authUser.selected_brand.languages
+										each brandLanguage, i in authUser.brand.languages
 											li.nav-item
 												a.nav-link(class= (i== 0 ? 'active' : '') data-bs-toggle='tab' href=`#kt_tab_pane_${brandLanguage.prefix}`) #{brandLanguage.name}
 									#myTabContent.tab-content.tab-content-fields
-										each brandLanguage, i in authUser.selected_brand.languages
+										each brandLanguage, i in authUser.brand.languages
 											.tab-pane.fade(class= (i== 0 ? 'active show' : '') role='tabpanel' id=`kt_tab_pane_${brandLanguage.prefix}`)
 												                                            
 												.text-gray-500.fw-semibold.fs-5.mb-5
@@ -114,11 +114,11 @@ block content
 										h2.fw-bold Banner Section 2                               
 								.card-body.pt-0
 									ul.nav.nav-tabs.nav-line-tabs.mb-5.fs-6
-										each brandLanguage, i in authUser.selected_brand.languages
+										each brandLanguage, i in authUser.brand.languages
 											li.nav-item
 												a.nav-link(class= (i== 0 ? 'active' : '') data-bs-toggle='tab' href=`#kt_tab_pane_${brandLanguage.prefix}2`) #{brandLanguage.name}
 									#myTabContent.tab-content.tab-content-fields
-										each brandLanguage, i in authUser.selected_brand.languages
+										each brandLanguage, i in authUser.brand.languages
 											.tab-pane.fade(class= (i== 0 ? 'active show' : '') role='tabpanel' id=`kt_tab_pane_${brandLanguage.prefix}2`)
 												
 												.text-gray-500.fw-semibold.fs-5.mb-5
@@ -134,11 +134,11 @@ block content
 										h2.fw-bold Brand List Section                             
 								.card-body.pt-0
 									ul.nav.nav-tabs.nav-line-tabs.mb-5.fs-6
-										each brandLanguage, i in authUser.selected_brand.languages
+										each brandLanguage, i in authUser.brand.languages
 											li.nav-item
 												a.nav-link(class= (i== 0 ? 'active' : '') data-bs-toggle='tab' href=`#kt_tab_pane_${brandLanguage.prefix}3`) #{brandLanguage.name}
 									#myTabContent.tab-content.tab-content-fields
-										each brandLanguage, i in authUser.selected_brand.languages
+										each brandLanguage, i in authUser.brand.languages
 											.tab-pane.fade(class= (i== 0 ? 'active show' : '') role='tabpanel' id=`kt_tab_pane_${brandLanguage.prefix}3`)
 												
 												.text-gray-500.fw-semibold.fs-5.mb-5

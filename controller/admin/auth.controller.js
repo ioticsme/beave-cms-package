@@ -126,7 +126,7 @@ const loginSubmit = async (req, res) => {
                     '-brand -country -__v -created_at -updated_at -author'
                 )
 
-                session.selected_brand = {
+                session.brand = {
                     _id: brand._id,
                     name: brand.name,
                     code: brand.code,
