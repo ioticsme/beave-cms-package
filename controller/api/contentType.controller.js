@@ -63,7 +63,7 @@ const list = async (req, res) => {
                         },
                         {
                             $lookup: {
-                                from: 'media',
+                                from: 'beave_medias',
                                 localField: 'content.value',
                                 foreignField: '_id',
                                 as: 'content.related_model',
@@ -151,7 +151,7 @@ const list = async (req, res) => {
                         },
                         {
                             $lookup: {
-                                from: 'media',
+                                from: 'beave_medias',
                                 localField: 'content.value',
                                 foreignField: '_id',
                                 as: 'content.related_model',
@@ -249,6 +249,8 @@ const list = async (req, res) => {
                         liveContent
                     )
 
+                    // return res.json(liveContent)
+
                     if (
                         process.env.CACHE_LOCAL_DATA == 'true' &&
                         liveContent?.length
@@ -269,7 +271,7 @@ const list = async (req, res) => {
                 // TODO:: Send slack notification for redis connection fail on authentication
             })
 
-        res.status(200).json({
+        return res.status(200).json({
             [req.params.contentType]: contentType.single_type ? contents[0] : contents,
             navigation: contentType.nav_on_collection_api
                 ? req.navigation
@@ -331,7 +333,7 @@ const detail = async (req, res) => {
                         },
                         {
                             $lookup: {
-                                from: 'media',
+                                from: 'beave_medias',
                                 localField: 'content.value',
                                 foreignField: '_id',
                                 as: 'content.related_model',

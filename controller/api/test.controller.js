@@ -44,7 +44,7 @@ const populateTest = async (req, res) => {
     // await testData.save()
     // return res.json(testData)
     let cf = await Content.aggregate([
-        { $match: { type_slug: 'store', published: true } },
+        { $match: { type_slug: 'post', published: true } },
         {
             $lookup: {
                 from: 'countries',
@@ -71,7 +71,7 @@ const populateTest = async (req, res) => {
         },
         {
             $lookup: {
-                from: 'media',
+                from: 'beave_medias',
                 localField: 'content.value',
                 foreignField: '_id',
                 as: 'content.related_model',
