@@ -173,7 +173,7 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
         const selected_section = e.target.section_name_field.value
         const slected_field_type = e.target.field_type.value
         const selected_field_name = e.target.field_name.value
-        const selected_field_options = e.target.field_options.value.trim()
+        const selected_field_options = e.target.field_options?.value?.trim() || ''
         const options = []
         selected_field_options.split(',').map((option) => {
             if (option.length) {
