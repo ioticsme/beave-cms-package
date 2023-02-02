@@ -14,10 +14,21 @@ const hb = require('handlebars')
 const { sendEmail } = require('./Mail.helper')
 const { orderNotification } = require('./Slack.helper')
 const { sendOrderSms } = require('./SMS.helper')
+const { ObjectId } = require('mongodb')
 const readFile = utils.promisify(fs.readFile)
 // END:FOR PDF Generation
 
 const projectRootDir = require('path').resolve('./')
+
+function isObjectId(string) {
+    try {
+        const objectId = new ObjectId(string)
+        return objectId
+    } catch (error) {
+        // console.log(error)
+        return string
+    }
+}
 
 const getRequestIp = async (req) => {
     let ip = (
@@ -171,6 +182,7 @@ const createFcmSwJS = async (credentials) => {
 
 module.exports = {
     // generatePdfInvoice,
+    isObjectId,
     purchaseNotification,
     getRequestIp,
     differenceInPercentage,

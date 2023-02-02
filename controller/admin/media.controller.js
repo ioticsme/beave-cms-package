@@ -12,6 +12,15 @@ const list = async (req, res) => {
     }
 }
 
+const jsonList = async (req, res) => {
+    try {
+        const media = await Media.find()
+        return res.status(200).json(media)
+    } catch (error) {
+        return res.render(`admin/error-404`)
+    }
+}
+
 const fileUpload = async (req, res) => {
     //BEGIN:: Media upload
     let images = {}
@@ -49,5 +58,6 @@ const fileUpload = async (req, res) => {
 
 module.exports = {
     list,
+    jsonList,
     fileUpload,
 }

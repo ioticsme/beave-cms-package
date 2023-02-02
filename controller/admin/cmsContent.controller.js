@@ -10,6 +10,8 @@ const { formatInTimeZone } = require('date-fns-tz')
 const { default: collect } = require('collect.js')
 const Redis = require('../../helper/Redis.helper')
 const { default: mongoose } = require('mongoose')
+const { isObjectId } = require('../../helper/Operations.helper')
+const { ObjectId } = require('mongodb')
 
 let session
 
@@ -562,6 +564,8 @@ const save = async (req, res) => {
 }
 
 const saveTemp = async (req, res) => {
+    console.log(req.body)
+    // return false
     try {
         // Data object to insert
         let type = req.contentType
@@ -590,7 +594,7 @@ const saveTemp = async (req, res) => {
                             group_name: groupName,
                             is_repeated: group_info['repeater_group'] || false,
                             field: fieldName,
-                            value: value,
+                            value: isObjectId(value),
                         })
                     })
                 })
@@ -604,7 +608,7 @@ const saveTemp = async (req, res) => {
                                 is_repeated:
                                     group_info['repeater_group'] || false,
                                 field: fieldName,
-                                value: value,
+                                value: isObjectId(value),
                             })
                         })
                     })
@@ -618,7 +622,7 @@ const saveTemp = async (req, res) => {
                                     ? group_info['repeater_group']
                                     : false,
                             field: fieldName,
-                            value: field,
+                            value: isObjectId(field),
                         })
                     })
                 }

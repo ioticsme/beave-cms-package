@@ -17,6 +17,7 @@ router.group('/', (router) => {
     // Menu management Routes
     router.group('/media', (router) => {
         router.get('/', mediaController.list)
+        router.get('/json', mediaController.jsonList)
         router.post('/upload', upload.any(), mediaController.fileUpload)
     })
 

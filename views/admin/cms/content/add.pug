@@ -155,6 +155,13 @@ block content
 																		<textarea class="content_wysiwyg" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}][]]" id="wysiwyg-cf-#{brandLanguage.prefix}-#{cfg.row_name}-#{cf.field_name}"></textarea>
 																	else if cf.field_type === 'textarea'
 																		<textarea class="form-control form-control-solid" rows="6" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}][]]" placeholder="" spellcheck="false"></textarea>
+																	else if cf.field_type === 'media'
+																		<span id="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}_#{cf_idx}_preview">
+																			<span class="preview-holder"></span>
+																			<a class="btn btn-danger image-preview-remove-btn d-none"><i class="fa fa-trash"></i></a>
+																		</span>
+																		<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}_#{cf_idx}" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}][]]">
+																		<a class="btn btn-success" data-field="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}_#{cf_idx}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																	else if cf.field_type === 'date'
 																		<div class="kt_daterangepicker">
 																			<input class="form-control mb-2" id="kt_daterangepicker_#{brandLanguage.prefix}-#{cf_i}" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}][]]" placeholder="#{cf.placeholder}" value="">
@@ -218,6 +225,13 @@ block content
 																else if cf.field_type === 'textarea'
 																	<textarea class="form-control form-control-solid" rows="6" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}]]" placeholder="" spellcheck="false"></textarea>
 																	<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}_#{brandLanguage.prefix}"></div>
+																else if cf.field_type === 'media'
+																	<span id="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}_preview">
+																		<span class="preview-holder"></span>
+																		<a class="btn btn-danger image-preview-remove-btn d-none"><i class="fa fa-trash"></i></a>
+																	</span>
+																	<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}]]">
+																	<a class="btn btn-success" data-field="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																else if cf.field_type === 'date'
 																	.kt_daterangepicker
 																		<input class="form-control mb-2" id="kt_daterangepicker_#{brandLanguage.prefix}-#{cf_i}" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}]]" placeholder="#{cf.placeholder}" value="">
@@ -263,7 +277,7 @@ block content
 													h4 #{cfg.row_label}
 													<div class="group_repeater" id="kt_docs_repeater_#{cfg._id}_#{cfg_i}">
 														<div class="form-group row form-repeater-group-#{cfg._id}-en" id="form_repeater_child_#{cfg._id}-#{cfg_i}">
-															each cf in cfg.fields
+															each cf, cf_i in cfg.fields
 																<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container">
 																	<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 																		<span class="required">#{cf.field_label}</span>
@@ -278,6 +292,13 @@ block content
 																	else if cf.field_type === 'textarea'
 																		<textarea class="form-control form-control-solid" rows="6" name="#{cfg.row_name}[#{cf.field_name}[]]" placeholder="" spellcheck="false"></textarea>
 																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
+																	else if cf.field_type === 'media'
+																		<span id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}_preview">
+																			<span class="preview-holder"></span>
+																			<a class="btn btn-danger image-preview-remove-btn d-none"><i class="fa fa-trash"></i></a>
+																		</span>
+																		<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" name="#{cfg.row_name}[#{cf.field_name}[]]">
+																		<a class="btn btn-success" data-field="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																	else if cf.field_type === 'date'
 																		<div class="kt_daterangepicker">
 																			<input class="form-control mb-2" id="kt_daterangepicker_#{cf_i}" name="#{cfg.row_name}[#{cf.field_name}[]]" placeholder="#{cf.placeholder}" value="">
@@ -322,7 +343,7 @@ block content
 														<a class="btn btn-light-primary" onClick="cloneChild(event)" target-lang="#{cfg._id}" target-lang-prefix="en" target-id="kt_docs_repeater_#{cfg._id}_#{cfg_i}"><i class="la la-plus"></i>Add</a>
 													</div>
 												else 
-													each cf in cfg.fields
+													each cf, cf_i in cfg.fields
 														.d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container
 															label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
 																span.required #{cf.field_label}
@@ -336,6 +357,13 @@ block content
 															else if cf.field_type === 'textarea'
 																textarea.form-control.form-control-solid(rows='6' name=`${cfg.row_name}[${cf.field_name}]` placeholder='' spellcheck='false')
 																<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
+															else if cf.field_type === 'media'
+																<span id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}_preview">
+																	<span class="preview-holder"></span>
+																	<a class="btn btn-danger image-preview-remove-btn d-none"><i class="fa fa-trash"></i></a>
+																</span>
+																<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" name="#{cfg.row_name}[#{cf.field_name}[]]">
+																<a class="btn btn-success" data-field="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 															else if cf.field_type === 'date'
 																.kt_daterangepicker
 																	input.form-control.mb-2(id=`kt_daterangepicker_${cf_i}` name=`${cfg.row_name}[${cf.field_name}]` placeholder=`${cf.placeholder}` value='')
@@ -394,3 +422,21 @@ block content
 			</div>
 		</div>
 	</div>
+
+
+block widgets
+	#kt_modal_media_list.modal.fade(tabindex='-1' aria-hidden='true')
+		//- input(type="hidden" id="field_id")
+		.modal-dialog.modal-dialog-centered.mw-1000px
+			.modal-content
+				.modal-header
+					h2 Media List
+					.btn.btn-sm.btn-icon.btn-active-color-primary(data-bs-dismiss='modal' )
+						h3 X						
+				.modal-body.py-lg-5.px-lg-5
+					.card.card-flush
+						.card-body.pt-0
+							.col-md-12
+								//- span.preloader Loading...
+								#media-holder
+									
