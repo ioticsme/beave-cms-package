@@ -590,38 +590,52 @@ const saveTemp = async (req, res) => {
                 _.forEach(group, (field, fieldName) => {
                     _.forEach(field, (value, language) => {
                         // console.log(fieldName)
-                        // console.log(value)
+                        // console.log(typeof value)
                         // console.log(isObjectId(value))
+                        let value_to_insert = isObjectId(value)
+                        if (typeof value == 'object') {
+                            value_to_insert = value.map((item) => {
+                                return isObjectId(item)
+                            })
+                        }
                         restructuredJson.push({
                             language: language || 'common',
                             group_name: groupName,
                             is_repeated: group_info['repeater_group'] || false,
                             field: fieldName,
-                            value: isObjectId(value),
+                            value: value_to_insert,
                         })
+                        // console.log(restructuredJson)
                     })
                 })
             } else {
                 if (group_info && group_info['repeater_group']) {
                     _.forEach(group, (field, fieldName) => {
                         _.forEach(field, (value) => {
-                            // console.log(value)
-                            // console.log(isObjectId(value))
+                            let value_to_insert = isObjectId(value)
+                            if (typeof value == 'object') {
+                                value_to_insert = value.map((item) => {
+                                    return isObjectId(item)
+                                })
+                            }
                             restructuredJson.push({
                                 language: 'common',
                                 group_name: groupName,
                                 is_repeated:
                                     group_info['repeater_group'] || false,
                                 field: fieldName,
-                                value: isObjectId(value),
+                                value: value_to_insert,
                             })
                         })
                     })
                 } else {
                     _.forEach(group, (field, fieldName) => {
-                        // console.log(fieldName)
-                        // console.log(field)
-                        // console.log(isObjectId(field))
+                        let value_to_insert = isObjectId(field)
+                        if (typeof field == 'object') {
+                            value_to_insert = field.map((item) => {
+                                return isObjectId(item)
+                            })
+                        }
                         restructuredJson.push({
                             language: 'common',
                             group_name: groupName,
@@ -630,7 +644,7 @@ const saveTemp = async (req, res) => {
                                     ? group_info['repeater_group']
                                     : false,
                             field: fieldName,
-                            value: isObjectId(field),
+                            value: value_to_insert,
                         })
                     })
                 }
