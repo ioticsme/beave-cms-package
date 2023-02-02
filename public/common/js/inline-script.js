@@ -13,40 +13,40 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
                 </div>`
             })
             mediaList = `${mediaList}</div>`
+            e.target.querySelector('#field_id').value =
+                e.relatedTarget.getAttribute('data-field')
             document.getElementById('media-holder').innerHTML = mediaList
-
-            document
-                .querySelector('#media-holder')
-                .addEventListener('click', function (event) {
-                    var mediaId = event.target.getAttribute('data-mediaId')
-                    if (mediaId) {
-                        $(mediaModal).modal('hide')
-                        // Do something when a list item is clicked, such as displaying its text content
-                        document.querySelector(
-                            `#${e.relatedTarget.getAttribute('data-field')}`
-                        ).value = mediaId
-                        const imgHolderParent = document.querySelector(
-                            `#${e.relatedTarget.getAttribute(
-                                'data-field'
-                            )}_preview`
-                        )
-                        console.log(imgHolderParent)
-                        imgHolderParent.querySelector(
-                            `.preview-holder`
-                        ).innerHTML = `<img width="150px" src="${event.target.getAttribute(
-                            'data-mediaUrl'
-                        )}" />`
-                        imgHolderParent
-                            .querySelector(`.image-preview-remove-btn`)
-                            .classList.remove('d-none')
-                    }
-                })
         })
         .catch(function (error) {
             // Handle the error
             console.error(error)
         })
 })
+
+document
+    .querySelector('#media-holder')
+    .addEventListener('click', function (event) {
+        var mediaId = event.target.getAttribute('data-mediaId')
+        var fieldId = mediaModal.querySelector('#field_id').value
+        console.log(fieldId)
+        if (mediaId) {
+            $(mediaModal).modal('hide')
+            // Do something when a list item is clicked, such as displaying its text content
+            document.querySelector(`#${fieldId}`).value = mediaId
+            const imgHolderParent = document.querySelector(
+                `#${fieldId}_preview`
+            )
+            // console.log(imgHolderParent)
+            imgHolderParent.querySelector(
+                `.preview-holder`
+            ).innerHTML = `<img width="150px" src="${event.target.getAttribute(
+                'data-mediaUrl'
+            )}" />`
+            imgHolderParent
+                .querySelector(`.image-preview-remove-btn`)
+                .classList.remove('d-none')
+        }
+    })
 
 document.querySelectorAll('.image-preview-remove-btn').forEach((removeBtn) => {
     removeBtn.addEventListener('click', function (e) {

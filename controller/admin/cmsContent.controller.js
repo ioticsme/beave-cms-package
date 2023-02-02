@@ -564,7 +564,7 @@ const save = async (req, res) => {
 }
 
 const saveTemp = async (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
     // return false
     try {
         // Data object to insert
@@ -589,6 +589,9 @@ const saveTemp = async (req, res) => {
             if (group_info?.localisation) {
                 _.forEach(group, (field, fieldName) => {
                     _.forEach(field, (value, language) => {
+                        // console.log(fieldName)
+                        // console.log(value)
+                        // console.log(isObjectId(value))
                         restructuredJson.push({
                             language: language || 'common',
                             group_name: groupName,
@@ -602,6 +605,8 @@ const saveTemp = async (req, res) => {
                 if (group_info && group_info['repeater_group']) {
                     _.forEach(group, (field, fieldName) => {
                         _.forEach(field, (value) => {
+                            // console.log(value)
+                            // console.log(isObjectId(value))
                             restructuredJson.push({
                                 language: 'common',
                                 group_name: groupName,
@@ -614,6 +619,9 @@ const saveTemp = async (req, res) => {
                     })
                 } else {
                     _.forEach(group, (field, fieldName) => {
+                        // console.log(fieldName)
+                        // console.log(field)
+                        // console.log(isObjectId(field))
                         restructuredJson.push({
                             language: 'common',
                             group_name: groupName,

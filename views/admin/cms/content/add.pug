@@ -6,6 +6,16 @@ block csslib
 	link(href='/cms-static/admin/assets/plugins/global/plugins.bundle.css' rel='stylesheet' type='text/css')
 	link(href='/cms-static/admin/assets/css/style.bundle.css' rel='stylesheet' type='text/css')
 
+	style.
+		a.image-preview-remove-btn {
+			display: inline-block;
+			cursor: pointer;
+		}
+		a.image-preview-remove-btn i {
+			pointer-events: none;
+		}
+
+
 block jslib
 	// begin::Vendors Javascript(used by this page)
 	//- script(src='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.js')
@@ -104,8 +114,8 @@ block content
 		//- 				li.breadcrumb-item
 		//- 					span.bullet.bg-gray-400.w-5px.h-2px
 		//- 				li.breadcrumb-item.text-muted Add New
-				//- .d-flex.align-items-center.gap-2.gap-lg-3
-				//- 	a.btn.btn-sm.fw-bold.btn-primary(href='#' data-bs-toggle='modal' data-bs-target='#kt_modal_create_app') Create
+		//- .d-flex.align-items-center.gap-2.gap-lg-3
+		//- 	a.btn.btn-sm.fw-bold.btn-primary(href='#' data-bs-toggle='modal' data-bs-target='#kt_modal_create_app') Create
 		//- #kt_app_content.app-content.flex-column-fluid
 		<div id="kt_app_content" class="app-content flex-column-fluid">
 			<div class="app-container container-xxl" id="kt_app_content_container">
@@ -158,7 +168,7 @@ block content
 																	else if cf.field_type === 'media'
 																		<span id="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}_#{cf_idx}_preview">
 																			<span class="preview-holder"></span>
-																			<a class="btn btn-danger image-preview-remove-btn d-none"><i class="fa fa-trash"></i></a>
+																			<a class="btn btn-danger image-preview-remove-btn d-none my-1"><i class="fa fa-trash" tabindex="-1"></i></a>
 																		</span>
 																		<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}_#{cf_idx}" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}][]]">
 																		<a class="btn btn-success" data-field="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}_#{cf_idx}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
@@ -186,7 +196,7 @@ block content
 																						<label class="form-label" for="percentage"> </label>
 																					</span>
 																				</div>
-																			
+
 																	else if cf.field_type === 'dropdown'
 																		<select class="form-select" data-control="select2" name="#{cfg.e}[#{cf.field_name}[#{brandLanguage.prefix}][]]" data-placeholder="Selectan ptio">
 																			<option></option>
@@ -200,11 +210,11 @@ block content
 															</div>
 														</div>
 													</div>
-													
+
 													<div class="form-group mt-5 text-center">
 														<a class="btn btn-light-primary mb-10" onClick="cloneChild(event)" target-lang="#{cfg._id}" target-lang-prefix="#{brandLanguage.prefix}" target-id="kt_docs_repeater_#{brandLanguage.prefix}_#{cfg._id}_#{cfg_i}" data-repeater-create=""><i class="la la-plus"></i>Add</a>
 													</div>
-															
+
 												else
 													if cfg.localisation
 														//- h1 Test
@@ -228,7 +238,7 @@ block content
 																else if cf.field_type === 'media'
 																	<span id="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}_preview">
 																		<span class="preview-holder"></span>
-																		<a class="btn btn-danger image-preview-remove-btn d-none"><i class="fa fa-trash"></i></a>
+																		<a class="btn btn-danger image-preview-remove-btn d-none my-1"><i class="fa fa-trash" tabindex="-1"></i></a>
 																	</span>
 																	<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}]]">
 																	<a class="btn btn-success" data-field="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
@@ -295,7 +305,7 @@ block content
 																	else if cf.field_type === 'media'
 																		<span id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}_preview">
 																			<span class="preview-holder"></span>
-																			<a class="btn btn-danger image-preview-remove-btn d-none"><i class="fa fa-trash"></i></a>
+																			<a class="btn btn-danger image-preview-remove-btn d-none my-1"><i class="fa fa-trash" tabindex="-1"></i></a>
 																		</span>
 																		<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" name="#{cfg.row_name}[#{cf.field_name}[]]">
 																		<a class="btn btn-success" data-field="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
@@ -360,7 +370,7 @@ block content
 															else if cf.field_type === 'media'
 																<span id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}_preview">
 																	<span class="preview-holder"></span>
-																	<a class="btn btn-danger image-preview-remove-btn d-none"><i class="fa fa-trash"></i></a>
+																	<a class="btn btn-danger image-preview-remove-btn d-none my-1"><i class="fa fa-trash" tabindex="-1"></i></a>
 																</span>
 																<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" name="#{cfg.row_name}[#{cf.field_name}[]]">
 																<a class="btn btn-success" data-field="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
@@ -426,7 +436,7 @@ block content
 
 block widgets
 	#kt_modal_media_list.modal.fade(tabindex='-1' aria-hidden='true')
-		//- input(type="hidden" id="field_id")
+		input(type="hidden" id="field_id")
 		.modal-dialog.modal-dialog-centered.mw-1000px
 			.modal-content
 				.modal-header
@@ -439,4 +449,3 @@ block widgets
 							.col-md-12
 								//- span.preloader Loading...
 								#media-holder
-									
