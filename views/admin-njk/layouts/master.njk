@@ -119,9 +119,8 @@
 				<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
 
 					{# //- BEGIN::LOADING MAIN PAGE CONTENT PART #}
-					{% block content %}{% endblock %} 
+					{% block content %}{% endblock %}
 					{# //- END::LOADING MAIN PAGE CONTENT PART #}
-
 
 					<div class="app-footer" id="kt_app_footer">
 						<div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
@@ -144,21 +143,53 @@
 			</div>
 		</div>
 
+		<div class="modal fade" id="kt_modal_media_list" tabindex="-1" aria-hidden="true">
+			<input type="hidden" id="field_id"/>
+			<div class="modal-dialog modal-dialog-centered mw-1000px">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2>Media List</h2>
+						<div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+							<h3>X</h3>
+						</div>
+					</div>
+					<div class="modal-body py-lg-5 px-lg-5">
+						<div class="card card-flush">
+							<div class="card-body pt-0">
+								<div class="col-md-12">
+									<div id="media-holder"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<script>
 			var hostUrl = "assets/";
-			{# //- BEGIN:: Active accordion nav #}
-			document.querySelectorAll('.menu-accordion').forEach((mainAccordion) => {
-				mainAccordion.querySelectorAll('.menu-sub-accordion .menu-item .menu-link').forEach((subAccordionItem)=> {
-					if(subAccordionItem.classList.contains('active')) {
-						mainAccordion.classList.add('here', 'show')
-					}
-				})
-			})
-			{# //- END:: Active accordion nav #}
+			{
+				# //- BEGIN:: Active accordion nav #}
+				document
+					.querySelectorAll('.menu-accordion')
+					.forEach((mainAccordion) => {
+						mainAccordion
+							.querySelectorAll('.menu-sub-accordion .menu-item .menu-link')
+							.forEach((subAccordionItem) => {
+								if (subAccordionItem.classList.contains('active')) {
+									mainAccordion
+										.classList
+										.add('here', 'show')
+								}
+							})
+					}) {
+						# //- END:: Active accordion nav #}
 		</script>
 		<script src='/cms-static/admin/assets/plugins/global/plugins.bundle.js'></script>
 		<script src='/cms-static/admin/assets/js/scripts.bundle.js'></script>
 		<script src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'></script>
+
+		<script src='/cms-static/common/js/inline-script.js'></script>
 
 		{% block jslib %}{% endblock %}
 		{% block customScript %}{% endblock %}

@@ -131,6 +131,20 @@
 			</div>
 		</div>
 
+		#kt_modal_media_list.modal.fade(tabindex='-1' aria-hidden='true')
+			input(type="hidden" id="field_id")
+			.modal-dialog.modal-dialog-centered.mw-1000px
+				.modal-content
+					.modal-header
+						h2 Media List
+						.btn.btn-sm.btn-icon.btn-active-color-primary(data-bs-dismiss='modal' )
+							h3 X
+					.modal-body.py-lg-5.px-lg-5
+						.card.card-flush
+							.card-body.pt-0
+								.col-md-12
+									#media-holder
+
 		script.
 			var hostUrl = "assets/";
 			//- BEGIN:: Active accordion nav
