@@ -82,13 +82,15 @@ block content
                                                                     .row
                                                                         each eachVal, vIndex in cfg.fields
                                                                             .col-12.col-sm-6
-                                                                                each eachField, fIndex in contentDetail.content['common'][cfg.row_name][eachVal.field_name]
-                                                                                    span.badge.badge-light #{eachVal.field_label.toUpperCase()} :
-                                                                                    if eachVal.field_type == 'media'
-                                                                                        img(src=`${contentDetail.content['common'][cfg.row_name][eachVal.field_name]}` style="max-width: 100px;")
-                                                                                    else
-                                                                                        span.badge.badge-light-info #{contentDetail.content['common'][cfg.row_name][eachVal.field_name]}
-                                                                                    br
+                                                                                - var content = contentDetail.content['common'][cfg.row_name]
+                                                                                if content
+                                                                                    each eachField, fIndex in contentDetail.content['common'][cfg.row_name][eachVal.field_name]
+                                                                                        span.badge.badge-light #{eachVal.field_label.toUpperCase()} :
+                                                                                        if eachVal.field_type == 'media'
+                                                                                            img(src=`${contentDetail.content['common'][cfg.row_name][eachVal.field_name]}` style="max-width: 100px;")
+                                                                                        else
+                                                                                            span.badge.badge-light-info #{contentDetail.content['common'][cfg.row_name][eachVal.field_name]}
+                                                                                        br
                                                                 else
                                                                     each cf in cfg.fields
                                                                         span.badge.badge-light-success.mt-5 #{cf.field_label}

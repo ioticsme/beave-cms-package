@@ -162,23 +162,6 @@ const edit = async (req, res) => {
             country: session.brand.country,
         })
 
-        const findalContentFieldsGroup = _.groupBy(
-            contentDetail.content,
-            'language'
-        )
-        for (const language in findalContentFieldsGroup) {
-            findalContentFieldsGroup[language] = _.groupBy(
-                findalContentFieldsGroup[language],
-                'group_name'
-            )
-            for (const group_name in findalContentFieldsGroup[language]) {
-                findalContentFieldsGroup[language][group_name] = _.groupBy(
-                    findalContentFieldsGroup[language][group_name],
-                    'field'
-                )
-            }
-        }
-
         // return res.send(findalContentFieldsGroup)
 
         if (req.contentType?.allowed_type?.length) {
@@ -195,11 +178,12 @@ const edit = async (req, res) => {
         const has_common_custom_fields = collect(req.contentType.custom_fields)
             .where('localisation', false)
             .count()
-        res.render(`admin/cms/content/edit`, {
+
+        // return res.json(contentDetail)
+        return res.render(`admin/cms/content/edit`, {
             reqContentType: req.contentType,
             has_common_custom_fields: has_common_custom_fields ? true : false,
             contentDetail,
-            findalContentFieldsGroup,
             allowed_content,
         })
     } catch (error) {
@@ -585,7 +569,7 @@ const save = async (req, res) => {
 }
 
 const saveTemp = async (req, res) => {
-    // console.log(req.authUser.brand.languages)
+    // console.log(req.body)
     // return false
     try {
         // Data object to insert
@@ -609,7 +593,7 @@ const saveTemp = async (req, res) => {
             attached_type: Joi.optional(),
             published: Joi.string().required().valid('true', 'false'),
             in_home: Joi.string().required().valid('true', 'false'),
-            position: Joi.number().required(),
+            position: Joi.number().optional(),
         }).unknown()
         // END:: Validation rule
 
@@ -630,7 +614,7 @@ const saveTemp = async (req, res) => {
             // brand: req.authUser.brand._id,
             country: req.authUser.brand.country,
             published: body.published === 'true',
-            position: body.position,
+            position: body.position || 0,
             // template_name: type.template_name,
             content: content_to_insert,
             // group_content: fieldGroupData,
@@ -677,7 +661,7 @@ const saveTemp = async (req, res) => {
             })
             const cache_key = `content-${countryCode}-${type.slug}-${existingContent.slug}`
             // Update content
-            await Content.updateOne({ _id: body._id }, data)
+            await Content.updateOne({ _id: req.body._id }, data)
             Redis.removeCache([cache_key])
             return res.status(201).json({
                 message: 'Content updated successfully',

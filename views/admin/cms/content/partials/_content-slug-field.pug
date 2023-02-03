@@ -3,6 +3,6 @@
         .card-title
             h3 Slug (URL)
     .card-body.pt-0
-        input.form-control(type='text' placeholder='Enter Slug'  name=`slug`)
+        input.form-control(type='text' placeholder='Enter Slug'  name=`slug` value=`${contentDetail ? contentDetail.slug : ''}`)
         .fv-plugins-message-container.invalid-feedback(id=`field-error-slug`)
         .text-muted.fs-7 Set the content url
