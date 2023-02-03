@@ -31,7 +31,7 @@ block content
                             a.text-muted.text-hover-primary(href=`../${reqContentType.slug}`) #{reqContentType.title}
                         li.breadcrumb-item
                             span.bullet.bg-gray-400.w-5px.h-2px
-                        li.breadcrumb-item.text-muted #{contentDetail.content[0].value}
+                        li.breadcrumb-item.text-muted #{`${contentDetail.content[default_lang.prefix][reqContentType.field_groups[0].row_label][reqContentType.field_groups[0].fields[0].field_name]}`}
                 .d-flex.align-items-center.gap-2.gap-lg-3
                     if reqContentType.single_type == false
                         a.btn.btn-sm.fw-bold.btn-success(href=`/admin/cms/${reqContentType.slug}/add`) Add New #{reqContentType.title}
@@ -56,20 +56,49 @@ block content
                                                         each cfg, cfg_i in reqContentType.field_groups
                                                             if cfg.localisation == true
                                                                 h1.mt-5.mb-2 #{cfg.row_label.toUpperCase()}
-                                                                if cfg.repeater_group && findalContentFieldsGroup && findalContentFieldsGroup[brandLanguage.prefix] && findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name] && findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][0]
+                                                                if cfg.repeater_group
                                                                     .row
-                                                                        each eachVal, vIndex in findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][0].value
+                                                                        each eachVal, vIndex in cfg.fields
                                                                             .col-12.col-sm-6
-                                                                                each eachField, fIndex in findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name]
-                                                                                    span.badge.badge-light #{findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][fIndex].field.toUpperCase()} :
-                                                                                    span.badge.badge-light-info #{findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name][fIndex].value[vIndex]}
+                                                                                each eachField, fIndex in contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name]
+                                                                                    span.badge.badge-light #{eachVal.field_label.toUpperCase()} :
+                                                                                    if eachVal.field_type == 'media'
+                                                                                        img(src=`${contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name]}` style="max-width: 100px;")
+                                                                                    else
+                                                                                        span.badge.badge-light-info #{contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name]}
                                                                                     br
-                                                                else if findalContentFieldsGroup[brandLanguage.prefix] && findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name]
-                                                                    each cf in findalContentFieldsGroup[brandLanguage.prefix][cfg.row_name]
-                                                                        span.badge.badge-light-success.mt-5 #{cf.field.toUpperCase()}
+                                                                else
+                                                                    each cf in cfg.fields
+                                                                        span.badge.badge-light-success.mt-5 #{cf.field_label}
                                                                         br
                                                                         .card
-                                                                            | !{cf.value}
+                                                                            if cf.field_type == 'media'
+                                                                                img(src=`${contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name]}` style="max-width: 200px;")
+                                                                            else
+                                                                                | !{contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name]}
+                                                            else
+                                                                h1.mt-5.mb-2 #{cfg.row_label.toUpperCase()}
+                                                                if cfg.repeater_group
+                                                                    .row
+                                                                        each eachVal, vIndex in cfg.fields
+                                                                            .col-12.col-sm-6
+                                                                                each eachField, fIndex in contentDetail.content['common'][cfg.row_name][eachVal.field_name]
+                                                                                    span.badge.badge-light #{eachVal.field_label.toUpperCase()} :
+                                                                                    if eachVal.field_type == 'media'
+                                                                                        img(src=`${contentDetail.content['common'][cfg.row_name][eachVal.field_name]}` style="max-width: 100px;")
+                                                                                    else
+                                                                                        span.badge.badge-light-info #{contentDetail.content['common'][cfg.row_name][eachVal.field_name]}
+                                                                                    br
+                                                                else
+                                                                    each cf in cfg.fields
+                                                                        span.badge.badge-light-success.mt-5 #{cf.field_label}
+                                                                        br
+                                                                        .card
+                                                                            if cf.field_type == 'media'
+                                                                                img(src=`${contentDetail.content['common'][cfg.row_name][cf.field_name]}` style="max-width: 200px;")
+                                                                            else
+                                                                                | !{contentDetail.content['common'][cfg.row_name][cf.field_name]}
+
                     .col-12.col-sm-4
                         .card.card-flush.pt-3.mb-5.mb-lg-10                                
                             .card-body
@@ -82,14 +111,14 @@ block content
                                             | API Endpoint : 
                                             br
                                             code
-                                                |#{baseURL}/api/cms/#{reqContentType.slug}
+                                                a(href=`${baseURL}/api/cms/${reqContentType.slug}` target="_blank") #{baseURL}/api/cms/#{reqContentType.slug}
                                         else
                                             | API Endpoint (Collection) :
                                             br
                                             code
-                                                |#{baseURL}/api/cms/#{reqContentType.slug}
+                                                a(href=`${baseURL}/api/cms/${reqContentType.slug}` target="_blank") #{baseURL}/api/cms/#{reqContentType.slug}
                                             br
                                             | API Endpoint (Detail) :
                                             br
                                             code
-                                                |#{baseURL}/api/cms/#{reqContentType.slug}/#{contentDetail.slug}
+                                                a(href=`${baseURL}/api/cms/${reqContentType.slug}/${contentDetail.slug}` target="_blank") #{baseURL}/api/cms/#{reqContentType.slug}/#{contentDetail.slug}

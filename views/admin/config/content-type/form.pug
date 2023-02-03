@@ -133,6 +133,9 @@ block content
 								small Please include the following in your content type.
 								.row.mt-3
 									.form-check.form-check-custom.form-check-solid.form-check-sm.col-md-4.mt-4
+										input#in_use.form-check-input(type='checkbox' value='true' name='has_slug' checked=(contentType ? contentType.has_slug : false))
+										label.form-check-label(for='in_use') Has Slug (URL)
+									.form-check.form-check-custom.form-check-solid.form-check-sm.col-md-4.mt-4
 										input#in_use.form-check-input(type='checkbox' value='true' name='in_use' checked=(contentType ? contentType.in_use : false))
 										label.form-check-label(for='in_use') In Use
 									.form-check.form-check-custom.form-check-solid.form-check-sm.col-md-4.mt-4

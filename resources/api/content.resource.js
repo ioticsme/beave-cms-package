@@ -12,21 +12,32 @@ class ContentResource extends Resource {
             slug: this.slug,
             type: this.type_slug,
             // type_id: this.type_id,
-            author: this.author,
+            author: {
+                _id: this.author._id,
+                name: this.author.name,
+                email: this.author.email,
+            },
             position: this.position,
             // template_name: this.template_name,
             // published: this.published,
             // brand: this.brand,
-            country: this.country[0],
-            content: collect(this.fields)
-                .groupBy('group_name')
-                .map((group) => {
-                    return ContentFieldResource.collection(group).reduce(
-                        (acc, curr) => {
-                            return { ...acc, ...curr }
-                        }
-                    )
-                }),
+            country: {
+                _id: this.country._id,
+                name: this.country.name,
+                code: this.country.code,
+                currency: this.country.currency,
+                timezone: this.country.timezone,
+            },
+            content: this.content,
+            // content: collect(this.fields)
+            //     .groupBy('group_name')
+            //     .map((group) => {
+            //         return ContentFieldResource.collection(group).reduce(
+            //             (acc, curr) => {
+            //                 return { ...acc, ...curr }
+            //             }
+            //         )
+            //     }),
             // content_test: collect(this.fields)
             //     .groupBy('group_name')
             //     .map((group) => {

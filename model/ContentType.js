@@ -73,6 +73,10 @@ const ContentTypeSchema = new mongoose.Schema(
         //     type: String,
         //     default: 'page',
         // },
+        has_slug: {
+            type: Boolean,
+            default: false,
+        },
         single_type: {
             type: Boolean,
             default: false,

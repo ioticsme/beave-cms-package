@@ -9,9 +9,7 @@ const Country = require('./Country')
 
 const ContentSchema = new mongoose.Schema(
     {
-        slug: {
-            type: String,
-        },
+        slug: String,
         type_id: {
             type: Schema.ObjectId,
             ref: ContentType,
@@ -59,45 +57,7 @@ const ContentSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
-        content: [
-            {
-                language: {
-                    type: String,
-                    required: true,
-                },
-                group_name: {
-                    type: String,
-                    required: true,
-                },
-                is_repeated: {
-                    type: Boolean,
-                    default: false,
-                },
-                field: {
-                    type: String,
-                    required: true,
-                },
-                value: {
-                    type: Schema.Types.Mixed,
-                    required: true,
-                },
-            },
-        ],
-        // custom_fields: Object,
-        // meta: {
-        //     en: {
-        //         title: String,
-        //         keywords: String,
-        //         description: String,
-        //         og_image: String,
-        //     },
-        //     ar: {
-        //         title: String,
-        //         keywords: String,
-        //         description: String,
-        //         og_image: String,
-        //     },
-        // },
+        content: Object,
     },
     {
         timestamps: {

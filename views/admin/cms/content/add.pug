@@ -160,28 +160,28 @@ block content
 																	label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
 																		span.required #{cf.field_label} (#{brandLanguage.prefix})
 																	if cf.field_type === 'text' || cf.field_type === 'email' || cf.field_type === 'number'
-																		<input class="form-control form-control-solid" type="#{cf.field_type}" placeholder="Enter #{cf.field_label}" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}][]]">
+																		<input class="form-control form-control-solid" type="#{cf.field_type}" placeholder="Enter #{cf.field_label}" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}[]]]">
 																	else if cf.field_type === 'richtext'
-																		<textarea class="content_wysiwyg" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}][]]" id="wysiwyg-cf-#{brandLanguage.prefix}-#{cfg.row_name}-#{cf.field_name}"></textarea>
+																		<textarea class="content_wysiwyg" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}[]]]" id="wysiwyg-cf-#{brandLanguage.prefix}-#{cfg.row_name}-#{cf.field_name}"></textarea>
 																	else if cf.field_type === 'textarea'
-																		<textarea class="form-control form-control-solid" rows="6" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}][]]" placeholder="" spellcheck="false"></textarea>
+																		<textarea class="form-control form-control-solid" rows="6" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}[]]]" placeholder="" spellcheck="false"></textarea>
 																	else if cf.field_type === 'media'
 																		<span id="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}_#{cf_idx}_preview">
 																			<span class="preview-holder"></span>
 																			<a class="btn btn-danger image-preview-remove-btn d-none my-1"><i class="fa fa-trash" tabindex="-1"></i></a>
 																		</span>
-																		<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}_#{cf_idx}" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}][]]">
+																		<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}_#{cf_idx}" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}[]]]">
 																		<a class="btn btn-success" data-field="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}_#{cf_idx}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																	else if cf.field_type === 'date'
 																		<div class="kt_daterangepicker">
-																			<input class="form-control mb-2" id="kt_daterangepicker_#{brandLanguage.prefix}-#{cf_i}" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}][]]" placeholder="#{cf.placeholder}" value="">
+																			<input class="form-control mb-2" id="kt_daterangepicker_#{brandLanguage.prefix}-#{cf_i}" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}[]]]" placeholder="#{cf.placeholder}" value="">
 																		</div>
 																	else if cf.field_type === 'radio'
 																		.row.row-cols-1.row-cols-md-3.row-cols-lg-1.row-cols-xl-3.g-9(data-kt-buttons='true' data-kt-buttons-target="[data-kt-button='true']")
 																			each option,i in cf.options 
 																				<div class="col d-flex text-start p-6">
 																					<span class="form-check form-check-custom form-check-solid form-check-sm align-items-start" data-kt-button="true">
-																						<input class="form-check-input" type="radio" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}][]]" id="#{option.value}-#{i}" value="#{option.value}">
+																						<input class="form-check-input" type="radio" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}[]]]" id="#{option.value}-#{i}" value="#{option.value}">
 																					</span>
 																					<span class="ms-5">
 																						<label class="form-label" for="#{option.value}-#{i}">#{option.label}</label>
@@ -190,7 +190,7 @@ block content
 																			else 
 																				<div class="col d-flex text-start p-6">
 																					<span class="form-check form-check-custom form-check-solid form-check-sm align-items-start" data-kt-button="true">
-																						<input class="form-check-input" type="radio" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}][]]" id="percentage" value="true">
+																						<input class="form-check-input" type="radio" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}[]]]" id="percentage" value="true">
 																					</span>
 																					<span class="ms-5">
 																						<label class="form-label" for="percentage"> </label>
@@ -198,7 +198,7 @@ block content
 																				</div>
 
 																	else if cf.field_type === 'dropdown'
-																		<select class="form-select" data-control="select2" name="#{cfg.e}[#{cf.field_name}[#{brandLanguage.prefix}][]]" data-placeholder="Selectan ptio">
+																		<select class="form-select" data-control="select2" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}[]]]" data-placeholder="Selectan ptio">
 																			<option></option>
 																			each dropdown, dd_i in cf.options
 																				<option value="#{dropdown.value}">#{dropdown.label}</option>
@@ -227,37 +227,37 @@ block content
 																</label>
 																// end::Label
 																if cf.field_type === 'text' || cf.field_type === 'email' || cf.field_type === 'number'
-																	<input class="form-control form-control-solid" type="#{cf.field_type}" placeholder="Enter #{cf.field_label}" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}]]">
+																	<input class="form-control form-control-solid" type="#{cf.field_type}" placeholder="Enter #{cf.field_label}" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}]]">
 																	<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}_#{brandLanguage.prefix}"></div>
 																else if cf.field_type === 'richtext'
-																	<textarea class="content_wysiwyg" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}]]" id="wysiwyg-cf-#{brandLanguage.prefix}-#{cfg.row_name}-#{cf.field_name}"></textarea>
+																	<textarea class="content_wysiwyg" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}]]" id="wysiwyg-cf-#{brandLanguage.prefix}-#{cfg.row_name}-#{cf.field_name}"></textarea>
 																	<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}_#{brandLanguage.prefix}"></div>
 																else if cf.field_type === 'textarea'
-																	<textarea class="form-control form-control-solid" rows="6" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}]]" placeholder="" spellcheck="false"></textarea>
+																	<textarea class="form-control form-control-solid" rows="6" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}]]" placeholder="" spellcheck="false"></textarea>
 																	<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}_#{brandLanguage.prefix}"></div>
 																else if cf.field_type === 'media'
 																	<span id="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}_preview">
 																		<span class="preview-holder"></span>
 																		<a class="btn btn-danger image-preview-remove-btn d-none my-1"><i class="fa fa-trash" tabindex="-1"></i></a>
 																	</span>
-																	<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}]]">
+																	<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}]]">
 																	<a class="btn btn-success" data-field="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																else if cf.field_type === 'date'
 																	.kt_daterangepicker
-																		<input class="form-control mb-2" id="kt_daterangepicker_#{brandLanguage.prefix}-#{cf_i}" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}]]" placeholder="#{cf.placeholder}" value="">
+																		<input class="form-control mb-2" id="kt_daterangepicker_#{brandLanguage.prefix}-#{cf_i}" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}]]" placeholder="#{cf.placeholder}" value="">
 																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}_#{brandLanguage.prefix}"></div>
 																else if cf.field_type === 'radio'
 																	<div class="row row-cols-1 row-cols-md-3 row-cols-lg-1 row-cols-xl-3 g-9" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button='true']">
 																		each option,i in cf.options 
 																			<div class="col d-flex text-start p-6"><span class="form-check form-check-custom form-check-solid form-check-sm align-items-start" data-kt-button="true"></span>
-																				<input class="form-check-input" type="radio" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}]]" id="#{option.value}-#{i}" value="#{option.value}">
+																				<input class="form-check-input" type="radio" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}]]" id="#{option.value}-#{i}" value="#{option.value}">
 																				<span class="ms-5"></span>
 																				<label class="form-label" for="#{option.value}-#{i}">#{option.label}</label>
 																			</div>
 																		else 
 																			<div class="col d-flex text-start p-6">
 																				<span class="form-check form-check-custom form-check-solid form-check-sm align-items-start" data-kt-button="true">
-																					<input class="form-check-input" type="radio" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}]]" id="percentage" value="true"></span>
+																					<input class="form-check-input" type="radio" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}]]" id="percentage" value="true"></span>
 																				<span class="ms-5">
 																					<label class="form-label" for="percentage"> </label>
 																				</span>
@@ -265,7 +265,7 @@ block content
 																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}_#{brandLanguage.prefix}"></div>
 																	</div>
 																else if cf.field_type === 'dropdown'
-																	<select class="form-select" data-control="select2" name="#{cfg.row_name}[#{cf.field_name}[#{brandLanguage.prefix}]]" data-placeholder="Select an option">
+																	<select class="form-select" data-control="select2" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}]]" data-placeholder="Select an option">
 																		<option></option>
 																		each dropdown, dd_i in cf.options
 																			<option value="#{dropdown.value}">#{dropdown.label}</option>
@@ -294,24 +294,24 @@ block content
 																		<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-kt-initialized="1"></i>
 																	</label>
 																	if cf.field_type === 'text' || cf.field_type === 'email' || cf.field_type === 'number'
-																		<input class="form-control form-control-solid" type="#{cf.field_type}" placeholder="Enter #{cf.field_label}" name="#{cfg.row_name}[#{cf.field_name}[]]">
+																		<input class="form-control form-control-solid" type="#{cf.field_type}" placeholder="Enter #{cf.field_label}" name="common[#{cfg.row_name}[#{cf.field_name}[]]]">
 																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 																	else if cf.field_type === 'richtext'
-																		<textarea class="content_wysiwyg" name="#{cfg.row_name}[#{cf.field_name}]" id="wysiwyg-cf-#{cf_i}"></textarea>
+																		<textarea class="content_wysiwyg" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" id="wysiwyg-cf-#{cf_i}"></textarea>
 																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 																	else if cf.field_type === 'textarea'
-																		<textarea class="form-control form-control-solid" rows="6" name="#{cfg.row_name}[#{cf.field_name}[]]" placeholder="" spellcheck="false"></textarea>
+																		<textarea class="form-control form-control-solid" rows="6" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" placeholder="" spellcheck="false"></textarea>
 																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 																	else if cf.field_type === 'media'
 																		<span id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}_preview">
 																			<span class="preview-holder"></span>
 																			<a class="btn btn-danger image-preview-remove-btn d-none my-1"><i class="fa fa-trash" tabindex="-1"></i></a>
 																		</span>
-																		<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" name="#{cfg.row_name}[#{cf.field_name}[]]">
+																		<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" name="common[#{cfg.row_name}[#{cf.field_name}[]]]">
 																		<a class="btn btn-success" data-field="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																	else if cf.field_type === 'date'
 																		<div class="kt_daterangepicker">
-																			<input class="form-control mb-2" id="kt_daterangepicker_#{cf_i}" name="#{cfg.row_name}[#{cf.field_name}[]]" placeholder="#{cf.placeholder}" value="">
+																			<input class="form-control mb-2" id="kt_daterangepicker_#{cf_i}" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" placeholder="#{cf.placeholder}" value="">
 																			<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 																		</div>
 																	else if cf.field_type === 'radio'
@@ -319,7 +319,7 @@ block content
 																			each option,i in cf.options 
 																				<div class="col d-flex text-start p-6">
 																					<span class="form-check form-check-custom form-check-solid form-check-sm align-items-start" data-kt-button="true">
-																						<input class="form-check-input" type="radio" name="#{cfg.row_name}[#{cf.field_name}[]]" id="#{option.value}-#{i}" value="#{option.value}">
+																						<input class="form-check-input" type="radio" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" id="#{option.value}-#{i}" value="#{option.value}">
 																					</span>
 																					<span class="ms-5">
 																						<label class="form-label" for="#{option.value}-#{i}">#{option.label}</label>
@@ -328,7 +328,7 @@ block content
 																			else 
 																				<div class="col d-flex text-start p-6">
 																					<span class="form-check form-check-custom form-check-solid form-check-sm align-items-start" data-kt-button="true">
-																						<input class="form-check-input" type="radio" name="#{cfg.row_name}[#{cf.field_name}[]]" id="percentage" value="true">
+																						<input class="form-check-input" type="radio" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" id="percentage" value="true">
 																					</span>
 																					<span class="ms-5">
 																						<label class="form-label" for="percentage"> </label>
@@ -337,7 +337,7 @@ block content
 																			<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 																		<div>
 																	else if cf.field_type === 'dropdown'
-																		<select class="form-select" data-control="select" name="#{cfg.row_name}[#{cf.field_name}[]]" data-placeholder="Select an option">
+																		<select class="form-select" data-control="select" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" data-placeholder="Select an option">
 																			<option value="">Select an option</option>
 																			each dropdown, dd_i in cf.options
 																				<option value="#{dropdown.value}">#{dropdown.label}</option>
@@ -359,37 +359,37 @@ block content
 																span.required #{cf.field_label}
 																i.fas.fa-exclamation-circle.ms-2.fs-7(data-bs-toggle='tooltip' aria-label='Specify a target name for future usage and reference' data-kt-initialized='1')
 															if cf.field_type === 'text' || cf.field_type === 'email' || cf.field_type === 'number'
-																input.form-control.form-control-solid(type=`${cf.field_type}` placeholder=`Enter  ${cf.field_label}` name=`${cfg.row_name}[${cf.field_name}]`)
+																input.form-control.form-control-solid(type=`${cf.field_type}` placeholder=`Enter  ${cf.field_label}` name=`common[${cfg.row_name}[${cf.field_name}]]`)
 																<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 															else if cf.field_type === 'richtext'
-																textarea.content_wysiwyg(name=`${cfg.row_name}[${cf.field_name}]` id=`wysiwyg-cf-${cf_i}`)
+																textarea.content_wysiwyg(name=`common[${cfg.row_name}[${cf.field_name}]]` id=`wysiwyg-cf-${cf_i}`)
 																<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 															else if cf.field_type === 'textarea'
-																textarea.form-control.form-control-solid(rows='6' name=`${cfg.row_name}[${cf.field_name}]` placeholder='' spellcheck='false')
+																textarea.form-control.form-control-solid(rows='6' name=`common[${cfg.row_name}[${cf.field_name}]]` placeholder='' spellcheck='false')
 																<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 															else if cf.field_type === 'media'
 																<span id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}_preview">
 																	<span class="preview-holder"></span>
 																	<a class="btn btn-danger image-preview-remove-btn d-none my-1"><i class="fa fa-trash" tabindex="-1"></i></a>
 																</span>
-																<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" name="#{cfg.row_name}[#{cf.field_name}[]]">
+																<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" name="common[#{cfg.row_name}[#{cf.field_name}]]">
 																<a class="btn btn-success" data-field="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 															else if cf.field_type === 'date'
 																.kt_daterangepicker
-																	input.form-control.mb-2(id=`kt_daterangepicker_${cf_i}` name=`${cfg.row_name}[${cf.field_name}]` placeholder=`${cf.placeholder}` value='')
+																	input.form-control.mb-2(id=`kt_daterangepicker_${cf_i}` name=`common[${cfg.row_name}[${cf.field_name}]]` placeholder=`${cf.placeholder}` value='')
 																	<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 															else if cf.field_type === 'radio'
 																.row.row-cols-1.row-cols-md-3.row-cols-lg-1.row-cols-xl-3.g-9(data-kt-buttons='true' data-kt-buttons-target="[data-kt-button='true']")
 																	each option,i in cf.options 
 																		.col.d-flex.text-start.p-6
 																			span.form-check.form-check-custom.form-check-solid.form-check-sm.align-items-start(data-kt-button='true')
-																				input.form-check-input(type='radio' name=`${cfg.row_name}[${cf.field_name}]` id=`${option.value}-${i}` value=`${option.value}` checked=i==0)
+																				input.form-check-input(type='radio' name=`common[${cfg.row_name}[${cf.field_name}]]` id=`${option.value}-${i}` value=`${option.value}` checked=i==0)
 																			span.ms-5
 																				label.form-label(for=`${option.value}-${i}`) #{option.label}
 																	else 
 																		<div class="col d-flex text-start p-6">
 																			<span class="form-check form-check-custom form-check-solid form-check-sm align-items-start" data-kt-button="true">
-																				<input class="form-check-input" type="radio" name="#{cfg.row_name}[#{cf.field_name}]" id="percentage" value="true"></span><span class="ms-5">
+																				<input class="form-check-input" type="radio" name="common[#{cfg.row_name}[#{cf.field_name}]]" id="percentage" value="true"></span><span class="ms-5">
 																				<label class="form-label" for="percentage"> </label>
 																			</span>
 																		</div>
@@ -400,7 +400,7 @@ block content
 																		//- 		label.form-label(for="percentage") 
 																	<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 															else if cf.field_type === 'dropdown'
-																<select class="form-select" data-control="select2" name="#{cfg.row_name}[#{cf.field_name}]" data-placeholder="Select an option">
+																<select class="form-select" data-control="select2" name="common[#{cfg.row_name}[#{cf.field_name}]]" data-placeholder="Select an option">
 																	<option></option>
 																	each dropdown, dd_i in cf.options
 																		<option value="#{dropdown.value}">#{dropdown.label}</option>
@@ -418,6 +418,10 @@ block content
 						</div>
 					</div>
 					<div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 ms-lg-10">
+
+						if reqContentType.has_slug
+							include ./partials/_content-slug-field
+
 						include ./partials/_publish
 
 						if reqContentType.allowed_type && reqContentType.allowed_type.length

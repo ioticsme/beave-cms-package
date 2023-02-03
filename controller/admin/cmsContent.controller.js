@@ -40,7 +40,16 @@ const list = async (req, res) => {
         if (!contentList) {
             return res.render(`admin/error-404`)
         }
+
+        // const reqContentType = req.contentType
+        const default_lang = _.find(
+            req.authUser.brand.languages,
+            function (item) {
+                return item.is_default === true
+            }
+        )
         return res.render(`admin/cms/content/listing`, {
+            default_lang,
             reqContentType: req.contentType,
             data: contentList,
         })
@@ -74,29 +83,41 @@ const detail = async (req, res) => {
         //     }
         // }
 
-        const groupedData = _.groupBy(contentDetail.content, (item) => {
-            return item.language
-        })
+        // const groupedData = _.groupBy(contentDetail.content, (item) => {
+        //     return item.language
+        // })
 
         // const groupNameGroup = {}
-        const findalContentFieldsGroup = {}
+        // const findalContentFieldsGroup = {}
 
-        Object.keys(groupedData).forEach((key) => {
-            findalContentFieldsGroup[key] = _.groupBy(
-                groupedData[key],
-                'group_name'
-            )
-        })
+        // Object.keys(groupedData).forEach((key) => {
+        //     findalContentFieldsGroup[key] = _.groupBy(
+        //         groupedData[key],
+        //         'group_name'
+        //     )
+        // })
 
-        // return res.send(findalContentFieldsGroup)
+        if (!contentDetail) {
+            return res.render(`admin/error-404`)
+        }
+
+        const default_lang = _.find(
+            req.authUser.brand.languages,
+            function (item) {
+                return item.is_default === true
+            }
+        )
+
+        // return res.send(contentDetail)
 
         res.render(`admin/cms/content/detail`, {
+            default_lang,
             reqContentType: req.contentType,
             contentDetail,
-            findalContentFieldsGroup,
+            // findalContentFieldsGroup,
         })
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin/error-500`)
     }
 }
 
@@ -564,6 +585,125 @@ const save = async (req, res) => {
 }
 
 const saveTemp = async (req, res) => {
+    // console.log(req.authUser.brand.languages)
+    // return false
+    try {
+        // Data object to insert
+        let type = req.contentType
+        let body = req.body
+        let content_to_insert = _.omit(body, [
+            '_id',
+            'slug',
+            'published',
+            'in_home',
+            'position',
+        ])
+
+        // BEGIN:: Validation rule
+        const schema = Joi.object({
+            _id: Joi.optional(),
+            method: Joi.string().valid('add', 'edit'),
+            slug: req.contentType.has_cms
+                ? Joi.string().required()
+                : Joi.string().optional(),
+            attached_type: Joi.optional(),
+            published: Joi.string().required().valid('true', 'false'),
+            in_home: Joi.string().required().valid('true', 'false'),
+            position: Joi.number().required(),
+        }).unknown()
+        // END:: Validation rule
+
+        const validationResult = schema.validate(req.body, {
+            abortEarly: false,
+        })
+
+        if (validationResult.error) {
+            return res.status(422).json(validationResult.error)
+        }
+
+        let data = {
+            type_id: type._id,
+            type_slug: type.slug,
+            author: req.authUser.admin_id,
+            // banner: body?.banner || null, // If Requested content type has banner required
+            // gallery: body?.gallery || null, // If Requested content type has gallery required
+            // brand: req.authUser.brand._id,
+            country: req.authUser.brand.country,
+            published: body.published === 'true',
+            position: body.position,
+            // template_name: type.template_name,
+            content: content_to_insert,
+            // group_content: fieldGroupData,
+            // meta: metaData,
+            in_home: body.in_home || false,
+        }
+
+        // console.log(data)
+        // //  console.log(req.body)
+        // return false
+
+        if (
+            Object?.keys(body.attached_type ? body.attached_type : {})?.length
+        ) {
+            attachedData = []
+            Object.keys(body.attached_type).map((item) => {
+                const itemDataType = typeof body.attached_type[item]
+                if (body.attached_type?.[item]?.length) {
+                    let obj = {
+                        content_type: item,
+                        items:
+                            itemDataType == 'string'
+                                ? body.attached_type[item].split(',')
+                                : body.attached_type[item],
+                    }
+                    attachedData.push(obj)
+                }
+            })
+            if (attachedData.length) {
+                data.attached_type = attachedData
+            }
+        }
+        // const brandCode = req.authUser.brand?.code
+        const countryCode = req.authUser.brand?.country_code
+
+        if (req.body._id) {
+            data.slug = req.body.slug ? slugify(req.body.slug) : undefined
+            // console.log(data)
+            // data.slug = body.slug?.en
+            //     ? slugify(body.slug?.en?.toLowerCase())
+            //     : slugify(body.title?.en?.toLowerCase())
+            const existingContent = await Content.findOne({
+                _id: req.body._id,
+            })
+            const cache_key = `content-${countryCode}-${type.slug}-${existingContent.slug}`
+            // Update content
+            await Content.updateOne({ _id: body._id }, data)
+            Redis.removeCache([cache_key])
+            return res.status(201).json({
+                message: 'Content updated successfully',
+                redirect_to: `/admin/cms/${type.slug}/detail/${req.body._id}`,
+            })
+        } else {
+            data.slug = req.body.slug ? slugify(req.body.slug) : undefined
+            // Create content
+            const save = await Content.create(data)
+            if (!save?._id) {
+                return res.status(400).json({ error: 'Something went wrong' })
+            }
+            const cache_key = `content-${countryCode}-${type.slug}`
+            Redis.removeCache([cache_key])
+            return res.status(200).json({
+                message: 'Content added successfully',
+                redirect_to: `/admin/cms/${type.slug}/detail/${save._id}`,
+            })
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ error: 'Something went wrong' })
+    }
+}
+
+const saveTempOld = async (req, res) => {
     // console.log(req.body)
     // return false
     try {

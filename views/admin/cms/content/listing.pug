@@ -49,7 +49,7 @@ block content
 											<input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_subscriptions_table .form-check-input" value="1">
 										</div>
 									</th>
-									<th class="min-w-125px">Name</th>
+									<th class="min-w-125px">#{reqContentType.field_groups[0].fields[0].field_name}</th>
 									<th class="min-w-125px">URL</th>
 									<th class="min-w-125px">Status</th>
 									<th class="min-w-125px">In Home</th>
@@ -67,7 +67,7 @@ block content
 											</div>
 										</td>
 										<td>
-											<a class="text-gray-800 text-hover-primary mb-1" href="/admin/cms/#{reqContentType.slug}/detail/#{item._id}">#{item.content[0].value}</a>
+											<a class="text-gray-800 text-hover-primary mb-1" href="/admin/cms/#{reqContentType.slug}/detail/#{item._id}">#{`${item.content[default_lang.prefix][reqContentType.field_groups[0].row_label][reqContentType.field_groups[0].fields[0].field_name]}`}</a>
 										</td>
 										<td>
 											//- if reqContentType.has_api_endpoint
