@@ -1,8 +1,6 @@
 require('dotenv').config()
 const express = require('express')
 const helmet = require('helmet')
-const Sentry = require('@sentry/node')
-const Tracing = require('@sentry/tracing')
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const chalk = require('chalk')

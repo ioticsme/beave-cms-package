@@ -5,6 +5,6 @@
     .card-body.pt-0
         select#kt_ecommerce_add_product_status_select.form-select.mb-2(data-control='select2' name="published" data-hide-search='true' data-placeholder='Select an option')
             option
-            option(value='false' selected=!contentDetail.published) Un-Published
-            option(value='true' selected=contentDetail.published) Published
+            option(value='false' selected=(contentDetail && !contentDetail.published)) Un-Published
+            option(value='true' selected=(contentDetail && contentDetail.published)) Published
         .text-muted.fs-7 Set the status

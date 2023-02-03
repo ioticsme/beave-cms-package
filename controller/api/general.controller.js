@@ -1,6 +1,4 @@
-const { optionalRequire } = require("optional-require");
-
-const Menu = optionalRequire('../../node_modules/@ioticsme/cms/model/Menu')
+const Menu = require('../../model/Menu')
 const MenuResource = require('../../resources/api/menu.resource')
 
 // Menu
