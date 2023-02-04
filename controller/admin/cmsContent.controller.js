@@ -12,6 +12,7 @@ const Redis = require('../../helper/Redis.helper')
 const { default: mongoose } = require('mongoose')
 const { isObjectId } = require('../../helper/Operations.helper')
 const { ObjectId } = require('mongodb')
+const { group } = require('console')
 
 let session
 
@@ -583,13 +584,98 @@ const saveTemp = async (req, res) => {
             'position',
         ])
 
+        // BEGIN:: Generating content field validation rule for content type
+        let validationSchema = {}
+
+        const validTypes = {
+            text: 'string()',
+            textarea: 'string()',
+            richtext: 'string()',
+            media: 'string()',
+            dropdown: 'string()',
+            email: 'string()',
+            number: 'number()',
+        }
+
+        const language_prefixes = _.map(req.authUser.brand.languages, 'prefix')
+        language_prefixes.push('common')
+        language_prefixes.forEach((lang) => {
+            let fieldGroupValidationObj = {}
+            let group_by_localisation
+            if (lang != 'common') {
+                group_by_localisation = _.filter(
+                    req.contentType.field_groups,
+                    function (o) {
+                        return o.localisation == true
+                    }
+                )
+            } else {
+                group_by_localisation = _.filter(
+                    req.contentType.field_groups,
+                    function (o) {
+                        return o.localisation == false
+                    }
+                )
+            }
+            group_by_localisation.forEach((group) => {
+                let fieldsValidationObject = {}
+                if (!group.repeater_group) {
+                    group.fields.forEach((field) => {
+                        const required = field.validation?.required
+                            ? '.required()'
+                            : '.optional()'
+                        const min = field.validation?.min_length
+                            ? `.min(${field.validation.min_length})`
+                            : ''
+                        const max = field.validation?.max_length
+                            ? `.max(${field.validation.max_length})`
+                            : ''
+
+                        _.assign(fieldsValidationObject, {
+                            [field.field_name]: eval(
+                                ` Joi.${
+                                    validTypes[field.field_type]
+                                }${min}${max}${required}.label('${field.field_label}')`
+                            ),
+                        })
+                    })
+                } else {
+                    group.fields.forEach((field) => {
+                        const required = field.validation?.required
+                            ? '.required()'
+                            : '.optional()'
+                        const min = field.validation?.min_length
+                            ? `.min(${field.validation.min_length})`
+                            : ''
+                        const max = field.validation?.max_length
+                            ? `.max(${field.validation.max_length})`
+                            : ''
+
+                        _.assign(fieldsValidationObject, {
+                            [field.field_name]: eval(
+                                ` Joi.array().items(Joi.${
+                                    validTypes[field.field_type]
+                                }${min}${max}${required}).label('${field.field_label}')`
+                            ),
+                        })
+                    })
+                }
+
+                fieldGroupValidationObj[group.row_name] = Joi.object(
+                    fieldsValidationObject
+                )
+            })
+            validationSchema[lang] = Joi.object(fieldGroupValidationObj)
+        })
+        // END:: Generating content field validation rule for content type
+
         // BEGIN:: Validation rule
         const schema = Joi.object({
             _id: Joi.optional(),
-            method: Joi.string().valid('add', 'edit'),
             slug: req.contentType.has_cms
                 ? Joi.string().required()
                 : Joi.string().optional(),
+            ...validationSchema,
             attached_type: Joi.optional(),
             published: Joi.string().required().valid('true', 'false'),
             in_home: Joi.string().required().valid('true', 'false'),
@@ -605,6 +691,7 @@ const saveTemp = async (req, res) => {
             return res.status(422).json(validationResult.error)
         }
 
+        // return false
         let data = {
             type_id: type._id,
             type_slug: type.slug,

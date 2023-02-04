@@ -170,10 +170,12 @@ document.querySelectorAll('#field-list-section .btn').forEach((fieldBtn) => {
 document.querySelectorAll('.field-form').forEach((fieldForm) => {
     fieldForm.addEventListener('submit', function (e) {
         e.preventDefault()
+        // return false
         const selected_section = e.target.section_name_field.value
         const slected_field_type = e.target.field_type.value
         const selected_field_name = e.target.field_name.value
-        const selected_field_options = e.target.field_options?.value?.trim() || ''
+        const selected_field_options =
+            e.target.field_options?.value?.trim() || ''
         const options = []
         selected_field_options.split(',').map((option) => {
             if (option.length) {
@@ -194,12 +196,15 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
             localization: true,
             options: options,
             validation: {
-                required: true,
+                required: e.target.validation_required.checked,
                 private: false,
-                max_length: 30,
-                min_length: 5,
+                max_length: 500,
+                min_length: 1,
             },
         }
+
+        // console.log(e.target.validation_required.checked)
+        // return false
         const fieldSection = _.find(fieldSchemaJson, {
             section: selected_section,
         })

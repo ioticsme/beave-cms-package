@@ -52,6 +52,9 @@ document.querySelectorAll('.image-preview-remove-btn').forEach((removeBtn) => {
     removeBtn.addEventListener('click', function (e) {
         e.preventDefault()
         e.target.classList.add('d-none')
+        e.target.parentElement.parentElement.querySelector(
+            'input[type="hidden"]'
+        ).value = ''
         e.target.previousElementSibling.innerHTML = ' '
     })
 })

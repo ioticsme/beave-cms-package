@@ -210,7 +210,7 @@ block content
 																				each dropdown, dd_i in cf.options
 																					<option value="#{dropdown.value}">#{dropdown.label}</option>
 																			</select>
-																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}_#{brandLanguage.prefix}"></div>
+																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{brandLanguage.prefix}_#{cfg.row_name}_#{cf.field_name}"></div>
 																	</div>
 															<div class="text-center">
 																<a class="btn btn-sm btn-light-danger mt-3 mt-md-8" onClick="deleteChild(event)" child-id="form-repeater-child-#{brandLanguage.prefix}_#{cfg._id}-#{cfg_i}" target-id="kt_docs_repeater_#{brandLanguage.prefix}_#{cfg._id}_#{cfg_i}"><i class="la la-trash-o"></i>Delete</a>
@@ -236,13 +236,13 @@ block content
 																// end::Label
 																if cf.field_type === 'text' || cf.field_type === 'email' || cf.field_type === 'number'
 																	<input class="form-control form-control-solid" type="#{cf.field_type}" placeholder="Enter #{cf.field_label}" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}]]" value="#{fieldValue}" />
-																	<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}_#{brandLanguage.prefix}"></div>
+																	//- <div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}_#{brandLanguage.prefix}"></div>
 																else if cf.field_type === 'richtext'
 																	<textarea class="content_wysiwyg" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}]]" id="wysiwyg-cf-#{brandLanguage.prefix}-#{cfg.row_name}-#{cf.field_name}">#{fieldValue}</textarea>
-																	<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}_#{brandLanguage.prefix}"></div>
+																	//- <div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}_#{brandLanguage.prefix}"></div>
 																else if cf.field_type === 'textarea'
 																	<textarea class="form-control form-control-solid" rows="6" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}]]" placeholder="" spellcheck="false">#{fieldValue}</textarea>
-																	<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}_#{brandLanguage.prefix}"></div>
+																	//- <div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}_#{brandLanguage.prefix}"></div>
 																else if cf.field_type === 'media'
 																	<span id="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}_preview">
 																		<span class="preview-holder">
@@ -256,7 +256,7 @@ block content
 																else if cf.field_type === 'date'
 																	.kt_daterangepicker
 																		<input class="form-control mb-2" id="kt_daterangepicker_#{brandLanguage.prefix}-#{cf_i}" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}]]" placeholder="#{cf.placeholder}" value="#{fieldValue}">
-																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}_#{brandLanguage.prefix}"></div>
+																		//- <div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}_#{brandLanguage.prefix}"></div>
 																else if cf.field_type === 'radio'
 																	<div class="row row-cols-1 row-cols-md-3 row-cols-lg-1 row-cols-xl-3 g-9" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button='true']">
 																		each option,i in cf.options 
@@ -273,7 +273,7 @@ block content
 																					<label class="form-label" for="percentage"> </label>
 																				</span>
 																			</div>
-																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}_#{brandLanguage.prefix}"></div>
+																		//- <div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}_#{brandLanguage.prefix}"></div>
 																	</div>
 																else if cf.field_type === 'dropdown'
 																	<select class="form-select" data-control="select2" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}]]" data-placeholder="Select an option">
@@ -281,7 +281,7 @@ block content
 																		each dropdown, dd_i in cf.options
 																			<option value="#{dropdown.value}">#{dropdown.label}</option>
 																	</select>
-																	<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}_#{brandLanguage.prefix}"></div>
+																<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{brandLanguage.prefix}_#{cfg.row_name}_#{cf.field_name}"></div>
 															</div>
 										</div>
 								</div>
@@ -309,13 +309,10 @@ block content
 																		</label>
 																		if cf.field_type === 'text' || cf.field_type === 'email' || cf.field_type === 'number'
 																			<input class="form-control form-control-solid" type="#{cf.field_type}" placeholder="Enter #{cf.field_label}" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" value="#{fieldValue}">
-																			<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 																		else if cf.field_type === 'richtext'
 																			<textarea class="content_wysiwyg" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" id="wysiwyg-cf-#{cf_i}">#{fieldValue}</textarea>
-																			<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 																		else if cf.field_type === 'textarea'
 																			<textarea class="form-control form-control-solid" rows="6" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" placeholder="" spellcheck="false">#{fieldValue}</textarea>
-																			<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 																		else if cf.field_type === 'media'
 																			<span id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}_preview">
 																				<span class="preview-holder">
@@ -351,7 +348,6 @@ block content
 																							<label class="form-label" for="percentage"> </label>
 																						</span>
 																					</div>
-																				<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 																			<div>
 																		else if cf.field_type === 'dropdown'
 																			<select class="form-select" data-control="select" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" data-placeholder="Select an option">
@@ -359,7 +355,7 @@ block content
 																				each dropdown, dd_i in cf.options
 																					<option value="#{dropdown.value}" #{fieldValue == dropdown.value ? 'selected' : ''}>#{dropdown.label}</option>
 																			</select>
-																			<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
+																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_#{cfg.row_name}_#{cf.field_name}"></div>
 																	</div>
 															<div class="text-center">
 																<a class="btn btn-sm btn-light-danger mt-3 mt-md-8" onClick="deleteChild(event)" child-id="form-repeater-child-#{cfg._id}-#{cfg_i}" target-id="kt_docs_repeater_#{cfg._id}_#{cfg_i}"><i class="la la-trash-o"></i>Delete</a>
@@ -378,13 +374,10 @@ block content
 																i.fas.fa-exclamation-circle.ms-2.fs-7(data-bs-toggle='tooltip' aria-label='Specify a target name for future usage and reference' data-kt-initialized='1')
 															if cf.field_type === 'text' || cf.field_type === 'email' || cf.field_type === 'number'
 																input.form-control.form-control-solid(type=`${cf.field_type}` placeholder=`Enter  ${cf.field_label}` name=`common[${cfg.row_name}[${cf.field_name}]]` value=`${fieldValue}`)
-																<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 															else if cf.field_type === 'richtext'
 																textarea.content_wysiwyg(name=`common[${cfg.row_name}[${cf.field_name}]]` id=`wysiwyg-cf-${cf_i}`) #{fieldValue}
-																<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 															else if cf.field_type === 'textarea'
 																textarea.form-control.form-control-solid(rows='6' name=`common[${cfg.row_name}[${cf.field_name}]]` placeholder='' spellcheck='false') #{fieldValue}
-																<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 															else if cf.field_type === 'media'
 																<span id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}_preview">
 																	<span class="preview-holder">
@@ -398,7 +391,6 @@ block content
 															else if cf.field_type === 'date'
 																.kt_daterangepicker
 																	input.form-control.mb-2(id=`kt_daterangepicker_${cf_i}` name=`common[${cfg.row_name}[${cf.field_name}]]` placeholder=`${cf.placeholder}` value='')
-																	<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 															else if cf.field_type === 'radio'
 																.row.row-cols-1.row-cols-md-3.row-cols-lg-1.row-cols-xl-3.g-9(data-kt-buttons='true' data-kt-buttons-target="[data-kt-button='true']")
 																	each option,i in cf.options 
@@ -414,24 +406,13 @@ block content
 																				<label class="form-label" for="percentage"> </label>
 																			</span>
 																		</div>
-																		//- .col.d-flex.text-start.p-6
-																		//- 	span.form-check.form-check-custom.form-check-solid.form-check-sm.align-items-start(data-kt-button='true')
-																		//- 		input.form-check-input(type='radio' name=`${cfg.row_name}[${cf.field_name}]` id="percentage" value=`true` )
-																		//- 	span.ms-5
-																		//- 		label.form-label(for="percentage") 
-																	<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
 															else if cf.field_type === 'dropdown'
 																<select class="form-select" data-control="select2" name="common[#{cfg.row_name}[#{cf.field_name}]]" data-placeholder="Select an option">
 																	<option></option>
 																	each dropdown, dd_i in cf.options
 																		<option value="#{dropdown.value}">#{dropdown.label}</option>
 																</select>
-																//- select.form-select(data-control='select2' name=`${cfg.row_name}[${cf.field_name}]` data-placeholder='Select an option')
-																//- 	option
-																//- 	each dropdown, dd_i in cf.options
-																//- 		option(value=`${dropdown.value}`) #{dropdown.label}
-																<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
-																//- <div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
+															<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_#{cfg.row_name}_#{cf.field_name}"></div>
 									</div>
 								</div>
 								//- END::Custom Fields without localisation
