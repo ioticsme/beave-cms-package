@@ -198,18 +198,18 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
             validation: {
                 required: e.target.validation_required.checked,
                 private: false,
-                max_length: 500,
-                min_length: 1,
+                min_length: e.target.validation_min?.value ? parseInt(e.target.validation_min.value) : undefined,
+                max_length: e.target.validation_max?.value ? parseInt(e.target.validation_max.value) : undefined,
             },
         }
 
-        // console.log(e.target.validation_required.checked)
+        // console.log(newField)
         // return false
         const fieldSection = _.find(fieldSchemaJson, {
             section: selected_section,
         })
         _.set(fieldSection, 'fields', fieldSection.fields.concat([newField]))
-        console.log(fieldSchemaJson)
+        // console.log(fieldSchemaJson)
         generateField()
         fieldForm.reset()
         $('#field_form_modal').modal('hide')
