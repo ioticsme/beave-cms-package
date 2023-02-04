@@ -205,6 +205,7 @@ block widgets
 					#text-field-section.modal-field-sections.d-none
 						form(class="field-form")
 							input(type="hidden" name="section_name_field" class="section_name_field")
+							label(for="section_name_field") Field Name
 							input(type="hidden" name="field_type" value="text")
 							input(type="text" name="field_name" id="field_name" class="form-control" placeholder="Field Name")
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
@@ -213,6 +214,7 @@ block widgets
 									| Required
 								</label>
 							</div>
+							label.mt-3(for="section_name_field") Advanced Valdiation Rules
 							<div class="row my-3">
 								<div class="col-6">
 									input(type="text" name="validation_min" id="validation_min" class="form-control" placeholder="Minimum Charecters")
@@ -229,6 +231,7 @@ block widgets
 					#email-field-section.modal-field-sections.d-none
 						form(class="field-form")
 							input(type="hidden" name="section_name_field" class="section_name_field")
+							label(for="section_name_field") Field Name
 							input(type="hidden" name="field_type" value="email")
 							input(type="text" name="field_name" id="field_name" class="form-control" placeholder="Field Name")
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
@@ -237,6 +240,15 @@ block widgets
 									| Required
 								</label>
 							</div>
+							label.mt-3(for="section_name_field") Advanced Valdiation Rules
+							<div class="row my-3">
+								<div class="col-6">
+									input(type="text" name="validation_min" id="validation_min" class="form-control" placeholder="Minimum Charecters")
+								</div>
+								<div class="col-6">
+									input(type="text" name="validation_max" id="validation_max" class="form-control" placeholder="Maximum Charecters")
+								</div>
+							</div>
 							.row.mt-5
 								.col-12
 									button.btn.btn-light(type='reset' data-bs-dismiss='modal') Back
@@ -244,6 +256,7 @@ block widgets
 					#number-field-section.modal-field-sections.d-none
 						form(class="field-form")
 							input(type="hidden" name="section_name_field" class="section_name_field")
+							label(for="section_name_field") Field Name
 							input(type="hidden" name="field_type" value="number")
 							input(type="text" name="field_name" id="field_name" class="form-control" placeholder="Field Name")
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
@@ -260,12 +273,22 @@ block widgets
 						form(class="field-form")
 							input(type="hidden" name="section_name_field" class="section_name_field")
 							input(type="hidden" name="field_type" value="textarea")
+							label(for="section_name_field") Field Name
 							input(type="text" name="field_name" id="field_name" class="form-control" placeholder="Field Name")
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
 								<input class="form-check-input" type="checkbox" value="true" name="validation_required" checked />
 								<label class="form-check-label" for="">
 									| Required
 								</label>
+							</div>
+							label.mt-3(for="section_name_field") Advanced Valdiation Rules
+							<div class="row my-3">
+								<div class="col-6">
+									input(type="text" name="validation_min" id="validation_min" class="form-control" placeholder="Minimum Charecters")
+								</div>
+								<div class="col-6">
+									input(type="text" name="validation_max" id="validation_max" class="form-control" placeholder="Maximum Charecters")
+								</div>
 							</div>
 							.row.mt-5
 								.col-12
@@ -275,12 +298,22 @@ block widgets
 						form(class="field-form")
 							input(type="hidden" name="section_name_field" class="section_name_field")
 							input(type="hidden" name="field_type" value="richtext")
+							label(for="section_name_field") Field Name
 							input(type="text" name="field_name" id="field_name" class="form-control" placeholder="Field Name")
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
 								<input class="form-check-input" type="checkbox" value="true" name="validation_required" checked />
 								<label class="form-check-label" for="">
 									| Required
 								</label>
+							</div>
+							label.mt-3(for="section_name_field") Advanced Valdiation Rules
+							<div class="row my-3">
+								<div class="col-6">
+									input(type="text" name="validation_min" id="validation_min" class="form-control" placeholder="Minimum Charecters")
+								</div>
+								<div class="col-6">
+									input(type="text" name="validation_max" id="validation_max" class="form-control" placeholder="Maximum Charecters")
+								</div>
 							</div>
 							.row.mt-5
 								.col-12
@@ -290,6 +323,7 @@ block widgets
 						form(class="field-form")
 							input(type="hidden" name="section_name_field" class="section_name_field")
 							input(type="hidden" name="field_type" value="media")
+							label(for="section_name_field") Field Name
 							input(type="text" name="field_name" id="field_name" class="form-control" placeholder="Field Name")
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
 								<input class="form-check-input" type="checkbox" value="true" name="validation_required" checked />
@@ -303,11 +337,13 @@ block widgets
 									button.btn.btn-primary(type='submit') Add Field
 					#dropdown-field-section.modal-field-sections.d-none
 						form(class="field-form")
+							label(for="section_name_field") Field Name
 							input(type="hidden" name="section_name_field" class="section_name_field")
 							input(type="hidden" name="field_type" value="dropdown")
 							input(type="text" name="field_name" id="field_name" class="form-control" placeholder="Field Name")
-							textarea(name="field_options" id="field_options" class="form-control mt-2" placeholder="Field option Values")
-							input(type="text" name="field_data_method" id="field_data_method" class="form-control mt-2" placeholder="Field Data Method")
+							label.mt-3(for="section_name_field") Field Pre-Defined Values
+							textarea(name="field_options" id="field_options" class="form-control mt-2" placeholder=`Example : Male | m, Female | f,`)
+							//- input(type="text" name="field_data_method" id="field_data_method" class="form-control mt-2" placeholder="Field Data Method")
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
 								<input class="form-check-input" type="checkbox" value="true" name="validation_required" checked />
 								<label class="form-check-label" for="">
