@@ -67,6 +67,8 @@ const generateField = async () => {
         `.form-field-holder`
     ).innerHTML = `${htmlData} </tbody></table></div>`
 
+    // console.log(fieldSchemaJson)
+
     dataObjectComparison(bkupDataJson, fieldSchemaJson)
 
     return true
@@ -100,14 +102,16 @@ document
             `#field-section-form #section_localisation`
         ).checked
         const sectionExist = _.find(fieldSchemaJson, function (d) {
-            return _.toLower(d.section) == section_name.toLowerCase()
+            return (
+                _.toLower(d.section).trim() == section_name.toLowerCase().trim()
+            )
         })
         if (sectionExist) {
             alert('Section Name Already Exist')
             return false
         }
         fieldSchemaJson.push({
-            section: section_name,
+            section: section_name.toUpperCase(),
             repeater_group: repeater_group ? true : false,
             localisation: localisation ? true : false,
             fields: [],
@@ -171,9 +175,9 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
     fieldForm.addEventListener('submit', function (e) {
         e.preventDefault()
         // return false
-        const selected_section = e.target.section_name_field.value
-        const slected_field_type = e.target.field_type.value
-        const selected_field_name = e.target.field_name.value
+        const selected_section = e.target.section_name_field.value.trim()
+        const slected_field_type = e.target.field_type.value.trim()
+        const selected_field_name = e.target.field_name.value.trim()
         const selected_field_options =
             e.target.field_options?.value?.trim() || ''
         const options = []
@@ -187,6 +191,24 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
             }
         })
 
+        const requestedSection = _.find(fieldSchemaJson, (field) => {
+            return (
+                field.section.toLowerCase() === selected_section.toLowerCase()
+            )
+        })
+
+        const existingField = _.find(requestedSection.fields, function (field) {
+            return (
+                field.label.toLowerCase() === selected_field_name.toLowerCase()
+            )
+        })
+        // console.log(existingField)
+
+        if (existingField) {
+            alert(`'${selected_field_name}' Already Exist in '${selected_section}' section`)
+            return false
+        }
+
         const newField = {
             id: 'timestamp',
             type: slected_field_type,
@@ -198,17 +220,27 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
             validation: {
                 required: e.target.validation_required.checked,
                 private: false,
-                min_length: e.target.validation_min?.value ? parseInt(e.target.validation_min.value) : undefined,
-                max_length: e.target.validation_max?.value ? parseInt(e.target.validation_max.value) : undefined,
+                min_length: e.target.validation_min?.value
+                    ? parseInt(e.target.validation_min.value)
+                    : undefined,
+                max_length: e.target.validation_max?.value
+                    ? parseInt(e.target.validation_max.value)
+                    : undefined,
             },
         }
 
         // console.log(newField)
         // return false
-        const fieldSection = _.find(fieldSchemaJson, {
-            section: selected_section,
-        })
-        _.set(fieldSection, 'fields', fieldSection.fields.concat([newField]))
+        // const fieldSection = _.find(fieldSchemaJson, (field) => {
+        //     return (
+        //         field.section.toLowerCase() === selected_section.toLowerCase()
+        //     )
+        // })
+        _.set(
+            requestedSection,
+            'fields',
+            requestedSection.fields.concat([newField])
+        )
         // console.log(fieldSchemaJson)
         generateField()
         fieldForm.reset()
