@@ -159,7 +159,10 @@ block content
 															- var totalItems = contentDetail.content[brandLanguage.prefix][cfg.row_name][Object.keys(contentDetail.content[brandLanguage.prefix][cfg.row_name])[0]].length || 1
 															- for (var i = 0; i < totalItems; i++)
 																each cf,cf_idx in cfg.fields
-																	- var fieldValue = contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name][i]
+																	if contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name]
+																		- var fieldValue = contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name][i]
+																	else 
+																		- var fieldValue = ''
 																	<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container">
 																		label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
 																			span.required #{cf.field_label} (#{brandLanguage.prefix})

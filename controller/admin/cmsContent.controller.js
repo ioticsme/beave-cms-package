@@ -163,6 +163,9 @@ const edit = async (req, res) => {
             country: session.brand.country,
         })
 
+        if(!contentDetail) {
+            return res.render(`admin/error-404`)
+        }
         // return res.send(findalContentFieldsGroup)
 
         if (req.contentType?.allowed_type?.length) {

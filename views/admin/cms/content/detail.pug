@@ -57,16 +57,18 @@ block content
 															if cfg.localisation == true
 																h1.mt-5.mb-2 #{cfg.row_label.toUpperCase()}
 																if cfg.repeater_group
-																	.row
-																		- for (var i = 0; i < contentDetail.content[brandLanguage.prefix][cfg.row_name][cfg.fields[0].field_name].length; i++)
+																	- for (var i = 0; i < contentDetail.content[brandLanguage.prefix][cfg.row_name][cfg.fields[0].field_name].length; i++)
+																		.row
 																			each eachVal, vIndex in cfg.fields
 																				.col-12.col-sm-6
 																					span.badge.badge-light #{eachVal.field_label.toUpperCase()} :
-																					if eachVal.field_type == 'media'
-																						img(src=`${contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name][i]}` style="max-width: 100px;")
-																					else
-																						span.badge.badge-light-info #{contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name][i]}
-																					br
+																					- var content = contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name]
+																					if content
+																						if eachVal.field_type == 'media'
+																							img(src=`${contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name][i]}` style="max-width: 100px;")
+																						else
+																							span.badge.badge-light-info #{contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name][i]}
+																						br
 																else
 																	each cf in cfg.fields
 																		span.badge.badge-light-success.mt-5 #{cf.field_label}
@@ -80,26 +82,30 @@ block content
 																h1.mt-5.mb-2 #{cfg.row_label.toUpperCase()}
 																if cfg.repeater_group
 																	.row
-																		- for (var i = 0; i < contentDetail.content['common'][cfg.row_name][cfg.fields[0].field_name].length; i++)
-																			each eachVal, vIndex in cfg.fields
-																				.col-12.col-sm-6
-																					- var content = contentDetail.content['common'][cfg.row_name]
-																					if content
-																						span.badge.badge-light #{eachVal.field_label.toUpperCase()} :
-																						if eachVal.field_type == 'media'
-																							img(src=`${content[eachVal.field_name][i]}` style="max-width: 100px;")
-																						else
-																							span.badge.badge-light-info #{content[eachVal.field_name][i]}
-																						br
+																		- var content = contentDetail.content['common'][cfg.row_name]
+																		if content
+																			- for (var i = 0; i < contentDetail.content['common'][cfg.row_name][cfg.fields[0].field_name].length; i++)
+																				each eachVal, vIndex in cfg.fields
+																					.col-12.col-sm-6
+																						- var content = contentDetail.content['common'][cfg.row_name]
+																						if content
+																							span.badge.badge-light #{eachVal.field_label.toUpperCase()} :
+																							if eachVal.field_type == 'media'
+																								img(src=`${content[eachVal.field_name][i]}` style="max-width: 100px;")
+																							else
+																								span.badge.badge-light-info #{content[eachVal.field_name][i]}
+																							br
 																else
 																	each cf in cfg.fields
 																		span.badge.badge-light-success.mt-5 #{cf.field_label}
 																		br
 																		.card
-																			if cf.field_type == 'media'
-																				img(src=`${contentDetail.content['common'][cfg.row_name][cf.field_name]}` style="max-width: 200px;")
-																			else
-																				| !{contentDetail.content['common'][cfg.row_name][cf.field_name]}
+																			- var content = contentDetail.content['common'][cfg.row_name]
+																			if content
+																				if cf.field_type == 'media'
+																					img(src=`${contentDetail.content['common'][cfg.row_name][cf.field_name]}` style="max-width: 200px;")
+																				else
+																					| !{contentDetail.content['common'][cfg.row_name][cf.field_name]}
 
 					.col-12.col-sm-4
 						.card.card-flush.pt-3.mb-5.mb-lg-10                                
