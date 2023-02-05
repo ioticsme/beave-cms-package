@@ -100,7 +100,7 @@ block content
 																		span.badge.badge-light-success.mt-5 #{cf.field_label}
 																		br
 																		.card
-																			- var content = contentDetail.content['common'][cfg.row_name]
+																			- var content = contentDetail.content['common'] && contentDetail.content['common'][cfg.row_name]
 																			if content
 																				if cf.field_type == 'media'
 																					img(src=`${contentDetail.content['common'][cfg.row_name][cf.field_name]}` style="max-width: 200px;")
