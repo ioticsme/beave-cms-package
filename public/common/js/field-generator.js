@@ -25,15 +25,17 @@ var fieldSchemaJson
 var bkupDataJson
 const generateField = async () => {
     let htmlData = `<div class="table-responsive">
-							<table class="table gs-7 gy-7 gx-7">
+							<table class="table gs-7 gy-3 gx-7">
 								<thead>
 									<tr class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
 										<th>Name</th>
 										<th>Type</th>
+										<th>Required</th>
+										<th>Validation</th>
 										<th>Action</th>
 									</tr>
 								</thead>
-								<tbody>`
+								<tbody style="font-size: 13px;">`
     await _.forEach(fieldSchemaJson, function (group) {
         const currGroup = `<tr><td colspn="3">
         <h3 class="mb-1">${group.section}
@@ -55,9 +57,31 @@ const generateField = async () => {
             const currField = `<tr>
             <td>${field.label}</td>
             <td>${field.type}</td>
+            <td>${
+                field.validation.required
+                    ? '<span class="badge badge-success">Yes</span>'
+                    : '<span class="badge badge-danger">No</span>'
+            }</td>
             <td>
-                <a class="btn btn-light-success btn-xs"><i class="fa-solid fa-pencil"></i></a>
-                <a class="btn btn-light-danger btn-xs field-dlt-btn" data-section="${group.section}" data-field="${field.label}"><i class="fa-solid fa-trash-can"></i></a>
+            <small>
+            ${
+                field.validation.min_length
+                    ? `Min Length: ${field.validation.min_length} <br>`
+                    : ''
+            }
+            ${
+                field.validation.max_length
+                    ? `Max Length: ${field.validation.max_length} <br>`
+                    : ''
+            }
+            </small>
+            </td>
+            <td>
+                <a class="btn btn-light-danger btn-xs field-dlt-btn" data-section="${
+                    group.section
+                }" data-field="${
+                field.label
+            }"><i class="fa-solid fa-trash-can"></i></a>
             </td>
         </tr>`
             htmlData = `${htmlData} ${currField}`
@@ -205,7 +229,9 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
         // console.log(existingField)
 
         if (existingField) {
-            alert(`'${selected_field_name}' Already Exist in '${selected_section}' section`)
+            alert(
+                `'${selected_field_name}' Already Exist in '${selected_section}' section`
+            )
             return false
         }
 
