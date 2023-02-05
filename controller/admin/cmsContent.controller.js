@@ -623,7 +623,7 @@ const saveTemp = async (req, res) => {
                     group.fields.forEach((field) => {
                         const required = field.validation?.required
                             ? '.required()'
-                            : '.optional()'
+                            : `.optional().allow(null,'')`
                         const min = field.validation?.min_length
                             ? `.min(${field.validation.min_length})`
                             : ''
@@ -635,7 +635,9 @@ const saveTemp = async (req, res) => {
                             [field.field_name]: eval(
                                 ` Joi.${
                                     validTypes[field.field_type]
-                                }${min}${max}${required}.label('${field.field_label}')`
+                                }${min}${max}${required}.label('${
+                                    field.field_label
+                                }')`
                             ),
                         })
                     })
@@ -643,7 +645,7 @@ const saveTemp = async (req, res) => {
                     group.fields.forEach((field) => {
                         const required = field.validation?.required
                             ? '.required()'
-                            : '.optional()'
+                            : `.optional().allow(null,'')`
                         const min = field.validation?.min_length
                             ? `.min(${field.validation.min_length})`
                             : ''
@@ -655,7 +657,9 @@ const saveTemp = async (req, res) => {
                             [field.field_name]: eval(
                                 ` Joi.array().items(Joi.${
                                     validTypes[field.field_type]
-                                }${min}${max}${required}).label('${field.field_label}')`
+                                }${min}${max}${required}).label('${
+                                    field.field_label
+                                }')`
                             ),
                         })
                     })
