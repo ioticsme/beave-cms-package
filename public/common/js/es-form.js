@@ -1,4 +1,20 @@
 document.addEventListener('DOMContentLoaded', function () {
+    toastr.options = {
+        closeButton: false,
+        newestOnTop: false,
+        progressBar: false,
+        positionClass: 'toastr-bottom-right',
+        preventDuplicates: false,
+        onclick: null,
+        showDuration: '300',
+        hideDuration: '1000',
+        timeOut: '5000',
+        extendedTimeOut: '1000',
+        showEasing: 'swing',
+        hideEasing: 'linear',
+        showMethod: 'fadeIn',
+        hideMethod: 'fadeOut',
+    }
     document.querySelectorAll('.es-form').forEach(function (eachForm) {
         var formId = eachForm.getAttribute('id')
         if (!formId) {
@@ -119,7 +135,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    async function formSave(form, url, pageRefresh, callback) {
+    async function formSave(
+        form,
+        url,
+        pageRefresh,
+        callback,
+        disableResetForm = false
+    ) {
         form.querySelectorAll('.invalid-feedback').forEach(function (
             invalidFieldMessage
         ) {
@@ -137,7 +159,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Converting the form data to JSON for validation purpose
-        let sendData = FormDataJson.toJson(document.querySelector(`#${form.getAttribute('id')}`))
+        let sendData = FormDataJson.toJson(
+            document.querySelector(`#${form.getAttribute('id')}`)
+        )
 
         let formData = new FormData()
         let images = {}
@@ -232,8 +256,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 var resStatus = res.status
                 var data = await res.json()
                 if (resStatus >= 200 && resStatus < 300) {
-                    // toastr.success('Data saved', 'Done!');
-                    document.getElementById(form.getAttribute('id')).reset()
+                    if (!disableResetForm) {
+                        document.getElementById(form.getAttribute('id')).reset()
+                    }
                     // Swal.fire({
                     //     text: data?.message || 'success',
                     //     icon: 'success',
@@ -251,10 +276,12 @@ document.addEventListener('DOMContentLoaded', function () {
                         window.location.href = data.redirect_to
                     } else {
                         if (callback) {
-                            console.log('callback called')
+                            // console.log('callback called')
                             window.location.href = callback
                         } else if (pageRefresh) {
                             location.reload()
+                        } else {
+                            toastr.success('Success')
                         }
                     }
                 } else if (resStatus == 422) {
@@ -325,12 +352,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 '#' + sourceForm.getAttribute('id')
             )
             var url = form.action
+            var disableResetForm =
+                form.getAttribute('data-disable-reset') || false
             var pageRefresh = form.getAttribute('data-success-refresh') || false
             var callback = form.getAttribute('data-redirect-url')
                 ? form.getAttribute('data-redirect-url')
                 : false
-            // console.log({ form, url, pageRefresh, callback })
-            formSave(form, url, pageRefresh, callback)
+            // console.log({ form, url, pageRefresh, callback, resetForm })
+            formSave(form, url, pageRefresh, callback, disableResetForm)
         })
     })
 })

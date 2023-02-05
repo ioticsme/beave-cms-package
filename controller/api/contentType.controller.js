@@ -389,6 +389,7 @@ const list = async (req, res) => {
             [req.params.contentType]: contentType.single_type
                 ? contents[0]
                 : contents,
+            collection_meta: contentType.has_meta ? contentType.meta : undefined,
             navigation: contentType.nav_on_collection_api
                 ? req.navigation
                 : undefined,
@@ -409,7 +410,7 @@ const detail = async (req, res) => {
                 if (process.env.CACHE_LOCAL_DATA == 'true' && data) {
                     return JSON.parse(data)
                 } else {
-                    const liveData = await Content.findOne({
+                    let liveData = await Content.findOne({
                         type_id: mongoose.Types.ObjectId(contentType?._id),
                         country: mongoose.Types.ObjectId(req.country._id),
                         published: true,
@@ -437,6 +438,9 @@ const detail = async (req, res) => {
                     }
                     // END:: Fetching Attached Contents
 
+                    if(contentType.has_meta == false) {
+                        liveData.meta = undefined
+                    }
                     const liveDataCollection = new ContentResource(
                         liveData
                     ).exec()
@@ -481,7 +485,7 @@ const generateStaticPath = async (req, res) => {
         })
         const contents = await Content.find({
             type_id: contentType._id,
-            brand: req.brand._id,
+            // brand: req.brand._id,
             // country: req.country._id,
             published: true,
         })

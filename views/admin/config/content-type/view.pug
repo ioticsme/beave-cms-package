@@ -51,9 +51,10 @@ block content
 							li.nav-item.w-100.me-0.mb-md-2
 								a.nav-link.w-100.active.btn.btn-flex.btn-active-light-success.active(data-bs-toggle='tab' href='#kt_vtab_pane_4')
 									span.svg-icon.svg-icon-2
-										svg(width='24' height='24' viewbox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-											path(opacity='0.3' d='M22.1 11.5V12.6C22.1 13.2 21.7 13.6 21.2 13.7L19.9 13.9C19.7 14.7 19.4 15.5 18.9 16.2L19.7 17.2999C20 17.6999 20 18.3999 19.6 18.7999L18.8 19.6C18.4 20 17.8 20 17.3 19.7L16.2 18.9C15.5 19.3 14.7 19.7 13.9 19.9L13.7 21.2C13.6 21.7 13.1 22.1 12.6 22.1H11.5C10.9 22.1 10.5 21.7 10.4 21.2L10.2 19.9C9.4 19.7 8.6 19.4 7.9 18.9L6.8 19.7C6.4 20 5.7 20 5.3 19.6L4.5 18.7999C4.1 18.3999 4.1 17.7999 4.4 17.2999L5.2 16.2C4.8 15.5 4.4 14.7 4.2 13.9L2.9 13.7C2.4 13.6 2 13.1 2 12.6V11.5C2 10.9 2.4 10.5 2.9 10.4L4.2 10.2C4.4 9.39995 4.7 8.60002 5.2 7.90002L4.4 6.79993C4.1 6.39993 4.1 5.69993 4.5 5.29993L5.3 4.5C5.7 4.1 6.3 4.10002 6.8 4.40002L7.9 5.19995C8.6 4.79995 9.4 4.39995 10.2 4.19995L10.4 2.90002C10.5 2.40002 11 2 11.5 2H12.6C13.2 2 13.6 2.40002 13.7 2.90002L13.9 4.19995C14.7 4.39995 15.5 4.69995 16.2 5.19995L17.3 4.40002C17.7 4.10002 18.4 4.1 18.8 4.5L19.6 5.29993C20 5.69993 20 6.29993 19.7 6.79993L18.9 7.90002C19.3 8.60002 19.7 9.39995 19.9 10.2L21.2 10.4C21.7 10.5 22.1 11 22.1 11.5ZM12.1 8.59998C10.2 8.59998 8.6 10.2 8.6 12.1C8.6 14 10.2 15.6 12.1 15.6C14 15.6 15.6 14 15.6 12.1C15.6 10.2 14 8.59998 12.1 8.59998Z' fill='currentColor')
-											path(d='M17.1 12.1C17.1 14.9 14.9 17.1 12.1 17.1C9.30001 17.1 7.10001 14.9 7.10001 12.1C7.10001 9.29998 9.30001 7.09998 12.1 7.09998C14.9 7.09998 17.1 9.29998 17.1 12.1ZM12.1 10.1C11 10.1 10.1 11 10.1 12.1C10.1 13.2 11 14.1 12.1 14.1C13.2 14.1 14.1 13.2 14.1 12.1C14.1 11 13.2 10.1 12.1 10.1Z' fill='currentColor')
+										<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="currentColor"/>
+											<path d="M11.9343 12.5657L9.53696 14.963C9.22669 15.2733 9.18488 15.7619 9.43792 16.1204C9.7616 16.5789 10.4211 16.6334 10.8156 16.2342L14.3054 12.7029C14.6903 12.3134 14.6903 11.6866 14.3054 11.2971L10.8156 7.76582C10.4211 7.3666 9.7616 7.42107 9.43792 7.87962C9.18488 8.23809 9.22669 8.72669 9.53696 9.03696L11.9343 11.4343C12.2467 11.7467 12.2467 12.2533 11.9343 12.5657Z" fill="currentColor"/>
+										</svg>
 									span.d-flex.flex-column.align-items-start
 										span.fs-4.fw-bold Fields
 										span.fs-7 Description
@@ -66,6 +67,17 @@ block content
 									span.d-flex.flex-column.align-items-start
 										span.fs-4.fw-bold Config
 										span.fs-7 Description
+							if contentType.has_meta
+								li.nav-item.w-100.me-0.mb-md-2
+									a.nav-link.w-100.btn.btn-flex.btn-active-light-info(data-bs-toggle='tab' href='#kt_vtab_pane_6')
+										span.svg-icon.svg-icon-2
+											<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path opacity="0.3" d="M19.0687 17.9688H11.0687C10.4687 17.9688 10.0687 18.3687 10.0687 18.9688V19.9688C10.0687 20.5687 10.4687 20.9688 11.0687 20.9688H19.0687C19.6687 20.9688 20.0687 20.5687 20.0687 19.9688V18.9688C20.0687 18.3687 19.6687 17.9688 19.0687 17.9688Z" fill="currentColor"/>
+												<path d="M4.06875 17.9688C3.86875 17.9688 3.66874 17.8688 3.46874 17.7688C2.96874 17.4688 2.86875 16.8688 3.16875 16.3688L6.76874 10.9688L3.16875 5.56876C2.86875 5.06876 2.96874 4.46873 3.46874 4.16873C3.96874 3.86873 4.56875 3.96878 4.86875 4.46878L8.86875 10.4688C9.06875 10.7688 9.06875 11.2688 8.86875 11.5688L4.86875 17.5688C4.66875 17.7688 4.36875 17.9688 4.06875 17.9688Z" fill="currentColor"/>
+											</svg>
+										span.d-flex.flex-column.align-items-start
+											span.fs-4.fw-bold Meta
+											span.fs-7 Description
 					.col-9
 						#myTabContent.tab-content
 							#kt_vtab_pane_4.tab-pane.fade.show.active(role="tabpanel")
@@ -139,8 +151,35 @@ block content
 														input#has_api_endpoint.form-check-input(type='checkbox' value='true' disabled='true' name='has_api_endpoint' checked=(contentType ? contentType.has_api_endpoint : false))
 														label.form-check-label(for='has_api_endpoint') Has API Endpoint
 													.form-check.form-check-custom.form-check-solid.form-check-sm.col-md-6.mt-4
-														input#hide_meta.form-check-input(type='checkbox' value='true' disabled='true' name='hide_meta' checked=(contentType ? contentType.hide_meta : false))
-														label.form-check-label(for='hide_meta') Hide Meta
+														input#hide_meta.form-check-input(type='checkbox' value='true' disabled='true' name='has_meta' checked=(contentType ? contentType.has_meta : false))
+														label.form-check-label(for='hide_meta') Has Meta
+
+							#kt_vtab_pane_6.tab-pane.fade(role="tabpanel")
+								form#content_type_meta_form.form.es-form(action=`/admin/config/content-type/save-meta` data-disable-reset='true' method='post' autocomplete="off")
+									input(type="hidden" name="_id" value=contentType._id)
+									.badge.badge-danger.fv-plugins-message-container.invalid-feedback(id=`field-error-_id`)
+									.card.mb-5.mb-xl-10
+										.card-header.border-0.cursor-pointer(role='button' data-bs-toggle='collapse' data-bs-target='#kt_account_profile_details' aria-expanded='true' aria-controls='kt_account_profile_details')
+											.card-title.m-0
+												h3.fw-bold.m-0 Meta Fields
+											.card-toolbar
+												<button class="btn btn-success btn-sm form-submit-btn" id="kt_account_profile_details_submit" type="submit">
+													<span class="preloader d-none">Saving...</span>
+													<span class="label">Save</span>
+												</button>
+										#kt_account_settings_profile_details
+											.card-body.border-top.p-9
+												each meta_section in metaFields
+													h3.badge.badge-light-success #{meta_section.name}
+													each meta_field in meta_section.fields
+														.row.mb-6
+															label.col-lg-4.col-form-label.required.fw-semibold.fs-6 #{meta_field.label}
+															.col-lg-8.pt-2
+																if meta_field.type == 'textarea'
+																	textarea(class="form-control" name=`meta[${meta_section.slug}][${meta_field.name}]` placeholder=meta_field.label) #{contentType.meta[meta_section.slug][meta_field.name]}
+																else
+																	input(type="text" class="form-control" name=`meta[${meta_section.slug}][${meta_field.name}]` placeholder=meta_field.label value=contentType.meta[meta_section.slug][meta_field.name])
+																	
 
 
 block widgets

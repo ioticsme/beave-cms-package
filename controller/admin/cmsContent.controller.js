@@ -13,6 +13,7 @@ const { default: mongoose } = require('mongoose')
 const { isObjectId } = require('../../helper/Operations.helper')
 const { ObjectId } = require('mongodb')
 const { group } = require('console')
+const metaFields = require('../../config/meta-fields.config')
 
 let session
 
@@ -145,6 +146,7 @@ const add = async (req, res) => {
             reqContentType: req.contentType,
             has_common_field_groups: has_common_field_groups ? true : false,
             allowed_content,
+            metaFields,
         })
     } catch (error) {
         // console.log(error)
@@ -163,7 +165,7 @@ const edit = async (req, res) => {
             country: session.brand.country,
         })
 
-        if(!contentDetail) {
+        if (!contentDetail) {
             return res.render(`admin/error-404`)
         }
         // return res.send(findalContentFieldsGroup)
@@ -179,16 +181,17 @@ const edit = async (req, res) => {
             const grouped = collection.groupBy('type_slug')
             allowed_content = JSON.parse(JSON.stringify(grouped.items))
         }
-        const has_common_custom_fields = collect(req.contentType.custom_fields)
+        const has_common_field_groups = collect(req.contentType.field_groups)
             .where('localisation', false)
             .count()
 
         // return res.json(contentDetail)
         return res.render(`admin/cms/content/edit`, {
             reqContentType: req.contentType,
-            has_common_custom_fields: has_common_custom_fields ? true : false,
+            has_common_field_groups: has_common_field_groups ? true : false,
             contentDetail,
             allowed_content,
+            metaFields,
         })
     } catch (error) {
         console.log(error)
@@ -585,6 +588,7 @@ const saveTemp = async (req, res) => {
             'published',
             'in_home',
             'position',
+            'meta',
         ])
 
         // BEGIN:: Generating content field validation rule for content type
@@ -684,6 +688,7 @@ const saveTemp = async (req, res) => {
                 : Joi.string().optional(),
             ...validationSchema,
             attached_type: Joi.optional(),
+            meta: Joi.object().optional().allow(null, ''),
             published: Joi.string().required().valid('true', 'false'),
             in_home: Joi.string().required().valid('true', 'false'),
             position: Joi.number().optional(),
@@ -711,6 +716,7 @@ const saveTemp = async (req, res) => {
             position: body.position || 0,
             // template_name: type.template_name,
             content: content_to_insert,
+            meta: body.meta,
             // group_content: fieldGroupData,
             // meta: metaData,
             in_home: body.in_home || false,

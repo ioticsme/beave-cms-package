@@ -141,6 +141,14 @@ block content
 										<li class="nav-item">
 											<a class="nav-link #{(i== 0 ? 'active' : '')}" data-bs-toggle="tab" href="#kt_tab_pane_#{brandLanguage.prefix}">#{brandLanguage.name}</a>
 										</li>
+									if has_common_field_groups
+										<li class="nav-item">
+											<a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_common">General</a>
+										</li>
+									if reqContentType.has_meta
+										<li class="nav-item">
+											<a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_meta">Meta</a>
+										</li>
 										//- li.nav-item
 										//- 	a.nav-link(class= (i== 0 ? 'active' : '') data-bs-toggle='tab' href=`#kt_tab_pane_${brandLanguage.prefix}`) #{brandLanguage.name}
 								</ul>
@@ -287,35 +295,100 @@ block content
 																<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{brandLanguage.prefix}_#{cfg.row_name}_#{cf.field_name}"></div>
 															</div>
 										</div>
-								</div>
-								if has_common_field_groups
-									<div class="ribbon ribbon-start ribbon-clip">
-										<div class="ribbon-label">General Fields (No localisation)<span class="ribbon-inner bg-success"></span></div>
-									</div>
-								//- BEGIN::Custom Fields without localisation
-								<div class="row mt-5 pt-5">
-									<div class="col-12 mt-5">
-										each cfg, cfg_i in reqContentType.field_groups
-											if cfg.localisation == false 
-												if cfg.repeater_group == true
-													h4 #{cfg.row_label}
-													<div class="group_repeater" id="kt_docs_repeater_#{cfg._id}_#{cfg_i}">
-														<div class="form-group row form-repeater-group-#{cfg._id}-en" id="form_repeater_child_#{cfg._id}-#{cfg_i}">
-															- var totalItems = contentDetail.content['common'][cfg.row_name][Object.keys(contentDetail.content['common'][cfg.row_name])[0]].length || 1
-															- for (var i = 0; i < totalItems; i++)
+									if has_common_field_groups
+										<div class="tab-pane fade" role="tabpanel" id="kt_tab_pane_common">
+											//- BEGIN::Custom Fields without localisation
+											<div class="row mt-5 pt-5">
+												<div class="col-12 mt-5">
+													each cfg, cfg_i in reqContentType.field_groups
+														if cfg.localisation == false 
+															if cfg.repeater_group == true
+																h4 #{cfg.row_label}
+																<div class="group_repeater" id="kt_docs_repeater_#{cfg._id}_#{cfg_i}">
+																	<div class="form-group row form-repeater-group-#{cfg._id}-en" id="form_repeater_child_#{cfg._id}-#{cfg_i}">
+																		- var totalItems = contentDetail.content['common'][cfg.row_name][Object.keys(contentDetail.content['common'][cfg.row_name])[0]].length || 1
+																		- for (var i = 0; i < totalItems; i++)
+																			each cf, cf_i in cfg.fields
+																				- var fieldValue = contentDetail.content['common'][cfg.row_name][cf.field_name][i]
+																				<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container">
+																					<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+																						<span class="required">#{cf.field_label}</span>
+																						<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-kt-initialized="1"></i>
+																					</label>
+																					if cf.field_type === 'text' || cf.field_type === 'email' || cf.field_type === 'number'
+																						<input class="form-control form-control-solid" type="#{cf.field_type}" placeholder="Enter #{cf.field_label}" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" value="#{fieldValue}">
+																					else if cf.field_type === 'richtext'
+																						<textarea class="content_wysiwyg" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" id="wysiwyg-cf-#{cf_i}">#{fieldValue}</textarea>
+																					else if cf.field_type === 'textarea'
+																						<textarea class="form-control form-control-solid" rows="6" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" placeholder="" spellcheck="false">#{fieldValue}</textarea>
+																					else if cf.field_type === 'media'
+																						<span id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}_preview">
+																							<span class="preview-holder">
+																								if fieldValue
+																									<img src="#{fieldValue}" style="max-width: 150px;" />
+																							</span>
+																							<a class="btn btn-danger image-preview-remove-btn my-1 #{!fieldValue ? 'd-none' : ''}"><i class="fa fa-trash" tabindex="-1"></i></a>
+																						</span>
+																						<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" name="common[#{cfg.row_name}[#{cf.field_name}[]]]">
+																						<a class="btn btn-success" data-field="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																					else if cf.field_type === 'date'
+																						<div class="kt_daterangepicker">
+																							<input class="form-control mb-2" id="kt_daterangepicker_#{cf_i}" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" placeholder="#{cf.placeholder}" value="#{fieldValue}">
+																							<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
+																						</div>
+																					else if cf.field_type === 'radio'
+																						<div class="row row-cols-1 row-cols-md-3 row-cols-lg-1 row-cols-xl-3 g-9" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button='true']">
+																							each option,i in cf.options 
+																								<div class="col d-flex text-start p-6">
+																									<span class="form-check form-check-custom form-check-solid form-check-sm align-items-start" data-kt-button="true">
+																										<input class="form-check-input" type="radio" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" id="#{option.value}-#{i}" value="#{option.value}">
+																									</span>
+																									<span class="ms-5">
+																										<label class="form-label" for="#{option.value}-#{i}">#{option.label}</label>
+																									</span>
+																								</div>
+																							else 
+																								<div class="col d-flex text-start p-6">
+																									<span class="form-check form-check-custom form-check-solid form-check-sm align-items-start" data-kt-button="true">
+																										<input class="form-check-input" type="radio" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" id="percentage" value="true">
+																									</span>
+																									<span class="ms-5">
+																										<label class="form-label" for="percentage"> </label>
+																									</span>
+																								</div>
+																						<div>
+																					else if cf.field_type === 'dropdown'
+																						<select class="form-select" data-control="select" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" data-placeholder="Select an option">
+																							<option value="">Select an option</option>
+																							each dropdown, dd_i in cf.options
+																								<option value="#{dropdown.value}" #{fieldValue == dropdown.value ? 'selected' : ''}>#{dropdown.label}</option>
+																						</select>
+																					<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_#{cfg.row_name}_#{cf.field_name}"></div>
+																				</div>
+																		<div class="text-center">
+																			<a class="btn btn-sm btn-light-danger mt-3 mt-md-8" onClick="deleteChild(event)" child-id="form-repeater-child-#{cfg._id}-#{cfg_i}" target-id="kt_docs_repeater_#{cfg._id}_#{cfg_i}"><i class="la la-trash-o"></i>Delete</a>
+																		</div>
+																	</div>
+																</div>
+																<div class="form-group mt-5 text-center">
+																	<a class="btn btn-light-primary" onClick="cloneChild(event)" target-lang="#{cfg._id}" target-lang-prefix="en" target-id="kt_docs_repeater_#{cfg._id}_#{cfg_i}"><i class="la la-plus"></i>Add</a>
+																</div>
+															else 
 																each cf, cf_i in cfg.fields
-																	- var fieldValue = contentDetail.content['common'][cfg.row_name][cf.field_name][i]
-																	<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container">
-																		<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-																			<span class="required">#{cf.field_label}</span>
-																			<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-kt-initialized="1"></i>
-																		</label>
+																	if contentDetail.content['common'] && contentDetail.content['common'][cfg.row_name][cf.field_name]
+																		- var fieldValue = contentDetail.content['common'][cfg.row_name][cf.field_name]
+																	else
+																		- var fieldValue = ''
+																	.d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container
+																		label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
+																			span.required #{cf.field_label}
+																			i.fas.fa-exclamation-circle.ms-2.fs-7(data-bs-toggle='tooltip' aria-label='Specify a target name for future usage and reference' data-kt-initialized='1')
 																		if cf.field_type === 'text' || cf.field_type === 'email' || cf.field_type === 'number'
-																			<input class="form-control form-control-solid" type="#{cf.field_type}" placeholder="Enter #{cf.field_label}" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" value="#{fieldValue}">
+																			input.form-control.form-control-solid(type=`${cf.field_type}` placeholder=`Enter  ${cf.field_label}` name=`common[${cfg.row_name}[${cf.field_name}]]` value=`${fieldValue}`)
 																		else if cf.field_type === 'richtext'
-																			<textarea class="content_wysiwyg" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" id="wysiwyg-cf-#{cf_i}">#{fieldValue}</textarea>
+																			textarea.content_wysiwyg(name=`common[${cfg.row_name}[${cf.field_name}]]` id=`wysiwyg-cf-${cf_i}`) #{fieldValue}
 																		else if cf.field_type === 'textarea'
-																			<textarea class="form-control form-control-solid" rows="6" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" placeholder="" spellcheck="false">#{fieldValue}</textarea>
+																			textarea.form-control.form-control-solid(rows='6' name=`common[${cfg.row_name}[${cf.field_name}]]` placeholder='' spellcheck='false') #{fieldValue}
 																		else if cf.field_type === 'media'
 																			<span id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}_preview">
 																				<span class="preview-holder">
@@ -324,104 +397,59 @@ block content
 																				</span>
 																				<a class="btn btn-danger image-preview-remove-btn my-1 #{!fieldValue ? 'd-none' : ''}"><i class="fa fa-trash" tabindex="-1"></i></a>
 																			</span>
-																			<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" name="common[#{cfg.row_name}[#{cf.field_name}[]]]">
+																			<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" name="common[#{cfg.row_name}[#{cf.field_name}]]" value="#{fieldValue}">
 																			<a class="btn btn-success" data-field="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																		else if cf.field_type === 'date'
-																			<div class="kt_daterangepicker">
-																				<input class="form-control mb-2" id="kt_daterangepicker_#{cf_i}" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" placeholder="#{cf.placeholder}" value="#{fieldValue}">
-																				<div class="fv-plugins-message-container invalid-feedback" id="field-error-#{cf.field_name}"></div>
-																			</div>
+																			.kt_daterangepicker
+																				input.form-control.mb-2(id=`kt_daterangepicker_${cf_i}` name=`common[${cfg.row_name}[${cf.field_name}]]` placeholder=`${cf.placeholder}` value='')
 																		else if cf.field_type === 'radio'
-																			<div class="row row-cols-1 row-cols-md-3 row-cols-lg-1 row-cols-xl-3 g-9" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button='true']">
+																			.row.row-cols-1.row-cols-md-3.row-cols-lg-1.row-cols-xl-3.g-9(data-kt-buttons='true' data-kt-buttons-target="[data-kt-button='true']")
 																				each option,i in cf.options 
-																					<div class="col d-flex text-start p-6">
-																						<span class="form-check form-check-custom form-check-solid form-check-sm align-items-start" data-kt-button="true">
-																							<input class="form-check-input" type="radio" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" id="#{option.value}-#{i}" value="#{option.value}">
-																						</span>
-																						<span class="ms-5">
-																							<label class="form-label" for="#{option.value}-#{i}">#{option.label}</label>
-																						</span>
-																					</div>
+																					.col.d-flex.text-start.p-6
+																						span.form-check.form-check-custom.form-check-solid.form-check-sm.align-items-start(data-kt-button='true')
+																							input.form-check-input(type='radio' name=`common[${cfg.row_name}[${cf.field_name}]]` id=`${option.value}-${i}` value=`${option.value}` checked=i==0)
+																						span.ms-5
+																							label.form-label(for=`${option.value}-${i}`) #{option.label}
 																				else 
 																					<div class="col d-flex text-start p-6">
 																						<span class="form-check form-check-custom form-check-solid form-check-sm align-items-start" data-kt-button="true">
-																							<input class="form-check-input" type="radio" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" id="percentage" value="true">
-																						</span>
-																						<span class="ms-5">
+																							<input class="form-check-input" type="radio" name="common[#{cfg.row_name}[#{cf.field_name}]]" id="percentage" value="true"></span><span class="ms-5">
 																							<label class="form-label" for="percentage"> </label>
 																						</span>
 																					</div>
-																			<div>
 																		else if cf.field_type === 'dropdown'
-																			<select class="form-select" data-control="select" name="common[#{cfg.row_name}[#{cf.field_name}[]]]" data-placeholder="Select an option">
-																				<option value="">Select an option</option>
+																			<select class="form-select" data-control="select2" name="common[#{cfg.row_name}[#{cf.field_name}]]" data-placeholder="Select an option">
+																				<option></option>
 																				each dropdown, dd_i in cf.options
-																					<option value="#{dropdown.value}" #{fieldValue == dropdown.value ? 'selected' : ''}>#{dropdown.label}</option>
+																					<option value="#{dropdown.value}">#{dropdown.label}</option>
 																			</select>
 																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_#{cfg.row_name}_#{cf.field_name}"></div>
-																	</div>
-															<div class="text-center">
-																<a class="btn btn-sm btn-light-danger mt-3 mt-md-8" onClick="deleteChild(event)" child-id="form-repeater-child-#{cfg._id}-#{cfg_i}" target-id="kt_docs_repeater_#{cfg._id}_#{cfg_i}"><i class="la la-trash-o"></i>Delete</a>
-															</div>
-														</div>
-													</div>
-													<div class="form-group mt-5 text-center">
-														<a class="btn btn-light-primary" onClick="cloneChild(event)" target-lang="#{cfg._id}" target-lang-prefix="en" target-id="kt_docs_repeater_#{cfg._id}_#{cfg_i}"><i class="la la-plus"></i>Add</a>
-													</div>
-												else 
-													each cf, cf_i in cfg.fields
-														if contentDetail.content['common'] && contentDetail.content['common'][cfg.row_name][cf.field_name]
-															- var fieldValue = contentDetail.content['common'][cfg.row_name][cf.field_name]
-														else
-															- var fieldValue = ''
-														.d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container
-															label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
-																span.required #{cf.field_label}
-																i.fas.fa-exclamation-circle.ms-2.fs-7(data-bs-toggle='tooltip' aria-label='Specify a target name for future usage and reference' data-kt-initialized='1')
-															if cf.field_type === 'text' || cf.field_type === 'email' || cf.field_type === 'number'
-																input.form-control.form-control-solid(type=`${cf.field_type}` placeholder=`Enter  ${cf.field_label}` name=`common[${cfg.row_name}[${cf.field_name}]]` value=`${fieldValue}`)
-															else if cf.field_type === 'richtext'
-																textarea.content_wysiwyg(name=`common[${cfg.row_name}[${cf.field_name}]]` id=`wysiwyg-cf-${cf_i}`) #{fieldValue}
-															else if cf.field_type === 'textarea'
-																textarea.form-control.form-control-solid(rows='6' name=`common[${cfg.row_name}[${cf.field_name}]]` placeholder='' spellcheck='false') #{fieldValue}
-															else if cf.field_type === 'media'
-																<span id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}_preview">
-																	<span class="preview-holder">
-																		if fieldValue
-																			<img src="#{fieldValue}" style="max-width: 150px;" />
-																	</span>
-																	<a class="btn btn-danger image-preview-remove-btn my-1 #{!fieldValue ? 'd-none' : ''}"><i class="fa fa-trash" tabindex="-1"></i></a>
-																</span>
-																<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" name="common[#{cfg.row_name}[#{cf.field_name}]]" value="#{fieldValue}">
-																<a class="btn btn-success" data-field="#{cfg.row_name}_#{cf.field_name}_#{cf_i}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
-															else if cf.field_type === 'date'
-																.kt_daterangepicker
-																	input.form-control.mb-2(id=`kt_daterangepicker_${cf_i}` name=`common[${cfg.row_name}[${cf.field_name}]]` placeholder=`${cf.placeholder}` value='')
-															else if cf.field_type === 'radio'
-																.row.row-cols-1.row-cols-md-3.row-cols-lg-1.row-cols-xl-3.g-9(data-kt-buttons='true' data-kt-buttons-target="[data-kt-button='true']")
-																	each option,i in cf.options 
-																		.col.d-flex.text-start.p-6
-																			span.form-check.form-check-custom.form-check-solid.form-check-sm.align-items-start(data-kt-button='true')
-																				input.form-check-input(type='radio' name=`common[${cfg.row_name}[${cf.field_name}]]` id=`${option.value}-${i}` value=`${option.value}` checked=i==0)
-																			span.ms-5
-																				label.form-label(for=`${option.value}-${i}`) #{option.label}
-																	else 
-																		<div class="col d-flex text-start p-6">
-																			<span class="form-check form-check-custom form-check-solid form-check-sm align-items-start" data-kt-button="true">
-																				<input class="form-check-input" type="radio" name="common[#{cfg.row_name}[#{cf.field_name}]]" id="percentage" value="true"></span><span class="ms-5">
-																				<label class="form-label" for="percentage"> </label>
-																			</span>
-																		</div>
-															else if cf.field_type === 'dropdown'
-																<select class="form-select" data-control="select2" name="common[#{cfg.row_name}[#{cf.field_name}]]" data-placeholder="Select an option">
-																	<option></option>
-																	each dropdown, dd_i in cf.options
-																		<option value="#{dropdown.value}">#{dropdown.label}</option>
-																</select>
-															<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_#{cfg.row_name}_#{cf.field_name}"></div>
-									</div>
-								</div>
-								//- END::Custom Fields without localisation
+												</div>
+											</div>
+											//- END::Custom Fields without localisation
+										</div>
+									if reqContentType.has_meta
+										<div class="tab-pane fade" role="tabpanel" id="kt_tab_pane_meta">
+											<div class="row mt-5 pt-5">
+												<div class="col-12 mt-5">
+													each meta_section in metaFields
+														h3.badge.badge-light-success #{meta_section.name}
+														each meta_field in meta_section.fields
+															.row.mb-6
+																label.col-lg-4.col-form-label.required.fw-semibold.fs-6 #{meta_field.label}
+																.col-lg-8.pt-2
+																	if contentDetail.content.meta && contentDetail.content.meta[meta_section.slug] && contentDetail.content.meta[meta_section.slug][meta_field.name]
+																		- var metaFieldValue = contentDetail.content.meta[meta_section.slug][meta_field.name]
+																	else
+																		- var metaFieldValue = ''
+																	if meta_field.type == 'textarea'
+																		textarea(class="form-control" name=`meta[${meta_section.slug}][${meta_field.name}]` placeholder=meta_field.label) #{metaFieldValue}
+																	else
+																		input(type="text" class="form-control" name=`meta[${meta_section.slug}][${meta_field.name}]` placeholder=meta_field.label value=metaFieldValue)
+												</div>
+											</div>
+										</div>
+								</div>								
 							</div>
 						</div>
 					</div>

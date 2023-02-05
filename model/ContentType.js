@@ -68,6 +68,7 @@ const ContentTypeSchema = new mongoose.Schema(
                 ],
             },
         ],
+        meta: {},
         allowed_type: [{ type: String }],
         // template_name: {
         //     type: String,
@@ -97,7 +98,7 @@ const ContentTypeSchema = new mongoose.Schema(
             type: Boolean,
             default: true,
         },
-        hide_meta: {
+        has_meta: {
             type: Boolean,
             default: false,
         },

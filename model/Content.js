@@ -58,6 +58,7 @@ const ContentSchema = new mongoose.Schema(
             default: false,
         },
         content: Object,
+        meta: {},
     },
     {
         timestamps: {

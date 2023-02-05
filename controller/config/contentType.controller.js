@@ -3,6 +3,7 @@ const express = require('express')
 const Joi = require('joi')
 const bcrypt = require('bcrypt')
 const ContentType = require('../../model/ContentType')
+const metaFields = require('../../config/meta-fields.config')
 const slugify = require('slugify')
 
 const list = async (req, res) => {
@@ -66,6 +67,7 @@ const view = async (req, res) => {
     return res.render('admin/config/content-type/view', {
         contentType,
         fields_to_map,
+        metaFields,
         // contentTypes,
     })
 }
@@ -84,7 +86,7 @@ const save = async (req, res) => {
             nav_on_collection_api: Joi.boolean().optional(),
             nav_on_single_api: Joi.boolean().optional(),
             has_form: Joi.boolean().optional(),
-            hide_meta: Joi.boolean().optional(),
+            has_meta: Joi.boolean().optional(),
             has_api_endpoint: Joi.boolean().optional(),
             single_type: Joi.boolean().optional(),
             attachable_type: Joi.array(),
@@ -112,7 +114,7 @@ const save = async (req, res) => {
             has_form: req.body?.has_form || false,
             has_slug: req.body.has_slug || false,
             in_use: req.body.in_use || false,
-            hide_meta: req.body.hide_meta || false,
+            has_meta: req.body.has_meta || false,
             nav_on_collection_api: req.body.nav_on_collection_api || false,
             nav_on_single_api: req.body.nav_on_single_api || false,
             single_type: req.body.single_type || false,
@@ -284,6 +286,44 @@ const saveFields = async (req, res) => {
     }
 }
 
+const saveMeta = async (req, res) => {
+    try {
+        console.log(req.body)
+        const schema = Joi.object({
+            _id: Joi.string().required(),
+            meta: Joi.object().required(),
+        })
+
+        const validationResult = schema.validate(req.body, {
+            abortEarly: false,
+        })
+
+        if (validationResult.error) {
+            return res.status(422).json(validationResult.error)
+        }
+        await ContentType.updateOne(
+            {
+                _id: req.body._id,
+            },
+            {
+                $set: {
+                    meta: req.body.meta,
+                },
+            }
+        )
+
+        return res.status(200).json({ message: 'Content Type Meta updated' })
+    } catch (e) {
+        console.log(e)
+        if (e.errors) {
+            return res.status(422).json({
+                details: e.errors,
+            })
+        }
+        return res.status(500).json({ error: 'Something went wrong' })
+    }
+}
+
 module.exports = {
     list,
     add,
@@ -293,4 +333,5 @@ module.exports = {
     deleteItem,
     addFields,
     saveFields,
+    saveMeta,
 }

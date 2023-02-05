@@ -47,6 +47,7 @@ router.group('/', (router) => {
         router.get('/view/:id', contentTypeController.view)
         // router.get('/add-fields/:id', contentTypeController.addFields)
         router.post('/save-fields', contentTypeController.saveFields)
+        router.post('/save-meta', contentTypeController.saveMeta)
         router.post('/save', contentTypeController.save)
         router.post('/delete', contentTypeController.deleteItem)
     })

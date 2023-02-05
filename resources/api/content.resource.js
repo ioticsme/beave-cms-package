@@ -49,6 +49,7 @@ class ContentResource extends Resource {
             //     }),
             // group_content: this.group_content,
             attached_content: this.attached_content,
+            meta: this.meta,
             // banner: this.banner ? new BannerResource(this.banner).exec() : undefined,
             // gallery: this.gallery ? new GalleryResource(this.gallery).exec() : undefined,
             // meta: this.meta,
