@@ -116,6 +116,7 @@ const detail = async (req, res) => {
             default_lang,
             reqContentType: req.contentType,
             contentDetail,
+            metaFields,
             // findalContentFieldsGroup,
         })
     } catch (error) {

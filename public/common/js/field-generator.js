@@ -38,13 +38,14 @@ const generateField = async () => {
 								<tbody style="font-size: 13px;">`
     await _.forEach(fieldSchemaJson, function (group) {
         const currGroup = `<tr><td colspn="3">
-        <h3 class="mb-1">${group.section}
+        <h3 class="mb-1">${group.section.toUpperCase()}</h3>
+        <p class="my-2"><small>${group.localisation ? '<span class="badge badge-light-info">Multi Linguistic</span>' : '<span class="badge badge-light-success">Global</span>'}
         ${
             group.repeater_group
-                ? '<span class="badge badge-warning">Repeater</span>'
+                ? '<span class="badge badge-light-primary">Repeater</span>'
                 : ''
         }
-        </h3>
+        </small></p>
         <a class="btn btn-light btn-xs" data-bs-toggle="modal" data-bs-target="#field_form_modal" data-section="${
             group.section
         }"><i class="fa-solid fa-plus"></i></a>

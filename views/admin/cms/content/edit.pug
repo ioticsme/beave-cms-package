@@ -438,8 +438,8 @@ block content
 															.row.mb-6
 																label.col-lg-4.col-form-label.required.fw-semibold.fs-6 #{meta_field.label}
 																.col-lg-8.pt-2
-																	if contentDetail.content.meta && contentDetail.content.meta[meta_section.slug] && contentDetail.content.meta[meta_section.slug][meta_field.name]
-																		- var metaFieldValue = contentDetail.content.meta[meta_section.slug][meta_field.name]
+																	if contentDetail.meta && contentDetail.meta[meta_section.slug] && contentDetail.meta[meta_section.slug][meta_field.name]
+																		- var metaFieldValue = contentDetail.meta[meta_section.slug][meta_field.name]
 																	else
 																		- var metaFieldValue = ''
 																	if meta_field.type == 'textarea'
