@@ -175,10 +175,14 @@ block content
 														.row.mb-6
 															label.col-lg-4.col-form-label.required.fw-semibold.fs-6 #{meta_field.label}
 															.col-lg-8.pt-2
-																if meta_field.type == 'textarea'
-																	textarea(class="form-control" name=`meta[${meta_section.slug}][${meta_field.name}]` placeholder=meta_field.label) #{contentType.meta[meta_section.slug][meta_field.name]}
+																if contentType.meta && contentType.meta[meta_section.slug] && contentType.meta[meta_section.slug][meta_field.name]
+																	- var fieldValue = contentType.meta[meta_section.slug][meta_field.name]
 																else
-																	input(type="text" class="form-control" name=`meta[${meta_section.slug}][${meta_field.name}]` placeholder=meta_field.label value=contentType.meta[meta_section.slug][meta_field.name])
+																	- var fieldValue = ''
+																if meta_field.type == 'textarea'
+																	textarea(class="form-control" name=`meta[${meta_section.slug}][${meta_field.name}]` placeholder=meta_field.label) #{fieldValue}
+																else
+																	input(type="text" class="form-control" placeholder=meta_field.label name=`meta[${meta_section.slug}][${meta_field.name}]` value=fieldValue)
 																	
 
 

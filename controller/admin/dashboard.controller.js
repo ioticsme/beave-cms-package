@@ -19,7 +19,6 @@ const {
 } = require('date-fns')
 
 // Services
-const { default: collect } = require('collect.js')
 const { differenceInPercentage } = require('../../helper/Operations.helper')
 const User = require('../../model/User')
 
