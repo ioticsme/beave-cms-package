@@ -287,8 +287,14 @@ const list = async (req, res) => {
         const cache_key = `data-content-${req.brand.code}-${req.brand.country_code}-${req.params.contentType}`
 
         const contentType = await ContentType.findOne({
+            active: true,
             slug: req.params.contentType,
         })
+
+        if(!contentType) {
+            return res.status(404).json({ error: `Content Type not exist` })
+        }
+
         const contents = await getCache(cache_key)
             .then(async (data) => {
                 if (process.env.CACHE_LOCAL_DATA == 'true' && data) {
@@ -403,8 +409,14 @@ const detail = async (req, res) => {
     try {
         const cache_key = `data-content-${req.brand.code}-${req.brand.country_code}-${req.params.contentType}-${req.params.slug}`
         const contentType = await ContentType.findOne({
+            active: true,
             slug: req.params.contentType,
         })
+
+        if(!contentType) {
+            return res.status(404).json({ error: `Content Type not exist` })
+        }
+
         const contents = await getCache(cache_key)
             .then(async (data) => {
                 if (process.env.CACHE_LOCAL_DATA == 'true' && data) {
@@ -481,8 +493,14 @@ const detail = async (req, res) => {
 const generateStaticPath = async (req, res) => {
     try {
         const contentType = await ContentType.findOne({
+            active: true,
             slug: req.params.contentType,
         })
+
+        if(!contentType) {
+            return res.status(404).json({ error: `Content Type not exist` })
+        }
+        
         const contents = await Content.find({
             type_id: contentType._id,
             // brand: req.brand._id,

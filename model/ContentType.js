@@ -86,7 +86,7 @@ const ContentTypeSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
-        in_use: {
+        active: {
             type: Boolean,
             default: true,
         },

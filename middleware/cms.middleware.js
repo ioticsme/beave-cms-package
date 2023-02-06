@@ -97,9 +97,9 @@ const authUser = async (req, res, next) => {
 //     const admin_nav = await AdminNav.find().select('-_id -created_at -updated_at -__v')
 //     const contentTypes = await ContentType.find({
 //         // single_type: false,
-//         in_use: true,
+//         active: true,
 //     })
-//         .select('-_id title slug admin_icon position in_use single_type')
+//         .select('-_id title slug admin_icon position active single_type')
 //         .sort([['position', 'ascending']])
 //     // app.locals.mainNav = contentTypes
 //     const listTypeItems = collect(contentTypes)
@@ -178,9 +178,9 @@ const mainNavGenerator = async (req, res, next) => {
     // console.log('DB Fetch END')
     const contentTypes = await ContentType.find({
         // single_type: false,
-        in_use: true,
+        active: true,
     })
-        .select('-_id title slug admin_icon position in_use single_type')
+        .select('-_id title slug admin_icon position active single_type')
         .sort([['position', 'ascending']])
     // app.locals.mainNav = contentTypes
     const listTypeItems = collect(contentTypes)
