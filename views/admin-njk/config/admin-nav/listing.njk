@@ -1,0 +1,235 @@
+{% extends "../../layouts/master.njk" %}
+
+{% block csslib %}
+	<link href="/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block jslib %}
+	{# //- // begin::Vendors Javascript(used by this page) #}
+	<script src='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.js'></script>
+	{# //- custom functions  #}
+	<script src='/cms-static/common/js/form-data-json.min.js'></script>
+	<script src='/cms-static/common/js/es-form.js'></script>
+	<script src='/cms-static/common/js/custom-functions.js'></script>
+{% endblock %}
+
+{% block customScript %}
+	<script>
+		$('#kt_modal_nav_item_form').on('show.bs.modal', function (e) {
+			var dataValue = $(e.relatedTarget).data('section');
+			$('#kt_modal_nav_item_form input[name="section"]').val(dataValue);
+		});
+		$('#kt_modal_nav_child_form').on('show.bs.modal', function (e) {
+			var dataSection = $(e.relatedTarget).data('section');
+			var dataItem = $(e.relatedTarget).data('item');
+			$('#kt_modal_nav_child_form input[name="section"]').val(dataSection);
+			$('#kt_modal_nav_child_form input[name="item"]').val(dataItem);
+		});
+	</script>
+{% endblock %}
+
+{% block content %}
+	<div class="d-flex flex-column flex-column-fluid">
+		<div class="app-toolbar py-3 py-lg-6" id="kt_app_toolbar">
+			<div class="app-container container-xxl d-flex flex-stack" id="kt_app_toolbar_container">
+				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Admin Nav List</h1>
+				</div>
+				<div class="d-flex align-items-center gap-2 gap-lg-3">
+					<a class="btn btn-sm fw-bold btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_nav_section_form">Add Nav Section</a>
+				</div>
+			</div>
+		</div>
+		<div id="kt_app_content" class="app-content flex-column-fluid">
+			<div id="kt_app_content_container" class="app-container container-xxl">
+				<div class="card">
+					<div class="card-header border-0 pt-6">
+						<div class="card-title">
+							<div class="d-flex align-items-center position-relative my-1"></div>
+						</div>
+					</div>
+
+					<div class="card-body pt-0">
+						<ul>
+							{% for admin_nav, i in admin_navs %}
+								<li class="my-10">
+									<h1>{{ admin_nav.section }} | 
+										<a href="#" class="btn btn-success btn-sm" data-bs-toggle='modal' data-bs-target='#kt_modal_nav_item_form' data-section={{admin_nav.section}}>
+											<i class="fa fa-plus"></i>
+										</a>
+										<a href="/admin/config/admin-nav/section/delete/{{ admin_nav._id }}" class="btn btn-danger btn-sm">
+											<i class="fa fa-trash"></i>
+										</a>
+									</h1>
+									<ul>
+										{% for item, item_index in admin_nav.items %}
+											<li class="border-gray-300 border-dotted my-5">
+												<div class="px-10">
+													<h2>Label : {{ item.label }} | 
+														<a href="#" class="btn btn-info btn-sm" data-bs-toggle='modal' data-bs-target='#kt_modal_nav_child_form' data-section={{admin_nav._id}} data-item={{item._id}}>
+															<i class="fa fa-plus"></i>
+														</a>
+														<a href="/admin/config/admin-nav/item/delete/{{ admin_nav.section }}/{{ item._id }}" class="btn btn-danger btn-sm">
+															<i class="fa fa-trash"></i>
+														</a>
+													</h2>
+													<p>expandable : {{ item.expandable }}</p>
+													<p>icon : {{ item.icon }}</p>
+													<p>path : {{ item.path }}</p>
+													<ul>
+														{% for child, child_index in item.child %}
+															<li class="border-gray-300 border-dotted my-5">
+																<div class="px-10">
+																	<h2>Label : {{ child.label }} | 
+																		<a href="/admin/config/admin-nav/child/delete/{{ admin_nav._id }}/{{ item._id }}/{{ child._id }}" class="btn btn-danger btn-sm">
+																			<i class="fa fa-trash"></i>
+																		</a>
+																	</h2>
+																	<p>path : {{ child.path }}</p>
+																</div>
+															</li>
+														{% endfor %}
+													</ul>
+												</div>
+											</li>
+										{% endfor %}
+									</ul>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+
+
+{% block widgets %}
+	<div id="kt_modal_nav_section_form" class="modal fade" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered mw-400px">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2>Add Nav Section</h2>
+					<div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+						<h3>X</h3>
+					</div>
+				</div>
+				<div class="modal-body py-lg-5 px-lg-5">
+					<form id="kt_modal_create_app_form" class="form es-form" action="/admin/config/admin-nav/section/save" data-kt-redirect-url="/admin/config/admin-nav/section/save" method="post">
+						<div class="card card-flush">
+							<div class="card-body pt-0">
+								<div class="col-md-12">
+									<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+										<span>Section Name</span>
+										<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-kt-initialized="1"></i>
+									</label>
+									<input id="flexCheckChecked" class="form-control" type="text" name="section" placeholder="Nav Section Name">
+									<input id="flexCheckChecked" class="form-control" type="number" name="position" placeholder="Section Position">
+									<div class="card-toolbar mt-8 d-flex justify-content-end">
+										<button class="btn btn-sm btn-success form-submit-btn" type="submit">
+											<span class="label">Save</span>
+											<span class="preloader d-none">Saving...</span>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="kt_modal_nav_item_form" class="modal fade" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-center mw-400px">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2>Add Nav Item</h2>
+					<button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+						<h3>X</h3>
+					</button>
+				</div>
+				<div class="modal-body py-lg-5 px-lg-5">
+					<form id="kt_modal_create_item_form" action="/admin/config/admin-nav/item/save" data-kt-redirect-url="/admin/config/admin-nav/item/save" method="post" class="form es-form">
+						<input type="hidden" name="section">
+						<div class="card card-flush">
+							<div class="card-body pt-0">
+								<div class="col-md-12">
+									<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+										<span> Nav Item</span>
+										<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-kt-initialized="1"></i>
+									</label>
+									<div class="form-check form-check-custom form-check-solid my-1">
+										<input type="text" name="label" placeholder="Item Label" class="form-control">
+									</div>
+									<div class="form-check form-check-custom form-check-solid my-1">
+										<input type="checkbox" name="expandable" value="true" class="form-checkbox">
+										<label>Expandable</label>
+									</div>
+									<div class="form-check form-check-custom form-check-solid my-1">
+										<textarea name="icon" placeholder="Icon" class="form-control"></textarea>
+									</div>
+									<a href="https://preview.keenthemes.com/html/metronic/docs/icons/duotune" target="_blank">
+										<small>Sample Icons</small>
+									</a>
+									<div class="form-check form-check-custom form-check-solid my-1">
+										<input type="text" name="path" placeholder="URL" class="form-control">
+									</div>
+									<div class="card-toolbar mt-8 d-flex justify-content-end">
+										<button type="submit" class="btn btn-sm btn-success form-submit-btn">
+											<span class="label">Save</span>
+											<span class="preloader d-none">Saving...</span>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="kt_modal_nav_child_form" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered mw-400px">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2>Add Child Item</h2>
+					<div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+						<h3>X						</h3>
+					</div>
+				</div>
+				<div class="modal-body py-lg-5 px-lg-5">
+					<form class="form es-form" id="kt_modal_create_child_form" action="/admin/config/admin-nav/child/save" data-kt-redirect-url="/admin/config/admin-nav/child/save" method="post">
+						<input type="hidden" name="section"/>
+						<input type="hidden" name="item"/>
+						<div class="card card-flush">
+							<div class="card-body pt-0">
+								<div class="col-md-12">
+									<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+										<span> Child Item</span>
+										<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-kt-initialized="1"></i>
+									</label>
+									<div class="form-check form-check-custom form-check-solid my-1">
+										<input class="form-control" type="text" name="label" placeholder="Child Label"/>
+									</div>
+									<div class="form-check form-check-custom form-check-solid my-1">
+										<input class="form-control" type="text" name="path" placeholder="URL"/>
+									</div>
+									<div class="card-toolbar mt-8 d-flex justify-content-end">
+										<button class="btn btn-sm btn-success form-submit-btn" type="submit">
+											<span class="label">Save</span>
+											<span class="preloader d-none">Saving...</span></button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

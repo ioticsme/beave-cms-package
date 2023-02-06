@@ -1,0 +1,26 @@
+{% if partialType == 'mainList' %}
+    <tr>
+        <td>
+            <a class="text-gray-800 text-hover-primary mb-1">{{ config_key }}</a>
+        </td>
+        <td>
+            {% if fieldType == 'String' or fieldType == 'Number' %}
+                <input type="text" class="form-control form-control-lg form-control-solid" name="{{ key }}[{{ config_key }}]" placeholder="" value="{{ configs[key][config_key] }}">
+            {% else if fieldType == 'Boolean' %}
+                <div class="form-check form-switch form-check-custom form-check-success form-check-solid">
+                    <input id="kt_flexSwitchCustomDefault_1_1" type="checkbox" class="form-check-input" name="{{ key }}[{{ config_key }}]" value="true" {% if configs[key][config_key] %}checked{% endif %}>
+                </div>
+                <div class="fv-plugins-message-container invalid-feedback" id="field-error-{{ key }}_{{ config_key }}"></div>
+                {% if configs
+                    .schema
+                    .path(key + '.' + config_key)and configs
+                    .schema
+                    .path(key + '.' + config_key)
+                    .options %}
+                    <br>
+                    <span class="badge badge-light-danger">{{ configs.schema.path(key + '.' + config_key).options.Comment }}</span>
+                {% endif %}
+            {% endif %}
+        </td>
+    </tr>
+{% endif %}
