@@ -48,6 +48,10 @@ block content
 											each brandLanguage, i in authUser.brand.languages
 												li.nav-item
 													a.nav-link(class= (i== 0 ? 'active' : '') data-bs-toggle='tab' href=`#kt_tab_pane_${brandLanguage.prefix}`) #{brandLanguage.name}
+											if has_common_field_groups
+												<li class="nav-item">
+													<a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_common">General</a>
+												</li>
 											if reqContentType.has_meta
 												li.nav-item
 													a.nav-link(data-bs-toggle='tab' href=`#kt_tab_pane_meta`) Meta
@@ -81,7 +85,13 @@ block content
 																					img(src=`${contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name]}` style="max-width: 200px;")
 																				else
 																					| !{contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name]}
-																else
+
+											if has_common_field_groups
+												.tab-pane.fade(role='tabpanel' id=`kt_tab_pane_common`)
+													.row
+														.col-12
+															each cfg, cfg_i in reqContentType.field_groups
+																if cfg.localisation == false
 																	h1.mt-5.mb-2 #{cfg.row_label.toUpperCase()}
 																	if cfg.repeater_group
 																		.row
@@ -109,7 +119,6 @@ block content
 																						img(src=`${contentDetail.content['common'][cfg.row_name][cf.field_name]}` style="max-width: 200px;")
 																					else
 																						| !{contentDetail.content['common'][cfg.row_name][cf.field_name]}
-
 											.tab-pane.fade(role='tabpanel' id=`kt_tab_pane_meta`)
 												.row
 													.col-12

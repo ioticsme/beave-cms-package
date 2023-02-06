@@ -103,6 +103,10 @@ const detail = async (req, res) => {
             return res.render(`admin/error-404`)
         }
 
+        const has_common_field_groups = collect(req.contentType.field_groups)
+            .where('localisation', false)
+            .count()
+
         const default_lang = _.find(
             req.authUser.brand.languages,
             function (item) {
@@ -114,6 +118,7 @@ const detail = async (req, res) => {
 
         res.render(`admin/cms/content/detail`, {
             default_lang,
+            has_common_field_groups: has_common_field_groups ? true : false,
             reqContentType: req.contentType,
             contentDetail,
             metaFields,
