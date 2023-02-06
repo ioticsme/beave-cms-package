@@ -14,7 +14,7 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
             })
             mediaList = `${mediaList}</div>`
             e.target.querySelector('#field_id').value =
-                e.relatedTarget.getAttribute('data-field')
+                e.relatedTarget.getAttribute('id')
             document.getElementById('media-holder').innerHTML = mediaList
         })
         .catch(function (error) {
@@ -27,15 +27,19 @@ document
     .querySelector('#media-holder')
     .addEventListener('click', function (event) {
         var mediaUrl = event.target.getAttribute('data-mediaUrl')
-        var fieldId = mediaModal.querySelector('#field_id').value
-        console.log(fieldId)
+        var attachButtonId = mediaModal.querySelector('#field_id').value
+        // console.log(fieldId)
         if (mediaUrl) {
             $(mediaModal).modal('hide')
             // Do something when a list item is clicked, such as displaying its text content
-            document.querySelector(`#${fieldId}`).value = mediaUrl
-            const imgHolderParent = document.querySelector(
-                `#${fieldId}_preview`
-            )
+            // console.log(attachButtonId)
+            document
+                .querySelector(`#${attachButtonId}`)
+                .parentElement.querySelector('.media_url_field').value =
+                mediaUrl
+            const imgHolderParent = document
+                .querySelector(`#${attachButtonId}`)
+                .parentElement.querySelector(`.media_preview`)
             // console.log(imgHolderParent)
             imgHolderParent.querySelector(
                 `.preview-holder`
@@ -48,13 +52,16 @@ document
         }
     })
 
-document.querySelectorAll('.image-preview-remove-btn').forEach((removeBtn) => {
-    removeBtn.addEventListener('click', function (e) {
+//
+document.addEventListener('click', function (e) {
+    if (e.target.matches('.image-preview-remove-btn')) {
+        // console.log("Clicked on an element with class 'class-name'")
         e.preventDefault()
+        // console.log(e.target)
         e.target.classList.add('d-none')
         e.target.parentElement.parentElement.querySelector(
             'input[type="hidden"]'
         ).value = ''
         e.target.previousElementSibling.innerHTML = ' '
-    })
+    }
 })

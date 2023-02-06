@@ -74,6 +74,9 @@ block customScript
 				.forEach(function (element) {
 					element.value = null
 				})
+			//- console.log(`#${newElement.getAttribute('id')}`)
+			newMediaButtonId = `beave-media-field-${Math.floor(Math.random() * 1000000000)}`
+			document.querySelector(`#${newElement.getAttribute('id')}`).querySelector('.media-uploader-modal-btn').setAttribute('id', newMediaButtonId)
 		}
 
 		function deleteChild(event){
@@ -150,7 +153,7 @@ block content
 										</li>
 										//- li.nav-item
 										//- 	a.nav-link(class= (i== 0 ? 'active' : '') data-bs-toggle='tab' href=`#kt_tab_pane_${brandLanguage.prefix}`) #{brandLanguage.name}
-									
+
 								</ul>
 								<div class="tab-content tab-content-fields" id="myTabContent">
 									each brandLanguage, i in authUser.brand.languages
@@ -175,12 +178,16 @@ block content
 																	else if cf.field_type === 'textarea'
 																		<textarea class="form-control form-control-solid" rows="6" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}[]]]" placeholder="" spellcheck="false"></textarea>
 																	else if cf.field_type === 'media'
-																		<span id="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}_#{cf_idx}_preview">
-																			<span class="preview-holder"></span>
-																			<a class="btn btn-danger image-preview-remove-btn d-none my-1"><i class="fa fa-trash" tabindex="-1"></i></a>
+																		//- h1 #{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}_preview[]
+																		- var id = Math.floor(Math.random() * 1000000000)
+																		<span class='media-uploader-field'>
+																			<span class="media_preview">
+																				<span class="preview-holder"></span>
+																				<a class="btn btn-danger image-preview-remove-btn d-none my-1"><i class="fa fa-trash" tabindex="-1"></i></a>
+																			</span>
+																			<input type="hidden" class="media_url_field" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}[]]]">
+																			<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-#{id}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																		</span>
-																		<input type="hidden" id="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}_#{cf_idx}" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}[]]]">
-																		<a class="btn btn-success" data-field="#{cfg.row_name}_#{cf.field_name}_#{brandLanguage.prefix}_#{cf_idx}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																	else if cf.field_type === 'date'
 																		<div class="kt_daterangepicker">
 																			<input class="form-control mb-2" id="kt_daterangepicker_#{brandLanguage.prefix}-#{cf_i}" name="#{brandLanguage.prefix}[#{cfg.row_name}[#{cf.field_name}[]]]" placeholder="#{cf.placeholder}" value="">
