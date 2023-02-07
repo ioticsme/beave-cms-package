@@ -12,9 +12,9 @@ const signup = async (req, res) => {
         if(admin) {
             res.redirect('/admin/auth/login')
         }
-        res.render(`admin/authentication/sign-up`)
+        res.render(`admin-njk/authentication/sign-up`)
     } catch (error) {
-        res.render(`admin/error-404`)
+        res.render(`admin-njk/error-404`)
     }
 }
 
@@ -72,10 +72,10 @@ const login = async (req, res) => {
             res.redirect('/admin/auth/signup')
             return 
         }
-        return res.render(`admin/authentication/sign-in`)
+        return res.render(`admin-njk/authentication/sign-in`)
     } catch (error) {
         console.log(error)
-        return res.render(`admin/error-500`)
+        return res.render(`admin-njk/error-500`)
     }
 }
 

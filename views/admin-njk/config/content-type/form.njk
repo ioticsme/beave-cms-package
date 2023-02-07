@@ -70,7 +70,7 @@
 			<div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-						{{ contentType ? 'Edit' : 'Add' }} Content Type
+						{{ 'Edit' if contentType else 'Add' }} Content Type
 				</h1>
 					<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
 						<li class="breadcrumb-item text-muted">
@@ -82,7 +82,7 @@
 						<li class="breadcrumb-item text-muted">Content Type 
 						<span class="bullet bg-gray-400 w-5px h-2px ms-1"></span>
 						</li>
-						<li class="breadcrumb-item text-muted">{{ contentType ? 'Edit' : 'New' }}</li>
+						<li class="breadcrumb-item text-muted">{{ 'Edit' if contentType else 'New' }}</li>
 					</ul>
 				</div>
 			</div>
@@ -98,14 +98,14 @@
 							</div>
 						</div>
 						<div id="kt_account_settings_profile_details">
-							<input type="hidden" name="id" value="{{ contentType ? contentType._id : '' }}">
+							<input type="hidden" name="id" value="{{ contentType._id }}">
 							<div class="card-body border-top p-9">
 								<div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Title</label>
 									<div class="col-lg-8">
 										<div class="row">
 											<div class="col-lg-12 fv-row">
-												<input class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" type="text" name="title" placeholder="Title" value="{{ contentType ? contentType.title : '' }}">
+												<input class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" type="text" name="title" placeholder="Title" value="{{ contentType.title }}">
 												<div class="fv-plugins-message-container invalid-feedback" id="field-error-title"></div>
 											</div>
 										</div>
@@ -114,7 +114,7 @@
 								<div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">URL</label>
 									<div class="col-lg-8 fv-row">
-										<input class="form-control form-control-lg form-control-solid" type="text" name="slug" placeholder="URL" value="{{ contentType ? contentType.slug : '' }}">
+										<input class="form-control form-control-lg form-control-solid" type="text" name="slug" placeholder="URL" value="{{ contentType.slug }}">
 										<div class="fv-plugins-message-container invalid-feedback" id="field-error-slug"></div>
 									</div>
 								</div>
@@ -122,7 +122,7 @@
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Single Type</label>
 									<div class="col-lg-8 fv-row">
 										<div class="form-check form-switch form-check-custom form-check-success form-check-solid">
-											<input id="kt_flexSwitchCustomDefault_1_1" class="form-check-input" type="checkbox" name="single_type" value="true" {{ contentType && contentType.single_type ? 'checked' : '' }}>
+											<input id="kt_flexSwitchCustomDefault_1_1" class="form-check-input" type="checkbox" name="single_type" value="true" {{ 'checked' if contentType.single_type }}>
 											<label class="form-check-label" for="kt_flexSwitchCustomDefault_1_1"></label>
 										</div>
 										<div class="fv-plugins-message-container invalid-feedback" id="field-error-single_type"></div>
@@ -132,19 +132,21 @@
 								<div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Position</label>
 									<div class="col-lg-8 fv-row">
-										<input class="form-control form-control-lg form-control-solid" type="number" name="position" placeholder="Position" value="{{ contentType ? contentType.position : 0 }}">
+										<input class="form-control form-control-lg form-control-solid" type="number" name="position" placeholder="Position" value="{{ contentType.position }}">
 										<div class="fv-plugins-message-container invalid-feedback" id="field-error-position"></div>
 									</div>
 								</div>
 
 								<div class="row mb-6">
-									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Admin Icon (SVG Code)</label>
-									<br>
-									<a href="https://preview.keenthemes.com/html/metronic/docs/icons/duotune" target="_blank">
-										<small>Sample Icons</small>
-									</a>
+									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Admin Icon (SVG Code)
+										<br>
+										<a href="https://preview.keenthemes.com/html/metronic/docs/icons/duotune" target="_blank">
+											<small>Sample Icons</small>
+										</a>
+									</label>
+
 									<div class="col-lg-8 fv-row">
-										<textarea class="form-control form-control-lg form-control-solid" type="text" name="admin_icon" placeholder="Admin Icon">{{ contentType ? contentType.admin_icon : '' }}</textarea>
+										<textarea class="form-control form-control-lg form-control-solid" type="text" name="admin_icon" placeholder="Admin Icon">{{ contentType.admin_icon }}</textarea>
 										<div class="fv-plugins-message-container invalid-feedback" id="field-error-admin_icon"></div>
 									</div>
 								</div>
@@ -154,7 +156,8 @@
 									<div class="col-lg-8 fv-row">
 										<select class="form-select form-select-lg form-select-solid" data-control="select2" data-close-on-select="false" name="attachable_type" data-placeholder="Select a type" data-allow-clear="true" multiple="multiple">
 											{% for ct in contentTypes %}
-												<option value="{{ ct.slug }}" {% if contentType and contentType.allowed_type and contentType.allowed_type.length and contentType.allowed_type.find((at)=>at==ct.slug) %}selected{% endif %}>{{ ct.title }}</option>
+												{# <option value="{{ ct.slug }}" {{ 'selected' if contentType.allowed_type.find((at)=>at==ct.slug) }}>{{ ct.title }}</option> #}
+												<option value="{{ ct.slug }}">{{ ct.title }}</option>
 											{% endfor %}
 										</select>
 										<div class="fv-plugins-message-container invalid-feedback" id="field-error-attachable_type"></div>
@@ -177,33 +180,32 @@
 									<span class="col-lg-4 col-form-label required fw-semibold fs-6">Features Checklist</span>
 									<small>Please include the following in your content type.</small>
 									<div class="row mt-3">
-
 										<div class="form-check form-check-custom form-check-solid form-check-sm col-md-4 mt-4">
-											<input type="checkbox" value="true" name="has_slug" id="has_slug" {% if contentType %}checked="{{ contentType.has_slug }}"{% endif %}>
+											<input type="checkbox" value="true" name="has_slug" {{ 'checked' if contentType.has_slug }}>
 											<label for="has_slug">Has Slug (URL)</label>
 										</div>
 										<div class="form-check form-check-custom form-check-solid form-check-sm col-md-4 mt-4">
-											<input type="checkbox" value="true" name="active" id="active" {% if contentType %}checked="{{ contentType.active }}"{% endif %}>
+											<input type="checkbox" value="true" name="active" id="active" {{ 'checked' if contentType.active }}>
 											<label for="active">Active</label>
 										</div>
 										<div class="form-check form-check-custom form-check-solid form-check-sm col-md-4 mt-4">
-											<input type="checkbox" value="true" name="nav_on_collection_api" id="nav_on_collection_api" {% if contentType %}checked="{{ contentType.nav_on_collection_api }}"{% endif %}>
+											<input type="checkbox" value="true" name="nav_on_collection_api" id="nav_on_collection_api" {{ 'checked' if contentType.nav_on_collection_api }}>
 											<label for="nav_on_collection_api">Navigation On Collection API</label>
 										</div>
 										<div class="form-check form-check-custom form-check-solid form-check-sm col-md-4 mt-4">
-											<input type="checkbox" value="true" name="nav_on_single_api" id="nav_on_single_api" {% if contentType %}checked="{{ contentType.nav_on_single_api }}"{% endif %}>
+											<input type="checkbox" value="true" name="nav_on_single_api" id="nav_on_single_api" {{ 'checked' if contentType.nav_on_single_api }}>
 											<label for="nav_on_single_api">Navigation on Detail API</label>
 										</div>
 										<div class="form-check form-check-custom form-check-solid form-check-sm col-md-4 mt-4">
-											<input type="checkbox" value="true" name="has_form" id="has_form" {% if contentType %}checked="{{ contentType.has_form }}"{% endif %}>
+											<input type="checkbox" value="true" name="has_form" id="has_form" {{ 'checked' if contentType.has_form }}>
 											<label for="has_form">Has Form</label>
 										</div>
 										<div class="form-check form-check-custom form-check-solid form-check-sm col-md-4 mt-4">
-											<input type="checkbox" value="true" name="has_api_endpoint" id="has_api_endpoint" {% if contentType %}checked="{{ contentType.has_api_endpoint }}"{% endif %}>
+											<input type="checkbox" value="true" name="has_api_endpoint" id="has_api_endpoint" {{ 'checked' if contentType.has_api_endpoint }}>
 											<label for="has_api_endpoint">Has API Endpoint</label>
 										</div>
 										<div class="form-check form-check-custom form-check-solid form-check-sm col-md-4 mt-4">
-											<input type="checkbox" value="true" name="has_meta" id="has_meta" {% if contentType %}checked="{{ contentType.has_meta }}"{% endif %}>
+											<input type="checkbox" value="true" name="has_meta" id="has_meta" {{ 'checked' if contentType.has_meta }}>
 											<label for="has_meta">Has Meta</label>
 										</div>
 

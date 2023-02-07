@@ -51,7 +51,7 @@
 
 					<div class="card-body pt-0">
 						<ul>
-							{% for admin_nav, i in admin_navs %}
+							{% for admin_nav in admin_navs %}
 								<li class="my-10">
 									<h1>{{ admin_nav.section }} | 
 										<a href="#" class="btn btn-success btn-sm" data-bs-toggle='modal' data-bs-target='#kt_modal_nav_item_form' data-section={{admin_nav.section}}>
@@ -62,7 +62,7 @@
 										</a>
 									</h1>
 									<ul>
-										{% for item, item_index in admin_nav.items %}
+										{% for item in admin_nav.items %}
 											<li class="border-gray-300 border-dotted my-5">
 												<div class="px-10">
 													<h2>Label : {{ item.label }} | 
@@ -77,7 +77,7 @@
 													<p>icon : {{ item.icon }}</p>
 													<p>path : {{ item.path }}</p>
 													<ul>
-														{% for child, child_index in item.child %}
+														{% for child in item.child %}
 															<li class="border-gray-300 border-dotted my-5">
 																<div class="px-10">
 																	<h2>Label : {{ child.label }} | 

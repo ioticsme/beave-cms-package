@@ -8,7 +8,7 @@ const Country = require('../../model/Country')
 const list = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
     const countries = await Country.find()
-    return res.render('admin/config/country/listing', {
+    return res.render('admin-njk/config/country/listing', {
         countries,
     })
 }
@@ -16,7 +16,7 @@ const list = async (req, res) => {
 const add = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
     // const contentTypes = await ContentType.find()
-    return res.render('admin/config/country/form', {
+    return res.render('admin-njk/config/country/form', {
         isEdit: false,
     })
 }

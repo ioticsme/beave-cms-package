@@ -70,7 +70,7 @@
 							</thead>
 							<tbody class="text-gray-600 fw-semibold">
 
-								{% for ct, i in contentTypes %}
+								{% for ct in contentTypes %}
 
 									<tr>
 										<td>
@@ -82,7 +82,7 @@
 											<a href="/admin/config/content-type/view/{{ ct._id }}" class="text-gray-800 text-hover-primary mb-1">{{ ct.title }}</a>
 										</td>
 										<td>{{ ct.slug }}</td>
-										<td>{{ ct.single_type == true ? "Single" : "Collection" }}</td>
+										<td>{{ "Single" if ct.single_type == true else "Collection" }}</td>
 										<td>
 											{% if ct.active == true %}
 												<span class="badge badge-light-success">Active</span>

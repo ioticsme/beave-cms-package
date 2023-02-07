@@ -19,7 +19,7 @@ const list = async (req, res) => {
     // for(const p in sd) {
     //     console.log(configs.schema.path(p)?.instance || 'Mixed')
     // }
-    return res.render('admin/config/app-settings/listing', {
+    return res.render('admin-njk/config/app-settings/listing', {
         schema_fields: Config.schema,
         configs,
     })

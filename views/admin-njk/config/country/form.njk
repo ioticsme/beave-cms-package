@@ -55,14 +55,14 @@
 					</div>
 					<div id="kt_account_settings_profile_details">
 						<form class="form es-form" id="kt_account_profile_details_form" action="/admin/config/country/save" data-redirect-url="/admin/config/country" method="post" autocomplete="off">
-							<input type="hidden" name="id" value="{{ country ? country._id : '' }}">
+							<input type="hidden" name="id" value="{{ country._id }}">
 							<div class="card-body border-top p-9">
 								<div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Name</label>
 									<div class="col-lg-8">
 										<div class="row">
 											<div class="col-lg-12 fv-row">
-												<input type="text" name="name" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" placeholder="Name" value="{{ country ? country.name.en : '' }}">
+												<input type="text" name="name" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" placeholder="Name" value="{{ country.name.en }}">
 												<div class="fv-plugins-message-container invalid-feedback" id="field-error-name"></div>
 											</div>
 										</div>
@@ -71,21 +71,21 @@
 								<div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Country Code</label>
 									<div class="col-lg-8 fv-row">
-										<input type="text" name="code" class="form-control form-control-lg form-control-solid" placeholder="Country Code" value="{{ country ? country.code : '' }}">
+										<input type="text" name="code" class="form-control form-control-lg form-control-solid" placeholder="Country Code" value="{{ country.code if country}}">
 										<div class="fv-plugins-message-container invalid-feedback" id="field-error-code"></div>
 									</div>
 								</div>
 								<div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Currency</label>
 									<div class="col-lg-8 fv-row">
-										<input type="text" name="currency" class="form-control form-control-lg form-control-solid" placeholder="Currency Name" value="{{ country ? country.currency : '' }}">
+										<input type="text" name="currency" class="form-control form-control-lg form-control-solid" placeholder="Currency Name" value="{{ country.currency }}">
 										<div class="fv-plugins-message-container invalid-feedback" id="field-error-currency"></div>
 									</div>
 								</div>
 								<div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Currency Symbol</label>
 									<div class="col-lg-8 fv-row">
-										<input type="text" name="currency_symbol" placeholder="Currency Symbol" class="form-control form-control-lg form-control-solid" value="{{ country ? country.currency_symbol : '' }}">
+										<input type="text" name="currency_symbol" placeholder="Currency Symbol" class="form-control form-control-lg form-control-solid" value="{{ country.currency_symbol }}">
 										<div id="field-error-currency_symbol" class="fv-plugins-message-container invalid-feedback"></div>
 									</div>
 								</div>
@@ -93,7 +93,7 @@
 								<div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Currency Decimal Points</label>
 									<div class="col-lg-8 fv-row">
-										<input type="text" name="currency_decimal_points" placeholder="Currency Percision" class="form-control form-control-lg form-control-solid" value="{{ country ? country.currency_decimal_points : '' }}">
+										<input type="text" name="currency_decimal_points" placeholder="Currency Percision" class="form-control form-control-lg form-control-solid" value="{{ country.currency_decimal_points }}">
 										<div id="field-error-currency_decimal_points" class="fv-plugins-message-container invalid-feedback"></div>
 									</div>
 								</div>
@@ -101,7 +101,7 @@
 								<div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Timezone</label>
 									<div class="col-lg-8 fv-row">
-										<input type="text" name="timezone" placeholder="Timezone" class="form-control form-control-lg form-control-solid" value="{{ country ? country.timezone : '' }}">
+										<input type="text" name="timezone" placeholder="Timezone" class="form-control form-control-lg form-control-solid" value="{{ country.timezone }}">
 										<div id="field-error-timezone" class="fv-plugins-message-container invalid-feedback"></div>
 									</div>
 								</div>

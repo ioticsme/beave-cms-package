@@ -11,7 +11,7 @@ const Country = require('../../model/Country')
 const list = async (req, res)  => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
     const brands = await Brand.find()
-    return res.render('admin/config/brand/listing', {
+    return res.render('admin-njk/config/brand/listing', {
         brands,
     })
 }
@@ -20,7 +20,7 @@ const add = async (req, res)  => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
     const languages = await Language.find()
     const countries = await Country.find()
-    return res.render('admin/config/brand/form', {
+    return res.render('admin-njk/config/brand/form', {
         languages,
         countries,
         isEdit: false,
@@ -35,7 +35,7 @@ const edit = async (req, res)  => {
         _id: req.params.id,
     })
     // res.send(contentType)
-    return res.render('admin/config/brand/form', {
+    return res.render('admin-njk/config/brand/form', {
         languages,
         countries,
         brand,

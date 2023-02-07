@@ -12,7 +12,7 @@ const { object } = require('joi')
 const list = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
     const admins = await Admin.find()
-    return res.render('admin/config/admin/listing', {
+    return res.render('admin-njk/config/admin/listing', {
         admins,
     })
 }
@@ -20,7 +20,7 @@ const list = async (req, res) => {
 const add = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
     // const contentTypes = await ContentType.find()
-    return res.render('admin/config/admin/form', {
+    return res.render('admin-njk/config/admin/form', {
         isEdit: false,
     })
 }
@@ -32,7 +32,7 @@ const edit = async (req, res) => {
     })
     // console.log('admin :>> ', admin);
     // res.send(contentType)
-    return res.render('admin/config/admin/form', {
+    return res.render('admin-njk/config/admin/form', {
         admin,
         isEdit: true,
     })

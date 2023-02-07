@@ -7,14 +7,14 @@ const { default: slugify } = require('slugify')
 
 const list = async (req, res) => {
     const contentTypes = await ContentType.find()
-    return res.render('admin/config/content-type/listing', {
+    return res.render('admin-njk/config/content-type/listing', {
         contentTypes,
     })
 }
 
 const add = async (req, res) => {
     const contentTypes = await ContentType.find()
-    return res.render('admin/config/content-type/form', {
+    return res.render('admin-njk/config/content-type/form', {
         isEdit: false,
         contentTypes,
     })
@@ -25,7 +25,7 @@ const edit = async (req, res) => {
         _id: req.params.id,
     })
     const contentTypes = await ContentType.find()
-    return res.render('admin/config/content-type/form', {
+    return res.render('admin-njk/config/content-type/form', {
         contentType,
         isEdit: true,
         contentTypes,

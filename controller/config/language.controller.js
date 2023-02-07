@@ -8,7 +8,7 @@ const Language = require('../../model/Language')
 const list = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
     const languages = await Language.find()
-    return res.render('admin/config/language/listing', {
+    return res.render('admin-njk/config/language/listing', {
         languages,
     })
 }
@@ -16,7 +16,7 @@ const list = async (req, res) => {
 const add = async (req, res) => { 
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
     // const contentTypes = await ContentType.find()
-    return res.render('admin/config/language/form', {
+    return res.render('admin-njk/config/language/form', {
         isEdit: false,
     })
 }
@@ -27,7 +27,7 @@ const edit = async (req, res) => {
         _id: req.params.id,
     })
     // res.send(contentType)
-    return res.render('admin/config/language/form', {
+    return res.render('admin-njk/config/language/form', {
         language,
         isEdit: true,
     })

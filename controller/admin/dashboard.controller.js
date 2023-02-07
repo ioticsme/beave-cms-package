@@ -23,7 +23,7 @@ const { differenceInPercentage } = require('../../helper/Operations.helper')
 const User = require('../../model/User')
 
 const basicDashboard = async (req, res) => {
-    return res.render(`admin/dashboards/basic`, {})
+    return res.render(`admin-njk/dashboards/basic`, {})
 }
 module.exports = {
     basicDashboard,

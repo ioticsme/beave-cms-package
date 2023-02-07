@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+const nunjucks = require('nunjucks')
 const helmet = require('helmet')
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
@@ -101,9 +102,16 @@ app.use(cookieParser())
 // app.use(ServiceProvider.moduleConfig)
 
 // Template Engine
-app.set('views', path.join(__dirname, '/views'))
-// path.join(__dirname, '/views/admin/layouts')]);
-app.set('view engine', 'pug')
+
+nunjucks.configure(path.join(__dirname, '/views'), {
+    express: app,
+    autoescape: true,
+    noCache: true,
+})
+app.set('view engine', 'njk')
+
+// app.set('views', path.join(__dirname, '/views'))
+// app.set('view engine', 'pug')
 
 // DB Connection
 const Config = require('./model/Config')

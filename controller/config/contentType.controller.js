@@ -8,14 +8,14 @@ const slugify = require('slugify')
 
 const list = async (req, res) => {
     const contentTypes = await ContentType.find()
-    return res.render('admin/config/content-type/listing', {
+    return res.render('admin-njk/config/content-type/listing', {
         contentTypes,
     })
 }
 
 const add = async (req, res) => {
     const contentTypes = await ContentType.find()
-    return res.render('admin/config/content-type/form', {
+    return res.render('admin-njk/config/content-type/form', {
         isEdit: false,
         contentTypes,
     })
@@ -27,7 +27,7 @@ const edit = async (req, res) => {
     })
     // console.log('contentType :>> ', contentType)
     const contentTypes = await ContentType.find()
-    return res.render('admin/config/content-type/form', {
+    return res.render('admin-njk/config/content-type/form', {
         contentType,
         isEdit: true,
         contentTypes,
@@ -60,13 +60,13 @@ const view = async (req, res) => {
         return group
     })
 
-    // return res.json(fields_to_map)
+    // return res.json(JSON.stringify(fields_to_map))
 
     // console.log('contentType :>> ', contentType)
     // const contentTypes = await ContentType.find()
-    return res.render('admin/config/content-type/view', {
+    return res.render('admin-njk/config/content-type/view', {
         contentType,
-        fields_to_map,
+        fields_to_map: JSON.stringify(fields_to_map),
         metaFields,
         // contentTypes,
     })
@@ -167,7 +167,7 @@ const addFields = async (req, res) => {
     const contentType = await ContentType.findOne({
         _id: req.params.id,
     })
-    return res.render('admin/config/content-type/field-config-form', {
+    return res.render('admin-njk/config/content-type/field-config-form', {
         contentType,
     })
 }

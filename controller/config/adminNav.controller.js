@@ -8,7 +8,7 @@ const AdminNav = require('../../model/AdminNav')
 const list = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
     const admin_navs = await AdminNav.find()
-    return res.render('admin/config/admin-nav/listing', {
+    return res.render('admin-njk/config/admin-nav/listing', {
         admin_navs,
     })
 }

@@ -50,27 +50,26 @@
 						<div class="card-body pt-0">
 
 							<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
-								{% for config_item, key in schema_fields.obj %}
+								{% for key, config_item in schema_fields.obj %}
 									{% if configs %}
 										{% set fieldType = configs
 											.schema
-											.path(`${key}`)
-												? configs
-													.schema
-													.path(`${key}`)
-													.instance
-												: 'Mixed' %}
+											.path(key)
+											.instance if configs
+											.schema
+											.path(key)else 
+												'Mixed' %}
 										{% if fieldType == 'Mixed' %}
 											<li class="nav-item">
-												<a class="nav-link {% if key=='General' %}active{% endif %}" data-bs-toggle="tab" href="#kt_tab_pane_{{ key }}">{{ key.toUpperCase() }}</a>
+												<a class="nav-link {{ active if key=='General' }}" data-bs-toggle="tab" href="#kt_tab_pane_{{ key }}">{{ key.toUpperCase() }}</a>
 											</li>
 										{% endif %}
 									{% endif %}
 								{% endfor %}
 							</ul>
 							<div id="myTabContent" class="tab-content">
-								{% for config_item, key in schema_fields.obj %}
-									<div class="tab-pane fade {% if key=='General' %}show active{% endif %}" id="kt_tab_pane_{{ key }}" role="tabpanel">
+								{% for key, config_item in schema_fields.obj %}
+									<div class="tab-pane fade  {{ 'show active' if key=='General' }}" id="kt_tab_pane_{{ key }}" role="tabpanel">
 										<table id="kt_subscriptions_table" class="table align-middle table-row-dashed fs-6 gy-5">
 											<thead>
 												<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
@@ -79,16 +78,16 @@
 												</tr>
 											</thead>
 											<tbody class="text-gray-600 fw-semibold">
-												{% for config_val, config_key in config_item %}
-													{% set fieldType = configs
+												{% for config_key, config_val in config_item %}
+													{% set partialType = 'mainList' %}
+													{% set fieldType = (configs
 														.schema
-														.path(`${key}.${config_key}`)
-															? configs
-																.schema
-																.path(`${key}.${config_key}`)
-																.instance
-															: 'Object' %}
-													{% include '_app-config-row' %}
+														.path(key + "." + config_key)
+														.instance) if (configs
+														.schema
+														.path(key + "." + config_key)) else 
+															'Object' %}
+													{% include "./_app-config-row.njk" %}
 												{% endfor %}
 											</tbody>
 										</table>
