@@ -1,0 +1,40 @@
+<div class="modal fade" tabindex="-1" aria-hidden="true" id="kt_modal_create_app">
+  <div class="modal-dialog modal-dialog-center mw-900px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Attach Type</h2>
+        <button class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+          <h3>X</h3>
+        </button>
+      </div>
+      <div class="modal-body py-lg-10 px-lg-10">
+        <div class="card card-flush">
+          <div class="card-body pt-0">
+            <div class="accordion" id="kt_accordion_1">
+              {% for i, item in allowed_content | dictsort %}
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="kt_accordion_1_header_{{ i }}">
+                    <button class="accordion-button fs-4 fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kt_accordion_1_body_{{ i }}" aria-expanded="{{ i == 0 }}" aria-controls="kt_accordion_1_body_{{ i }}">
+                      {{ item.toUpperCase() }}
+                    </button>
+                  </h2>
+                  <div class="accordion-collapse collapse" id="kt_accordion_1_body_{{ i }}" aria-labelledby="kt_accordion_1_header_{{ i }}" data-bs-parent="#kt_accordion_1">
+                    <div class="accordion-body">
+                      <select class="form-select mb-2" id="kt_ecommerce_add_product_status_select2-{{ i }}" data-control="select2" name="attached_type[{{ item }}]" data-hide-search="true" data-placeholder="Select a content" multiple="multiple">
+                        <option></option>
+                        {% for content in allowed_content[item] %}
+                          <option value="{{ content._id }}">{{ content.content.en ? content.content.en.title : item~' title' }}</option>
+                        {% endfor %}
+                      </select>
+                      <p class="text-muted fs-7">Set the content Types</p>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

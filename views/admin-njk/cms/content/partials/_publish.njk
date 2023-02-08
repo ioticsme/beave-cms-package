@@ -1,0 +1,24 @@
+<div class="card card-flush py-4">
+    <div class="card-header">
+        <div class="card-title">
+            <h3>Status</h3>
+        </div>
+    </div>
+    <div class="card-body pt-0">
+        <select id="kt_ecommerce_add_product_status_select" class="form-select mb-2" data-control="select2" name="published" data-hide-search="true" data-placeholder="Select an option">
+            <option></option>
+            {% if contentDetail and not contentDetail.published %}
+                <option value="false" selected>Un-Published</option>
+            {% else %}
+                <option value="false">Un-Published</option>
+            {% endif %}
+            {% if contentDetail and contentDetail.published %}
+                <option value="true" selected>Published</option>
+            {% else %}
+                <option value="true">Published</option>
+            {% endif %}
+        </select>
+        <p class="text-muted fs-7">Set the status</p>
+        <div class="fv-plugins-message-container invalid-feedback" id="field-error-published"></div>
+    </div>
+</div>
