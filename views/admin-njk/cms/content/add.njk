@@ -339,9 +339,9 @@
 																		</label>
 																		{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
 																			<input type="{{ cf.field_type }}" class="form-control form-control-solid" placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]">
-																		{% elseif cf.field_type === 'richtext' %}
+																		{% elif cf.field_type === 'richtext' %}
 																			<textarea class="content_wysiwyg" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" id="wysiwyg-cf-{{ cf_i }}"></textarea>
-																		{% elseif cf.field_type === 'textarea' %}
+																		{% elif cf.field_type === 'textarea' %}
 																			<textarea class="form-control form-control-solid" rows="6" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
 																		{% elif cf.field_type == "media" %}
 																			<span id="{{ cfg.row_name }}_{{ cf.field_name }}_{{ cf_i }}_preview">

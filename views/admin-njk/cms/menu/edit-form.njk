@@ -81,7 +81,7 @@
 							<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 								{% for brandLanguage, i in authUser.brand.languages %}
 									<li class="nav-item">
-										<a class="nav-link {{ i== 0 ? 'active' : '' }}" data-bs-toggle="tab" href="#kt_tab_pane_{{brandLanguage.prefix}}">{{brandLanguage.name}}</a>
+										<a class="nav-link {{ 'active' if i== 0 }}" data-bs-toggle="tab" href="#kt_tab_pane_{{brandLanguage.prefix}}">{{brandLanguage.name}}</a>
 									</li>
 								{% endfor %}
 							</ul>
@@ -113,7 +113,7 @@
 									<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-kt-initialized="1"></i>
 								</label>
 								<div class="form-check form-check-custom form-check-solid">
-									<input id="flexCheckChecked" class="form-check-input" type="checkbox" name="external" value="true" {{ menuItem.url.external==true ? "checked" : "" }}>
+									<input id="flexCheckChecked" class="form-check-input" type="checkbox" name="external" value="true" {{ "checked" if menuItem.url.external==true}}>
 									<label class="form-check-label" for="flexCheckChecked">External</label>
 								</div>
 							</div>

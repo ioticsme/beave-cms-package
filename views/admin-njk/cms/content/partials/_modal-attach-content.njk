@@ -23,7 +23,7 @@
                       <select class="form-select mb-2" id="kt_ecommerce_add_product_status_select2-{{ i }}" data-control="select2" name="attached_type[{{ item }}]" data-hide-search="true" data-placeholder="Select a content" multiple="multiple">
                         <option></option>
                         {% for content in allowed_content[item] %}
-                          <option value="{{ content._id }}">{{ content.content.en ? content.content.en.title : item~' title' }}</option>
+                          <option value="{{ content._id }}">{{ content.content.en.title if content.content.en else item~' title' }}</option>
                         {% endfor %}
                       </select>
                       <p class="text-muted fs-7">Set the content Types</p>

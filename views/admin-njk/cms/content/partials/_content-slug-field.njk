@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="card-body pt-0">
-    <input type="text" class="form-control" placeholder="Enter Slug" name="slug" value="{{ contentDetail ? contentDetail.slug : '' }}">
+    <input type="text" class="form-control" placeholder="Enter Slug" name="slug" value="{{ contentDetail.slug if contentDetail }}">
     <div class="fv-plugins-message-container invalid-feedback" id="field-error-slug"></div>
     <div class="text-muted fs-7">Set the content url</div>
   </div>
