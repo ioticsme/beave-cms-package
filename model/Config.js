@@ -24,6 +24,10 @@ const ConfigSchema = new mongoose.Schema(
                 type: Boolean,
                 default: false,
             },
+            user_email_verification: {
+                type: Boolean,
+                default: false,
+            },
         },
         imagekit: {
             public_key: {

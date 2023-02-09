@@ -33,6 +33,7 @@ const save = async (req, res) => {
             frontend_url: Joi.string().optional(),
             push_notification: Joi.boolean(),
             slack: Joi.boolean(),
+            user_email_verification: Joi.boolean(),
         }),
         imagekit: Joi.object().optional(),
         firebase: Joi.object().optional(),

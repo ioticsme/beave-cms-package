@@ -16,6 +16,7 @@ const { sendEmail } = require('../../helper/Mail.helper')
 const { verifyCaptcha } = require('../../helper/Captcha.helper')
 const { getCache, setCache, removeCache } = require('../../helper/Redis.helper')
 const { getRequestIp } = require('../../helper/Operations.helper')
+const Config = require('../../model/Config')
 const {
     parseISO,
     addMinutes,
@@ -85,15 +86,21 @@ const loginSubmit = async (req, res) => {
 
         if (bcrypt.compareSync(req.body.password, user.password)) {
             let token
-            if (!user.mobile_verified) {
-                authenticator.options = {
-                    digits: 8,
-                    epoch: Date.now(),
-                    step: 20000,
-                }
-                const otp = authenticator.generate(user.mobile)
-                let smsSettings = req.brand.settings?.notification_settings?.sms
-                SMS.sendOTP(otp, user.mobile, req.brand.name.en, smsSettings)
+            const config = await Config.findOne()
+            if (config.general?.user_email_verification && !user.email_verified) {
+                // authenticator.options = {
+                //     digits: 8,
+                //     epoch: Date.now(),
+                //     step: 20000,
+                // }
+                // const otp = authenticator.generate(user.mobile)
+                // let smsSettings = req.brand.settings?.notification_settings?.sms
+                // SMS.sendOTP(otp, user.mobile, req.brand.name.en, smsSettings)
+                
+                // TODO:: Send verification email to client
+                return res.status(403).json({
+                    error: 'User email is not verified',
+                })
             } else {
                 // Generate token
                 token = jwt.sign(
@@ -656,52 +663,20 @@ const signupSubmit = async (req, res) => {
                 .json({ error: 'Not able to update user details' })
         }
 
-        const featured_packages = ProductResource.collection(
-            await Product.find({
-                brand: req.brand._id,
-                country: req.country._id,
-                product_type: 'regular',
-                featured: true,
-                published: true,
-            })
-                .limit(4)
-                .sort('position')
-                .populate('country')
-                .select('name price image actual_price sales_price')
-        )
-
-        const prmotions = await Content.find({
-            type_slug: 'promotion',
-        })
-            .limit(4)
-            .select('content')
-        let mg_settings = req.brand.settings?.notification_settings?.mailgun
-        sendEmail(
-            mg_settings.from,
-            req.body.email,
-            `Thank you for Registering`,
-            mg_settings.welcome_template,
-            {
-                user: user,
-                packages: featured_packages,
-                promotions: prmotions,
-            },
-            mg_settings
-        )
-
         authenticator.options = {
             digits: 8,
             epoch: Date.now(),
             step: 20000,
         }
-        const otp = authenticator.generate(mobile)
-        let smsSettings = req.brand.settings?.notification_settings?.sms
-        SMS.sendOTP(otp, mobile, req.brand.name.en, smsSettings)
+        // const otp = authenticator.generate(mobile)
+        // let smsSettings = req.brand.settings?.notification_settings?.sms
+        // SMS.sendOTP(otp, mobile, req.brand.name.en, smsSettings)
 
         return res.status(200).json({
             message: 'OTP sent to mobile ',
         })
     } catch (error) {
+        console.log(error)
         return res.status(500).json({ error: 'Something went wrong' })
     }
 }
