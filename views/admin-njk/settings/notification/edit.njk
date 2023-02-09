@@ -1,0 +1,189 @@
+{% extends "../../layouts/master.njk" %}
+
+{% block csslib %}
+
+    <link href='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css' rel='stylesheet' type='text/css'>
+    <link href='/cms-static/admin/assets/plugins/custom/jstree/jstree.bundle.css' rel='stylesheet' type='text/css'>
+{% endblock %}
+{% block jslib %}
+
+    <!-- begin::Vendors Javascript(used by this page) -->
+    <script src='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.js'></script>
+    <!-- end::Vendors Javascript -->
+    <!-- begin::Custom Javascript(used by this page) -->
+    <script src='https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
+    <script src='/cms-static/admin/assets/js/custom/apps/notification/catalog/products.js'></script>
+    <script src='/cms-static/admin/assets/js/custom/utilities/modals/create-app.js'></script>
+    <script src='/cms-static/admin/assets/js/custom/utilities/modals/users-search.js'></script>
+    <script src='/cms-static/admin/assets/plugins/custom/jstree/jstree.bundle.js'></script>
+    <!-- CKEditor Build bundles -->
+    <script src='/cms-static/admin/assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js'></script>
+    <!-- Form Submission Script -->
+    <script src='/cms-static/common/js/form-data-json.min.js'></script>
+    <script src='/cms-static/common/js/es-form.js'></script>
+{% endblock %}
+
+{% block customScript %}
+
+    <script>
+        document
+            .querySelectorAll('.content_wysiwyg')
+            .forEach(function (e) {
+                ClassicEditor
+                    .create(document.querySelector(`#${e.getAttribute('id')}`))
+                    .then(editor => {})
+                    .catch(error => {
+                        console.error(error);
+                    });
+            })
+    </script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="d-flex flex-column flex-column-fluid">
+        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+                <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Notification Settings</h1>
+                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                        <li class="breadcrumb-item text-muted">
+                            <a href="/admin/dashboard" class="text-muted text-hover-primary">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-400 w-5px h-2px"></span>
+                        </li>
+                        <li class="breadcrumb-item text-muted">Settings</li>
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-400 w-5px h-2px"></span>
+                        </li>
+                        <li class="breadcrumb-item text-muted">
+                            <a href="/admin/settings/notification" class="text-muted text-hover-primary">Notification</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="kt_app_content" class="app-content flex-column-fluid">
+            <div id="kt_app_content_container" class="app-container container-xxl">
+                <form id="kt_subscriptions_create_new" class="form es-form d-flex flex-column flex-lg-row" action="/admin/settings/notification/save" data-redirect-url="/admin/settings/notification/" method="post">
+                    <input type="text" name="type" value="{{ type }}" hidden="hidden"/>
+                    <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+                        <div class="card card-flush py-4">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h2 class="fw-bold">Edit
+                                        {{ title }}
+                                        Settings</h2>
+                                </div>
+                                <div class="card-toolbar">
+                                    <button class="btn btn-sm btn-success form-submit-btn" type="submit">
+                                        <span class="label">Save</span>
+                                        <span class="preloader d-none">Saving...</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                {% if type == 'sms' %}
+                                    <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                            <span class="required">Sender ID</span>
+                                        </label>
+                                        <input type="text" placeholder="Sender ID" name="sender_id" value="{{ data.sms.sender_id || '' }}" class="form-control">
+                                        <div id="field-error-sender_id" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                    <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                            <span class="required">Username</span>
+                                        </label>
+                                        <input type="text" placeholder="Username" name="username" value="{{ data.sms.username || '' }}" class="form-control">
+                                        <div id="field-error-username" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                    <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                            <span class="required">Password</span>
+                                        </label>
+                                        <input type="text" placeholder="Password" name="password" value="{{ data.sms.password || '' }}" class="form-control">
+                                        <div id="field-error-password" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                {% elseif type == 'communication_channels' %}
+                                    <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                            <span class="required">Email</span>
+                                        </label>
+                                        <input type="text" placeholder="Branch Email" name="email" value="{{ data.communication_channels.email || '' }}" class="form-control">
+                                        <div id="field-error-email" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                {% elseif type == 'mailgun' %}
+
+                                    <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                            <span class="required">From Mail address</span>
+                                        </label>
+                                        <input type="text" placeholder="From Mail" name="from" class="form-control" value="{{ data.mailgun.from || '' }}">
+                                        <div class="fv-plugins-message-container invalid-feedback" id="field-error-from"></div>
+                                    </div>
+
+                                    <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                            <span class="required">Domain</span>
+                                        </label>
+                                        <input type="text" placeholder="Domain" name="domain" class="form-control" value="{{ data.mailgun.domain || '' }}">
+                                        <div class="fv-plugins-message-container invalid-feedback" id="field-error-domain"></div>
+                                    </div>
+
+                                    <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                            <span class="required">API Key</span>
+                                        </label>
+                                        <input type="text" placeholder="API Key" name="api_key" class="form-control" value="{{ data.mailgun.api_key || '' }}">
+                                        <div class="fv-plugins-message-container invalid-feedback" id="field-error-api_key"></div>
+                                    </div>
+
+                                    <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                            <span class="required">OTP Template</span>
+                                        </label>
+                                        <input type="text" placeholder="OTP Template" name="otp_template" class="form-control" value="{{ data.mailgun.otp_template || '' }}">
+                                        <div class="fv-plugins-message-container invalid-feedback" id="field-error-otp_template"></div>
+                                    </div>
+
+                                    <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                            <span class="required">Forgot Password Template</span>
+                                        </label>
+                                        <input type="text" placeholder="Forgot Password Template" name="forgot_password_template" value="{{ data.mailgun.forgot_password_template || '' }}" class="form-control">
+                                        <div id="field-error-forgot_password_template" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                    <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                            <span class="required">Forgot Password Thankyou Template</span>
+                                        </label>
+                                        <input type="text" placeholder="Forgot Password Thankyou Template" name="forgot_password_thankyou_template" value="{{ data.mailgun.forgot_password_thankyou_template || '' }}" class="form-control">
+                                        <div id="field-error-forgot_password_thankyou_template" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                    <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                            <span class="required">Order complete Template</span>
+                                        </label>
+                                        <input type="text" placeholder="Order complete Template" name="order_complete_template" value="{{ data.mailgun.order_complete_template || '' }}" class="form-control">
+                                        <div id="field-error-order_complete_template" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                    <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                            <span class="required">Welcome Template</span>
+                                        </label>
+                                        <input type="text" placeholder="Welcome Template" name="welcome_template" value="{{ data.mailgun.welcome_template || '' }}" class="form-control">
+                                        <div id="field-error-welcome_template" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

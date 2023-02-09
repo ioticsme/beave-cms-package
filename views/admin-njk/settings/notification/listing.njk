@@ -1,0 +1,122 @@
+{% extends "../../layouts/master.njk" %}
+
+{% block csslib %}
+
+    <link href="/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css">
+    <link href="/cms-static/admin/assets/plugins/custom/jstree/jstree.bundle.css" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block jslib %}
+
+    <!-- begin::Vendors Javascript(used by this page) -->
+    <script src="/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <!-- end::Vendors Javascript -->
+    <!-- begin::Custom Javascript(used by this page) -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
+    <script src="/cms-static/admin/assets/js/custom/apps/ecommerce/catalog/products.js"></script>
+    <script src="/cms-static/admin/assets/js/custom/utilities/modals/create-app.js"></script>
+    <script src="/cms-static/admin/assets/js/custom/utilities/modals/users-search.js"></script>
+    <script src="/cms-static/admin/assets/plugins/custom/jstree/jstree.bundle.js"></script>
+    <!-- Form Submission Script -->
+    <script src="/cms-static/common/js/form-data-json.min.js"></script>
+    <script src="/cms-static/common/js/es-form.js"></script>
+{% endblock %}
+
+{% block customScript %}
+
+    <script></script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="d-flex flex-column flex-column-fluid">
+        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+                <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Notification Settings</h1>
+                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                        <li class="breadcrumb-item text-muted">
+                            <a href="/admin/dashboard" class="text-muted text-hover-primary">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-400 w-5px h-2px"></span>
+                        </li>
+                        <li class="breadcrumb-item text-muted">Settings</li>
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-400 w-5px h-2px"></span>
+                        </li>
+                        <li class="breadcrumb-item text-muted">Notification</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {#  #}
+
+        <div id="kt_app_content" class="app-content flex-column-fluid">
+            <div id="kt_app_content_container" class="app-container container">
+                <div class="row g-5 g-xl-10 mb-xl-10">
+                    <div class="col-lg-12">
+                        <div class="card mb-5 pb-4">
+                            <div class="card-header">
+                                <h3 class="card-title">Mailgun Settings</h3>
+                                <div class="card-toolbar">
+                                    <a href="/admin/settings/notification/edit/mailgun" class="btn btn-sm btn-primary">Edit</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5>From Mail address</h5>
+                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.mailgun.from | default("Nil") }}</p>
+                                <h5>Domain</h5>
+                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.mailgun.domain | default("Nil") }}</p>
+                                <h5>API Key</h5>
+                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.mailgun.api_key | default("Nil") }}</p>
+                                <h5>OTP Template</h5>
+                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.mailgun.otp_template | default("Nil") }}</p>
+                                <h5>Forgot Password Template</h5>
+                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.mailgun.forgot_password_template | default("Nil") }}</p>
+                                <h5>Forgot Password Thankyou Template</h5>
+                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.mailgun.forgot_password_thankyou_template | default("Nil") }}</p>
+                                <h5>Order Complete Template</h5>
+                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.mailgun.order_complete_template | default("Nil") }}</p>
+                                <h5>Welcome Template</h5>
+                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.mailgun.welcome_template | default("Nil") }}</p>
+                            </div>
+                        </div>
+                        <div class="card mb-5 pb-4">
+                            <div class="card-header">
+                                <h3 class="card-title">Communication Channels</h3>
+                                <div class="card-toolbar">
+                                    <a href="/admin/settings/notification/edit/communication_channels" class="btn btn-sm btn-primary">Edit</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5>To Mail address</h5>
+                                <span class="badge badge-light-warning">Birthday & Contact from submission data will receive here.</span>
+                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.communication_channels.email || "Nil" }}</p>
+                            </div>
+                        </div>
+
+                        <div class="card mb-5 pb-4">
+                            <div class="card-header">
+                                <h3 class="card-title">SMS Settings</h3>
+                                <div class="card-toolbar">
+                                    <a href="/admin/settings/notification/edit/sms" class="btn btn-sm btn-primary">Edit</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5>Sender ID</h5>
+                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.sms.sender_id || "Nil" }}</p>
+                                <h5>Username</h5>
+                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.sms.username || "Nil" }}</p>
+                                <h5>Password</h5>
+                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.sms.password || "Nil" }}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
