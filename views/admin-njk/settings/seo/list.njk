@@ -52,18 +52,18 @@
                                 <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
                                     {% for brandLanguage in authUser.brand.languages %}
                                         <li class="nav-item">
-                                            <a class="nav-link {{ 'active' if i == 0 %}}" data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
+                                            <a class="nav-link {{ 'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
                                         </li>
                                     {% endfor %}
                                 </ul>
                                 <div class="tab-content tab-content-fields" id="myTabContent">
                                     {% for brandLanguage in authUser.brand.languages %}
-                                        <div class="tab-pane fade {{ i == 0 ? 'active show' : '' }}" role="tabpanel" id="kt_tab_pane_{{ brandLanguage.prefix }}">
+                                        <div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" id="kt_tab_pane_{{ brandLanguage.prefix }}">
                                             <form id="kt_subscriptions_create_new" action="#" class="form">
                                                 <h5 class="mb-5">Meta Title</h5>
-                                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.meta.title[brandLanguage.prefix] || "Nil" }}</p>
+                                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.meta.title[brandLanguage.prefix] or "Nil" }}</p>
                                                 <h5 class="mb-5">Meta Description</h5>
-                                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.meta.description[brandLanguage.prefix] || "Nil" }}</p>
+                                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.meta.description[brandLanguage.prefix] or "Nil" }}</p>
                                                 <h5 class="mb-5">Meta Keywords</h5>
                                                 <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.meta.keywords[brandLanguage.prefix] }}</p>
                                                 <h5 class="mb-5">Og Image</h5>

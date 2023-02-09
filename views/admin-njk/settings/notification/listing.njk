@@ -87,7 +87,7 @@
                             <div class="card-body">
                                 <h5>To Mail address</h5>
                                 <span class="badge badge-light-warning">Birthday & Contact from submission data will receive here.</span>
-                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.communication_channels.email || "Nil" }}</p>
+                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.communication_channels.email or "Nil" }}</p>
                             </div>
                         </div>
 
@@ -100,11 +100,11 @@
                             </div>
                             <div class="card-body">
                                 <h5>Sender ID</h5>
-                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.sms.sender_id || "Nil" }}</p>
+                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.sms.sender_id or "Nil" }}</p>
                                 <h5>Username</h5>
-                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.sms.username || "Nil" }}</p>
+                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.sms.username or "Nil" }}</p>
                                 <h5>Password</h5>
-                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.sms.password || "Nil" }}</p>
+                                <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.sms.password or "Nil" }}</p>
                             </div>
                         </div>
 

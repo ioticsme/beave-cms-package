@@ -91,21 +91,21 @@
                                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                             <span class="required">Sender ID</span>
                                         </label>
-                                        <input type="text" placeholder="Sender ID" name="sender_id" value="{{ data.sms.sender_id || '' }}" class="form-control">
+                                        <input type="text" placeholder="Sender ID" name="sender_id" value="{{ data.sms.sender_id }}" class="form-control">
                                         <div id="field-error-sender_id" class="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
                                     <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
                                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                             <span class="required">Username</span>
                                         </label>
-                                        <input type="text" placeholder="Username" name="username" value="{{ data.sms.username || '' }}" class="form-control">
+                                        <input type="text" placeholder="Username" name="username" value="{{ data.sms.username }}" class="form-control">
                                         <div id="field-error-username" class="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
                                     <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
                                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                             <span class="required">Password</span>
                                         </label>
-                                        <input type="text" placeholder="Password" name="password" value="{{ data.sms.password || '' }}" class="form-control">
+                                        <input type="text" placeholder="Password" name="password" value="{{ data.sms.password }}" class="form-control">
                                         <div id="field-error-password" class="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
                                 {% elseif type == 'communication_channels' %}
@@ -113,7 +113,7 @@
                                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                             <span class="required">Email</span>
                                         </label>
-                                        <input type="text" placeholder="Branch Email" name="email" value="{{ data.communication_channels.email || '' }}" class="form-control">
+                                        <input type="text" placeholder="Branch Email" name="email" value="{{ data.communication_channels.email }}" class="form-control">
                                         <div id="field-error-email" class="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
                                 {% elseif type == 'mailgun' %}
@@ -122,7 +122,7 @@
                                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                             <span class="required">From Mail address</span>
                                         </label>
-                                        <input type="text" placeholder="From Mail" name="from" class="form-control" value="{{ data.mailgun.from || '' }}">
+                                        <input type="text" placeholder="From Mail" name="from" class="form-control" value="{{ data.mailgun.from }}">
                                         <div class="fv-plugins-message-container invalid-feedback" id="field-error-from"></div>
                                     </div>
 
@@ -130,7 +130,7 @@
                                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                             <span class="required">Domain</span>
                                         </label>
-                                        <input type="text" placeholder="Domain" name="domain" class="form-control" value="{{ data.mailgun.domain || '' }}">
+                                        <input type="text" placeholder="Domain" name="domain" class="form-control" value="{{ data.mailgun.domain }}">
                                         <div class="fv-plugins-message-container invalid-feedback" id="field-error-domain"></div>
                                     </div>
 
@@ -138,7 +138,7 @@
                                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                             <span class="required">API Key</span>
                                         </label>
-                                        <input type="text" placeholder="API Key" name="api_key" class="form-control" value="{{ data.mailgun.api_key || '' }}">
+                                        <input type="text" placeholder="API Key" name="api_key" class="form-control" value="{{ data.mailgun.api_key }}">
                                         <div class="fv-plugins-message-container invalid-feedback" id="field-error-api_key"></div>
                                     </div>
 
@@ -146,7 +146,7 @@
                                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                             <span class="required">OTP Template</span>
                                         </label>
-                                        <input type="text" placeholder="OTP Template" name="otp_template" class="form-control" value="{{ data.mailgun.otp_template || '' }}">
+                                        <input type="text" placeholder="OTP Template" name="otp_template" class="form-control" value="{{ data.mailgun.otp_template }}">
                                         <div class="fv-plugins-message-container invalid-feedback" id="field-error-otp_template"></div>
                                     </div>
 
@@ -154,28 +154,28 @@
                                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                             <span class="required">Forgot Password Template</span>
                                         </label>
-                                        <input type="text" placeholder="Forgot Password Template" name="forgot_password_template" value="{{ data.mailgun.forgot_password_template || '' }}" class="form-control">
+                                        <input type="text" placeholder="Forgot Password Template" name="forgot_password_template" value="{{ data.mailgun.forgot_password_template }}" class="form-control">
                                         <div id="field-error-forgot_password_template" class="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
                                     <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
                                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                             <span class="required">Forgot Password Thankyou Template</span>
                                         </label>
-                                        <input type="text" placeholder="Forgot Password Thankyou Template" name="forgot_password_thankyou_template" value="{{ data.mailgun.forgot_password_thankyou_template || '' }}" class="form-control">
+                                        <input type="text" placeholder="Forgot Password Thankyou Template" name="forgot_password_thankyou_template" value="{{ data.mailgun.forgot_password_thankyou_template }}" class="form-control">
                                         <div id="field-error-forgot_password_thankyou_template" class="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
                                     <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
                                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                             <span class="required">Order complete Template</span>
                                         </label>
-                                        <input type="text" placeholder="Order complete Template" name="order_complete_template" value="{{ data.mailgun.order_complete_template || '' }}" class="form-control">
+                                        <input type="text" placeholder="Order complete Template" name="order_complete_template" value="{{ data.mailgun.order_complete_template }}" class="form-control">
                                         <div id="field-error-order_complete_template" class="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
                                     <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
                                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                             <span class="required">Welcome Template</span>
                                         </label>
-                                        <input type="text" placeholder="Welcome Template" name="welcome_template" value="{{ data.mailgun.welcome_template || '' }}" class="form-control">
+                                        <input type="text" placeholder="Welcome Template" name="welcome_template" value="{{ data.mailgun.welcome_template }}" class="form-control">
                                         <div id="field-error-welcome_template" class="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
                                 {% endif %}

@@ -61,7 +61,7 @@
 												'Mixed' %}
 										{% if fieldType == 'Mixed' %}
 											<li class="nav-item">
-												<a class="nav-link {{ active if key=='General' }}" data-bs-toggle="tab" href="#kt_tab_pane_{{ key }}">{{ key.toUpperCase() }}</a>
+												<a class="nav-link {{ 'active' if key=='general' }}" data-bs-toggle="tab" href="#kt_tab_pane_{{ key }}">{{ key.toUpperCase() }}</a>
 											</li>
 										{% endif %}
 									{% endif %}
@@ -69,7 +69,7 @@
 							</ul>
 							<div id="myTabContent" class="tab-content">
 								{% for key, config_item in schema_fields.obj %}
-									<div class="tab-pane fade  {{ 'show active' if key=='General' }}" id="kt_tab_pane_{{ key }}" role="tabpanel">
+									<div class="tab-pane fade  {{ 'show active' if key=='general' }}" id="kt_tab_pane_{{ key }}" role="tabpanel">
 										<table id="kt_subscriptions_table" class="table align-middle table-row-dashed fs-6 gy-5">
 											<thead>
 												<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
