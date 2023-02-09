@@ -12,7 +12,7 @@ const cmsRoutes = require('./cms.routes')
 const settingsRoutes = require('./settings.routes')
 const customFormsRoutes = require('./customForm.routes')
 const logRoutes = require('./log.routes')
-const userRoutes = require('./user.routes')
+const adminUserRoutes = require('./adminUser.routes')
 // END:: Route Groups
 
 // BEGIN::Admin Middleware
@@ -36,7 +36,7 @@ router.use('/cms', [authCheck], cmsRoutes)
 router.use('/settings', [authCheck], settingsRoutes)
 router.use('/custom-forms', [authCheck], customFormsRoutes)
 router.use('/log', [authCheck], logRoutes)
-router.use('/user', [authCheck], userRoutes)
+router.use('/admin-user', [authCheck], adminUserRoutes)
 router.use('/config', [authCheck, checkSuperAdmin], configRoutes)
 // END:: Routes
 

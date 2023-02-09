@@ -56,8 +56,27 @@ const navConfig = [
         ],
     },
     {
-        section: 'Custom Forms',
+        section: 'Public',
         position: 3,
+        items: [
+            {
+                label: 'Users',
+                expandable: false,
+                icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16.0173 9H15.3945C14.2833 9 13.263 9.61425 12.7431 10.5963L12.154 11.7091C12.0645 11.8781 12.1072 12.0868 12.2559 12.2071L12.6402 12.5183C13.2631 13.0225 13.7556 13.6691 14.0764 14.4035L14.2321 14.7601C14.2957 14.9058 14.4396 15 14.5987 15H18.6747C19.7297 15 20.4057 13.8774 19.912 12.945L18.6686 10.5963C18.1487 9.61425 17.1285 9 16.0173 9Z" fill="currentColor"/>
+                <rect opacity="0.3" x="14" y="4" width="4" height="4" rx="2" fill="currentColor"/>
+                <path d="M4.65486 14.8559C5.40389 13.1224 7.11161 12 9 12C10.8884 12 12.5961 13.1224 13.3451 14.8559L14.793 18.2067C15.3636 19.5271 14.3955 21 12.9571 21H5.04292C3.60453 21 2.63644 19.5271 3.20698 18.2067L4.65486 14.8559Z" fill="currentColor"/>
+                <rect opacity="0.3" x="6" y="5" width="6" height="6" rx="3" fill="currentColor"/>
+                </svg>`,
+                position: 1,
+                path: '/admin/cms/menu',
+                child: [],
+            },
+        ],
+    },
+    {
+        section: 'Custom Forms',
+        position: 4,
         items: [
             {
                 label: 'View Forms',
@@ -83,7 +102,7 @@ const navConfig = [
     },
     {
         section: 'Settings',
-        position: 4,
+        position: 5,
         items: [
             {
                 label: 'General Settings',
@@ -134,41 +153,6 @@ const navConfig = [
     },
 ]
 
-const customNav = [
-    {
-        section: 'Ecommerce',
-        position: 1,
-        items: [
-            {
-                label: 'Catalogue',
-                expandable: true,
-                icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path opacity="0.3" d="M18 10V20C18 20.6 18.4 21 19 21C19.6 21 20 20.6 20 20V10H18Z" fill="currentColor"/>
-                <path opacity="0.3" d="M11 10V17H6V10H4V20C4 20.6 4.4 21 5 21H12C12.6 21 13 20.6 13 20V10H11Z" fill="currentColor"/>
-                <path opacity="0.3" d="M10 10C10 11.1 9.1 12 8 12C6.9 12 6 11.1 6 10H10Z" fill="currentColor"/>
-                <path opacity="0.3" d="M18 10C18 11.1 17.1 12 16 12C14.9 12 14 11.1 14 10H18Z" fill="currentColor"/>
-                <path opacity="0.3" d="M14 4H10V10H14V4Z" fill="currentColor"/>
-                <path opacity="0.3" d="M17 4H20L22 10H18L17 4Z" fill="currentColor"/>
-                <path opacity="0.3" d="M7 4H4L2 10H6L7 4Z" fill="currentColor"/>
-                <path d="M6 10C6 11.1 5.1 12 4 12C2.9 12 2 11.1 2 10H6ZM10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10H10ZM18 10C18 11.1 18.9 12 20 12C21.1 12 22 11.1 22 10H18ZM19 2H5C4.4 2 4 2.4 4 3V4H20V3C20 2.4 19.6 2 19 2ZM12 17C12 16.4 11.6 16 11 16H6C5.4 16 5 16.4 5 17C5 17.6 5.4 18 6 18H11C11.6 18 12 17.6 12 17Z" fill="currentColor"/>
-                </svg>`,
-                position: 0,
-                child: [
-                    {
-                        label: 'Categories',
-                        path: '/admin/ecommerce/list',
-                    },
-                    {
-                        label: 'Products',
-                        path: '/admin/ecommerce/products',
-                    },
-                ],
-            },
-        ],
-    },
-]
-
 module.exports = {
     navConfig,
-    customNav,
 }
