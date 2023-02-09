@@ -22,12 +22,12 @@ const list = async (req, res) => {
             brand: session.brand._id,
             country: session.brand.country,
         }).sort('position')
-        res.render(`admin/cms/content/listing`, {
+        res.render(`admin-njk/cms/content/listing`, {
             reqContentType: req.contentType,
             data: contentList,
         })
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 
@@ -40,12 +40,12 @@ const detail = async (req, res) => {
             brand: session.brand._id,
             country: session.brand.country,
         }).populate('author')
-        res.render(`admin/cms/content/detail`, {
+        res.render(`admin-njk/cms/content/detail`, {
             reqContentType: req.contentType,
             contentDetail,
         })
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 
@@ -82,7 +82,7 @@ const add = async (req, res) => {
             .where('bilingual', false)
             .count()
         console.log(has_common_field_groups)
-        res.render(`admin/cms/content/add`, {
+        res.render(`admin-njk/cms/content/add`, {
             reqContentType: req.contentType,
             has_common_field_groups: has_common_field_groups ? true : false,
             allowed_content,
@@ -91,7 +91,7 @@ const add = async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        return res.render(`admin/error-500`)
+        return res.render(`admin-njk/error-500`)
     }
 }
 
@@ -130,7 +130,7 @@ const edit = async (req, res) => {
         const has_common_custom_fields = collect(req.contentType.custom_fields)
             .where('bilingual', false)
             .count()
-        res.render(`admin/cms/content/edit`, {
+        res.render(`admin-njk/cms/content/edit`, {
             reqContentType: req.contentType,
             has_common_custom_fields: has_common_custom_fields ? true : false,
             contentDetail,
@@ -140,7 +140,7 @@ const edit = async (req, res) => {
         })
     } catch (error) {
         // console.log(error)
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 

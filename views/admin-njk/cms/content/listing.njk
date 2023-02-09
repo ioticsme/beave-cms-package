@@ -61,7 +61,7 @@
 							</thead>
 							<tbody class="text-gray-600 fw-semibold">
 								{# //- BEGIN::Data Loop #}
-								{% for item, i in data %}
+								{% for item in data %}
 									<tr>
 										<td>
 											<div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -69,10 +69,10 @@
 											</div>
 										</td>
 										<td>
-											<a class="text-gray-800 text-hover-primary mb-1" href="/admin/cms/{{reqContentType.slug}}/detail/{{item._id}}">{{`${item.content[default_lang.prefix][reqContentType.field_groups[0].row_label][reqContentType.field_groups[0].fields[0].field_name]}`}}</a>
+											<a class="text-gray-800 text-hover-primary mb-1" href="/admin/cms/{{reqContentType.slug}}/detail/{{item._id}}">{{item.content[default_lang.prefix][reqContentType.field_groups[0].row_name][reqContentType.field_groups[0].fields[0].field_name]}}</a>
 										</td>
 										<td>
-											//- if reqContentType.has_api_endpoint
+											{# //- if reqContentType.has_api_endpoint #}
 											<a class="badge badge-light-primary" href="/admin/cms/{{reqContentType.slug}}/detail/{{item._id}}">{{item.slug}}</a>
 										</td>
 										<td>

@@ -147,9 +147,9 @@
 							</div>
 							<div class="card-body pt-0">
 								<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
-									{% for brandLanguage, i in authUser.brand.languages %}
+									{% for brandLanguage in authUser.brand.languages %}
 										<li class="nav-item">
-											<a class="nav-link {% if i == 0 %}active{% endif %}" data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
+											<a class="nav-link {% if loop.index == 1 %}active{% endif %}" data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
 										</li>
 									{% endfor %}
 									{% if has_common_field_groups %}
@@ -166,10 +166,10 @@
 									{% endif %}
 								</ul>
 								<div class="tab-content tab-content-fields" id="myTabContent">
-									{% for brandLanguage, i in authUser.brand.languages %}
-										<div class="tab-pane fade {{ 'active show' if i == 0 }}" role="tabpanel" id="kt_tab_pane_{{ brandLanguage.prefix }}">
-											//- BEGIN::Fields with localisation
-											{% for cfg, cfg_i in reqContentType.field_groups %}
+									{% for brandLanguage in authUser.brand.languages %}
+										<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" id="kt_tab_pane_{{ brandLanguage.prefix }}">
+											{# //- BEGIN::Fields with localisation #}
+											{% for cfg in reqContentType.field_groups %}
 												<h4 class="badge badge-warning mb-2">{{cfg.row_label}}</h4>
 												{% if cfg.repeater_group == true && cfg.localisation %}
 													<div class="group_repeater" id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{cfg_i}}">
@@ -319,7 +319,7 @@
 																			</div>
 																		{% endfor %}
 																		<div class="text-center">
-																			<a class="btn btn-sm btn-light-danger mt-3 mt-md-8" onClick="deleteChild(event)" child-id="form-repeater-child-{{ cfg._id }}-{{ cfg_i }}" target-id="{{ targetId }}">
+																			<a class="btn btn-sm btn-light-danger mt-3 mt-md-8" onClick="deleteChild(event)" child-id="form-repeater-child-{{ cfg._id }}-{{ loop.index }}" target-id="{{ targetId }}">
 																				<i class="la la-trash-o"></i>
 																				Delete
 																			</a>
@@ -358,13 +358,13 @@
 																			</div>
 																		{% elif cf.field_type === 'radio' %}
 																			<div class="row row-cols-1 row-cols-md-3 row-cols-lg-1 row-cols-xl-3 g-9" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button='true']">
-																				{% for i, option in cf.options %}
+																				{% for option in cf.options %}
 																					<div class="col d-flex text-start p-6">
 																						<span class="form-check form-check-custom form-check-solid form-check-sm align-items-start" data-kt-button="true">
-																							<input class="form-check-input" type="radio" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" id="{{ option.value }}-{{ i }}" value="{{ option.value }}" {% if i == 0 %}checked{% endif %}>
+																							<input class="form-check-input" type="radio" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" id="{{ option.value }}-{{ loop.index }}" value="{{ option.value }}" {% if loop.index == 1 %}checked{% endif %}>
 																						</span>
 																						<span class="ms-5">
-																							<label class="form-label" for="{{ option.value }}-{{ i }}">{{ option.label }}</label>
+																							<label class="form-label" for="{{ option.value }}-{{ loop.index }}">{{ option.label }}</label>
 																						</span>
 																					</div>
 																				{% endfor %}

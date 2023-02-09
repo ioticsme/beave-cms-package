@@ -1,12 +1,11 @@
 {% extends "../../layouts/master.njk" %}
 
 {% block csslib %}
-
     <link href="/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css">
     <link href="/cms-static/admin/assets/plugins/custom/jstree/jstree.bundle.css" rel="stylesheet" type="text/css">
 {% endblock %}
-{% block jslib %}
 
+{% block jslib %}
     <!-- begin::Vendors Javascript(used by this page) -->
     <script src="/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <!-- end::Vendors Javascript -->
@@ -21,11 +20,6 @@
     <!-- Form Submission Script -->
     <script src="/cms-static/common/js/form-data-json.min.js"></script>
     <script src="/cms-static/common/js/es-form.js"></script>
-{% endblock %}
-
-{% block customScript %}
-
-    <script></script>
 {% endblock %}
 
 {% block content %}

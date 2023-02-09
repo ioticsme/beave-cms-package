@@ -13,7 +13,7 @@ const userDetail = async (req, res) => {
         res.status(404).json('Not Found')
         return
     }
-    res.render(`admin/user/profile`, { userDetails })
+    res.render(`admin-njk/user/profile`, { userDetails })
 }
 
 const profileUpdate = async (req, res) => {
@@ -25,7 +25,7 @@ const profileUpdate = async (req, res) => {
         res.status(404).json('Not Found')
         return
     }
-    res.render(`admin/user/update-profile`, { userDetails })
+    res.render(`admin-njk/user/update-profile`, { userDetails })
 }
 
 const profileUpdateSave = async (req, res) => {
@@ -73,7 +73,7 @@ const changePassword = async (req, res) => {
         res.status(404).json('Not Found')
         return
     }
-    res.render(`admin/user/change-password`, { userDetails })
+    res.render(`admin-njk/user/change-password`, { userDetails })
 }
 
 const changePasswordSave = async (req, res) => {

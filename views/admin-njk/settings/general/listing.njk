@@ -6,128 +6,124 @@
 {% endblock %}
 
 {% block jslib %}
-	// begin::Vendors Javascript(used by this page)
+	{# // begin::Vendors Javascript(used by this page) #}
 	<script src='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.js'></script>
-	// end::Vendors Javascript
-	// begin::Custom Javascript(used by this page)
-	//- script(src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js')
+	{# // end::Vendors Javascript #}
+	{# // begin::Custom Javascript(used by this page) #}
+	{# //- script(src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js') #}
 	<script src='https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js'></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
 	<script src='/cms-static/admin/assets/js/custom/apps/ecommerce/catalog/products.js'></script>
-	//- script(src='/cms-static/admin/assets/js/widgets.bundle.js')
-	//- script(src='/cms-static/admin/assets/js/custom/widgets.js')
-	
-	
+	{# //- script(src='/cms-static/admin/assets/js/widgets.bundle.js') #}
+	{# //- script(src='/cms-static/admin/assets/js/custom/widgets.js') #}
+
 	<script src='/cms-static/admin/assets/js/custom/utilities/modals/create-app.js'></script>
 	<script src='/cms-static/admin/assets/js/custom/utilities/modals/users-search.js'></script>
 	<script src='/cms-static/admin/assets/plugins/custom/jstree/jstree.bundle.js'></script>
 
-	// Form Submission Script
+	{# // Form Submission Script #}
 	<script src='/cms-static/common/js/form-data-json.min.js'></script>
 	<script src='/cms-static/common/js/es-form.js'></script>
 {% endblock %}
 
 {% block customScript %}
 	<script>
-  function changeStatus(status,mode){
-  	fetch("/admin/settings/general/brand/change-status", {
-  		method: 'POST',
-  		cache: 'no-cache',
-  		headers: {
-  			Accept: 'application/json',
-  			'Content-Type': 'application/json',
-  		},
-  		body: JSON.stringify({
-  			status,
-  			mode
-  		}),
-  	})
-  		.then(async (res) => {
-  			const status = res.status
-  			let data = await res.json()
-  			if (status >= 200 && status < 300) {
-  				location.reload()
-  			} else {
-  				Swal.fire({
-  					text: data.error || 'Something went wrong.',
-  					icon: 'warning',
-  					buttonsStyling: !1,
-  					confirmButtonText: 'Ok, got it!',
-  					customClass: {
-  						confirmButton: 'btn fw-bold btn-primary',
-  					},
-  				})
-  			}
-  		})
-  		.catch((err) => {
-  			Swal.fire({
-  				text: 'Something went wrong !.',
-  				icon: 'error',
-  				buttonsStyling: !1,
-  				confirmButtonText: 'Ok, got it!',
-  				customClass: {
-  					confirmButton: 'btn fw-bold btn-primary',
-  				},
-  			})
-  		})
-  }
-  function clearCache(){
-  	Swal.fire({
-  		text: 'Are you sure you want to clear cache ?',
-  		icon: 'warning',
-  		showCancelButton: !0,
-  		buttonsStyling: !1,
-  		confirmButtonText: 'Yes, Clear!',
-  		cancelButtonText: 'No, cancel',
-  		customClass: {
-  			confirmButton: 'btn fw-bold btn-danger',
-  			cancelButton: 'btn fw-bold btn-active-light-primary',
-  		},
-  	}).then((e) => {
-  		if (e.value) {
-  			fetch("/admin/settings/general/clear-cache", {
-  				method: 'POST',
-  				cache: 'no-cache',
-  				headers: {
-  					Accept: 'application/json',
-  					'Content-Type': 'application/json',
-  				},
-  				body: JSON.stringify({
-  
-  				}),
-  			})
-  				.then(async (res) => {
-  					const status = res.status
-  					let data = await res.json()
-  					if (status >= 200 && status < 300) {
-  						location.reload()
-  					} else {
-  						Swal.fire({
-  							text: data.error || 'Something went wrong.',
-  							icon: 'warning',
-  							buttonsStyling: !1,
-  							confirmButtonText: 'Ok, got it!',
-  							customClass: {
-  								confirmButton: 'btn fw-bold btn-primary',
-  							},
-  						})
-  					}
-  				})
-  				.catch((err) => {
-  					Swal.fire({
-  						text: 'Something went wrong !.',
-  						icon: 'error',
-  						buttonsStyling: !1,
-  						confirmButtonText: 'Ok, got it!',
-  						customClass: {
-  							confirmButton: 'btn fw-bold btn-primary',
-  						},
-  					})
-  				})
-  		}
-  	})
-  }
-</script>
+		function changeStatus(status, mode) {
+			fetch("/admin/settings/general/brand/change-status", {
+				method: 'POST',
+				cache: 'no-cache',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({status, mode})
+			})
+				.then(async (res) => {
+					const status = res.status
+					let data = await res.json()
+					if (status >= 200 && status < 300) {
+						location.reload()
+					} else {
+						Swal.fire({
+							text: data.error || 'Something went wrong.',
+							icon: 'warning',
+							buttonsStyling: !1,
+							confirmButtonText: 'Ok, got it!',
+							customClass: {
+								confirmButton: 'btn fw-bold btn-primary'
+							}
+						})
+					}
+				})
+				.catch((err) => {
+					Swal.fire({
+						text: 'Something went wrong !.',
+						icon: 'error',
+						buttonsStyling: !1,
+						confirmButtonText: 'Ok, got it!',
+						customClass: {
+							confirmButton: 'btn fw-bold btn-primary'
+						}
+					})
+				})
+			}
+		function clearCache() {
+			Swal
+				.fire({
+					text: 'Are you sure you want to clear cache ?',
+					icon: 'warning',
+					showCancelButton: !0,
+					buttonsStyling: !1,
+					confirmButtonText: 'Yes, Clear!',
+					cancelButtonText: 'No, cancel',
+					customClass: {
+						confirmButton: 'btn fw-bold btn-danger',
+						cancelButton: 'btn fw-bold btn-active-light-primary'
+					}
+				})
+				.then((e) => {
+					if (e.value) {
+						fetch("/admin/settings/general/clear-cache", {
+							method: 'POST',
+							cache: 'no-cache',
+							headers: {
+								Accept: 'application/json',
+								'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({})
+						})
+							.then(async (res) => {
+								const status = res.status
+								let data = await res.json()
+								if (status >= 200 && status < 300) {
+									location.reload()
+								} else {
+									Swal.fire({
+										text: data.error || 'Something went wrong.',
+										icon: 'warning',
+										buttonsStyling: !1,
+										confirmButtonText: 'Ok, got it!',
+										customClass: {
+											confirmButton: 'btn fw-bold btn-primary'
+										}
+									})
+								}
+							})
+							.catch((err) => {
+								Swal.fire({
+									text: 'Something went wrong !.',
+									icon: 'error',
+									buttonsStyling: !1,
+									confirmButtonText: 'Ok, got it!',
+									customClass: {
+										confirmButton: 'btn fw-bold btn-primary'
+									}
+								})
+							})
+						}
+				})
+		}
+	</script>
 
 {% endblock %}
 
@@ -136,19 +132,23 @@
 		<div class="app-toolbar py-3 py-lg-6" id="kt_app_toolbar">
 			<div class="app-container container-xxl d-flex flex-stack" id="kt_app_toolbar_container">
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-				<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">General Settings</h1>
-				<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
-					<li class="breadcrumb-item text-muted"><a class="text-muted text-hover-primary" href="/admin/dashboard">Home</a></li>
-					<li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
-					<li class="breadcrumb-item text-muted">Settings</li>
-					<li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
-					<li class="breadcrumb-item text-muted">General</li>
-				</ul>
+					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">General Settings</h1>
+					<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+						<li class="breadcrumb-item text-muted">
+							<a class="text-muted text-hover-primary" href="/admin/dashboard">Home</a>
+						</li>
+						<li class="breadcrumb-item">
+							<span class="bullet bg-gray-400 w-5px h-2px"></span></li>
+						<li class="breadcrumb-item text-muted">Settings</li>
+						<li class="breadcrumb-item">
+							<span class="bullet bg-gray-400 w-5px h-2px"></span></li>
+						<li class="breadcrumb-item text-muted">General</li>
+					</ul>
 				</div>
 			</div>
 		</div>
 		<div class="app-content flex-column-fluid" id="kt_app_content">
-  			<div class="app-container container" id="kt_app_content_container">
+			<div class="app-container container" id="kt_app_content_container">
 				<div class="row g-5 g-xl-10 mb-xl-10">
 					<div class="col-lg-4 col-md-6">
 						<div class="card mb-5 pb-4">
@@ -157,7 +157,7 @@
 							</div>
 							<div class="card-body">
 								<div class="form-check form-switch form-check-custom form-check-solid">
-									<input id="status-toggle-a" class="form-check-input cursor-pointer" type="checkbox" checked="{{ domain.maintenance_mode }}" onchange="changeStatus({{ domain.maintenance_mode }}, 1)" value="{{ domain.maintenance_mode }}">
+									<input id="status-toggle-a" class="form-check-input cursor-pointer" type="checkbox" {{ 'checked' if domain.maintenance_mode }} onchange="changeStatus({{ domain.maintenance_mode }}, 1)" value="{{ domain.maintenance_mode }}">
 									<label class="form-check-label cursor-pointer" for="status-toggle-a">
 										{% if domain.maintenance_mode %}
 											<div class="badge badge-light-danger">Site in Maintenance Mode</div>
@@ -193,31 +193,31 @@
 							<div class="card-body">
 								<style>
 									.image-input-placeholder {
-										background-image: url('/cms-static/admin/assets/media/svg/files/blank-image.svg');
+										background-image: url("/cms-static/admin/assets/media/svg/files/blank-image.svg");
 									}
 									[data-theme="dark"] .image-input-placeholder {
-										background-image: url('/cms-static/admin/assets/media/svg/files/blank-image-dark.svg');
+										background-image: url("/cms-static/admin/assets/media/svg/files/blank-image-dark.svg");
 									}
 								</style>
 
 								<table class="table align-middle table-row-dashed fs-6 gy-5">
 									<thead>
-									<tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-										<th class="min-w-200px">Logo</th>
-										<th class="min-w-200px">Country</th>
-										<th class="text-end min-w-70px">Actions</th>
-									</tr>
+										<tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+											<th class="min-w-200px">Logo</th>
+											<th class="min-w-200px">Country</th>
+											<th class="text-end min-w-70px">Actions</th>
+										</tr>
 									</thead>
 									{% for item in brand.domains %}
 										<tr>
 											<td>
 												<div class="d-flex align-items-center">
 													<a class="symbol symbol-50px" href="/admin/settings/General/brand/change-logo/{{ item.country._id }}?domain=true">
-													{% if item.logo and item.logo.en and item.logo.en.media_url %}
-														<span class="symbol-label" style="background-image:url({{ item.logo.en.media_url }});"></span>
-													{% else %}
-														<span class="symbol-label" style="background-image:url(/admin/assets/media/svg/files/blank-image.svg);"></span>
-													{% endif %}
+														{% if item.logo and item.logo.en and item.logo.en.media_url %}
+															<span class="symbol-label" style="background-image:url({{ item.logo.en.media_url }});"></span>
+														{% else %}
+															<span class="symbol-label" style="background-image:url(/admin/assets/media/svg/files/blank-image.svg);"></span>
+														{% endif %}
 													</a>
 													<a class="text-gray-800 text-hover-primary fs-5 fw-bold" href="/admin/ecommerce/catalog/products/edit/{{ item._id }}" data-kt-ecommerce-product-filter="product_name">{{ item.country.name.en }}</a>
 												</div>
@@ -252,6 +252,3 @@
 	</div>
 
 {% endblock %}
-
-
-

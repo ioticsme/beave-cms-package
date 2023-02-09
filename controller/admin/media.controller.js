@@ -6,9 +6,9 @@ const Media = require('../../model/Media')
 const list = async (req, res) => {
     try {
         const media = await Media.find()
-        return res.render('admin/cms/media/listing', { media })
+        return res.render('admin-njk/cms/media/listing', { media })
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 
@@ -17,7 +17,7 @@ const jsonList = async (req, res) => {
         const media = await Media.find()
         return res.status(200).json(media)
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 

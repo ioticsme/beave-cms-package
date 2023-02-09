@@ -1,4 +1,4 @@
-{% extends "../../layouts/master.njk" %}
+{% extends "../layouts/master.njk" %}
 
 {% block csslib %}
 	<link href="/cms-static/admin/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css"/>
@@ -220,14 +220,14 @@
 														<span class="required">Field Name</span>
 													</label>
 													<input type="text" class="form-control cf" placeholder="Enter field name" value="{{ item.field_name }}" name="field_name[]">
-													<div id="field-error-field_name_{{ i }}" class="fv-plugins-message-container invalid-feedback"></div>
+													<div id="field-error-field_name_{{ loop.index }}" class="fv-plugins-message-container invalid-feedback"></div>
 												</div>
 												<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-6">
 													<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 														<span class="required">Field Validation</span>
 													</label>
 													<input type="text" class="form-control cf" placeholder="Enter field name" value="{{ item.validation }}" name="field_validation[]">
-													<div id="field-error-field_validation_{{ i }}" class="fv-plugins-message-container invalid-feedback"></div>
+													<div id="field-error-field_validation_{{ loop.index }}" class="fv-plugins-message-container invalid-feedback"></div>
 												</div>
 											</div>
 										{% endfor %}

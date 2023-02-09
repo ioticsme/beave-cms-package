@@ -19,11 +19,11 @@ const list = async (req, res) => {
             brand: session.brand._id,
             country: session.brand.country,
         })
-        res.render(`admin/custom-forms/listing`, {
+        res.render(`admin-njk/custom-forms/listing`, {
             data: forms,
         })
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 
@@ -39,26 +39,30 @@ const edit = async (req, res) => {
         const domainTemplates = await mailGunTemplates(
             req.brand?.settings?.notification_settings?.mailgun
         )
-        res.render(`admin/custom-forms/edit`, {
+        res.render(`admin-njk/custom-forms/edit`, {
             form,
             domainTemplates,
         })
     } catch (error) {
         console.log(error)
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 
 const add = async (req, res) => {
     try {
         session = req.authUser
-        const domainTemplates = await mailGunTemplates(
-            req.brand?.settings?.notification_settings?.mailgun
-        )
-        res.render(`admin/custom-forms/add`, { domainTemplates })
+        let domainTemplates = []
+        if (req.brand?.settings?.notification_settings?.mailgun) {
+            domainTemplates = await mailGunTemplates(
+                req.brand?.settings?.notification_settings?.mailgun
+            )
+        }
+
+        res.render(`admin-njk/custom-forms/add`, { domainTemplates })
     } catch (error) {
         console.log(error)
-        return res.render(`admin/error-500`)
+        return res.render(`admin-njk/error-500`)
     }
 }
 
@@ -225,11 +229,11 @@ const viewSubmissions = async (req, res) => {
             brand: session.brand._id,
             country: session.brand.country,
         })
-        res.render(`admin/custom-forms/submissions`, {
+        res.render(`admin-njk/custom-forms/submissions`, {
             data: submissions,
         })
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 

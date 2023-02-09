@@ -40,7 +40,7 @@ const list = async (req, res) => {
         }
 
         if (!contentList) {
-            return res.render(`admin/error-404`)
+            return res.render(`admin-njk/error-404`)
         }
 
         // const reqContentType = req.contentType
@@ -50,14 +50,14 @@ const list = async (req, res) => {
                 return item.is_default === true
             }
         )
-        return res.render(`admin/cms/content/listing`, {
+        return res.render(`admin-njk/cms/content/listing`, {
             default_lang,
             reqContentType: req.contentType,
             data: contentList,
         })
     } catch (error) {
         console.log(error)
-        return res.render(`admin/error-500`)
+        return res.render(`admin-njk/error-500`)
     }
 }
 
@@ -100,7 +100,7 @@ const detail = async (req, res) => {
         // })
 
         if (!contentDetail) {
-            return res.render(`admin/error-404`)
+            return res.render(`admin-njk/error-404`)
         }
 
         const has_common_field_groups = collect(req.contentType.field_groups)
@@ -116,7 +116,7 @@ const detail = async (req, res) => {
 
         // return res.send(contentDetail)
 
-        res.render(`admin/cms/content/detail`, {
+        res.render(`admin-njk/cms/content/detail`, {
             default_lang,
             has_common_field_groups: has_common_field_groups ? true : false,
             reqContentType: req.contentType,
@@ -125,7 +125,7 @@ const detail = async (req, res) => {
             // findalContentFieldsGroup,
         })
     } catch (error) {
-        return res.render(`admin/error-500`)
+        return res.render(`admin-njk/error-500`)
     }
 }
 
@@ -148,7 +148,7 @@ const add = async (req, res) => {
             .where('localisation', false)
             .count()
         // return res.send(req.contentType._id)
-        return res.render(`admin/cms/content/add`, {
+        return res.render(`admin-njk/cms/content/add`, {
             reqContentType: req.contentType,
             has_common_field_groups: has_common_field_groups ? true : false,
             allowed_content,
@@ -156,7 +156,7 @@ const add = async (req, res) => {
         })
     } catch (error) {
         // console.log(error)
-        return res.render(`admin/error-500`)
+        return res.render(`admin-njk/error-500`)
     }
 }
 
@@ -172,7 +172,7 @@ const edit = async (req, res) => {
         })
 
         if (!contentDetail) {
-            return res.render(`admin/error-404`)
+            return res.render(`admin-njk/error-404`)
         }
         // return res.send(findalContentFieldsGroup)
 
@@ -192,7 +192,7 @@ const edit = async (req, res) => {
             .count()
 
         // return res.json(contentDetail)
-        return res.render(`admin/cms/content/edit`, {
+        return res.render(`admin-njk/cms/content/edit`, {
             reqContentType: req.contentType,
             has_common_field_groups: has_common_field_groups ? true : false,
             contentDetail,
@@ -201,7 +201,7 @@ const edit = async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        return res.render(`admin/error-500`)
+        return res.render(`admin-njk/error-500`)
     }
 }
 

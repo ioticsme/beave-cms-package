@@ -53,11 +53,11 @@
                             </div>
                             <div class="card-body pt-0">
                                 <h5 class="mb-5">GTM ID</h5>
-                                <div class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.marketing ? data.marketing.gtm_id : "Nil" }}</div>
+                                <div class="text-gray-500 fw-semibold fs-5 mb-5">{{  data.marketing.gtm_id if data.marketing else "Nil" }}</div>
                                 <h5 class="mb-5">Google Analytics ID</h5>
-                                <div class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.marketing ? data.marketing.google_analytics_id : "Nil" }}</div>
+                                <div class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.marketing.google_analytics_id if data.marketing else "Nil" }}</div>
                                 <h5 class="mb-5">Google Token</h5>
-                                <div class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.marketing ? data.marketing.google_token : "Nil" }}</div>
+                                <div class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.marketing.google_token if data.marketing else "Nil" }}</div>
                             </div>
                         </div>
                     </div>

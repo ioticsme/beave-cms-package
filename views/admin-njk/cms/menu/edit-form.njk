@@ -87,7 +87,7 @@
 							</ul>
 							<div class="tab-content tab-content-fields" id="myTabContent">
 								{% for brandLanguage, i in authUser.brand.languages %}
-									<div class="tab-pane fade {% if i == 0 %}active show{% endif %}" role="tabpanel" id="kt_tab_pane_{{brandLanguage.prefix}}">
+									<div class="tab-pane fade {% if loop.index == 1 %}active show{% endif %}" role="tabpanel" id="kt_tab_pane_{{brandLanguage.prefix}}">
 										<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-6">
 											<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 												<span class="required">Menu name ({{ brandLanguage.prefix }})</span>

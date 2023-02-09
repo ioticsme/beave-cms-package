@@ -1,4 +1,5 @@
-{% extends "../../layouts/master.njk" %}
+{% extends "../layouts/master.njk" %}
+
 
 {% block csslib %}
 	<link href='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css' rel='stylesheet' type='text/css'/>
@@ -74,7 +75,7 @@
 								</tr>
 							</thead>
 							<tbody class="text-gray-600 fw-semibold">
-								{% for item, i in data %}
+								{% for item in data %}
 									<tr>
 										<td>
 											<div class="form-check form-check-sm form-check-custom form-check-solid">

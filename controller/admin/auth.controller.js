@@ -165,7 +165,7 @@ const logout = async (req, res) => {
         req.session.destroy()
         res.redirect('/admin/auth/login')
     } catch (error) {
-        res.render(`admin/error-500`)
+        res.render(`admin-njk/error-500`)
     }
 }
 

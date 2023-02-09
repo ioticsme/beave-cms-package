@@ -38,7 +38,7 @@ const switchBrand = async (req, res) => {
         }
         res.redirect('back')
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 
@@ -57,12 +57,12 @@ const generalList = async (req, res) => {
                 (dom) => dom.country?._id.toString() == country
             )
         }
-        return res.render('admin/settings/general/listing', {
+        return res.render('admin-njk/settings/general/listing', {
             domain,
             brand,
         })
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 // Render logo edit form
@@ -89,12 +89,12 @@ const editLogo = async (req, res) => {
                 )
             }
         }
-        return res.render('admin/settings/general/edit-logo-form', {
+        return res.render('admin-njk/settings/general/edit-logo-form', {
             data,
             isBrand,
         })
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 
@@ -251,9 +251,9 @@ const seoList = async (req, res) => {
                     session.brand.country.toString()
             )
         }
-        return res.render('admin/settings/seo/list', { data })
+        return res.render('admin-njk/settings/seo/list', { data })
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 const seoEdit = async (req, res) => {
@@ -271,9 +271,9 @@ const seoEdit = async (req, res) => {
                     session.brand.country.toString()
             )
         }
-        return res.render('admin/settings/seo/form', { data })
+        return res.render('admin-njk/settings/seo/form', { data })
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 
@@ -406,9 +406,9 @@ const marketingList = async (req, res) => {
             _id: session.brand._id,
         })
 
-        return res.render('admin/settings/marketing/list', { data: brand })
+        return res.render('admin-njk/settings/marketing/list', { data: brand })
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 const marketingEdit = async (req, res) => {
@@ -417,9 +417,9 @@ const marketingEdit = async (req, res) => {
         const brand = await Brand.findOne({
             _id: session.brand._id,
         })
-        return res.render('admin/settings/marketing/form', { data: brand })
+        return res.render('admin-njk/settings/marketing/form', { data: brand })
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 
@@ -477,11 +477,11 @@ const ecommerceList = async (req, res) => {
             brand: session.brand._id,
             country: session.brand.country,
         })
-        return res.render('admin/settings/ecommerce/listing', {
+        return res.render('admin-njk/settings/ecommerce/listing', {
             data: settings?.ecommerce_settings || {},
         })
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 const invoiceEdit = async (req, res) => {
@@ -491,11 +491,11 @@ const invoiceEdit = async (req, res) => {
             brand: session.brand._id,
             country: session.brand.country,
         })
-        return res.render('admin/settings/ecommerce/edit-invoice', {
+        return res.render('admin-njk/settings/ecommerce/edit-invoice', {
             data: settings?.ecommerce_settings || {},
         })
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 
@@ -580,7 +580,7 @@ const notificationList = async (req, res) => {
             brand: session.brand._id,
             country: session.brand.country,
         })
-        return res.render('admin/settings/notification/listing', {
+        return res.render('admin-njk/settings/notification/listing', {
             data: settings?.notification_settings || {
                 mailgun: {},
                 sms: {},
@@ -588,7 +588,7 @@ const notificationList = async (req, res) => {
             },
         })
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 
@@ -599,7 +599,7 @@ const editNotificationSettings = async (req, res) => {
             brand: session.brand._id,
             country: session.brand.country,
         })
-        return res.render('admin/settings/notification/edit', {
+        return res.render('admin-njk/settings/notification/edit', {
             title: req.params.type.replace('_', ' ').toUpperCase(),
             type: req.params.type,
             data: settings?.notification_settings || {
@@ -608,7 +608,7 @@ const editNotificationSettings = async (req, res) => {
             },
         })
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 const saveNoticationSettings = async (req, res) => {

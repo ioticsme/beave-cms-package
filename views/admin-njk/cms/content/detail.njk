@@ -54,9 +54,9 @@
 								<div class="card card-flush pt-3 mb-5 mb-lg-10">
 									<div class="card-body pt-0">
 										<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
-											{% for brandLanguage, i in authUser.brand.languages %}
+											{% for brandLanguage in authUser.brand.languages %}
 												<li class="nav-item">
-													<a class="nav-link" {% if i == 0 %}class="active"{% endif %} data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
+													<a class="nav-link" {% if loop.index == 1 %}class="active"{% endif %} data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
 												</li>
 											{% endfor %}
 
@@ -73,11 +73,11 @@
 											{% endif %}
 										</ul>
 										<div class="tab-content tab-content-fields" id="myTabContent">
-											{% for brandLanguage, i in authUser.brand.languages %}
+											{% for brandLanguage in authUser.brand.languages %}
 												<div class="tab-pane fade active show" role="tabpanel" id="kt_tab_pane_{{ brandLanguage.prefix }}">
 													<div class="row">
 														<div class="col-12">
-															{% for cfg, cfg_i in reqContentType.field_groups %}
+															{% for cfg in reqContentType.field_groups %}
 																{% if cfg.localisation == true %}
 																	<h1 class="mt-5 mb-2">{{ cfg.row_label.toUpperCase() }}</h1>
 																	{% if cfg.repeater_group %}
@@ -87,7 +87,7 @@
 																				.field_name
 																		].length) %}
 																			<div class="row">
-																				{% for eachVal, vIndex in cfg.fields %}
+																				{% for eachVal in cfg.fields %}
 																					<div class="col-12 col-sm-6">
 																						<span class="badge badge-light">{{ eachVal.field_label.toUpperCase() }} :</span>
 																						{% set content = contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name] %}
@@ -127,7 +127,7 @@
 												<div class="tab-pane fade" role="tabpanel" id="kt_tab_pane_common">
 													<div class="row">
 														<div class="col-12">
-															{% for cfg, cfg_i in reqContentType.field_groups %}
+															{% for cfg in reqContentType.field_groups %}
 																{% if cfg.localisation == false %}
 																	<h1 class="mt-5 mb-2">{{cfg.row_label.toUpperCase()}}</h1>
 																	{% if cfg.repeater_group %}
@@ -139,7 +139,7 @@
 																						.fields[0]
 																						.field_name
 																				].length) %}
-																					{% for eachVal, vIndex in cfg.fields %}
+																					{% for eachVal in cfg.fields %}
 																						<div class="col-12 col-sm-6">
 																							{% set content = contentDetail.content['common'][cfg.row_name] %}
 																							{% if content %}
@@ -172,11 +172,11 @@
 																			</div>
 																		{% endfor %}
 																	{% endif %}
-																{% endfor %}
-															</div>
+																{% endif %}
+															{% endfor %}
 														</div>
 													</div>
-												{% endif %}
+												</div>
 												<div class="tab-pane fade" role="tabpanel" id="kt_tab_pane_meta">
 													<div class="row">
 														<div class="col-12">
@@ -202,44 +202,43 @@
 														</div>
 													</div>
 												</div>
-											</div>
+											{% endif %}
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-
-						<div class="col-12 col-sm-4">
-							<div class="card card-flush pt-3 mb-5 mb-lg-10">
-								<div class="card-body">
+					</div>
+					<div class="col-12 col-sm-4">
+						<div class="card card-flush pt-3 mb-5 mb-lg-10">
+							<div class="card-body">
 								Status: 
-								<span class="badge badge-light-{{ contentDetail.published ? 'success' : 'danger' }}">
-										{{ contentDetail.published ? 'Published' : 'Unpublished' }}
-									</span>
-									<p>
-										<small>
-											{% if reqContentType.single_type %}
+								<span class="badge badge-light-{{ 'success'  if contentDetail.published else 'danger' }}">
+									{{ 'Published' if contentDetail.published else 'Unpublished' }}
+								</span>
+								<p>
+									<small>
+										{% if reqContentType.single_type %}
 											API Endpoint: 
 											<br>
-												<code>
-													<a href="{{ baseURL }}/api/cms/{{ reqContentType.slug }}" target="_blank">{{ baseURL }}/api/cms/{{ reqContentType.slug }}</a>
-												</code>
-											{% else %}
+											<code>
+												<a href="{{ baseURL }}/api/cms/{{ reqContentType.slug }}" target="_blank">{{ baseURL }}/api/cms/{{ reqContentType.slug }}</a>
+											</code>
+										{% else %}
 											API Endpoint (Collection):
 											<br>
-												<code>
-													<a href="{{ baseURL }}/api/cms/{{ reqContentType.slug }}" target="_blank">{{ baseURL }}/api/cms/{{ reqContentType.slug }}</a>
-												</code>
-												<br>
+											<code>
+												<a href="{{ baseURL }}/api/cms/{{ reqContentType.slug }}" target="_blank">{{ baseURL }}/api/cms/{{ reqContentType.slug }}</a>
+											</code>
+											<br>
 											API Endpoint (Detail):
 											<br>
-												<code>
-													<a href="{{ baseURL }}/api/cms/{{ reqContentType.slug }}/{{ contentDetail.slug }}" target="_blank">{{ baseURL }}/api/cms/{{ reqContentType.slug }}/{{ contentDetail.slug }}</a>
-												</code>
-											{% endif %}
-										</small>
-									</p>
-								</div>
+											<code>
+												<a href="{{ baseURL }}/api/cms/{{ reqContentType.slug }}/{{ contentDetail.slug }}" target="_blank">{{ baseURL }}/api/cms/{{ reqContentType.slug }}/{{ contentDetail.slug }}</a>
+											</code>
+										{% endif %}
+									</small>
+								</p>
 							</div>
 						</div>
 					</div>
@@ -247,5 +246,4 @@
 			</div>
 		</div>
 	</div>
-
 {% endblock %}

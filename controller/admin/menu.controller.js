@@ -11,10 +11,10 @@ const listMenu = async (req, res) => {
             brand: req.authUser?.brand?._id,
             country: req.authUser?.brand?.country,
         }).sort({ position: 1 })
-        res.render(`admin/cms/menu/listing`, { menulist: menus })
+        res.render(`admin-njk/cms/menu/listing`, { menulist: menus })
     } catch (e) {
         console.log(e)
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 
@@ -138,14 +138,14 @@ const editMenu = async (req, res) => {
         }
         // add level value to menuItem
         if (menuItem?._id) menuItem.level = level
-        res.render(`admin/cms/menu/edit-form`, {
+        res.render(`admin-njk/cms/menu/edit-form`, {
             menulist: menus,
             navPosition: position,
             menuItem: menuItem ? menuItem : {},
         })
     } catch (error) {
         // console.log(error)
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 

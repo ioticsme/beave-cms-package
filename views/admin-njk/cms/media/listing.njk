@@ -115,10 +115,10 @@
 					</div>
 				</div>
 				<div class="row g-5 g-10 mb-10">
-					{% for i, item in media %}
-						<input id="img-{{ i }}" value="{{ item.url }}" hidden/>
+					{% for item in media %}
+						<input id="img-{{ loop.index }}" value="{{ item.url }}" hidden/>
 						<div class="col-12 col-sm-4 col-md-3 col-lg-2 col-xl-2 col-xxl-2 text-center mb-2 mb-xl-2">
-							<div class="copy-btn" data-clipboard-target="#img-{{ i }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to copy Image URL">
+							<div class="copy-btn" data-clipboard-target="#img-{{ loop.index }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to copy Image URL">
 								<img class="lazy img-thumbnail cursor-pointer" src="/admin/assets/media/svg/files/blank-image.svg" data-src="{{ item.url }}" alt="image" srcset="" style="width: 120px; height: 120px; object-fit: cover;">
 							</div>
 						</div>

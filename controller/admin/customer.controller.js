@@ -7,10 +7,10 @@ let session
 const list = async (req, res) => {
     try {
         // const users = await User.find()
-        // res.render(`admin/ecommerce/customers/listing`, { data: users })
-        res.render(`admin/ecommerce/customers/listing-ajax`)
+        // res.render(`admin-njk/ecommerce/customers/listing`, { data: users })
+        res.render(`admin-njk/ecommerce/customers/listing-ajax`)
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 
@@ -76,9 +76,9 @@ const detail = async (req, res) => {
         const user = await User.findOne({ _id: req.params.id }).populate(
             'cards'
         )
-        res.render(`admin/ecommerce/customers/details`, { user })
+        res.render(`admin-njk/ecommerce/customers/details`, { user })
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 
@@ -89,7 +89,7 @@ const activateUser = async (req, res) => {
         await user.save()
         res.redirect(`/admin/ecommerce/customers`)
     } catch (error) {
-        return res.render(`admin/error-404`)
+        return res.render(`admin-njk/error-404`)
     }
 }
 
