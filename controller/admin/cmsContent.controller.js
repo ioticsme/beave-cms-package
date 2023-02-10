@@ -582,7 +582,7 @@ const save = async (req, res) => {
 }
 
 const saveTemp = async (req, res) => {
-    // console.log(req.body)
+    console.log(req.body.en.test.description)
     // return false
     try {
         // Data object to insert

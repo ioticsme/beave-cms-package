@@ -56,7 +56,7 @@
 										<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 											{% for brandLanguage in authUser.brand.languages %}
 												<li class="nav-item">
-													<a class="nav-link" {% if loop.index == 1 %}class="active"{% endif %} data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
+													<a class="nav-link {{ 'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
 												</li>
 											{% endfor %}
 
@@ -74,7 +74,7 @@
 										</ul>
 										<div class="tab-content tab-content-fields" id="myTabContent">
 											{% for brandLanguage in authUser.brand.languages %}
-												<div class="tab-pane fade active show" role="tabpanel" id="kt_tab_pane_{{ brandLanguage.prefix }}">
+												<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" id="kt_tab_pane_{{ brandLanguage.prefix }}">
 													<div class="row">
 														<div class="col-12">
 															{% for cfg in reqContentType.field_groups %}

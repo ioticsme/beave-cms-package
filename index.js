@@ -103,11 +103,12 @@ app.use(cookieParser())
 
 // Template Engine
 
-nunjucks.configure(path.join(__dirname, '/views'), {
+var njk = nunjucks.configure(path.join(__dirname, '/views'), {
     express: app,
     autoescape: true,
     noCache: true,
 })
+njk.addGlobal('ObjectKeys', Object.keys)
 app.set('view engine', 'njk')
 
 // app.set('views', path.join(__dirname, '/views'))

@@ -95,10 +95,7 @@
 			let parentDiv = targetElement.parentElement.parentElement.parentElement
 			let childDiv = targetElement.parentElement.parentElement
 			let parentId = parentDiv.getAttribute('id')
-			let childId = childDiv.getAttribute('id')
-			{# console.log(Number(
-				childId.split('-')
-				?.[1])) #}
+			let childId = childDiv.getAttribute('id') 
 			if (Number(
 				childId.split('-')
 				?.[1]) > 1000) {
@@ -186,7 +183,6 @@
 																	{% elif cf.field_type === 'textarea' %}
 																		<textarea class="form-control form-control-solid" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																	{% elif cf.field_type === 'media' %}
-																		{% set id = Math.floor(Math.random() * 1000000000) %}
 																		<span class='media-uploader-field'>
 																			<span class="media_preview">
 																				<span class="preview-holder"></span>
@@ -195,7 +191,7 @@
 																				</a>
 																			</span>
 																			<input type="hidden" class="media_url_field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
-																			<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{ id }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																			<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																		</span>
 																	{% elif cf.field_type == "date" %}
 																		<div class="kt_daterangepicker">
@@ -248,8 +244,8 @@
 																				<i class="fa fa-trash" tabindex="-1"></i>
 																			</a>
 																		</span>
-																		<input type="hidden" class="media_url_field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
-																		<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{ loop.index }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																		<input type="hidden" class="media_url_field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]">
+																		<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																	</span>
 																	{# <span id="{{ cfg.row_name }}_{{ cf.field_name }}_{{ brandLanguage.prefix }}_preview">
 																		<span class="preview-holder"></span>
@@ -303,7 +299,6 @@
 																				{% elif cf.field_type == 'textarea' %}
 																					<textarea class="form-control form-control-solid" rows="6" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																				{% elif cf.field_type === 'media' %}
-																					{% set id = Math.floor(Math.random() * 1000000000) %}
 																					<span class='media-uploader-field'>
 																						<span class="media_preview">
 																							<span class="preview-holder"></span>
@@ -312,7 +307,7 @@
 																							</a>
 																						</span>
 																						<input type="hidden" class="media_url_field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
-																						<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{ id }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																						<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																					</span>
 																					{# <span id="{{cfg.row_name}}_{{cf.field_name}}_{{cf_i}}_preview">
 																						<span class="preview-holder"></span>
@@ -371,8 +366,8 @@
 																						<i class="fa fa-trash" tabindex="-1"></i>
 																					</a>
 																				</span>
-																				<input type="hidden" class="media_url_field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
-																				<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{ loop.index }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																				<input type="hidden" class="media_url_field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]">
+																				<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																			</span>
 																			{# <span id="{{ cfg.row_name }}_{{ cf.field_name }}_{{ cf_i }}_preview">
 																				<span class="preview-holder"></span>
