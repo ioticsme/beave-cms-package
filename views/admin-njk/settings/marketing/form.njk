@@ -37,54 +37,54 @@
                             <a class="text-muted text-hover-primary" href='/admin/dashboard'>Home</a>
                         </li>
                     </ul>
+                </div>
+            </div>
+        </div>
 
-                    <div id="kt_app_content" class="app-content flex-column-fluid">
-                        <div id="kt_app_content_container" class="app-container container-xxl">
-                            <form id="kt_subscriptions_create_new" class="form es-form d-flex flex-column flex-lg-row" action="/admin/settings/integrations/marketing/save" data-redirect-url="/admin/settings/integrations/marketing" method="post">
-                                <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
-                                    <div class="card card-flush py-4">
-                                        <div class="card-header">
-                                            <div class="card-title">
-                                                <h2 class="fw-bold">Marketing</h2>
-                                            </div>
-                                            <div class="card-toolbar">
-                                                <button id="save-btn" class="btn btn-sm btn-success form-submit-btn" type="submit">
-                                                    <span class="label">Save</span>
-                                                    <span class="preloader d-none">Saving...</span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <div class="card-body pt-0 mb-10">
-                                            <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
-                                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                                    <span class="required">GTM ID</span>
-                                                </label>
-                                                <input type="text" class="form-control" name="gtm_id" value="{{ data.marketing.gtm_id }}"/>
-                                                <div class="fv-plugins-message-container invalid-feedback" id="field-error-gtm_id"></div>
-                                            </div>
-                                            <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
-                                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                                    <span class="required">Gooogle Analytics ID</span>
-                                                </label>
-                                                <input type="text" class="form-control" name="google_analytics_id" value="{{ data.marketing.google_analytics_id }}"/>
-                                                <div class="fv-plugins-message-container invalid-feedback" id="field-error-google_analytics_id"></div>
-                                            </div>
-                                            <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
-                                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                                    <span class="required">Google Token</span>
-                                                </label>
-                                                <input type="text" class="form-control" name="google_token" value="{{ data.marketing.google_token }}"/>
-                                                <div class="fv-plugins-message-container invalid-feedback" id="field-error-google_token"></div>
-                                            </div>
-                                        </div>
-
-                                    </div>
+        <div id="kt_app_content" class="app-content flex-column-fluid">
+            <div id="kt_app_content_container" class="app-container container-xxl">
+                <form id="kt_subscriptions_create_new" class="form es-form d-flex flex-column flex-lg-row" action="/admin/settings/integrations/marketing/save" data-redirect-url="/admin/settings/integrations/marketing" method="post">
+                    <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+                        <div class="card card-flush py-4">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h2 class="fw-bold">Marketing</h2>
                                 </div>
-                            </form>
+                                <div class="card-toolbar">
+                                    <button id="save-btn" class="btn btn-sm btn-success form-submit-btn" type="submit">
+                                        <span class="label">Save</span>
+                                        <span class="preloader d-none">Saving...</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="card-body pt-0 mb-10">
+                                <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                        <span class="required">GTM ID</span>
+                                    </label>
+                                    <input type="text" class="form-control" name="gtm_id" value="{{ data.marketing.gtm_id }}"/>
+                                    <div class="fv-plugins-message-container invalid-feedback" id="field-error-gtm_id"></div>
+                                </div>
+                                <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                        <span class="required">Gooogle Analytics ID</span>
+                                    </label>
+                                    <input type="text" class="form-control" name="google_analytics_id" value="{{ data.marketing.google_analytics_id }}"/>
+                                    <div class="fv-plugins-message-container invalid-feedback" id="field-error-google_analytics_id"></div>
+                                </div>
+                                <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                        <span class="required">Google Token</span>
+                                    </label>
+                                    <input type="text" class="form-control" name="google_token" value="{{ data.marketing.google_token }}"/>
+                                    <div class="fv-plugins-message-container invalid-feedback" id="field-error-google_token"></div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
