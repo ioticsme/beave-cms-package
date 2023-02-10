@@ -48,8 +48,8 @@ const save = async (req, res) => {
         name: Joi.string().required().min(3).max(60),
         email: Joi.string().required().min(3).max(60),
         password: Joi.string().required().min(3).max(20),
-        role: Joi.string().required().valid('admin'),
-        active: Joi.boolean().optional(),
+        role: Joi.string().required().valid('super_admin','admin','editor'),
+        status: Joi.boolean().required(),
         id: Joi.optional(),
     })
 
@@ -91,7 +91,7 @@ const save = async (req, res) => {
         email: req.body.email,
         password: bcrypt.hashSync('password', salt),
         role: req.body.role,
-        active: req.body.active || false,
+        active: req.body.status || false,
     }
 
     if (req.body.id) {

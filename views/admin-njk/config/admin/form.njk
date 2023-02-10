@@ -76,10 +76,20 @@
 								<div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Role</label>
 									<div class="col-lg-8 fv-row">
-										<select name="role" data-placeholder="Select a role" class="form-select mb-2" value="{{ admin.role }}">
+										<select name="role" data-placeholder="Select a role" class="form-select mb-2">
+											<option value="super_admin" {{ 'selected' if admin.role == 'super_admin'}}>Super Admin</option>
 											<option value="admin" {{ 'selected' if admin.role == 'admin'}}>Admin</option>
 											<option value="editor" {{ 'selected' if admin.role == 'editor' }}>Editor</option>
 											<option value="finance" {{ 'selected' if admin.role == 'finance'}}>Finance</option>
+										</select>
+									</div>
+								</div>
+								<div class="row mb-6">
+									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Status</label>
+									<div class="col-lg-8 fv-row">
+										<select name="status" data-placeholder="Select Status" class="form-select mb-2">
+											<option value="true" {{ 'selected' if admin.active }}>Active</option>
+											<option value="false" {{ 'selected' if admin.active == false }}>In Active</option>
 										</select>
 									</div>
 								</div>

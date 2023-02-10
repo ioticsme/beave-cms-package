@@ -79,15 +79,17 @@
 											</thead>
 											<tbody class="text-gray-600 fw-semibold">
 												{% for config_key, config_val in config_item %}
-													{% set partialType = 'mainList' %}
-													{% set fieldType = (configs
-														.schema
-														.path(key + "." + config_key)
-														.instance) if (configs
-														.schema
-														.path(key + "." + config_key)) else 
-															'Object' %}
-													{% include "./_app-config-row.njk" %}
+													{% if configs %}
+														{% set partialType = 'mainList' %}
+														{% set fieldType = configs
+															.schema
+															.path(key + "." + config_key)
+															.instance if configs
+															.schema
+															.path(key + "." + config_key) else 
+																'Object' %}
+														{% include "./_app-config-row.njk" %}
+													{% endif %}
 												{% endfor %}
 											</tbody>
 										</table>

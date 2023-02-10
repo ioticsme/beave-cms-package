@@ -142,9 +142,9 @@
 							</div>
 							<div class="card-body pt-0">
 								<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
-									{% for brandLanguage, i in authUser.brand.languages %}
+									{% for brandLanguage in authUser.brand.languages %}
 										<li class="nav-item">
-											<a class="nav-link {{'active' if i== 0 }}" data-bs-toggle="tab" href="#kt_tab_pane_{{brandLanguage.prefix}}">{{brandLanguage.name}}</a>
+											<a class="nav-link {{'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#kt_tab_pane_{{brandLanguage.prefix}}">{{brandLanguage.name}}</a>
 										</li>
 									{% endfor %}
 									{% if has_common_field_groups %}
@@ -161,24 +161,30 @@
 								<div class="tab-content tab-content-fields" id="myTabContent">
 									{% for brandLanguage in authUser.brand.languages %}
 										<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" id="kt_tab_pane_{{brandLanguage.prefix}}">
-											{% for cfg, cfg_i in reqContentType.field_groups %}
+											{% for cfg in reqContentType.field_groups %}
 												<h4 class="badge badge-warning mb-2">{{cfg.row_label}}</h4>
 												{% if cfg.repeater_group == true and cfg.localisation %}
-													<div class="group_repeater" id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{cfg_i}}">
-														<div class="row form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}}" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-{{cfg_i}}">
-															{% set totalItems = contentDetail
-																.content[brandLanguage.prefix][cfg.row_name][Object.keys(contentDetail.content[brandLanguage.prefix][cfg.row_name])[0]]
-																.length or 1 %}
+													<div class="group_repeater" id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
+														<div class="row form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}}" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}">
+															{% if contentDetail.content[brandLanguage.prefix][cfg.row_name] %}
+																{% set totalItems = contentDetail
+																	.content[brandLanguage.prefix][cfg.row_name][Object.keys(contentDetail.content[brandLanguage.prefix][cfg.row_name])[0]]
+																	.length or 1 %}
+															{% else %}
+																{% set totalItems = 1 %}
+															{% endif %}
+
 															{% for i in range(totalItems) %}
-																{% for cf, cf_idx in cfg.fields %}
+																{% for cf in cfg.fields %}
 																	{% if contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name] %}
 																		{% set fieldValue = contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name][i] %}
 																	{% else %}
 																		{% set fieldValue = '' %}
 																	{% endif %}
 																	<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container">
-																		label.d-flex.align-items-center.fs-6.fw-semibold.mb-2
-																			span.required {{cf.field_label}} ({{brandLanguage.prefix}})
+																		<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+																			<span class="required">{{cf.field_label}} ({{brandLanguage.prefix}})</span>
+																		</label>
 																		{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
 																			<input class="form-control form-control-solid" type="{{cf.field_type}}" placeholder="Enter {{cf.field_label}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" value="{{fieldValue}}">
 																		{% elif cf.field_type === 'richtext' %}
@@ -186,7 +192,7 @@
 																		{% elif cf.field_type === 'textarea' %}
 																			<textarea class="form-control form-control-solid" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
 																		{% elif cf.field_type === 'media' %}
-																			<span id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{cf_idx}}_preview">
+																			<span id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}_preview">
 																				<span class="preview-holder">
 																					{% if fieldValue %}
 																						<img src="{{fieldValue}}" style="max-width: 200px;"/>
@@ -196,8 +202,8 @@
 																					<i class="fa fa-trash" tabindex="-1"></i>
 																				</a>
 																			</span>
-																			<input type="hidden" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{cf_idx}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
-																			<a class="btn btn-success" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{cf_idx}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																			<input type="hidden" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																			<a class="btn btn-success" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																		{% elif cf.field_type === 'date' %}
 																			<div class="kt_daterangepicker">
 																				<input class="form-control mb-2" id="kt_daterangepicker_{{brandLanguage.prefix}}-{{cf_i}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
@@ -215,14 +221,14 @@
 																{% endfor %}
 															{% endfor %}
 															<div class="text-center">
-																<a class="btn btn-sm btn-light-danger mt-3 mt-md-8" onClick="deleteChild(event)" child-id="form-repeater-child-{{brandLanguage.prefix}}_{{cfg._id}}-{{cfg_i}}" target-id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{cfg_i}}">
+																<a class="btn btn-sm btn-light-danger mt-3 mt-md-8" onClick="deleteChild(event)" child-id="form-repeater-child-{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}" target-id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
 																	<i class="la la-trash-o"></i>Delete</a>
 															</div>
 														</div>
 													</div>
 
 													<div class="form-group mt-5 text-center">
-														<a class="btn btn-light-primary mb-10" onClick="cloneChild(event)" target-lang="{{cfg._id}}" target-lang-prefix="{{brandLanguage.prefix}}" target-id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{cfg_i}}" data-repeater-create="">
+														<a class="btn btn-light-primary mb-10" onClick="cloneChild(event)" target-lang="{{cfg._id}}" target-lang-prefix="{{brandLanguage.prefix}}" target-id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}" data-repeater-create="">
 															<i class="la la-plus"></i>Add</a>
 													</div>
 												{% else %}
@@ -279,12 +285,12 @@
 												{# //- BEGIN::Custom Fields without localisation #}
 												<div class="row mt-5 pt-5">
 													<div class="col-12 mt-5">
-														{% for cfg, cfg_i in reqContentType.field_groups %}
+														{% for cfg in reqContentType.field_groups %}
 															{% if cfg.localisation == false %}
 																{% if cfg.repeater_group == true %}
 																	<h4>{{cfg.row_label}}</h4>
-																	<div class="group_repeater" id="kt_docs_repeater_{{cfg._id}}_{{cfg_i}}">
-																		<div class="form-group row form-repeater-group-{{cfg._id}}-en" id="form_repeater_child_{{cfg._id}}-{{cfg_i}}">
+																	<div class="group_repeater" id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
+																		<div class="form-group row form-repeater-group-{{cfg._id}}-en" id="form_repeater_child_{{cfg._id}}-{{loop.index}}">
 																			{% set totalItems = contentDetail
 																				.content['common'][cfg.row_name][Object.keys(contentDetail.content['common'][cfg.row_name])[0]]
 																				.length or 1 %}
@@ -332,13 +338,13 @@
 																				{% endfor %}
 																			{% endfor %}
 																			<div class="text-center">
-																				<a class="btn btn-sm btn-light-danger mt-3 mt-md-8" onClick="deleteChild(event)" child-id="form-repeater-child-{{cfg._id}}-{{cfg_i}}" target-id="kt_docs_repeater_{{cfg._id}}_{{cfg_i}}">
+																				<a class="btn btn-sm btn-light-danger mt-3 mt-md-8" onClick="deleteChild(event)" child-id="form-repeater-child-{{cfg._id}}-{{loop.index}}" target-id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
 																					<i class="la la-trash-o"></i>Delete</a>
 																			</div>
 																		</div>
 																	</div>
 																	<div class="form-group mt-5 text-center">
-																		<a class="btn btn-light-primary" onClick="cloneChild(event)" target-lang="{{cfg._id}}" target-lang-prefix="en" target-id="kt_docs_repeater_{{cfg._id}}_{{cfg_i}}">
+																		<a class="btn btn-light-primary" onClick="cloneChild(event)" target-lang="{{cfg._id}}" target-lang-prefix="en" target-id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
 																			<i class="la la-plus"></i>Add
 																	</a>
 																	</div>
@@ -430,27 +436,28 @@
 								</div>
 							</div>
 						</div>
-						<div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 ms-lg-10">
-							{% if reqContentType.has_slug %}
-								{% include "./partials/_content-slug-field.njk" %}
-							{% endif %}
+					</div>
+					<div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 ms-lg-10">
+						{% if reqContentType.has_slug %}
+							{% include "./partials/_content-slug-field.njk" %}
+						{% endif %}
 
-							{% include "./partials/_publish.njk" %}
+						{% include "./partials/_publish.njk" %}
 
-							{% if reqContentType.allowed_type and reqContentType.allowed_type.length %}
-								{% include "./partials/_attach-content-type.njk" %}
-							{% endif %}
+						{% if reqContentType.allowed_type and reqContentType.allowed_type.length %}
+							{% include "./partials/_attach-content-type.njk" %}
+						{% endif %}
 
-							{% include "./partials/_add-to-home.njk" %}
+						{% include "./partials/_add-to-home.njk" %}
 
-							{% if reqContentType.single_type == false %}
-								{% include "./partials/_position.njk" %}
-							{% endif %}
-						</div>
-						{% include "./partials/_modal-attach-content.njk" %}
-					</form>
-				</div>
+						{% if reqContentType.single_type == false %}
+							{% include "./partials/_position.njk" %}
+						{% endif %}
+					</div>
+					{% include "./partials/_modal-attach-content.njk" %}
+				</form>
 			</div>
 		</div>
+	</div>
 
 	{% endblock %}

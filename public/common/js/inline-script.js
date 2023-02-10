@@ -15,6 +15,7 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
             mediaList = `${mediaList}</div>`
             e.target.querySelector('#field_id').value =
                 e.relatedTarget.getAttribute('id')
+            console.log(e.relatedTarget.getAttribute('id'))
             document.getElementById('media-holder').innerHTML = mediaList
         })
         .catch(function (error) {
