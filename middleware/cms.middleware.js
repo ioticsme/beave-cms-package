@@ -167,7 +167,6 @@ const authUser = async (req, res, next) => {
 const mainNavGenerator = async (req, res, next) => {
     let preBuildnav = _.cloneDeep(navConfig)
     let customBuildnav = _.cloneDeep(customNavConfig || [])
-    console.log(customBuildnav)
     const admin_nav_db_data = await AdminNav.find().select(
         '-_id -created_at -updated_at -__v'
     )
@@ -231,33 +230,42 @@ const mainNavGenerator = async (req, res, next) => {
         .sort([['position', 'ascending']])
     // app.locals.mainNav = contentTypes
     const listTypeItems = collect(contentTypes)
-        .filter((item) => item.single_type === false)
+        // .filter((item) => item.single_type === false)
         .map((item) => {
-            return {
-                section: item.admin_nav_section || 'Content',
-                label: item.title,
-                expandable: true,
-                icon: item.admin_icon,
-                position: item.position,
-                child: [
-                    {
-                        label: `All ${item.title}`,
-                        path: `/admin/cms/${item.slug}`,
-                    },
-                    {
-                        label: `Add ${item.title}`,
-                        path: `/admin/cms/${item.slug}/add`,
-                    },
-                ],
+            if(item.single_type === false) {
+                return {
+                    section: item.admin_nav_section || 'Content',
+                    label: item.title,
+                    expandable: true,
+                    icon: item.admin_icon,
+                    position: item.position,
+                    child: [
+                        {
+                            label: `All ${item.title}`,
+                            path: `/admin/cms/${item.slug}`,
+                        },
+                        {
+                            label: `Add ${item.title}`,
+                            path: `/admin/cms/${item.slug}/add`,
+                        },
+                    ],
+                }
+            } else {
+                return {
+                    section: item.admin_nav_section || 'Content',
+                    label: item.title,
+                    path: `/admin/cms/${item.slug}`,
+                }
             }
+            
         })
         .all()
 
     // console.log(preBuildnav)
 
-    const singleTypeItems = collect(contentTypes)
-        .filter((item) => item.single_type === true)
-        .all()
+    // const singleTypeItems = collect(contentTypes)
+    //     .filter((item) => item.single_type === true)
+    //     .all()
 
     listTypeItems.forEach((d) => {
         // console.log(d.section)
@@ -279,30 +287,28 @@ const mainNavGenerator = async (req, res, next) => {
         // }
     })
 
-    if (!singleTypeItems.length) {
-        const contentSection = _.find(preBuildnav, { section: 'Content' })
-        _.remove(contentSection?.items, (item) => item.label === 'Single Type')
-    } else {
-        const contentSection = _.find(preBuildnav, { section: 'Content' })
-        const single_type_nav = _.find(contentSection.items, {
-            label: 'Single Type',
-        })
-        single_type_nav.child = _.map(singleTypeItems, (single_item) => {
-            return {
-                label: single_item.title,
-                path: `/admin/cms/${single_item.slug}`,
-            }
-        })
-        // console.log(singleTypeItems)
-        // single_type_nav.child = [
-        //     {
-        //         label: 'Marketing Tool',
-        //         path: '/admin/settings/integrations/marketing',
-        //     },
-        // ]
-    }
-
-    // console.log(preBuildnav)
+    // if (!singleTypeItems.length) {
+    //     const contentSection = _.find(preBuildnav, { section: 'Content' })
+    //     _.remove(contentSection?.items, (item) => item.label === 'Single Type')
+    // } else {
+    //     const contentSection = _.find(preBuildnav, { section: 'Content' })
+    //     const single_type_nav = _.find(contentSection.items, {
+    //         label: 'Single Type',
+    //     })
+    //     single_type_nav.child = _.map(singleTypeItems, (single_item) => {
+    //         return {
+    //             label: single_item.title,
+    //             path: `/admin/cms/${single_item.slug}`,
+    //         }
+    //     })
+    //     // console.log(singleTypeItems)
+    //     // single_type_nav.child = [
+    //     //     {
+    //     //         label: 'Marketing Tool',
+    //     //         path: '/admin/settings/integrations/marketing',
+    //     //     },
+    //     // ]
+    // }
 
     const mixed_nav = _.sortBy(preBuildnav, 'position')
     // console.log(mixed_nav[4].items[4].child)
@@ -313,6 +319,7 @@ const mainNavGenerator = async (req, res, next) => {
     // console.log(singleTypeItems)
     next()
 }
+
 const allBrands = async (req, res, next) => {
     const allBrands = await Brand.find()
         .populate('languages')
