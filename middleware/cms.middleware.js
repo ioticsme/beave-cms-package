@@ -17,6 +17,7 @@ try {
         './config/admin.config.js'
     ))
 } catch (error) {
+    // console.log(error)
     customNavConfig = []
 }
 
@@ -166,6 +167,7 @@ const authUser = async (req, res, next) => {
 const mainNavGenerator = async (req, res, next) => {
     let preBuildnav = _.cloneDeep(navConfig)
     let customBuildnav = _.cloneDeep(customNavConfig || [])
+    console.log(customBuildnav)
     const admin_nav_db_data = await AdminNav.find().select(
         '-_id -created_at -updated_at -__v'
     )
@@ -174,71 +176,10 @@ const mainNavGenerator = async (req, res, next) => {
     // const path = req.path;
     // console.log(`The request path is: ${path}`);
     // console.log('DB Fetch Begin')
-    // console.log(admin_nav)
+    // const mergedArray = _.groupBy(_.merge(preBuildnav, customBuildnav, adminNav), 'section')
+    // console.log(mergedArray)
     // console.log('DB Fetch END')
-    const contentTypes = await ContentType.find({
-        // single_type: false,
-        active: true,
-    })
-        .select('-_id title slug admin_icon position active single_type')
-        .sort([['position', 'ascending']])
-    // app.locals.mainNav = contentTypes
-    const listTypeItems = collect(contentTypes)
-        .filter((item) => item.single_type === false)
-        .map((item) => {
-            return {
-                label: item.title,
-                expandable: true,
-                icon: item.admin_icon,
-                position: item.position,
-                child: [
-                    {
-                        label: `All ${item.title}`,
-                        path: `/admin/cms/${item.slug}`,
-                    },
-                    {
-                        label: `Add ${item.title}`,
-                        path: `/admin/cms/${item.slug}/add`,
-                    },
-                ],
-            }
-        })
-        .all()
-
-    const singleTypeItems = collect(contentTypes)
-        .filter((item) => item.single_type === true)
-        .all()
-
-    const contentSection = _.find(preBuildnav, { section: 'Content' })
-    if (contentSection?.items?.length) {
-        contentSection.items = _.uniqBy(
-            _.concat(contentSection.items, listTypeItems),
-            (item) => {
-                return item.label
-            }
-        )
-    }
-
-    if (!singleTypeItems.length) {
-        _.remove(contentSection?.items, (item) => item.label === 'Single Type')
-    } else {
-        const single_type_nav = _.find(contentSection.items, {
-            label: 'Single Type',
-        })
-        single_type_nav.child = _.map(singleTypeItems, (single_item) => {
-            return {
-                label: single_item.title,
-                path: `/admin/cms/${single_item.slug}`,
-            }
-        })
-        // console.log(singleTypeItems)
-        // single_type_nav.child = [
-        //     {
-        //         label: 'Marketing Tool',
-        //         path: '/admin/settings/integrations/marketing',
-        //     },
-        // ]
-    }
+    
     // const mixed_nav = _.sortBy(_.concat(preBuildnav, admin_nav), 'position')
 
     const findSection = (section) => {
@@ -278,6 +219,88 @@ const mainNavGenerator = async (req, res, next) => {
             preBuildnav.push(customSection)
         }
     })
+
+
+    const contentTypes = await ContentType.find({
+        // single_type: false,
+        active: true,
+    })
+        .select(
+            '-_id title slug admin_icon admin_nav_section position active single_type'
+        )
+        .sort([['position', 'ascending']])
+    // app.locals.mainNav = contentTypes
+    const listTypeItems = collect(contentTypes)
+        .filter((item) => item.single_type === false)
+        .map((item) => {
+            return {
+                section: item.admin_nav_section || 'Content',
+                label: item.title,
+                expandable: true,
+                icon: item.admin_icon,
+                position: item.position,
+                child: [
+                    {
+                        label: `All ${item.title}`,
+                        path: `/admin/cms/${item.slug}`,
+                    },
+                    {
+                        label: `Add ${item.title}`,
+                        path: `/admin/cms/${item.slug}/add`,
+                    },
+                ],
+            }
+        })
+        .all()
+
+    // console.log(preBuildnav)
+
+    const singleTypeItems = collect(contentTypes)
+        .filter((item) => item.single_type === true)
+        .all()
+
+    listTypeItems.forEach((d) => {
+        // console.log(d.section)
+        const contentSection = _.find(preBuildnav, { section: d.section })
+        // if (contentSection?.items?.length) {
+        //     contentSection.items = _.uniqBy(
+        //         _.concat(contentSection.items, listTypeItems),
+        //         (item) => {
+        //             return item.label
+        //         }
+        //     )
+        // } else {
+            contentSection.items = _.uniqBy(
+                _.concat(contentSection.items, listTypeItems),
+                (item) => {
+                    return item.label
+                }
+            )
+        // }
+    })
+
+    if (!singleTypeItems.length) {
+        const contentSection = _.find(preBuildnav, { section: 'Content' })
+        _.remove(contentSection?.items, (item) => item.label === 'Single Type')
+    } else {
+        const contentSection = _.find(preBuildnav, { section: 'Content' })
+        const single_type_nav = _.find(contentSection.items, {
+            label: 'Single Type',
+        })
+        single_type_nav.child = _.map(singleTypeItems, (single_item) => {
+            return {
+                label: single_item.title,
+                path: `/admin/cms/${single_item.slug}`,
+            }
+        })
+        // console.log(singleTypeItems)
+        // single_type_nav.child = [
+        //     {
+        //         label: 'Marketing Tool',
+        //         path: '/admin/settings/integrations/marketing',
+        //     },
+        // ]
+    }
 
     // console.log(preBuildnav)
 

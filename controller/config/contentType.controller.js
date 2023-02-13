@@ -81,6 +81,7 @@ const save = async (req, res) => {
             // template_name: Joi.string().required().min(3).max(60),
             position: Joi.number().required(),
             admin_icon: Joi.string().optional().allow(null, ''),
+            admin_nav_section: Joi.string().optional().allow(null, ''),
             has_slug: Joi.boolean().optional().allow(null, ''),
             active: Joi.boolean().optional().allow(null, ''),
             nav_on_collection_api: Joi.boolean().optional().allow(null, ''),
@@ -110,6 +111,7 @@ const save = async (req, res) => {
             admin_icon: req.body.admin_icon.length
                 ? req.body.admin_icon
                 : undefined,
+            admin_nav_section: req.body.admin_nav_section,
             allowed_type: req.body.allowed_type || [],
             has_form: req.body?.has_form || false,
             has_slug: req.body.has_slug || false,

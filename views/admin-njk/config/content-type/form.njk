@@ -152,6 +152,19 @@
 								</div>
 
 								<div class="row mb-6">
+									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Admin Nav Section</label>
+									<div class="col-lg-8 fv-row">
+										<select class="form-select form-select-lg form-select-solid" data-control="select2" data-close-on-select="false" name="admin_nav_section" data-placeholder="Select Nav Section">
+											<option value="">Select Nav Section</option>
+											{% for navGroup in mainNav %}
+												<option value="{{ navGroup.section }}" {{'selected' if contentType.admin_nav_section == navGroup.section }}>{{ navGroup.section }}</option>
+											{% endfor %}
+										</select>
+										<div class="fv-plugins-message-container invalid-feedback" id="field-error-admin_nav_section"></div>
+									</div>
+								</div>
+
+								<div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Attachable type</label>
 									<div class="col-lg-8 fv-row">
 										<select class="form-select form-select-lg form-select-solid" data-control="select2" data-close-on-select="false" name="attachable_type" data-placeholder="Select a type" data-allow-clear="true" multiple="multiple">
