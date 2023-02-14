@@ -520,8 +520,8 @@ const save = async (req, res) => {
             // meta: metaData,
             in_home: body.in_home || false,
         }
-        console.log('fieldGroupData :>> ', fieldGroupData)
-        console.log(data)
+        // console.log('fieldGroupData :>> ', fieldGroupData)
+        // console.log(data)
         // getting attached contents
         // TODO Find Permanent solution for issue
         // ISSUE : Sometime the data get in the form of array sometime in the form of string
@@ -582,7 +582,7 @@ const save = async (req, res) => {
 }
 
 const saveTemp = async (req, res) => {
-    console.log(req.body.en.test.description)
+    // console.log(req.body)
     // return false
     try {
         // Data object to insert

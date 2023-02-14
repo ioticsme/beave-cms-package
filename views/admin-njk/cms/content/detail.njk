@@ -95,7 +95,7 @@
 																							{% if eachVal.field_type == 'media' %}
 																								<img src="{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name][i] }}" style="max-width: 100px;">
 																							{% else %}
-																								<span class="badge badge-light-info">{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name][i] }}</span>
+																								<span class="badge badge-light-info">{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name][i] | safe }}</span>
 																								<br>
 																							{% endif %}
 																						{% endif %}
@@ -111,7 +111,7 @@
 																				{% if cf.field_type == 'media' %}
 																					<img src="{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name] }}" style="max-width: 200px;">
 																				{% else %}
-																					{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name] }}
+																					{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name] | safe }}
 																				{% endif %}
 																			</div>
 																		{% endfor %}
@@ -147,7 +147,7 @@
 																								{% if eachVal.field_type == 'media' %}
 																									<img src="{{content[eachVal.field_name][i]}}" style="max-width: 100px;">
 																								{% else %}
-																									<span class="badge badge-light-info">{{content[eachVal.field_name][i]}}</span>
+																									<span class="badge badge-light-info">{{content[eachVal.field_name][i] | safe}}</span>
 																									<br>
 																								{% endif %}
 																							{% endif %}
@@ -166,7 +166,7 @@
 																					{% if cf.field_type == 'media' %}
 																						<img src="{{ contentDetail.content['common'][cfg.row_name][cf.field_name] }}" style="max-width: 200px;">
 																					{% else %}
-																						{{ contentDetail.content['common'][cfg.row_name][cf.field_name] }}
+																						{{ contentDetail.content['common'][cfg.row_name][cf.field_name] | safe }}
 																					{% endif %}
 																				{% endif %}
 																			</div>

@@ -82,6 +82,12 @@
 				.forEach(function (element) {
 					element.value = null
 				})
+			//- console.log(`#${newElement.getAttribute('id')}`)
+			newMediaButtonId = `beave-media-field-${Math.floor(Math.random() * 1000000000)}`
+			document
+				.querySelector(`#${newElement.getAttribute('id')}`)
+				.querySelector('.media-uploader-modal-btn')
+				.setAttribute('id', newMediaButtonId)
 		}
 
 		function deleteChild(event) {
@@ -90,9 +96,6 @@
 			let childDiv = targetElement.parentElement.parentElement
 			let parentId = parentDiv.getAttribute('id')
 			let childId = childDiv.getAttribute('id')
-			console.log(Number(
-				childId.split('-')
-				?.[1]))
 			if (Number(
 				childId.split('-')
 				?.[1]) > 1000) {
@@ -126,12 +129,12 @@
 		<div id="kt_app_content" class="app-content flex-column-fluid">
 			<div class="app-container container-xxl" id="kt_app_content_container">
 				<form class="form es-form d-flex flex-column flex-lg-row" id="kt_subscriptions_create_new" action="/admin/cms/{{reqContentType.slug}}/save" data-kt-redirect-url="/admin/cms/{{reqContentType.slug}}" enctype="multipart/form-data" method="post">
-					<input type="hidden" name="_id" value="{{contentDetail._id}}">
+					<input type="hidden" name="_id" value="{{ contentDetail._id }}">
 					<div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
 						<div class="card card-flush py-4">
 							<div class="card-header">
 								<div class="card-title">
-									<h2 class="fw-bold">{{reqContentType.title}}</h2>
+									<h2 class="fw-bold">{{ reqContentType.title }}</h2>
 								</div>
 								<div class="card-toolbar">
 									<button class="btn btn-sm btn-success form-submit-btn" type="submit">
@@ -144,7 +147,7 @@
 								<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 									{% for brandLanguage in authUser.brand.languages %}
 										<li class="nav-item">
-											<a class="nav-link {{'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#kt_tab_pane_{{brandLanguage.prefix}}">{{brandLanguage.name}}</a>
+											<a class="nav-link {{'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
 										</li>
 									{% endfor %}
 									{% if has_common_field_groups %}
@@ -160,7 +163,7 @@
 								</ul>
 								<div class="tab-content tab-content-fields" id="myTabContent">
 									{% for brandLanguage in authUser.brand.languages %}
-										<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" id="kt_tab_pane_{{brandLanguage.prefix}}">
+										<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" id="kt_tab_pane_{{ brandLanguage.prefix }}">
 											{% for cfg in reqContentType.field_groups %}
 												<h4 class="badge badge-warning mb-2">{{cfg.row_label}}</h4>
 												{% if cfg.repeater_group == true and cfg.localisation %}
@@ -193,18 +196,20 @@
 																		{% elif cf.field_type === 'textarea' %}
 																			<textarea class="form-control form-control-solid" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
 																		{% elif cf.field_type === 'media' %}
-																			<span id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}_preview">
-																				<span class="preview-holder">
-																					{% if fieldValue %}
-																						<img src="{{fieldValue}}" style="max-width: 200px;"/>
-																					{% endif %}
+																			<span class='media-uploader-field'>
+																				<span class="media_preview">
+																					<span class="preview-holder">
+																						{% if fieldValue %}
+																							<img src="{{fieldValue}}" style="max-width: 200px;"/>
+																						{% endif %}
+																					</span>
+																					<a class="btn btn-danger image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
+																						<i class="fa fa-trash" tabindex="-1"></i>
+																					</a>
 																				</span>
-																				<a class="btn btn-danger image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
-																					<i class="fa fa-trash" tabindex="-1"></i>
-																				</a>
+																				<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																				<a class="btn btn-success" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																			</span>
-																			<input type="hidden" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
-																			<a class="btn btn-success" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																		{% elif cf.field_type === 'date' %}
 																			<div class="kt_daterangepicker">
 																				<input class="form-control mb-2" id="kt_daterangepicker_{{brandLanguage.prefix}}-{{cf_i}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
@@ -251,18 +256,20 @@
 																{% elif cf.field_type === 'textarea' %}
 																	<textarea class="form-control form-control-solid" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
 																{% elif cf.field_type === 'media' %}
-																	<span id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_preview">
-																		<span class="preview-holder">
-																			{% if fieldValue %}
-																				<img src="{{fieldValue}}" style="max-width: 200px;"/>
-																			{% endif %}
+																	<span class='media-uploader-field'>
+																		<span class="media_preview">
+																			<span class="preview-holder">
+																				{% if fieldValue %}
+																					<img src="{{fieldValue}}" style="max-width: 200px;"/>
+																				{% endif %}
+																			</span>
+																			<a class="btn btn-danger image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
+																				<i class="fa fa-trash" tabindex="-1"></i>
+																			</a>
 																		</span>
-																		<a class="btn btn-danger image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
-																			<i class="fa fa-trash" tabindex="-1"></i>
-																		</a>
+																		<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" value="{{fieldValue}}">
+																		<a class="btn btn-success" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																	</span>
-																	<input type="hidden" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" value="{{fieldValue}}">
-																	<a class="btn btn-success" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																{% elif cf.field_type === 'date' %}
 																	.kt_daterangepicker
 																		<input class="form-control mb-2" id="kt_daterangepicker_{{brandLanguage.prefix}}-{{cf_i}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
@@ -310,17 +317,19 @@
 																						{% elif cf.field_type === 'textarea' %}
 																							<textarea class="form-control form-control-solid" rows="6" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
 																						{% elif cf.field_type === 'media' %}
-																							<span id="{{cfg.row_name}}_{{cf.field_name}}_{{cf_i}}_preview">
-																								<span class="preview-holder">
+																							<span class='media-uploader-field'>
+																								<span class="media_preview">
+																									<span class="preview-holder">
 																								if fieldValue
 																									<img src="{{fieldValue}}" style="max-width: 150px;"/>
+																									</span>
+																									<a class="btn btn-danger image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
+																										<i class="fa fa-trash" tabindex="-1"></i>
+																									</a>
 																								</span>
-																								<a class="btn btn-danger image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
-																									<i class="fa fa-trash" tabindex="-1"></i>
-																								</a>
+																								<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{cf_i}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																								<a class="btn btn-success" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{cf_i}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																							</span>
-																							<input type="hidden" id="{{cfg.row_name}}_{{cf.field_name}}_{{cf_i}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]">
-																							<a class="btn btn-success" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{cf_i}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																						{% elif cf.field_type === 'date' %}
 																							<div class="kt_daterangepicker">
 																								<input class="form-control mb-2" id="kt_daterangepicker_{{cf_i}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
@@ -368,18 +377,20 @@
 																			{% elif cf.field_type === 'textarea' %}
 																				<textarea class="form-control form-control-solid" rows="6" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false">{{ fieldValue }}</textarea>
 																			{% elif cf.field_type === 'media' %}
-																				<span id="{{ cfg.row_name }}_{{ cf.field_name }}_{{ cf_i }}_preview">
-																					<span class="preview-holder">
-																						{% if fieldValue %}
-																							<img src="{{ fieldValue }}" style="max-width: 150px;"/>
-																						{% endif %}
+																				<span class='media-uploader-field'>
+																					<span class="media_preview">
+																						<span class="preview-holder">
+																							{% if fieldValue %}
+																								<img src="{{ fieldValue }}" style="max-width: 150px;"/>
+																							{% endif %}
+																						</span>
+																						<a class="btn btn-danger image-preview-remove-btn my-1 {% if not fieldValue %}d-none{% endif %}">
+																							<i class="fa fa-trash" tabindex="-1"></i>
+																						</a>
 																					</span>
-																					<a class="btn btn-danger image-preview-remove-btn my-1 {% if not fieldValue %}d-none{% endif %}">
-																						<i class="fa fa-trash" tabindex="-1"></i>
-																					</a>
+																					<input type="hidden" class="media_url_field" id="{{ cfg.row_name }}_{{ cf.field_name }}_{{ cf_i }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" value="{{ fieldValue }}">
+																					<a class="btn btn-success" data-field="{{ cfg.row_name }}_{{ cf.field_name }}_{{ cf_i }}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																				</span>
-																				<input type="hidden" id="{{ cfg.row_name }}_{{ cf.field_name }}_{{ cf_i }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" value="{{ fieldValue }}">
-																				<a class="btn btn-success" data-field="{{ cfg.row_name }}_{{ cf.field_name }}_{{ cf_i }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																			{% elif cf.field_type === 'date' %}
 																				<div class="kt_daterangepicker">
 																					<input id="kt_daterangepicker_{{cf_i}}" class="form-control mb-2" type="text" name="common[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="">
@@ -461,4 +472,4 @@
 		</div>
 	</div>
 
-	{% endblock %}
+{% endblock %}

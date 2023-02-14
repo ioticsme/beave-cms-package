@@ -6,7 +6,7 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
         .then(function (response) {
             // Handle the successful response
             var mediaList = `<div class="row">`
-            console.log(response.data)
+            // console.log(response.data)
             response.data.forEach((element) => {
                 mediaList = `${mediaList} <div class="col-12 col-sm-3 col-md-2">
                     <img data-mediaUrl="${element.url}" src="${element.url}" />
@@ -15,7 +15,7 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
             mediaList = `${mediaList}</div>`
             e.target.querySelector('#field_id').value =
                 e.relatedTarget.getAttribute('id')
-            console.log(e.relatedTarget.getAttribute('id'))
+            // console.log(e.relatedTarget.getAttribute('id'))
             document.getElementById('media-holder').innerHTML = mediaList
         })
         .catch(function (error) {
@@ -29,7 +29,7 @@ document
     .addEventListener('click', function (event) {
         var mediaUrl = event.target.getAttribute('data-mediaUrl')
         var attachButtonId = mediaModal.querySelector('#field_id').value
-        // console.log(fieldId)
+        // console.log(attachButtonId)
         if (mediaUrl) {
             $(mediaModal).modal('hide')
             // Do something when a list item is clicked, such as displaying its text content

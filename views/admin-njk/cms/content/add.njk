@@ -146,7 +146,7 @@
 								<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 									{% for brandLanguage in authUser.brand.languages %}
 										<li class="nav-item">
-											<a class="nav-link {% if loop.index == 1 %}active{% endif %}" data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
+											<a class="nav-link {{'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
 										</li>
 									{% endfor %}
 									{% if has_common_field_groups %}
@@ -179,7 +179,8 @@
 																	{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
 																		<input class="form-control form-control-solid" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
 																	{% elif cf.field_type === 'richtext' %}
-																		<textarea class="content_wysiwyg" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}"></textarea>
+																		{# <h1>Hello</h1> #}
+																		<textarea class="content_wysiwyg" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ loop.index }}"></textarea>
 																	{% elif cf.field_type === 'textarea' %}
 																		<textarea class="form-control form-control-solid" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																	{% elif cf.field_type === 'media' %}
