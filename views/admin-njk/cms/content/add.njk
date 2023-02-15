@@ -280,10 +280,11 @@
 									{% if has_common_field_groups %}
 										<div class="tab-pane fade" role="tabpanel" id="kt_tab_pane_common">
 											{# //- BEGIN::Custom Fields without localisation #}
-											<div class="row mt-5 pt-5">
-												<div class="col-12 mt-5">
+											<div class="row mt-5">
+												<div class="col-12">
 													{% for cfg in reqContentType.field_groups %}
 														{% if cfg.localisation == false %}
+															<h4 class="badge badge-warning mb-2">{{cfg.row_label}}</h4>
 															{% if cfg.repeater_group == true %}
 																<h4>{{ cfg.row_label }}</h4>
 																<div class="group_repeater" id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
