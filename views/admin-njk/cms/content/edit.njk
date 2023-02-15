@@ -168,17 +168,20 @@
 												<h4 class="badge badge-warning mb-2">{{cfg.row_label}}</h4>
 												{% if cfg.repeater_group == true and cfg.localisation %}
 													<div class="group_repeater" id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
-														<div class="row form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}}" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}">
-															{# {{ ObjectKeys(contentDetail.content[brandLanguage.prefix][cfg.row_name]) }} #}
-															{% if contentDetail.content[brandLanguage.prefix][cfg.row_name] %}
-																{% set totalItems = contentDetail
-																	.content[brandLanguage.prefix][cfg.row_name][ObjectKeys(contentDetail.content[brandLanguage.prefix][cfg.row_name])[0]]
-																	.length or 1 %}
-															{% else %}
-																{% set totalItems = 1 %}
-															{% endif %}
+														{% if contentDetail.content[brandLanguage.prefix][cfg.row_name] %}
+															{% set totalItems = contentDetail
+																.content[brandLanguage.prefix][cfg.row_name][ObjectKeys(contentDetail.content[brandLanguage.prefix][cfg.row_name])[0]]
+																.length or 1 %}
+														{% else %}
+															{% set totalItems = 1 %}
+														{% endif %}
 
-															{% for i in range(totalItems) %}
+														{% for i in range(totalItems) %}
+															{% if loop.index == 1%}
+																<div class="row form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}}" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}">
+															{%else%}
+																<div class="row form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}}" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index * 1000}}">
+															{%endif%}
 																{% for cf in cfg.fields %}
 																	{% if contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name] %}
 																		{% set fieldValue = contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name][i] %}
@@ -225,12 +228,12 @@
 																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{brandLanguage.prefix}}_{{cfg.row_name}}_{{cf.field_name}}"></div>
 																	</div>
 																{% endfor %}
-															{% endfor %}
-															<div class="text-center">
-																<a class="btn btn-sm btn-light-danger mt-3 mt-md-8" onClick="deleteChild(event)" child-id="form-repeater-child-{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}" target-id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
-																	<i class="la la-trash-o"></i>Delete</a>
+																<div class="text-center">
+																	<a class="btn btn-sm btn-light-danger mt-3 mt-md-8" onClick="deleteChild(event)" child-id="form-repeater-child-{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}" target-id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
+																		<i class="la la-trash-o"></i>Delete</a>
+																</div>
 															</div>
-														</div>
+														{% endfor %}
 													</div>
 
 													<div class="form-group mt-5 text-center">
@@ -298,65 +301,69 @@
 																{% if cfg.repeater_group == true %}
 																	<h4>{{cfg.row_label}}</h4>
 																	<div class="group_repeater" id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
-																		<div class="form-group row form-repeater-group-{{cfg._id}}-en" id="form_repeater_child_{{cfg._id}}-{{loop.index}}">
 																			{% set totalItems = contentDetail
 																				.content['common'][cfg.row_name][Object.keys(contentDetail.content['common'][cfg.row_name])[0]]
 																				.length or 1 %}
 																			{% for i in range(totalItems) %}
-																				{% for cf, cf_i in cfg.fields %}
-																					{% set fieldValue = contentDetail.content['common'][cfg.row_name][cf.field_name][i] %}
-																					<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container">
-																						<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-																							<span class="required">{{cf.field_label}}</span>
-																							<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-kt-initialized="1"></i>
-																						</label>
-																						{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
-																							<input class="form-control form-control-solid" type="{{cf.field_type}}" placeholder="Enter {{cf.field_label}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" value="{{fieldValue}}">
-																						{% elif cf.field_type === 'richtext' %}
-																							<textarea class="content_wysiwyg" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" id="wysiwyg-cf-{{cf_i}}">{{fieldValue}}</textarea>
-																						{% elif cf.field_type === 'textarea' %}
-																							<textarea class="form-control form-control-solid" rows="6" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
-																						{% elif cf.field_type === 'media' %}
-																							<span class='media-uploader-field'>
-																								<span class="media_preview">
-																									<span class="preview-holder">
-																								if fieldValue
-																									<img src="{{fieldValue}}" style="max-width: 150px;"/>
+																				{% if loop.index == 1%}
+																					<div class="form-group row form-repeater-group-{{cfg._id}}-en" id="form_repeater_child_{{cfg._id}}-{{loop.index}}">
+																				{%else%}
+																					<div class="form-group row form-repeater-group-{{cfg._id}}-en" id="form_repeater_child_{{cfg._id}}-{{loop.index * 1000}}">
+																				{%endif%}
+																					{% for cf, cf_i in cfg.fields %}
+																						{% set fieldValue = contentDetail.content['common'][cfg.row_name][cf.field_name][i] %}
+																						<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container">
+																							<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+																								<span class="required">{{cf.field_label}}</span>
+																								<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-kt-initialized="1"></i>
+																							</label>
+																							{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
+																								<input class="form-control form-control-solid" type="{{cf.field_type}}" placeholder="Enter {{cf.field_label}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" value="{{fieldValue}}">
+																							{% elif cf.field_type === 'richtext' %}
+																								<textarea class="content_wysiwyg" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" id="wysiwyg-cf-{{cf_i}}">{{fieldValue}}</textarea>
+																							{% elif cf.field_type === 'textarea' %}
+																								<textarea class="form-control form-control-solid" rows="6" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
+																							{% elif cf.field_type === 'media' %}
+																								<span class='media-uploader-field'>
+																									<span class="media_preview">
+																										<span class="preview-holder">
+																									if fieldValue
+																										<img src="{{fieldValue}}" style="max-width: 150px;"/>
+																										</span>
+																										<a class="btn btn-danger image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
+																											<i class="fa fa-trash" tabindex="-1"></i>
+																										</a>
 																									</span>
-																									<a class="btn btn-danger image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
-																										<i class="fa fa-trash" tabindex="-1"></i>
-																									</a>
+																									<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{cf_i}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																									<a class="btn btn-success" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{cf_i}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																								</span>
-																								<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{cf_i}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]">
-																								<a class="btn btn-success" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{cf_i}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
-																							</span>
-																						{% elif cf.field_type === 'date' %}
-																							<div class="kt_daterangepicker">
-																								<input class="form-control mb-2" id="kt_daterangepicker_{{cf_i}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
-																								<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{cf.field_name}}"></div>
-																							</div>
-																						{% elif cf.field_type === 'dropdown' %}
-																							<select class="form-select" data-control="select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" data-placeholder="Select an option">
-																								<option value="">Select an option</option>
-																								{% for dropdown, dd_i in cf.options %}
-																									<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value}}>{{dropdown.label}}</option>
-																								{% endfor %}
-																							</select>
-																						{% endif %}
-																						<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_{{cfg.row_name}}_{{cf.field_name}}"></div>
+																							{% elif cf.field_type === 'date' %}
+																								<div class="kt_daterangepicker">
+																									<input class="form-control mb-2" id="kt_daterangepicker_{{cf_i}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																									<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{cf.field_name}}"></div>
+																								</div>
+																							{% elif cf.field_type === 'dropdown' %}
+																								<select class="form-select" data-control="select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" data-placeholder="Select an option">
+																									<option value="">Select an option</option>
+																									{% for dropdown, dd_i in cf.options %}
+																										<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value}}>{{dropdown.label}}</option>
+																									{% endfor %}
+																								</select>
+																							{% endif %}
+																							<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_{{cfg.row_name}}_{{cf.field_name}}"></div>
+																						</div>
+																					{% endfor %}
+																					<div class="text-center">
+																						<a class="btn btn-sm btn-light-danger mt-3 mt-md-8" onClick="deleteChild(event)" child-id="form-repeater-child-{{cfg._id}}-{{loop.index}}" target-id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
+																							<i class="la la-trash-o"></i>Delete</a>
 																					</div>
-																				{% endfor %}
+																				</div>
 																			{% endfor %}
-																			<div class="text-center">
-																				<a class="btn btn-sm btn-light-danger mt-3 mt-md-8" onClick="deleteChild(event)" child-id="form-repeater-child-{{cfg._id}}-{{loop.index}}" target-id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
-																					<i class="la la-trash-o"></i>Delete</a>
-																			</div>
 																		</div>
-																	</div>
-																	<div class="form-group mt-5 text-center">
-																		<a class="btn btn-light-primary" onClick="cloneChild(event)" target-lang="{{cfg._id}}" target-lang-prefix="en" target-id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
-																			<i class="la la-plus"></i>Add
-																	</a>
+																		<div class="form-group mt-5 text-center">
+																			<a class="btn btn-light-primary" onClick="cloneChild(event)" target-lang="{{cfg._id}}" target-lang-prefix="en" target-id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
+																				<i class="la la-plus"></i>Add
+																		</a>
 																	</div>
 																{% else %}
 																	{% for cf, cf_i in cfg.fields %}
