@@ -1,6 +1,6 @@
 {
     "name": "@ioticsme/beave-cms",
-    "version": "1.0.43",
+    "version": "1.0.44",
     "description": "BeaveCMS - NPM Package",
     "main": "index.js",
     "scripts": {
