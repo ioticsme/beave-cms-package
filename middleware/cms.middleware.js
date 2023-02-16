@@ -178,7 +178,7 @@ const mainNavGenerator = async (req, res, next) => {
     // const mergedArray = _.groupBy(_.merge(preBuildnav, customBuildnav, adminNav), 'section')
     // console.log(mergedArray)
     // console.log('DB Fetch END')
-    
+
     // const mixed_nav = _.sortBy(_.concat(preBuildnav, admin_nav), 'position')
 
     const findSection = (section) => {
@@ -232,7 +232,7 @@ const mainNavGenerator = async (req, res, next) => {
     const listTypeItems = collect(contentTypes)
         // .filter((item) => item.single_type === false)
         .map((item) => {
-            if(item.single_type === false) {
+            if (item.single_type === false) {
                 return {
                     section: item.admin_nav_section || 'Content',
                     label: item.title,
@@ -256,8 +256,7 @@ const mainNavGenerator = async (req, res, next) => {
                     label: item.title,
                     path: `/admin/cms/${item.slug}`,
                 }
-            }
-            
+            }   
         })
         .all()
 
@@ -278,12 +277,15 @@ const mainNavGenerator = async (req, res, next) => {
         //         }
         //     )
         // } else {
+        if (contentSection) {
             contentSection.items = _.uniqBy(
                 _.concat(contentSection.items, listTypeItems),
                 (item) => {
                     return item.label
                 }
             )
+        }
+
         // }
     })
 

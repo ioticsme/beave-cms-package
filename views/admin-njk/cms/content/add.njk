@@ -164,7 +164,7 @@
 								</ul>
 								<div class="tab-content tab-content-fields" id="myTabContent">
 									{% for brandLanguage in authUser.brand.languages %}
-										<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" id="kt_tab_pane_{{ brandLanguage.prefix }}">
+										<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" dir="{{brandLanguage.dir}}" id="kt_tab_pane_{{ brandLanguage.prefix }}">
 											{# //- BEGIN::Fields with localisation #}
 											{% for cfg in reqContentType.field_groups %}
 												{% if cfg.repeater_group == true and cfg.localisation  %}
