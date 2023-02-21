@@ -114,7 +114,7 @@ const detail = async (req, res) => {
             }
         )
 
-        // return res.send(contentDetail)
+        // return res.send(metaFields)
 
         res.render(`admin-njk/cms/content/detail`, {
             default_lang,
@@ -757,7 +757,7 @@ const saveTemp = async (req, res) => {
         const countryCode = req.authUser.brand?.country_code
 
         if (req.body._id) {
-            data.slug = req.body.slug ? slugify(req.body.slug) : undefined
+            data.slug = req.body.slug ? slugify(req.body.slug).toLowerCase() : undefined
             // console.log(data)
             // data.slug = body.slug?.en
             //     ? slugify(body.slug?.en?.toLowerCase())

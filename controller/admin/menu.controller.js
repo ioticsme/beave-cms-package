@@ -39,7 +39,14 @@ const addMenu = async (req, res) => {
                 ...pathValidationObj,
             }),
             external: Joi.string().allow('', null, 'true'),
-            menu_position: Joi.string().required(),
+            menu_position: Joi.string().optional().allow(null, ''),
+            menu_position_new: Joi.string()
+                .empty('')
+                .optional()
+                .when('menu_position', {
+                    is: Joi.required(),
+                    then: Joi.required(),
+                }),
         })
 
         const validationResult = schema.validate(req.body, {
@@ -72,10 +79,25 @@ const addMenu = async (req, res) => {
                 external: body.external == 'true',
             },
         }
+
+        const nav = await Menu.findOne({
+            nav_position: body.menu_position || body.menu_position_new,
+            brand: req.authUser?.brand?._id,
+            country: req.authUser?.brand?.country,
+        })
+
+        if (!nav) {
+            await Menu.create({
+                nav_label: body.menu_position || body.menu_position_new,
+                nav_position: body.menu_position || body.menu_position_new,
+                brand: req.authUser?.brand?._id,
+                country: req.authUser?.brand?.country,
+            })
+        }
         // Push the obj to nav_items
         const update = await Menu.findOneAndUpdate(
             {
-                nav_position: body.menu_position,
+                nav_position: body.menu_position || body.menu_position_new,
                 brand: req.authUser?.brand?._id,
                 country: req.authUser?.brand?.country,
             },
@@ -85,6 +107,8 @@ const addMenu = async (req, res) => {
                 },
             }
         )
+        // console.log(req.body)
+        // console.log(update)
         // If menu position not found
         if (!update?._id) {
             return res
@@ -97,6 +121,7 @@ const addMenu = async (req, res) => {
             item: update,
         })
     } catch (error) {
+        console.log(error)
         return res.status(400).json({ error: 'Something went wrong' })
     }
 }
@@ -459,7 +484,7 @@ const deleteMenu = async (req, res) => {
             message: `Menu deleted`,
         })
     } catch (error) {
-        console.log('error :>> ', error);
+        console.log('error :>> ', error)
         return res.status(400).json({ error: 'Something went wrong' })
     }
 }
