@@ -39,7 +39,7 @@ const view = async (req, res) => {
         _id: req.params.id,
     })
     // const fields_to_map = []
-    const fields_to_map = await contentType.field_groups.map((eachGroup) => {
+    const fields_to_map = await contentType?.field_groups.map((eachGroup) => {
         const fields = []
         eachGroup.fields.forEach((field) => {
             fields.push({
@@ -58,7 +58,7 @@ const view = async (req, res) => {
             fields: fields,
         }
         return group
-    })
+    }) || []
 
     // return res.json(JSON.stringify(fields_to_map))
 

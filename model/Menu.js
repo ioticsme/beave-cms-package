@@ -29,33 +29,21 @@ const MenuSchema = new mongoose.Schema(
                     required: true,
                 },
                 label: {
-                    en: {
-                        type: String,
-                        required: true,
-                    },
-                    ar: {
-                        type: String,
-                        required: true,
-                    },
+                    type: Object,
+                    required: true,
                 },
                 position: {
                     type: Number,
                     default: 0,
                 },
                 url: {
-                    en: {
-                        type: String,
-                        required: true,
-                    },
-                    ar: {
-                        type: String,
-                        required: true,
-                    },
-                    external: {
-                        type: Boolean,
-                        default: false,
-                    }
+                    type: Object,
+                    required: true,
                 },
+                // external: {
+                //     type: Boolean,
+                //     default: false,
+                // },
                 active: {
                     type: Boolean,
                     default: true,
@@ -67,33 +55,21 @@ const MenuSchema = new mongoose.Schema(
                             required: true,
                         },
                         label: {
-                            en: {
-                                type: String,
-                                required: true,
-                            },
-                            ar: {
-                                type: String,
-                                required: true,
-                            },
+                            type: Object,
+                            required: true,
                         },
                         position: {
                             type: Number,
                             default: 0,
                         },
                         url: {
-                            en: {
-                                type: String,
-                                required: true,
-                            },
-                            ar: {
-                                type: String,
-                                required: true,
-                            },
-                            external: {
-                                type: Boolean,
-                                default: false,
-                            }
+                            type: Object,
+                            required: true,
                         },
+                        // external: {
+                        //     type: Boolean,
+                        //     default: false,
+                        // },
                         active: {
                             type: Boolean,
                             default: true,
@@ -105,33 +81,21 @@ const MenuSchema = new mongoose.Schema(
                                     required: true,
                                 },
                                 label: {
-                                    en: {
-                                        type: String,
-                                        required: true,
-                                    },
-                                    ar: {
-                                        type: String,
-                                        required: true,
-                                    },
+                                    type: Object,
+                                    required: true,
                                 },
                                 position: {
                                     type: Number,
                                     default: 0,
                                 },
                                 url: {
-                                    en: {
-                                        type: String,
-                                        required: true,
-                                    },
-                                    ar: {
-                                        type: String,
-                                        required: true,
-                                    },
-                                    external: {
-                                        type: Boolean,
-                                        default: false,
-                                    }
+                                    type: Object,
+                                    required: true,
                                 },
+                                // external: {
+                                //     type: Boolean,
+                                //     default: false,
+                                // },
                                 active: {
                                     type: Boolean,
                                     default: true,

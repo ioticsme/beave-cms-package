@@ -19,6 +19,7 @@ const listMenu = async (req, res) => {
 }
 
 const addMenu = async (req, res) => {
+    // console.log(req.body)
     try {
         session = req.authUser
         let labelValidationObj = {}
@@ -39,14 +40,12 @@ const addMenu = async (req, res) => {
                 ...pathValidationObj,
             }),
             external: Joi.string().allow('', null, 'true'),
-            menu_position: Joi.string().optional().allow(null, ''),
-            menu_position_new: Joi.string()
-                .empty('')
-                .optional()
-                .when('menu_position', {
-                    is: Joi.required(),
-                    then: Joi.required(),
-                }),
+            menu_position: Joi.string().allow(''),
+            menu_position_new: Joi.string().when('menu_position', {
+                is: '',
+                then: Joi.string().required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
         })
 
         const validationResult = schema.validate(req.body, {
@@ -129,13 +128,15 @@ const addMenu = async (req, res) => {
 const editMenu = async (req, res) => {
     try {
         let { position, id, level } = req.params
+        // console.log(req.params)
         // Findong all menis from DB
-        const menus = await Menu.find({
+        const menuDetail = await Menu.findOne({
+            nav_position: position,
             brand: req.authUser?.brand?._id,
             country: req.authUser?.brand?.country,
         }).sort({ position: 1 })
         // Finding menu with menu position
-        const menuDetail = menus.find((menu) => menu.nav_position == position)
+        // const menuDetail = menus.find((menu) => menu.nav_position == position)
         let menuItem = {}
         // Finding menu item w.r.t the menu child level
         if (menuDetail?._id) {
@@ -164,7 +165,7 @@ const editMenu = async (req, res) => {
         // add level value to menuItem
         if (menuItem?._id) menuItem.level = level
         res.render(`admin-njk/cms/menu/edit-form`, {
-            menulist: menus,
+            menuDetail,
             navPosition: position,
             menuItem: menuItem ? menuItem : {},
         })
@@ -175,6 +176,8 @@ const editMenu = async (req, res) => {
 }
 
 const saveEditMenu = async (req, res) => {
+    // console.log(req.body)
+    // return false
     try {
         const schema = Joi.object({
             id: Joi.string().required(),
@@ -404,7 +407,7 @@ const saveEditMenu = async (req, res) => {
             message: `Menu updated`,
         })
     } catch (error) {
-        // console.log(error)
+        console.log(error)
         return res.status(400).json({ error: 'Something went wrong' })
     }
 }
@@ -500,8 +503,10 @@ const saveMenu = async (req, res) => {
         const treeData = collect(JSON.parse(req.body.menu))
         const root_items = treeData.where('parent', '#').all()
         root_items.forEach((rootElement, rootIndex) => {
+            // console.log((rootElement.li_attr))
+            // console.log((JSON.stringify(rootElement.li_attr.label)))
             const parent = {
-                _id: rootElement.li_attr.data_id,
+                _id: rootElement.li_attr['data-id'],
                 position: rootIndex,
                 label: JSON.parse(rootElement.li_attr.label),
                 url: JSON.parse(rootElement.li_attr.url),
@@ -512,7 +517,7 @@ const saveMenu = async (req, res) => {
                 .all()
                 .forEach((firstChildElement, fcIndex) => {
                     const firstChild = {
-                        _id: firstChildElement.li_attr.data_id,
+                        _id: firstChildElement.li_attr['data-id'],
                         position: fcIndex,
                         label: JSON.parse(firstChildElement.li_attr.label),
                         url: JSON.parse(firstChildElement.li_attr.url),
@@ -523,7 +528,7 @@ const saveMenu = async (req, res) => {
                         .all()
                         .forEach((secondChildElement, scIndex) => {
                             const secondChild = {
-                                _id: secondChildElement.li_attr.data_id,
+                                _id: secondChildElement.li_attr['data-id'],
                                 position: scIndex,
                                 label: JSON.parse(
                                     secondChildElement.li_attr.label
@@ -536,6 +541,9 @@ const saveMenu = async (req, res) => {
                 })
             dataToSave.push(parent)
         })
+
+        // console.log(dataToSave)
+        // return false
 
         const save = await Menu.findOneAndUpdate(
             {
@@ -557,7 +565,7 @@ const saveMenu = async (req, res) => {
             item: save,
         })
     } catch (error) {
-        // console.log(error)
+        console.log(error)
         return res.status(400).json({ error: 'Something went wrong' })
     }
 }

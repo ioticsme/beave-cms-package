@@ -245,23 +245,24 @@ const getNav = async (req, res, next) => {
                 // TODO:: Send slack notification for redis connection fail on product pull
             })
         // Adding global meta to navigation
-        const globalMeta = req.brand?.domains?.meta || {}
+        // const globalMeta = req.brand?.domains?.meta || {}
         // Restructuring the global meta
-        const newGlobalMeta = {
-            en: {
-                title: globalMeta.title?.en,
-                description: globalMeta.description?.en,
-                keywords: globalMeta.keywords?.en,
-                og_image: globalMeta.og_image?.en,
-            },
-            ar: {
-                title: globalMeta.title?.ar,
-                description: globalMeta.description?.ar,
-                keywords: globalMeta.keywords?.ar,
-                og_image: globalMeta.og_image?.ar,
-            },
-        }
-        req.navigation = { ...navigation.data, meta: newGlobalMeta }
+        // const newGlobalMeta = {
+        //     en: {
+        //         title: globalMeta.title?.en,
+        //         description: globalMeta.description?.en,
+        //         keywords: globalMeta.keywords?.en,
+        //         og_image: globalMeta.og_image?.en,
+        //     },
+        //     ar: {
+        //         title: globalMeta.title?.ar,
+        //         description: globalMeta.description?.ar,
+        //         keywords: globalMeta.keywords?.ar,
+        //         og_image: globalMeta.og_image?.ar,
+        //     },
+        // }
+        // req.navigation = { ...navigation.data, meta: newGlobalMeta }
+        req.navigation = navigation.data
     } catch (error) {
         console.log(error)
         return res.status(400).json('Not foundssss')

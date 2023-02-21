@@ -480,6 +480,7 @@ const detail = async (req, res) => {
 
         res.status(200).json({
             [req.params.contentType]: contents,
+            collection_meta: contentType.has_meta ? contentType.meta : undefined,
             navigation: contentType.nav_on_single_api
                 ? req.navigation
                 : undefined,

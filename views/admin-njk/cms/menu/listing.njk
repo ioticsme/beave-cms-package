@@ -134,7 +134,6 @@
 				var v = $(`#${targetId}`)
 					.jstree(true)
 					.get_json('#', {flat: true})
-				//- console.log(v)
 				var redrawData = JSON.stringify(v);
 				saveMenuSorting(redrawData, menuName)
 			})
@@ -178,7 +177,7 @@
 									<div class="jstree_dragdrop" id="nav_{{ nav.nav_position }}" data-nav_position="{{ nav.nav_position }}">
 										<ul>
 											{% for menu in nav.nav_items %}
-												<li data-id="{{ menu._id }}" url="{{ menu.url | json }}" label="{{ menu.label | json }}">{{ menu.label.en }}
+												<li data-id="{{ menu._id }}" url="{{ menu.url }}" label="{{ menu.label }}">{{ menu.label.en }}
 													<button id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" onClick="deleteMenuItem(this)">
 														<i class="fa-solid fa-trash text-danger"></i>
 													</button>
@@ -187,8 +186,8 @@
 													</button>
 
 													<ul>
-														{% for j, first_level_child in menu.child %}
-															<li data-id="{{ first_level_child._id }}" url={{ first_level_child.url | json }} label={{ first_level_child.label | json }}>{{ first_level_child.label.en }}
+														{% for first_level_child in menu.child %}
+															<li data-id="{{ first_level_child._id }}" url={{ first_level_child.url }} label={{ first_level_child.label }}>{{ first_level_child.label.en }}
 																<button id="{{ first_level_child._id }}" nav_position="{{ nav.nav_position }}" level="1" onClick="deleteMenuItem(this)">
 																	<i class="fa-solid fa-trash text-danger"></i>
 																</button>
@@ -197,12 +196,12 @@
 																</button>
 
 																<ul>
-																	{% for second_level_child, k in first_level_child.child %}
-																		<li data-id="{{ second_level_child._id }}" url="{{ second_level_child.url | json }}" label="{{ second_level_child.label | json }}">{{ second_level_child.label.en }}
+																	{% for second_level_child in first_level_child.child %}
+																		<li data-id="{{ second_level_child._id }}" url="{{ second_level_child.url }}" label="{{ second_level_child.label }}">{{ second_level_child.label.en }}
 																			<button id="{{ second_level_child._id }}" nav_position="{{ nav.nav_position }}" level="2" onClick="deleteMenuItem(this)">
 																				<i class="fa-solid fa-trash text-danger"></i>
 																			</button>
-																			<button id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ second_level_child._id }}/2?parent_index={{ loop.index }}&sec_parent_index={{ j }}" onClick="editMenu(this)">
+																			<button id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ second_level_child._id }}/2?parent_index={{ loop.index }}&sec_parent_index={{ loop.parent.loop.index }}" onClick="editMenu(this)">
 																				<i class="fa-solid fa-pen text-primary"></i>
 																			</button>
 																		</li>
@@ -241,9 +240,10 @@
 											<span class="required">Menu Position</span>
 											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-kt-initialized="1"></i>
 										</label>
-										<select id="kt_ecommerce_add_product_status_select" class="form-select mb-2" data-control="select2" name="menu_position" data-hide-search="true" data-placeholder="Select an option">
+										<select id="kt_ecommerce_add_product_status_select" class="form-select mb-2" name="menu_position">
+											<option value="" "selected"> -- Choose Nav Position -- </option>
 											{% for nav in menulist %}
-												<option value="{{ nav.nav_position }}" {{ 'selected' if loop.index==1 }}>{{ nav.nav_label }}</option>
+												<option value="{{ nav.nav_position }}">{{ nav.nav_label }}</option>
 											{% endfor %}
 										</select>
 										<pre>--OR--</pre>
@@ -253,7 +253,7 @@
 										<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 											{% for brandLanguage in authUser.brand.languages %}
 												<li class="nav-item">
-													<a class="nav-link {{ active if loop.index == 1 }}" data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
+													<a class="nav-link {{ 'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
 												</li>
 											{% endfor %}
 										</ul>
@@ -261,7 +261,7 @@
 
 									<div class="tab-content tab-content-fields" id="myTabContent">
 										{% for brandLanguage in authUser.brand.languages %}
-											<div class="tab-pane fade {% if loop.index == 1 %}active show{% endif %}" role="tabpanel" id="kt_tab_pane_{{ brandLanguage.prefix }}">
+											<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" id="kt_tab_pane_{{ brandLanguage.prefix }}">
 												<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-6">
 													<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 														<span class="required"> Menu name ({{ brandLanguage.prefix }}) </span>
