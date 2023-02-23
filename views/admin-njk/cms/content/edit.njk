@@ -300,7 +300,7 @@
 															{% if cfg.localisation == false %}
 																<h4 class="badge badge-warning mb-2">{{cfg.row_label}}</h4>
 																{% if cfg.repeater_group == true %}
-																	<h4>{{cfg.row_label}}</h4>
+																	{# <h4>{{cfg.row_label}}</h4> #}
 																	<div class="group_repeater" id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
 																			{% set totalItems = contentDetail
 																				.content['common'][cfg.row_name][ObjectKeys(contentDetail.content['common'][cfg.row_name])[0]]
