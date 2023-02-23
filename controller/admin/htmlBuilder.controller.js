@@ -19,7 +19,7 @@ const viewPage = async (req, res) => {
         const html_data = await HtmlBuilder.findOne({
             _id: req.params.id,
         })
-        return res.render('admin-njk/cms/html-builder/view', {html_data})
+        return res.render('admin-njk/cms/html-builder/view', { html_data })
     } catch (error) {
         return res.render(`admin-njk/error-404`)
     }
@@ -101,6 +101,36 @@ const saveTemplate = async (req, res) => {
     }
 }
 
+const changeStatus = async (req, res) => {
+    try {
+        console.log(req.body)
+        const html_data = await HtmlBuilder.findOne({
+            _id: req.body.id,
+        })
+
+        html_data.active = !html_data.active
+        await html_data.save()
+
+        return res.status(200).json('done')
+    } catch (error) {
+        console.log(error)
+        return res.render(`admin-njk/error-500`)
+    }
+}
+
+const deletePage = async (req, res) => {
+    try {
+        await HtmlBuilder.deleteOne({
+            _id: req.body.id,
+        })
+
+        return res.status(200).json('deleted')
+    } catch (error) {
+        console.log(error)
+        return res.render(`admin-njk/error-500`)
+    }
+}
+
 module.exports = {
     list,
     viewPage,
@@ -109,4 +139,6 @@ module.exports = {
     loadEditorData,
     editor,
     saveTemplate,
+    deletePage,
+    changeStatus,
 }

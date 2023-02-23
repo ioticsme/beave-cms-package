@@ -20,6 +20,8 @@ router.group('/', (router) => {
         router.get('/view/:id', htmlBuilder.viewPage)
         router.get('/add', htmlBuilder.add)
         router.post('/save', htmlBuilder.save)
+        router.post('/delete', htmlBuilder.deletePage)
+        router.post('/change-status', htmlBuilder.changeStatus)
         router.get('/editor/:id', htmlBuilder.editor)
         router.get('/load-data/:id', htmlBuilder.loadEditorData)
         router.post('/save-template', htmlBuilder.saveTemplate)

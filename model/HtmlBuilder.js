@@ -1,5 +1,5 @@
 const { mongoose, Schema } = require('mongoose')
-// const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
+const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 const Brand = require('./Brand')
 const Country = require('./Country')
@@ -46,7 +46,7 @@ const HtmlBuilderSchema = new mongoose.Schema(
     }
 )
 
-// AdminSchema.plugin(softDeletePlugin)
+HtmlBuilderSchema.plugin(softDeletePlugin)
 HtmlBuilderSchema.plugin(uniqueValidator)
 
 module.exports = mongoose.model('beave_HtmlBuilder', HtmlBuilderSchema)
