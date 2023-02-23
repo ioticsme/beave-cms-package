@@ -54,6 +54,11 @@ const save = async (req, res) => {
             redirect_to: `/admin/cms/html-builder/editor/${new_page._id}`,
         })
     } catch (error) {
+        if (error.errors) {
+            return res.status(422).json({
+                details: error.errors,
+            })
+        }
         return res.render(`admin-njk/error-404`)
     }
 }

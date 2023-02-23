@@ -5,6 +5,7 @@ const authController = require('../../controller/api/auth.controller')
 const generalController = require('../../controller/api/general.controller')
 const customFormController = require('../../controller/api/customForm.controller')
 const userController = require('../../controller/api/user.controller')
+const pageBuilderController = require('../../controller/api/pageBuilder.controller')
 const testController = require('../../controller/api/test.controller')
 
 // Middleware
@@ -54,6 +55,10 @@ router.group('/', (router) => {
         router.get('/menu', generalController.menuList)
         router.get('/brand', generalController.brandingDetail)
         router.get('/navigation', generalController.navList)
+    })
+
+    router.group('/page-builder', (router) => {
+        router.get('/:slug', pageBuilderController.view)
     })
 
     // Auth
