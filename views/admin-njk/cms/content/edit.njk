@@ -303,7 +303,7 @@
 																	<h4>{{cfg.row_label}}</h4>
 																	<div class="group_repeater" id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
 																			{% set totalItems = contentDetail
-																				.content['common'][cfg.row_name][Object.keys(contentDetail.content['common'][cfg.row_name])[0]]
+																				.content['common'][cfg.row_name][ObjectKeys(contentDetail.content['common'][cfg.row_name])[0]]
 																				.length or 1 %}
 																			{% for i in range(totalItems) %}
 																				{% if loop.index == 1%}
@@ -328,7 +328,6 @@
 																								<span class='media-uploader-field'>
 																									<span class="media_preview">
 																										<span class="preview-holder">
-																									if fieldValue
 																										<img src="{{fieldValue}}" style="max-width: 150px;"/>
 																										</span>
 																										<a class="btn btn-danger image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">

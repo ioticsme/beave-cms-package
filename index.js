@@ -103,10 +103,21 @@ app.use(cookieParser())
 
 // Template Engine
 
+// Define a custom filter that returns an array of keys from an object
+nunjucks.configure().addFilter('keys', function (obj) {
+    return Object.keys(obj)
+})
+
 var njk = nunjucks.configure(path.join(__dirname, '/views'), {
     express: app,
     autoescape: true,
     noCache: true,
+    // Add the `keys` filter to the environment
+    filters: {
+        keys: function (obj) {
+            return Object.keys(obj)
+        },
+    },
 })
 njk.addGlobal('ObjectKeys', Object.keys)
 app.set('view engine', 'njk')
