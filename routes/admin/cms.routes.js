@@ -6,7 +6,7 @@ const cmsContentController = require('../../controller/admin/cmsContent.controll
 const customFormController = require('../../controller/admin/customForm.controller')
 const menuController = require('../../controller/admin/menu.controller')
 const mediaController = require('../../controller/admin/media.controller')
-// const bannerController = require('../../controller/admin/banner.controller')
+const htmlBuilder = require('../../controller/admin/htmlBuilder.controller')
 // const galleryController = require('../../controller/admin/gallery.controller')
 const { contentTypeCheck } = require('../../middleware/cms.middleware')
 
@@ -15,6 +15,16 @@ const upload = multer({ dest: 'temp/' })
 
 router.group('/', (router) => {
     // Menu management Routes
+    router.group('/html-builder', (router) => {
+        router.get('/', htmlBuilder.list)
+        router.get('/view/:id', htmlBuilder.viewPage)
+        router.get('/add', htmlBuilder.add)
+        router.post('/save', htmlBuilder.save)
+        router.get('/editor/:id', htmlBuilder.editor)
+        router.get('/load-data/:id', htmlBuilder.loadEditorData)
+        router.post('/save-template', htmlBuilder.saveTemplate)
+    })
+
     router.group('/media', (router) => {
         router.get('/', mediaController.list)
         router.get('/json', mediaController.jsonList)

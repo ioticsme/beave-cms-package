@@ -36,6 +36,7 @@
         "fs": "0.0.1-security",
         "google-auth-library": "^8.7.0",
         "googleapis": "^105.0.0",
+        "grapejs": "^2.1.2",
         "handlebars": "^4.7.7",
         "helmet": "^6.0.0",
         "imagekit": "^4.1.0",

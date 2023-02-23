@@ -1,0 +1,43 @@
+{% extends "../../layouts/master.njk" %}
+
+{% block csslib %}
+	<link href='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css' rel='stylesheet' type='text/css'/>
+	<link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
+	<link href="/cms-static/common/css/grapejs-style.css" rel="stylesheet">
+{% endblock %}
+
+{% block jslib %}
+	{# // begin::Vendors Javascript(used by this page) #}
+	<script src='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.js'></script>
+	<script src="https://unpkg.com/grapesjs"></script>
+	<script src="https://unpkg.com/grapesjs-preset-webpage"></script>
+	<script src="https://unpkg.com/grapesjs-preset-newsletter"></script>
+
+	{# // Form Submission Script #}
+	{# <script src='/cms-static/common/js/form-data-json.min.js'></script> #}
+	{# <script src='/cms-static/common/js/es-form.js'></script> #}
+	<script>
+		// Add a hidden input field to the component
+		var pageId = '{{page_id}}';
+	</script>
+	<script src='/cms-static/common/js/grapejs-editor.js'></script>
+
+{% endblock %}
+
+{% block customScript %}
+	
+{% endblock %}
+
+{% block content %}
+	<div class="d-flex flex-column flex-column-fluid">
+		
+		<div id="kt_app_content" class="app-content flex-column-fluid p-0 m-0">
+			<div id="kt_app_content_container" class="app-container container p-0 m-0">
+				<div id="gjs" class="p-0 m-0">
+					{# Data Will Load Here #}
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "../../layouts/master.njk" %}
+
+{% block csslib %}
+    <link href='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css' rel='stylesheet' type='text/css'/>
+    {# <link href='/cms-static/admin/assets/plugins/custom/jstree/jstree.bundle.css' rel='stylesheet' type='text/css'/> #}
+{% endblock %}
+
+{% block jslib %}
+    {# // begin::Vendors Javascript(used by this page) #}
+    <script src='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.js'></script>
+
+    {# // end::Vendors Javascript #}
+    {# // begin::Custom Javascript(used by this page) #}
+    {# //- script(src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js') #}
+    {# <script src='https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js'></script> #}
+    {# <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script> #}
+    {# <script src='/cms-static/admin/assets/js/custom/apps/ecommerce/catalog/products.js'></script> #}
+    {# //- script(src='/cms-static/admin/assets/js/widgets.bundle.js') #}
+    {# //- script(src='/cms-static/admin/assets/js/custom/widgets.js') #}
+
+    {# <script src='/cms-static/admin/assets/js/custom/utilities/modals/create-app.js'></script> #}
+    {# <script src='/cms-static/admin/assets/js/custom/utilities/modals/users-search.js'></script> #}
+    {# <script src='/cms-static/admin/assets/plugins/custom/jstree/jstree.bundle.js'></script> #}
+
+    {# // Form Submission Script #}
+    <script src='/cms-static/common/js/form-data-json.min.js'></script>
+    <script src='/cms-static/common/js/es-form.js'></script>
+
+{% endblock %}
+
+{% block customScript %}{% endblock %}
+
+{% block content %}
+    <div class="d-flex flex-column flex-column-fluid">
+        <div class="app-toolbar py-3 py-lg-6" id="kt_app_toolbar">
+			<div class="app-container container-xxl d-flex flex-stack" id="kt_app_toolbar_container">
+				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Media Management</h1>
+					<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+						<li class="breadcrumb-item text-muted">
+							<a class="text-muted text-hover-primary" href="/admin/dashboard">Home</a>
+						</li>
+						<li class="breadcrumb-item">
+							<span class="bullet bg-gray-400 w-5px h-2px"></span></li>
+						<li class="breadcrumb-item text-muted">CMS</li>
+						<li class="breadcrumb-item">
+							<span class="bullet bg-gray-400 w-5px h-2px"></span></li>
+						<li class="breadcrumb-item text-muted">Media</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+        <div class="app-content flex-column-fluid" id="kt_app_content">
+            <div class="app-container container-xxl" id="kt_app_content_container">
+                <div class="card mb-5 mb-xl-10">
+                    <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+                        <div class="card-title m-0">
+                            <h3 class="fw-bold m-0">New Template</h3>
+                        </div>
+                    </div>
+                    <div id="kt_account_settings_profile_details">
+                        <form class="form es-form" id="kt_account_profile_details_form" action="/admin/cms/html-builder/save" method="post" autocomplete="off">
+                            <div class="card-body border-top p-9">
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                                        <span class="required">Template Name</span>
+                                        <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Current password should be enter to update profile details"></i>
+                                    </label>
+                                    <div class="col-lg-8 fv-row">
+                                        <input class="form-control form-control-lg form-control-solid" type="text" name="name" placeholder="Template Name"/>
+                                        <div class="fv-plugins-message-container invalid-feedback" id="field-error-name"></div>
+                                    </div>
+                                </div>
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                                        <span class="required">Template URL (Slug)</span>
+                                        <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Current password should be enter to update profile details"></i>
+                                    </label>
+                                    <div class="col-lg-8 fv-row">
+                                        <input class="form-control form-control-lg form-control-solid" type="text" name="slug" placeholder="Template URL"/>
+                                        <div class="fv-plugins-message-container invalid-feedback" id="field-error-slug"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                <button class="btn btn-primary form-submit-btn" id="kt_account_profile_details_submit" type="submit">
+                                    <span class="preloader d-none">Updating</span>
+                                    <span class="label">Save & Continue</span></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
