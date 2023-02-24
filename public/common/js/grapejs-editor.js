@@ -28,10 +28,20 @@ editor.Panels.addButton('options', {
     },
 })
 
+// Create a new panel with a "Code Editor" button
+editor.Panels.addButton('options', {
+    id: 'edit-btn',
+    className: 'fa fa-file-code-o',
+    command: 'edit-code',
+    attributes: {
+        title: 'Edit Code',
+    },
+})
+
 axios
-    .get(`/admin/cms/html-builder/load-data/${pageId}`)
+    .get(`/admin/cms/${content_type_slug}/editor/load-data/${pageId}`)
     .then(function (response) {
-      // console.log(response.data)
+        console.log(response.data)
         // Store the HTML and CSS in the storage manager
         editor.setComponents(response.data.content.html)
         editor.setStyle(response.data.content.css)
@@ -55,11 +65,18 @@ editor.Commands.add('save-template', {
 
         // Send the data to your server to save to your database
         $.post(
-            '/admin/cms/html-builder/save-template',
+            `/admin/cms/${content_type_slug}/editor/save`,
             payloads,
             function (data) {
                 console.log(data)
             }
         )
+    },
+})
+// Define the save command
+editor.Commands.add('edit-code', {
+    run: function (editor, sender) {
+        // Get the HTML and CSS content from the editor
+        alert()
     },
 })

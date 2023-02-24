@@ -5,8 +5,9 @@ const Media = require('../model/Media')
 var FileReader = require('filereader')
 const { format } = require('date-fns')
 
+const _ = require('lodash')
 // BEGIN:FOR PDF Generation
-const fs = require('fs')
+const fs = require('fs').promises
 const path = require('path')
 const utils = require('util')
 // const puppeteer = require('puppeteer')
@@ -180,6 +181,64 @@ const createFcmSwJS = async (credentials) => {
     writeStream.end()
 }
 
+const loadSVGIcons = async () => {
+    const dirPath = path.join(
+        __dirname,
+        '../public/admin/assets/media/icons/duotune'
+    );
+
+    const output = [];
+    try {
+        const folders = await fs.readdir(dirPath);
+        // Filter the list to only include folders
+        const folderNames = [];
+
+        for (const file of folders) {
+            const stats = await fs.stat(path.join(dirPath, file));
+
+            if (stats.isDirectory()) {
+                folderNames.push({
+                    name: file,
+                    items: [],
+                });
+            }
+        }
+
+        for (const targetFolder of folderNames) {
+            const svgDir = path.join(
+                __dirname,
+                `../public/admin/assets/media/icons/duotune/${targetFolder.name}`
+            );
+
+            const tempItems = [];
+
+            const allFiles = await fs.readdir(svgDir);
+            const svgFiles = allFiles.filter(
+                (file) => path.extname(file) === '.svg'
+            );
+
+            for (const file of svgFiles) {
+                const svgPath = path.join(svgDir, file);
+                const svgData = await fs.readFile(svgPath, 'utf8');
+                tempItems.push(svgData);
+            }
+
+            const folderObject = _.find(folderNames, {
+                name: targetFolder.name,
+            });
+
+            folderObject.items.push(...tempItems);
+            output.push(folderObject);
+        }
+
+        return output;
+    } catch (e) {
+        console.log(e);
+        return output;
+    }
+};
+
+
 module.exports = {
     // generatePdfInvoice,
     isObjectId,
@@ -189,4 +248,5 @@ module.exports = {
     fileLogger,
     getVatAmount,
     createFcmSwJS,
+    loadSVGIcons,
 }

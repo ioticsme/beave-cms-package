@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt')
 const ContentType = require('../../model/ContentType')
 const metaFields = require('../../config/meta-fields.config')
 const slugify = require('slugify')
+const { loadSVGIcons } = require('../../helper/Operations.helper')
 
 const list = async (req, res) => {
     const contentTypes = await ContentType.find()
@@ -14,14 +15,18 @@ const list = async (req, res) => {
 }
 
 const add = async (req, res) => {
+    const icons = await loadSVGIcons()
     const contentTypes = await ContentType.find()
+
     return res.render('admin-njk/config/content-type/form', {
         isEdit: false,
         contentTypes,
+        icons,
     })
 }
 
 const edit = async (req, res) => {
+    const icons = await loadSVGIcons()
     const contentType = await ContentType.findOne({
         _id: req.params.id,
     })
@@ -31,6 +36,7 @@ const edit = async (req, res) => {
         contentType,
         isEdit: true,
         contentTypes,
+        icons,
     })
 }
 
@@ -82,6 +88,7 @@ const save = async (req, res) => {
             position: Joi.number().required(),
             admin_icon: Joi.string().optional().allow(null, ''),
             admin_nav_section: Joi.string().optional().allow(null, ''),
+            page_builder: Joi.boolean().optional().allow(null, ''),
             has_slug: Joi.boolean().optional().allow(null, ''),
             active: Joi.boolean().optional().allow(null, ''),
             nav_on_collection_api: Joi.boolean().optional().allow(null, ''),
@@ -113,6 +120,7 @@ const save = async (req, res) => {
                 : undefined,
             admin_nav_section: req.body.admin_nav_section,
             allowed_type: req.body.allowed_type || [],
+            page_builder: req.body?.page_builder || false,
             has_form: req.body?.has_form || false,
             has_slug: req.body.has_slug || false,
             active: req.body.active || false,

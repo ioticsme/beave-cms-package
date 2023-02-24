@@ -71,34 +71,6 @@ const detail = async (req, res) => {
             country: session.brand.country,
         }).populate('author')
 
-        // const groupedArray = _.groupBy(contentDetail.content, 'language')
-        // for (const language in groupedArray) {
-        //     groupedArray[language] = _.groupBy(
-        //         groupedArray[language],
-        //         'group_name'
-        //     )
-        //     for (const group_name in groupedArray[language]) {
-        //         groupedArray[language][group_name] = _.groupBy(
-        //             groupedArray[language][group_name],
-        //             'field'
-        //         )
-        //     }
-        // }
-
-        // const groupedData = _.groupBy(contentDetail.content, (item) => {
-        //     return item.language
-        // })
-
-        // const groupNameGroup = {}
-        // const findalContentFieldsGroup = {}
-
-        // Object.keys(groupedData).forEach((key) => {
-        //     findalContentFieldsGroup[key] = _.groupBy(
-        //         groupedData[key],
-        //         'group_name'
-        //     )
-        // })
-
         if (!contentDetail) {
             return res.render(`admin-njk/error-404`)
         }
@@ -116,7 +88,12 @@ const detail = async (req, res) => {
 
         // return res.send(metaFields)
 
-        res.render(`admin-njk/cms/content/detail`, {
+        let template = `admin-njk/cms/content/detail`
+        if (req.contentType?.page_builder) {
+            template = `admin-njk/cms/content/html-builder/detail`
+        }
+
+        res.render(template, {
             default_lang,
             has_common_field_groups: has_common_field_groups ? true : false,
             reqContentType: req.contentType,
@@ -148,7 +125,12 @@ const add = async (req, res) => {
             .where('localisation', false)
             .count()
         // return res.send(req.contentType._id)
-        return res.render(`admin-njk/cms/content/add`, {
+
+        let template = `admin-njk/cms/content/add`
+        if (req.contentType?.page_builder) {
+            template = `admin-njk/cms/content/html-builder/form`
+        }
+        return res.render(template, {
             reqContentType: req.contentType,
             has_common_field_groups: has_common_field_groups ? true : false,
             allowed_content,
@@ -191,8 +173,12 @@ const edit = async (req, res) => {
             .where('localisation', false)
             .count()
 
+        let template = `admin-njk/cms/content/edit`
+        if (req.contentType?.page_builder) {
+            template = `admin-njk/cms/content/html-builder/form`
+        }
         // return res.json(contentDetail)
-        return res.render(`admin-njk/cms/content/edit`, {
+        return res.render(template, {
             reqContentType: req.contentType,
             has_common_field_groups: has_common_field_groups ? true : false,
             contentDetail,
@@ -263,268 +249,383 @@ const changeStatus = async (req, res) => {
     }
 }
 
+// const save = async (req, res) => {
+//     try {
+//         const language_codes = collect(req.authUser.brand.languages)
+//             .pluck('prefix')
+//             .toArray()
+//         // console.log(req.contentType.field_groups)
+//         const validationSchema = {}
+
+//         _.forEach(req.contentType.field_groups, (row) => {
+//             _.forEach(row.fields, (field) => {
+//                 validationSchema[field.field_name] = Joi.object({
+//                     en: Joi.string()
+//                         .required(field.validation.required)
+//                         .min(field.validation.min_length)
+//                         .max(field.validation.max_length),
+//                 })
+//             })
+//         })
+//         console.log(validationSchema)
+
+//         // createValidationSchema(req.contentType.field_groups)
+
+//         // const customValidationResult = createValidationSchema(
+//         //     req.contentType.field_groups
+//         // ).validate(req.body, {
+//         //     abortEarly: false,
+//         // })
+
+//         // if (customValidationResult.error) {
+//         //     console.log(customValidationResult.error)
+//         //     return res.status(422).json(customValidationResult.error)
+//         // }
+
+//         // return false
+
+//         // console.log(req.files)
+//         session = req.authUser
+//         // BEGIN:: Generating default field validation rule for content type (title, description)
+//         // let defaultValidationObj = {}
+//         // let metaValidationObj = {}
+//         // const titleValidationRules = `Joi.string().required()`
+//         // const descriptionValidationRules = `Joi.string().required().min(10)`
+//         // const excerptValidationRules = `Joi.string().allow('',null)`
+//         // const metaValidationRules = 'Joi.optional()'
+//         // const titleValidationObj = {}
+//         // const descriptionValidationObj = {}
+//         // const excerptValidationObj = {}
+//         // const metaTitleValidationObj = {}
+//         // const metaDescriptionValidationObj = {}
+//         // const metaKeywordsValidationObj = {}
+//         // req.authUser.brand.languages.forEach((lang) => {
+//         //     _.assign(titleValidationObj, {
+//         //         [lang.prefix]: eval(titleValidationRules),
+//         //     })
+//         //     _.assign(descriptionValidationObj, {
+//         //         [lang.prefix]: eval(descriptionValidationRules),
+//         //     })
+//         //     _.assign(excerptValidationObj, {
+//         //         [lang.prefix]: eval(excerptValidationRules),
+//         //     })
+//         //     // _.assign(metaTitleValidationObj, {
+//         //     //     [lang.prefix]: eval(metaValidationRules),
+//         //     // })
+//         //     // _.assign(metaDescriptionValidationObj, {
+//         //     //     [lang.prefix]: eval(metaValidationRules),
+//         //     // })
+//         //     // _.assign(metaKeywordsValidationObj, {
+//         //     //     [lang.prefix]: eval(metaValidationRules),
+//         //     // })
+//         // })
+
+//         // defaultValidationObj['title'] = Joi.object(titleValidationObj)
+//         // defaultValidationObj['body_content'] = Joi.object(
+//         //     descriptionValidationObj
+//         // )
+//         // defaultValidationObj['excerpt'] = Joi.object(excerptValidationObj)
+//         // metaValidationObj['meta_title'] = Joi.object(metaTitleValidationObj)
+//         // metaValidationObj['meta_description'] = Joi.object(
+//         //     metaDescriptionValidationObj
+//         // )
+//         // metaValidationObj['meta_keywords'] = Joi.object(
+//         //     metaKeywordsValidationObj
+//         // )
+//         // ========= Output of the above code is : ==========
+//         // title: Joi.object({
+//         // 	en: Joi.string().required().max(200),
+//         // 	ar: Joi.string().required().max(200),
+//         // }),
+//         // body_content: Joi.object({
+//         // 	en: Joi.string().required().min(50).max(2000),`
+//         // 	ar: Joi.string().required().min(50).max(2000),
+//         // }),
+
+//         // BEGIN:: Generating custom field group validation rule for content type
+//         // let cfgValidationObj = {}
+//         // req.contentType.custom_field_groups.forEach((element) => {
+//         //     if (element.localisation) {
+//         //         element.fields.forEach((field) => {
+//         //             const validationObject = {}
+//         //             const URLvalidationObject = {}
+//         //             if (element.field_type == 'file') {
+//         //                 req.authUser.brand.languages.forEach(
+//         //                     (lang) => {
+//         //                         _.assign(validationObject, {
+//         //                             [lang.prefix]: eval(
+//         //                                 req.body.method == 'add'
+//         //                                     ? field.addValidation ||
+//         //                                           'Joi.optional().allow(null,"")'
+//         //                                     : field.editValidation ||
+//         //                                           'Joi.optional().allow(null,"")'
+//         //                             ),
+//         //                         })
+//         //                         _.assign(URLvalidationObject, {
+//         //                             [lang.prefix]: eval(`Joi.optional()`),
+//         //                         })
+//         //                     }
+//         //                 )
+//         //                 cfgValidationObj[field.field_name] =
+//         //                     Joi.object(validationObject)
+//         //                 cfgValidationObj[`${field.field_name}-url`] =
+//         //                     Joi.object(URLvalidationObject)
+//         //             } else {
+//         //                 req.authUser.brand.languages.forEach(
+//         //                     (lang) => {
+//         //                         _.assign(validationObject, {
+//         //                             [lang.prefix]: eval(`${field.validation}`),
+//         //                         })
+//         //                     }
+//         //                 )
+//         //                 cfgValidationObj[field.field_name] =
+//         //                     Joi.object(validationObject)
+//         //             }
+//         //         })
+//         //     } else {
+//         //         element.fields.forEach((field) => {
+//         //             cfgValidationObj[field.field_name] = eval(field.validation)
+//         //         })
+//         //     }
+//         // })
+//         // END:: Generating custom field group validation rule for content type
+
+//         // BEGIN:: Validation rule
+//         // const schema = Joi.object({
+//         //     _id: Joi.optional(),
+//         //     method: Joi.string().valid('add', 'edit'),
+//         //     // ...defaultValidationObj,
+//         //     // ...metaValidationObj,
+//         //     ...cfgValidationObj,
+//         //     slug: Joi.object({
+//         //         en: Joi.optional(),
+//         //         ar: Joi.optional(),
+//         //     }),
+//         //     banner: Joi.optional(),
+//         //     gallery: Joi.optional(),
+//         //     attached_type: Joi.optional(),
+//         //     published: Joi.string().required().valid('true', 'false'),
+//         //     in_home: Joi.string().required().valid('true', 'false'),
+//         //     position: Joi.number().required(),
+//         //     repeater_field: Joi.array(),
+//         // })
+//         // END:: Validation rule
+
+//         const validationResult = validationSchema.validate(req.body, {
+//             abortEarly: false,
+//         })
+
+//         if (validationResult.error) {
+//             // console.log(validationResult.error)
+//             return res.status(422).json(validationResult.error)
+//         }
+
+//         let isEdit = false
+//         let body = req.body
+//         if (body._id) {
+//             isEdit = true
+//         }
+//         let type = req.contentType
+//         // const country = await Country.findOne({
+//         //     code: session.brand.country_code,
+//         // })
+
+//         let fieldGroupData = {}
+//         let metaData = {}
+
+//         let content_fields_to_insert = []
+//         session?.brand?.languages.map((lang, langIndex) => {
+//             // Field group
+//             req.contentType.custom_field_groups?.map((cfg, cfgIndex) => {
+//                 cfg.fields?.map((cf) => {
+//                     if (cfg.localisation) {
+//                         content_fields_to_insert = [
+//                             ...content_fields_to_insert,
+//                             {
+//                                 language: lang.prefix,
+//                                 group_name: `${cfg.row_name}`,
+//                                 is_repeated: cfg.repeater_group ? true : false,
+//                                 field: `${cf.field_name}`,
+//                                 value: body[cf.field_name]?.[lang.prefix],
+//                             },
+//                         ]
+//                     } else {
+//                         content_fields_to_insert = [
+//                             ...content_fields_to_insert,
+//                             {
+//                                 language: 'common',
+//                                 group_name: `${cfg.row_name}`,
+//                                 is_repeated: cfg.repeater_group ? true : false,
+//                                 field: `${cf.field_name}`,
+//                                 value: body[cf.field_name],
+//                             },
+//                         ]
+//                     }
+//                 })
+//             })
+//             // content_fields_to_insert = [
+//             //     ...content_fields_to_insert,
+//             //     {
+//             //         language: lang.prefix,
+//             //         group_name: 'general',
+//             //         field: 'title',
+//             //         value: body.title[lang.prefix],
+//             //     },
+//             //     {
+//             //         language: lang.prefix,
+//             //         group_name: 'general',
+//             //         field: 'description',
+//             //         value: body.body_content[lang.prefix],
+//             //     },
+//             //     {
+//             //         language: lang.prefix,
+//             //         group_name: 'general',
+//             //         field: 'description',
+//             //         value: body.excerpt[lang.prefix],
+//             //     },
+//             // ]
+//         })
+
+//         // console.log('content', content_fields_to_insert)
+
+//         // Data object to insert
+//         let data = {
+//             type_id: type._id,
+//             type_slug: type.slug,
+//             author: session.admin_id,
+//             // banner: body?.banner || null, // If Requested content type has banner required
+//             // gallery: body?.gallery || null, // If Requested content type has gallery required
+//             brand: req.authUser.brand._id,
+//             country: req.authUser.brand.country,
+//             published: body.published === 'true',
+//             position: body.position,
+//             // template_name: type.template_name,
+//             custom_fields: type.custom_fields,
+//             content: content_fields_to_insert,
+//             // group_content: fieldGroupData,
+//             // meta: metaData,
+//             in_home: body.in_home || false,
+//         }
+//         // console.log('fieldGroupData :>> ', fieldGroupData)
+//         // console.log(data)
+//         // getting attached contents
+//         // TODO Find Permanent solution for issue
+//         // ISSUE : Sometime the data get in the form of array sometime in the form of string
+//         if (
+//             Object?.keys(body.attached_type ? body.attached_type : {})?.length
+//         ) {
+//             attachedData = []
+//             Object.keys(body.attached_type).map((item) => {
+//                 const itemDataType = typeof body.attached_type[item]
+//                 if (body.attached_type?.[item]?.length) {
+//                     let obj = {
+//                         content_type: item,
+//                         items:
+//                             itemDataType == 'string'
+//                                 ? body.attached_type[item].split(',')
+//                                 : body.attached_type[item],
+//                     }
+//                     attachedData.push(obj)
+//                 }
+//             })
+//             if (attachedData.length) {
+//                 data.attached_type = attachedData
+//             }
+//         }
+//         const brandCode = req.authUser.brand?.code
+//         const countryCode = req.authUser.brand?.country_code
+
+//         if (isEdit) {
+//             data.slug = body.slug?.en
+//                 ? slugify(body.slug?.en?.toLowerCase())
+//                 : slugify(body.title.en.toLowerCase())
+//             const cache_key = `content-${brandCode}-${countryCode}-${type.slug}-${data.slug}`
+//             // Update content
+//             const update = await Content.updateOne({ _id: body._id }, data)
+//             Redis.removeCache([cache_key])
+//             return res.status(201).json({
+//                 message: 'Content updated successfully',
+//                 redirect_to: `/admin/cms/${type.slug}/detail/${req.body._id}`,
+//             })
+//         } else {
+//             data.slug = slugify(body.title.en.toLowerCase())
+//             // Create content
+//             const save = await Content.create(data)
+//             if (!save?._id) {
+//                 return res.status(400).json({ error: 'Something went wrong' })
+//             }
+//             const cache_key = `content-${brandCode}-${countryCode}-${type.slug}`
+//             Redis.removeCache([cache_key])
+//             return res.status(200).json({
+//                 message: 'Content added successfully',
+//                 redirect_to: `/admin/cms/${type.slug}/detail/${save._id}`,
+//             })
+//         }
+//     } catch (error) {
+//         console.log(error)
+//         return res.status(400).json({ error: 'Something went wrong' })
+//     }
+// }
+
 const save = async (req, res) => {
+    if (!req.contentType?.page_builder) {
+        return await saveDefaultContent(req, res)
+    } else {
+        return await savePageBuilderContent(req, res)
+    }
+}
+
+const savePageBuilderContent = async (req, res) => {
+    // console.log(req.body)
+    // return false
     try {
-        const language_codes = collect(req.authUser.brand.languages)
-            .pluck('prefix')
-            .toArray()
-        // console.log(req.contentType.field_groups)
-        const validationSchema = {}
-
-        _.forEach(req.contentType.field_groups, (row) => {
-            _.forEach(row.fields, (field) => {
-                validationSchema[field.field_name] = Joi.object({
-                    en: Joi.string()
-                        .required(field.validation.required)
-                        .min(field.validation.min_length)
-                        .max(field.validation.max_length),
-                })
-            })
-        })
-        console.log(validationSchema)
-
-        // createValidationSchema(req.contentType.field_groups)
-
-        // const customValidationResult = createValidationSchema(
-        //     req.contentType.field_groups
-        // ).validate(req.body, {
-        //     abortEarly: false,
-        // })
-
-        // if (customValidationResult.error) {
-        //     console.log(customValidationResult.error)
-        //     return res.status(422).json(customValidationResult.error)
-        // }
-
-        // return false
-
-        // console.log(req.files)
-        session = req.authUser
-        // BEGIN:: Generating default field validation rule for content type (title, description)
-        // let defaultValidationObj = {}
-        // let metaValidationObj = {}
-        // const titleValidationRules = `Joi.string().required()`
-        // const descriptionValidationRules = `Joi.string().required().min(10)`
-        // const excerptValidationRules = `Joi.string().allow('',null)`
-        // const metaValidationRules = 'Joi.optional()'
-        // const titleValidationObj = {}
-        // const descriptionValidationObj = {}
-        // const excerptValidationObj = {}
-        // const metaTitleValidationObj = {}
-        // const metaDescriptionValidationObj = {}
-        // const metaKeywordsValidationObj = {}
-        // req.authUser.brand.languages.forEach((lang) => {
-        //     _.assign(titleValidationObj, {
-        //         [lang.prefix]: eval(titleValidationRules),
-        //     })
-        //     _.assign(descriptionValidationObj, {
-        //         [lang.prefix]: eval(descriptionValidationRules),
-        //     })
-        //     _.assign(excerptValidationObj, {
-        //         [lang.prefix]: eval(excerptValidationRules),
-        //     })
-        //     // _.assign(metaTitleValidationObj, {
-        //     //     [lang.prefix]: eval(metaValidationRules),
-        //     // })
-        //     // _.assign(metaDescriptionValidationObj, {
-        //     //     [lang.prefix]: eval(metaValidationRules),
-        //     // })
-        //     // _.assign(metaKeywordsValidationObj, {
-        //     //     [lang.prefix]: eval(metaValidationRules),
-        //     // })
-        // })
-
-        // defaultValidationObj['title'] = Joi.object(titleValidationObj)
-        // defaultValidationObj['body_content'] = Joi.object(
-        //     descriptionValidationObj
-        // )
-        // defaultValidationObj['excerpt'] = Joi.object(excerptValidationObj)
-        // metaValidationObj['meta_title'] = Joi.object(metaTitleValidationObj)
-        // metaValidationObj['meta_description'] = Joi.object(
-        //     metaDescriptionValidationObj
-        // )
-        // metaValidationObj['meta_keywords'] = Joi.object(
-        //     metaKeywordsValidationObj
-        // )
-        // ========= Output of the above code is : ==========
-        // title: Joi.object({
-        // 	en: Joi.string().required().max(200),
-        // 	ar: Joi.string().required().max(200),
-        // }),
-        // body_content: Joi.object({
-        // 	en: Joi.string().required().min(50).max(2000),`
-        // 	ar: Joi.string().required().min(50).max(2000),
-        // }),
-
-        // BEGIN:: Generating custom field group validation rule for content type
-        // let cfgValidationObj = {}
-        // req.contentType.custom_field_groups.forEach((element) => {
-        //     if (element.localisation) {
-        //         element.fields.forEach((field) => {
-        //             const validationObject = {}
-        //             const URLvalidationObject = {}
-        //             if (element.field_type == 'file') {
-        //                 req.authUser.brand.languages.forEach(
-        //                     (lang) => {
-        //                         _.assign(validationObject, {
-        //                             [lang.prefix]: eval(
-        //                                 req.body.method == 'add'
-        //                                     ? field.addValidation ||
-        //                                           'Joi.optional().allow(null,"")'
-        //                                     : field.editValidation ||
-        //                                           'Joi.optional().allow(null,"")'
-        //                             ),
-        //                         })
-        //                         _.assign(URLvalidationObject, {
-        //                             [lang.prefix]: eval(`Joi.optional()`),
-        //                         })
-        //                     }
-        //                 )
-        //                 cfgValidationObj[field.field_name] =
-        //                     Joi.object(validationObject)
-        //                 cfgValidationObj[`${field.field_name}-url`] =
-        //                     Joi.object(URLvalidationObject)
-        //             } else {
-        //                 req.authUser.brand.languages.forEach(
-        //                     (lang) => {
-        //                         _.assign(validationObject, {
-        //                             [lang.prefix]: eval(`${field.validation}`),
-        //                         })
-        //                     }
-        //                 )
-        //                 cfgValidationObj[field.field_name] =
-        //                     Joi.object(validationObject)
-        //             }
-        //         })
-        //     } else {
-        //         element.fields.forEach((field) => {
-        //             cfgValidationObj[field.field_name] = eval(field.validation)
-        //         })
-        //     }
-        // })
-        // END:: Generating custom field group validation rule for content type
+        // Data object to insert
+        let type = req.contentType
+        let body = req.body
 
         // BEGIN:: Validation rule
-        // const schema = Joi.object({
-        //     _id: Joi.optional(),
-        //     method: Joi.string().valid('add', 'edit'),
-        //     // ...defaultValidationObj,
-        //     // ...metaValidationObj,
-        //     ...cfgValidationObj,
-        //     slug: Joi.object({
-        //         en: Joi.optional(),
-        //         ar: Joi.optional(),
-        //     }),
-        //     banner: Joi.optional(),
-        //     gallery: Joi.optional(),
-        //     attached_type: Joi.optional(),
-        //     published: Joi.string().required().valid('true', 'false'),
-        //     in_home: Joi.string().required().valid('true', 'false'),
-        //     position: Joi.number().required(),
-        //     repeater_field: Joi.array(),
-        // })
+        const schema = Joi.object({
+            _id: Joi.optional(),
+            name: Joi.string().required(),
+            slug: req.contentType.has_slug
+                ? Joi.string().required()
+                : Joi.string().optional(),
+            attached_type: Joi.optional(),
+            meta: Joi.object().optional().allow(null, ''),
+            published: Joi.string().required().valid('true', 'false'),
+            in_home: Joi.string().required().valid('true', 'false'),
+            position: Joi.number().optional(),
+        }).unknown()
         // END:: Validation rule
 
-        const validationResult = validationSchema.validate(req.body, {
+        const validationResult = schema.validate(req.body, {
             abortEarly: false,
         })
 
         if (validationResult.error) {
-            // console.log(validationResult.error)
             return res.status(422).json(validationResult.error)
         }
 
-        let isEdit = false
-        let body = req.body
-        if (body._id) {
-            isEdit = true
-        }
-        let type = req.contentType
-        // const country = await Country.findOne({
-        //     code: session.brand.country_code,
-        // })
-
-        let fieldGroupData = {}
-        let metaData = {}
-
-        let content_fields_to_insert = []
-        session?.brand?.languages.map((lang, langIndex) => {
-            // Field group
-            req.contentType.custom_field_groups?.map((cfg, cfgIndex) => {
-                cfg.fields?.map((cf) => {
-                    if (cfg.localisation) {
-                        content_fields_to_insert = [
-                            ...content_fields_to_insert,
-                            {
-                                language: lang.prefix,
-                                group_name: `${cfg.row_name}`,
-                                is_repeated: cfg.repeater_group ? true : false,
-                                field: `${cf.field_name}`,
-                                value: body[cf.field_name]?.[lang.prefix],
-                            },
-                        ]
-                    } else {
-                        content_fields_to_insert = [
-                            ...content_fields_to_insert,
-                            {
-                                language: 'common',
-                                group_name: `${cfg.row_name}`,
-                                is_repeated: cfg.repeater_group ? true : false,
-                                field: `${cf.field_name}`,
-                                value: body[cf.field_name],
-                            },
-                        ]
-                    }
-                })
-            })
-            // content_fields_to_insert = [
-            //     ...content_fields_to_insert,
-            //     {
-            //         language: lang.prefix,
-            //         group_name: 'general',
-            //         field: 'title',
-            //         value: body.title[lang.prefix],
-            //     },
-            //     {
-            //         language: lang.prefix,
-            //         group_name: 'general',
-            //         field: 'description',
-            //         value: body.body_content[lang.prefix],
-            //     },
-            //     {
-            //         language: lang.prefix,
-            //         group_name: 'general',
-            //         field: 'description',
-            //         value: body.excerpt[lang.prefix],
-            //     },
-            // ]
-        })
-
-        // console.log('content', content_fields_to_insert)
-
-        // Data object to insert
+        // return false
         let data = {
             type_id: type._id,
             type_slug: type.slug,
-            author: session.admin_id,
-            // banner: body?.banner || null, // If Requested content type has banner required
-            // gallery: body?.gallery || null, // If Requested content type has gallery required
-            brand: req.authUser.brand._id,
+            author: req.authUser.admin_id,
+            // brand: req.authUser.brand._id,
             country: req.authUser.brand.country,
             published: body.published === 'true',
-            position: body.position,
-            // template_name: type.template_name,
-            custom_fields: type.custom_fields,
-            content: content_fields_to_insert,
-            // group_content: fieldGroupData,
-            // meta: metaData,
+            position: body.position || 0,
+            content: {
+                name: req.body.name,
+            },
+            meta: body.meta,
             in_home: body.in_home || false,
         }
-        // console.log('fieldGroupData :>> ', fieldGroupData)
+
         // console.log(data)
-        // getting attached contents
-        // TODO Find Permanent solution for issue
-        // ISSUE : Sometime the data get in the form of array sometime in the form of string
+        // //  console.log(req.body)
+        // return false
+
         if (
             Object?.keys(body.attached_type ? body.attached_type : {})?.length
         ) {
@@ -546,29 +647,36 @@ const save = async (req, res) => {
                 data.attached_type = attachedData
             }
         }
-        const brandCode = req.authUser.brand?.code
+        // const brandCode = req.authUser.brand?.code
         const countryCode = req.authUser.brand?.country_code
 
-        if (isEdit) {
-            data.slug = body.slug?.en
-                ? slugify(body.slug?.en?.toLowerCase())
-                : slugify(body.title.en.toLowerCase())
-            const cache_key = `content-${brandCode}-${countryCode}-${type.slug}-${data.slug}`
+        if (req.body._id) {
+            data.slug = req.body.slug
+                ? slugify(req.body.slug).toLowerCase()
+                : undefined
+            // console.log(data)
+            // data.slug = body.slug?.en
+            //     ? slugify(body.slug?.en?.toLowerCase())
+            //     : slugify(body.title?.en?.toLowerCase())
+            const existingContent = await Content.findOne({
+                _id: req.body._id,
+            })
+            const cache_key = `content-${countryCode}-${type.slug}-${existingContent.slug}`
             // Update content
-            const update = await Content.updateOne({ _id: body._id }, data)
+            await Content.updateOne({ _id: req.body._id }, data)
             Redis.removeCache([cache_key])
             return res.status(201).json({
                 message: 'Content updated successfully',
                 redirect_to: `/admin/cms/${type.slug}/detail/${req.body._id}`,
             })
         } else {
-            data.slug = slugify(body.title.en.toLowerCase())
+            data.slug = req.body.slug ? slugify(req.body.slug) : undefined
             // Create content
             const save = await Content.create(data)
             if (!save?._id) {
                 return res.status(400).json({ error: 'Something went wrong' })
             }
-            const cache_key = `content-${brandCode}-${countryCode}-${type.slug}`
+            const cache_key = `content-${countryCode}-${type.slug}`
             Redis.removeCache([cache_key])
             return res.status(200).json({
                 message: 'Content added successfully',
@@ -581,7 +689,7 @@ const save = async (req, res) => {
     }
 }
 
-const saveTemp = async (req, res) => {
+const saveDefaultContent = async (req, res) => {
     // console.log(req.body)
     // return false
     try {
@@ -689,7 +797,7 @@ const saveTemp = async (req, res) => {
         // BEGIN:: Validation rule
         const schema = Joi.object({
             _id: Joi.optional(),
-            slug: req.contentType.has_cms
+            slug: req.contentType.has_slug
                 ? Joi.string().required()
                 : Joi.string().optional(),
             ...validationSchema,
@@ -757,7 +865,9 @@ const saveTemp = async (req, res) => {
         const countryCode = req.authUser.brand?.country_code
 
         if (req.body._id) {
-            data.slug = req.body.slug ? slugify(req.body.slug).toLowerCase() : undefined
+            data.slug = req.body.slug
+                ? slugify(req.body.slug).toLowerCase()
+                : undefined
             // console.log(data)
             // data.slug = body.slug?.en
             //     ? slugify(body.slug?.en?.toLowerCase())
@@ -793,172 +903,236 @@ const saveTemp = async (req, res) => {
     }
 }
 
-const saveTempOld = async (req, res) => {
-    // console.log(req.body)
-    // return false
+// const saveTempOld = async (req, res) => {
+//     // console.log(req.body)
+//     // return false
+//     try {
+//         // Data object to insert
+//         let type = req.contentType
+//         let body = req.body
+//         let content_to_insert = _.omit(body, [
+//             '_id',
+//             'published',
+//             'in_home',
+//             'position',
+//         ])
+
+//         // console.log(req.body)
+//         const restructuredJson = []
+
+//         _.forEach(content_to_insert, (group, groupName) => {
+//             const group_info = collect(type.field_groups)
+//                 .where('row_name', groupName)
+//                 .first()
+
+//             // console.log(group_info)
+//             if (group_info?.localisation) {
+//                 _.forEach(group, (field, fieldName) => {
+//                     _.forEach(field, (value, language) => {
+//                         // console.log(fieldName)
+//                         // console.log(typeof value)
+//                         // console.log(isObjectId(value))
+//                         let value_to_insert = isObjectId(value)
+//                         if (typeof value == 'object') {
+//                             value_to_insert = value.map((item) => {
+//                                 return isObjectId(item)
+//                             })
+//                         }
+//                         restructuredJson.push({
+//                             language: language || 'common',
+//                             group_name: groupName,
+//                             is_repeated: group_info['repeater_group'] || false,
+//                             field: fieldName,
+//                             value: value_to_insert,
+//                         })
+//                         // console.log(restructuredJson)
+//                     })
+//                 })
+//             } else {
+//                 if (group_info && group_info['repeater_group']) {
+//                     _.forEach(group, (field, fieldName) => {
+//                         _.forEach(field, (value) => {
+//                             let value_to_insert = isObjectId(value)
+//                             if (typeof value == 'object') {
+//                                 value_to_insert = value.map((item) => {
+//                                     return isObjectId(item)
+//                                 })
+//                             }
+//                             restructuredJson.push({
+//                                 language: 'common',
+//                                 group_name: groupName,
+//                                 is_repeated:
+//                                     group_info['repeater_group'] || false,
+//                                 field: fieldName,
+//                                 value: value_to_insert,
+//                             })
+//                         })
+//                     })
+//                 } else {
+//                     _.forEach(group, (field, fieldName) => {
+//                         let value_to_insert = isObjectId(field)
+//                         if (typeof field == 'object') {
+//                             value_to_insert = field.map((item) => {
+//                                 return isObjectId(item)
+//                             })
+//                         }
+//                         restructuredJson.push({
+//                             language: 'common',
+//                             group_name: groupName,
+//                             is_repeated:
+//                                 group_info && group_info['repeater_group']
+//                                     ? group_info['repeater_group']
+//                                     : false,
+//                             field: fieldName,
+//                             value: value_to_insert,
+//                         })
+//                     })
+//                 }
+//             }
+//         })
+
+//         let data = {
+//             type_id: type._id,
+//             type_slug: type.slug,
+//             author: req.authUser.admin_id,
+//             // banner: body?.banner || null, // If Requested content type has banner required
+//             // gallery: body?.gallery || null, // If Requested content type has gallery required
+//             // brand: req.authUser.brand._id,
+//             country: req.authUser.brand.country,
+//             published: body.published === 'true',
+//             position: body.position,
+//             // template_name: type.template_name,
+//             content: restructuredJson,
+//             // group_content: fieldGroupData,
+//             // meta: metaData,
+//             in_home: body.in_home || false,
+//         }
+
+//         // console.log(data)
+//         //  console.log(req.body)
+//         // return false
+
+//         if (
+//             Object?.keys(body.attached_type ? body.attached_type : {})?.length
+//         ) {
+//             attachedData = []
+//             Object.keys(body.attached_type).map((item) => {
+//                 const itemDataType = typeof body.attached_type[item]
+//                 if (body.attached_type?.[item]?.length) {
+//                     let obj = {
+//                         content_type: item,
+//                         items:
+//                             itemDataType == 'string'
+//                                 ? body.attached_type[item].split(',')
+//                                 : body.attached_type[item],
+//                     }
+//                     attachedData.push(obj)
+//                 }
+//             })
+//             if (attachedData.length) {
+//                 data.attached_type = attachedData
+//             }
+//         }
+//         const brandCode = req.authUser.brand?.code
+//         const countryCode = req.authUser.brand?.country_code
+
+//         if (req.body._id) {
+//             console.log(data)
+//             // data.slug = body.slug?.en
+//             //     ? slugify(body.slug?.en?.toLowerCase())
+//             //     : slugify(body.title?.en?.toLowerCase())
+//             const existingContent = await Content.findOne({
+//                 _id: req.body._id,
+//             })
+//             const cache_key = `content-${brandCode}-${countryCode}-${type.slug}-${existingContent.slug}`
+//             // Update content
+//             await Content.updateOne({ _id: body._id }, data)
+//             Redis.removeCache([cache_key])
+//             return res.status(201).json({
+//                 message: 'Content updated successfully',
+//                 redirect_to: `/admin/cms/${type.slug}/detail/${req.body._id}`,
+//             })
+//         } else {
+//             data.slug = slugify(restructuredJson[0].value.toLowerCase())
+//             // Create content
+//             const save = await Content.create(data)
+//             if (!save?._id) {
+//                 return res.status(400).json({ error: 'Something went wrong' })
+//             }
+//             const cache_key = `content-${brandCode}-${countryCode}-${type.slug}`
+//             Redis.removeCache([cache_key])
+//             return res.status(200).json({
+//                 message: 'Content added successfully',
+//                 redirect_to: `/admin/cms/${type.slug}/detail/${save._id}`,
+//             })
+//         }
+//     } catch (error) {
+//         console.log(error)
+//         return res.status(400).json({ error: 'Something went wrong' })
+//     }
+// }
+
+const loadEditorData = async (req, res) => {
     try {
-        // Data object to insert
-        let type = req.contentType
-        let body = req.body
-        let content_to_insert = _.omit(body, [
-            '_id',
-            'published',
-            'in_home',
-            'position',
-        ])
-
-        // console.log(req.body)
-        const restructuredJson = []
-
-        _.forEach(content_to_insert, (group, groupName) => {
-            const group_info = collect(type.field_groups)
-                .where('row_name', groupName)
-                .first()
-
-            // console.log(group_info)
-            if (group_info?.localisation) {
-                _.forEach(group, (field, fieldName) => {
-                    _.forEach(field, (value, language) => {
-                        // console.log(fieldName)
-                        // console.log(typeof value)
-                        // console.log(isObjectId(value))
-                        let value_to_insert = isObjectId(value)
-                        if (typeof value == 'object') {
-                            value_to_insert = value.map((item) => {
-                                return isObjectId(item)
-                            })
-                        }
-                        restructuredJson.push({
-                            language: language || 'common',
-                            group_name: groupName,
-                            is_repeated: group_info['repeater_group'] || false,
-                            field: fieldName,
-                            value: value_to_insert,
-                        })
-                        // console.log(restructuredJson)
-                    })
-                })
-            } else {
-                if (group_info && group_info['repeater_group']) {
-                    _.forEach(group, (field, fieldName) => {
-                        _.forEach(field, (value) => {
-                            let value_to_insert = isObjectId(value)
-                            if (typeof value == 'object') {
-                                value_to_insert = value.map((item) => {
-                                    return isObjectId(item)
-                                })
-                            }
-                            restructuredJson.push({
-                                language: 'common',
-                                group_name: groupName,
-                                is_repeated:
-                                    group_info['repeater_group'] || false,
-                                field: fieldName,
-                                value: value_to_insert,
-                            })
-                        })
-                    })
-                } else {
-                    _.forEach(group, (field, fieldName) => {
-                        let value_to_insert = isObjectId(field)
-                        if (typeof field == 'object') {
-                            value_to_insert = field.map((item) => {
-                                return isObjectId(item)
-                            })
-                        }
-                        restructuredJson.push({
-                            language: 'common',
-                            group_name: groupName,
-                            is_repeated:
-                                group_info && group_info['repeater_group']
-                                    ? group_info['repeater_group']
-                                    : false,
-                            field: fieldName,
-                            value: value_to_insert,
-                        })
-                    })
-                }
-            }
-        })
-
-        let data = {
-            type_id: type._id,
-            type_slug: type.slug,
-            author: req.authUser.admin_id,
-            // banner: body?.banner || null, // If Requested content type has banner required
-            // gallery: body?.gallery || null, // If Requested content type has gallery required
-            // brand: req.authUser.brand._id,
+        const contentDetail = await Content.findOne({
+            _id: req.params.id,
+            type_id: req.contentType._id,
+            // brand: session.brand._id,
             country: req.authUser.brand.country,
-            published: body.published === 'true',
-            position: body.position,
-            // template_name: type.template_name,
-            content: restructuredJson,
-            // group_content: fieldGroupData,
-            // meta: metaData,
-            in_home: body.in_home || false,
-        }
-
-        // console.log(data)
-        //  console.log(req.body)
-        // return false
-
-        if (
-            Object?.keys(body.attached_type ? body.attached_type : {})?.length
-        ) {
-            attachedData = []
-            Object.keys(body.attached_type).map((item) => {
-                const itemDataType = typeof body.attached_type[item]
-                if (body.attached_type?.[item]?.length) {
-                    let obj = {
-                        content_type: item,
-                        items:
-                            itemDataType == 'string'
-                                ? body.attached_type[item].split(',')
-                                : body.attached_type[item],
-                    }
-                    attachedData.push(obj)
-                }
-            })
-            if (attachedData.length) {
-                data.attached_type = attachedData
-            }
-        }
-        const brandCode = req.authUser.brand?.code
-        const countryCode = req.authUser.brand?.country_code
-
-        if (req.body._id) {
-            console.log(data)
-            // data.slug = body.slug?.en
-            //     ? slugify(body.slug?.en?.toLowerCase())
-            //     : slugify(body.title?.en?.toLowerCase())
-            const existingContent = await Content.findOne({
-                _id: req.body._id,
-            })
-            const cache_key = `content-${brandCode}-${countryCode}-${type.slug}-${existingContent.slug}`
-            // Update content
-            await Content.updateOne({ _id: body._id }, data)
-            Redis.removeCache([cache_key])
-            return res.status(201).json({
-                message: 'Content updated successfully',
-                redirect_to: `/admin/cms/${type.slug}/detail/${req.body._id}`,
-            })
-        } else {
-            data.slug = slugify(restructuredJson[0].value.toLowerCase())
-            // Create content
-            const save = await Content.create(data)
-            if (!save?._id) {
-                return res.status(400).json({ error: 'Something went wrong' })
-            }
-            const cache_key = `content-${brandCode}-${countryCode}-${type.slug}`
-            Redis.removeCache([cache_key])
-            return res.status(200).json({
-                message: 'Content added successfully',
-                redirect_to: `/admin/cms/${type.slug}/detail/${save._id}`,
-            })
-        }
+        })
+        // const html_data = await HtmlBuilder.findOne({
+        //     _id: req.params.id,
+        // })
+        return res.status(200).json(contentDetail)
     } catch (error) {
         console.log(error)
-        return res.status(400).json({ error: 'Something went wrong' })
+        return res.status(500).json(`Something went wrong`)
+    }
+}
+
+const pageBuildEditor = async (req, res) => {
+    try {
+        const page_id = req.params.id
+        return res.render('admin-njk/cms/content/html-builder/editor', {
+            reqContentType: req.contentType,
+            page_id,
+        })
+    } catch (error) {
+        return res.render(`admin-njk/error-404`)
+    }
+}
+
+const savePageBuilderData = async (req, res) => {
+    try {
+        const page = await Content.findOne({
+            _id: req.body.id,
+        })
+        if (!page) {
+            return res.status(404).json({
+                error: 'Not Found',
+            })
+        }
+        page.content = {
+            name: page.content.name,
+            html: req.body.html,
+            css: req.body.css,
+        }
+        await page.save()
+
+        return res.status(200).json('Saved')
+    } catch (error) {
+        return res.status(500).json(`Something went wrong`)
+    }
+}
+
+const previewPageBuildData = async (req, res) => {
+    try {
+        const html_data = await Content.findOne({
+            _id: req.params.id,
+        })
+        return res.render('admin-njk/cms/content/html-builder/view', { html_data })
+    } catch (error) {
+        return res.render(`admin-njk/error-404`)
     }
 }
 
@@ -970,5 +1144,8 @@ module.exports = {
     changeStatus,
     add,
     save,
-    saveTemp,
+    loadEditorData,
+    pageBuildEditor,
+    savePageBuilderData,
+    previewPageBuildData,
 }

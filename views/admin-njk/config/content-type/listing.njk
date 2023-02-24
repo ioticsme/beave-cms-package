@@ -64,6 +64,7 @@
 									<th class="min-w-125px">Title</th>
 									<th class="min-w-125px">Slug</th>
 									<th class="min-w-125px">Type</th>
+									<th class="min-w-125px">Editor Type</th>
 									<th class="min-w-125px">Status</th>
 									<th class="text-end min-w-70px">Actions</th>
 								</tr>
@@ -83,6 +84,7 @@
 										</td>
 										<td>{{ ct.slug }}</td>
 										<td>{{ "Single" if ct.single_type == true else "Collection" }}</td>
+										<td>{{ "Page Builder" if ct.page_builder == true else "Default" }}</td>
 										<td>
 											{% if ct.active == true %}
 												<span class="badge badge-light-success">Active</span>

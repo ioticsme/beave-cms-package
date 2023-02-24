@@ -60,6 +60,44 @@
 				$('[data-kt-repeate="select2"]').select2();
 			}
 		});
+
+		document.addEventListener('DOMContentLoaded', function () {
+			let selectedIcon = ''
+			document
+				.querySelectorAll('.svg-item')
+				.forEach(function (svgIcon) {
+					svgIcon.addEventListener('click', function (e) {
+						e.preventDefault()
+
+						selectedIcon = svgIcon
+							.querySelector('a')
+							.innerHTML
+
+							document
+							.querySelectorAll('.svg-item')
+							.forEach(function (activeItem) {
+								activeItem
+									.querySelector('a')
+									.classList
+									.remove('btn-success')
+							})
+
+						svgIcon
+							.querySelector('a')
+							.classList
+							.add('btn-success')
+					})
+				})
+
+			document
+				.querySelector('#icon-list-modal')
+				.querySelector('#add-icon-modal-btn')
+				.addEventListener('click', function () {
+					document
+						.getElementById('admin-svg-icon-form-field')
+						.value = selectedIcon
+				})
+		})
 	</script>
 
 {% endblock %}
@@ -128,6 +166,18 @@
 										<div class="fv-plugins-message-container invalid-feedback" id="field-error-single_type"></div>
 									</div>
 								</div>
+								<div class="row mb-6">
+									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Editor Type</label>
+									<div class="col-lg-8 fv-row">
+										<div class="form-check form-switch form-check-custom form-check-success form-check-solid">
+											<input id="kt_flexSwitchCustomDefault_1_1" class="form-check-input" type="checkbox" name="page_builder" value="true" {{ 'checked' if contentType.page_builder }}>
+											<label class="form-check-label" for="kt_flexSwitchCustomDefault_1_1">
+												Page Builder
+											</label>
+										</div>
+										<div class="fv-plugins-message-container invalid-feedback" id="field-error-single_type"></div>
+									</div>
+								</div>
 
 								<div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Position</label>
@@ -145,9 +195,14 @@
 										</a>
 									</label>
 
-									<div class="col-lg-8 fv-row">
-										<textarea class="form-control form-control-lg form-control-solid" type="text" name="admin_icon" placeholder="Admin Icon">{{ contentType.admin_icon }}</textarea>
+									<div class="col-lg-6 fv-row">
+										<textarea class="form-control form-control-lg form-control-solid" type="text" name="admin_icon" id="admin-svg-icon-form-field" placeholder="Admin Icon">{{ contentType.admin_icon }}</textarea>
 										<div class="fv-plugins-message-container invalid-feedback" id="field-error-admin_icon"></div>
+									</div>
+									<div class="col-lg-2">
+										<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#icon-list-modal">
+											Insert Icon
+										</button>
 									</div>
 								</div>
 
@@ -240,4 +295,41 @@
 		</form>
 	</div>
 
+{% endblock %}
+
+{% block widgets %}
+	<div class="modal fade" tabindex="-1" id="icon-list-modal">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title">Icon List</h1>
+
+					<!--begin::Close-->
+					<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+						<span class="svg-icon svg-icon-1"></span>
+					</div>
+					<!--end::Close-->
+				</div>
+
+				<div class="modal-body">
+					{% for icon in icons %}
+						<h3 class="badge badge-light-success mb-3">{{icon.name | upper }}</h3>
+						<ul class="list-inline mb-5">
+							{% for svg in icon.items %}
+								<li class="list-inline-item svg-item">
+									<a href="#" class="btn svg-btn">{{svg | safe}}</a>
+								</li>
+							{% endfor %}
+						</ul>
+
+					{% endfor %}
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="add-icon-modal-btn">Add Icon</button>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

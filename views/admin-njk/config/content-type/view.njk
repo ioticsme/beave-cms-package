@@ -154,6 +154,10 @@
 												<div class="col-lg-8 pt-2">{{ 'Single' if contentType.single_type == true else 'Collection' }}</div>
 											</div>
 											<div class="row mb-6">
+												<label class="col-lg-4 col-form-label required fw-semibold fs-6">Editor Type</label>
+												<div class="col-lg-8 pt-2">{{ 'Page Builder' if contentType.page_builder == true else 'Default' }}</div>
+											</div>
+											<div class="row mb-6">
 												<label class="col-lg-4 col-form-label required fw-semibold fs-6">Position</label>
 												<div class="col-lg-8 pt-2">{{ contentType.position }}</div>
 											</div>

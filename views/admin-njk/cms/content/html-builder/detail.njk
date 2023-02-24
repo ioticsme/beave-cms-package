@@ -1,4 +1,4 @@
-{% extends "../../layouts/master.njk" %}
+{% extends "../../../layouts/master.njk" %}
 
 {% block csslib %}
 	<link href='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css' rel='stylesheet' type='text/css'/>
@@ -34,7 +34,7 @@
 							<li class="breadcrumb-item">
 								<span class="bullet bg-gray-400 w-5px h-2px"></span>
 							</li>
-							{# <li class="breadcrumb-item text-muted">{{ contentDetail.content[default_lang.prefix][reqContentType.field_groups[0].row_label][reqContentType.field_groups[0].fields[0].field_name] }}</li> #}
+
 							<li class="breadcrumb-item text-muted">{{ contentDetail.slug }}</li>
 						{% endif %}
 					</ul>
@@ -57,17 +57,9 @@
 								<div class="card card-flush pt-3 mb-5 mb-lg-10">
 									<div class="card-body pt-0">
 										<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
-											{% for brandLanguage in authUser.brand.languages %}
-												<li class="nav-item">
-													<a class="nav-link {{ 'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
-												</li>
-											{% endfor %}
-
-											{% if has_common_field_groups %}
-												<li class="nav-item">
-													<a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_common">General</a>
-												</li>
-											{% endif %}
+											<li class="nav-item">
+												<a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_general">General</a>
+											</li>
 
 											{% if reqContentType.has_meta %}
 												<li class="nav-item">
@@ -76,111 +68,20 @@
 											{% endif %}
 										</ul>
 										<div class="tab-content tab-content-fields" id="myTabContent">
-											{% for brandLanguage in authUser.brand.languages %}
-												<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" dir="{{brandLanguage.dir}}" id="kt_tab_pane_{{ brandLanguage.prefix }}">
-													<div class="row">
-														<div class="col-12">
-															{% for cfg in reqContentType.field_groups %}
-																{% if cfg.localisation == true %}
-																	<h1 class="mt-5 mb-2">{{ cfg.row_label.toUpperCase() }}</h1>
-																	{% if cfg.repeater_group %}
-																		{% for i in range(contentDetail.content[brandLanguage.prefix][cfg.row_name][
-																			cfg
-																				.fields[0]
-																				.field_name
-																		].length) %}
-																			<div class="row">
-																				{% for eachVal in cfg.fields %}
-																					<div class="col-12 col-sm-6">
-																						<span class="badge badge-light">{{ eachVal.field_label.toUpperCase() }} :</span>
-																						{% set content = contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name] %}
-																						{% if content %}
-																							{% if eachVal.field_type == 'media' %}
-																								<img src="{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name][i] }}" style="max-width: 100px;">
-																							{% else %}
-																								<span class="badge badge-light-info">{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name][i] | safe }}</span>
-																								<br>
-																							{% endif %}
-																						{% endif %}
-																					</div>
-																				{% endfor %}
-																			</div>
-																		{% endfor %}
-																	{% else %}
-																		{% for cf in cfg.fields %}
-																			<span class="badge badge-light-success mt-5">{{ cf.field_label }}</span>
-																			<br>
-																			<div class="card">
-																				{% if cf.field_type == 'media' %}
-																					<img src="{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name] }}" style="max-width: 200px;">
-																				{% else %}
-																					{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name] | safe }}
-																				{% endif %}
-																			</div>
-																		{% endfor %}
-																	{% endif %}
-																{% endif %}
-															{% endfor %}
-														</div>
-													</div>
-												</div>
-											{% endfor %}
+											<div class="tab-pane fade active show" role="tabpanel" id="kt_tab_pane_general">
+												<div class="row">
+													<div class="col-12">
 
-											{% if has_common_field_groups %}
-												<div class="tab-pane fade" role="tabpanel" id="kt_tab_pane_common">
-													<div class="row">
-														<div class="col-12">
-															{% for cfg in reqContentType.field_groups %}
-																{% if cfg.localisation == false %}
-																	<h1 class="mt-5 mb-2">{{cfg.row_label.toUpperCase()}}</h1>
-																	{% if cfg.repeater_group %}
-																		<div class="row">
-																			{% set content = contentDetail.content['common'][cfg.row_name] %}
-																			{% if content %}
-																				{% for i in range(contentDetail.content['common'][cfg.row_name][
-																					cfg
-																						.fields[0]
-																						.field_name
-																				].length) %}
-																					{% for eachVal in cfg.fields %}
-																						<div class="col-12 col-sm-6">
-																							{% set content = contentDetail.content['common'][cfg.row_name] %}
-																							{% if content %}
-																								<span class="badge badge-light">{{eachVal.field_label.toUpperCase()}} :</span>
-																								{% if eachVal.field_type == 'media' %}
-																									<img src="{{content[eachVal.field_name][i]}}" style="max-width: 100px;">
-																								{% else %}
-																									<span class="badge badge-light-info">{{content[eachVal.field_name][i] | safe}}</span>
-																									<br>
-																								{% endif %}
-																							{% endif %}
-																						</div>
-																					{% endfor %}
-																				{% endfor %}
-																			{% endif %}
-																		</div>
-																	{% else %}
-																		{% for cf in cfg.fields %}
-																			<span class="badge badge-light-success mt-5">{{ cf.field_label }}</span>
-																			<br>
-																			<div class="card">
-																				{% set content = contentDetail.content['common'] and contentDetail.content['common'][cfg.row_name] %}
-																				{% if content %}
-																					{% if cf.field_type == 'media' %}
-																						<img src="{{ contentDetail.content['common'][cfg.row_name][cf.field_name] }}" style="max-width: 200px;">
-																					{% else %}
-																						{{ contentDetail.content['common'][cfg.row_name][cf.field_name] | safe }}
-																					{% endif %}
-																				{% endif %}
-																			</div>
-																		{% endfor %}
-																	{% endif %}
-																{% endif %}
-															{% endfor %}
-														</div>
+														<span class="badge badge-light">Name :</span>
+														<span>{{contentDetail.content.name}}</span>
+
+													</div>
+
+													<div class="col-12 mt-5">
+														<a href="/admin/cms/{{reqContentType.slug}}/editor/{{contentDetail._id}}" class="btn btn-light-success">Edit Page</a>
 													</div>
 												</div>
-											{% endif %}
+											</div>
 
 											{% if reqContentType.has_meta %}
 												<div class="tab-pane fade" role="tabpanel" id="kt_tab_pane_meta">
@@ -209,7 +110,7 @@
 													</div>
 												</div>
 											{% endif %}
-											
+
 										</div>
 									</div>
 								</div>

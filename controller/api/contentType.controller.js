@@ -425,6 +425,7 @@ const detail = async (req, res) => {
                     let liveData = await Content.findOne({
                         type_id: mongoose.Types.ObjectId(contentType?._id),
                         country: mongoose.Types.ObjectId(req.country._id),
+                        slug: req.params.slug,
                         published: true,
                     })
                         .populate('author')

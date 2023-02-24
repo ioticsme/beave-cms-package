@@ -73,10 +73,10 @@ const ContentTypeSchema = new mongoose.Schema(
         ],
         meta: {},
         allowed_type: [{ type: String }],
-        // template_name: {
-        //     type: String,
-        //     default: 'page',
-        // },
+        page_builder: {
+            type: Boolean,
+            default: false,
+        },
         has_slug: {
             type: Boolean,
             default: false,

@@ -6,7 +6,6 @@ const cmsContentController = require('../../controller/admin/cmsContent.controll
 const customFormController = require('../../controller/admin/customForm.controller')
 const menuController = require('../../controller/admin/menu.controller')
 const mediaController = require('../../controller/admin/media.controller')
-const htmlBuilder = require('../../controller/admin/htmlBuilder.controller')
 // const galleryController = require('../../controller/admin/gallery.controller')
 const { contentTypeCheck } = require('../../middleware/cms.middleware')
 
@@ -14,19 +13,7 @@ const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
 router.group('/', (router) => {
-    // Menu management Routes
-    router.group('/html-builder', (router) => {
-        router.get('/', htmlBuilder.list)
-        router.get('/view/:id', htmlBuilder.viewPage)
-        router.get('/add', htmlBuilder.add)
-        router.post('/save', htmlBuilder.save)
-        router.post('/delete', htmlBuilder.deletePage)
-        router.post('/change-status', htmlBuilder.changeStatus)
-        router.get('/editor/:id', htmlBuilder.editor)
-        router.get('/load-data/:id', htmlBuilder.loadEditorData)
-        router.post('/save-template', htmlBuilder.saveTemplate)
-    })
-
+    
     router.group('/media', (router) => {
         router.get('/', mediaController.list)
         router.get('/json', mediaController.jsonList)
@@ -67,8 +54,7 @@ router.group('/', (router) => {
         '/:contentType/save',
         contentTypeCheck,
         upload.any(),
-        // cmsContentController.save
-        cmsContentController.saveTemp
+        cmsContentController.save
     )
     router.post(
         '/:contentType/delete',
@@ -79,6 +65,28 @@ router.group('/', (router) => {
         '/:contentType/change-status',
         contentTypeCheck,
         cmsContentController.changeStatus
+    )
+
+    // Below routes are  for page builder (GrapeJs) editor
+    router.get(
+        '/:contentType/editor/preview/:id',
+        contentTypeCheck,
+        cmsContentController.previewPageBuildData
+    )
+    router.get(
+        '/:contentType/editor/load-data/:id',
+        contentTypeCheck,
+        cmsContentController.loadEditorData
+    )
+    router.get(
+        '/:contentType/editor/:id',
+        contentTypeCheck,
+        cmsContentController.pageBuildEditor
+    )
+    router.post(
+        '/:contentType/editor/save',
+        contentTypeCheck,
+        cmsContentController.savePageBuilderData
     )
 })
 

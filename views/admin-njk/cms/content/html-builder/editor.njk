@@ -1,8 +1,10 @@
-{% extends "../../layouts/master.njk" %}
+{% extends "../../../layouts/master.njk" %}
 
 {% block csslib %}
 	<link href='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css' rel='stylesheet' type='text/css'/>
 	<link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
+	<!-- Include the CodeMirror library from the CDN -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/codemirror.min.css" rel="stylesheet">
 	<link href="/cms-static/common/css/grapejs-style.css" rel="stylesheet">
 {% endblock %}
 
@@ -12,6 +14,10 @@
 	<script src="https://unpkg.com/grapesjs"></script>
 	<script src="https://unpkg.com/grapesjs-preset-webpage"></script>
 	<script src="https://unpkg.com/grapesjs-preset-newsletter"></script>
+	<!-- Include the CodeMirror library from the CDN -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/codemirror.min.js"></script>
+	<!-- Include the CodeManager plugin from the CDN -->
+	<script src="https://unpkg.com/grapesjs-codemanager"></script>
 
 	{# // Form Submission Script #}
 	{# <script src='/cms-static/common/js/form-data-json.min.js'></script> #}
@@ -19,23 +25,25 @@
 	<script>
 		// Add a hidden input field to the component
 		var pageId = '{{page_id}}';
+		var content_type_slug = '{{reqContentType.slug}}';
 	</script>
 	<script src='/cms-static/common/js/grapejs-editor.js'></script>
 
 {% endblock %}
 
-{% block customScript %}
-	
-{% endblock %}
+{% block customScript %}{% endblock %}
 
 {% block content %}
 	<div class="d-flex flex-column flex-column-fluid">
-		
 		<div id="kt_app_content" class="app-content flex-column-fluid p-0 m-0">
 			<div id="kt_app_content_container" class="app-container container p-0 m-0">
+				<div class="panel__top">
+					<div class="panel__basic-actions"></div>
+				</div>
 				<div id="gjs" class="p-0 m-0">
 					{# Data Will Load Here #}
 				</div>
+				<div id="blocks"></div>
 			</div>
 		</div>
 	</div>
