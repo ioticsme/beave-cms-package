@@ -254,6 +254,8 @@ const mainNavGenerator = async (req, res, next) => {
                 return {
                     section: item.admin_nav_section || 'Content',
                     label: item.title,
+                    expandable: false,
+                    icon: item.admin_icon,
                     path: `/admin/cms/${item.slug}`,
                 }
             }   
