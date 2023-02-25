@@ -1,4 +1,4 @@
-require('dotenv').config()
+const envConfig = require('../../config/env.config')
 const { uploadMedia } = require('../../helper/FileUpload.helper')
 const fs = require('fs')
 const Media = require('../../model/Media')

@@ -1,4 +1,4 @@
-require('dotenv').config()
+const envConfig = require('../../config/env.config')
 const Joi = require('joi')
 const { joiPasswordExtendCore } = require('joi-password')
 const joiPassword = Joi.extend(joiPasswordExtendCore)

@@ -1,4 +1,4 @@
-require('dotenv').config()
+const envConfig = require('./config/env.config')
 const express = require('express')
 const nunjucks = require('nunjucks')
 const helmet = require('helmet')
@@ -28,12 +28,11 @@ const {
 } = require('./middleware/cms.middleware')
 // END::Service Providers
 
+// console.log(envConfig.general)
 app.use((req, res, next) => {
     app.locals.baseURL =
-        process.env.DOMAIN ||
-        req.protocol + '://' + req.get('host') ||
-        `{{domain}}`
-    app.locals.clientName = process.env.CLIENT_NAME
+        envConfig.general.DOMAIN || req.protocol + '://' + req.get('host')
+    app.locals.clientName = envConfig.general.CLIENT_NAME
     next()
 })
 // BEGIN::Security Headers
@@ -57,7 +56,7 @@ app.use('/wrapper-static', express.static(path.join(__dirname, '../public')))
 //Configure redis client
 
 var client = redis.createClient({
-    url: `${process.env.REDIS_URL}`,
+    url: `${envConfig.cache.REDIS_URL}`,
     legacyMode: true,
 })
 
@@ -70,14 +69,14 @@ var client = redis.createClient({
 
 const sessionConfig = {
     store: new redisStore({
-        // url: `${process.env.REDIS_URL}`,
+        // url: `${envConfig.cache.REDIS_URL}`,
         // legacyMode: true,
         // host: 'localhost',
         // port: 6379,
         client: client,
         // ttl: 260,
     }),
-    secret: `${process.env.APP_KEY}`,
+    secret: `${envConfig.general.APP_KEY}`,
     saveUninitialized: false,
     resave: false,
     // cookie: {
@@ -88,7 +87,7 @@ const sessionConfig = {
 }
 
 //session middleware
-if (process.env.NODE_ENV === 'production') {
+if (envConfig.general.NODE_ENV === 'production') {
     app.set('trust proxy', 1)
 }
 // sessionConfig.store = new RedisStore({ host: 'localhost', port: 6379, client: redisClient,ttl :  260}),
@@ -131,8 +130,8 @@ global.globalModuleConfig = {}
 let dbSuccess = 'Fail'
 mongoose.set('strictQuery', false)
 mongoose
-    .connect(process.env.DB_CONNECTION, {
-        dbName: `${process.env.DB_NAME}`,
+    .connect(envConfig.db.URL, {
+        dbName: `${envConfig.db.NAME}`,
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
@@ -189,7 +188,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:')) //TODO:
 
 app.get('/health', async (req, res) => {
     const appKey =
-        process.env.APP_KEY === undefined ? 'APP Key is missing!!!' : 'OK'
+        envConfig.general.APP_KEY === undefined ? 'APP Key is missing!!!' : 'OK'
     res.status(200).json({
         'DB Connected': dbSuccess,
         Health: 'OK',
@@ -206,7 +205,7 @@ const webAPIRoutes = require('./routes/api/web-api.routes')
 
 // TODO::Below code is only for continuos development purpose. Should be removed on staging and production
 // BEGIN::Admin automatic auth on each server restart for development purpose
-if (process.env.NODE_ENV == 'development') {
+if (envConfig.general.NODE_ENV == 'development') {
     const Settings = require('./model/Settings')
     const Admin = require('./model/Admin')
     const Brand = require('./model/Brand')

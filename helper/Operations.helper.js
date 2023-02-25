@@ -1,4 +1,4 @@
-require('dotenv').config()
+const envConfig = require('../config/env.config')
 const winston = require('winston')
 const ImageKit = require('imagekit')
 const Media = require('../model/Media')

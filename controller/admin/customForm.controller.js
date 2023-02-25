@@ -1,4 +1,4 @@
-require('dotenv').config()
+const envConfig = require('../../config/env.config')
 const _ = require('lodash')
 const slugify = require('slugify')
 const Joi = require('joi')

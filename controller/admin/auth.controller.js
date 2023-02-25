@@ -1,4 +1,4 @@
-require('dotenv').config()
+const envConfig = require('../../config/env.config')
 const Joi = require('joi')
 const bcrypt = require('bcrypt')
 const Admin = require('../../model/Admin')

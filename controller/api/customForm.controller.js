@@ -49,8 +49,8 @@ const customFormSubmit = async (req, res) => {
         // Verifying captcha with token
         if (
             customForm.has_captcha &&
-            (process.env.NODE_ENV == 'production' ||
-                process.env.NODE_ENV == 'staging')
+            (envConfig.general.NODE_ENV == 'production' ||
+                envConfig.general.NODE_ENV == 'staging')
         ) {
             const isVerified = await verifyCaptcha(req.body.token)
             if (!isVerified) {

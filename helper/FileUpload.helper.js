@@ -1,4 +1,4 @@
-require('dotenv').config()
+const envConfig = require('../config/env.config')
 const ImageKit = require('imagekit')
 const Media = require('../model/Media')
 var FileReader = require('filereader')
@@ -7,9 +7,9 @@ var FileReader = require('filereader')
 const uploadMedia = async (media, folder, new_name) => {
     // SDK initialization
     const imagekit = new ImageKit({
-        publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
-        privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
-        urlEndpoint: process.env.IMAGEKIT_URL,
+        publicKey: envConfig.imagekit.PUBLIC_KEY,
+        privateKey: envConfig.imagekit.PRIVATE_KEY,
+        urlEndpoint: envConfig.imagekit.URL,
     })
 
     // URL generation
@@ -23,8 +23,8 @@ const uploadMedia = async (media, folder, new_name) => {
     //     ],
     // })
 
-    let nodeEnv = process.env.NODE_ENV
-    let baseFolder = `${process.env.IMAGEKIT_FOLDER}/${
+    let nodeEnv = envConfig.general.NODE_ENV
+    let baseFolder = `${envConfig.imagekit.FOLDER}/${
         nodeEnv.charAt(0).toUpperCase() + nodeEnv.slice(1)
     }`
     const uploaded = await imagekit

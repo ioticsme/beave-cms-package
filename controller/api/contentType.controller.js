@@ -1,4 +1,4 @@
-require('dotenv').config()
+const envConfig = require('../../config/env.config')
 const _ = require('lodash')
 const { getCache, setCache } = require('../../helper/Redis.helper')
 const ContentType = require('../../model/ContentType')
@@ -17,7 +17,7 @@ const { default: mongoose } = require('mongoose')
 //         })
 //         const contents = await getCache(cache_key)
 //             .then(async (data) => {
-//                 if (process.env.CACHE_LOCAL_DATA == 'true' && data) {
+//                 if (envConfig.cache.ACTIVE == 'true' && data) {
 //                     return JSON.parse(data)
 //                 } else {
 //                     let allContents
@@ -252,7 +252,7 @@ const { default: mongoose } = require('mongoose')
 //                     // return res.json(liveContent)
 
 //                     if (
-//                         process.env.CACHE_LOCAL_DATA == 'true' &&
+//                         envConfig.cache.ACTIVE == 'true' &&
 //                         liveContent?.length
 //                     ) {
 //                         // console.log(JSON.stringify(liveDataCollection))
@@ -297,7 +297,7 @@ const list = async (req, res) => {
 
         const contents = await getCache(cache_key)
             .then(async (data) => {
-                if (process.env.CACHE_LOCAL_DATA == 'true' && data) {
+                if (envConfig.cache.ACTIVE == 'true' && data) {
                     return JSON.parse(data)
                 } else {
                     let allContents
@@ -372,7 +372,7 @@ const list = async (req, res) => {
                     // return res.json(liveContent)
 
                     if (
-                        process.env.CACHE_LOCAL_DATA == 'true' &&
+                        envConfig.cache.ACTIVE == 'true' &&
                         liveContent?.length
                     ) {
                         // console.log(JSON.stringify(liveDataCollection))
@@ -419,7 +419,7 @@ const detail = async (req, res) => {
 
         const contents = await getCache(cache_key)
             .then(async (data) => {
-                if (process.env.CACHE_LOCAL_DATA == 'true' && data) {
+                if (envConfig.cache.ACTIVE == 'true' && data) {
                     return JSON.parse(data)
                 } else {
                     let liveData = await Content.findOne({
@@ -458,7 +458,7 @@ const detail = async (req, res) => {
                         liveData
                     ).exec()
 
-                    if (process.env.CACHE_LOCAL_DATA == 'true' && liveData) {
+                    if (envConfig.cache.ACTIVE == 'true' && liveData) {
                         setCache(
                             cache_key,
                             JSON.stringify({

@@ -1,4 +1,4 @@
-require('dotenv').config()
+const envConfig = require('../../config/env.config')
 const Joi = require('joi')
 const { joiPasswordExtendCore } = require('joi-password')
 const joiPassword = Joi.extend(joiPasswordExtendCore)
@@ -43,8 +43,8 @@ const loginSubmit = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        (process.env.NODE_ENV == 'production' ||
-            process.env.NODE_ENV == 'staging') &&
+        (envConfig.general.NODE_ENV == 'production' ||
+            envConfig.general.NODE_ENV == 'staging') &&
         req.source == 'web'
     ) {
         const isVerified = await verifyCaptcha(req.body.token)
@@ -110,16 +110,16 @@ const loginSubmit = async (req, res) => {
                             source: req.source,
                         },
                     },
-                    process.env.APP_KEY,
+                    envConfig.general.APP_KEY,
                     {
                         expiresIn:
                             req.source == 'app'
                                 ? `${
-                                      process.env.MOBILE_USER_TOKEN_EXPIRY ||
+                                      envConfig.cache.MOBILE_TOKEN_EXPIRY ||
                                       '15days'
                                   }`
                                 : `${
-                                      process.env.WEB_USER_TOKEN_EXPIRY || '24h'
+                                      envConfig.cache.WEB_TOKEN_EXPIRY || '24h'
                                   }`,
                     }
                 )
@@ -143,7 +143,7 @@ const loginSubmit = async (req, res) => {
                             60 *
                             24 *
                             (req.source == 'app'
-                                ? process.env.MOBILE_USER_TOKEN_EXPIRY || 15
+                                ? envConfig.cache.MOBILE_TOKEN_EXPIRY || 15
                                 : 1)
                     )
                 }
@@ -314,12 +314,12 @@ const socialLoginSubmit = async (req, res) => {
                     source: req.source,
                 },
             },
-            process.env.APP_KEY,
+            envConfig.general.APP_KEY,
             {
                 expiresIn:
                     req.source == 'app'
-                        ? `${process.env.MOBILE_USER_TOKEN_EXPIRY || '15days'}`
-                        : `${process.env.WEB_USER_TOKEN_EXPIRY || '24h'}`,
+                        ? `${envConfig.cache.MOBILE_TOKEN_EXPIRY || '15days'}`
+                        : `${envConfig.cache.WEB_TOKEN_EXPIRY || '24h'}`,
             }
         )
 
@@ -331,7 +331,7 @@ const socialLoginSubmit = async (req, res) => {
                 60 *
                 24 *
                 (req.source == 'app'
-                    ? process.env.MOBILE_USER_TOKEN_EXPIRY || 15
+                    ? envConfig.cache.MOBILE_TOKEN_EXPIRY || 15
                     : 1)
         )
 
@@ -434,8 +434,8 @@ const updateMobileNo = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        (process.env.NODE_ENV == 'production' ||
-            process.env.NODE_ENV == 'staging') &&
+        (envConfig.general.NODE_ENV == 'production' ||
+            envConfig.general.NODE_ENV == 'staging') &&
         req.source == 'web'
     ) {
         const isVerified = await verifyCaptcha(req.body.token)
@@ -588,8 +588,8 @@ const signupSubmit = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        process.env.NODE_ENV == 'production' ||
-        process.env.NODE_ENV == 'staging'
+        envConfig.general.NODE_ENV == 'production' ||
+        envConfig.general.NODE_ENV == 'staging'
     ) {
         const isVerified = await verifyCaptcha(req.body.token)
         if (!isVerified) {
@@ -698,8 +698,8 @@ const otpVerification = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        process.env.NODE_ENV == 'production' ||
-        process.env.NODE_ENV == 'staging'
+        envConfig.general.NODE_ENV == 'production' ||
+        envConfig.general.NODE_ENV == 'staging'
     ) {
         const isVerified = await verifyCaptcha(req.body.token)
         if (!isVerified) {
@@ -769,12 +769,12 @@ const otpVerification = async (req, res) => {
                         source: req.source,
                     },
                 },
-                process.env.APP_KEY,
+                envConfig.general.APP_KEY,
                 {
                     expiresIn:
                         req.source == 'app'
-                            ? process.env.MOBILE_USER_TOKEN_EXPIRY
-                            : process.env.WEB_USER_TOKEN_EXPIRY || '24h',
+                            ? envConfig.cache.MOBILE_TOKEN_EXPIRY
+                            : envConfig.cache.WEB_TOKEN_EXPIRY || '24h',
                 }
             )
 
@@ -829,8 +829,8 @@ const resendOTP = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        process.env.NODE_ENV == 'production' ||
-        process.env.NODE_ENV == 'staging'
+        envConfig.general.NODE_ENV == 'production' ||
+        envConfig.general.NODE_ENV == 'staging'
     ) {
         const isVerified = await verifyCaptcha(req.body.token)
         if (!isVerified) {
@@ -924,8 +924,8 @@ const forgotCredentials = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        process.env.NODE_ENV == 'production' ||
-        process.env.NODE_ENV == 'staging'
+        envConfig.general.NODE_ENV == 'production' ||
+        envConfig.general.NODE_ENV == 'staging'
     ) {
         const isVerified = await verifyCaptcha(req.body.token)
         if (!isVerified) {
@@ -1087,8 +1087,8 @@ const verifyForgotOTP = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        process.env.NODE_ENV == 'production' ||
-        process.env.NODE_ENV == 'staging'
+        envConfig.general.NODE_ENV == 'production' ||
+        envConfig.general.NODE_ENV == 'staging'
     ) {
         const isVerified = await verifyCaptcha(req.body.token)
         if (!isVerified) {

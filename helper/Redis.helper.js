@@ -1,4 +1,4 @@
-require('dotenv').config()
+const envConfig = require('../config/env.config')
 const redis = require('redis')
 const asyncRedis = require('async-redis')
 const { sendAdminNotification } = require('./Slack.helper')
@@ -7,7 +7,7 @@ const redisConnect = async () => {
     try {
         const client = asyncRedis.createClient({
             legacyMode: true,
-            url: process.env.REDIS_URL || 'redis://localhost:6379',
+            url: envConfig.cache.REDIS_URL || 'redis://localhost:6379',
         })
 
         client.on('error', (error) => {
@@ -100,8 +100,8 @@ const flushCache = async () => {
 
 // // BEGIN:: REDIS PUB/SUB server to server messaging
 // const Redis = require('ioredis')
-// const pubRedis = new Redis(`${process.env.REDIS_URL}`)
-// const subRedis = new Redis(`${process.env.REDIS_URL}`)
+// const pubRedis = new Redis(`${envConfig.cache.REDIS_URL}`)
+// const subRedis = new Redis(`${envConfig.cache.REDIS_URL}`)
 
 // setInterval(() => {
 //     const message = { foo: Math.random() }

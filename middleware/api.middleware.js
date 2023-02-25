@@ -1,4 +1,4 @@
-require('dotenv').config()
+const envConfig = require('../config/env.config')
 const jwt = require('jsonwebtoken')
 const collect = require('collect.js')
 const useragent = require('express-useragent')
@@ -107,7 +107,7 @@ const UserAuthCheck = async (req, res, next) => {
                 })
             }
             const token = req.headers.authorization.split(' ')
-            const decodedUser = jwt.verify(token[1], process.env.APP_KEY)
+            const decodedUser = jwt.verify(token[1], envConfig.general.APP_KEY)
             // const user = await User.findOne({
             //     _id: decodedUser.data?.user?._id,
             // })
@@ -224,7 +224,7 @@ const getNav = async (req, res, next) => {
                                 .all() || []
 
                         if (
-                            process.env.CACHE_LOCAL_DATA == 'true' &&
+                            envConfig.cache.ACTIVE == 'true' &&
                             liveData?.length
                         ) {
                             setCache(

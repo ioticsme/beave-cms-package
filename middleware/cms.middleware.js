@@ -1,4 +1,4 @@
-require('dotenv').config()
+const envConfig = require('../config/env.config')
 const fs = require('fs')
 const _ = require('lodash')
 const path = require('path')
@@ -22,7 +22,7 @@ try {
 }
 
 const baseConfig = async (req, res, next) => {
-    // res.locals.clientName = `${process.env.CLIENT_NAME}`
+    // res.locals.clientName = `${envConfig.general.CLIENT_NAME}`
     // res.locals.cmsLogoLarge = `#`
     // res.locals.cmsLogoSmall = `#`
     res.locals.globalModuleConfig = globalModuleConfig

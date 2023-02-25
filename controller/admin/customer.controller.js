@@ -1,6 +1,6 @@
 const User = require('../../model/User')
 const AjaxPaginationCustomerResource = require('../../resources/api/ajaxPaginationCustomer.resource')
-require('dotenv').config()
+const envConfig = require('./config/env.config')
 
 let session
 

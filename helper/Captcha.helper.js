@@ -1,4 +1,4 @@
-require('dotenv').config()
+const envConfig = require('../config/env.config')
 const axios = require('axios')
 
 // TODO: env parameteres should come from DB (Super admin config)
@@ -6,7 +6,7 @@ const verifyCaptcha = async (token) => {
     try {
         let response = await axios
             .post(
-                `${process.env.CAPTCHA_BASE_URL}?secret=${process.env.CAPTCHA_SECRET_KEY}&response=${token}`
+                `${envConfig.captcha.BASE_URL}?secret=${envConfig.captcha.SECRET_KEY}&response=${token}`
             )
             .then((res) => {
                 // console.log(res.data)

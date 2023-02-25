@@ -1,14 +1,14 @@
 // "https://smsapi.aptivadigi.com/api/?username=iotic&password=Iotics@324&cmd=sendSMS&message=Dear+customer%2C+your+one+time+password+%28OTP%29+for+ordering+from+Akawi+Oven+is+513391&sender=EATROOT&uniCode=0&to=971566994313"
-require('dotenv').config()
+const envConfig = require('../config/env.config')
 const axios = require('axios')
 const User = require('../model/User')
 const senderID = `Fun City`
-// const baseURL = `https://smsapi.aptivadigi.com/api/?username=${process.env.APTIVA_USRNAME}&password=${process.env.APTIVA_PASSWORD}&cmd=sendSMS&message=`
+// const baseURL = `https://smsapi.aptivadigi.com/api/?username=${envConfig.sms.USRNAME}&password=${envConfig.sms.PASSWORD}&cmd=sendSMS&message=`
 const baseURL = `https://smsapi.aptivadigi.com/api/?username=lmleisure&password=Leisure@123&cmd=sendSMS&message=`
 
 const sendSMS = async (mobile, senderID, message) => {
     console.log(mobile, senderID, message)
-    // if (process.env.NODE_ENV == 'production') {
+    // if (envConfig.general.NODE_ENV == 'production') {
     axios
         .get(`${baseURL}${message}&sender=${senderID}&uniCode=0&to=${mobile}`)
         .then(function (response) {
@@ -19,7 +19,7 @@ const sendSMS = async (mobile, senderID, message) => {
             // TODO::Send slack notification to the admin
         })
     // } else {
-    //     axios.post(`${process.env.SLACK_ADMIN_CHANNEL}`, {
+    //     axios.post(`${envConfig.slack.ADMIN_CHANNEL}`, {
     //         username: 'LML-OTP',
     //         text: message,
     //     })
@@ -38,7 +38,7 @@ const sendTransactionOTP = async (otp, mobile, brand) => {
 const sendThanks = async (message, mobile, brand, smsSettings) => {
     const senderID = `${smsSettings.sender_id}`
     const baseURL = `https://smsapi.aptivadigi.com/api/?username=${smsSettings.username}&password=${smsSettings.password}&cmd=sendSMS&message=`
-    if (process.env.NODE_ENV == 'production') {
+    if (envConfig.general.NODE_ENV == 'production') {
         sendSMS(mobile, senderID, message)
         // axios
         //     .get(
