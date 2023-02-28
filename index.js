@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const chalk = require('chalk')
 var session = require('express-session')
-const redis = require('redis')
+const Redis = require('ioredis')
 var redisStore = require('connect-redis')(session)
 
 const fs = require('fs')
@@ -54,18 +54,7 @@ app.use('/cms-static', express.static(path.join(__dirname, './public')))
 app.use('/wrapper-static', express.static(path.join(__dirname, '../public')))
 
 //Configure redis client
-
-var client = redis.createClient({
-    url: `${envConfig.cache.REDIS_URL}`,
-    legacyMode: true,
-})
-
-;(async () => {
-    client.on('error', (err) => {
-        console.log('Redis Client Error', err)
-    })
-    await client.connect()
-})()
+const redis = new Redis(envConfig.cache.REDIS_URL)
 
 const sessionConfig = {
     store: new redisStore({
@@ -73,7 +62,7 @@ const sessionConfig = {
         // legacyMode: true,
         // host: 'localhost',
         // port: 6379,
-        client: client,
+        client: redis,
         // ttl: 260,
     }),
     secret: `${envConfig.general.APP_KEY}`,

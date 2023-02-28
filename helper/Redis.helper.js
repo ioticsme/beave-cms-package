@@ -1,39 +1,41 @@
 const envConfig = require('../config/env.config')
-const redis = require('redis')
-const asyncRedis = require('async-redis')
-const { sendAdminNotification } = require('./Slack.helper')
+const Redis = require('ioredis')
+// const asyncRedis = require('async-redis')
+// const { sendAdminNotification } = require('./Slack.helper')
 
-const redisConnect = async () => {
-    try {
-        const client = asyncRedis.createClient({
-            legacyMode: true,
-            url: envConfig.cache.REDIS_URL || 'redis://localhost:6379',
-        })
+const redis = new Redis(envConfig.cache.REDIS_URL)
 
-        client.on('error', (error) => {
-            console.error(`❗️ Redis Error: ${error}`)
-            sendAdminNotification(`❗️ Redis Error: ${error}`)
-            // client.end()
-        })
+// const redisConnect = async () => {
+//     try {
+//         const client = asyncRedis.createClient({
+//             legacyMode: true,
+//             url: envConfig.cache.REDIS_URL,
+//         })
 
-        client.on('connect', () => {
-            console.log('✅ Connect redis success !')
-        })
+//         client.on('error', (error) => {
+//             console.error(`❗️ Redis Error: ${error}`)
+//             sendAdminNotification(`❗️ Redis Error: ${error}`)
+//             // client.end()
+//         })
 
-        // await client.connect()
+//         client.on('connect', () => {
+//             console.log('✅ Connect redis success !')
+//         })
 
-        return client
-    } catch (error) {
-        console.log('Redis Client Error', error)
-        return error
-    }
-}
+//         // await client.connect()
+
+//         return client
+//     } catch (error) {
+//         console.log('Redis Client Error', error)
+//         return error
+//     }
+// }
 
 const getCache = async (key) => {
     // await client.connect()
     try {
-        const client = await redisConnect()
-        return await client.get(key)
+        // const client = await redisConnect()
+        return await redis.get(key)
     } catch (error) {
         console.log('Redis Client Error', error)
         return error
@@ -43,9 +45,9 @@ const getCache = async (key) => {
 const setCache = async (key, data, expiry = 300) => {
     // await client.connect()
     try {
-        const client = await redisConnect()
+        // const client = await redisConnect()
         // console.log(data)
-        await client.set(key, data, 'EX', expiry) // Response will be 'OK'
+        await redis.set(key, data, 'EX', expiry) // Response will be 'OK'
         // client.expire(key, expiry)
         return 'OK'
     } catch (error) {
@@ -57,8 +59,8 @@ const setCache = async (key, data, expiry = 300) => {
 const removeCache = async (keys) => {
     // await client.connect()
     try {
-        const client = await redisConnect()
-        return await client.del(keys)
+        // const client = await redisConnect()
+        return await redis.pipeline().del(keys)
     } catch (error) {
         console.log('Redis Client Error', error)
         return error
@@ -68,19 +70,16 @@ const removeCache = async (keys) => {
 const clearCacheAll = async () => {
     // await client.connect()
     try {
-        const client = await redisConnect()
+        // const client = await redisConnect()
         const keys_to_remove = []
-        for await (const key of client.scanIterator({
-            MATCH: 'semnox-*',
-        })) {
+        const iterator = await redis.scanStream({
+            match: 'data-*',
+        })
+        // console.log(iterator)
+        for await (const key of iterator) {
             keys_to_remove.push(key)
         }
-        for await (const key of client.scanIterator({
-            MATCH: 'data-*',
-        })) {
-            keys_to_remove.push(key)
-        }
-        return await client.del(keys_to_remove)
+        return await redis.del(keys_to_remove)
     } catch (error) {
         console.log('Redis Client Error', error)
         return error
@@ -90,8 +89,8 @@ const clearCacheAll = async () => {
 const flushCache = async () => {
     // await client.connect()
     try {
-        const client = await redisConnect()
-        return await client.flushAll()
+        // const client = await redisConnect()
+        return await redis.flushdb()
     } catch (error) {
         console.log('Redis Client Error', error)
         return error
@@ -137,5 +136,5 @@ module.exports = {
     removeCache,
     clearCacheAll,
     flushCache,
-    redisConnect,
+    // redisConnect,
 }

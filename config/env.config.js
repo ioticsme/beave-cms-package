@@ -34,7 +34,7 @@ const envConfig = {
         ACTIVE: process.env.CACHE_LOCAL_DATA || false,
         WEB_TOKEN_EXPIRY: process.env.WEB_USER_TOKEN_EXPIRY || '24h',
         MOBILE_TOKEN_EXPIRY: process.env.MOBILE_USER_TOKEN_EXPIRY || '30days',
-        REDIS_URL: process.env.REDIS_URL,
+        REDIS_URL: process.env.REDIS_URL  || 'redis://localhost:6379',
     },
     slack: {
         ADMIN_CHANNEL: process.env.SLACK_ADMIN_CHANNEL,
