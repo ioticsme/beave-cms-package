@@ -18,31 +18,31 @@ const metaFields = [
                 name: 'keywords',
                 type: 'textarea',
             },
-            {
-                label: 'Viewport',
-                name: 'viewport',
-                type: 'text',
-            },
-            {
-                label: 'Robots',
-                name: 'robots',
-                type: 'text',
-            },
+            // {
+            //     label: 'Viewport',
+            //     name: 'viewport',
+            //     type: 'text',
+            // },
+            // {
+            //     label: 'Robots',
+            //     name: 'robots',
+            //     type: 'text',
+            // },
             {
                 label: 'Canonical',
                 name: 'canonical',
                 type: 'text',
             },
-            {
-                label: 'Author',
-                name: 'author',
-                type: 'text',
-            },
-            {
-                label: 'Charset',
-                name: 'charset',
-                type: 'text',
-            },
+            // {
+            //     label: 'Author',
+            //     name: 'author',
+            //     type: 'text',
+            // },
+            // {
+            //     label: 'Charset',
+            //     name: 'charset',
+            //     type: 'text',
+            // },
         ],
     },
     {
