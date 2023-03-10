@@ -298,7 +298,7 @@ const saveFields = async (req, res) => {
 
 const saveMeta = async (req, res) => {
     try {
-        console.log(req.body)
+        // console.log(req.body)
         const schema = Joi.object({
             _id: Joi.string().required(),
             meta: Joi.object().required(),

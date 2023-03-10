@@ -673,7 +673,8 @@ const signupSubmit = async (req, res) => {
         // SMS.sendOTP(otp, mobile, req.brand.name.en, smsSettings)
 
         return res.status(200).json({
-            message: 'OTP sent to mobile ',
+            // message: 'OTP sent to mobile',
+            message: 'Success',
         })
     } catch (error) {
         console.log(error)

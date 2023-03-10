@@ -23,7 +23,10 @@
 
 {% block customScript %}
 	<script>
-		{# var fields_to_map = {{fields_to_map | safe}}; #}
+		{
+			# var fields_to_map = {{fields_to_map | safe}};
+			#
+		}
 		fieldSchemaJson = {{fields_to_map | safe}} || [];
 		bkupDataJson = _.cloneDeep(fieldSchemaJson)
 		generateField()
@@ -246,29 +249,45 @@
 										</div>
 										<div id="kt_account_settings_profile_details">
 											<div class="card-body border-top p-9">
-												{% for meta_section in metaFields %}
-													<h3 class="badge badge-light-success">{{ meta_section.name }}</h3>
-													{% for meta_field in meta_section.fields %}
-														<div class="row mb-6">
-															<label class="col-lg-4 col-form-label fw-semibold fs-6">{{ meta_field.label }}</label>
-															<div class="col-lg-8 pt-2">
-																{% if contentType
-																	.meta and contentType
-																	.meta[meta_section.slug] and contentType
-																	.meta[meta_section.slug][meta_field.name] %}
-																	{% set fieldValue = contentType.meta[meta_section.slug][meta_field.name] %}
-																{% else %}
-																	{% set fieldValue = '' %}
-																{% endif %}
-																{% if meta_field.type == 'textarea' %}
-																	<textarea class="form-control" name="meta[{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}">{{ fieldValue }}</textarea>
-																{% else %}
-																	<input type="text" class="form-control" placeholder="{{ meta_field.label }}" name="meta[{{ meta_section.slug }}][{{ meta_field.name }}]" value="{{ fieldValue }}">
-																{% endif %}
-															</div>
+
+												<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
+													{% for brandLanguage in authUser.brand.languages %}
+														<li class="nav-item">
+															<a class="nav-link {{'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#meta_tab_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
+														</li>
+													{% endfor %}
+												</ul>
+
+												<div class="tab-content" id="meta-lang-tabs">
+													{% for brandLanguage in authUser.brand.languages %}
+														<div class="tab-pane fade {{'show active' if loop.index == 1 }}" id="meta_tab_{{ brandLanguage.prefix }}" role="tabpanel">
+															{% for meta_section in metaFields %}
+																<h3 class="badge badge-light-success">{{ meta_section.name }}</h3>
+																{% for meta_field in meta_section.fields %}
+																	<div class="row mb-6">
+																		<label class="col-lg-4 col-form-label fw-semibold fs-6">{{ meta_field.label }}</label>
+																		<div class="col-lg-8 pt-2">
+																			{% if contentType
+																				.meta and contentType
+																				.meta[brandLanguage.prefix][meta_section.slug] and contentType
+																				.meta[brandLanguage.prefix][meta_section.slug][meta_field.name] %}
+																				{% set fieldValue = contentType.meta[brandLanguage.prefix][meta_section.slug][meta_field.name] %}
+																			{% else %}
+																				{% set fieldValue = '' %}
+																			{% endif %}
+																			{% if meta_field.type == 'textarea' %}
+																				<textarea class="form-control" name="meta[{{brandLanguage.prefix}}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}">{{ fieldValue }}</textarea>
+																			{% else %}
+																				<input type="text" class="form-control" placeholder="{{ meta_field.label }}" name="meta[{{brandLanguage.prefix}}][{{ meta_section.slug }}][{{ meta_field.name }}]" value="{{ fieldValue }}">
+																			{% endif %}
+																		</div>
+																	</div>
+																{% endfor %}
+															{% endfor %}
 														</div>
 													{% endfor %}
-												{% endfor %}
+												</div>
+
 											</div>
 										</div>
 									</div>

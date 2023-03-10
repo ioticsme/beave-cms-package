@@ -1,0 +1,95 @@
+{# BEGIN:: ID field for edit form  #}
+{% macro idField(model) %}
+    {% if model._id %}
+        <input type="hidden" name="_id" value="{{model._id}}"/>
+    {% endif %}
+{% endmacro %}
+{# END:: ID field for edit form  #}
+
+{% macro field(name, type = 'text', value = '', label = '', placeholder = '') %}
+    {% set field_name_flattened = name | replace('[', '_') | replace(']', '') %}
+    <div class="d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container.col-md-6">
+        {% if label %}
+            <label class="d-flex align-items-center fs-6.fw-semibold mb-2">
+                <span class="required">{{label}}</span>
+            </label>
+        {% endif %}
+
+        {% if type == 'textarea' %}
+            <textarea class="form-control" name="{{name}}" placeholder="{{placeholder}}">{{value}}</textarea>
+        {% else %}
+            <input class="form-control" type='{{type}}' placeholder='{{placeholder}}' name="{{name}}" value="{{value}}"/>
+        {% endif %}
+        <span id="field-error-{{field_name_flattened}}" class="fv-plugins-message-container invalid-feedback"></span>
+    </div>
+{% endmacro %}
+
+{% macro dateField(name, type = 'text', value = '', label = '', placeholder = '') %}
+    {% set field_name_flattened = name | replace('[', '_') | replace(']', '') %}
+    <div class="d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container.col-md-6">
+        {% if label %}
+            <label class="d-flex align-items-center fs-6.fw-semibold mb-2">
+                <span class="required">{{label}}</span>
+            </label>
+        {% endif %}
+        <input class="form-control datepicker" type='{{type}}' placeholder='{{placeholder}}' name="{{name}}" value="{{value}}"/>
+        <span id="field-error-{{field_name_flattened}}" class="fv-plugins-message-container invalid-feedback"></span>
+    </div>
+
+{% endmacro %}
+
+{# BEGIN:: Publish drop down field for form  #}
+{% macro publishField(value) %}
+    <div class="d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container.col-md-6">
+        <label class="d-flex align-items-center fs-6.fw-semibold mb-2">
+            <span class="required">Status</span>
+        </label>
+        <select class="form-select" name="published" aria-label="Select example">
+            <option>- Status -</option>
+            <option value="true" {{ 'selected' if value== true }}>Publish</option>
+            <option value="false" {{ 'selected' if value== false }}>Unpublish</option>
+        </select>
+        <span id="field-error-published" class="fv-plugins-message-container invalid-feedback"></span>
+    </div>
+{% endmacro %}
+{# END:: Publish drop down field for form  #}
+
+{# BEGIN:: Media Upload Button for form  #}
+{% macro mediaField(field_name, element_id, label = '', button_text = 'Attach Media') %}
+    {# <span id="{{element_id}}_preview">
+        <span class="preview-holder"></span>
+        <a class="btn btn-danger image-preview-remove-btn d-none my-1">
+            <i class="fa fa-trash" tabindex="-1"></i>
+        </a>
+    </span>
+    <input type="hidden" id="{{element_id}}" name="{{field_name}}">
+    <a class="btn btn-success" data-field="{{element_id}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a> #}
+
+    <div class="d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container.col-md-6">
+        {% if label %}
+            <label class="d-flex align-items-center fs-6.fw-semibold mb-2">
+                <span class="required">{{label}}</span>
+            </label>
+        {% endif %}
+        <span class='media-uploader-field'>
+            <span class="media_preview">
+                <span class="preview-holder"></span>
+                <a class="btn btn-danger image-preview-remove-btn d-none my-1">
+                    <i class="fa fa-trash" tabindex="-1"></i>
+                </a>
+            </span>
+            <input type="hidden" class="media_url_field" name="{{ field_name }}">
+            <a class="btn btn-success media-uploader-modal-btn" id="{{element_id}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>{{ button_text }}</a>
+        </span>
+    </div>
+{% endmacro %}
+{# END:: Media Upload Button for form  #}
+
+{# BEGIN:: Save Button for form  #}
+{% macro submitBtn(class = '') %}
+    <button class="btn btn-sm btn-success form-submit-btn items-center justify-center {{class}}" type="submit">
+        <span class="label">Save</span>
+        <span class="preloader d-none">Saving...</span>
+    </button>
+{% endmacro %}
+{# END:: Save Button for form  #}

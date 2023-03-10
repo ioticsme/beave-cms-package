@@ -426,31 +426,44 @@
 									{% endif %}
 									{% if reqContentType.has_meta %}
 										<div class="tab-pane fade" role="tabpanel" id="kt_tab_pane_meta">
-											<div class="row mt-5 pt-5">
-												<div class="col-12 mt-5">
-													{% for meta_section in metaFields %}
-														<h3 class="badge badge-light-success">{{ meta_section.name }}</h3>
-														{% for meta_field in meta_section.fields %}
-															<div class="row mb-6">
-																<label class="col-lg-4 col-form-label fw-semibold fs-6">{{ meta_field.label }}</label>
-																<div class="col-lg-8 pt-2">
-																	{% set metaFieldValue = '' %}
-																	{% if contentDetail
-																		.meta and contentDetail
-																		.meta[meta_section.slug] and contentDetail
-																		.meta[meta_section.slug][meta_field.name] %}
-																		{% set metaFieldValue = contentDetail.meta[meta_section.slug][meta_field.name] %}
-																	{% endif %}
-																	{% if meta_field.type == 'textarea' %}
-																		<textarea class="form-control" name="meta[{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}">{{ metaFieldValue }}</textarea>
-																	{% else %}
-																		<input type="text" class="form-control" name="meta[{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}" value="{{ metaFieldValue }}">
-																	{% endif %}
-																</div>
+											<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
+												{% for brandLanguage in authUser.brand.languages %}
+													<li class="nav-item">
+														<a class="nav-link {{'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#meta_tab_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
+													</li>
+												{% endfor %}
+											</ul>
+											<div class="tab-content" id="meta-lang-tabs">
+												{% for brandLanguage in authUser.brand.languages %}
+													<div class="tab-pane fade {{'show active' if loop.index == 1 }}" id="meta_tab_{{ brandLanguage.prefix }}" role="tabpanel">
+														<div class="row mt-5 pt-5">
+															<div class="col-12 mt-5">
+																{% for meta_section in metaFields %}
+																	<h3 class="badge badge-light-success">{{ meta_section.name }}</h3>
+																	{% for meta_field in meta_section.fields %}
+																		<div class="row mb-6">
+																			<label class="col-lg-4 col-form-label fw-semibold fs-6">{{ meta_field.label }}</label>
+																			<div class="col-lg-8 pt-2">
+																				{% set metaFieldValue = '' %}
+																				{% if contentDetail
+																					.meta and contentDetail
+																					.meta[brandLanguage.prefix][meta_section.slug] and contentDetail
+																					.meta[brandLanguage.prefix][meta_section.slug][meta_field.name] %}
+																					{% set metaFieldValue = contentDetail.meta[brandLanguage.prefix][meta_section.slug][meta_field.name] %}
+																				{% endif %}
+																				{% if meta_field.type == 'textarea' %}
+																					<textarea class="form-control" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}">{{ metaFieldValue }}</textarea>
+																				{% else %}
+																					<input type="text" class="form-control" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}" value="{{ metaFieldValue }}">
+																				{% endif %}
+																			</div>
+																		</div>
+																	{% endfor %}
+																{% endfor %}
 															</div>
-														{% endfor %}
-													{% endfor %}
-												</div>
+														</div>
+													</div>
+												{% endfor %}
 											</div>
 										</div>
 									{% endif %}
