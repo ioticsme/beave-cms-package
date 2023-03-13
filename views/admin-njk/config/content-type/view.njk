@@ -23,10 +23,6 @@
 
 {% block customScript %}
 	<script>
-		{
-			# var fields_to_map = {{fields_to_map | safe}};
-			#
-		}
 		fieldSchemaJson = {{fields_to_map | safe}} || [];
 		bkupDataJson = _.cloneDeep(fieldSchemaJson)
 		generateField()
