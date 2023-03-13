@@ -167,8 +167,9 @@
 										<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" dir="{{brandLanguage.dir}}" id="kt_tab_pane_{{ brandLanguage.prefix }}">
 											{# //- BEGIN::Fields with localisation #}
 											{% for cfg in reqContentType.field_groups %}
+												<div class="border border-gray-200 bg-slate-200 p-4 rounded-lg mb-4">
 												{% if cfg.repeater_group == true and cfg.localisation %}
-													<h4 class="badge badge-warning mb-2">{{cfg.row_label}}</h4>
+													<h4 class="badge bg-slate-600 text-white mb-4">{{cfg.row_label}}</h4>
 													<div class="group_repeater" id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
 														<div class="row form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}}" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}">
 															{% for cf in cfg.fields %}
@@ -213,6 +214,7 @@
 																<a class="btn btn-sm btn-light-danger mt-3 mt-md-8" onClick="deleteChild(event)" child-id="form-repeater-child-{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}" target-id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
 																	<i class="la la-trash-o"></i>Delete</a>
 															</div>
+															<hr class="my-6" />
 														</div>
 													</div>
 
@@ -222,7 +224,7 @@
 													</div>
 												{% else %}
 													{% if cfg.localisation %}
-														<h4 class="badge badge-warning mb-2">{{cfg.row_label}}</h4>
+														<h4 class="badge bg-slate-600 text-white mb-4">{{cfg.row_label}}</h4>
 														{% for cf in cfg.fields %}
 															<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container">
 																{# // begin::Label #}
@@ -274,6 +276,7 @@
 														{% endfor %}
 													{% endif %}
 												{% endif %}
+												</div>
 											{% endfor %}
 										</div>
 									{% endfor %}
@@ -283,8 +286,9 @@
 											<div class="row mt-5">
 												<div class="col-12">
 													{% for cfg in reqContentType.field_groups %}
+														<div class="border border-gray-600 bg-slate-400">
 														{% if cfg.localisation == false %}
-															<h4 class="badge badge-warning mb-2">{{cfg.row_label}}</h4>
+															<h4 class="badge bg-slate-600 text-white mb-4">{{cfg.row_label}}</h4>
 															{% if cfg.repeater_group == true %}
 																<h4>{{ cfg.row_label }}</h4>
 																<div class="group_repeater" id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
@@ -411,6 +415,7 @@
 																{% endfor %}
 															{% endif %}
 														{% endif %}
+														<div>
 													{% endfor %}
 												</div>
 											</div>

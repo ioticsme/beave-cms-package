@@ -110,13 +110,13 @@
 			</div>
 
 			<div class="flex flex-1 flex-row flex-row-fluid" id="kt_app_wrapper">
-				<div class="flex flex-column w-[230px] bg-slate-700 overflow-hidden h-screen relative pb-20">
+				<div class="flex flex-column w-[230px] bg-slate-700 overflow-hidden h-screen fixed pb-20">
 					{# //- BEGIN:: Main Navigation #}
 					{% include '../partials/_side-nav.njk' %}
 					{# //- END:: Main Navigation #}
 				</div>
 
-				<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+				<div class="app-main flex-column flex-row-fluid" id="kt_app_main" style="padding-left: 230px">
 
 					{# //- BEGIN::LOADING MAIN PAGE CONTENT PART #}
 					{% block content %}{% endblock %}
