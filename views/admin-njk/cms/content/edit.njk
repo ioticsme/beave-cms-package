@@ -342,7 +342,7 @@
 																										<i class="fa fa-trash" tabindex="-1"></i>
 																									</a>
 																								</span>
-																								<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																								<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" value="{{fieldValue}}">
 																								<a class="btn btn-success" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																							</span>
 																						{% elif cf.field_type === 'date' %}
