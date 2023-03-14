@@ -23,10 +23,8 @@ const uploadMedia = async (media, folder, new_name) => {
     //     ],
     // })
 
-    let nodeEnv = envConfig.general.NODE_ENV
-    let baseFolder = `${envConfig.imagekit.FOLDER}/${
-        nodeEnv.charAt(0).toUpperCase() + nodeEnv.slice(1)
-    }`
+    // let nodeEnv = envConfig.general.NODE_ENV
+    let baseFolder = `${envConfig.imagekit.FOLDER.toLowerCase()}/${envConfig.general.NODE_ENV.toLowerCase()}`
     const uploaded = await imagekit
         .upload({
             folder: `${baseFolder}/${folder}`,

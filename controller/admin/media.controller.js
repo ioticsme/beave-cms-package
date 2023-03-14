@@ -33,7 +33,7 @@ const fileUpload = async (req, res) => {
             )
             let fieldName = req.files[i].fieldname.split('.')[0]
             let fieldLang = req.files[i].fieldname.split('.')[1]
-            const media = await uploadMedia(base64, 'Media', file.filename) //file.originalname
+            const media = await uploadMedia(base64, 'media', file.filename) //file.originalname
             // Deleting the image saved to uploads/
             fs.unlinkSync(`temp/${file.filename}`)
             if (media && media._id) {
