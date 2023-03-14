@@ -101,6 +101,10 @@ const UserSchema = new Schema(
 UserSchema.plugin(softDeletePlugin)
 UserSchema.plugin(mongoosePaginate)
 
+UserSchema.virtual('full_name').get(function () {
+    return `${this.first_name} ${this.last_name}`
+})
+
 UserSchema.virtual('date_created').get(function () {
     return formatInTimeZone(
         this.created_at,

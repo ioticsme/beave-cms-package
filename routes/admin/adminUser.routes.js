@@ -1,15 +1,15 @@
 const express = require('express')
 require('express-group-routes')
 const router = express.Router()
-const userController = require('../../controller/admin/user.controller')
+const adminUserController = require('../../controller/admin/adminUser.controller')
 
 router.group('/', (router) => {
-    router.get('/', userController.userDetail)
-    router.get('/update-profile', userController.profileUpdate)
-    router.post('/update-profile', userController.profileUpdateSave)
-    router.get('/change-password', userController.changePassword)
-    router.post('/change-password', userController.changePasswordSave)
+    router.get('/', adminUserController.userDetail)
+    router.get('/update-profile', adminUserController.profileUpdate)
+    router.post('/update-profile', adminUserController.profileUpdateSave)
+    router.get('/change-password', adminUserController.changePassword)
+    router.post('/change-password', adminUserController.changePasswordSave)
 })
-// router.post('/', userController.verifyOtp)
+// router.post('/', adminUserController.verifyOtp)
 
 module.exports = router

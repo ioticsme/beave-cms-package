@@ -9,6 +9,7 @@ const configRoutes = require('./config.routes')
 const authRoutes = require('./auth.routes')
 const dashboardRoutes = require('./dashboard.routes')
 const cmsRoutes = require('./cms.routes')
+const userRoutes = require('./user.routes')
 const settingsRoutes = require('./settings.routes')
 const customFormsRoutes = require('./customForm.routes')
 const logRoutes = require('./log.routes')
@@ -32,6 +33,8 @@ router.use('/dashboard', [authCheck], dashboardRoutes)
 // router.use('/ecommerce', [authCheck], ecommerceRoutes)
 
 router.use('/cms', [authCheck], cmsRoutes)
+
+router.use('/users', [authCheck], userRoutes)
 
 router.use('/settings', [authCheck], settingsRoutes)
 router.use('/custom-forms', [authCheck], customFormsRoutes)

@@ -75,7 +75,7 @@ const navConfig = [
                 <rect opacity="0.3" x="6" y="5" width="6" height="6" rx="3" fill="currentColor"/>
                 </svg>`,
                 position: 1,
-                path: '/admin/cms/menu',
+                path: '/admin/users',
                 child: [],
             },
         ],

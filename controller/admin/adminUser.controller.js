@@ -3,49 +3,6 @@ const { joiPasswordExtendCore } = require('joi-password')
 const joiPassword = Joi.extend(joiPasswordExtendCore)
 const bcrypt = require('bcrypt')
 const Admin = require('../../model/Admin')
-const User = require('../../model/User')
-
-const list = async (req, res) => {
-    const userList = await User.find()
-    if (!userList) {
-        return res.status(404).json('Not Found')
-    }
-    return res.render(`admin-njk/user/listing`, { userList })
-}
-
-const changeStatus = async (req, res) => {
-    try {
-        const { status, id } = req.body
-        // const slug = req.contentType?.slug
-        // If id not found
-        if (!id) {
-            return res.status(404).json({ error: 'Invalid data' })
-        }
-        // Update
-        const update = await User.findOneAndUpdate(
-            {
-                _id: id,
-                // brand: req.authUser.brand._id,
-                // country: req.authUser.brand.country,
-            },
-            {
-                $set: {
-                    active: !status,
-                },
-            }
-        )
-        // If not updated
-        if (!update?._id) {
-            return res.status(404).json({ error: 'Something went wrong' })
-        }
-        return res.status(200).json({
-            message: 'User status changed',
-            url: `/users/${id}`,
-        })
-    } catch (error) {
-        return res.status(404).json({ error: 'Something went wrong' })
-    }
-}
 
 const userDetail = async (req, res) => {
     const userDetails = await Admin.findOne({
@@ -56,7 +13,7 @@ const userDetail = async (req, res) => {
         res.status(404).json('Not Found')
         return
     }
-    res.render(`admin-njk/user/profile`, { userDetails })
+    res.render(`admin-njk/admin-user/profile`, { userDetails })
 }
 
 const profileUpdate = async (req, res) => {
@@ -68,7 +25,7 @@ const profileUpdate = async (req, res) => {
         res.status(404).json('Not Found')
         return
     }
-    res.render(`admin-njk/user/update-profile`, { userDetails })
+    res.render(`admin-njk/admin-user/update-profile`, { userDetails })
 }
 
 const profileUpdateSave = async (req, res) => {
@@ -116,7 +73,7 @@ const changePassword = async (req, res) => {
         res.status(404).json('Not Found')
         return
     }
-    res.render(`admin-njk/user/change-password`, { userDetails })
+    res.render(`admin-njk/admin-user/change-password`, { userDetails })
 }
 
 const changePasswordSave = async (req, res) => {
@@ -175,11 +132,9 @@ const changePasswordSave = async (req, res) => {
 }
 
 module.exports = {
-    list,
-    changeStatus,
-    // userDetail,
-    // profileUpdate,
-    // profileUpdateSave,
-    // changePassword,
-    // changePasswordSave,
+    userDetail,
+    profileUpdate,
+    profileUpdateSave,
+    changePassword,
+    changePasswordSave,
 }
