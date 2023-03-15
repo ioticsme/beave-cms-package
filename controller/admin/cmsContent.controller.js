@@ -593,7 +593,7 @@ const savePageBuilderContent = async (req, res) => {
             attached_type: Joi.optional(),
             meta: Joi.object().optional().allow(null, ''),
             published: Joi.string().required().valid('true', 'false'),
-            in_home: Joi.string().required().valid('true', 'false'),
+            // in_home: Joi.string().required().valid('true', 'false'),
             position: Joi.number().optional(),
         }).unknown()
         // END:: Validation rule
@@ -619,7 +619,7 @@ const savePageBuilderContent = async (req, res) => {
                 name: req.body.name,
             },
             meta: body.meta,
-            in_home: body.in_home || false,
+            // in_home: body.in_home || false,
         }
 
         // console.log(data)
@@ -700,7 +700,7 @@ const saveDefaultContent = async (req, res) => {
             '_id',
             'slug',
             'published',
-            'in_home',
+            // 'in_home',
             'position',
             'meta',
         ])
@@ -804,7 +804,7 @@ const saveDefaultContent = async (req, res) => {
             attached_type: Joi.optional(),
             meta: Joi.object().optional().allow(null, ''),
             published: Joi.string().required().valid('true', 'false'),
-            in_home: Joi.string().required().valid('true', 'false'),
+            // in_home: Joi.string().required().valid('true', 'false'),
             position: Joi.number().optional(),
         }).unknown()
         // END:: Validation rule
@@ -833,7 +833,7 @@ const saveDefaultContent = async (req, res) => {
             meta: body.meta,
             // group_content: fieldGroupData,
             // meta: metaData,
-            in_home: body.in_home || false,
+            // in_home: body.in_home || false,
         }
 
         // console.log(data)

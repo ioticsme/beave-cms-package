@@ -358,7 +358,7 @@ const save = async (req, res) => {
             gallery: Joi.optional(),
             attached_type: Joi.optional(),
             published: Joi.string().required().valid('true', 'false'),
-            in_home: Joi.string().required().valid('true', 'false'),
+            // in_home: Joi.string().required().valid('true', 'false'),
             position: Joi.number().required(),
             repeater_field: Joi.array(),
             meta_title: Joi.object({
@@ -602,7 +602,7 @@ const save = async (req, res) => {
             custom_fields: type.custom_fields,
             content: customData,
             meta: metaData,
-            in_home: body.in_home || false,
+            // in_home: body.in_home || false,
         }
         // gettting attached contents
         // TODO Find Permenant solution for issue

@@ -8,74 +8,92 @@ const slugify = require('slugify')
 const { loadSVGIcons } = require('../../helper/Operations.helper')
 
 const list = async (req, res) => {
-    const contentTypes = await ContentType.find()
-    return res.render('admin-njk/config/content-type/listing', {
-        contentTypes,
-    })
+    try {
+        const contentTypes = await ContentType.find()
+        return res.render('admin-njk/config/content-type/listing', {
+            contentTypes,
+        })
+    } catch (e) {
+        return res.render(`admin-njk/error-500`)
+    }
 }
 
 const add = async (req, res) => {
-    const icons = await loadSVGIcons()
-    const contentTypes = await ContentType.find()
+    try {
+        const icons = await loadSVGIcons()
+        const contentTypes = await ContentType.find()
 
-    return res.render('admin-njk/config/content-type/form', {
-        isEdit: false,
-        contentTypes,
-        icons,
-    })
+        return res.render('admin-njk/config/content-type/form', {
+            isEdit: false,
+            contentTypes,
+            icons,
+        })
+    } catch (e) {
+        return res.render(`admin-njk/error-500`)
+    }
 }
 
 const edit = async (req, res) => {
-    const icons = await loadSVGIcons()
-    const contentType = await ContentType.findOne({
-        _id: req.params.id,
-    })
-    // console.log('contentType :>> ', contentType)
-    const contentTypes = await ContentType.find()
-    return res.render('admin-njk/config/content-type/form', {
-        contentType,
-        isEdit: true,
-        contentTypes,
-        icons,
-    })
+    try {
+        const icons = await loadSVGIcons()
+        const contentType = await ContentType.findOne({
+            _id: req.params.id,
+        })
+        // console.log('contentType :>> ', contentType)
+        const contentTypes = await ContentType.find()
+        return res.render('admin-njk/config/content-type/form', {
+            contentType,
+            isEdit: true,
+            contentTypes,
+            icons,
+        })
+    } catch (e) {
+        return res.render(`admin-njk/error-500`)
+    }
 }
 
 const view = async (req, res) => {
-    const contentType = await ContentType.findOne({
-        _id: req.params.id,
-    })
-    // const fields_to_map = []
-    const fields_to_map = await contentType.field_groups.map((eachGroup) => {
-        const fields = []
-        eachGroup.fields.forEach((field) => {
-            fields.push({
-                label: field.field_label,
-                name: field.field_name,
-                type: field.field_type,
-                position: field.position,
-                validation: field.validation,
-                options: field.options,
-            })
+    try {
+        const contentType = await ContentType.findOne({
+            _id: req.params.id,
         })
-        const group = {
-            section: eachGroup.row_name,
-            repeater_group: eachGroup.repeater_group,
-            localisation: eachGroup.localisation,
-            fields: fields,
-        }
-        return group
-    })
+        // const fields_to_map = []
+        const fields_to_map = await contentType.field_groups.map(
+            (eachGroup) => {
+                const fields = []
+                eachGroup.fields.forEach((field) => {
+                    fields.push({
+                        label: field.field_label,
+                        name: field.field_name,
+                        type: field.field_type,
+                        position: field.position,
+                        validation: field.validation,
+                        options: field.options,
+                    })
+                })
+                const group = {
+                    section: eachGroup.row_name,
+                    repeater_group: eachGroup.repeater_group,
+                    localisation: eachGroup.localisation,
+                    fields: fields,
+                }
+                return group
+            }
+        )
 
-    // return res.json(JSON.stringify(fields_to_map))
+        // return res.json(JSON.stringify(fields_to_map))
 
-    // console.log('contentType :>> ', contentType)
-    // const contentTypes = await ContentType.find()
-    return res.render('admin-njk/config/content-type/view', {
-        contentType,
-        fields_to_map: JSON.stringify(fields_to_map),
-        metaFields,
-        // contentTypes,
-    })
+        // console.log('contentType :>> ', contentType)
+        // const contentTypes = await ContentType.find()
+        return res.render('admin-njk/config/content-type/view', {
+            contentType,
+            fields_to_map: JSON.stringify(fields_to_map),
+            metaFields,
+            // contentTypes,
+        })
+    } catch (e) {
+        return res.render(`admin-njk/error-500`)
+    }
 }
 
 const save = async (req, res) => {
@@ -174,12 +192,16 @@ const deleteItem = async (req, res) => {
 }
 
 const addFields = async (req, res) => {
-    const contentType = await ContentType.findOne({
-        _id: req.params.id,
-    })
-    return res.render('admin-njk/config/content-type/field-config-form', {
-        contentType,
-    })
+    try {
+        const contentType = await ContentType.findOne({
+            _id: req.params.id,
+        })
+        return res.render('admin-njk/config/content-type/field-config-form', {
+            contentType,
+        })
+    } catch (e) {
+        return res.render(`admin-njk/error-500`)
+    }
 }
 
 const saveFields = async (req, res) => {

@@ -53,10 +53,10 @@ const ContentSchema = new mongoose.Schema(
         // template_name: {
         //     type: String,
         // },
-        in_home: {
-            type: Boolean,
-            default: false,
-        },
+        // in_home: {
+        //     type: Boolean,
+        //     default: false,
+        // },
         content: Object,
         meta: {},
     },

@@ -54,7 +54,7 @@
 									<th class="min-w-125px">{{'Name' if reqContentType.page_builder else reqContentType.field_groups[0].fields[0].field_name}}</th>
 									<th class="min-w-125px">URL</th>
 									<th class="min-w-125px">Status</th>
-									<th class="min-w-125px">In Home</th>
+									{# <th class="min-w-125px">In Home</th> #}
 									<th class="min-w-125px">Created Date</th>
 									<th class="text-end min-w-70px">Actions</th>
 								</tr>
@@ -84,9 +84,9 @@
 										<td>
 											<span class="badge badge-light-{{'success' if item.published else 'danger'}}">{{'Published' if item.published else 'Unpublished'}}</span>
 										</td>
-										<td>
+										{# <td>
 											<span class="badge badge-{{'success' if item.in_home else 'danger'}}">{{'Yes' if item.in_home else 'No'}}</span>
-										</td>
+										</td> #}
 										<td>
 											{{item.date_created}}</td>
 										<td class="text-end">

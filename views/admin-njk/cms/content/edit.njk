@@ -200,6 +200,7 @@
 																			{% elif cf.field_type === 'textarea' %}
 																				<textarea class="form-control form-control-solid" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
 																			{% elif cf.field_type === 'media' %}
+																				{# <h1>Test</h1> #}
 																				<span class='media-uploader-field'>
 																					<span class="media_preview">
 																						<span class="preview-holder">
@@ -212,7 +213,8 @@
 																						</a>
 																					</span>
 																					<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
-																					<a class="btn btn-success" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																					{# <a class="btn btn-success" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list' id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}">Attach Media</a> #}
+																					<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																				</span>
 																			{% elif cf.field_type === 'date' %}
 																				<div class="kt_daterangepicker">
@@ -491,7 +493,7 @@
 							{% include "./partials/_attach-content-type.njk" %}
 						{% endif %}
 
-						{% include "./partials/_add-to-home.njk" %}
+						{# {% include "./partials/_add-to-home.njk" %} #}
 
 						{% if reqContentType.single_type == false %}
 							{% include "./partials/_position.njk" %}

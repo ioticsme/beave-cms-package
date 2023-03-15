@@ -56,15 +56,6 @@
 
 {# BEGIN:: Media Upload Button for form  #}
 {% macro mediaField(field_name, element_id, label = '', button_text = 'Attach Media') %}
-    {# <span id="{{element_id}}_preview">
-        <span class="preview-holder"></span>
-        <a class="btn btn-danger image-preview-remove-btn d-none my-1">
-            <i class="fa fa-trash" tabindex="-1"></i>
-        </a>
-    </span>
-    <input type="hidden" id="{{element_id}}" name="{{field_name}}">
-    <a class="btn btn-success" data-field="{{element_id}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a> #}
-
     <div class="d-flex.flex-column.mb-8.fv-row.fv-plugins-icon-container.col-md-6">
         {% if label %}
             <label class="d-flex align-items-center fs-6.fw-semibold mb-2">
