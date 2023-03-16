@@ -221,12 +221,19 @@
 																					<input class="form-control mb-2" id="kt_daterangepicker_{{brandLanguage.prefix}}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
-																				<select class="form-select" data-control="select2" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" data-placeholder="Selectan ptio">
+																				{# <select class="form-select" data-control="select2" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" data-placeholder="Selectan ptio">
 																					<option></option>
 																					{% for dropdown, dd_i in cf.options %}
 																						<option value="{{dropdown.value}}">{{dropdown.label}}</option>
 																					{% endfor %}
+																				</select> #}
+																				<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																					<option>- Select {{cf.field_label}} -</option>
+																					{% for dropdown in cf.options %}
+																						<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
+																					{% endfor %}
 																				</select>
+
 																			{% endif %}
 																			<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{brandLanguage.prefix}}_{{cfg.row_name}}_{{cf.field_name}}"></div>
 																		</div>
@@ -282,10 +289,10 @@
 																		.kt_daterangepicker
 																			<input class="form-control mb-2" id="kt_daterangepicker_{{brandLanguage.prefix}}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																	{% elif cf.field_type === 'dropdown' %}
-																		<select class="form-select" data-control="select2" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" data-placeholder="Select an option">
-																			<option></option>
-																			{% for dropdown, dd_i in cf.options %}
-																				<option value="{{dropdown.value}}">{{dropdown.label}}</option>
+																		<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]">
+																			<option>- Select {{cf.field_label}} -</option>
+																			{% for dropdown in cf.options %}
+																				<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
 																			{% endfor %}
 																		</select>
 																	{% endif %}
@@ -353,9 +360,9 @@
 																								<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{cf.field_name}}"></div>
 																							</div>
 																						{% elif cf.field_type === 'dropdown' %}
-																							<select class="form-select" data-control="select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" data-placeholder="Select an option">
-																								<option value="">Select an option</option>
-																								{% for dropdown, dd_i in cf.options %}
+																							<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																								<option>- Select {{cf.field_label}} -</option>
+																								{% for dropdown in cf.options %}
 																									<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value}}>{{dropdown.label}}</option>
 																								{% endfor %}
 																							</select>
@@ -413,10 +420,10 @@
 																				<input id="kt_daterangepicker_{{loop.index}}" class="form-control mb-2" type="text" name="common[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="">
 																			</div>
 																		{% elif cf.field_type === 'dropdown' %}
-																			<select class="form-select" data-control="select2" name="common[{{cfg.row_name}}[{{cf.field_name}}]]" data-placeholder="Select an option">
-																				<option></option>
-																				{% for dropdown, dd_i in cf.options %}
-																					<option value="{{dropdown.value}}">{{dropdown.label}}</option>
+																			<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}]]">
+																				<option>- Select {{cf.field_label}} -</option>
+																				{% for dropdown in cf.options %}
+																					<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
 																				{% endfor %}
 																			</select>
 																		{% endif %}
