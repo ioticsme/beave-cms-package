@@ -4,7 +4,7 @@ require('express-group-routes')
 const pageController = require('../../controller/api/page.controller')
 const contentTypeController = require('../../controller/api/contentType.controller')
 
-router.get('/home', pageController.homePage)
+// router.get('/home', pageController.homePage)
 router.get('/:contentType', contentTypeController.list)
 router.get(
     '/:contentType/static-path',
