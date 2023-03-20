@@ -57,23 +57,9 @@
 				<div class="row">
 					<div class="col-3">
 						<ul class="nav nav-tabs nav-pills flex-row border-0 flex-md-column me-5 mb-3 mb-md-0 fs-6 min-w-lg-200px">
-							<li class="nav-item w-100 me-0 mb-md-2">
-								<a class="nav-link w-100 active btn btn-flex btn-active-light-success active" data-bs-toggle="tab" href="#kt_vtab_pane_4">
-									<span class="svg-icon svg-icon-2">
-										<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-											<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="currentColor"/>
-											<path d="M11.9343 12.5657L9.53696 14.963C9.22669 15.2733 9.18488 15.7619 9.43792 16.1204C9.7616 16.5789 10.4211 16.6334 10.8156 16.2342L14.3054 12.7029C14.6903 12.3134 14.6903 11.6866 14.3054 11.2971L10.8156 7.76582C10.4211 7.3666 9.7616 7.42107 9.43792 7.87962C9.18488 8.23809 9.22669 8.72669 9.53696 9.03696L11.9343 11.4343C12.2467 11.7467 12.2467 12.2533 11.9343 12.5657Z" fill="currentColor"/>
-										</svg>
-									</span>
-									<span class="d-flex flex-column align-items-start">
-										<span class="fs-4 fw-bold">Fields</span>
-										<span class="fs-7">Field Configuration</span>
-									</span>
-								</a>
-							</li>
 
 							<li class="nav-item w-100 me-0 mb-md-2">
-								<a class="nav-link w-100 btn btn-flex btn-active-light-info" data-bs-toggle="tab" href="#kt_vtab_pane_5">
+								<a class="nav-link active w-100 btn btn-flex btn-active-light-info" data-bs-toggle="tab" href="#kt_vtab_pane_5">
 									<span class="svg-icon svg-icon-2">
 										<svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 											<path opacity="0.3" d="M22.1 11.5V12.6C22.1 13.2 21.7 13.6 21.2 13.7L19.9 13.9C19.7 14.7 19.4 15.5 18.9 16.2L19.7 17.2999C20 17.6999 20 18.3999 19.6 18.7999L18.8 19.6C18.4 20 17.8 20 17.3 19.7L16.2 18.9C15.5 19.3 14.7 19.7 13.9 19.9L13.7 21.2C13.6 21.7 13.1 22.1 12.6 22.1H11.5C10.9 22.1 10.5 21.7 10.4 21.2L10.2 19.9C9.4 19.7 8.6 19.4 7.9 18.9L6.8 19.7C6.4 20 5.7 20 5.3 19.6L4.5 18.7999C4.1 18.3999 4.1 17.7999 4.4 17.2999L5.2 16.2C4.8 15.5 4.4 14.7 4.2 13.9L2.9 13.7C2.4 13.6 2 13.1 2 12.6V11.5C2 10.9 2.4 10.5 2.9 10.4L4.2 10.2C4.4 9.39995 4.7 8.60002 5.2 7.90002L4.4 6.79993C4.1 6.39993 4.1 5.69993 4.5 5.29993L5.3 4.5C5.7 4.1 6.3 4.10002 6.8 4.40002L7.9 5.19995C8.6 4.79995 9.4 4.39995 10.2 4.19995L10.4 2.90002C10.5 2.40002 11 2 11.5 2H12.6C13.2 2 13.6 2.40002 13.7 2.90002L13.9 4.19995C14.7 4.39995 15.5 4.69995 16.2 5.19995L17.3 4.40002C17.7 4.10002 18.4 4.1 18.8 4.5L19.6 5.29993C20 5.69993 20 6.29993 19.7 6.79993L18.9 7.90002C19.3 8.60002 19.7 9.39995 19.9 10.2L21.2 10.4C21.7 10.5 22.1 11 22.1 11.5ZM12.1 8.59998C10.2 8.59998 8.6 10.2 8.6 12.1C8.6 14 10.2 15.6 12.1 15.6C14 15.6 15.6 14 15.6 12.1C15.6 10.2 14 8.59998 12.1 8.59998Z" fill="currentColor"></path>
@@ -86,6 +72,23 @@
 									</span>
 								</a>
 							</li>
+
+							{% if contentType.page_builder == false %}
+								<li class="nav-item w-100 me-0 mb-md-2">
+									<a class="nav-link w-100 btn btn-flex btn-active-light-success" data-bs-toggle="tab" href="#kt_vtab_pane_4">
+										<span class="svg-icon svg-icon-2">
+											<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="currentColor"/>
+												<path d="M11.9343 12.5657L9.53696 14.963C9.22669 15.2733 9.18488 15.7619 9.43792 16.1204C9.7616 16.5789 10.4211 16.6334 10.8156 16.2342L14.3054 12.7029C14.6903 12.3134 14.6903 11.6866 14.3054 11.2971L10.8156 7.76582C10.4211 7.3666 9.7616 7.42107 9.43792 7.87962C9.18488 8.23809 9.22669 8.72669 9.53696 9.03696L11.9343 11.4343C12.2467 11.7467 12.2467 12.2533 11.9343 12.5657Z" fill="currentColor"/>
+											</svg>
+										</span>
+										<span class="d-flex flex-column align-items-start">
+											<span class="fs-4 fw-bold">Fields</span>
+											<span class="fs-7">Field Configuration</span>
+										</span>
+									</a>
+								</li>
+							{% endif %}
 
 							{% if contentType.has_meta %}
 
@@ -111,27 +114,30 @@
 
 					<div class="col-9">
 						<div class="tab-content" id="myTabContent">
-							<div id="kt_vtab_pane_4" class="tab-pane fade show active" role="tabpanel">
-								<div class="card mb-5 mb-xl-10">
-									<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
-										<div class="card-title m-0">
-											<h3 class="fw-bold m-0">Content Fields</h3>
-										</div>
-										<div class="card-toolbar pt-5">
-											<button class="btn btn-sm btn-success" type="button" disabled="true" id="schema-save-btn">
-												<i class="las la-save"></i>
+
+							{% if contentType.page_builder == false %}
+								<div id="kt_vtab_pane_4" class="tab-pane fade" role="tabpanel">
+									<div class="card mb-5 mb-xl-10">
+										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+											<div class="card-title m-0">
+												<h3 class="fw-bold m-0">Content Fields</h3>
+											</div>
+											<div class="card-toolbar pt-5">
+												<button class="btn btn-sm btn-success" type="button" disabled="true" id="schema-save-btn">
+													<i class="las la-save"></i>
 												Save
 											</button>
+											</div>
+										</div>
+										<input type="hidden" name="id" value="{{ contentType._id }}">
+										<div class="card-body border-top p-9">
+											<div class="form-field-holder"></div>
 										</div>
 									</div>
-									<input type="hidden" name="id" value="{{ contentType._id }}">
-									<div class="card-body border-top p-9">
-										<div class="form-field-holder"></div>
-									</div>
 								</div>
-							</div>
+							{% endif %}
 
-							<div class="tab-pane fade" id="kt_vtab_pane_5" role="tabpanel">
+							<div class="tab-pane fade show active" id="kt_vtab_pane_5" role="tabpanel">
 								<div class="card mb-5 mb-xl-10">
 									<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
 										<div class="card-title m-0">
@@ -227,68 +233,70 @@
 								</div>
 							</div>
 
-							<div id="kt_vtab_pane_6" class="tab-pane fade" role="tabpanel">
-								<form id="content_type_meta_form" class="form es-form" action="/admin/config/content-type/save-meta" data-disable-reset="true" method="post" autocomplete="off">
-									<input type="hidden" name="_id" value={{ contentType._id }}>
-									<div class="badge badge-danger fv-plugins-message-container invalid-feedback" id="field-error-_id"></div>
-									<div class="card mb-5 mb-xl-10">
-										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
-											<div class="card-title m-0">
-												<h3 class="fw-bold m-0">Meta Fields</h3>
-											</div>
-											<div class="card-toolbar">
-												<button class="btn btn-success btn-sm form-submit-btn" id="kt_account_profile_details_submit" type="submit">
-													<span class="preloader d-none">Saving...</span>
-													<span class="label">Save</span>
-												</button>
-											</div>
-										</div>
-										<div id="kt_account_settings_profile_details">
-											<div class="card-body border-top p-9">
-
-												<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
-													{% for brandLanguage in authUser.brand.languages %}
-														<li class="nav-item">
-															<a class="nav-link {{'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#meta_tab_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
-														</li>
-													{% endfor %}
-												</ul>
-
-												<div class="tab-content" id="meta-lang-tabs">
-													{% for brandLanguage in authUser.brand.languages %}
-														<div class="tab-pane fade {{'show active' if loop.index == 1 }}" id="meta_tab_{{ brandLanguage.prefix }}" role="tabpanel">
-															{% for meta_section in metaFields %}
-																<h3 class="badge badge-light-success">{{ meta_section.name }}</h3>
-																{% for meta_field in meta_section.fields %}
-																	<div class="row mb-6">
-																		<label class="col-lg-4 col-form-label fw-semibold fs-6">{{ meta_field.label }}</label>
-																		<div class="col-lg-8 pt-2">
-																			{% if contentType
-																				.meta and contentType
-																				.meta[brandLanguage.prefix][meta_section.slug] and contentType
-																				.meta[brandLanguage.prefix][meta_section.slug][meta_field.name] %}
-																				{% set fieldValue = contentType.meta[brandLanguage.prefix][meta_section.slug][meta_field.name] %}
-																			{% else %}
-																				{% set fieldValue = '' %}
-																			{% endif %}
-																			{% if meta_field.type == 'textarea' %}
-																				<textarea class="form-control" name="meta[{{brandLanguage.prefix}}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}">{{ fieldValue }}</textarea>
-																			{% else %}
-																				<input type="text" class="form-control" placeholder="{{ meta_field.label }}" name="meta[{{brandLanguage.prefix}}][{{ meta_section.slug }}][{{ meta_field.name }}]" value="{{ fieldValue }}">
-																			{% endif %}
-																		</div>
-																	</div>
-																{% endfor %}
-															{% endfor %}
-														</div>
-													{% endfor %}
+							{% if contentType.has_meta %}
+								<div id="kt_vtab_pane_6" class="tab-pane fade" role="tabpanel">
+									<form id="content_type_meta_form" class="form es-form" action="/admin/config/content-type/save-meta" data-disable-reset="true" method="post" autocomplete="off">
+										<input type="hidden" name="_id" value={{ contentType._id }}>
+										<div class="badge badge-danger fv-plugins-message-container invalid-feedback" id="field-error-_id"></div>
+										<div class="card mb-5 mb-xl-10">
+											<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+												<div class="card-title m-0">
+													<h3 class="fw-bold m-0">Meta Fields</h3>
 												</div>
+												<div class="card-toolbar">
+													<button class="btn btn-success btn-sm form-submit-btn" id="kt_account_profile_details_submit" type="submit">
+														<span class="preloader d-none">Saving...</span>
+														<span class="label">Save</span>
+													</button>
+												</div>
+											</div>
+											<div id="kt_account_settings_profile_details">
+												<div class="card-body border-top p-9">
 
+													<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
+														{% for brandLanguage in authUser.brand.languages %}
+															<li class="nav-item">
+																<a class="nav-link {{'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#meta_tab_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
+															</li>
+														{% endfor %}
+													</ul>
+
+													<div class="tab-content" id="meta-lang-tabs">
+														{% for brandLanguage in authUser.brand.languages %}
+															<div class="tab-pane fade {{'show active' if loop.index == 1 }}" id="meta_tab_{{ brandLanguage.prefix }}" role="tabpanel">
+																{% for meta_section in metaFields %}
+																	<h3 class="badge badge-light-success">{{ meta_section.name }}</h3>
+																	{% for meta_field in meta_section.fields %}
+																		<div class="row mb-6">
+																			<label class="col-lg-4 col-form-label fw-semibold fs-6">{{ meta_field.label }}</label>
+																			<div class="col-lg-8 pt-2">
+																				{% if contentType
+																					.meta and contentType
+																					.meta[brandLanguage.prefix][meta_section.slug] and contentType
+																					.meta[brandLanguage.prefix][meta_section.slug][meta_field.name] %}
+																					{% set fieldValue = contentType.meta[brandLanguage.prefix][meta_section.slug][meta_field.name] %}
+																				{% else %}
+																					{% set fieldValue = '' %}
+																				{% endif %}
+																				{% if meta_field.type == 'textarea' %}
+																					<textarea class="form-control" name="meta[{{brandLanguage.prefix}}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}">{{ fieldValue }}</textarea>
+																				{% else %}
+																					<input type="text" class="form-control" placeholder="{{ meta_field.label }}" name="meta[{{brandLanguage.prefix}}][{{ meta_section.slug }}][{{ meta_field.name }}]" value="{{ fieldValue }}">
+																				{% endif %}
+																			</div>
+																		</div>
+																	{% endfor %}
+																{% endfor %}
+															</div>
+														{% endfor %}
+													</div>
+
+												</div>
 											</div>
 										</div>
-									</div>
-								</form>
-							</div>
+									</form>
+								</div>
+							{% endif %}
 						</div>
 					</div>
 				</div>
@@ -357,6 +365,9 @@
 							<i class="bi bi-chat-square-text-fill fs-4 me-2"></i> Dropdown</a>
 						<a class="btn btn-dark m-1" href="#" data-value="media">
 							<i class="bi bi-chat-square-text-fill fs-4 me-2"></i> Media</a>
+						<a class="btn btn-info m-1" href="#" data-value="date">
+							<i class="bi bi-chat-square-text-fill fs-4 me-2"></i> Date</a>
+
 					</div>
 					<div class="modal-field-sections d-none" id="text-field-section">
 						<form class="field-form">
@@ -512,6 +523,46 @@
 								<input class="form-check-input" type="checkbox" value="true" name="validation_required" checked/>
 								<label class="form-check-label" for="">Required</label>
 							</div>
+							<div class="row mt-5">
+								<div class="col-12">
+									<button class="btn btn-light" type="reset" data-bs-dismiss="modal">Back</button>
+									<button class="btn btn-primary" type="submit">Add Field</button>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<div class="modal-field-sections d-none" id="date-field-section">
+						<form class="field-form">
+							<input class="section_name_field" type="hidden" name="section_name_field"/>
+							<label for="section_name_field">Field Name</label>
+							<input type="hidden" name="field_type" value="date"/>
+							<input class="form-control" type="text" name="field_name" id="field_name" placeholder="Field Name"/>
+							{# <div class="row mb-3">
+								<div class="col-12 col-sm-6">
+									<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
+										<input class="form-check-input" type="checkbox" value="date_range" name="options[]"/>
+										<label class="form-check-label" for="">Date Range</label>
+									</div>
+								</div>
+								<div class="col-12 col-sm-6">
+									<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
+										<input class="form-check-input" type="checkbox" value="time" name="options[]"/>
+										<label class="form-check-label" for="">With Time</label>
+									</div>
+								</div>
+							</div> #}
+							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
+								<input class="form-check-input" type="checkbox" value="true" name="validation_required" checked/>
+								<label class="form-check-label" for="">Required</label>
+							</div>
+							{# <label class="mt-3" for="section_name_field">Advanced Valdiation Rules</label>
+							<div class="row my-3">
+								<div class="col-6">
+									<input class="form-control" type="text" name="validation_min" id="validation_min" placeholder="Minimum Charecters"/></div>
+								<div class="col-6">
+									<input class="form-control" type="text" name="validation_max" id="validation_max" placeholder="Maximum Charecters"/></div>
+							</div> #}
 							<div class="row mt-5">
 								<div class="col-12">
 									<button class="btn btn-light" type="reset" data-bs-dismiss="modal">Back</button>

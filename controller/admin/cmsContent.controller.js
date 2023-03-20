@@ -716,6 +716,7 @@ const saveDefaultContent = async (req, res) => {
             dropdown: 'string()',
             email: 'string()',
             number: 'number()',
+            date: 'date()',
         }
 
         const language_prefixes = _.map(req.authUser.brand.languages, 'prefix')
