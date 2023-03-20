@@ -11,11 +11,14 @@ const { default: collect } = require('collect.js')
 const { navConfig } = require('../config/admin.config')
 let customNavConfig
 try {
-    customNavConfig = require(path.resolve(
-        __dirname,
-        '../../../../',
-        './config/admin.config.js'
-    ))
+    customNavConfig = require(`${path.dirname(
+        require.main.filename
+    )}/config/admin.config.js`)
+    // customNavConfig = require(path.resolve(
+    //     __dirname,
+    //     '../../../../',
+    //     './config/admin.config.js'
+    // ))
 } catch (error) {
     // console.log(error)
     customNavConfig = []
@@ -219,7 +222,6 @@ const mainNavGenerator = async (req, res, next) => {
         }
     })
 
-
     const contentTypes = await ContentType.find({
         // single_type: false,
         active: true,
@@ -258,7 +260,7 @@ const mainNavGenerator = async (req, res, next) => {
                     icon: item.admin_icon,
                     path: `/admin/cms/${item.slug}`,
                 }
-            }   
+            }
         })
         .all()
 
@@ -281,7 +283,7 @@ const mainNavGenerator = async (req, res, next) => {
         // } else {
         if (contentSection) {
             contentSection.items = _.uniqBy(
-                _.concat(contentSection.items, listTypeItems),
+                _.concat(contentSection.items, d),
                 (item) => {
                     return item.label
                 }
