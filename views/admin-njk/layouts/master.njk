@@ -156,8 +156,27 @@
 					<div class="modal-body py-lg-5 px-lg-5">
 						<div class="card card-flush">
 							<div class="card-body pt-0">
-								<div class="col-md-12">
-									<div id="media-holder"></div>
+								<div class="row">
+									<div class="col-12 col-sm-8">
+										<div id="media-holder"></div>
+									</div>
+									<div class="col-12 col-sm-4">
+										<div class="mb-3">
+											<label for="exampleFormControlInput1" class="form-label">URL</label>
+											<input type="text" id="media-modal-selected-media-url" class="form-control form-control-solid" placeholder="URL" readonly="true" />
+										</div>
+										<div class="mb-3">
+											<label for="exampleFormControlInput1" class="form-label">Title</label>
+											<input type="text" id="media-modal-selected-media-title" class="form-control form-control-solid" placeholder="Title"/>
+										</div>
+										<div class="mb-3">
+											<label for="exampleFormControlInput1" class="form-label">Alt Text</label>
+											<input type="text" id="media-modal-selected-media-alt" class="form-control form-control-solid" placeholder="Alt Text"/>
+										</div>
+										<div class="mb-3">
+											<a href="#" class="btn btn-success" id="media-attach-submit-btn"><i class="las la-wallet fs-2 me-2"></i> Attach</a>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>

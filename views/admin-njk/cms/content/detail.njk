@@ -96,7 +96,7 @@
 																						{% set content = contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name] %}
 																						{% if content %}
 																							{% if eachVal.field_type == 'media' %}
-																								<img src="{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name][i] }}" style="max-width: 100px;">
+																								<img src="{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name][i].url }}" style="max-width: 100px;">
 																							{% else %}
 																								<span class="badge badge-light-info">{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name][i] | safe }}</span>
 																								<br>
@@ -112,7 +112,7 @@
 																			<br>
 																			<div class="card">
 																				{% if cf.field_type == 'media' %}
-																					<img src="{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name] }}" style="max-width: 200px;">
+																					<img src="{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name].url }}" style="max-width: 200px;">
 																				{% else %}
 																					{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name] | safe }}
 																				{% endif %}
@@ -148,7 +148,7 @@
 																							{% if content %}
 																								<span class="badge badge-light">{{eachVal.field_label.toUpperCase()}} :</span>
 																								{% if eachVal.field_type == 'media' %}
-																									<img src="{{content[eachVal.field_name][i]}}" style="max-width: 100px;">
+																									<img src="{{content[eachVal.field_name][i].url}}" style="max-width: 100px;">
 																								{% else %}
 																									<span class="badge badge-light-info">{{content[eachVal.field_name][i] | safe}}</span>
 																									<br>
@@ -167,7 +167,7 @@
 																				{% set content = contentDetail.content['common'] and contentDetail.content['common'][cfg.row_name] %}
 																				{% if content %}
 																					{% if cf.field_type == 'media' %}
-																						<img src="{{ contentDetail.content['common'][cfg.row_name][cf.field_name] }}" style="max-width: 200px;">
+																						<img src="{{ contentDetail.content['common'][cfg.row_name][cf.field_name].url }}" style="max-width: 200px;">
 																					{% else %}
 																						{{ contentDetail.content['common'][cfg.row_name][cf.field_name] | safe }}
 																					{% endif %}

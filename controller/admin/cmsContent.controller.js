@@ -712,7 +712,7 @@ const saveDefaultContent = async (req, res) => {
             text: 'string()',
             textarea: 'string()',
             richtext: 'string()',
-            media: 'string()',
+            media: 'object()',
             dropdown: 'string()',
             email: 'string()',
             number: 'number()',
@@ -753,15 +753,29 @@ const saveDefaultContent = async (req, res) => {
                             ? `.max(${field.validation.max_length})`
                             : ''
 
-                        _.assign(fieldsValidationObject, {
-                            [field.field_name]: eval(
-                                ` Joi.${
-                                    validTypes[field.field_type]
-                                }${min}${max}${required}.label('${
-                                    field.field_label
-                                }')`
-                            ),
-                        })
+                        if (field.field_type == 'media') {
+                            _.assign(fieldsValidationObject, {
+                                [field.field_name]: eval(
+                                    ` Joi.object({
+                                        url: Joi.string()${required}.label('${
+                                            field.field_label
+                                        }'),
+                                        title: Joi.string().allow(null, ''),
+                                        alt_text: Joi.string().allow(null, ''),
+                                    })`
+                                ),
+                            })
+                        } else {
+                            _.assign(fieldsValidationObject, {
+                                [field.field_name]: eval(
+                                    ` Joi.${
+                                        validTypes[field.field_type]
+                                    }${min}${max}${required}.label('${
+                                        field.field_label
+                                    }')`
+                                ),
+                            })
+                        }
                     })
                 } else {
                     group.fields.forEach((field) => {
@@ -775,15 +789,66 @@ const saveDefaultContent = async (req, res) => {
                             ? `.max(${field.validation.max_length})`
                             : ''
 
-                        _.assign(fieldsValidationObject, {
-                            [field.field_name]: eval(
-                                ` Joi.array().items(Joi.${
-                                    validTypes[field.field_type]
-                                }${min}${max}${required}).label('${
-                                    field.field_label
-                                }')`
-                            ),
-                        })
+                        if (field.field_type == 'media') {
+                            /*  ===== BEGIN:: Restructuring the media field array and validation ====
+                                 --- Initial Structure ---
+                                image: {
+                                    url: [
+                                        'https://ik.imagekit.io/3olumvfrg/IOTICS-CMS-TEST/Development/Media/72d545e3689a617965b5f03d30fbcbbb_x5VmamuTm',
+                                        'https://ik.imagekit.io/iex/woohoo/development/media/4456e5e6f21abb7f6c9c5d93b16fc709_4EhnJgqKy'
+                                    ],
+                                    title: [ 'ssss', 'ffff' ],
+                                    alt_text: [ 'dddd', 'ffff' ]
+                                }
+
+                                --- Converted Structure ---
+
+                                image: [
+                                    {
+                                        url: https://ik.imagekit.io/3olumvfrg/IOTICS-CMS-TEST/Development/Media/72d545e3689a617965b5f03d30fbcbbb_x5VmamuTm',
+                                        title: 'ssss',
+                                        alt_text: 'ffff'
+                                    },
+                                    {
+                                        url: 'https://ik.imagekit.io/iex/woohoo/development/media/4456e5e6f21abb7f6c9c5d93b16fc709_4EhnJgqKy'
+                                        title: 'dddd',
+                                        alt_text: 'ffff'
+                                    }
+                                ]
+                            */
+                            const mediaArray = []
+                            for (let i = 0; i < req.body[lang][group.row_name][field.field_name]['url'].length; i++) {
+                                const item = {
+                                    url: req.body[lang][group.row_name][field.field_name]['url'][i],
+                                    title: req.body[lang][group.row_name][field.field_name]['title'][i],
+                                    alt_text: req.body[lang][group.row_name][field.field_name]['alt_text'][i],
+                                }
+                                mediaArray.push(item) // Add the object to the array
+                            }
+                            req.body[lang][group.row_name][field.field_name] = mediaArray
+                            _.assign(fieldsValidationObject, {
+                                [field.field_name]: eval(
+                                    ` Joi.array().items(Joi.object({
+                                        url: Joi.string()${required}.label('${
+                                            field.field_label
+                                        }'),
+                                        title: Joi.string().allow(null, ''),
+                                        alt_text: Joi.string().allow(null, ''),
+                                    }))`
+                                ),
+                            })
+                             // END:: Restructuring the media field array and validation
+                        } else {
+                            _.assign(fieldsValidationObject, {
+                                [field.field_name]: eval(
+                                    ` Joi.array().items(Joi.${
+                                        validTypes[field.field_type]
+                                    }${min}${max}${required}).label('${
+                                        field.field_label
+                                    }')`
+                                ),
+                            })
+                        }
                     })
                 }
 
@@ -1131,7 +1196,9 @@ const previewPageBuildData = async (req, res) => {
         const html_data = await Content.findOne({
             _id: req.params.id,
         })
-        return res.render('admin-njk/cms/content/html-builder/view', { html_data })
+        return res.render('admin-njk/cms/content/html-builder/view', {
+            html_data,
+        })
     } catch (error) {
         return res.render(`admin-njk/error-404`)
     }

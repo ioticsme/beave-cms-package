@@ -94,7 +94,6 @@
 			document
 				.querySelectorAll(`#form_repeater_child_${parentLang}-${childIndex * 10000} .form-control`)
 				.forEach(function (element) {
-					console.log(element)
 					element.value = null
 				})
 			//- console.log(`#${newElement.getAttribute('id')}`)
@@ -105,7 +104,16 @@
 					.querySelector('.media-uploader-modal-btn')
 					.setAttribute('id', newMediaButtonId)
 
+				document
+					.querySelector(`#${newElement.getAttribute('id')}`).querySelector('.media_preview .preview-holder').innerHTML = ''
+				document
+					.querySelector(`#${newElement.getAttribute('id')}`).querySelector('.media_preview .image-preview-remove-btn').classList.add('d-none')
+
 			}
+
+			document.querySelector(`#${newElement.getAttribute('id')}`).querySelectorAll('input, textarea').forEach((input)=> {
+				input.value= ''
+			})
 
 			initDatePicker()
 
@@ -215,7 +223,9 @@
 																							<i class="fa fa-trash" tabindex="-1"></i>
 																						</a>
 																					</span>
-																					<input type="hidden" class="media_url_field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
+																					<input type="hidden" class="media_url_field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[url][]]]">
+																					<input type="hidden" class="media_title_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title][]]]">
+																					<input type="hidden" class="media_alt_text_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]">
 																					<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																				</span>
 																			{% elif cf.field_type == "date" %}
@@ -236,7 +246,7 @@
 																					{% endfor %}
 																				</select>
 																			{% endif %}
-																			<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{ brandLanguage.prefix }}_{{ cfg.row_name }}_{{ cf.field_name }}"></div>
+																			<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{ brandLanguage.prefix }}_{{ cfg.row_name }}_{{ cf.field_name }}{{ '_0_url' if cf.field_type == 'media' }}"></div>
 																		</div>
 																	{% endfor %}
 																	<div class="text-center">
@@ -275,7 +285,9 @@
 																					<i class="fa fa-trash" tabindex="-1"></i>
 																				</a>
 																			</span>
-																			<input type="hidden" class="media_url_field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]">
+																			<input type="hidden" class="media_url_field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[url]]]">
+																			<input type="hidden" class="media_title_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title]]]">
+																			<input type="hidden" class="media_alt_text_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text]]]">
 																			<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																		</span>
 																	{% elif cf.field_type === 'date' %}
@@ -291,7 +303,7 @@
 																			{% endfor %}
 																		</select>
 																	{% endif %}
-																	<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{ brandLanguage.prefix }}_{{ cfg.row_name }}_{{ cf.field_name }}"></div>
+																	<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{ brandLanguage.prefix }}_{{ cfg.row_name }}_{{ cf.field_name }}{{ '_url' if cf.field_type == 'media' }}"></div>
 																</div>
 															{% endfor %}
 														{% endif %}
@@ -309,7 +321,6 @@
 														<div class="border border-gray-100 bg-slate-200 p-4 rounded-lg mb-4">
 															<h4 class="badge bg-slate-600 text-white mb-4">{{cfg.row_label}}</h4>
 															{% if cfg.repeater_group == true %}
-																<h4>{{ cfg.row_label }}</h4>
 																<div class="group_repeater" id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
 																	<div class="form-group row form-repeater-group-{{cfg._id}}-en" id="form_repeater_child_{{cfg._id}}-{{loop.index}}">
 																		{% for cf in cfg.fields %}
@@ -332,7 +343,9 @@
 																								<i class="fa fa-trash" tabindex="-1"></i>
 																							</a>
 																						</span>
-																						<input type="hidden" class="media_url_field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
+																						<input type="hidden" class="media_url_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[url][]]]">
+																						<input type="hidden" class="media_title_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[title][]]]">
+																						<input type="hidden" class="media_alt_text_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]">
 																						<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																					</span>
 																				{% elif cf.field_type === 'date' %}
@@ -347,7 +360,7 @@
 																						{% endfor %}
 																					</select>
 																				{% endif %}
-																				<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_{{cfg.row_name}}_{{cf.field_name}}"></div>
+																				<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_{{cfg.row_name}}_{{cf.field_name}}{{ '_0_url' if cf.field_type == 'media' }}"></div>
 																			</div>
 																		{% endfor %}
 																		<div class="text-center">
@@ -383,7 +396,9 @@
 																						<i class="fa fa-trash" tabindex="-1"></i>
 																					</a>
 																				</span>
-																				<input type="hidden" class="media_url_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]">
+																				<input type="hidden" class="media_url_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[url]]]">
+																				<input type="hidden" class="media_title_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[title]]]">
+																				<input type="hidden" class="media_alt_text_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[alt_text]]]">
 																				<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																			</span>
 
@@ -412,7 +427,7 @@
 																				{% endfor %}
 																			</select>
 
-																			<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_{{cfg.row_name}}_{{cf.field_name}}"></div>
+																			<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_{{cfg.row_name}}_{{cf.field_name}}{{ '_url' if cf.field_type == 'media' }}"></div>
 																		{% endif %}
 																	</div>
 																{% endfor %}
