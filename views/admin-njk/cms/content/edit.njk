@@ -16,7 +16,18 @@
 		}
 		.inline-row {
 			display: flex;
+			flex-wrap: wrap;
+			box-sizing: border-box;
+			gap: 10px;
+			align-items: center;
 			justify-content: space-around;
+		}
+		.inline-row div {
+			{# flex-basis: calc(25% - 1px); #}
+			{# flex: 1; #}
+		}
+		.inline-row .repeater-delete-btn {
+			flex: inherit !important;
 		}
 	</style>
 
@@ -193,7 +204,7 @@
 																		{% else %}
 																			{% set fieldValue = '' %}
 																		{% endif %}
-																		<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container">
+																		<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 																				<span class="required">{{cf.field_label}} ({{brandLanguage.prefix}})</span>
 																			</label>
@@ -216,15 +227,15 @@
 																							<i class="fa fa-trash" tabindex="-1"></i>
 																						</a>
 																					</span>
-																					<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[][url]]]" value="{{fieldValue.url}}">
-																					<input type="hidden" class="media_title_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[][title]]]" value="{{fieldValue.title}}">
-																					<input type="hidden" class="media_alt_text_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[][alt_text]]]" value="{{fieldValue.alt_text}}">
+																					<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
+																					<input type="hidden" class="media_title_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
+																					<input type="hidden" class="media_alt_text_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
 																					{# <a class="btn btn-success" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list' id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}">Attach Media</a> #}
 																					<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																				</span>
 																			{% elif cf.field_type === 'date' %}
 																				<div class="kt_daterangepicker">
-																					<input class="form-control mb-2" id="kt_daterangepicker_{{brandLanguage.prefix}}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																					<input class="form-control form-control-solid" id="kt_daterangepicker_{{brandLanguage.prefix}}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
 																				<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
@@ -239,16 +250,16 @@
 																			<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{brandLanguage.prefix}}_{{cfg.row_name}}_{{cf.field_name}}{{ '_0_url' if cf.field_type == 'media' }}"></div>
 																		</div>
 																	{% endfor %}
-																	<div class="text-center">
-																		<a class="btn btn-sm btn-light-danger mt-3 mt-md-8" onClick="deleteChild(event)" child-id="form-repeater-child-{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}" target-id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
+																	<div class="repeater-delete-btn text-center my-3">
+																		<a class="btn btn-sm btn-light-danger mt-5" onClick="deleteChild(event)" child-id="form-repeater-child-{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}" target-id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
 																			<i class="la la-trash-o"></i>Delete</a>
 																	</div>
 																</div>
 															{% endfor %}
 														</div>
 
-														<div class="form-group mt-5 text-center">
-															<a class="btn btn-light-primary mb-10" onClick="cloneChild(event)" target-lang="{{cfg._id}}" target-lang-prefix="{{brandLanguage.prefix}}" target-id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}" data-repeater-create="">
+														<div class="form-group my-3 text-center">
+															<a class="btn btn-light-primary" onClick="cloneChild(event)" target-lang="{{cfg._id}}" target-lang-prefix="{{brandLanguage.prefix}}" target-id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}" data-repeater-create="">
 																<i class="la la-plus"></i>Add</a>
 														</div>
 													</div>
@@ -259,7 +270,7 @@
 															<div class="{{ 'inline-row' if cfg.inline_fields }}">
 																{% for cf in cfg.fields %}
 																	{% set fieldValue = contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name] %}
-																	<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container">
+																	<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																		{# // begin::Label #}
 																		<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 																			<span class="required">{{cf.field_label}} ({{brandLanguage.prefix}})</span>
@@ -336,7 +347,7 @@
 																				{% for cf in cfg.fields %}
 																					{% set fieldValue = contentDetail.content['common'][cfg.row_name][cf.field_name][i] %}
 																					{# <h1>{{fieldValue}}</h1> #}
-																					<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container">
+																					<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																						<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 																							<span class="required">{{cf.field_label}}</span>
 																							<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-kt-initialized="1"></i>
@@ -357,15 +368,14 @@
 																										<i class="fa fa-trash" tabindex="-1"></i>
 																									</a>
 																								</span>
-																								<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[][url]]]" value="{{fieldValue.url}}">
-																								<input type="hidden" class="media_title_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[][title]]]" value="{{fieldValue.title}}">
-																								<input type="hidden" class="media_alt_text_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[][alt_text]]]" value="{{fieldValue.alt_text}}">
+																								<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
+																								<input type="hidden" class="media_title_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
+																								<input type="hidden" class="media_alt_text_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
 																								<a class="btn btn-success" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																							</span>
 																						{% elif cf.field_type === 'date' %}
 																							<div class="kt_daterangepicker">
-																								<input class="form-control mb-2" id="kt_daterangepicker_{{loop.index}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
-																								<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{cf.field_name}}"></div>
+																								<input class="form-control form-control-solid" id="kt_daterangepicker_{{loop.index}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																							</div>
 																						{% elif cf.field_type === 'dropdown' %}
 																							<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]">
@@ -378,14 +388,14 @@
 																						<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_{{cfg.row_name}}_{{cf.field_name}}{{ '_0_url' if cf.field_type == 'media' }}"></div>
 																					</div>
 																				{% endfor %}
-																				<div class="text-center">
-																					<a class="btn btn-sm btn-light-danger mt-3 mt-md-8" onClick="deleteChild(event)" child-id="form-repeater-child-{{cfg._id}}-{{loop.index}}" target-id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
+																				<div class="repeater-delete-btn text-center my-3">
+																					<a class="btn btn-sm btn-light-danger mt-5" onClick="deleteChild(event)" child-id="form-repeater-child-{{cfg._id}}-{{loop.index}}" target-id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
 																						<i class="la la-trash-o"></i>Delete</a>
 																				</div>
 																			</div>
 																		{% endfor %}
 																	</div>
-																	<div class="form-group mt-5 text-center">
+																	<div class="form-group my-3 text-center">
 																		<a class="btn btn-light-primary" onClick="cloneChild(event)" target-lang="{{cfg._id}}" target-lang-prefix="en" target-id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
 																			<i class="la la-plus"></i>Add
 																	</a>
@@ -398,7 +408,7 @@
 																		{% else %}
 																			{% set fieldValue = '' %}
 																		{% endif %}
-																		<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container">
+																		<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 																				<span class="required">{{ cf.field_label }}</span>
 																				<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-kt-initialized="1"></i>
