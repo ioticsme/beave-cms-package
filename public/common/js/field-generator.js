@@ -39,10 +39,19 @@ const generateField = async () => {
     await _.forEach(fieldSchemaJson, function (group) {
         const currGroup = `<tr><td colspn="3">
         <h3 class="mb-1">${group.section.toUpperCase()}</h3>
-        <p class="my-2"><small>${group.localisation ? '<span class="badge badge-light-info">Multi Linguistic</span>' : '<span class="badge badge-light-success">Global</span>'}
+        <p class="my-2"><small>${
+            group.localisation
+                ? '<span class="badge badge-light-info">Multi Linguistic</span>'
+                : '<span class="badge badge-light-success">Global</span>'
+        }
         ${
             group.repeater_group
                 ? '<span class="badge badge-light-primary">Repeater</span>'
+                : ''
+        }
+        ${
+            group.inline_fields
+                ? '<span class="badge badge-light-warning">Inline</span>'
                 : ''
         }
         </small></p>
@@ -126,6 +135,9 @@ document
         const localisation = document.querySelector(
             `#field-section-form #section_localisation`
         ).checked
+        const inline_fields = document.querySelector(
+            `#field-section-form #section_inline_fields`
+        ).checked
         const sectionExist = _.find(fieldSchemaJson, function (d) {
             return (
                 _.toLower(d.section).trim() == section_name.toLowerCase().trim()
@@ -139,6 +151,7 @@ document
             section: section_name.toUpperCase(),
             repeater_group: repeater_group ? true : false,
             localisation: localisation ? true : false,
+            inline_fields: inline_fields ? true : false,
             fields: [],
         })
 

@@ -75,6 +75,7 @@ const view = async (req, res) => {
                     section: eachGroup.row_name,
                     repeater_group: eachGroup.repeater_group,
                     localisation: eachGroup.localisation,
+                    inline_fields: eachGroup.inline_fields,
                     fields: fields,
                 }
                 return group
@@ -214,6 +215,7 @@ const saveFields = async (req, res) => {
                     section: Joi.string().required(),
                     repeater_group: Joi.boolean().required(),
                     localisation: Joi.boolean().optional(),
+                    inline_fields: Joi.boolean().optional(),
                     fields: Joi.array().optional(),
                     options: Joi.array().optional(),
                 })
@@ -288,6 +290,7 @@ const saveFields = async (req, res) => {
                 row_label: eachGroup.section,
                 repeater_group: eachGroup.repeater_group,
                 localisation: eachGroup.localisation,
+                inline_fields: eachGroup.inline_fields,
                 fields: fields,
             }
             fields_to_update.push(group)

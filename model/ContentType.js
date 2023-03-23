@@ -37,6 +37,10 @@ const ContentTypeSchema = new mongoose.Schema(
                 row_label: String,
                 repeater_group: Boolean,
                 localisation: Boolean,
+                inline_fields: {
+                    type: Boolean,
+                    default: false,
+                },
                 fields: [
                     {
                         field_label: String,
