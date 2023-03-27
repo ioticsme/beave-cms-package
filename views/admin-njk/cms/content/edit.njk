@@ -438,7 +438,7 @@
 																				</span>
 																			{% elif cf.field_type === 'date' %}
 																				<div class="kt_daterangepicker">
-																					<input id="kt_daterangepicker_{{loop.index}}" class="form-control mb-2" type="text" name="common[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="">
+																					<input id="kt_daterangepicker_{{loop.index}}" class="form-control mb-2" type="text" name="common[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
 																				<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}]]">

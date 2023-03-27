@@ -5,20 +5,26 @@
         </div>
     </div>
     <div class="card-body pt-0">
-        <select id="kt_ecommerce_add_product_status_select" class="form-select mb-2" data-control="select2" name="published" data-hide-search="true" data-placeholder="Select an option">
-            <option></option>
-            {% if contentDetail and not contentDetail.published %}
-                <option value="false" selected>Un-Published</option>
-            {% else %}
-                <option value="false">Un-Published</option>
-            {% endif %}
-            {% if contentDetail and contentDetail.published %}
-                <option value="true" selected>Published</option>
-            {% else %}
-                <option value="true">Published</option>
-            {% endif %}
+        <select id="content-status-select" class="form-select mb-2" name="status">
+            <option> - Select - </option>
+            <option value="unpublished" {{'selected' if contentDetail.status == 'unpublished'}}>Un-Published</option>
+            <option value="published" {{'selected' if contentDetail.status == 'published'}}>Published</option>
+            <option value="scheduled" {{'selected' if contentDetail.status == 'scheduled'}}>Scheduled</option>
         </select>
         <p class="text-muted fs-7">Set the status</p>
-        <div class="fv-plugins-message-container invalid-feedback" id="field-error-published"></div>
+        <div class="fv-plugins-message-container invalid-feedback" id="field-error-status"></div>
+
+        <div class="row {{'d-none' if contentDetail.status != 'scheduled'}}" id="cms-schedule-dt-range">
+            <p class="text-muted fs-7">
+                Available Between
+                <a class="badge badge-light-danger float-right" id="cms_publish_dt_clear_btn" href="#">Clear</a>
+            </p>
+            <div class="col-12 my-1">
+                <input class="form-control cms_publish_dt_fields" type="text" id="cms_publish_start_dt" name="cms_publish_start" value="{{contentDetail.scheduled_start}}">
+            </div>
+            <div class="col-12">
+                <input class="form-control cms_publish_dt_fields" type="text" id="cms_publish_end_dt" name="cms_publish_end" value="{{contentDetail.scheduled_end}}">
+            </div>
+        </div>
     </div>
 </div>

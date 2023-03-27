@@ -60,7 +60,7 @@ const removeCache = async (keys) => {
     // await client.connect()
     try {
         // const client = await redisConnect()
-        return await redis.pipeline().del(keys)
+        return await redis.del(...keys)
     } catch (error) {
         console.log('Redis Client Error', error)
         return error
@@ -79,7 +79,7 @@ const clearCacheAll = async () => {
         for await (const key of iterator) {
             keys_to_remove.push(key)
         }
-        return await redis.del(keys_to_remove)
+        return await redis.del(...keys_to_remove)
     } catch (error) {
         console.log('Redis Client Error', error)
         return error

@@ -185,22 +185,22 @@ const loadSVGIcons = async () => {
     const dirPath = path.join(
         __dirname,
         '../public/admin/assets/media/icons/duotune'
-    );
+    )
 
-    const output = [];
+    const output = []
     try {
-        const folders = await fs.readdir(dirPath);
+        const folders = await fs.readdir(dirPath)
         // Filter the list to only include folders
-        const folderNames = [];
+        const folderNames = []
 
         for (const file of folders) {
-            const stats = await fs.stat(path.join(dirPath, file));
+            const stats = await fs.stat(path.join(dirPath, file))
 
             if (stats.isDirectory()) {
                 folderNames.push({
                     name: file,
                     items: [],
-                });
+                })
             }
         }
 
@@ -208,36 +208,55 @@ const loadSVGIcons = async () => {
             const svgDir = path.join(
                 __dirname,
                 `../public/admin/assets/media/icons/duotune/${targetFolder.name}`
-            );
+            )
 
-            const tempItems = [];
+            const tempItems = []
 
-            const allFiles = await fs.readdir(svgDir);
+            const allFiles = await fs.readdir(svgDir)
             const svgFiles = allFiles.filter(
                 (file) => path.extname(file) === '.svg'
-            );
+            )
 
             for (const file of svgFiles) {
-                const svgPath = path.join(svgDir, file);
-                const svgData = await fs.readFile(svgPath, 'utf8');
-                tempItems.push(svgData);
+                const svgPath = path.join(svgDir, file)
+                const svgData = await fs.readFile(svgPath, 'utf8')
+                tempItems.push(svgData)
             }
 
             const folderObject = _.find(folderNames, {
                 name: targetFolder.name,
-            });
+            })
 
-            folderObject.items.push(...tempItems);
-            output.push(folderObject);
+            folderObject.items.push(...tempItems)
+            output.push(folderObject)
         }
 
-        return output;
+        return output
     } catch (e) {
-        console.log(e);
-        return output;
+        console.log(e)
+        return output
     }
-};
+}
 
+const filteringScheduledCMSItems = async (items) => {
+    // BEGIN::Filtering scheduled items
+    const dayStart = new Date().setHours(0, 0, 0, 0)
+    const dayEnd = new Date().setHours(23, 59, 59, 999)
+    const filteredData = _.filter(items, (item) => {
+        const scheduledStart = item.scheduled.start
+            ? new Date(item.scheduled.start).setHours(0, 0, 0, 0)
+            : null
+        const scheduledEnd = item.scheduled.end
+            ? new Date(item.scheduled.end).setHours(23, 59, 59, 999)
+            : null
+        return (
+            (scheduledStart == null || scheduledStart <= dayStart) &&
+            (scheduledEnd == null || scheduledEnd >= dayEnd)
+        )
+    })
+    return filteredData
+    // END::Filtering scheduled items
+}
 
 module.exports = {
     // generatePdfInvoice,
@@ -249,4 +268,5 @@ module.exports = {
     getVatAmount,
     createFcmSwJS,
     loadSVGIcons,
+    filteringScheduledCMSItems,
 }

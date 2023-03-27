@@ -51,7 +51,7 @@
 		<div class="app-content flex-column-fluid" id="kt_app_content">
 			<div class="app-container container-xxl" id="kt_app_content_container">
 				<div class="row">
-					<div class="col-12 col-sm-8">
+					<div class="col-12 col-sm-7 col-md-8 col-lg-9">
 						<div class="d-flex flex-column flex-lg-row">
 							<div class="flex-lg-row-fluid me-lg-15 order-2 order-lg-1 mb-10 mb-lg-0">
 								<div class="card card-flush pt-3 mb-5 mb-lg-10">
@@ -230,30 +230,43 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-sm-4">
+					<div class="col-12 col-sm-5 col-md-4 col-lg-3">
 						<div class="card card-flush pt-3 mb-5 mb-lg-10">
 							<div class="card-body">
 								Status: 
-								<span class="badge badge-light-{{ 'success'  if contentDetail.published else 'danger' }}">
-									{{ 'Published' if contentDetail.published else 'Unpublished' }}
-								</span>
+								{% if contentDetail.status == 'published' %}
+									<span class="badge badge-light-success">
+										{{ contentDetail.status }}
+									</span>
+								{% elif contentDetail.status == 'scheduled' %}
+									<span class="badge badge-light-warning">
+										{{ contentDetail.status }}
+									</span>
+									<br>
+									<small>{{contentDetail.scheduled_dt_range | safe}}</small>
+								{% else %}
+									<span class="badge badge-light-danger">
+										{{ contentDetail.status }}
+									</span>
+								{% endif %}
+								<hr class="my-3">
 								<p>
 									<small>
 										{% if reqContentType.single_type %}
-											API Endpoint: 
-											<br>
+										API Endpoint: 
+										<br>
 											<code>
 												<a href="{{ baseURL }}/api/cms/{{ reqContentType.slug }}" target="_blank">{{ baseURL }}/api/cms/{{ reqContentType.slug }}</a>
 											</code>
 										{% else %}
-											API Endpoint (Collection):
-											<br>
+										API Endpoint (Collection):
+										<br>
 											<code>
 												<a href="{{ baseURL }}/api/cms/{{ reqContentType.slug }}" target="_blank">{{ baseURL }}/api/cms/{{ reqContentType.slug }}</a>
 											</code>
 											<br>
-											API Endpoint (Detail):
-											<br>
+										API Endpoint (Detail):
+										<br>
 											<code>
 												<a href="{{ baseURL }}/api/cms/{{ reqContentType.slug }}/{{ contentDetail.slug }}" target="_blank">{{ baseURL }}/api/cms/{{ reqContentType.slug }}/{{ contentDetail.slug }}</a>
 											</code>

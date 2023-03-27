@@ -19,7 +19,11 @@ class ContentResource extends Resource {
             },
             position: this.position,
             // template_name: this.template_name,
-            // published: this.published,
+            status: this.status,
+            scheduled: this.scheduled_at ? {
+                start: this.scheduled_at.start,
+                end: this.scheduled_at.end,
+            } : undefined,
             // brand: this.brand,
             country: {
                 _id: this.country._id,

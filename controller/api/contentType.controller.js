@@ -7,6 +7,7 @@ const ContentResource = require('../../resources/api/content.resource')
 const ContentPathResource = require('../../resources/api/contentPath.resource')
 const { default: collect } = require('collect.js')
 const { default: mongoose } = require('mongoose')
+const { filteringScheduledCMSItems } = require('../../helper/Operations.helper')
 
 // const listOld = async (req, res) => {
 //     try {
@@ -291,7 +292,7 @@ const list = async (req, res) => {
             slug: req.params.contentType,
         })
 
-        if(!contentType) {
+        if (!contentType) {
             return res.status(404).json({ error: `Content Type not exist` })
         }
 
@@ -316,7 +317,48 @@ const list = async (req, res) => {
                     liveData = await Content.find({
                         type_id: mongoose.Types.ObjectId(contentType?._id),
                         country: mongoose.Types.ObjectId(req.country._id),
-                        published: true,
+                        $or: [
+                            { status: 'published' },
+                            {
+                                status: 'scheduled',
+                                // $and: [
+                                //     {
+                                //         $or: [
+                                //             {
+                                //                 'scheduled_at.start': {
+                                //                     $exists: false,
+                                //                 }, // start date is empty
+                                //             },
+                                //             {
+                                //                 'scheduled_at.start': null, // start date is null
+                                //             },
+                                //             {
+                                //                 'scheduled_at.start': {
+                                //                     $lte: new Date(),
+                                //                 },
+                                //             }, // scheduled_at is a valid date and less than or equal to the current date
+                                //         ],
+                                //     },
+                                //     {
+                                //         $or: [
+                                //             {
+                                //                 'scheduled_at.end': {
+                                //                     $exists: false,
+                                //                 }, // end date is empty
+                                //             },
+                                //             {
+                                //                 'scheduled_at.end': null, // end date is null
+                                //             },
+                                //             {
+                                //                 'scheduled_at.end': {
+                                //                     $gte: new Date(),
+                                //                 },
+                                //             }, // scheduled_at is a valid date and greater than or equal to the current date
+                                //         ],
+                                //     },
+                                // ],
+                            },
+                        ],
                     })
                         .populate('author')
                         .populate('country')
@@ -391,11 +433,18 @@ const list = async (req, res) => {
                 // TODO:: Send slack notification for redis connection fail on authentication
             })
 
+        // BEGIN::Filtering scheduled items
+        const filteredData = await filteringScheduledCMSItems(contents)
+        // END::Filtering scheduled items
+
+        // return res.json(filteredData)
         return res.status(200).json({
             [req.params.contentType]: contentType.single_type
-                ? contents[0]
-                : contents,
-            collection_meta: contentType.has_meta ? contentType.meta : undefined,
+                ? filteredData[0]
+                : filteredData,
+            collection_meta: contentType.has_meta
+                ? contentType.meta
+                : undefined,
             navigation: contentType.nav_on_collection_api
                 ? req.navigation
                 : undefined,
@@ -413,7 +462,7 @@ const detail = async (req, res) => {
             slug: req.params.contentType,
         })
 
-        if(!contentType) {
+        if (!contentType) {
             return res.status(404).json({ error: `Content Type not exist` })
         }
 
@@ -426,7 +475,7 @@ const detail = async (req, res) => {
                         type_id: mongoose.Types.ObjectId(contentType?._id),
                         country: mongoose.Types.ObjectId(req.country._id),
                         slug: req.params.slug,
-                        published: true,
+                        $or: [{ status: 'published' }, { status: 'scheduled' }],
                     })
                         .populate('author')
                         .populate('country')
@@ -451,14 +500,14 @@ const detail = async (req, res) => {
                     }
                     // END:: Fetching Attached Contents
 
-                    if(contentType.has_meta == false) {
+                    if (contentType.has_meta == false) {
                         liveData.meta = undefined
                     }
                     const liveDataCollection = new ContentResource(
                         liveData
                     ).exec()
 
-                    if (envConfig.cache.ACTIVE == 'true' && liveData) {
+                    if (envConfig.cache.ACTIVE == 'true' && liveData && liveData.status == 'published') {
                         setCache(
                             cache_key,
                             JSON.stringify({
@@ -479,6 +528,11 @@ const detail = async (req, res) => {
                 // TODO:: Send slack notification for redis connection fail on authentication
             })
 
+        // BEGIN::Filtering scheduled items
+        // const filteredData = await filteringScheduledCMSItems(contents)
+        return res.json(contents)
+        // END::Filtering scheduled items
+
         res.status(200).json({
             [req.params.contentType]: contents,
             navigation: contentType.nav_on_single_api
@@ -498,10 +552,10 @@ const generateStaticPath = async (req, res) => {
             slug: req.params.contentType,
         })
 
-        if(!contentType) {
+        if (!contentType) {
             return res.status(404).json({ error: `Content Type not exist` })
         }
-        
+
         const contents = await Content.find({
             type_id: contentType._id,
             // brand: req.brand._id,

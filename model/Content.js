@@ -42,9 +42,14 @@ const ContentSchema = new mongoose.Schema(
                 items: [{ type: Schema.ObjectId }],
             },
         ],
-        published: {
-            type: Boolean,
-            default: false,
+        status: {
+            type: String,
+            enum: ['published', 'unpublished', 'scheduled'],
+            default: 'unpublished',
+        },
+        scheduled_at: {
+            start: Date,
+            end: Date,
         },
         position: {
             type: Number,
@@ -76,6 +81,50 @@ ContentSchema.virtual('date_created').get(function () {
         'Asia/Dubai',
         'dd/MM/yyyy HH:mm:ss'
     )
+})
+
+ContentSchema.virtual('scheduled_start').get(function () {
+    if (this.scheduled_at?.start) {
+        return formatInTimeZone(
+            this.scheduled_at.start,
+            'Asia/Dubai',
+            'yyyy-MM-dd'
+        )
+    }
+})
+ContentSchema.virtual('scheduled_end').get(function () {
+    if (this.scheduled_at?.end) {
+        return formatInTimeZone(
+            this.scheduled_at.end,
+            'Asia/Dubai',
+            'yyyy-MM-dd'
+        )
+    }
+})
+ContentSchema.virtual('scheduled_dt_range').get(function () {
+    let start
+    let end
+    if (this.scheduled_at?.start) {
+        start = formatInTimeZone(
+            this.scheduled_at.start,
+            'Asia/Dubai',
+            'dd/MM/yyyy'
+        )
+    }
+    if (this.scheduled_at?.end) {
+        end = formatInTimeZone(
+            this.scheduled_at.end,
+            'Asia/Dubai',
+            'dd/MM/yyyy'
+        )
+    }
+    return `${
+        start
+            ? 'Publish On : <span class="badge badge-light-success">' +
+              start +
+              '</span>'
+            : ''
+    } ${end ? 'Un-Publish On :<span class="badge badge-light-danger">' + end + '</span>' : ''}`
 })
 
 ContentSchema.virtual('date_updated').get(function () {

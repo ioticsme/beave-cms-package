@@ -97,3 +97,41 @@ document.addEventListener('click', function (e) {
         e.target.previousElementSibling.innerHTML = ' '
     }
 })
+
+// Date field for scheduled publish
+document.querySelector('#content-status-select').addEventListener('change', (event) => {
+    console.log(event.target.value)
+    if(event.target.value == 'scheduled') {
+        document.querySelector('#cms-schedule-dt-range').classList.remove('d-none')
+    }else {
+        document.querySelector('#cms-schedule-dt-range').classList.add('d-none')
+    }
+})
+$('#cms_publish_start_dt, #cms_publish_end_dt').daterangepicker(
+    {
+        autoUpdateInput: false,
+        singleDatePicker: true,
+        showDropdowns: true,
+        minYear: 2023,
+        maxYear: parseInt(moment().format('YYYY'), 12),
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
+    },
+    // function (start, end, label) {
+    //     // var years = moment().diff(start, 'years')
+    //     alert('You are ' + new Date(start) + ' years old!')
+    // }
+)
+$('.cms_publish_dt_fields').on('apply.daterangepicker', function (ev, picker) {
+    // console.log(picker)
+    $(this).val(picker.startDate.format('YYYY-MM-DD'));
+});
+
+document.querySelector('#cms_publish_dt_clear_btn').addEventListener('click', (e) => {
+    e.preventDefault()
+    // alert('sss')
+    document.getElementsByClassName('cms_publish_dt_fields').forEach((field)=> {
+        field.value= ''
+    })
+})
