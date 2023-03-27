@@ -433,6 +433,9 @@ const list = async (req, res) => {
                 // TODO:: Send slack notification for redis connection fail on authentication
             })
 
+        if (contentType.single_type && !contents.length) {
+            return res.status(404).json({ error: `Not Found` })
+        }
         // BEGIN::Filtering scheduled items
         const filteredData = await filteringScheduledCMSItems(contents)
         // END::Filtering scheduled items
@@ -507,7 +510,11 @@ const detail = async (req, res) => {
                         liveData
                     ).exec()
 
-                    if (envConfig.cache.ACTIVE == 'true' && liveData && liveData.status == 'published') {
+                    if (
+                        envConfig.cache.ACTIVE == 'true' &&
+                        liveData &&
+                        liveData.status == 'published'
+                    ) {
                         setCache(
                             cache_key,
                             JSON.stringify({
@@ -530,9 +537,12 @@ const detail = async (req, res) => {
 
         // BEGIN::Filtering scheduled items
         // const filteredData = await filteringScheduledCMSItems(contents)
-        return res.json(contents)
+        // return res.json(contents)
         // END::Filtering scheduled items
 
+        if (!contents.length) {
+            return res.status(404).json({ error: `Not Found` })
+        }
         res.status(200).json({
             [req.params.contentType]: contents,
             navigation: contentType.nav_on_single_api
@@ -540,7 +550,7 @@ const detail = async (req, res) => {
                 : undefined,
         })
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         return res.status(500).json({ error: `Something went wrong` })
     }
 }
