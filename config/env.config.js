@@ -8,8 +8,8 @@ const envConfig = {
         DOMAIN: process.env.DOMAIN,
         FRONTEND_URL: process.env.FRONTEND_URL,
         CLIENT_NAME: process.env.CLIENT_NAME,
-        CMS_LOGO_LARGE: process.env.CMS_LOGO_LARGE,
-        CMS_LOGO_SMALL: process.env.CMS_LOGO_SMALL,
+        CMS_LOGO_LARGE: process.env.CMS_LOGO_LARGE || '/cms-static/admin/assets/media/beave-logo.jpg',
+        CMS_LOGO_SMALL: process.env.CMS_LOGO_SMALL || '/cms-static/admin/assets/media/beave-logo.jpg',
     },
     db: {
         URL: process.env.DB_CONNECTION,

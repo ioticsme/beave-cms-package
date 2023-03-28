@@ -25,9 +25,9 @@ try {
 }
 
 const baseConfig = async (req, res, next) => {
-    // res.locals.clientName = `${envConfig.general.CLIENT_NAME}`
-    // res.locals.cmsLogoLarge = `#`
-    // res.locals.cmsLogoSmall = `#`
+    res.locals.browserTitle = `${envConfig.general.CLIENT_NAME}`
+    res.locals.cmsLogoLarge = `${envConfig.general.CMS_LOGO_LARGE}`
+    res.locals.cmsLogoSmall = `${envConfig.general.CMS_LOGO_SMALL}`
     res.locals.globalModuleConfig = globalModuleConfig
     next()
 }

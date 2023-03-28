@@ -83,7 +83,7 @@
 											<a class="badge badge-light-primary" href="/admin/cms/{{reqContentType.slug}}/detail/{{item._id}}">{{item.slug}}</a>
 										</td>
 										<td>
-											<span class="badge badge-light-{{'success' if item.published else 'danger'}}">{{'Published' if item.published else 'Unpublished'}}</span>
+											<span class="badge badge-light-{{'success' if item.status == 'published' else ('warning' if item.status == 'scheduled' else 'danger')}}">{{ item.status | upper() }}</span>
 										</td>
 										{# <td>
 											<span class="badge badge-{{'success' if item.in_home else 'danger'}}">{{'Yes' if item.in_home else 'No'}}</span>
