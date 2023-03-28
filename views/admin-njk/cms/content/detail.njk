@@ -84,25 +84,18 @@
 																{% if cfg.localisation == true %}
 																	<h1 class="mt-5 mb-2">{{ cfg.row_label.toUpperCase() }}</h1>
 																	{% if cfg.repeater_group %}
-																		{% for i in range(contentDetail.content[brandLanguage.prefix][cfg.row_name][
-																			cfg
-																				.fields[0]
-																				.field_name
-																		].length) %}
+																		{% for eachRepeaterObject in contentDetail.content[brandLanguage.prefix][cfg.row_name] %}
 																			<div class="row">
-																				{% for eachVal in cfg.fields %}
+																				{% for eachKey in ObjectKeys(eachRepeaterObject) %}
+																					{# {% if cfg.fields[loop.index-1].field_name.length %} #}
 																					<div class="col-12 col-sm-6">
-																						<span class="badge badge-light">{{ eachVal.field_label.toUpperCase() }} :</span>
-																						{% set content = contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name] %}
-																						{% if content %}
-																							{% if eachVal.field_type == 'media' %}
-																								<img src="{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name][i].url }}" style="max-width: 100px;">
-																							{% else %}
-																								<span class="badge badge-light-info">{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][eachVal.field_name][i] | safe }}</span>
-																								<br>
-																							{% endif %}
-																						{% endif %}
+																						<span class="badge badge-light">{{ eachKey.toUpperCase() }} :</span>
+																						{% set fieldValue = '<img width="80" src="' + eachRepeaterObject[eachKey]['url'] + '"/>' if ObjectKeys(eachRepeaterObject[eachKey])[0] == 'url' else 
+																							eachRepeaterObject[eachKey] %}
+																						<span class="badge badge-light-info">{{ fieldValue | safe }}</span>
+																						<br>
 																					</div>
+																					{# {% endif %} #}
 																				{% endfor %}
 																			</div>
 																		{% endfor %}
@@ -135,29 +128,22 @@
 																	<h1 class="mt-5 mb-2">{{cfg.row_label.toUpperCase()}}</h1>
 																	{% if cfg.repeater_group %}
 																		<div class="row">
-																			{% set content = contentDetail.content['common'][cfg.row_name] %}
-																			{% if content %}
-																				{% for i in range(contentDetail.content['common'][cfg.row_name][
-																					cfg
-																						.fields[0]
-																						.field_name
-																				].length) %}
-																					{% for eachVal in cfg.fields %}
+																			{# {% set content = contentDetail.content['common'][cfg.row_name] %}
+																			{% if content %} #}
+																			{% for eachRepeaterObject in contentDetail.content['common'][cfg.row_name] %}
+																				<div class="row">
+																					{% for eachKey in ObjectKeys(eachRepeaterObject) %}
 																						<div class="col-12 col-sm-6">
-																							{% set content = contentDetail.content['common'][cfg.row_name] %}
-																							{% if content %}
-																								<span class="badge badge-light">{{eachVal.field_label.toUpperCase()}} :</span>
-																								{% if eachVal.field_type == 'media' %}
-																									<img src="{{content[eachVal.field_name][i].url}}" style="max-width: 100px;">
-																								{% else %}
-																									<span class="badge badge-light-info">{{content[eachVal.field_name][i] | safe}}</span>
-																									<br>
-																								{% endif %}
-																							{% endif %}
+																							<span class="badge badge-light">{{ eachKey.toUpperCase() }} :</span>
+																							{% set fieldValue = '<img width="80" src="' + eachRepeaterObject[eachKey]['url'] + '"/>' if ObjectKeys(eachRepeaterObject[eachKey])[0] == 'url' else 
+																								eachRepeaterObject[eachKey] %}
+																							<span class="badge badge-light-info">{{ fieldValue | safe }}</span>
+																							<br>
 																						</div>
 																					{% endfor %}
-																				{% endfor %}
-																			{% endif %}
+																				</div>
+																			{% endfor %}
+																			{# {% endif %} #}
 																		</div>
 																	{% else %}
 																		{% for cf in cfg.fields %}

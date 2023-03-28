@@ -1,7 +1,7 @@
 {% extends "../../layouts/master.njk" %}
 
 {% block csslib %}
-	<link href='/cms-static/admin/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css' rel='stylesheet' type='text/css'/>
+	{# <link href='/cms-static/admin/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css' rel='stylesheet' type='text/css'/> #}
 	{# //- link(href='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css' rel='stylesheet' type='text/css') #}
 	<link href='/cms-static/admin/assets/plugins/global/plugins.bundle.css' rel='stylesheet' type='text/css'/>
 	<link href='/cms-static/admin/assets/css/style.bundle.css' rel='stylesheet' type='text/css'/>
@@ -22,10 +22,7 @@
 			align-items: center;
 			justify-content: space-around;
 		}
-		.inline-row div {
-			{# flex-basis: calc(25% - 1px); #}
-			{# flex: 1; #}
-		}
+		.inline-row div {}
 		.inline-row .repeater-delete-btn {
 			flex: inherit !important;
 		}
@@ -69,15 +66,27 @@
 					});
 			})
 
-		document
-			.querySelectorAll('.kt_daterangepicker input')
-			.forEach((picker) => {
-				$(`#${picker.id}`).flatpickr({
-					altInput: !0,
-					altFormat: 'd F, Y',
-					dateFormat: 'Y-m-dTH:i:00.000\\Z'
+		function initDatePicker() {
+			document
+				.querySelectorAll('.kt_daterangepicker input')
+				.forEach((picker) => {
+					const options = {
+						altFormat: 'd F, Y',
+						enableTime: picker.getAttribute('data-hastime') || false
+					}
+					options.dateFormat = picker.getAttribute('data-hastime') == true
+						? 'Y-m-d H:i'
+						: 'Y-m-d'
+					if (picker.getAttribute('data-daterange') == true) {
+						options.mode = picker.getAttribute('data-daterange')
+							? "range"
+							: "single"
+					}
+					picker.flatpickr(options)
 				})
-			})
+		}
+
+		initDatePicker()
 
 		var childIndex = 0
 		function cloneChild(event) {
@@ -98,11 +107,30 @@
 					element.value = null
 				})
 			//- console.log(`#${newElement.getAttribute('id')}`)
-			newMediaButtonId = `beave-media-field-${Math.floor(Math.random() * 1000000000)}`
+			if (document.querySelector(`#${newElement.getAttribute('id')}`).querySelector('.media-uploader-modal-btn')) {
+				newMediaButtonId = `beave-media-field-${Math.floor(Math.random() * 1000000000)}`
+				document
+					.querySelector(`#${newElement.getAttribute('id')}`)
+					.querySelector('.media-uploader-modal-btn')
+					.setAttribute('id', newMediaButtonId)
+
+				document
+					.querySelector(`#${newElement.getAttribute('id')}`)
+					.querySelector('.media_preview .preview-holder')
+					.innerHTML = ''
+				document
+					.querySelector(`#${newElement.getAttribute('id')}`)
+					.querySelector('.media_preview .image-preview-remove-btn')
+					.classList
+					.add('d-none')
+
+			}
 			document
 				.querySelector(`#${newElement.getAttribute('id')}`)
 				.querySelector('.media-uploader-modal-btn')
 				.setAttribute('id', newMediaButtonId)
+
+			initDatePicker()
 		}
 
 		function deleteChild(event) {
@@ -184,26 +212,22 @@
 													<h4 class="badge bg-slate-600 text-white mb-4">{{cfg.row_label | upper()}}</h4>
 													<div class="border border-gray-200 bg-slate-200 p-4 rounded-lg mb-4">
 														<div class="group_repeater" id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
-															{% if contentDetail.content[brandLanguage.prefix][cfg.row_name] %}
-																{% set totalItems = contentDetail
-																	.content[brandLanguage.prefix][cfg.row_name][ObjectKeys(contentDetail.content[brandLanguage.prefix][cfg.row_name])[0]]
-																	.length or 1 %}
-															{% else %}
-																{% set totalItems = 1 %}
-															{% endif %}
+
+															{% set totalItems = contentDetail
+																.content[brandLanguage.prefix][cfg.row_name]
+																.length or 1 %}
 
 															{% for i in range(totalItems) %}
-																{% if loop.index == 1%}
+
+																{# {% if loop.index == 1%}
 																	<div class="form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}">
-																{%else%}
-																	<div class="form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index * 1000}}">
-																{%endif%}
+																{%else%} #}
+																<div class="form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index * 1000}}">
+																	{# {%endif%} #}
 																	{% for cf in cfg.fields %}
-																		{% if contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name] %}
-																			{% set fieldValue = contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name][i] %}
-																		{% else %}
-																			{% set fieldValue = '' %}
-																		{% endif %}
+
+																		{% set fieldValue = contentDetail.content[brandLanguage.prefix][cfg.row_name][i][cf.field_name] %}
+
 																		<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 																				<span class="required">{{cf.field_label}} ({{brandLanguage.prefix}})</span>
@@ -235,7 +259,7 @@
 																				</span>
 																			{% elif cf.field_type === 'date' %}
 																				<div class="kt_daterangepicker">
-																					<input class="form-control form-control-solid" id="kt_daterangepicker_{{brandLanguage.prefix}}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																					<input class="form-control form-control-solid" data-hastime="false" data-daterange="false" id="kt_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
 																				<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
@@ -246,7 +270,7 @@
 																				</select>
 
 																			{% endif %}
-																			
+
 																			<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{brandLanguage.prefix}}_{{cfg.row_name}}_{{cf.field_name}}{{ '_0_url' if cf.field_type == 'media' }}"></div>
 																		</div>
 																	{% endfor %}
@@ -302,7 +326,7 @@
 																			</span>
 																		{% elif cf.field_type === 'date' %}
 																			<div class="kt_daterangepicker">
-																				<input class="form-control form-control-solid" data-hastime="false" data-daterange="false" id="kt_daterangepicker_{{brandLanguage.prefix}}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																				<input class="form-control form-control-solid" data-hastime="false" data-daterange="false" id="kt_daterangepicker_{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ loop.index }}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																			</div>
 																		{% elif cf.field_type === 'dropdown' %}
 																			<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]">
@@ -322,7 +346,7 @@
 											{% endfor %}
 										</div>
 									{% endfor %}
-									
+
 									{% if has_common_field_groups %}
 										<div class="tab-pane fade" role="tabpanel" id="kt_tab_pane_common">
 											{# //- BEGIN::Custom Fields without localisation #}
@@ -330,22 +354,24 @@
 												<div class="col-12">
 													{% for cfg in reqContentType.field_groups %}
 														{% if cfg.localisation == false %}
-														<h4 class="badge bg-slate-600 text-white mb-4">{{cfg.row_label | upper()}}</h4>
-														<div class="border border-gray-200 bg-slate-200 p-4 rounded-lg mb-4">
-															{% if cfg.repeater_group == true %}
-																{# <h4>{{cfg.row_label}}</h4> #}
-																<div class="group_repeater" id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
+															<h4 class="badge bg-slate-600 text-white mb-4">{{cfg.row_label | upper()}}</h4>
+															<div class="border border-gray-200 bg-slate-200 p-4 rounded-lg mb-4">
+																{% if cfg.repeater_group == true %}
+																	{# <h4>{{cfg.row_label}}</h4> #}
+																	<div class="group_repeater" id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
+
 																		{% set totalItems = contentDetail
-																			.content['common'][cfg.row_name][ObjectKeys(contentDetail.content['common'][cfg.row_name])[0]]
+																			.content['common'][cfg.row_name]
 																			.length or 1 %}
+
 																		{% for i in range(totalItems) %}
-																			{% if loop.index == 1%}
-																				<div class="form-group form-repeater-group-{{cfg._id}}-en {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{cfg._id}}-{{loop.index}}">
-																			{%else%}
-																				<div class="form-group form-repeater-group-{{cfg._id}}-en {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{cfg._id}}-{{loop.index * 1000}}">
-																			{%endif%}
+																			{# {% if loop.index == 1%} #}
+																			{# <div class="form-group form-repeater-group-{{cfg._id}}-en {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{cfg._id}}-{{loop.index}}">
+																					{%else%} #}
+																			<div class="form-group form-repeater-group-{{cfg._id}}-en {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{cfg._id}}-{{loop.index * 1000}}">
+																				{# {%endif%} #}
 																				{% for cf in cfg.fields %}
-																					{% set fieldValue = contentDetail.content['common'][cfg.row_name][cf.field_name][i] %}
+																					{% set fieldValue = contentDetail.content['common'][cfg.row_name][i][cf.field_name] %}
 																					{# <h1>{{fieldValue}}</h1> #}
 																					<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																						<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
@@ -362,7 +388,7 @@
 																							<span class='media-uploader-field'>
 																								<span class="media_preview">
 																									<span class="preview-holder">
-																									<img src="{{fieldValue.url}}" style="max-width: 150px;"/>
+																										<img src="{{fieldValue.url}}" style="max-width: 150px;"/>
 																									</span>
 																									<a class="btn btn-danger image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
 																										<i class="fa fa-trash" tabindex="-1"></i>
@@ -375,7 +401,7 @@
 																							</span>
 																						{% elif cf.field_type === 'date' %}
 																							<div class="kt_daterangepicker">
-																								<input class="form-control form-control-solid" id="kt_daterangepicker_{{loop.index}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																								<input class="form-control form-control-solid" id="kt_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																							</div>
 																						{% elif cf.field_type === 'dropdown' %}
 																							<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]">
@@ -399,61 +425,61 @@
 																		<a class="btn btn-light-primary" onClick="cloneChild(event)" target-lang="{{cfg._id}}" target-lang-prefix="en" target-id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
 																			<i class="la la-plus"></i>Add
 																	</a>
-																</div>
-															{% else %}
-																<div class="{{ 'inline-row' if cfg.inline_fields }}">
-																	{% for cf in cfg.fields %}
-																		{% if contentDetail.content['common'] and contentDetail.content['common'][cfg.row_name][cf.field_name] %}
-																			{% set fieldValue = contentDetail.content['common'][cfg.row_name][cf.field_name] %}
-																		{% else %}
-																			{% set fieldValue = '' %}
-																		{% endif %}
-																		<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
-																			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-																				<span class="required">{{ cf.field_label }}</span>
-																				<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-kt-initialized="1"></i>
-																			</label>
-																			{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
-																				<input type="{{ cf.field_type }}" class="form-control form-control-solid" placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" value="{{ fieldValue }}">
-																			{% elif cf.field_type === 'richtext' %}
-																				<textarea class="content_wysiwyg" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" id="wysiwyg-cf-{{ loop.index }}">{{ fieldValue }}</textarea>
-																			{% elif cf.field_type === 'textarea' %}
-																				<textarea class="form-control form-control-solid" rows="6" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false">{{ fieldValue }}</textarea>
-																			{% elif cf.field_type === 'media' %}
-																				<span class='media-uploader-field'>
-																					<span class="media_preview">
-																						<span class="preview-holder">
-																							{% if fieldValue %}
-																								<img src="{{ fieldValue.url }}" style="max-width: 150px;"/>
-																							{% endif %}
-																						</span>
-																						<a class="btn btn-danger image-preview-remove-btn my-1 {% if not fieldValue %}d-none{% endif %}">
-																							<i class="fa fa-trash" tabindex="-1"></i>
-																						</a>
-																					</span>
-																					<input type="hidden" class="media_url_field" id="{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[url]]]" value="{{ fieldValue.url }}">
-																					<input type="hidden" class="media_title_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[title]]]" value="{{fieldValue.title}}">
-																					<input type="hidden" class="media_alt_text_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[alt_text]]]" value="{{fieldValue.alt_text}}">
-																					<a class="btn btn-success" data-field="{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
-																				</span>
-																			{% elif cf.field_type === 'date' %}
-																				<div class="kt_daterangepicker">
-																					<input id="kt_daterangepicker_{{loop.index}}" class="form-control mb-2" type="text" name="common[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
-																				</div>
-																			{% elif cf.field_type === 'dropdown' %}
-																				<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}]]">
-																					<option>- Select {{cf.field_label}} -</option>
-																					{% for dropdown in cf.options %}
-																						<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
-																					{% endfor %}
-																				</select>
+																	</div>
+																{% else %}
+																	<div class="{{ 'inline-row' if cfg.inline_fields }}">
+																		{% for cf in cfg.fields %}
+																			{% if contentDetail.content['common'] and contentDetail.content['common'][cfg.row_name][cf.field_name] %}
+																				{% set fieldValue = contentDetail.content['common'][cfg.row_name][cf.field_name] %}
+																			{% else %}
+																				{% set fieldValue = '' %}
 																			{% endif %}
-																			<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_{{ cfg.row_name }}_{{ cf.field_name }}{{ '_url' if cf.field_type == 'media' }}">{{ cfg.field_errors.common[cf.field_name] }}</div>
-																		</div>
-																	{% endfor %}
-																</div>
-															{% endif %}
-														</div>
+																			<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
+																				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+																					<span class="required">{{ cf.field_label }}</span>
+																					<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-kt-initialized="1"></i>
+																				</label>
+																				{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
+																					<input type="{{ cf.field_type }}" class="form-control form-control-solid" placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" value="{{ fieldValue }}">
+																				{% elif cf.field_type === 'richtext' %}
+																					<textarea class="content_wysiwyg" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" id="wysiwyg-cf-{{ loop.index }}">{{ fieldValue }}</textarea>
+																				{% elif cf.field_type === 'textarea' %}
+																					<textarea class="form-control form-control-solid" rows="6" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false">{{ fieldValue }}</textarea>
+																				{% elif cf.field_type === 'media' %}
+																					<span class='media-uploader-field'>
+																						<span class="media_preview">
+																							<span class="preview-holder">
+																								{% if fieldValue %}
+																									<img src="{{ fieldValue.url }}" style="max-width: 150px;"/>
+																								{% endif %}
+																							</span>
+																							<a class="btn btn-danger image-preview-remove-btn my-1 {% if not fieldValue %}d-none{% endif %}">
+																								<i class="fa fa-trash" tabindex="-1"></i>
+																							</a>
+																						</span>
+																						<input type="hidden" class="media_url_field" id="{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[url]]]" value="{{ fieldValue.url }}">
+																						<input type="hidden" class="media_title_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[title]]]" value="{{fieldValue.title}}">
+																						<input type="hidden" class="media_alt_text_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[alt_text]]]" value="{{fieldValue.alt_text}}">
+																						<a class="btn btn-success" data-field="{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																					</span>
+																				{% elif cf.field_type === 'date' %}
+																					<div class="kt_daterangepicker">
+																						<input id="kt_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" class="form-control mb-2" type="text" name="common[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																					</div>
+																				{% elif cf.field_type === 'dropdown' %}
+																					<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}]]">
+																						<option>- Select {{cf.field_label}} -</option>
+																						{% for dropdown in cf.options %}
+																							<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
+																						{% endfor %}
+																					</select>
+																				{% endif %}
+																				<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_{{ cfg.row_name }}_{{ cf.field_name }}{{ '_url' if cf.field_type == 'media' }}">{{ cfg.field_errors.common[cf.field_name] }}</div>
+																			</div>
+																		{% endfor %}
+																	</div>
+																{% endif %}
+															</div>
 														{% endif %}
 													{% endfor %}
 												</div>
@@ -506,7 +532,7 @@
 											</div>
 										</div>
 									{% endif %}
-									
+
 								</div>
 							</div>
 						</div>

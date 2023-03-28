@@ -247,7 +247,9 @@ const changeStatus = async (req, res) => {
         }
 
         const collection_cache_key = `data-content-${req.authUser.brand.code}-${countryCode}-${slug}`
-        const single_item_cache_key = `data-content-${req.authUser.brand.code}-${countryCode}-${slug}-${update.slug || update._id}`
+        const single_item_cache_key = `data-content-${
+            req.authUser.brand.code
+        }-${countryCode}-${slug}-${update.slug || update._id}`
         Redis.removeCache([collection_cache_key, single_item_cache_key])
 
         return res.status(200).json({
@@ -603,6 +605,57 @@ const saveDefaultContent = async (req, res) => {
         if (validationResult.error) {
             return res.status(422).json(validationResult.error)
         }
+
+        // BEGIN: Restructing repeating array fields to Array of Objects and replaing it to `request.body` object to insert.
+        language_prefixes.forEach((lang) => {
+            let fieldGroupValidationObj = {}
+            let repeater_group_by_localisation
+            if (lang != 'common') {
+                repeater_group_by_localisation = _.filter(
+                    req.contentType.field_groups,
+                    function (o) {
+                        return (
+                            o.localisation == true && o.repeater_group == true
+                        )
+                    }
+                )
+            } else {
+                repeater_group_by_localisation = _.filter(
+                    req.contentType.field_groups,
+                    function (o) {
+                        return (
+                            o.localisation == false && o.repeater_group == true
+                        )
+                    }
+                )
+            }
+
+            repeater_group_by_localisation.forEach((eachFieldGroup) => {
+                const repeater_field_keys = Object.keys(
+                    content_to_insert[lang][eachFieldGroup.row_name]
+                )
+                const content_to_change = []
+                const total_items_in_each_field =
+                    content_to_insert[lang][eachFieldGroup.row_name][
+                        repeater_field_keys[0]
+                    ].length
+                for (let i = 0; i < total_items_in_each_field; i++) {
+                    const obj = {}
+                    eachFieldGroup.fields.forEach((eachField) => {
+                        obj[eachField.field_name] =
+                            content_to_insert[lang][eachFieldGroup.row_name][
+                                eachField.field_name
+                            ][i]
+                    })
+                    content_to_change.push(obj)
+                }
+                content_to_insert[lang][eachFieldGroup.row_name] =
+                    content_to_change
+            })
+        })
+        // console.log(content_to_insert.ar.featured_blocks)
+        // return false
+        // END: Restructing repeating array fields to Array of Objects and replaing it to `request.body` object to insert.
 
         // return false
         let data = {

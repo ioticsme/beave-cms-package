@@ -1,4 +1,5 @@
 {% extends "../../layouts/master.njk" %}
+{% import "../../macro/field.njk" as field %}
 
 {% block csslib %}
 	{# <link href='/cms-static/admin/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css' rel='stylesheet' type='text/css'/> #}
@@ -235,7 +236,6 @@
 																				{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
 																					<input class="form-control form-control-solid" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
 																				{% elif cf.field_type === 'richtext' %}
-																					{# <h1>Hello</h1> #}
 																					<textarea class="content_wysiwyg" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ loop.index }}"></textarea>
 																				{% elif cf.field_type === 'textarea' %}
 																					<textarea class="form-control form-control-solid" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
@@ -253,12 +253,6 @@
 																						<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																					</span>
 																				{% elif cf.field_type == "date" %}
-																					{# <div class="input-group date_picker" id="kt_td_picker_date_only-{{range(100,10000)|random}}" data-td-target-input="nearest" data-td-target-toggle="nearest">
-																					<input id="kt_td_picker_date_only_input" type="text" class="form-control" data-td-target="#kt_td_picker_date_only"/>
-																					<span class="input-group-text" data-td-target="#kt_td_picker_date_only" data-td-toggle="datetimepicker">
-																						<i class="fas fa-calendar"></i>
-																					</span>
-																				</div> #}
 																					<div class="kt_daterangepicker">
 																						<input type="text" class="form-control form-control-solid" data-hastime="false" data-daterange="false" id="kt_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}">
 																					</div>
