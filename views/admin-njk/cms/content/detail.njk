@@ -92,7 +92,7 @@
 																						<span class="badge badge-light">{{ eachKey.toUpperCase() }} :</span>
 																						{% set fieldValue = '<img width="80" src="' + eachRepeaterObject[eachKey]['url'] + '"/>' if ObjectKeys(eachRepeaterObject[eachKey])[0] == 'url' else 
 																							eachRepeaterObject[eachKey] %}
-																						<span class="badge badge-light-info">{{ fieldValue | safe }}</span>
+																						<div class="">{{ fieldValue | safe }}</div>
 																						<br>
 																					</div>
 																					{# {% endif %} #}
