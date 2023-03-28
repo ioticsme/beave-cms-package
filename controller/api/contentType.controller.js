@@ -540,7 +540,7 @@ const detail = async (req, res) => {
         // return res.json(contents)
         // END::Filtering scheduled items
 
-        if (!contents.length) {
+        if (!contents) {
             return res.status(404).json({ error: `Not Found` })
         }
         res.status(200).json({
