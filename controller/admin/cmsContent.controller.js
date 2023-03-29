@@ -392,7 +392,7 @@ const savePageBuilderContent = async (req, res) => {
 }
 
 const saveDefaultContent = async (req, res) => {
-    // console.log(req.body)
+    console.log(req.body.en.featured_blocks.description)
     // return false
     try {
         // Data object to insert

@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
             })
-        // console.log(sendData)
+        console.log(sendData)
         // console.log(images)
         if (Object.keys(images)?.length > 0) {
             // Creating form data with json

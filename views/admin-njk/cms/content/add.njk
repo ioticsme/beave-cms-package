@@ -24,10 +24,7 @@
 			align-items: center;
 			justify-content: space-around;
 		}
-		.inline-row div {
-			{# flex-basis: calc(25% - 1px); #}
-			{# flex: 1; #}
-		}
+		.inline-row div {}
 		.inline-row .repeater-delete-btn {
 			flex: inherit !important;
 		}
@@ -131,6 +128,17 @@
 					.add('d-none')
 
 			}
+
+			/**
+
+			if (document.querySelector(`#${newElement.getAttribute('id')}`).querySelector('.content_wysiwyg')) {
+				newWYSIWYGfieldId = `beave-wysiwyg-field-wysiwyg-cf-${Math.floor(Math.random() * 1000000000)}`
+				document
+					.querySelector(`#${newElement.getAttribute('id')}`)
+					.querySelector('.content_wysiwyg')
+					.setAttribute('id', newWYSIWYGfieldId)
+			}
+			**/
 
 			document
 				.querySelector(`#${newElement.getAttribute('id')}`)
