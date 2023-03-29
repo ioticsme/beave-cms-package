@@ -38,7 +38,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     // console.log(result.details[index].path)
                     let field_key = result.details[index].path[0]
                     let field_error_message_id = result.details[index].path[0]
-                    if (result.details[index].path.length > 1) {
+                    const path_length = result.details[index].path.length
+                    if (path_length > 1) {
                         result.details[index].path.forEach((key, index) => {
                             if (index != 0) {
                                 field_key = `${field_key}[${key}]`
