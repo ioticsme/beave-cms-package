@@ -11,9 +11,10 @@
 	end::Vendors Javascript-->
 	<!-- begin::Custom Javascript(used by this page)-->
 	<script src="/cms-static/admin/assets/js/custom/apps/ecommerce/catalog/products.js"></script>
-	<script src="/cms-static/admin/assets/js/custom/utilities/modals/create-app.js"></script>
-	<script src="/cms-static/admin/assets/js/custom/utilities/modals/users-search.js"></script>
+	{# <script src="/cms-static/admin/assets/js/custom/utilities/modals/create-app.js"></script> #}
+	{# <script src="/cms-static/admin/assets/js/custom/utilities/modals/users-search.js"></script> #}
 	<script src="/cms-static/admin/assets/plugins/custom/jstree/jstree.bundle.js"></script>
+	<script src='/cms-static/common/js/custom-functions.js'></script>
 	<!-- Form Submission Script-->
 	<script src="/cms-static/common/js/form-data-json.min.js"></script>
 	<script src="/cms-static/common/js/es-form.js"></script>
@@ -104,16 +105,21 @@
 									})
 							})
 							.catch((error) => {
-								let data = error?.response?.data
-								Swal.fire({
-									text: data.error || 'Something went wrong !.',
-									icon: 'warning',
-									buttonsStyling: !1,
-									confirmButtonText: 'Ok, got it!',
-									customClass: {
-										confirmButton: 'btn fw-bold btn-primary'
-									}
-								})
+								let data = error
+									?.response
+										?.data
+								if (data) {
+									Swal.fire({
+										text: data.error || 'Something went wrong !.',
+										icon: 'warning',
+										buttonsStyling: !1,
+										confirmButtonText: 'Ok, got it!',
+										customClass: {
+											confirmButton: 'btn fw-bold btn-primary'
+										}
+									})
+								}
+
 							})
 						}
 				})
@@ -126,7 +132,7 @@
 
 		$(".jstree_dragdrop")
 			.on("redraw.jstree", function (e, data) {
-				console.log(e.target.getAttribute("data-nav_position"))
+				//console.log(e.target.getAttribute("data-nav_position"))
 				const targetId = e.target.id
 				const menuName = e
 					.target
@@ -134,8 +140,8 @@
 				var v = $(`#${targetId}`)
 					.jstree(true)
 					.get_json('#', {flat: true})
-				//- console.log(v)
 				var redrawData = JSON.stringify(v);
+				console.log(redrawData)
 				saveMenuSorting(redrawData, menuName)
 			})
 			.jstree();
@@ -161,7 +167,7 @@
 					</ul>
 				</div>
 				<div class="d-flex align-items-center gap-2 gap-lg-3">
-					<a class="btn btn-sm fw-bold btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app">Add New</a>
+					<a class="btn btn-sm fw-bold btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_create_section">Add Nav Section</a>
 				</div>
 			</div>
 		</div>
@@ -173,6 +179,14 @@
 							<div class="card card-stretch card-bordered mb-5">
 								<div class="card-header">
 									<h3 class="card-title">{{ nav.nav_label }}</h3>
+									<div class="card-toolbar">
+										<a class="btn btn-sm btn-light-danger menu-link px-3" id="{{ nav._id }}" url="/admin/cms/menu/delete-position" data-kt-subscriptions-table-filter="delete_row" onClick="deleteItem(this)">
+											<i class="fa fa-trash"></i>
+										</a>
+										<a class="btn btn-sm fw-bold btn-light-primary" href="#" data-bs-toggle="modal" data-sectionId="{{nav._id}}" data-bs-target="#kt_modal_create_item">
+											<i class="fa fa-plus"></i>
+										</a>
+									</div>
 								</div>
 								<div class="card-body">
 									<div class="jstree_dragdrop" id="nav_{{ nav.nav_position }}" data-nav_position="{{ nav.nav_position }}">
@@ -187,8 +201,9 @@
 													</button>
 
 													<ul>
-														{% for j, first_level_child in menu.child %}
-															<li data-id="{{ first_level_child._id }}" url={{ first_level_child.url | json }} label={{ first_level_child.label | json }}>{{ first_level_child.label.en }}
+														{% for first_level_child in menu.child %}
+															<li data-id="{{ first_level_child._id }}" url="{{ first_level_child.url | json }}" label="{{ first_level_child.label | json }}">
+																{{ first_level_child.label.en }}
 																<button id="{{ first_level_child._id }}" nav_position="{{ nav.nav_position }}" level="1" onClick="deleteMenuItem(this)">
 																	<i class="fa-solid fa-trash text-danger"></i>
 																</button>
@@ -197,8 +212,9 @@
 																</button>
 
 																<ul>
-																	{% for second_level_child, k in first_level_child.child %}
-																		<li data-id="{{ second_level_child._id }}" url="{{ second_level_child.url | json }}" label="{{ second_level_child.label | json }}">{{ second_level_child.label.en }}
+																	{% for second_level_child in first_level_child.child %}
+																		<li data-id="{{ second_level_child._id }}" url="{{ second_level_child.url | json }}" label="{{ second_level_child.label | json }}">
+																			{{ second_level_child.label.en }}
 																			<button id="{{ second_level_child._id }}" nav_position="{{ nav.nav_position }}" level="2" onClick="deleteMenuItem(this)">
 																				<i class="fa-solid fa-trash text-danger"></i>
 																			</button>
@@ -223,8 +239,40 @@
 			</div>
 		</div>
 
-		<div class="modal fade" id="kt_modal_create_app" tabindex="-1" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered mw-900px">
+		<div class="modal fade" id="kt_modal_create_section" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2>Add Nav Section</h2>
+						<div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+							<h3>X</h3>
+						</div>
+					</div>
+					<div class="modal-body">
+						<form class="form es-form" id="kt_modal_create_section_form" action="/admin/cms/menu/section/add" data-kt-redirect-url="/admin/cms/menu" method="post">
+							<div class="card card-flush">
+								<div class="card-body pt-0">
+									<div class="col">
+										<input type="text" class="form-control mb-2" name="menu_position_new" placeholder="New Menu Position" value="">
+										<div class="fv-plugins-message-container invalid-feedback" id="field-error-menu_position"></div>
+										<div class="fv-plugins-message-container invalid-feedback" id="field-error-menu_position_new"></div>
+									</div>
+									<div class="card-toolbar mt-8 d-flex justify-content-end">
+										<button class="btn btn-sm btn-success form-submit-btn" type="submit">
+											<span class="label">Save</span>
+											<span class="preloader d-none">Saving...</span>
+										</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="kt_modal_create_item" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h2>Add Menu</h2>
@@ -232,28 +280,16 @@
 							<h3>X</h3>
 						</div>
 					</div>
-					<div class="modal-body py-lg-10 px-lg-10">
-						<form class="form es-form" id="kt_modal_create_app_form" action="/admin/cms/menu/add" data-kt-redirect-url="/admin/cms/menu" method="post">
+					<div class="modal-body">
+						<form class="form es-form" id="kt_modal_create_item_form" action="/admin/cms/menu/add" data-kt-redirect-url="/admin/cms/menu" method="post">
+							<input type="hidden" name="menu_position" id="nav-id" value="">
 							<div class="card card-flush">
 								<div class="card-body pt-0">
-									<div class="col-md-6">
-										<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-											<span class="required">Menu Position</span>
-											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-kt-initialized="1"></i>
-										</label>
-										<select id="kt_ecommerce_add_product_status_select" class="form-select mb-2" data-control="select2" name="menu_position" data-hide-search="true" data-placeholder="Select an option">
-											{% for nav in menulist %}
-												<option value="{{ nav.nav_position }}" {{ 'selected' if loop.index==1 }}>{{ nav.nav_label }}</option>
-											{% endfor %}
-										</select>
-										<pre>--OR--</pre>
-										<input type="text" class="form-control mb-2" name="menu_position_new" placeholder="New Menu Position" value="">
-										<div class="fv-plugins-message-container invalid-feedback" id="field-error-menu_position"></div>
-										<div class="fv-plugins-message-container invalid-feedback" id="field-error-menu_position_new"></div>
+									<div class="col">
 										<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 											{% for brandLanguage in authUser.brand.languages %}
 												<li class="nav-item">
-													<a class="nav-link {{ active if loop.index == 1 }}" data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
+													<a class="nav-link {{ 'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
 												</li>
 											{% endfor %}
 										</ul>
@@ -262,7 +298,7 @@
 									<div class="tab-content tab-content-fields" id="myTabContent">
 										{% for brandLanguage in authUser.brand.languages %}
 											<div class="tab-pane fade {% if loop.index == 1 %}active show{% endif %}" role="tabpanel" id="kt_tab_pane_{{ brandLanguage.prefix }}">
-												<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-6">
+												<div class="d-flex flex-column fv-row fv-plugins-icon-container col-12">
 													<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 														<span class="required"> Menu name ({{ brandLanguage.prefix }}) </span>
 														<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="label" data-kt-initialized="1"></i>
@@ -270,7 +306,7 @@
 													<input type="text" class="form-control mb-2" name="label[{{ brandLanguage.prefix }}]" placeholder="Menu label" value="">
 													<div class="fv-plugins-message-container invalid-feedback" id="field-error-label_{{ brandLanguage.prefix }}"></div>
 												</div>
-												<div class="col-md-6">
+												<div class="col-12">
 													<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 														<span class="required"> Path ({{ brandLanguage.prefix }}) </span>
 														<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-kt-initialized="1"></i>
@@ -281,7 +317,7 @@
 											</div>
 										{% endfor %}
 									</div>
-									<div class="col-md-6">
+									<div class="col-12">
 										<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 											<span>Link Type</span>
 											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-kt-initialized="1"></i>
@@ -305,6 +341,7 @@
 				</div>
 			</div>
 		</div>
+
 	</div>
 
 {% endblock %}

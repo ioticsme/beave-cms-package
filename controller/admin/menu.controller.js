@@ -11,6 +11,7 @@ const listMenu = async (req, res) => {
             brand: req.authUser?.brand?._id,
             country: req.authUser?.brand?.country,
         }).sort({ position: 1 })
+        // console.log(menus[0].nav_items[2].label)
         res.render(`admin-njk/cms/menu/listing`, { menulist: menus })
     } catch (e) {
         console.log(e)
@@ -18,7 +19,43 @@ const listMenu = async (req, res) => {
     }
 }
 
+const addSection = async (req, res) => {
+    try {
+        session = req.authUser
+        const schema = Joi.object({
+            menu_position_new: Joi.string().required(),
+        })
+
+        const validationResult = schema.validate(req.body, {
+            abortEarly: false,
+        })
+
+        if (validationResult.error) {
+            return res.status(422).json(validationResult.error)
+        }
+        // Form data
+        let body = req.body
+        // object to insert
+
+        await Menu.create({
+            nav_label: body.menu_position || body.menu_position_new,
+            nav_position: body.menu_position || body.menu_position_new,
+            brand: req.authUser?.brand?._id,
+            country: req.authUser?.brand?.country,
+        })
+
+        return res.status(200).json({
+            message: `New Menu Section added`,
+            redirect_to: '/admin/cms/menu',
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ error: 'Something went wrong' })
+    }
+}
+
 const addMenu = async (req, res) => {
+    // console.log(req.body)
     try {
         session = req.authUser
         let labelValidationObj = {}
@@ -40,13 +77,6 @@ const addMenu = async (req, res) => {
             }),
             external: Joi.string().allow('', null, 'true'),
             menu_position: Joi.string().optional().allow(null, ''),
-            menu_position_new: Joi.string()
-                .empty('')
-                .optional()
-                .when('menu_position', {
-                    is: Joi.required(),
-                    then: Joi.required(),
-                }),
         })
 
         const validationResult = schema.validate(req.body, {
@@ -74,32 +104,21 @@ const addMenu = async (req, res) => {
         const obj = {
             _id: Types.ObjectId(),
             label,
-            url: {
-                ...path,
-                external: body.external == 'true',
-            },
+            url: path,
+            external: body.external == 'true',
         }
 
         const nav = await Menu.findOne({
-            nav_position: body.menu_position || body.menu_position_new,
-            brand: req.authUser?.brand?._id,
-            country: req.authUser?.brand?.country,
+            _id: body.menu_position,
         })
 
         if (!nav) {
-            await Menu.create({
-                nav_label: body.menu_position || body.menu_position_new,
-                nav_position: body.menu_position || body.menu_position_new,
-                brand: req.authUser?.brand?._id,
-                country: req.authUser?.brand?.country,
-            })
+            return res.status(400).json({ error: 'Something went wrong' })
         }
         // Push the obj to nav_items
         const update = await Menu.findOneAndUpdate(
             {
-                nav_position: body.menu_position || body.menu_position_new,
-                brand: req.authUser?.brand?._id,
-                country: req.authUser?.brand?.country,
+                _id: body.menu_position,
             },
             {
                 $push: {
@@ -119,6 +138,7 @@ const addMenu = async (req, res) => {
         return res.status(200).json({
             message: `New Menu added`,
             item: update,
+            redirect_to: '/admin/cms/menu',
         })
     } catch (error) {
         console.log(error)
@@ -228,16 +248,14 @@ const saveEditMenu = async (req, res) => {
             let obj = {
                 _id: id,
                 label: req.body.label,
-                url: {
-                    ...req.body.path,
-                    external: req.body.external == 'true',
-                },
+                url: eq.body.path,
+                external: req.body.external == 'true',
                 child: menuItem.child,
             }
             let deleteItem = await Menu.findOneAndUpdate(
                 {
-                    brand: req.authUser?.brand?._id,
-                    country: req.authUser?.brand?.country,
+                    // brand: req.authUser?.brand?._id,
+                    // country: req.authUser?.brand?.country,
                     nav_position: position,
                 },
                 {
@@ -255,8 +273,8 @@ const saveEditMenu = async (req, res) => {
             update = await Menu.findOneAndUpdate(
                 {
                     nav_position: position,
-                    brand: req.authUser?.brand?._id,
-                    country: req.authUser?.brand?.country,
+                    // brand: req.authUser?.brand?._id,
+                    // country: req.authUser?.brand?.country,
                     'nav_items.$._id': id,
                 },
                 {
@@ -271,8 +289,8 @@ const saveEditMenu = async (req, res) => {
         } else if (level == '1') {
             const menu = await Menu.findOne({
                 nav_position: position,
-                brand: req.authUser?.brand?._id,
-                country: req.authUser?.brand?.country,
+                // brand: req.authUser?.brand?._id,
+                // country: req.authUser?.brand?.country,
             })
             let menuItem = {}
             let menuIndex
@@ -297,8 +315,8 @@ const saveEditMenu = async (req, res) => {
             let deleteItem = await Menu.findOneAndUpdate(
                 {
                     nav_position: position,
-                    brand: req.authUser?.brand?._id,
-                    country: req.authUser?.brand?.country,
+                    // brand: req.authUser?.brand?._id,
+                    // country: req.authUser?.brand?.country,
                 },
                 {
                     $pull: {
@@ -315,8 +333,8 @@ const saveEditMenu = async (req, res) => {
             update = await Menu.findOneAndUpdate(
                 {
                     nav_position: position,
-                    brand: req.authUser?.brand?._id,
-                    country: req.authUser?.brand?.country,
+                    // brand: req.authUser?.brand?._id,
+                    // country: req.authUser?.brand?.country,
                     [`nav_items.${body.parent_index}.child.$._id`]: id,
                 },
                 {
@@ -334,8 +352,8 @@ const saveEditMenu = async (req, res) => {
         } else if (level == '2') {
             const menu = await Menu.findOne({
                 nav_position: position,
-                brand: req.authUser?.brand?._id,
-                country: req.authUser?.brand?.country,
+                // brand: req.authUser?.brand?._id,
+                // country: req.authUser?.brand?.country,
             })
             let menuItem = {}
             let menuIndex
@@ -360,8 +378,8 @@ const saveEditMenu = async (req, res) => {
             let deleteItem = await Menu.findOneAndUpdate(
                 {
                     nav_position: position,
-                    brand: req.authUser?.brand?._id,
-                    country: req.authUser?.brand?.country,
+                    // brand: req.authUser?.brand?._id,
+                    // country: req.authUser?.brand?.country,
                 },
                 {
                     $pull: {
@@ -378,8 +396,8 @@ const saveEditMenu = async (req, res) => {
             update = await Menu.findOneAndUpdate(
                 {
                     nav_position: position,
-                    brand: req.authUser?.brand?._id,
-                    country: req.authUser?.brand?.country,
+                    // brand: req.authUser?.brand?._id,
+                    // country: req.authUser?.brand?.country,
                     [`nav_items.${body.parent_index}.child.${body.sec_parent_index}.child.$._id`]:
                         id,
                 },
@@ -405,6 +423,35 @@ const saveEditMenu = async (req, res) => {
         })
     } catch (error) {
         // console.log(error)
+        return res.status(400).json({ error: 'Something went wrong' })
+    }
+}
+
+const deletePosition = async (req, res) => {
+    try {
+        const schema = Joi.object({
+            id: Joi.string().required(),
+        })
+
+        const validationResult = schema.validate(req.body, {
+            abortEarly: false,
+        })
+
+        if (validationResult.error) {
+            return res.status(422).json({ error: 'Something went wrong' })
+        }
+        // Destructuring values from req.body
+        const { id } = req.body
+
+        await Menu.deleteOne({
+            _id: id,
+        })
+
+        return res.status(200).json({
+            message: `Menu Section deleted`,
+        })
+    } catch (error) {
+        console.log('error :>> ', error)
         return res.status(400).json({ error: 'Something went wrong' })
     }
 }
@@ -496,10 +543,12 @@ const saveMenu = async (req, res) => {
         if (!navName) {
             return res.status(400).json({ error: 'Invalid data' })
         }
+        // console.log(req.body.menu)
         const dataToSave = []
         const treeData = collect(JSON.parse(req.body.menu))
         const root_items = treeData.where('parent', '#').all()
         root_items.forEach((rootElement, rootIndex) => {
+            // console.log(JSON.parse(JSON.stringify(rootElement.li_attr.label)))
             const parent = {
                 _id: rootElement.li_attr.data_id,
                 position: rootIndex,
@@ -537,11 +586,14 @@ const saveMenu = async (req, res) => {
             dataToSave.push(parent)
         })
 
+        // console.log(dataToSave)
+        // return
+
         const save = await Menu.findOneAndUpdate(
             {
                 nav_position: navName,
-                brand: req.authUser?.brand?._id,
-                country: req.authUser?.brand?.country,
+                // brand: req.authUser?.brand?._id,
+                // country: req.authUser?.brand?.country,
             },
             {
                 $set: {
@@ -557,16 +609,18 @@ const saveMenu = async (req, res) => {
             item: save,
         })
     } catch (error) {
-        // console.log(error)
+        console.log(error)
         return res.status(400).json({ error: 'Something went wrong' })
     }
 }
 
 module.exports = {
     listMenu,
+    addSection,
     addMenu,
     editMenu,
     saveEditMenu,
+    deletePosition,
     deleteMenu,
     saveMenu,
 }

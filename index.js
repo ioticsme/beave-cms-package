@@ -96,17 +96,21 @@ nunjucks.configure().addFilter('keys', function (obj) {
     return Object.keys(obj)
 })
 
-var njk = nunjucks.configure(path.join(__dirname, '/views'), {
-    express: app,
-    autoescape: true,
-    noCache: true,
-    // Add the `keys` filter to the environment
-    filters: {
-        keys: function (obj) {
-            return Object.keys(obj)
+var njk = nunjucks
+    .configure(path.join(__dirname, '/views'), {
+        express: app,
+        autoescape: true,
+        noCache: true,
+        // Add the `keys` filter to the environment
+        filters: {
+            keys: function (obj) {
+                return Object.keys(obj)
+            },
         },
-    },
-})
+    })
+    .addFilter('json', function (obj) {
+        return JSON.stringify(obj)
+    })
 njk.addGlobal('ObjectKeys', Object.keys)
 app.set('view engine', 'njk')
 

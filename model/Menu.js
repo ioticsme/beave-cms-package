@@ -1,6 +1,7 @@
 const { mongoose, Schema } = require('mongoose')
 const Brand = require('./Brand')
 const Country = require('./Country')
+const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
 
 const MenuSchema = new mongoose.Schema(
     {
@@ -28,33 +29,15 @@ const MenuSchema = new mongoose.Schema(
                     type: Schema.ObjectId,
                     required: true,
                 },
-                label: {
-                    en: {
-                        type: String,
-                        required: true,
-                    },
-                    ar: {
-                        type: String,
-                        required: true,
-                    },
-                },
+                label: {},
                 position: {
                     type: Number,
                     default: 0,
                 },
-                url: {
-                    en: {
-                        type: String,
-                        required: true,
-                    },
-                    ar: {
-                        type: String,
-                        required: true,
-                    },
-                    external: {
-                        type: Boolean,
-                        default: false,
-                    }
+                url: {},
+                external: {
+                    type: Boolean,
+                    default: false,
                 },
                 active: {
                     type: Boolean,
@@ -66,33 +49,15 @@ const MenuSchema = new mongoose.Schema(
                             type: Schema.ObjectId,
                             required: true,
                         },
-                        label: {
-                            en: {
-                                type: String,
-                                required: true,
-                            },
-                            ar: {
-                                type: String,
-                                required: true,
-                            },
-                        },
+                        label: {},
                         position: {
                             type: Number,
                             default: 0,
                         },
-                        url: {
-                            en: {
-                                type: String,
-                                required: true,
-                            },
-                            ar: {
-                                type: String,
-                                required: true,
-                            },
-                            external: {
-                                type: Boolean,
-                                default: false,
-                            }
+                        url: {},
+                        external: {
+                            type: Boolean,
+                            default: false,
                         },
                         active: {
                             type: Boolean,
@@ -104,33 +69,15 @@ const MenuSchema = new mongoose.Schema(
                                     type: Schema.ObjectId,
                                     required: true,
                                 },
-                                label: {
-                                    en: {
-                                        type: String,
-                                        required: true,
-                                    },
-                                    ar: {
-                                        type: String,
-                                        required: true,
-                                    },
-                                },
+                                label: {},
                                 position: {
                                     type: Number,
                                     default: 0,
                                 },
-                                url: {
-                                    en: {
-                                        type: String,
-                                        required: true,
-                                    },
-                                    ar: {
-                                        type: String,
-                                        required: true,
-                                    },
-                                    external: {
-                                        type: Boolean,
-                                        default: false,
-                                    }
+                                url: {},
+                                external: {
+                                    type: Boolean,
+                                    default: false,
                                 },
                                 active: {
                                     type: Boolean,
@@ -150,5 +97,7 @@ const MenuSchema = new mongoose.Schema(
         },
     }
 )
+
+MenuSchema.plugin(softDeletePlugin)
 
 module.exports = mongoose.model('beave_Menu', MenuSchema)

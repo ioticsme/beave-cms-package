@@ -99,14 +99,24 @@ document.addEventListener('click', function (e) {
 })
 
 // Date field for scheduled publish
-document.querySelector('#content-status-select').addEventListener('change', (event) => {
-    console.log(event.target.value)
-    if(event.target.value == 'scheduled') {
-        document.querySelector('#cms-schedule-dt-range').classList.remove('d-none')
-    }else {
-        document.querySelector('#cms-schedule-dt-range').classList.add('d-none')
-    }
-})
+const contentStatusSelectField = document.querySelector(
+    '#content-status-select'
+)
+if (contentStatusSelectField) {
+    contentStatusSelectField.addEventListener('change', (event) => {
+        console.log(event.target.value)
+        if (event.target.value == 'scheduled') {
+            document
+                .querySelector('#cms-schedule-dt-range')
+                .classList.remove('d-none')
+        } else {
+            document
+                .querySelector('#cms-schedule-dt-range')
+                .classList.add('d-none')
+        }
+    })
+}
+
 $('#cms_publish_start_dt, #cms_publish_end_dt').daterangepicker(
     {
         autoUpdateInput: false,
@@ -115,9 +125,9 @@ $('#cms_publish_start_dt, #cms_publish_end_dt').daterangepicker(
         minYear: 2023,
         maxYear: parseInt(moment().format('YYYY'), 12),
         locale: {
-            format: 'YYYY-MM-DD'
-        }
-    },
+            format: 'YYYY-MM-DD',
+        },
+    }
     // function (start, end, label) {
     //     // var years = moment().diff(start, 'years')
     //     alert('You are ' + new Date(start) + ' years old!')
@@ -125,13 +135,29 @@ $('#cms_publish_start_dt, #cms_publish_end_dt').daterangepicker(
 )
 $('.cms_publish_dt_fields').on('apply.daterangepicker', function (ev, picker) {
     // console.log(picker)
-    $(this).val(picker.startDate.format('YYYY-MM-DD'));
-});
-
-document.querySelector('#cms_publish_dt_clear_btn').addEventListener('click', (e) => {
-    e.preventDefault()
-    // alert('sss')
-    document.getElementsByClassName('cms_publish_dt_fields').forEach((field)=> {
-        field.value= ''
-    })
+    $(this).val(picker.startDate.format('YYYY-MM-DD'))
 })
+
+const cmsPublishDateClearBtn = document.querySelector(
+    '#cms_publish_dt_clear_btn'
+)
+if (cmsPublishDateClearBtn) {
+    cmsPublishDateClearBtn.addEventListener('click', (e) => {
+        e.preventDefault()
+        // alert('sss')
+        document
+            .getElementsByClassName('cms_publish_dt_fields')
+            .forEach((field) => {
+                field.value = ''
+            })
+    })
+}
+
+// ROUTE: /admin/cms/menu
+const menuItemAddModal = document.querySelector('#kt_modal_create_item')
+if (menuItemAddModal) {
+    menuItemAddModal.addEventListener('show.bs.modal', function (e) {
+        const sectionId = e.relatedTarget.getAttribute('data-sectionId')
+        document.querySelector('#nav-id').value = sectionId
+    })
+}
