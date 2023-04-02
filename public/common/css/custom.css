@@ -1,0 +1,7 @@
+
+.cms-attach-content .collapse {
+    visibility: initial;
+}
+.cms-attach-content .collapse:not(.show) {
+    display: none;
+}
