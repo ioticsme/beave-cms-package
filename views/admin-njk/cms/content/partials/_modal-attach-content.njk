@@ -11,11 +11,12 @@
         <div class="card card-flush">
           <div class="card-body pt-0">
             <div class="accordion" id="kt_accordion_1">
-              {% for i, item in allowed_content | dictsort %}
+              {% set content_type_keys = ObjectKeys(allowed_content) %}
+              {% for item in content_type_keys %}
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="kt_accordion_1_header_{{ loop.index }}">
                     <button class="accordion-button fs-4 fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kt_accordion_1_body_{{ loop.index }}" aria-expanded="{{ loop.index == 1 }}" aria-controls="kt_accordion_1_body_{{ loop.index }}">
-                      {{ item.toUpperCase() }}
+                      {{ item | upper }}
                     </button>
                   </h2>
                   <div class="accordion-collapse collapse" id="kt_accordion_1_body_{{ loop.index }}" aria-labelledby="kt_accordion_1_header_{{ loop.index }}" data-bs-parent="#kt_accordion_1">
@@ -23,7 +24,8 @@
                       <select class="form-select mb-2" id="kt_ecommerce_add_product_status_select2-{{ loop.index }}" data-control="select2" name="attached_type[{{ item }}]" data-hide-search="true" data-placeholder="Select a content" multiple="multiple">
                         <option></option>
                         {% for content in allowed_content[item] %}
-                          <option value="{{ content._id }}">{{ content.content.en.title if content.content.en else item~' title' }}</option>
+                          {# <option>dddd</option> #}
+                          <option value="{{ content._id }}">{{ content.slug if content else item._id }}</option>
                         {% endfor %}
                       </select>
                       <p class="text-muted fs-7">Set the content Types</p>
