@@ -12,6 +12,10 @@ const MediaSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        meta: {
+            title: String,
+            alt_text: String,
+        },
         response: {
             type: Object,
         },

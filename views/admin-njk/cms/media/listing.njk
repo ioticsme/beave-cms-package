@@ -23,6 +23,7 @@
 	<script src='/cms-static/admin/assets/plugins/custom/jstree/jstree.bundle.js'></script>
 
 	{# // Form Submission Script #}
+	<script src='/cms-static/common/js/custom-functions.js'></script>
 	<script src='/cms-static/common/js/form-data-json.min.js'></script>
 	<script src='/cms-static/common/js/es-form.js'></script>
 
@@ -42,6 +43,16 @@
 				} else {
 					done();
 				}
+			}
+		});
+		// Listen for upload complete event
+		myDropzone.on("complete", function (file) {
+			// Check if upload was successful
+			if (file.status == "success") {
+				console.log("Upload completed successfully!");
+				location.reload(true);
+			} else {
+				console.log("Upload failed: " + file.status);
 			}
 		});
 
@@ -88,7 +99,7 @@
 							<span class="bullet bg-gray-400 w-5px h-2px"></span></li>
 						<li class="breadcrumb-item text-muted">Media</li>
 					</ul>
-					<a class="btn btn-sm fw-bold btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#media_uploader_modal">Upload Media</a>
+					{# <a class="btn btn-sm fw-bold btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#media_uploader_modal">Upload Media</a> #}
 				</div>
 			</div>
 		</div>
@@ -115,18 +126,60 @@
 					</div>
 				</div>
 				<div class="row g-5 g-10 mb-10">
-					{% for item in media %}
-						<input id="img-{{ loop.index }}" value="{{ item.url }}" hidden/>
-						<div class="col-12 col-sm-4 col-md-3 col-lg-2 col-xl-2 col-xxl-2 text-center mb-2 mb-xl-2">
-							<div class="copy-btn" data-clipboard-target="#img-{{ loop.index }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to copy Image URL">
-								<img class="lazy img-thumbnail cursor-pointer" src="/admin/assets/media/svg/files/blank-image.svg" data-src="{{ item.url }}" alt="image" srcset="" style="width: 120px; height: 120px; object-fit: cover;">
+					<div class="col-12 col-sm-9">
+						<div class="row g-5 g-10 mb-10">
+							{% for item in media %}
+								<input id="img-{{ loop.index }}" value="{{ item.url }}" hidden/>
+								<div class="col-12 col-sm-3 col-md-3 col-lg-2 col-xl-2 col-xxl-2 text-center mb-2 mb-xl-2 media-list-item" data-id="{{item._id}}">
+									<img class="lazy img-thumbnail cursor-pointer" src="/admin/assets/media/svg/files/blank-image.svg" data-src="{{ item.url }}" alt="image" srcset="" style="width: 100%; height:120px; object-fit: cover;">
+									<div class="row mt-1">
+										<div class="col-12">
+											<div class="btn btn-danger btn-sm menu-link px-2 py-0" id="{{ item._id }}" url="/admin/cms/media/delete" data-kt-subscriptions-table-filter="delete_row" onClick="deleteItem(this)" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to delete image">
+										Delete
+									</div>
+											<span class="badge badge-success btn-sm copy-btn" data-clipboard-target="#img-{{ loop.index }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to copy Image URL">Copy URL</span>
+										</div>
+									</div>
+								</div>
+							{% else %}
+								<div class="text-center">
+									<h4 class="mt-10">No images available</h4>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="col-12 col-sm-3" id="media-meta-panel">
+						<div clas="row">
+							<div clas="col-12" id="img-holder">
+								<img id="preview-img" src="">
+							</div>
+							<div clas="col-12">
+								<form class="es-form" action="/admin/cms/media/add-meta" method="post">
+									<input type="hidden" name="id" value="">
+									<div clas="row">
+										<div clas="col-12">
+											<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+												<span>Media Title</span>
+											</label>
+											<input type="text" name="title" class="form-control" id="title_field">
+										</div>
+										<div clas="col-12">
+											<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+												<span>Media Alt Text</span>
+											</label>
+											<input type="text" name="alt_text" class="form-control" id="alt_text_field">
+										</div>
+										<div clas="col-12">
+											<button class="btn btn-sm btn-success form-submit-btn btn-block" type="submit">
+												<span class="label">Apply</span>
+												<span class="preloader d-none">Saving...</span>
+											</button>
+										</div>
+									</div>
+								</form>
 							</div>
 						</div>
-					{% else %}
-						<div class="text-center">
-							<h4 class="mt-10">No images available</h4>
-						</div>
-					{% endfor %}
+					</div>
 				</div>
 			</div>
 		</div>

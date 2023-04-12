@@ -5,7 +5,7 @@ const Media = require('../../model/Media')
 
 const list = async (req, res) => {
     try {
-        const media = await Media.find().sort({created_at: -1})
+        const media = await Media.find().sort({ created_at: -1 })
         return res.render('admin-njk/cms/media/listing', { media })
     } catch (error) {
         return res.render(`admin-njk/error-404`)
@@ -14,7 +14,18 @@ const list = async (req, res) => {
 
 const jsonList = async (req, res) => {
     try {
-        const media = await Media.find().sort({created_at: -1})
+        const media = await Media.find().sort({ created_at: -1 })
+        return res.status(200).json(media)
+    } catch (error) {
+        return res.render(`admin-njk/error-404`)
+    }
+}
+
+const jsonDetail = async (req, res) => {
+    try {
+        const media = await Media.findOne({
+            _id: req.params.id
+        })
         return res.status(200).json(media)
     } catch (error) {
         return res.render(`admin-njk/error-404`)
@@ -56,8 +67,63 @@ const fileUpload = async (req, res) => {
     return res.status(200).json('uploaded')
 }
 
+const deleteMedia = async (req, res) => {
+    try {
+        const { id } = req.body
+        // If id not found
+        if (!id) {
+            return res.status(404).json({ error: 'Id not found' })
+        }
+
+        await Media.deleteOne({
+            _id: id,
+        })
+
+        return res.status(200).json({
+            message: 'Media deleted',
+            url: `/cms/media`,
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(404).json({ error: 'Something went wrong' })
+    }
+}
+
+const addMetaInfo = async (req, res) => {
+    try {
+        const { id, title, alt_text } = req.body
+        // If id not found
+        if (!id) {
+            return res.status(404).json({ error: 'Id not found' })
+        }
+
+        await Media.updateOne(
+            {
+                _id: id,
+            },
+            {
+                meta: {
+                    title: req.body.title,
+                    alt_text: req.body.alt_text,
+                },
+            }
+        )
+
+        return res.status(200).json({
+            message: 'Media updated',
+            url: `/cms/media`,
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(404).json({ error: 'Something went wrong' })
+    }
+}
+
 module.exports = {
     list,
     jsonList,
+    jsonDetail,
+    addMetaInfo,
     fileUpload,
+    deleteMedia,
 }

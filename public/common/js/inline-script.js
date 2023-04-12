@@ -4,6 +4,7 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
     document.querySelector('#media-modal-selected-media-url').value = ''
     document.querySelector('#media-modal-selected-media-title').value = ''
     document.querySelector('#media-modal-selected-media-alt').value = ''
+    document.querySelector('#media-modal-selected-preview-img').src = ''
     axios
         .get('/admin/cms/media/json')
         .then(function (response) {
@@ -33,8 +34,9 @@ document
         var mediaUrl = event.target.getAttribute('data-mediaUrl')
         // console.log(attachButtonId)
         if (mediaUrl) {
-            document.querySelector('#media-modal-selected-media-url').value =
-                mediaUrl
+            document.querySelector('#media-modal-selected-media-url').value = mediaUrl
+            document.querySelector('#media-modal-selected-preview-img').src = mediaUrl
+
             // Do something when a list item is clicked, such as displaying its text content
             // console.log(attachButtonId)
         }
@@ -161,3 +163,25 @@ if (menuItemAddModal) {
         document.querySelector('#nav-id').value = sectionId
     })
 }
+
+document.querySelectorAll('.media-list-item').forEach((eachMediaItem) => {
+    eachMediaItem.addEventListener('click', function (e) {
+        const targetId = e.target.parentNode.getAttribute('data-id')
+        document.querySelectorAll('.active').forEach(function(e) {
+            e.classList.remove('active')
+        })
+        e.target.parentNode.classList.add('active')
+        axios
+            .get(`/admin/cms/media/view/${targetId}`)
+            .then(function (response) {
+                document.querySelector('#media-meta-panel #img-holder #preview-img').src = response.data.url || ''
+                document.querySelector('#media-meta-panel input[name="id"]').value = response.data._id || ''
+                document.querySelector('#media-meta-panel input[name="title"]').value = response.data.meta?.title || ''
+                document.querySelector('#media-meta-panel input[name="alt_text"]').value = response.data.meta?.alt_text || ''
+            })
+            .catch(function (err) {
+                // Handle the error
+                console.error(err)
+            })
+    })
+})

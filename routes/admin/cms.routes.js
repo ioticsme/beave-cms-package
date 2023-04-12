@@ -16,8 +16,11 @@ router.group('/', (router) => {
     
     router.group('/media', (router) => {
         router.get('/', mediaController.list)
+        router.post('/add-meta', mediaController.addMetaInfo)
         router.get('/json', mediaController.jsonList)
+        router.get('/view/:id', mediaController.jsonDetail)
         router.post('/upload', upload.any(), mediaController.fileUpload)
+        router.post('/delete', mediaController.deleteMedia)
     })
 
     // Media management Routes
