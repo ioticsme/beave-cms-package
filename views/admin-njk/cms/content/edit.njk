@@ -270,7 +270,7 @@
 																				</select>
 
 																			{% endif %}
-
+																			{% include './partials/_cms-field-info.njk' %}
 																			<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{brandLanguage.prefix}}_{{cfg.row_name}}_{{cf.field_name}}{{ '_0_url' if cf.field_type == 'media' }}"></div>
 																		</div>
 																	{% endfor %}
@@ -336,6 +336,7 @@
 																				{% endfor %}
 																			</select>
 																		{% endif %}
+																		{% include './partials/_cms-field-info.njk' %}
 																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{brandLanguage.prefix}}_{{cfg.row_name}}_{{cf.field_name}}{{ '_url' if cf.field_type == 'media' }}"></div>
 																	</div>
 																{% endfor %}
@@ -411,6 +412,7 @@
 																								{% endfor %}
 																							</select>
 																						{% endif %}
+																						{% include './partials/_cms-field-info.njk' %}
 																						<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_{{cfg.row_name}}_{{cf.field_name}}{{ '_0_url' if cf.field_type == 'media' }}"></div>
 																					</div>
 																				{% endfor %}
@@ -474,6 +476,7 @@
 																						{% endfor %}
 																					</select>
 																				{% endif %}
+																				{% include './partials/_cms-field-info.njk' %}
 																				<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_{{ cfg.row_name }}_{{ cf.field_name }}{{ '_url' if cf.field_type == 'media' }}">{{ cfg.field_errors.common[cf.field_name] }}</div>
 																			</div>
 																		{% endfor %}

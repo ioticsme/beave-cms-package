@@ -1,0 +1,25 @@
+.btn-block {
+    width: 100%;
+}
+.cms-attach-content .collapse {
+    visibility: initial;
+}
+.cms-attach-content .collapse:not(.show) {
+    display: none;
+}
+
+
+/* This for media library section */
+.media-list-item.active img{
+    background-color: greenyellow;
+    /* padding: 15px; */
+    border-radius: 15px;
+    box-shadow: 0px 0px 5px 4px #d1d1d1;
+}
+/* This for media attachment modal */
+#media-modal-selected-preview-img {
+    object-fit: cover;
+    height: 100px;
+    width: 100px;
+    object-position: top left;
+}

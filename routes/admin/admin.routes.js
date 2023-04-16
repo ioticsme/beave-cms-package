@@ -25,10 +25,10 @@ const {
 
 // BEGIN:: Routes
 router.use('/auth', authRoutes)
-router.get('/', (req, res) => {
-    res.redirect('/admin/dashboard')
-})
-router.use('/dashboard', [authCheck], dashboardRoutes)
+// router.get('/', (req, res) => {
+//     res.redirect('/admin/dashboard')
+// })
+// router.use('/dashboard', [authCheck], dashboardRoutes)
 
 // router.use('/ecommerce', [authCheck], ecommerceRoutes)
 

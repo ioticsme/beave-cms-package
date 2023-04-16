@@ -52,6 +52,7 @@ const ContentTypeSchema = new mongoose.Schema(
                             type: String,
                             lowercase: true,
                         },
+                        field_info: String,
                         placeholder: String,
                         position: {
                             type: Number,

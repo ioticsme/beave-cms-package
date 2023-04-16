@@ -287,8 +287,11 @@ const savePageBuilderContent = async (req, res) => {
             attached_type: Joi.optional(),
             meta: Joi.object().optional().allow(null, ''),
             status: Joi.string()
+                .valid('published', 'unpublished', 'scheduled')
                 .required()
-                .valid('published', 'unpublished', 'scheduled'),
+                .messages({
+                    'any.only': 'Content status is a required field',
+                }),
             cms_publish_start: Joi.date().allow(null, ''),
             cms_publish_end: Joi.date().allow(null, ''),
             position: Joi.number().optional(),
@@ -590,8 +593,11 @@ const saveDefaultContent = async (req, res) => {
             attached_type: Joi.optional(),
             meta: Joi.object().optional().allow(null, ''),
             status: Joi.string()
+                .valid('published', 'unpublished', 'scheduled')
                 .required()
-                .valid('published', 'unpublished', 'scheduled'),
+                .messages({
+                    'any.only': 'Content status is a required field',
+                }),
             cms_publish_start: Joi.date().allow(null, ''),
             cms_publish_end: Joi.date().allow(null, ''),
             position: Joi.number().optional(),

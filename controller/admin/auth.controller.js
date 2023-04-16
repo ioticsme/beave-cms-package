@@ -9,7 +9,7 @@ const Settings = require('../../model/Settings')
 const signup = async (req, res) => {
     try {
         const admin = await Admin.findOne()
-        if(admin) {
+        if (admin) {
             res.redirect('/admin/auth/login')
         }
         res.render(`admin-njk/authentication/sign-up`)
@@ -24,7 +24,9 @@ const signupSubmit = async (req, res) => {
             name: Joi.string().required().max(60),
             email: Joi.string().email().required().max(60),
             password: Joi.string().required().min(4).max(15),
-            confirm_password: Joi.string().required().valid(Joi.ref('password')),
+            confirm_password: Joi.string()
+                .required()
+                .valid(Joi.ref('password')),
         })
 
         const validationResult = schema.validate(req.body, {
@@ -49,7 +51,7 @@ const signupSubmit = async (req, res) => {
         if (admin?._id) {
             req.session.destroy()
             return res.status(200).json({
-                redirect_to: '/admin/dashboard',
+                redirect_to: envConfig.general.ADMIN_LANDING_URL,
             })
         } else {
             return res.status(500).json({ error: 'Something went wrong' })
@@ -68,9 +70,9 @@ const signupSubmit = async (req, res) => {
 const login = async (req, res) => {
     try {
         const admin = await Admin.findOne()
-        if(!admin) {
+        if (!admin) {
             res.redirect('/admin/auth/signup')
-            return 
+            return
         }
         return res.render(`admin-njk/authentication/sign-in`)
     } catch (error) {

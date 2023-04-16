@@ -309,7 +309,7 @@ const list = async (req, res) => {
                             $ne: mongoose.Types.ObjectId(contentType?._id),
                         },
                         country: mongoose.Types.ObjectId(req.country._id),
-                        published: true,
+                        $or: [{ status: 'published' }, { status: 'scheduled' }],
                     })
                         .populate('author')
                         .populate('country')
@@ -372,16 +372,18 @@ const list = async (req, res) => {
                             // then looping through the attached type array
                             if (liveData[i].attached_type?.length) {
                                 let attachedType = liveData[i].attached_type
-                                for (j = 0; j < attachedType.length; j++) {
-                                    const items = attachedType[j].items
+                                for (let each_attach_type of attachedType) {
+                                    const items = each_attach_type.items
+                                    // console.log(attachedType)
+                                    // console.log(items)
                                     let addedItems = []
                                     // looping through the items array containing the id of the contents
-                                    for (k = 0; k < items.length; k++) {
+                                    for (let each_attach_content of each_attach_type.items) {
                                         // finding the matched content from all content
                                         const content = await allContents.find(
                                             (content) =>
                                                 content._id.toString() ==
-                                                items[k].toString()
+                                                each_attach_content.toString()
                                         )
                                         // pushing the matched content to an array
                                         addedItems.push(
@@ -390,7 +392,7 @@ const list = async (req, res) => {
                                     }
                                     let obj = {
                                         content_type:
-                                            attachedType[j].content_type,
+                                            each_attach_type.content_type,
                                         items: addedItems,
                                     }
                                     // pushing the obj to array

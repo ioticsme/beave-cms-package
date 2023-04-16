@@ -65,7 +65,9 @@ const generateField = async () => {
         htmlData = `${htmlData} ${currGroup}`
         _.forEach(group.fields, function (field) {
             const currField = `<tr>
-            <td>${field.label}</td>
+            <td>${field.label} <br> ${
+                field.info ? '<span class="badge badge-light-warning">' + field.info + '</span>' : ''
+            }</td>
             <td>${field.type}</td>
             <td>${
                 field.validation.required
@@ -199,12 +201,12 @@ $('#field_form_modal').on('show.bs.modal', function (e) {
 document.querySelectorAll('#field-list-section .btn').forEach((fieldBtn) => {
     fieldBtn.addEventListener('click', function (e) {
         e.preventDefault()
-        const seletFieldType = fieldBtn.getAttribute('data-value')
+        const selectFieldType = fieldBtn.getAttribute('data-value')
         document.querySelectorAll('.modal-field-sections').forEach((item) => {
             item.classList.add('d-none')
         })
         document
-            .querySelector(`#${seletFieldType}-field-section`)
+            .querySelector(`#${selectFieldType}-field-section`)
             .classList.remove('d-none')
     })
 })
@@ -214,8 +216,9 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
         e.preventDefault()
         // return false
         const selected_section = e.target.section_name_field.value.trim()
-        const slected_field_type = e.target.field_type.value.trim()
+        const selected_field_type = e.target.field_type.value.trim()
         const selected_field_name = e.target.field_name.value.trim()
+        const selected_field_info = e.target.field_info.value.trim()
         const selected_field_options =
             e.target.field_options?.value?.trim() || ''
         const options = []
@@ -251,9 +254,10 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
 
         const newField = {
             id: 'timestamp',
-            type: slected_field_type,
+            type: selected_field_type,
             label: selected_field_name,
             name: selected_field_name,
+            info: selected_field_info,
             position: 1,
             localization: true,
             options: options,
