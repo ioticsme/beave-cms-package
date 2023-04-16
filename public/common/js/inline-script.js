@@ -13,7 +13,7 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
             // console.log(response.data)
             response.data.forEach((element) => {
                 mediaList = `${mediaList} <div class="col-12 col-sm-3 col-md-2">
-                    <img data-mediaUrl="${element.url}" src="${element.url}" />
+                    <img data-mediaUrl="${element.url}" src="${element.url}" data-mediaTitle="${element.meta?.title || ''}" data-altText="${element.meta?.alt_text || ''}" />
                 </div>`
             })
             mediaList = `${mediaList}</div>`
@@ -32,10 +32,14 @@ document
     .querySelector('#media-holder')
     .addEventListener('click', function (event) {
         var mediaUrl = event.target.getAttribute('data-mediaUrl')
+        var mediaTitle = event.target.getAttribute('data-mediaTitle')
+        var altText = event.target.getAttribute('data-altText')
         // console.log(attachButtonId)
         if (mediaUrl) {
-            document.querySelector('#media-modal-selected-media-url').value = mediaUrl
             document.querySelector('#media-modal-selected-preview-img').src = mediaUrl
+            document.querySelector('#media-modal-selected-media-url').value = mediaUrl
+            document.querySelector('#media-modal-selected-media-title').value = mediaTitle
+            document.querySelector('#media-modal-selected-media-alt').value = altText
 
             // Do something when a list item is clicked, such as displaying its text content
             // console.log(attachButtonId)
