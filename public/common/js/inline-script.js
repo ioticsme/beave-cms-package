@@ -1,10 +1,97 @@
+/*
+    BEGIN::Media Management
+*/
+const mediaManagementPanel = document.querySelector('#media-management-panel')
+
+if (mediaManagementPanel) {
+    var myDropzone = new Dropzone('#kt_dropzonejs_example_1', {
+        url: '/admin/cms/media/upload', // Set the url for your upload script location
+        paramName: 'file', // The name that will be used to transfer the file
+        maxFiles: 10,
+        maxFilesize: 10, // MB
+        addRemoveLinks: true,
+        accept: function (file, done) {
+            if (file.name == 'wow.jpg') {
+                done("Naha, you don't.")
+            } else {
+                done()
+            }
+        },
+    })
+    // Listen for upload complete event
+    myDropzone.on('complete', function (file) {
+        // Check if upload was successful
+        if (file.status == 'success') {
+            console.log('Upload completed successfully!')
+            const pageMediaHolderElm = document.querySelector('#page-media-holder')
+            if (!pageMediaHolderElm) {
+                axios
+                    .get('/admin/cms/media/json')
+                    .then(function (response) {
+                        // Handle the successful response
+                        var mediaList = `<div class="row">`
+                        // console.log(response.data)
+                        response.data.forEach((element) => {
+                            mediaList = `${mediaList} <div class="col-12 col-sm-3 col-md-2 p-2">
+                                <img data-mediaUrl="${
+                                    element.url
+                                }" src="${
+                                element.url
+                            }?tr=w-150,h-150" data-mediaTitle="${
+                                element.meta?.title || ''
+                            }" data-altText="${element.meta?.alt_text || ''}" />
+                                </div>`
+                        })
+                        mediaList = `${mediaList}</div>`
+                        // e.target.querySelector('#field_id').value =
+                        //     e.relatedTarget.getAttribute('id')
+                        // console.log(e.relatedTarget.getAttribute('id'))
+                        document.getElementById('modal-media-holder').innerHTML =
+                            mediaList
+                    })
+                    .catch(function (error) {
+                        // Handle the error
+                        console.error(error)
+                    })
+            } else {
+                console.log('ssss')
+                location.reload()
+            }
+        } else {
+            console.log('Upload failed: ' + file.status)
+        }
+    })
+
+    let images = document.querySelectorAll('.lazy')
+    new LazyLoad(images)
+
+    let buttons = document.querySelectorAll('.copy-btn')
+    var clipboard = new ClipboardJS(buttons)
+    clipboard.on('success', function (e) {
+        navigator.clipboard.writeText(e.text)
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            },
+        })
+        Toast.fire({ icon: 'success', title: 'URL Copied to clipboard' })
+        e.clearSelection()
+    })
+}
+
 var mediaModal = document.getElementById('kt_modal_media_list')
 mediaModal.addEventListener('show.bs.modal', function (e) {
-    document.getElementById('media-holder').innerHTML = 'Loading...'
+    document.getElementById('modal-media-holder').innerHTML = 'Loading...'
     document.querySelector('#media-modal-selected-media-url').value = ''
     document.querySelector('#media-modal-selected-media-title').value = ''
     document.querySelector('#media-modal-selected-media-alt').value = ''
-    document.querySelector('#media-modal-selected-preview-img').src = ''
+    document.querySelector('#media-modal-selected-preview-img').innerHTML = ''
     axios
         .get('/admin/cms/media/json')
         .then(function (response) {
@@ -12,15 +99,19 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
             var mediaList = `<div class="row">`
             // console.log(response.data)
             response.data.forEach((element) => {
-                mediaList = `${mediaList} <div class="col-12 col-sm-3 col-md-2">
-                    <img data-mediaUrl="${element.url}" src="${element.url}" data-mediaTitle="${element.meta?.title || ''}" data-altText="${element.meta?.alt_text || ''}" />
+                mediaList = `${mediaList} <div class="col-12 col-sm-3 col-md-2 p-2">
+                    <img data-mediaUrl="${element.url}" src="${
+                    element.url
+                }?tr=w-150,h-150" data-mediaTitle="${
+                    element.meta?.title || ''
+                }" data-altText="${element.meta?.alt_text || ''}" />
                 </div>`
             })
             mediaList = `${mediaList}</div>`
             e.target.querySelector('#field_id').value =
                 e.relatedTarget.getAttribute('id')
             // console.log(e.relatedTarget.getAttribute('id'))
-            document.getElementById('media-holder').innerHTML = mediaList
+            document.getElementById('modal-media-holder').innerHTML = mediaList
         })
         .catch(function (error) {
             // Handle the error
@@ -29,17 +120,23 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
 })
 
 document
-    .querySelector('#media-holder')
+    .querySelector('#modal-media-holder')
     .addEventListener('click', function (event) {
         var mediaUrl = event.target.getAttribute('data-mediaUrl')
         var mediaTitle = event.target.getAttribute('data-mediaTitle')
         var altText = event.target.getAttribute('data-altText')
         // console.log(attachButtonId)
         if (mediaUrl) {
-            document.querySelector('#media-modal-selected-preview-img').src = mediaUrl
-            document.querySelector('#media-modal-selected-media-url').value = mediaUrl
-            document.querySelector('#media-modal-selected-media-title').value = mediaTitle
-            document.querySelector('#media-modal-selected-media-alt').value = altText
+            document.querySelector(
+                '#media-modal-selected-preview-img'
+            ).innerHTML = `<img src="${mediaUrl}?tr=w-200" />`
+
+            document.querySelector('#media-modal-selected-media-url').value =
+                mediaUrl
+            document.querySelector('#media-modal-selected-media-title').value =
+                mediaTitle
+            document.querySelector('#media-modal-selected-media-alt').value =
+                altText
 
             // Do something when a list item is clicked, such as displaying its text content
             // console.log(attachButtonId)
@@ -81,7 +178,7 @@ document
             // console.log(imgHolderParent)
             imgHolderParent.querySelector(
                 `.preview-holder`
-            ).innerHTML = `<img width="150px" src="${selectedMediaUrl}" />`
+            ).innerHTML = `<img width="150px" src="${selectedMediaUrl}?tr=w-150" />`
             imgHolderParent
                 .querySelector(`.image-preview-remove-btn`)
                 .classList.remove('d-none')
@@ -103,6 +200,9 @@ document.addEventListener('click', function (e) {
         e.target.previousElementSibling.innerHTML = ' '
     }
 })
+/*
+    END::Media Management
+*/
 
 // Date field for scheduled publish
 const contentStatusSelectField = document.querySelector(
@@ -171,17 +271,25 @@ if (menuItemAddModal) {
 document.querySelectorAll('.media-list-item').forEach((eachMediaItem) => {
     eachMediaItem.addEventListener('click', function (e) {
         const targetId = e.target.parentNode.getAttribute('data-id')
-        document.querySelectorAll('.active').forEach(function(e) {
+        document.querySelectorAll('.active').forEach(function (e) {
             e.classList.remove('active')
         })
         e.target.parentNode.classList.add('active')
         axios
             .get(`/admin/cms/media/view/${targetId}`)
             .then(function (response) {
-                document.querySelector('#media-meta-panel #img-holder #preview-img').src = response.data.url || ''
-                document.querySelector('#media-meta-panel input[name="id"]').value = response.data._id || ''
-                document.querySelector('#media-meta-panel input[name="title"]').value = response.data.meta?.title || ''
-                document.querySelector('#media-meta-panel input[name="alt_text"]').value = response.data.meta?.alt_text || ''
+                document.querySelector(
+                    '#media-meta-panel #img-holder #preview-img'
+                ).src = response.data.url || ''
+                document.querySelector(
+                    '#media-meta-panel input[name="id"]'
+                ).value = response.data._id || ''
+                document.querySelector(
+                    '#media-meta-panel input[name="title"]'
+                ).value = response.data.meta?.title || ''
+                document.querySelector(
+                    '#media-meta-panel input[name="alt_text"]'
+                ).value = response.data.meta?.alt_text || ''
             })
             .catch(function (err) {
                 // Handle the error
