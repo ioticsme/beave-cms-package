@@ -134,12 +134,7 @@ const customFormSubmit = async (req, res) => {
             // call webhook
             console.log(customForm.web_hook)
             axios
-                .post(customForm.web_hook, {
-                    id: 11,
-                    name: 'Tom Brady',
-                    username: 'Brad',
-                    email: 'tombrad@asd.com',
-                })
+                .post(customForm.web_hook, save.data)
                 // .then((response) => displayOutput(response))
                 .catch((err) => console.log(err))
         }
