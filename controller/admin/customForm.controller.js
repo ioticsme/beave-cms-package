@@ -53,12 +53,7 @@ const add = async (req, res) => {
     try {
         session = req.authUser
         let domainTemplates = []
-        if (req.brand?.settings?.notification_settings?.mailgun) {
-            domainTemplates = await mailGunTemplates(
-                req.brand?.settings?.notification_settings?.mailgun
-            )
-        }
-
+        domainTemplates = await mailGunTemplates()
         res.render(`admin-njk/custom-forms/add`, { domainTemplates })
     } catch (error) {
         console.log(error)
@@ -79,6 +74,7 @@ const save = async (req, res) => {
             recepient_emails: Joi.string().optional().allow(null, ''),
             recepient_email_template: Joi.string().optional().allow(null, ''),
             slack_url: Joi.string().optional().allow(null, ''),
+            web_hook: Joi.string().optional().allow(null, ''),
             field_name: Joi.array().items(Joi.string()).required(),
             // field_type: Joi.array().items(Joi.optional()).optional(),
             field_validation: Joi.array().items(Joi.string()).required(),
@@ -138,6 +134,7 @@ const save = async (req, res) => {
             recepient_emails: req.body.recepient_emails.replace(/\s+/g, ''),
             recepient_email_template: req.body.recepient_email_template,
             slack_url: req.body.slack_url,
+            web_hook: req.body.web_hook,
             custom_fields,
             brand: session.brand._id,
             country: session.brand.country,

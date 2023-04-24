@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const axios = require('axios')
 const { default: mongoose } = require('mongoose')
 const { verifyCaptcha } = require('../../helper/Captcha.helper')
 const { sendEmail } = require('../../helper/Mail.helper')
@@ -6,6 +7,7 @@ const { sendEmail } = require('../../helper/Mail.helper')
 const CustomForm = require('../../model/CustomForm')
 const CustomFormData = require('../../model/CustomFormData')
 const ContentResource = require('../../resources/api/content.resource')
+const envConfig = require('../../config/env.config')
 
 const customFormSubmit = async (req, res) => {
     try {
@@ -91,20 +93,24 @@ const customFormSubmit = async (req, res) => {
 
         let save = await CustomFormData.create(data)
 
-        // BEGIN:: Sending Email
-        const brand_notification_settings =
-            req.brand.settings?.notification_settings
+        if (!save?._id) {
+            return res.status(400).json({ error: 'Submission error' })
+        }
 
-        let mg_settings = brand_notification_settings?.mailgun
-        if (mg_settings) {
+        // BEGIN:: Sending Email
+        if (
+            envConfig.mailgun.DOMAIN &&
+            envConfig.mailgun.API_KEY &&
+            envConfig.mailgun.FROM
+        ) {
             if (customForm.reply_email_template && req.body.email) {
                 sendEmail(
-                    mg_settings.from || 'noreply@funcity.ae',
+                    envConfig.mailgun.FROM,
                     req.body.email,
                     `${customForm.form_name} Form Submitted`,
                     customForm.reply_email_template,
                     {},
-                    mg_settings
+                    envConfig.mailgun
                 )
             }
 
@@ -113,19 +119,32 @@ const customFormSubmit = async (req, res) => {
                 customForm.recepient_emails
             ) {
                 sendEmail(
-                    mg_settings.from || 'noreply@funcity.ae',
+                    envConfig.mailgun.FROM,
                     customForm.recepient_emails.split(','),
                     `${customForm.form_name} Form Submission`,
                     customForm.reply_email_template,
                     req.body,
-                    mg_settings
+                    envConfig.mailgun
                 )
             }
         }
 
-        if (!save?._id) {
-            return res.status(400).json({ error: 'Submission error' })
+        // BEGIN::Calling webhook
+        if (customForm.web_hook) {
+            // call webhook
+            console.log(customForm.web_hook)
+            axios
+                .post(customForm.web_hook, {
+                    id: 11,
+                    name: 'Tom Brady',
+                    username: 'Brad',
+                    email: 'tombrad@asd.com',
+                })
+                // .then((response) => displayOutput(response))
+                .catch((err) => console.log(err))
         }
+        // END::Calling webhook
+
         return res
             .status(200)
             .json({ message: 'Custom Form Submitted', data: save })

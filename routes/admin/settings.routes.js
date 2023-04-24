@@ -50,11 +50,11 @@ router.group('/', (router) => {
         })
     })
     // Notification
-    router.group('/notification', (router) => {
-        router.get('/', settingsController.notificationList)
-        router.get('/edit/:type', settingsController.editNotificationSettings)
-        router.post('/save', settingsController.saveNoticationSettings)
-    })
+    // router.group('/notification', (router) => {
+    //     router.get('/', settingsController.notificationList)
+    //     router.get('/edit/:type', settingsController.editNotificationSettings)
+    //     router.post('/save', settingsController.saveNoticationSettings)
+    // })
 })
 // router.post('/', userController.verifyOtp)
 

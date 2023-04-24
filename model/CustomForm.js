@@ -20,6 +20,7 @@ const CustomFormSchema = new mongoose.Schema(
         recepient_emails: String,
         recepient_email_template: String,
         slack_url: String,
+        web_hook: String,
         custom_fields: [
             {
                 field_name: {
