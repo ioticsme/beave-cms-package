@@ -17,6 +17,11 @@ const app = express()
 const rateLimit = require('express-rate-limit')
 const { format } = require('date-fns')
 
+// BEGIN::Initiating Swagger APi Documentation
+const setupSwagger = require('./swagger')
+setupSwagger(app)
+// END::Initiating Swagger APi Documentation
+
 const { createFcmSwJS } = require('./helper/Operations.helper')
 
 // BEGIN::Service Providers

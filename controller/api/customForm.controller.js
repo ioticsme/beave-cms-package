@@ -132,9 +132,14 @@ const customFormSubmit = async (req, res) => {
         // BEGIN::Calling webhook
         if (customForm.web_hook) {
             // call webhook
-            console.log(customForm.web_hook)
+            // console.log(customForm.web_hook)
             axios
-                .post(customForm.web_hook, save.data)
+                .post(customForm.web_hook, {
+                    form_id: save.data.form_id,
+                    form_type: save.data.type,
+                    form_name: customForm.form_name,
+                    fields: save.data.fields,
+                })
                 // .then((response) => displayOutput(response))
                 .catch((err) => console.log(err))
         }
