@@ -12,7 +12,7 @@ const sendEmail = async (
     subject,
     template,
     payloads,
-    mg_settings,
+    mg_settings = envConfig.mailgun,
     filePath = false
 ) => {
     const DOMAIN = mg_settings.DOMAIN
