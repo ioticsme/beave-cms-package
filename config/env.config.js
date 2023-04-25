@@ -26,6 +26,7 @@ const envConfig = {
         DOMAIN: process.env.MAILGUN_DOMAIN,
         API_KEY: process.env.MAILGUN_API_KEY,
         FROM: process.env.MAILGUN_FROM,
+        URL: process.env.MAILGUN_URL || undefined,
     },
     captcha: {
         BASE_URL: process.env.CAPTCHA_BASE_URL,

@@ -15,13 +15,14 @@ const sendEmail = async (
     mg_settings,
     filePath = false
 ) => {
-    const DOMAIN = mg_settings.domain
+    const DOMAIN = mg_settings.DOMAIN
     const mailgun = new Mailgun(formData)
     const mg = mailgun.client({
         username: 'api',
-        key: mg_settings.api_key,
-        url: mg_settings.host,
+        key: mg_settings.API_KEY,
+        url: mg_settings.URL,
     })
+    // console.log(mg)
 
     // console.log(mg.domains.domainTemplates.list())
 
@@ -42,6 +43,7 @@ const sendEmail = async (
         attachment: attachment,
         'h:X-Mailgun-Variables': JSON.stringify(payloads),
     }
+    // console.log(mailgunData)
 
     return mg.messages.create(DOMAIN, mailgunData)
 }
