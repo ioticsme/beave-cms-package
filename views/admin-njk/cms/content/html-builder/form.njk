@@ -112,9 +112,9 @@
                                                                                 <label class="col-lg-4 col-form-label fw-semibold fs-6">{{ meta_field.label }}</label>
                                                                                 <div class="col-lg-8 pt-2">
                                                                                     {% if meta_field.type == 'textarea' %}
-                                                                                        <textarea class="form-control" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}"></textarea>
+                                                                                        <textarea class="form-control" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}">{{contentDetail.meta[brandLanguage.prefix][meta_section.slug][meta_field.name]}}</textarea>
                                                                                     {% else %}
-                                                                                        <input type="text" class="form-control" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}">
+                                                                                        <input type="text" class="form-control" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}" value="{{contentDetail.meta[brandLanguage.prefix][meta_section.slug][meta_field.name]}}" >
                                                                                     {% endif %}
                                                                                 </div>
                                                                             </div>

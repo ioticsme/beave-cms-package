@@ -319,10 +319,8 @@ const savePageBuilderContent = async (req, res) => {
                 end: req.body.cms_publish_end,
             },
             position: body.position || 0,
-            content: {
-                name: req.body.name,
-            },
-            meta: body.meta,
+            'content.name': req.body.name,
+            meta: req.body.meta,
             // in_home: body.in_home || false,
         }
 
