@@ -12,11 +12,20 @@
 }
 
 /* This for media library section */
+#page-media-holder {
+    height: 70vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
 .media-list-item.active img{
     background-color: greenyellow;
     /* padding: 15px; */
     border-radius: 15px;
     box-shadow: 0px 0px 5px 4px #d1d1d1;
+}
+#media-meta-panel > .row > .col-12 {
+    padding: 15px;
+    background-color: rgba(0,0,0,0.1);
 }
 /* This for media attachment modal */
 #media-modal-selected-preview-img img {
@@ -25,12 +34,8 @@
     width: 100px;
     object-position: top left;
 }
-#media-meta-panel {
-    position: relative;
-}
-#media-meta-panel #form-holder {
-    position: fixed;
-    width: 18%;
-    background-color: rgba(0,0,0,0.1);
-    padding: 8px;
+#modal-media-holder {
+    max-height: 500px;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }

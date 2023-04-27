@@ -60,7 +60,7 @@
 					</div>
 				</div>
 				<div class="row g-5 g-10 mb-10">
-					<div class="col-12 col-sm-9">
+					<div class="col-12 col-sm-7 col-md-9">
 						<div class="row g-5 g-10 mb-10" id="page-media-holder">
 							{% for item in media %}
 								<input id="img-{{ loop.index }}" value="{{ item.url }}" hidden/>
@@ -82,37 +82,35 @@
 							{% endfor %}
 						</div>
 					</div>
-					<div class="col-12 col-sm-3" id="media-meta-panel">
+					<div class="col-12 col-sm-5 col-md-3" id="media-meta-panel">
 						<div class="row">
-							<div id="form-holder">
-								<div class="col-12" id="img-holder">
-									<img id="preview-img" src="">
-								</div>
-								<div class="col-12">
-									<form class="es-form" action="/admin/cms/media/add-meta" method="post">
-										<input type="hidden" name="id" value="">
-										<div class="row">
-											<div class="col-12">
-												<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-													<span>Media Title</span>
-												</label>
-												<input type="text" name="title" class="form-control" id="title_field">
-											</div>
-											<div class="col-12">
-												<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-													<span>Media Alt Text</span>
-												</label>
-												<input type="text" name="alt_text" class="form-control" id="alt_text_field">
-											</div>
-											<div class="col-12 mt-5">
-												<button class="btn btn-sm btn-success form-submit-btn btn-block" type="submit">
-													<span class="label">Apply</span>
-													<span class="preloader d-none">Saving...</span>
-												</button>
-											</div>
+							<div class="col-12" id="img-holder">
+								<img id="preview-img" src="">
+							</div>
+							<div class="col-12">
+								<form class="es-form" action="/admin/cms/media/add-meta" method="post">
+									<input type="hidden" name="id" value="">
+									<div class="row">
+										<div class="col-12">
+											<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+												<span>Media Title</span>
+											</label>
+											<input type="text" name="title" class="form-control" id="title_field">
 										</div>
-									</form>
-								</div>
+										<div class="col-12">
+											<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+												<span>Media Alt Text</span>
+											</label>
+											<input type="text" name="alt_text" class="form-control" id="alt_text_field">
+										</div>
+										<div class="col-12 mt-5">
+											<button class="btn btn-sm btn-success form-submit-btn btn-block" type="submit">
+												<span class="label">Apply</span>
+												<span class="preloader d-none">Saving...</span>
+											</button>
+										</div>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
