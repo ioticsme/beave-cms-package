@@ -7,7 +7,9 @@
 .cms-attach-content .collapse:not(.show) {
     display: none;
 }
-
+.tab-invalid-icon, .invalid {
+    color: red !important;
+}
 
 /* This for media library section */
 .media-list-item.active img{

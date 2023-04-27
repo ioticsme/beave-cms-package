@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // }
         if (result.details) {
             // If response is from Joi validation
+            toastr.error('Validation Error..!')
             if (result._original) {
                 // Looping through each validation error response
                 for (const index in result.details) {
@@ -133,6 +134,28 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
             }
+
+            // Check Page has tab nav
+            const hasNavTabs = document.querySelectorAll('.nav-tabs')
+            if (hasNavTabs) {
+                document
+                    .querySelectorAll('.tab-pane')
+                    .forEach(function (tabPane) {
+                        // console.log(tabPane.getAttribute('id'))
+                        const invalidSpanLen = tabPane.querySelectorAll(
+                            '.invalid-feedback.d-inline'
+                        ).length
+                        // console.log(invalidSpanLen)
+                        if (invalidSpanLen) {
+                            const tabElm = document.querySelector(
+                                `a[href="#${tabPane.getAttribute('id')}"]`
+                            )
+                            tabElm
+                                .querySelector('.tab-invalid-icon')
+                                .classList.remove('d-none')
+                        }
+                    })
+            }
         }
     }
 
@@ -153,6 +176,11 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         form.querySelectorAll('.is-invalid').forEach(function (invalidField) {
             invalidField.classList.remove('is-invalid')
+        })
+        form.querySelectorAll('.tab-invalid-icon').forEach(function (
+            invalidTabIcon
+        ) {
+            invalidTabIcon.classList.add('d-none')
         })
 
         if (form.querySelector('#slug_field')) {
