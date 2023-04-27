@@ -83,34 +83,36 @@
 						</div>
 					</div>
 					<div class="col-12 col-sm-3" id="media-meta-panel">
-						<div clas="row">
-							<div clas="col-12" id="img-holder">
-								<img id="preview-img" src="">
-							</div>
-							<div clas="col-12">
-								<form class="es-form" action="/admin/cms/media/add-meta" method="post">
-									<input type="hidden" name="id" value="">
-									<div clas="row">
-										<div clas="col-12">
-											<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-												<span>Media Title</span>
-											</label>
-											<input type="text" name="title" class="form-control" id="title_field">
+						<div class="row">
+							<div id="form-holder">
+								<div class="col-12" id="img-holder">
+									<img id="preview-img" src="">
+								</div>
+								<div class="col-12">
+									<form class="es-form" action="/admin/cms/media/add-meta" method="post">
+										<input type="hidden" name="id" value="">
+										<div class="row">
+											<div class="col-12">
+												<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+													<span>Media Title</span>
+												</label>
+												<input type="text" name="title" class="form-control" id="title_field">
+											</div>
+											<div class="col-12">
+												<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+													<span>Media Alt Text</span>
+												</label>
+												<input type="text" name="alt_text" class="form-control" id="alt_text_field">
+											</div>
+											<div class="col-12 mt-5">
+												<button class="btn btn-sm btn-success form-submit-btn btn-block" type="submit">
+													<span class="label">Apply</span>
+													<span class="preloader d-none">Saving...</span>
+												</button>
+											</div>
 										</div>
-										<div clas="col-12">
-											<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-												<span>Media Alt Text</span>
-											</label>
-											<input type="text" name="alt_text" class="form-control" id="alt_text_field">
-										</div>
-										<div clas="col-12">
-											<button class="btn btn-sm btn-success form-submit-btn btn-block" type="submit">
-												<span class="label">Apply</span>
-												<span class="preloader d-none">Saving...</span>
-											</button>
-										</div>
-									</div>
-								</form>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>

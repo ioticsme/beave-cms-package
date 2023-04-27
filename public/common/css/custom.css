@@ -23,3 +23,12 @@
     width: 100px;
     object-position: top left;
 }
+#media-meta-panel {
+    position: relative;
+}
+#media-meta-panel #form-holder {
+    position: fixed;
+    width: 18%;
+    background-color: rgba(0,0,0,0.1);
+    padding: 8px;
+}
