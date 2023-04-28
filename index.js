@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const chalk = require('chalk')
 var session = require('express-session')
+const FileStore = require('session-file-store')(session)
 const Redis = require('ioredis')
 var redisStore = require('connect-redis')(session)
 
@@ -58,44 +59,32 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/cms-static', express.static(path.join(__dirname, './public')))
 app.use('/wrapper-static', express.static(path.join(__dirname, '../public')))
 
-//Configure redis client
-const redis = new Redis(envConfig.cache.REDIS_URL)
+//Configure admin session storage
+let session_driver
+if (envConfig.general.SESSION_STORAGE == 'redis') {
+    session_driver = new redisStore({
+        client: new Redis(envConfig.cache.REDIS_URL),
+    })
+} else {
+    session_driver = new FileStore({
+        path: './sessions', // This specifies the directory to store session files
+    })
+}
 
 const sessionConfig = {
-    store: new redisStore({
-        // url: `${envConfig.cache.REDIS_URL}`,
-        // legacyMode: true,
-        // host: 'localhost',
-        // port: 6379,
-        client: redis,
-        // ttl: 260,
-    }),
+    store: session_driver,
     secret: `${envConfig.general.APP_KEY}`,
     saveUninitialized: false,
     resave: false,
-    // cookie: {
-    //     secure: false, // if true only transmit cookie over https
-    //     httpOnly: false, // if true prevent client side JS from reading the cookie
-    //     maxAge: 1000 * 60 * 60 * 24 // session max age in miliseconds
-    // }
 }
-
 //session middleware
 if (envConfig.general.NODE_ENV === 'production') {
     app.set('trust proxy', 1)
 }
-// sessionConfig.store = new RedisStore({ host: 'localhost', port: 6379, client: redisClient,ttl :  260}),
-
 app.use(session(sessionConfig))
-
-// console.log('SESSION STARTED')
-
 app.use(cookieParser())
 
-// app.use(ServiceProvider.moduleConfig)
-
 // Template Engine
-
 // Define a custom filter that returns an array of keys from an object
 nunjucks.configure().addFilter('keys', function (obj) {
     return Object.keys(obj)
