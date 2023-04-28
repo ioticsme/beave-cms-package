@@ -6,23 +6,34 @@ const Mailgun = require('mailgun.js')
 const formData = require('form-data')
 const fs = require('fs')
 
-const mailGunTemplates = async (mg_settings) => {
-    const DOMAIN = 'funcity.ae' //TODO: This value should be dynamic
+const mailGunTemplates = async () => {
+    try {
+        const DOMAIN = envConfig.mailgun.DOMAIN
 
-    // const DOMAIN = 'funcity.ae'
-    const mailgun = new Mailgun(formData)
+        // const DOMAIN = 'funcity.ae'
+        const mailgun = new Mailgun(formData)
 
-    const client = mailgun.client({
-        username: 'api',
-        key: 'key-1ecdad0b98be252b695688f81049a00c' || '', //TODO: This value should be dynamic
-    })
+        const client = mailgun.client({
+            username: 'api',
+            key: envConfig.mailgun.API_KEY,
+        })
 
-    // console.log(client)
-    const domainTemplates = await client.domains.domainTemplates.list(DOMAIN, {
-        limit: 30,
-    })
+        // console.log(client.domains.domainTemplates.list)
+        // console.log(envConfig.mailgun.API_KEY)
 
-    return domainTemplates
+        // console.log(client)
+        const domainTemplates = await client.domains.domainTemplates.list(
+            DOMAIN,
+            {
+                limit: 30,
+            }
+        )
+
+        return domainTemplates
+    } catch (e) {
+        console.log(e)
+        return []
+    }
 }
 
 module.exports = {

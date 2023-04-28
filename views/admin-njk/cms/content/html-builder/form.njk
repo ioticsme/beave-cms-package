@@ -67,11 +67,17 @@
 
                                     <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
                                         <li class="nav-item">
-                                            <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_general">General</a>
+                                            <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_general">
+                                                General
+                                                <span class="fa-solid fa-circle-exclamation d-none tab-invalid-icon"></span>
+                                            </a>
                                         </li>
                                         {% if reqContentType.has_meta %}
                                             <li class="nav-item">
-                                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_meta">Meta</a>
+                                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_meta">
+                                                    Meta
+                                                    <span class="fa-solid fa-circle-exclamation d-none tab-invalid-icon"></span>
+                                                </a>
                                             </li>
                                         {% endif %}
                                     </ul>
@@ -112,9 +118,9 @@
                                                                                 <label class="col-lg-4 col-form-label fw-semibold fs-6">{{ meta_field.label }}</label>
                                                                                 <div class="col-lg-8 pt-2">
                                                                                     {% if meta_field.type == 'textarea' %}
-                                                                                        <textarea class="form-control" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}"></textarea>
+                                                                                        <textarea class="form-control" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}">{{contentDetail.meta[brandLanguage.prefix][meta_section.slug][meta_field.name]}}</textarea>
                                                                                     {% else %}
-                                                                                        <input type="text" class="form-control" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}">
+                                                                                        <input type="text" class="form-control" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}" value="{{contentDetail.meta[brandLanguage.prefix][meta_section.slug][meta_field.name]}}" >
                                                                                     {% endif %}
                                                                                 </div>
                                                                             </div>

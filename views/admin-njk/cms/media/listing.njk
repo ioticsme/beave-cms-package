@@ -12,7 +12,6 @@
 	{# // end::Vendors Javascript #}
 	{# // begin::Custom Javascript(used by this page) #}
 	{# //- script(src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js') #}
-	<script src='https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js'></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
 	<script src='/cms-static/admin/assets/js/custom/apps/ecommerce/catalog/products.js'></script>
 	{# //- script(src='/cms-static/admin/assets/js/widgets.bundle.js') #}
@@ -27,59 +26,6 @@
 	<script src='/cms-static/common/js/form-data-json.min.js'></script>
 	<script src='/cms-static/common/js/es-form.js'></script>
 
-{% endblock %}
-
-{% block customScript %}
-	<script>
-		var myDropzone = new Dropzone("#kt_dropzonejs_example_1", {
-			url: "/admin/cms/media/upload", // Set the url for your upload script location
-			paramName: "file", // The name that will be used to transfer the file
-			maxFiles: 10,
-			maxFilesize: 10, // MB
-			addRemoveLinks: true,
-			accept: function (file, done) {
-				if (file.name == "wow.jpg") {
-					done("Naha, you don't.");
-				} else {
-					done();
-				}
-			}
-		});
-		// Listen for upload complete event
-		myDropzone.on("complete", function (file) {
-			// Check if upload was successful
-			if (file.status == "success") {
-				console.log("Upload completed successfully!");
-				location.reload(true);
-			} else {
-				console.log("Upload failed: " + file.status);
-			}
-		});
-
-		let images = document.querySelectorAll(".lazy");
-		new LazyLoad(images);
-
-		let buttons = document.querySelectorAll(".copy-btn");
-		var clipboard = new ClipboardJS(buttons)
-		clipboard.on('success', function (e) {
-			navigator
-				.clipboard
-				.writeText(e.text)
-			const Toast = Swal.mixin({
-				toast: true,
-				position: 'top-end',
-				showConfirmButton: false,
-				timer: 1500,
-				timerProgressBar: true,
-				didOpen: (toast) => {
-					toast.addEventListener('mouseenter', Swal.stopTimer)
-					toast.addEventListener('mouseleave', Swal.resumeTimer)
-				}
-			})
-			Toast.fire({icon: 'success', title: 'URL Copied to clipboard'})
-			e.clearSelection();
-		});
-	</script>
 {% endblock %}
 
 {% block content %}
@@ -105,33 +51,21 @@
 		</div>
 
 		<div id="kt_app_content" class="app-content flex-column-fluid">
-			<div id="kt_app_content_container" class="app-container container">
+			<div id="media-management-panel" class="app-container container">
 				<div class="row g-5 g-10 mb-10">
 					<div class="col-12 col-md-8 mx-auto my-5">
 						<!-- begin::Form -->
-						<form class="form" action="#" method="post">
-							<div class="fv-row">
-								<div id="kt_dropzonejs_example_1" class="dropzone">
-									<div class="dz-message needsclick">
-										<i class="bi bi-file-earmark-arrow-up text-primary fs-3x"></i>
-										<div class="ms-4">
-											<h3 class="fs-5 fw-bold text-gray-900 mb-1">Drop files here or click to upload.</h3>
-											<span class="fs-7 fw-semibold text-gray-400">Upload up to 10 files</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</form>
+						{% include '../../partials/_media-upload-DZ-form.njk' %}
 						<!-- end::Form -->
 					</div>
 				</div>
 				<div class="row g-5 g-10 mb-10">
-					<div class="col-12 col-sm-9">
-						<div class="row g-5 g-10 mb-10">
+					<div class="col-12 col-sm-7 col-md-9">
+						<div class="row g-5 g-10 mb-10" id="page-media-holder">
 							{% for item in media %}
 								<input id="img-{{ loop.index }}" value="{{ item.url }}" hidden/>
 								<div class="col-12 col-sm-3 col-md-3 col-lg-2 col-xl-2 col-xxl-2 text-center mb-2 mb-xl-2 media-list-item" data-id="{{item._id}}">
-									<img class="lazy img-thumbnail cursor-pointer" src="/admin/assets/media/svg/files/blank-image.svg" data-src="{{ item.url }}" alt="image" srcset="" style="width: 100%; height:120px; object-fit: cover;">
+									<img class="lazy img-thumbnail cursor-pointer" src="/admin/assets/media/svg/files/blank-image.svg" data-src="{{ item.url }}?tr=w-150,h-150" alt="image" srcset="" style="width: 100%; height:auto; object-fit: cover;">
 									<div class="row mt-1">
 										<div class="col-12">
 											<div class="btn btn-danger btn-sm menu-link px-2 py-0" id="{{ item._id }}" url="/admin/cms/media/delete" data-kt-subscriptions-table-filter="delete_row" onClick="deleteItem(this)" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to delete image">
@@ -148,28 +82,28 @@
 							{% endfor %}
 						</div>
 					</div>
-					<div class="col-12 col-sm-3" id="media-meta-panel">
-						<div clas="row">
-							<div clas="col-12" id="img-holder">
+					<div class="col-12 col-sm-5 col-md-3" id="media-meta-panel">
+						<div class="row">
+							<div class="col-12" id="img-holder">
 								<img id="preview-img" src="">
 							</div>
-							<div clas="col-12">
+							<div class="col-12">
 								<form class="es-form" action="/admin/cms/media/add-meta" method="post">
 									<input type="hidden" name="id" value="">
-									<div clas="row">
-										<div clas="col-12">
+									<div class="row">
+										<div class="col-12">
 											<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 												<span>Media Title</span>
 											</label>
 											<input type="text" name="title" class="form-control" id="title_field">
 										</div>
-										<div clas="col-12">
+										<div class="col-12">
 											<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 												<span>Media Alt Text</span>
 											</label>
 											<input type="text" name="alt_text" class="form-control" id="alt_text_field">
 										</div>
-										<div clas="col-12">
+										<div class="col-12 mt-5">
 											<button class="btn btn-sm btn-success form-submit-btn btn-block" type="submit">
 												<span class="label">Apply</span>
 												<span class="preloader d-none">Saving...</span>
