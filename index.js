@@ -57,7 +57,7 @@ app.use(express.urlencoded({ extended: true }))
 
 // Assets folder
 app.use('/cms-static', express.static(path.join(__dirname, './public')))
-app.use('/wrapper-static', express.static(path.join(__dirname, '../public')))
+app.use('/static', express.static(`${process.cwd()}/public`))
 
 //Configure admin session storage
 let session_driver
