@@ -1,6 +1,6 @@
 {
     "name": "@ioticsme/beave-cms",
-    "version": "1.0.91",
+    "version": "1.0.92",
     "description": "BeaveCMS - NPM Package",
     "main": "index.js",
     "scripts": {
@@ -12,6 +12,7 @@
     "license": "ISC",
     "dependencies": {
         "@mongoosejs/double": "^0.3.0",
+        "agenda": "^5.0.0",
         "axios": "^0.26.1",
         "bcrypt": "^5.0.1",
         "chalk": "^4.1.2",
@@ -43,6 +44,7 @@
         "jsonwebtoken": "^9.0.0",
         "lodash": "^4.17.21",
         "mailgun.js": "^8.0.1",
+        "mongodb": "^5.3.0",
         "mongoose": "^6.4.3",
         "mongoose-paginate-v2": "^1.7.1",
         "mongoose-unique-validator": "^3.1.0",
