@@ -268,7 +268,7 @@ const socialLoginSubmit = async (req, res) => {
                 .select('content')
 
             const mg_settings =
-                req.brand.settings?.notification_settings?.mailgun
+                envConfig?.mailgun
             sendEmail(
                 mg_settings.from,
                 req.body.email,
@@ -1177,28 +1177,28 @@ const verifyForgotOTP = async (req, res) => {
             // }
 
             // IF auth_key is email otp send via email o.w send via sms
-            if (isEmail) {
-                // BEGIN:: Sending Email
-                let mg_settings =
-                    req.brand.settings?.notification_settings?.mailgun
-                sendEmail(
-                    mg_settings.from,
-                    req.body.auth_key,
-                    `Your password has been reset`,
-                    mg_settings.forgot_password_thankyou_template,
-                    {
-                        brand: req.brand.name.en,
-                    },
-                    mg_settings
-                )
-            } else if (isMobile) {
-                let mobile = req.body.auth_key
-                    .replace(/\D/g, '')
-                    .replace(/^0+/, '')
-                let message = `Your password is reset`
-                let smsSettings = req.brand.settings?.notification_settings?.sms
-                SMS.sendThanks(message, mobile, req.brand.name.en, smsSettings)
-            }
+            // if (isEmail) {
+            //     // BEGIN:: Sending Email
+            //     let mg_settings =
+            //         envConfig?.mailgun
+            //     sendEmail(
+            //         mg_settings.from,
+            //         req.body.auth_key,
+            //         `Your password has been reset`,
+            //         mg_settings.forgot_password_thankyou_template,
+            //         {
+            //             brand: req.brand.name.en,
+            //         },
+            //         mg_settings
+            //     )
+            // } else if (isMobile) {
+            //     let mobile = req.body.auth_key
+            //         .replace(/\D/g, '')
+            //         .replace(/^0+/, '')
+            //     let message = `Your password is reset`
+            //     let smsSettings = req.brand.settings?.notification_settings?.sms
+            //     SMS.sendThanks(message, mobile, req.brand.name.en, smsSettings)
+            // }
 
             return res.status(200).json({
                 message: 'Password is reset',
