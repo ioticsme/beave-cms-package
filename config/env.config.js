@@ -28,6 +28,8 @@ const envConfig = {
         API_KEY: process.env.MAILGUN_API_KEY,
         FROM: process.env.MAILGUN_FROM,
         URL: process.env.MAILGUN_URL || undefined,
+        TEMPLATE_FORGOT_PASSWORD: process.env.MAILGUN_TEMPLATE_FORGOT_PASSWORD,
+        TEMPLATE_WELCOME: process.env.MAILGUN_TEMPLATE_WELCOME,
     },
     captcha: {
         BASE_URL: process.env.CAPTCHA_BASE_URL,

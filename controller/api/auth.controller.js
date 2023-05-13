@@ -1027,16 +1027,16 @@ const forgotCredentials = async (req, res) => {
         // IF auth_key is email otp send via email o.w send via sms
         if (isEmail) {
             // BEGIN:: Sending Email
-            let mg_settings = req.brand.settings?.notification_settings?.mailgun
+            // let mg_settings = req.brand.settings?.notification_settings?.mailgun
             sendEmail(
                 mg_settings.from,
                 req.body.auth_key,
                 `OTP for resetting your password is ${otp}`,
-                mg_settings.forgot_password_template,
+                envConfig.mailgun.TEMPLATE_FORGOT_PASSWORD,
                 {
                     otp: otp,
                 },
-                mg_settings
+                // mg_settings
             )
         } else if (isMobile) {
             let mobile = req.body.auth_key.replace(/\D/g, '').replace(/^0+/, '')
