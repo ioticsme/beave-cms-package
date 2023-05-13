@@ -14,37 +14,42 @@ const sendEmail = async (
     mg_settings = envConfig.mailgun,
     filePath = false
 ) => {
-    const DOMAIN = mg_settings.DOMAIN
-    const mailgun = new Mailgun(formData)
-    const mg = mailgun.client({
-        username: 'api',
-        key: mg_settings.API_KEY,
-        url: mg_settings.URL,
-    })
-    // console.log(mg)
+    try {
+        const DOMAIN = mg_settings.DOMAIN
+        const mailgun = new Mailgun(formData)
+        const mg = mailgun.client({
+            username: 'api',
+            key: mg_settings.API_KEY,
+            url: mg_settings.URL,
+        })
+        // console.log(mg)
 
-    // console.log(mg.domains.domainTemplates.list())
+        // console.log(mg.domains.domainTemplates.list())
 
-    let attachment
-    if (filePath) {
-        const pdfPath = path.join(`${filePath}`)
-        const file = {
-            filename: 'invoice.pdf',
-            data: await fs.promises.readFile(pdfPath),
+        let attachment
+        if (filePath) {
+            const pdfPath = path.join(`${filePath}`)
+            const file = {
+                filename: 'invoice.pdf',
+                data: await fs.promises.readFile(pdfPath),
+            }
+            attachment = [file]
         }
-        attachment = [file]
-    }
-    const mailgunData = {
-        from: `${from}`,
-        to: `${to}`,
-        subject: `${subject}`,
-        template: `${template}`,
-        attachment: attachment,
-        'h:X-Mailgun-Variables': JSON.stringify(payloads),
-    }
-    // console.log(mailgunData)
+        const mailgunData = {
+            from: `${from}`,
+            to: `${to}`,
+            subject: `${subject}`,
+            template: `${template}`,
+            attachment: attachment,
+            'h:X-Mailgun-Variables': JSON.stringify(payloads),
+        }
+        // console.log(mailgunData)
 
-    return mg.messages.create(DOMAIN, mailgunData)
+        return mg.messages.create(DOMAIN, mailgunData)
+    } catch (error) {
+        console.log(error)
+        return false
+    }
 }
 
 module.exports = {

@@ -1028,6 +1028,7 @@ const forgotCredentials = async (req, res) => {
         if (isEmail) {
             // BEGIN:: Sending Email
             // let mg_settings = req.brand.settings?.notification_settings?.mailgun
+            try {
             sendEmail(
                 mg_settings.from,
                 req.body.auth_key,
@@ -1038,10 +1039,18 @@ const forgotCredentials = async (req, res) => {
                 },
                 // mg_settings
             )
+            } catch (error) {
+                console.log(error)
+            }
+
         } else if (isMobile) {
+            try {
             let mobile = req.body.auth_key.replace(/\D/g, '').replace(/^0+/, '')
             let smsSettings = req.brand.settings?.notification_settings?.sms
             SMS.sendOTP(otp, mobile, req.brand.name.en, smsSettings)
+            } catch (error) {
+                console.log(error)
+            }
         }
 
         user.otp_freez_until = addMinutes(new Date(), 1)
