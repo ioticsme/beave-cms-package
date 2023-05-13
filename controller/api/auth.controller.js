@@ -1027,12 +1027,12 @@ const forgotCredentials = async (req, res) => {
         // IF auth_key is email otp send via email o.w send via sms
         if (isEmail) {
             // BEGIN:: Sending Email
-            // let mg_settings = req.brand.settings?.notification_settings?.mailgun
+            let mg_settings = envConfig?.mailgun
             try {
             sendEmail(
                 mg_settings.from,
                 req.body.auth_key,
-                `OTP for resetting your password is ${otp}`,
+                `Reset password request for - ${envConfig.general.CLIENT_NAME}`,
                 envConfig.mailgun.TEMPLATE_FORGOT_PASSWORD,
                 {
                     otp: otp,
