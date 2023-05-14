@@ -29,7 +29,7 @@ const {
 const loginSubmit = async (req, res) => {
     const schema = Joi.object({
         email: Joi.string().email().required().max(60),
-        password: Joi.string().required().min(4).max(20),
+        password: Joi.string().required(),
         token: Joi.string().optional().allow(null, ''),
     })
 
