@@ -230,6 +230,8 @@ const changeStatus = async (req, res) => {
         if (!id) {
             return res.status(404).json({ error: 'Invalid data' })
         }
+
+        const newStatus = status ? 'unpublished' : 'published'
         // Update
         const update = await Content.findOneAndUpdate(
             {
@@ -239,7 +241,7 @@ const changeStatus = async (req, res) => {
             },
             {
                 $set: {
-                    status: status,
+                    status: newStatus,
                 },
             }
         )
