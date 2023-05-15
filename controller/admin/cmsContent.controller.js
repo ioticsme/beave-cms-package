@@ -206,6 +206,8 @@ const deleteContent = async (req, res) => {
             country: req.authUser.brand.country,
         })
 
+        // :TODO: Remove cache
+        const countryCode = req.authUser.brand?.country_code
         const collection_cache_key = `data-content-${req.authUser.brand.code}-${countryCode}-${slug}`
         // const single_item_cache_key = `data-content-${req.authUser.brand.code}-${countryCode}-${slug}-${update.slug || update._id}`
         Redis.removeCache([collection_cache_key])
@@ -246,6 +248,8 @@ const changeStatus = async (req, res) => {
             return res.status(404).json({ error: 'Something went wrong' })
         }
 
+        // :TODO: @Ebrahim, commented this because of error with countryCode
+        const countryCode = req.authUser.brand?.country_code
         const collection_cache_key = `data-content-${req.authUser.brand.code}-${countryCode}-${slug}`
         const single_item_cache_key = `data-content-${
             req.authUser.brand.code
