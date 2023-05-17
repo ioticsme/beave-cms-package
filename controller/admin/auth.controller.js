@@ -160,7 +160,10 @@ const forgotCredentials = async (req, res) => {
 
 const logout = async (req, res) => {
     try {
-        req.session.destroy()
+        // Deleting admin credentials from session
+        delete req.session.admin_id
+        delete req.session.admin_name
+        delete req.session.admin_role
         res.redirect('/admin/auth/login')
     } catch (error) {
         res.render(`admin-njk/error-500`)
