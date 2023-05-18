@@ -38,7 +38,7 @@ const customFormSubmit = async (req, res) => {
         })
         // END:: Validation rule
 
-        const validationResult = schema.validate(req.body, {
+        const validationResult = schema.validate(req.body, { 
             abortEarly: false,
         })
 
