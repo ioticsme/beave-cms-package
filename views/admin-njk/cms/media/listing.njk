@@ -61,7 +61,7 @@
 				</div>
 				<div class="row g-5 g-10 mb-10">
 					<div class="col-12 col-md-8 mx-auto my-5">
-						<input class="form-control form-control-sm " id="search-image-input" placeholder="Search image" />
+						<input class="form-control form-control-sm " id="search-image-input" placeholder="Search images with name" />
 					</div>
 				</div>
 				<div class="row g-5 g-10 mb-10">
@@ -73,10 +73,10 @@
 									<img class="lazy img-thumbnail cursor-pointer" src="/admin/assets/media/svg/files/blank-image.svg" data-src="{{ item.url }}?tr=w-150,h-150" alt="image" srcset="" style="width: 100%; height:auto; object-fit: cover;">
 									<div class="row mt-1">
 										<div class="col-12">
-											<span class="btn btn-danger btn-sm" id="{{ item._id }}" url="/admin/cms/media/delete" data-kt-subscriptions-table-filter="delete_row" onClick="deleteItem(this)" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to delete image">
+											<span class="btn btn-danger btn-sm mt-1" id="{{ item._id }}" url="/admin/cms/media/delete" data-kt-subscriptions-table-filter="delete_row" onClick="deleteItem(this)" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to delete image">
 												<i class="fa fa-trash"></i>
 											</span>
-											<span class="btn btn-success btn-sm copy-btn " data-clipboard-target="#img-{{ loop.index }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to copy Image URL">
+											<span class="btn btn-success btn-sm copy-btn mt-1" data-clipboard-target="#img-{{ loop.index }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to copy Image URL">
 												<i class="fa fa-clipboard text-white"></i>
 											</span>
 										</div>

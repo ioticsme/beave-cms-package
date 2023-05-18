@@ -34,7 +34,9 @@ if (mediaManagementPanel) {
                         var mediaList = `<div class="row">`
                         // console.log(response.data)
                         response.data.forEach((element) => {
-                            mediaList = `${mediaList} <div class="col-12 col-sm-3 col-md-2 p-2">
+                            mediaList = `${mediaList} <div class="col-12 col-sm-3 col-md-2 p-2 media-list-item" data-name="${
+                                element?.file?.name
+                            }">
                                 <img data-mediaUrl="${element.url}" src="${
                                 element.url
                             }?tr=w-150,h-150" data-mediaTitle="${
@@ -85,7 +87,7 @@ if (mediaManagementPanel) {
         e.clearSelection()
     })
 
-    // Media searching
+    // Media searching in media listing page
     $('#search-image-input').on('keyup', function (e) {
         var value = e.target?.value?.toLowerCase()
         if (value) {
@@ -110,6 +112,31 @@ if (mediaManagementPanel) {
     })
 }
 
+// Media searching in media attach modal
+$('#search-image-input-modal').on('keyup', function (e) {
+    var value = e.target?.value?.toLowerCase()
+    if (value) {
+        document
+            .querySelectorAll('#modal-media-holder .media-list-item')
+            .forEach(function (item) {
+                let divName = item.getAttribute('data-name')
+                // console.log("item: " + divName)
+                // if search value is not included in the div name then add d-none to the classlist of div
+                if (!divName.includes(value)) {
+                    item.classList.add('d-none')
+                } else {
+                    item.classList.remove('d-none')
+                }
+            })
+    } else {
+        document
+            .querySelectorAll('#modal-media-holder .media-list-item')
+            .forEach(function (item) {
+                item.classList.remove('d-none')
+            })
+    }
+})
+
 var mediaModal = document.getElementById('kt_modal_media_list')
 mediaModal.addEventListener('show.bs.modal', function (e) {
     document.getElementById('modal-media-holder').innerHTML = 'Loading...'
@@ -124,7 +151,9 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
             var mediaList = `<div class="row">`
             // console.log(response.data)
             response.data.forEach((element) => {
-                mediaList = `${mediaList} <div class="col-12 col-sm-3 col-md-2 p-2">
+                mediaList = `${mediaList} <div class="col-12 col-sm-3 col-md-2 p-2 media-list-item" data-name="${
+                    element?.file?.name
+                }">
                     <img data-mediaUrl="${element.url}" src="${
                     element.url
                 }?tr=w-150,h-150" data-mediaTitle="${
