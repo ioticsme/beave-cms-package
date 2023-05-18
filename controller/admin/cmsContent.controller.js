@@ -93,6 +93,8 @@ const detail = async (req, res) => {
             template = `admin-njk/cms/content/html-builder/detail`
         }
 
+        // console.log(contentDetail.meta.en.OG.url)
+
         res.render(template, {
             default_lang,
             has_common_field_groups: has_common_field_groups ? true : false,
@@ -399,7 +401,7 @@ const savePageBuilderContent = async (req, res) => {
 }
 
 const saveDefaultContent = async (req, res) => {
-    // console.log(req.body.en.featured_blocks.description)
+    // console.log(req.body.meta.en.og)
     // return false
     try {
         // Data object to insert

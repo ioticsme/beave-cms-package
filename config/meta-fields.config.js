@@ -47,7 +47,7 @@ const metaFields = [
     },
     {
         name: 'OG',
-        slug: 'OG',
+        slug: 'og',
         fields: [
             {
                 label: 'Title',
