@@ -65,9 +65,9 @@ const metaFields = [
                 type: 'text',
             },
             {
-                label: 'Image URL',
+                label: 'Image',
                 name: 'image',
-                type: 'text',
+                type: 'media',
             },
             {
                 label: 'Description',
@@ -98,7 +98,7 @@ const metaFields = [
             {
                 label: 'Image URL',
                 name: 'image',
-                type: 'text',
+                type: 'media',
             },
         ],
     },
