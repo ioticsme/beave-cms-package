@@ -19,6 +19,9 @@ const MediaSchema = new mongoose.Schema(
         response: {
             type: Object,
         },
+        file: {
+            type: Object,
+        },
     },
     {
         timestamps: {

@@ -10,6 +10,7 @@ if (mediaManagementPanel) {
         maxFiles: 10,
         maxFilesize: 10, // MB
         addRemoveLinks: true,
+        acceptedFiles: '.jpeg,.jpg,.png,.gif',
         accept: function (file, done) {
             if (file.name == 'wow.jpg') {
                 done("Naha, you don't.")
@@ -23,7 +24,8 @@ if (mediaManagementPanel) {
         // Check if upload was successful
         if (file.status == 'success') {
             console.log('Upload completed successfully!')
-            const pageMediaHolderElm = document.querySelector('#page-media-holder')
+            const pageMediaHolderElm =
+                document.querySelector('#page-media-holder')
             if (!pageMediaHolderElm) {
                 axios
                     .get('/admin/cms/media/json')
@@ -33,9 +35,7 @@ if (mediaManagementPanel) {
                         // console.log(response.data)
                         response.data.forEach((element) => {
                             mediaList = `${mediaList} <div class="col-12 col-sm-3 col-md-2 p-2">
-                                <img data-mediaUrl="${
-                                    element.url
-                                }" src="${
+                                <img data-mediaUrl="${element.url}" src="${
                                 element.url
                             }?tr=w-150,h-150" data-mediaTitle="${
                                 element.meta?.title || ''
@@ -46,8 +46,9 @@ if (mediaManagementPanel) {
                         // e.target.querySelector('#field_id').value =
                         //     e.relatedTarget.getAttribute('id')
                         // console.log(e.relatedTarget.getAttribute('id'))
-                        document.getElementById('modal-media-holder').innerHTML =
-                            mediaList
+                        document.getElementById(
+                            'modal-media-holder'
+                        ).innerHTML = mediaList
                     })
                     .catch(function (error) {
                         // Handle the error
@@ -82,6 +83,30 @@ if (mediaManagementPanel) {
         })
         Toast.fire({ icon: 'success', title: 'URL Copied to clipboard' })
         e.clearSelection()
+    })
+
+    // Media searching
+    $('#search-image-input').on('keyup', function (e) {
+        var value = e.target?.value?.toLowerCase()
+        if (value) {
+            document
+                .querySelectorAll('#page-media-holder .media-list-item')
+                .forEach(function (item) {
+                    let divName = item.getAttribute('data-name')
+                    // if search value is not included in the div name then add d-none to the classlist of div
+                    if (!divName.includes(value)) {
+                        item.classList.add('d-none')
+                    } else {
+                        item.classList.remove('d-none')
+                    }
+                })
+        } else {
+            document
+                .querySelectorAll('#page-media-holder .media-list-item')
+                .forEach(function (item) {
+                    item.classList.remove('d-none')
+                })
+        }
     })
 }
 

@@ -60,17 +60,22 @@
 					</div>
 				</div>
 				<div class="row g-5 g-10 mb-10">
+					<div class="col-12 col-md-8 mx-auto my-5">
+						<input class="form-control form-control-sm " id="search-image-input" placeholder="Search image" />
+					</div>
+				</div>
+				<div class="row g-5 g-10 mb-10">
 					<div class="col-12 col-sm-7 col-md-9">
 						<div class="row g-5 g-10 mb-10" id="page-media-holder">
 							{% for item in media %}
 								<input id="img-{{ loop.index }}" value="{{ item.url }}" hidden/>
-								<div class="col-12 col-sm-3 col-md-3 col-lg-2 col-xl-2 col-xxl-2 text-center mb-2 mb-xl-2 media-list-item" data-id="{{item._id}}">
+								<div class="col-12 col-sm-3 col-md-3 col-lg-2 col-xl-2 col-xxl-2 text-center mb-2 mb-xl-2 media-list-item" data-name="{{item.file.name}}" data-id="{{item._id}}">
 									<img class="lazy img-thumbnail cursor-pointer" src="/admin/assets/media/svg/files/blank-image.svg" data-src="{{ item.url }}?tr=w-150,h-150" alt="image" srcset="" style="width: 100%; height:auto; object-fit: cover;">
 									<div class="row mt-1">
 										<div class="col-12">
 											<div class="btn btn-danger btn-sm menu-link px-2 py-0" id="{{ item._id }}" url="/admin/cms/media/delete" data-kt-subscriptions-table-filter="delete_row" onClick="deleteItem(this)" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to delete image">
-										Delete
-									</div>
+												Delete
+											</div>
 											<span class="badge badge-success btn-sm copy-btn" data-clipboard-target="#img-{{ loop.index }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to copy Image URL">Copy URL</span>
 										</div>
 									</div>
