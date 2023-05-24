@@ -38,7 +38,7 @@ const customFormSubmit = async (req, res) => {
         })
         // END:: Validation rule
 
-        const validationResult = schema.validate(req.body, { 
+        const validationResult = schema.validate(req.body, {
             abortEarly: false,
         })
 
@@ -115,14 +115,14 @@ const customFormSubmit = async (req, res) => {
             }
 
             if (
-                customForm.reply_email_template &&
+                customForm.recepient_email_template &&
                 customForm.recepient_emails
             ) {
                 sendEmail(
                     envConfig.mailgun.FROM,
                     customForm.recepient_emails.split(','),
                     `${customForm.form_name} Form Submission`,
-                    customForm.reply_email_template,
+                    customForm.recepient_email_template,
                     req.body,
                     envConfig.mailgun
                 )
