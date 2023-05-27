@@ -43,7 +43,7 @@ const loginSubmit = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        (envConfig.general.NODE_ENV == 'production' ||
+        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
             envConfig.general.NODE_ENV == 'staging') &&
         req.source == 'web'
     ) {
@@ -434,7 +434,7 @@ const updateMobileNo = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        (envConfig.general.NODE_ENV == 'production' ||
+        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
             envConfig.general.NODE_ENV == 'staging') &&
         req.source == 'web'
     ) {
@@ -588,8 +588,9 @@ const signupSubmit = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        envConfig.general.NODE_ENV == 'production' ||
-        envConfig.general.NODE_ENV == 'staging'
+        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
+            envConfig.general.NODE_ENV == 'staging') &&
+        req.source == 'web'
     ) {
         const isVerified = await verifyCaptcha(req.body.token)
         if (!isVerified) {
@@ -699,8 +700,9 @@ const otpVerification = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        envConfig.general.NODE_ENV == 'production' ||
-        envConfig.general.NODE_ENV == 'staging'
+        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
+            envConfig.general.NODE_ENV == 'staging') &&
+        req.source == 'web'
     ) {
         const isVerified = await verifyCaptcha(req.body.token)
         if (!isVerified) {
@@ -830,8 +832,9 @@ const resendOTP = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        envConfig.general.NODE_ENV == 'production' ||
-        envConfig.general.NODE_ENV == 'staging'
+        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
+            envConfig.general.NODE_ENV == 'staging') &&
+        req.source == 'web'
     ) {
         const isVerified = await verifyCaptcha(req.body.token)
         if (!isVerified) {
@@ -925,8 +928,9 @@ const forgotCredentials = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        envConfig.general.NODE_ENV == 'production' ||
-        envConfig.general.NODE_ENV == 'staging'
+        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
+            envConfig.general.NODE_ENV == 'staging') &&
+        req.source == 'web'
     ) {
         const isVerified = await verifyCaptcha(req.body.token)
         if (!isVerified) {
@@ -1097,8 +1101,9 @@ const verifyForgotOTP = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        envConfig.general.NODE_ENV == 'production' ||
-        envConfig.general.NODE_ENV == 'staging'
+        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
+            envConfig.general.NODE_ENV == 'staging') &&
+        req.source == 'web'
     ) {
         const isVerified = await verifyCaptcha(req.body.token)
         if (!isVerified) {
