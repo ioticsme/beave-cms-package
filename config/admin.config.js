@@ -89,7 +89,7 @@ const navConfig = [
         ],
     },
     {
-        section: 'Public',
+        section: 'Users',
         position: 3,
         items: [
             {
