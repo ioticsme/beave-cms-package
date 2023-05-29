@@ -189,15 +189,22 @@
 																				<div class="row mb-6">
 																					<label class="col-lg-4 col-form-label required fw-semibold fs-6">{{ meta_field.label }}</label>
 																					<div class="col-lg-8 pt-2">
-																						{% if contentDetail
+																						{# {{meta_field.type}} #}
+																						{# {% if contentDetail
 																							.meta and contentDetail
 																							.meta[brandLanguage.prefix][meta_section.slug] and contentDetail
-																							.meta[brandLanguage.prefix][meta_section.slug][meta_field.name] %}
-																							{% set metaFieldValue = contentDetail.meta[brandLanguage.prefix][meta_section.slug][meta_field.name] %}
+																							.meta[brandLanguage.prefix][meta_section.slug][meta_field.name] %} #}
+																						{% set metaFieldValue = contentDetail.meta[brandLanguage.prefix][meta_section.slug][meta_field.name] %}
+																						{# {% elif meta_field.type == 'media' %}
+																							{% set metaFieldValue = '<img src="{{ metaFieldValue.url }}" style="max-width: 150px;"/>' %} #}
+																						{% if meta_field.type == 'media' %}
+																							{# {{metaFieldValue}} #}
+																							<img src="{{ metaFieldValue.url }}" style="max-width: 50px;"/>
+																							{# {% set metaFieldValue = '' %} #}
 																						{% else %}
-																							{% set metaFieldValue = '' %}
+																							{{ metaFieldValue }}
 																						{% endif %}
-																						{{ metaFieldValue }}
+																						{# {{ metaFieldValue }} #}
 																					</div>
 																				</div>
 																			{% endfor %}

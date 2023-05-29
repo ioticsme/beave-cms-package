@@ -24,7 +24,7 @@ const jsonList = async (req, res) => {
 const jsonDetail = async (req, res) => {
     try {
         const media = await Media.findOne({
-            _id: req.params.id
+            _id: req.params.id,
         })
         return res.status(200).json(media)
     } catch (error) {
@@ -44,7 +44,7 @@ const fileUpload = async (req, res) => {
             )
             let fieldName = req.files[i].fieldname.split('.')[0]
             let fieldLang = req.files[i].fieldname.split('.')[1]
-            const media = await uploadMedia(base64, 'media', file.filename) //file.originalname
+            const media = await uploadMedia(base64, 'media', file) //file.originalname
             // Deleting the image saved to uploads/
             fs.unlinkSync(`temp/${file.filename}`)
             if (media && media._id) {

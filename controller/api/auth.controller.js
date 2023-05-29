@@ -29,7 +29,7 @@ const {
 const loginSubmit = async (req, res) => {
     const schema = Joi.object({
         email: Joi.string().email().required().max(60),
-        password: Joi.string().required().min(4).max(20),
+        password: Joi.string().required(),
         token: Joi.string().optional().allow(null, ''),
     })
 
@@ -43,7 +43,7 @@ const loginSubmit = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        (envConfig.general.NODE_ENV == 'production' ||
+        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
             envConfig.general.NODE_ENV == 'staging') &&
         req.source == 'web'
     ) {
@@ -268,7 +268,7 @@ const socialLoginSubmit = async (req, res) => {
                 .select('content')
 
             const mg_settings =
-                req.brand.settings?.notification_settings?.mailgun
+                envConfig?.mailgun
             sendEmail(
                 mg_settings.from,
                 req.body.email,
@@ -434,7 +434,7 @@ const updateMobileNo = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        (envConfig.general.NODE_ENV == 'production' ||
+        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
             envConfig.general.NODE_ENV == 'staging') &&
         req.source == 'web'
     ) {
@@ -588,8 +588,9 @@ const signupSubmit = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        envConfig.general.NODE_ENV == 'production' ||
-        envConfig.general.NODE_ENV == 'staging'
+        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
+            envConfig.general.NODE_ENV == 'staging') &&
+        req.source == 'web'
     ) {
         const isVerified = await verifyCaptcha(req.body.token)
         if (!isVerified) {
@@ -699,8 +700,9 @@ const otpVerification = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        envConfig.general.NODE_ENV == 'production' ||
-        envConfig.general.NODE_ENV == 'staging'
+        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
+            envConfig.general.NODE_ENV == 'staging') &&
+        req.source == 'web'
     ) {
         const isVerified = await verifyCaptcha(req.body.token)
         if (!isVerified) {
@@ -830,8 +832,9 @@ const resendOTP = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        envConfig.general.NODE_ENV == 'production' ||
-        envConfig.general.NODE_ENV == 'staging'
+        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
+            envConfig.general.NODE_ENV == 'staging') &&
+        req.source == 'web'
     ) {
         const isVerified = await verifyCaptcha(req.body.token)
         if (!isVerified) {
@@ -925,8 +928,9 @@ const forgotCredentials = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        envConfig.general.NODE_ENV == 'production' ||
-        envConfig.general.NODE_ENV == 'staging'
+        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
+            envConfig.general.NODE_ENV == 'staging') &&
+        req.source == 'web'
     ) {
         const isVerified = await verifyCaptcha(req.body.token)
         if (!isVerified) {
@@ -1027,21 +1031,30 @@ const forgotCredentials = async (req, res) => {
         // IF auth_key is email otp send via email o.w send via sms
         if (isEmail) {
             // BEGIN:: Sending Email
-            let mg_settings = req.brand.settings?.notification_settings?.mailgun
+            let mg_settings = envConfig?.mailgun
+            try {
             sendEmail(
                 mg_settings.from,
                 req.body.auth_key,
-                `OTP for resetting your password is ${otp}`,
-                mg_settings.forgot_password_template,
+                `Reset password request for - ${envConfig.general.CLIENT_NAME}`,
+                envConfig.mailgun.TEMPLATE_FORGOT_PASSWORD,
                 {
                     otp: otp,
                 },
-                mg_settings
+                // mg_settings
             )
+            } catch (error) {
+                console.log(error)
+            }
+
         } else if (isMobile) {
+            try {
             let mobile = req.body.auth_key.replace(/\D/g, '').replace(/^0+/, '')
             let smsSettings = req.brand.settings?.notification_settings?.sms
             SMS.sendOTP(otp, mobile, req.brand.name.en, smsSettings)
+            } catch (error) {
+                console.log(error)
+            }
         }
 
         user.otp_freez_until = addMinutes(new Date(), 1)
@@ -1088,8 +1101,9 @@ const verifyForgotOTP = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        envConfig.general.NODE_ENV == 'production' ||
-        envConfig.general.NODE_ENV == 'staging'
+        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
+            envConfig.general.NODE_ENV == 'staging') &&
+        req.source == 'web'
     ) {
         const isVerified = await verifyCaptcha(req.body.token)
         if (!isVerified) {
@@ -1168,28 +1182,28 @@ const verifyForgotOTP = async (req, res) => {
             // }
 
             // IF auth_key is email otp send via email o.w send via sms
-            if (isEmail) {
-                // BEGIN:: Sending Email
-                let mg_settings =
-                    req.brand.settings?.notification_settings?.mailgun
-                sendEmail(
-                    mg_settings.from,
-                    req.body.auth_key,
-                    `Your password has been reset`,
-                    mg_settings.forgot_password_thankyou_template,
-                    {
-                        brand: req.brand.name.en,
-                    },
-                    mg_settings
-                )
-            } else if (isMobile) {
-                let mobile = req.body.auth_key
-                    .replace(/\D/g, '')
-                    .replace(/^0+/, '')
-                let message = `Your password is reset`
-                let smsSettings = req.brand.settings?.notification_settings?.sms
-                SMS.sendThanks(message, mobile, req.brand.name.en, smsSettings)
-            }
+            // if (isEmail) {
+            //     // BEGIN:: Sending Email
+            //     let mg_settings =
+            //         envConfig?.mailgun
+            //     sendEmail(
+            //         mg_settings.from,
+            //         req.body.auth_key,
+            //         `Your password has been reset`,
+            //         mg_settings.forgot_password_thankyou_template,
+            //         {
+            //             brand: req.brand.name.en,
+            //         },
+            //         mg_settings
+            //     )
+            // } else if (isMobile) {
+            //     let mobile = req.body.auth_key
+            //         .replace(/\D/g, '')
+            //         .replace(/^0+/, '')
+            //     let message = `Your password is reset`
+            //     let smsSettings = req.brand.settings?.notification_settings?.sms
+            //     SMS.sendThanks(message, mobile, req.brand.name.en, smsSettings)
+            // }
 
             return res.status(200).json({
                 message: 'Password is reset',

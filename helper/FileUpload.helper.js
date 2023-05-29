@@ -4,7 +4,7 @@ const Media = require('../model/Media')
 var FileReader = require('filereader')
 
 // Upload function internally uses the ImageKit.io javascript SDK
-const uploadMedia = async (media, folder, new_name) => {
+const uploadMedia = async (media, folder, file) => {
     // SDK initialization
     const imagekit = new ImageKit({
         publicKey: envConfig.imagekit.PUBLIC_KEY,
@@ -24,12 +24,14 @@ const uploadMedia = async (media, folder, new_name) => {
     // })
 
     // let nodeEnv = envConfig.general.NODE_ENV
-    let baseFolder = `${envConfig.imagekit.FOLDER.toLowerCase()}/${envConfig.general.NODE_ENV.toLowerCase()}`
+    let baseFolder =
+        `${envConfig.imagekit?.FOLDER?.toLowerCase()}/${envConfig.general?.NODE_ENV?.toLowerCase()}` ||
+        'Sample'
     const uploaded = await imagekit
         .upload({
             folder: `${baseFolder}/${folder}`,
             file: media,
-            fileName: new_name,
+            fileName: file?.originalname?.toLowerCase() || 'sample-image',
             // tags : ["tag1"]
         })
         .then(async (result) => {
@@ -41,6 +43,9 @@ const uploadMedia = async (media, folder, new_name) => {
             const insertedMedia = await Media.create({
                 url: result.url,
                 response: result,
+                file: {
+                    name: file?.originalname?.toLowerCase() || 'sample-image',
+                },
             })
 
             return insertedMedia

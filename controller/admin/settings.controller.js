@@ -148,7 +148,7 @@ const changeLogo = async (req, res) => {
                     'base64'
                 )
                 let fieldLang = req.files[i].fieldname.split('.')[1]
-                const media = await uploadMedia(base64, 'Logos', file.filename) //file.originalname
+                const media = await uploadMedia(base64, 'Logos', file) //file.originalname
                 // Deleting the image saved to uploads/
                 fs.unlinkSync(`uploads/${file.filename}`)
                 if (media && media._id) {
@@ -343,7 +343,7 @@ const seoSave = async (req, res) => {
                     'base64'
                 )
                 let fieldLang = req.files[i].fieldname.split('.')[1]
-                const media = await uploadMedia(base64, 'SEO', file.filename) //file.originalname
+                const media = await uploadMedia(base64, 'SEO', file) //file.originalname
                 // Deleting the image saved to uploads/
                 fs.unlinkSync(`uploads/${file.filename}`)
                 if (media && media._id) {

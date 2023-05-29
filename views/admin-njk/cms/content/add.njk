@@ -502,6 +502,19 @@
 																			<div class="col-lg-8 pt-2">
 																				{% if meta_field.type == 'textarea' %}
 																					<textarea class="form-control" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}"></textarea>
+																				{% elif meta_field.type == 'media' %}
+																					<span class='media-uploader-field'>
+																						<span class="media_preview">
+																							<span class="preview-holder"></span>
+																							<a class="btn btn-danger image-preview-remove-btn d-none my-1">
+																								<i class="fa fa-trash" tabindex="-1"></i>
+																							</a>
+																						</span>
+																						<input type="hidden" class="media_url_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][url]">
+																						<input type="hidden" class="media_title_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][title]">
+																						<input type="hidden" class="media_alt_text_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][alt_text]">
+																						<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																					</span>
 																				{% else %}
 																					<input type="text" class="form-control" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}">
 																				{% endif %}

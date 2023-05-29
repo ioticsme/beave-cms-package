@@ -51,6 +51,7 @@ const customFormSubmit = async (req, res) => {
         // Verifying captcha with token
         if (
             customForm.has_captcha &&
+            envConfig.general.CAPTCHA_ENABLED && 
             (envConfig.general.NODE_ENV == 'production' ||
                 envConfig.general.NODE_ENV == 'staging')
         ) {
@@ -115,14 +116,14 @@ const customFormSubmit = async (req, res) => {
             }
 
             if (
-                customForm.reply_email_template &&
+                customForm.recepient_email_template &&
                 customForm.recepient_emails
             ) {
                 sendEmail(
                     envConfig.mailgun.FROM,
                     customForm.recepient_emails.split(','),
                     `${customForm.form_name} Form Submission`,
-                    customForm.reply_email_template,
+                    customForm.recepient_email_template,
                     req.body,
                     envConfig.mailgun
                 )

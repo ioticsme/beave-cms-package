@@ -225,7 +225,7 @@ const viewSubmissions = async (req, res) => {
             form_id: req.params.id,
             brand: session.brand._id,
             country: session.brand.country,
-        })
+        }).sort({ _id: -1 })
         res.render(`admin-njk/custom-forms/submissions`, {
             data: submissions,
         })

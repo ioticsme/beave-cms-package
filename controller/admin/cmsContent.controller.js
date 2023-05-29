@@ -93,6 +93,8 @@ const detail = async (req, res) => {
             template = `admin-njk/cms/content/html-builder/detail`
         }
 
+        // console.log(contentDetail.meta.en.OG.url)
+
         res.render(template, {
             default_lang,
             has_common_field_groups: has_common_field_groups ? true : false,
@@ -206,6 +208,8 @@ const deleteContent = async (req, res) => {
             country: req.authUser.brand.country,
         })
 
+        // :TODO: Remove cache
+        const countryCode = req.authUser.brand?.country_code
         const collection_cache_key = `data-content-${req.authUser.brand.code}-${countryCode}-${slug}`
         // const single_item_cache_key = `data-content-${req.authUser.brand.code}-${countryCode}-${slug}-${update.slug || update._id}`
         Redis.removeCache([collection_cache_key])
@@ -228,6 +232,8 @@ const changeStatus = async (req, res) => {
         if (!id) {
             return res.status(404).json({ error: 'Invalid data' })
         }
+
+        const newStatus = status ? 'unpublished' : 'published'
         // Update
         const update = await Content.findOneAndUpdate(
             {
@@ -237,7 +243,7 @@ const changeStatus = async (req, res) => {
             },
             {
                 $set: {
-                    status: status,
+                    status: newStatus,
                 },
             }
         )
@@ -246,6 +252,8 @@ const changeStatus = async (req, res) => {
             return res.status(404).json({ error: 'Something went wrong' })
         }
 
+        // :TODO: @Ebrahim, commented this because of error with countryCode
+        const countryCode = req.authUser.brand?.country_code
         const collection_cache_key = `data-content-${req.authUser.brand.code}-${countryCode}-${slug}`
         const single_item_cache_key = `data-content-${
             req.authUser.brand.code
@@ -393,7 +401,7 @@ const savePageBuilderContent = async (req, res) => {
 }
 
 const saveDefaultContent = async (req, res) => {
-    // console.log(req.body.en.featured_blocks.description)
+    // console.log(req.body.meta.en.og)
     // return false
     try {
         // Data object to insert

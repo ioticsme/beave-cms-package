@@ -70,6 +70,8 @@ const ContentSchema = new mongoose.Schema(
             createdAt: 'created_at',
             updatedAt: 'updated_at',
         },
+        // toObject: { virtuals: true }, // <-- These properties will configure
+        // toJSON: { virtuals: true },
     }
 )
 
@@ -81,6 +83,10 @@ ContentSchema.virtual('date_created').get(function () {
         'Asia/Dubai',
         'dd/MM/yyyy HH:mm:ss'
     )
+})
+
+ContentSchema.virtual('published').get(function () {
+    return this.status === 'published'
 })
 
 ContentSchema.virtual('scheduled_start').get(function () {

@@ -68,7 +68,12 @@
 								{% for item in data %}
 									<tr>
 										<td>
-											<code>{{ JSON.stringify(item.field_values) }}</code>
+											{%set field_keys = ObjectKeys(item.field_values)%}
+											{%for key in field_keys%}
+												{%if  key != 'token'%}
+													<p>{{key}} : {{item.field_values[key]}} </p>
+												{%endif%}
+											{%endfor%}
 										</td>
 										<td>
 											<a class="badge badge-light-primary">{{ item.type }}</a>
