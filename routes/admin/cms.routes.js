@@ -13,7 +13,6 @@ const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
 router.group('/', (router) => {
-    
     router.group('/media', (router) => {
         router.get('/', mediaController.list)
         router.post('/add-meta', mediaController.addMetaInfo)

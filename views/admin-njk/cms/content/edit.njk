@@ -61,6 +61,7 @@
 				},
 			})
 				.then((editor) => {
+					let latestImageElement
 					editor.plugins.get('FileRepository').createUploadAdapter =
 						function (loader) {
 							return {
@@ -78,8 +79,17 @@
 									)
 
 									const data = await response.json()
-									
-									setImageUrl(data.urls?.default)
+									// Set data-id attribute for the latest uploaded image
+									const uniqueId = generateUniqueId()
+									if (latestImageElement) {
+										editor.model.change((writer) => {
+											writer.setAttributes(
+												{ 'data-id': uniqueId },
+												latestImageElement
+											)
+										})
+									}
+									setImageUrl(uniqueId, data.urls?.default)
 									return {
 										default: data.urls?.default,
 									}
@@ -87,27 +97,53 @@
 							}
 						}
 
-					// Function to set the image URL in CKEditor
-					function setImageUrl(imageUrl) {
-						editor.model.change((writer) => {
-							const imageElement = editor.model.document
-								.getRoot()
-								.getChild(0)
-							console.log('IE',imageElement)
-							writer.setAttribute('src', imageUrl, imageElement)
-						})
+					// Function to set the image URL in CKEditor based on a unique identifier
+					function setImageUrl(uniqueId, imageUrl) {
+						const imageElements = Array.from(
+							editor.model.document.getRoot().getChildren()
+						).filter((child) => child.name === 'image')
+
+						const targetImage = imageElements.find(
+							(imageElement) =>
+								imageElement.getAttribute('data-id') === uniqueId
+						)
+
+						if (targetImage) {
+							editor.model.change((writer) => {
+								writer.setAttribute('src', imageUrl, targetImage)
+							})
+						}
 					}
 
 					// Add data-id attribute to each image element
-					editor.model.change(writer => {
-						const imageElements = Array.from(editor.model.document.getRoot().getChildren())
-							.filter(child => child.name === 'imageBlock');
-						console.log('IES',imageElements)
+					editor.model.change((writer) => {
+						const imageElements = Array.from(
+							editor.model.document.getRoot().getChildren()
+						).filter((child) => child.name === 'imageBlock')
 						imageElements.forEach((imageElement, index) => {
-							console.log("LOOP IE",imageElement)
-							writer.setAttribute('data-id', `image-${index}`, imageElement);
-						});
-					});
+							writer.setAttribute(
+								'data-id',
+								generateUniqueId(),
+								imageElement
+							)
+						})
+					})
+
+					// Function to generate a unique ID
+					function generateUniqueId() {
+						return Math.random().toString(36).substr(2, 9)
+					}
+
+					// Event listener for when an image is inserted
+					editor.model.document.on('change:data', () => {
+						const imageElements = Array.from(
+							editor.model.document.getRoot().getChildren()
+						).filter((child) => child.name === 'imageBlock')
+
+						if (imageElements.length > 0) {
+							latestImageElement = imageElements[imageElements.length - 1]
+						}
+					})
 				})
 				.catch((error) => {
 					console.log(error)
