@@ -53,21 +53,57 @@
 	{# // Form Submission Script #}
 	<script src='/cms-static/common/js/form-data-json.min.js'></script>
 	<script src='/cms-static/common/js/es-form.js'></script>
+	<script src="https://cdn.quilljs.com/1.2.6/quill.min.js"></script>
 {% endblock %}
 
 {% block customScript %}
 	<script>
-		document
-			.querySelectorAll('.content_wysiwyg')
-			.forEach(function (e) {
-				//- console.log(e.getAttribute('id'))
-				ClassicEditor
-					.create(document.querySelector(`#${e.getAttribute('id')}`))
-					.then(editor => {})
-					.catch(error => {
-						console.error(error);
-					});
+		document.querySelectorAll('.content_wysiwyg').forEach(function (e) {
+			ClassicEditor.create(document.querySelector(`#${e.getAttribute('id')}`), {
+				simpleUpload: {
+					uploadUrl: '/admin/cms/media/ck-editor/upload',
+				},
 			})
+				.then((editor) => {
+					editor.plugins.get('FileRepository').createUploadAdapter =
+						function (loader) {
+							return {
+								upload: async () => {
+									const file = await loader.file
+									const formData = new FormData()
+									formData.append('image', file)
+
+									const response = await fetch(
+										'/admin/cms/media/ck-editor/upload',
+										{
+											method: 'POST',
+											body: formData,
+										}
+									)
+
+									const data = await response.json()
+									setImageUrl(data.urls?.default)
+									return {
+										default: data.urls?.default,
+									}
+								},
+							}
+						}
+
+					// Function to set the image URL in CKEditor
+					function setImageUrl(imageUrl) {
+						editor.model.change((writer) => {
+							const imageElement = editor.model.document
+								.getRoot()
+								.getChild(0)
+							writer.setAttribute('src', imageUrl, imageElement)
+						})
+					}
+				})
+				.catch((error) => {
+					console.log(error)
+				})
+		})
 
 		function initDatePicker() {
 			document
