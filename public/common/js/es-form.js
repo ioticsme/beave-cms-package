@@ -310,28 +310,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         } else if (pageRefresh) {
                             location.reload()
                         } else {
-                            toastr.success('Success')
+                            toastr.success(data?.message || 'Success')
                         }
                     }
                 } else if (resStatus == 422) {
-                    // console.log(data.details)
-                    // Swal.fire({
-                    //     text: 'You must fill out the form before moving forward',
-                    //     icon: 'error',
-                    //     buttonsStyling: !1,
-                    //     confirmButtonText: 'Ok, got it!',
-                    //     customClass: { confirmButton: 'btn btn-primary' },
-                    // })
                     showErrors(data, form.getAttribute('id'))
-                } else {
-                    console.log(data.error || 'Something went wrong')
-                    // Swal.fire({
-                    //     text: data.error || 'Something went wrong',
-                    //     icon: 'error',
-                    //     buttonsStyling: !1,
-                    //     confirmButtonText: 'Ok, got it!',
-                    //     customClass: { confirmButton: 'btn btn-primary' },
-                    // })
+                } else if (resStatus == 401) {
+                    console.log(data?.error || 'Invalid credentials')
+                    toastr.error(data?.error || 'Invalid credentials')
                 }
                 if (form.querySelector('#slug_field')) {
                     form.querySelector('#slug_field').disabled = true
@@ -355,13 +341,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 form.querySelector('.form-submit-btn .preloader').classList.add(
                     'd-none'
                 )
-                // Swal.fire({
-                //     text: 'Something went wrong',
-                //     icon: 'error',
-                //     buttonsStyling: !1,
-                //     confirmButtonText: 'Ok, got it!',
-                //     customClass: { confirmButton: 'btn btn-primary' },
-                // })
+                toastr.error('Something went wrong')
                 console.log(JSON.stringify(err))
             })
     }
