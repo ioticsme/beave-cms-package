@@ -99,12 +99,20 @@ const loginSubmit = async (req, res) => {
 
         const admin = await Admin.findOne({
             email: req.body.email,
-            active: true,
+            // active: true,
             // isDeleted: false,
         })
 
         if (!admin) {
             return res.status(401).json({ error: 'Invalid email or password' })
+        }
+
+        if (!admin?.active) {
+            return res
+                .status(401)
+                .json({
+                    error: 'An administrator has blocked you from this app',
+                })
         }
 
         if (bcrypt.compareSync(req.body.password, admin.password)) {
