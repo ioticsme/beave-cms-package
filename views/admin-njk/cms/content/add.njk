@@ -53,21 +53,106 @@
 	{# // Form Submission Script #}
 	<script src='/cms-static/common/js/form-data-json.min.js'></script>
 	<script src='/cms-static/common/js/es-form.js'></script>
+	<script src="https://cdn.quilljs.com/1.2.6/quill.min.js"></script>
 {% endblock %}
 
 {% block customScript %}
 	<script>
-		document
-			.querySelectorAll('.content_wysiwyg')
-			.forEach(function (e) {
-				//- console.log(e.getAttribute('id'))
-				ClassicEditor
-					.create(document.querySelector(`#${e.getAttribute('id')}`))
-					.then(editor => {})
-					.catch(error => {
-						console.error(error);
-					});
+		document.querySelectorAll('.content_wysiwyg').forEach(function (e) {
+			ClassicEditor.create(document.querySelector(`#${e.getAttribute('id')}`), {
+				simpleUpload: {
+					uploadUrl: '/admin/cms/media/ck-editor/upload',
+				},
 			})
+				.then((editor) => {
+					let latestImageElement
+					editor.plugins.get('FileRepository').createUploadAdapter =
+						function (loader) {
+							return {
+								upload: async () => {
+									const file = await loader.file
+									const formData = new FormData()
+									formData.append('image', file)
+
+									const response = await fetch(
+										'/admin/cms/media/ck-editor/upload',
+										{
+											method: 'POST',
+											body: formData,
+										}
+									)
+
+									const data = await response.json()
+									// Set data-id attribute for the latest uploaded image
+									const uniqueId = generateUniqueId()
+									if (latestImageElement) {
+										editor.model.change((writer) => {
+											writer.setAttributes(
+												{ 'data-id': uniqueId },
+												latestImageElement
+											)
+										})
+									}
+									setImageUrl(uniqueId, data.urls?.default)
+									return {
+										default: data.urls?.default,
+									}
+								},
+							}
+						}
+
+					// Function to set the image URL in CKEditor based on a unique identifier
+					function setImageUrl(uniqueId, imageUrl) {
+						const imageElements = Array.from(
+							editor.model.document.getRoot().getChildren()
+						).filter((child) => child.name === 'image')
+
+						const targetImage = imageElements.find(
+							(imageElement) =>
+								imageElement.getAttribute('data-id') === uniqueId
+						)
+
+						if (targetImage) {
+							editor.model.change((writer) => {
+								writer.setAttribute('src', imageUrl, targetImage)
+							})
+						}
+					}
+
+					// Add data-id attribute to each image element
+					editor.model.change((writer) => {
+						const imageElements = Array.from(
+							editor.model.document.getRoot().getChildren()
+						).filter((child) => child.name === 'imageBlock')
+						imageElements.forEach((imageElement, index) => {
+							writer.setAttribute(
+								'data-id',
+								generateUniqueId(),
+								imageElement
+							)
+						})
+					})
+
+					// Function to generate a unique ID
+					function generateUniqueId() {
+						return Math.random().toString(36).substr(2, 9)
+					}
+
+					// Event listener for when an image is inserted
+					editor.model.document.on('change:data', () => {
+						const imageElements = Array.from(
+							editor.model.document.getRoot().getChildren()
+						).filter((child) => child.name === 'imageBlock')
+
+						if (imageElements.length > 0) {
+							latestImageElement = imageElements[imageElements.length - 1]
+						}
+					})
+				})
+				.catch((error) => {
+					console.log(error)
+				})
+		})
 
 		function initDatePicker() {
 			document

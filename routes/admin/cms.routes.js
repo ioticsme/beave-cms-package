@@ -13,7 +13,6 @@ const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
 router.group('/', (router) => {
-    
     router.group('/media', (router) => {
         router.get('/', mediaController.list)
         router.post('/add-meta', mediaController.addMetaInfo)
@@ -21,6 +20,11 @@ router.group('/', (router) => {
         router.get('/view/:id', mediaController.jsonDetail)
         router.post('/upload', upload.any(), mediaController.fileUpload)
         router.post('/delete', mediaController.deleteMedia)
+        router.post(
+            '/ck-editor/upload',
+            upload.any(),
+            mediaController.ckEditorFileUpload
+        )
     })
 
     // Media management Routes

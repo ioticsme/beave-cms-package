@@ -67,6 +67,32 @@ const fileUpload = async (req, res) => {
     return res.status(200).json('uploaded')
 }
 
+const ckEditorFileUpload = async (req, res) => {
+    //BEGIN:: Media upload
+    let images = {}
+    if (!(req.files && req.files.length)) {
+        return res.status(400).json({ error: 'No media files found' })
+    }
+    let file = req.files[0]
+    // Creating base64 from file
+    const base64 = Buffer.from(fs.readFileSync(file.path)).toString('base64')
+    const media = await uploadMedia(base64, 'media', file) //file.originalname
+    // Deleting the image saved to temp/
+    fs.unlinkSync(`temp/${file.filename}`)
+    if (!(media && media._id)) {
+        return res.status(503).json({
+            error: 'Some error occurred while uploading the image',
+        })
+    }
+
+    //END:: Media upload
+    return res.status(200).json({
+        urls: {
+            default: media.url,
+        },
+    })
+}
+
 const deleteMedia = async (req, res) => {
     try {
         const { id } = req.body
@@ -125,5 +151,6 @@ module.exports = {
     jsonDetail,
     addMetaInfo,
     fileUpload,
+    ckEditorFileUpload,
     deleteMedia,
 }
