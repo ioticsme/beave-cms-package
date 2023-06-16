@@ -32,6 +32,27 @@ const baseConfig = async (req, res, next) => {
     next()
 }
 
+const nunjucksFilter = async (req, res, next) => {
+    // Converting the date object dd-mm-yyyy format
+    res.locals.convertDateToDMY = (date) => {
+        if (date) {
+            return format(date, 'dd-MM-yyyy')
+        } else {
+            return null
+        }
+    }
+    // Stringify the json object
+    res.locals.jsonToString = (json) => {
+        if (json) {
+            return JSON.stringify(json)
+        } else {
+            return null
+        }
+    }
+
+    next()
+}
+
 const authCheck = async (req, res, next) => {
     if (!req.session || !req.session.admin_id) {
         res.redirect('/admin/auth/login')
@@ -349,4 +370,5 @@ module.exports = {
     mainNavGenerator,
     allBrands,
     checkSuperAdmin,
+    nunjucksFilter,
 }

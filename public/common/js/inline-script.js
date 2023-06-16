@@ -2,15 +2,22 @@
     BEGIN::Media Management
 */
 const mediaManagementPanel = document.querySelector('#media-management-panel')
-
 if (mediaManagementPanel) {
+    const dropZoneDiv = document.querySelector('#kt_dropzonejs_example_1')
+    const hasPdfUpload = dropZoneDiv.getAttribute('data-upload-pdf') || false
+    // Setting the acceptedFiles for the dropzone
+    let acceptedFiles = `.jpeg,.jpg,.png,.gif`
+    // if hasPdfUpload is true then .pdf extension will be added to the acceptedFiles
+    if (hasPdfUpload == 'true') {
+        acceptedFiles += `,.pdf`
+    }
     var myDropzone = new Dropzone('#kt_dropzonejs_example_1', {
         url: '/admin/cms/media/upload', // Set the url for your upload script location
         paramName: 'file', // The name that will be used to transfer the file
         maxFiles: 10,
         maxFilesize: 10, // MB
         addRemoveLinks: true,
-        acceptedFiles: '.jpeg,.jpg,.png,.gif',
+        acceptedFiles,
         accept: function (file, done) {
             if (file.name == 'wow.jpg') {
                 done("Naha, you don't.")
@@ -329,12 +336,20 @@ document.querySelectorAll('.media-list-item').forEach((eachMediaItem) => {
             e.classList.remove('active')
         })
         e.target.parentNode.classList.add('active')
+
+        let pdfThumbnailURL = `/cms-static/admin/assets/media/pdf-thumbnail.png`
         axios
             .get(`/admin/cms/media/view/${targetId}`)
             .then(function (response) {
-                document.querySelector(
-                    '#media-meta-panel #img-holder #preview-img'
-                ).src = response.data.url || ''
+                if (response?.data?.file_type == 'pdf') {
+                    document.querySelector(
+                        '#media-meta-panel #img-holder #preview-img'
+                    ).src = pdfThumbnailURL || ''
+                } else {
+                    document.querySelector(
+                        '#media-meta-panel #img-holder #preview-img'
+                    ).src = response.data.url || ''
+                }
                 document.querySelector(
                     '#media-meta-panel input[name="id"]'
                 ).value = response.data._id || ''

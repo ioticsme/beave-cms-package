@@ -31,6 +31,7 @@ const {
     authUser,
     mainNavGenerator,
     allBrands,
+    nunjucksFilter,
 } = require('./middleware/cms.middleware')
 // END::Service Providers
 
@@ -254,7 +255,7 @@ app.get('/', (req, res) => {
 app.use('/api', webAPIRoutes)
 app.use(
     '/admin',
-    [baseConfig, authUser, mainNavGenerator, allBrands],
+    [baseConfig, nunjucksFilter, authUser, mainNavGenerator, allBrands],
     adminRoutes
 )
 

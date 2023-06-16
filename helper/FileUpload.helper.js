@@ -40,12 +40,18 @@ const uploadMedia = async (media, folder, file) => {
             //     transformation: [{ height: 300, width: 400 }],
             // })
 
+            let fileType = 'image'
+            if (file.mimetype == 'application/pdf') {
+                fileType = 'pdf'
+            }
+
             const insertedMedia = await Media.create({
                 url: result.url,
                 response: result,
                 file: {
                     name: file?.originalname?.toLowerCase() || 'sample-image',
                 },
+                file_type: fileType,
             })
 
             return insertedMedia

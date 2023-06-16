@@ -401,7 +401,7 @@ const savePageBuilderContent = async (req, res) => {
 }
 
 const saveDefaultContent = async (req, res) => {
-    // console.log(req.body.meta.en.og)
+    // console.log(req.body.common)
     // return false
     try {
         // Data object to insert

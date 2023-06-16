@@ -70,7 +70,11 @@
 							{% for item in media %}
 								<input id="img-{{ loop.index }}" value="{{ item.url }}" hidden/>
 								<div class="col-12 col-sm-3 col-md-3 col-lg-2 col-xl-2 col-xxl-2 text-center mb-2 mb-xl-2 media-list-item" data-name="{{item.file.name}}" data-id="{{item._id}}">
-									<img class="lazy img-thumbnail cursor-pointer" src="/admin/assets/media/svg/files/blank-image.svg" data-src="{{ item.url }}?tr=w-150,h-150" alt="image" srcset="" style="width: 100%; height:auto; object-fit: cover;">
+									{%if item.file_type=='pdf'%}
+										<img class="lazy img-thumbnail cursor-pointer" src="/cms-static/admin/assets/media/svg/files/blank-image.svg" data-src="/cms-static/admin/assets/media/pdf-thumbnail.png?tr=w-150,h-150" alt="image" srcset="" style="width: 100%; height:auto; object-fit: cover;">
+									{%else%}
+										<img class="lazy img-thumbnail cursor-pointer" src="/cms-static/admin/assets/media/svg/files/blank-image.svg" data-src="{{ item.url }}?tr=w-150,h-150" alt="image" srcset="" style="width: 100%; height:auto; object-fit: cover;">
+									{%endif%}
 									<div class="row mt-1">
 										<div class="col-12">
 											<span class="btn btn-danger btn-sm mt-1" id="{{ item._id }}" url="/admin/cms/media/delete" data-kt-subscriptions-table-filter="delete_row" onClick="deleteItem(this)" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to delete image">

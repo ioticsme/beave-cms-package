@@ -13,6 +13,7 @@ const envConfig = {
         ADMIN_LANDING_URL: process.env.ADMIN_LANDING_URL || '/admin/dashboard',
         SESSION_STORAGE: process.env.SESSION_STORAGE || 'file',
         CAPTCHA_ENABLED: process.env.CAPTCHA_ENABLED || false,
+        HAS_PDF_UPLOAD: process.env.HAS_PDF_UPLOAD || false,
     },
     db: {
         URL: process.env.DB_CONNECTION,
