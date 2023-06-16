@@ -6,15 +6,22 @@ const Media = require('../../model/Media')
 const list = async (req, res) => {
     try {
         const media = await Media.find().sort({ created_at: -1 })
-        return res.render('admin-njk/cms/media/listing', { media })
+        let hasPdfUpload = envConfig.general.HAS_PDF_UPLOAD
+        return res.render('admin-njk/cms/media/listing', {
+            media,
+            hasPdfUpload,
+        })
     } catch (error) {
+        console.log('error :>> ', error);
         return res.render(`admin-njk/error-404`)
     }
 }
 
 const jsonList = async (req, res) => {
     try {
-        const media = await Media.find().sort({ created_at: -1 })
+        const media = await Media.find({ file_type: { $ne: 'pdf' } }).sort({
+            created_at: -1,
+        })
         return res.status(200).json(media)
     } catch (error) {
         return res.render(`admin-njk/error-404`)

@@ -22,6 +22,12 @@ const MediaSchema = new mongoose.Schema(
         file: {
             type: Object,
         },
+        file_type: {
+            type: String,
+            required: true,
+            default: 'image',
+            enum: ['pdf', 'image'],
+        },
     },
     {
         timestamps: {
