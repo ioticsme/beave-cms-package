@@ -190,29 +190,18 @@
 				.forEach(function (element) {
 					element.value = null
 				})
-			//- console.log(`#${newElement.getAttribute('id')}`)
 			if (document.querySelector(`#${newElement.getAttribute('id')}`).querySelector('.media-uploader-modal-btn')) {
-				newMediaButtonId = `beave-media-field-${Math.floor(Math.random() * 1000000000)}`
-				document
-					.querySelector(`#${newElement.getAttribute('id')}`)
-					.querySelector('.media-uploader-modal-btn')
-					.setAttribute('id', newMediaButtonId)
-
-				document
-					.querySelector(`#${newElement.getAttribute('id')}`)
-					.querySelector('.media_preview .preview-holder')
-					.innerHTML = ''
-				document
-					.querySelector(`#${newElement.getAttribute('id')}`)
-					.querySelector('.media_preview .image-preview-remove-btn')
-					.classList
-					.add('d-none')
-
+				document.querySelector(`#${newElement.getAttribute('id')}`).querySelectorAll('.media-uploader-field').forEach((mediaField)=>{
+					newMediaButtonId = `beave-media-field-${Math.floor(Math.random() * 1000000000)}`
+					mediaField.querySelector('.media-uploader-modal-btn')
+						.setAttribute('id', newMediaButtonId)
+					mediaField.querySelector('.media_preview .preview-holder')
+						.innerHTML = ''
+					mediaField.querySelector('.media_preview .image-preview-remove-btn')
+						.classList
+						.add('d-none')
+				})
 			}
-			document
-				.querySelector(`#${newElement.getAttribute('id')}`)
-				.querySelector('.media-uploader-modal-btn')
-				.setAttribute('id', newMediaButtonId)
 
 			initDatePicker()
 		}
@@ -340,7 +329,7 @@
 																								<img src="{{fieldValue.url}}" style="max-width: 200px;"/>
 																							{% endif %}
 																						</span>
-																						<a class="btn btn-danger image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
+																						<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
 																							<i class="fa fa-trash" tabindex="-1"></i>
 																						</a>
 																					</span>
@@ -408,7 +397,7 @@
 																							<img src="{{fieldValue.url}}" style="max-width: 200px;"/>
 																						{% endif %}
 																					</span>
-																					<a class="btn btn-danger image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
+																					<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
 																						<i class="fa fa-trash" tabindex="-1"></i>
 																					</a>
 																				</span>
@@ -484,7 +473,7 @@
 																									<span class="preview-holder">
 																										<img src="{{fieldValue.url}}" style="max-width: 150px;"/>
 																									</span>
-																									<a class="btn btn-danger image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
+																									<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
 																										<i class="fa fa-trash" tabindex="-1"></i>
 																									</a>
 																								</span>
@@ -548,7 +537,7 @@
 																									<img src="{{ fieldValue.url }}" style="max-width: 150px;"/>
 																								{% endif %}
 																							</span>
-																							<a class="btn btn-danger image-preview-remove-btn my-1 {% if not fieldValue %}d-none{% endif %}">
+																							<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {% if not fieldValue %}d-none{% endif %}">
 																								<i class="fa fa-trash" tabindex="-1"></i>
 																							</a>
 																						</span>
@@ -621,7 +610,7 @@
 																										<img src="{{ metaFieldValue.url }}" style="max-width: 150px;"/>
 																									{% endif %}
 																								</span>
-																								<a class="btn btn-danger image-preview-remove-btn my-1 {% if not metaFieldValue.url %}d-none{% endif %}">
+																								<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {% if not metaFieldValue.url %}d-none{% endif %}">
 																									<i class="fa fa-trash" tabindex="-1"></i>
 																								</a>
 																							</span>

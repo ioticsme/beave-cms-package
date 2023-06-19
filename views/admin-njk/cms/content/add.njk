@@ -196,21 +196,16 @@
 				})
 			//- console.log(`#${newElement.getAttribute('id')}`)
 			if (document.querySelector(`#${newElement.getAttribute('id')}`).querySelector('.media-uploader-modal-btn')) {
-				newMediaButtonId = `beave-media-field-${Math.floor(Math.random() * 1000000000)}`
-				document
-					.querySelector(`#${newElement.getAttribute('id')}`)
-					.querySelector('.media-uploader-modal-btn')
-					.setAttribute('id', newMediaButtonId)
-
-				document
-					.querySelector(`#${newElement.getAttribute('id')}`)
-					.querySelector('.media_preview .preview-holder')
-					.innerHTML = ''
-				document
-					.querySelector(`#${newElement.getAttribute('id')}`)
-					.querySelector('.media_preview .image-preview-remove-btn')
-					.classList
-					.add('d-none')
+				document.querySelector(`#${newElement.getAttribute('id')}`).querySelectorAll('.media-uploader-field').forEach((mediaField)=>{
+					newMediaButtonId = `beave-media-field-${Math.floor(Math.random() * 1000000000)}`
+					mediaField.querySelector('.media-uploader-modal-btn')
+						.setAttribute('id', newMediaButtonId)
+					mediaField.querySelector('.media_preview .preview-holder')
+						.innerHTML = ''
+					mediaField.querySelector('.media_preview .image-preview-remove-btn')
+						.classList
+						.add('d-none')
+				})
 
 			}
 
@@ -345,7 +340,7 @@
 																					<span class='media-uploader-field'>
 																						<span class="media_preview">
 																							<span class="preview-holder"></span>
-																							<a class="btn btn-danger image-preview-remove-btn d-none my-1">
+																							<a class="btn btn-danger btn-icon image-preview-remove-btn d-none my-1">
 																								<i class="fa fa-trash" tabindex="-1"></i>
 																							</a>
 																						</span>
@@ -404,7 +399,7 @@
 																			<span class='media-uploader-field'>
 																				<span class="media_preview">
 																					<span class="preview-holder"></span>
-																					<a class="btn btn-danger image-preview-remove-btn d-none my-1">
+																					<a class="btn btn-danger btn-icon image-preview-remove-btn d-none my-1">
 																						<i class="fa fa-trash" tabindex="-1"></i>
 																					</a>
 																				</span>
@@ -463,7 +458,7 @@
 																				<span class='media-uploader-field'>
 																					<span class="media_preview">
 																						<span class="preview-holder"></span>
-																						<a class="btn btn-danger image-preview-remove-btn d-none my-1">
+																						<a class="btn btn-danger btn-icon image-preview-remove-btn d-none my-1">
 																							<i class="fa fa-trash" tabindex="-1"></i>
 																						</a>
 																					</span>
@@ -518,7 +513,7 @@
 																			<span class='media-uploader-field'>
 																				<span class="media_preview">
 																					<span class="preview-holder"></span>
-																					<a class="btn btn-danger image-preview-remove-btn d-none my-1">
+																					<a class="btn btn-danger btn-icon image-preview-remove-btn d-none my-1">
 																						<i class="fa fa-trash" tabindex="-1"></i>
 																					</a>
 																				</span>
@@ -591,7 +586,7 @@
 																					<span class='media-uploader-field'>
 																						<span class="media_preview">
 																							<span class="preview-holder"></span>
-																							<a class="btn btn-danger image-preview-remove-btn d-none my-1">
+																							<a class="btn btn-danger btn-icon image-preview-remove-btn d-none my-1">
 																								<i class="fa fa-trash" tabindex="-1"></i>
 																							</a>
 																						</span>
