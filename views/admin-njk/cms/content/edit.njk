@@ -50,178 +50,8 @@
 	{# // Form Submission Script #}
 	<script src='/cms-static/common/js/form-data-json.min.js'></script>
 	<script src='/cms-static/common/js/es-form.js'></script>
-{% endblock %}
-
-{% block customScript %}
-	<script>
-		document.querySelectorAll('.content_wysiwyg').forEach(function (e) {
-			ClassicEditor.create(document.querySelector(`#${e.getAttribute('id')}`), {
-				simpleUpload: {
-					uploadUrl: '/admin/cms/media/ck-editor/upload',
-				},
-			})
-				.then((editor) => {
-					let latestImageElement
-					editor.plugins.get('FileRepository').createUploadAdapter =
-						function (loader) {
-							return {
-								upload: async () => {
-									const file = await loader.file
-									const formData = new FormData()
-									formData.append('image', file)
-
-									const response = await fetch(
-										'/admin/cms/media/ck-editor/upload',
-										{
-											method: 'POST',
-											body: formData,
-										}
-									)
-
-									const data = await response.json()
-									// Set data-id attribute for the latest uploaded image
-									const uniqueId = generateUniqueId()
-									if (latestImageElement) {
-										editor.model.change((writer) => {
-											writer.setAttributes(
-												{ 'data-id': uniqueId },
-												latestImageElement
-											)
-										})
-									}
-									setImageUrl(uniqueId, data.urls?.default)
-									return {
-										default: data.urls?.default,
-									}
-								},
-							}
-						}
-
-					// Function to set the image URL in CKEditor based on a unique identifier
-					function setImageUrl(uniqueId, imageUrl) {
-						const imageElements = Array.from(
-							editor.model.document.getRoot().getChildren()
-						).filter((child) => child.name === 'image')
-
-						const targetImage = imageElements.find(
-							(imageElement) =>
-								imageElement.getAttribute('data-id') === uniqueId
-						)
-
-						if (targetImage) {
-							editor.model.change((writer) => {
-								writer.setAttribute('src', imageUrl, targetImage)
-							})
-						}
-					}
-
-					// Add data-id attribute to each image element
-					editor.model.change((writer) => {
-						const imageElements = Array.from(
-							editor.model.document.getRoot().getChildren()
-						).filter((child) => child.name === 'imageBlock')
-						imageElements.forEach((imageElement, index) => {
-							writer.setAttribute(
-								'data-id',
-								generateUniqueId(),
-								imageElement
-							)
-						})
-					})
-
-					// Function to generate a unique ID
-					function generateUniqueId() {
-						return Math.random().toString(36).substr(2, 9)
-					}
-
-					// Event listener for when an image is inserted
-					editor.model.document.on('change:data', () => {
-						const imageElements = Array.from(
-							editor.model.document.getRoot().getChildren()
-						).filter((child) => child.name === 'imageBlock')
-
-						if (imageElements.length > 0) {
-							latestImageElement = imageElements[imageElements.length - 1]
-						}
-					})
-				})
-				.catch((error) => {
-					console.log(error)
-				})
-		})
-
-		function initDatePicker() {
-			document
-				.querySelectorAll('.kt_daterangepicker input')
-				.forEach((picker) => {
-					const options = {
-						altFormat: 'd F, Y',
-						enableTime: picker.getAttribute('data-hastime') || false
-					}
-					options.dateFormat = picker.getAttribute('data-hastime') == true
-						? 'Y-m-d H:i'
-						: 'Y-m-d'
-					if (picker.getAttribute('data-daterange') == true) {
-						options.mode = picker.getAttribute('data-daterange')
-							? "range"
-							: "single"
-					}
-					picker.flatpickr(options)
-				})
-		}
-
-		initDatePicker()
-
-		var childIndex = 0
-		function cloneChild(event) {
-			childIndex++
-			let targetElement = event.target
-			let parentId = targetElement.getAttribute('target-id')
-			let parentLang = targetElement.getAttribute('target-lang')
-			let langPrefix = targetElement.getAttribute('target-lang-prefix')
-			let p = document.querySelector(`.form-repeater-group-${parentLang}-${langPrefix}`)
-			let p_prime = p.cloneNode(true)
-			let newElement = document
-				.getElementById(`${parentId}`)
-				.appendChild(p_prime)
-			newElement.setAttribute("id", `form_repeater_child_${parentLang}-${childIndex * 10000}`) //setting ID for newly created card
-			document
-				.querySelectorAll(`#form_repeater_child_${parentLang}-${childIndex * 10000} .form-control`)
-				.forEach(function (element) {
-					element.value = null
-				})
-			if (document.querySelector(`#${newElement.getAttribute('id')}`).querySelector('.media-uploader-modal-btn')) {
-				document.querySelector(`#${newElement.getAttribute('id')}`).querySelectorAll('.media-uploader-field').forEach((mediaField)=>{
-					newMediaButtonId = `beave-media-field-${Math.floor(Math.random() * 1000000000)}`
-					mediaField.querySelector('.media-uploader-modal-btn')
-						.setAttribute('id', newMediaButtonId)
-					mediaField.querySelector('.media_preview .preview-holder')
-						.innerHTML = ''
-					mediaField.querySelector('.media_preview .image-preview-remove-btn')
-						.classList
-						.add('d-none')
-				})
-			}
-
-			initDatePicker()
-		}
-
-		function deleteChild(event) {
-			let targetElement = event.target
-			let parentDiv = targetElement.parentElement.parentElement.parentElement
-			let childDiv = targetElement.parentElement.parentElement
-			let parentId = parentDiv.getAttribute('id')
-			let childId = childDiv.getAttribute('id')
-			if (Number(
-				childId.split('-')
-				?.[1]) > 1000) {
-				const parentElement = document.getElementById(parentId)
-				const childElement = document.getElementById(childId)
-				parentElement.removeChild(childElement)
-			}
-		}
-	</script>
-
+	{# Custom js for cms edit page #}
+	<script src='/cms-static/common/js/cms-content-edit.js'></script>
 {% endblock %}
 
 {% block content %}
@@ -260,6 +90,7 @@
 								</div>
 							</div>
 							<div class="card-body pt-0">
+								{# Tabs #}
 								<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 									{% for brandLanguage in authUser.brand.languages %}
 										<li class="nav-item">
@@ -287,6 +118,8 @@
 									{% endif %}
 								</ul>
 								<div class="tab-content tab-content-fields" id="myTabContent">
+
+									<!--Custom fields with localisation starting-->
 									{% for brandLanguage in authUser.brand.languages %}
 										<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" die="{{brandLanguage.dir}}" id="kt_tab_pane_{{ brandLanguage.prefix }}">
 											{% for cfg in reqContentType.field_groups %}
@@ -295,21 +128,65 @@
 													<div class="border border-gray-200 bg-slate-200 p-4 rounded-lg mb-4">
 														<div class="group_repeater" id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
 
+															{# This section only for editing. This will be hidden and when click add this section will be cloned #}
+															<div class="form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }} d-none" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-1">
+																{% for cf in cfg.fields %}
+																	<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
+																		<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+																			<span class="required">{{cf.field_label}} ({{brandLanguage.prefix}})</span>
+																		</label>
+																		{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
+																			<input class="form-control form-control-solid" type="{{cf.field_type}}" placeholder="Enter {{cf.field_label}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" value="{{fieldValue}}">
+																		{% elif cf.field_type === 'richtext' %}
+																			<textarea class="content_wysiwyg" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" id="wysiwyg-cf-{{brandLanguage.prefix}}-{{cfg.row_name}}-{{cf.field_name}}-{{i}}">{{fieldValue}}</textarea>
+																		{% elif cf.field_type === 'textarea' %}
+																			<textarea class="form-control form-control-solid" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
+																		{% elif cf.field_type === 'media' %}
+																			{# <h1>Test</h1> #}
+																			<span class='media-uploader-field'>
+																				<span class="media_preview">
+																					<span class="preview-holder">
+																						{% if fieldValue %}
+																							<img src="{{fieldValue.url}}" style="max-width: 200px;"/>
+																						{% endif %}
+																					</span>
+																					<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
+																						<i class="fa fa-trash" tabindex="-1"></i>
+																					</a>
+																				</span>
+																				<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
+																				<input type="hidden" class="media_title_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
+																				<input type="hidden" class="media_alt_text_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
+																				<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																			</span>
+																		{% elif cf.field_type === 'date' %}
+																			<div class="kt_daterangepicker">
+																				<input class="form-control form-control-solid" data-hastime="false" data-daterange="false" id="kt_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																			</div>
+																		{% elif cf.field_type === 'dropdown' %}
+																			<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																				<option>- Select {{cf.field_label}} -</option>
+																				{% for dropdown in cf.options %}
+																					<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
+																				{% endfor %}
+																			</select>
+
+																		{% endif %}
+																		{% include './partials/_cms-field-info.njk' %}
+																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{brandLanguage.prefix}}_{{cfg.row_name}}_{{cf.field_name}}{{ '_0_url' if cf.field_type == 'media' }}"></div>
+																	</div>
+																{% endfor %}
+															</div>
+															{# Editing section END #}
+
 															{% set totalItems = contentDetail
 																.content[brandLanguage.prefix][cfg.row_name]
 																.length or 1 %}
 
 															{% for i in range(totalItems) %}
-
-																{# {% if loop.index == 1%}
-																	<div class="form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}">
-																{%else%} #}
 																<div class="form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index * 1000}}">
-																	{# {%endif%} #}
 																	{% for cf in cfg.fields %}
-
 																		{% set fieldValue = contentDetail.content[brandLanguage.prefix][cfg.row_name][i][cf.field_name] %}
-
 																		<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 																				<span class="required">{{cf.field_label}} ({{brandLanguage.prefix}})</span>
@@ -336,7 +213,6 @@
 																					<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
 																					<input type="hidden" class="media_title_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
 																					<input type="hidden" class="media_alt_text_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
-																					{# <a class="btn btn-success" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list' id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}">Attach Media</a> #}
 																					<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																				</span>
 																			{% elif cf.field_type === 'date' %}
@@ -404,7 +280,7 @@
 																				<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url]]]" value="{{fieldValue.url}}">
 																				<input type="hidden" class="media_title_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title]]]" value="{{fieldValue.title}}">
 																				<input type="hidden" class="media_alt_text_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text]]]" value="{{fieldValue.alt_text}}">
-																				<a class="btn btn-success" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																				<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																			</span>
 																		{% elif cf.field_type === 'date' %}
 																			<div class="kt_daterangepicker">
@@ -429,10 +305,11 @@
 											{% endfor %}
 										</div>
 									{% endfor %}
+									<!--Custom fields with localisation ending-->
 
+									{# //- BEGIN::Custom Fields without localisation #}
 									{% if has_common_field_groups %}
 										<div class="tab-pane fade" role="tabpanel" id="kt_tab_pane_common">
-											{# //- BEGIN::Custom Fields without localisation #}
 											<div class="row mt-5">
 												<div class="col-12">
 													{% for cfg in reqContentType.field_groups %}
@@ -443,16 +320,66 @@
 																	{# <h4>{{cfg.row_label}}</h4> #}
 																	<div class="group_repeater" id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
 
+																		{# This section only for editing this will be hidden #}
+																		<div class="form-group form-repeater-group-{{cfg._id}}-en {{ 'inline-row' if cfg.inline_fields }} d-none" id="form_repeater_child_{{cfg._id}}-1">
+																			{% for cf in cfg.fields %}
+																				{% set fieldValue = contentDetail.content['common'][cfg.row_name][i][cf.field_name] %}
+																				{# <h1>{{fieldValue}}</h1> #}
+																				<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
+																					<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+																						<span class="required">{{cf.field_label}}</span>
+																						<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-kt-initialized="1"></i>
+																					</label>
+																					{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
+																						<input class="form-control form-control-solid" type="{{cf.field_type}}" placeholder="Enter {{cf.field_label}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" value="{{fieldValue}}">
+																					{% elif cf.field_type === 'richtext' %}
+																						<textarea class="content_wysiwyg" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" id="wysiwyg-cf-{{loop.index}}">{{fieldValue}}</textarea>
+																					{% elif cf.field_type === 'textarea' %}
+																						<textarea class="form-control form-control-solid" rows="6" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
+																					{% elif cf.field_type === 'media' %}
+																						<span class='media-uploader-field'>
+																							<span class="media_preview">
+																								<span class="preview-holder">
+																									<img src="{{fieldValue.url}}" style="max-width: 150px;"/>
+																								</span>
+																								<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
+																									<i class="fa fa-trash" tabindex="-1"></i>
+																								</a>
+																							</span>
+																							<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
+																							<input type="hidden" class="media_title_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
+																							<input type="hidden" class="media_alt_text_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
+																							<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																						</span>
+																					{% elif cf.field_type === 'date' %}
+																						<div class="kt_daterangepicker">
+																							<input class="form-control form-control-solid" id="kt_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																						</div>
+																					{% elif cf.field_type === 'dropdown' %}
+																						<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																							<option>- Select {{cf.field_label}} -</option>
+																							{% for dropdown in cf.options %}
+																								<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value}}>{{dropdown.label}}</option>
+																							{% endfor %}
+																						</select>
+																					{% endif %}
+																					{% include './partials/_cms-field-info.njk' %}
+																					<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_{{cfg.row_name}}_{{cf.field_name}}{{ '_0_url' if cf.field_type == 'media' }}"></div>
+																				</div>
+																			{% endfor %}
+																			<div class="repeater-delete-btn text-center my-3">
+																				<a class="btn btn-sm btn-light-danger mt-5" onClick="deleteChild(event)" child-id="form-repeater-child-{{cfg._id}}-{{loop.index}}" target-id="kt_docs_repeater_{{cfg._id}}_{{loop.index}}">
+																					<i class="la la-trash-o"></i>Delete</a>
+																			</div>
+																		</div>
+																		{# Hidden cf div end #}
+
 																		{% set totalItems = contentDetail
 																			.content['common'][cfg.row_name]
 																			.length or 1 %}
 
 																		{% for i in range(totalItems) %}
-																			{# {% if loop.index == 1%} #}
-																			{# <div class="form-group form-repeater-group-{{cfg._id}}-en {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{cfg._id}}-{{loop.index}}">
-																					{%else%} #}
 																			<div class="form-group form-repeater-group-{{cfg._id}}-en {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{cfg._id}}-{{loop.index * 1000}}">
-																				{# {%endif%} #}
 																				{% for cf in cfg.fields %}
 																					{% set fieldValue = contentDetail.content['common'][cfg.row_name][i][cf.field_name] %}
 																					{# <h1>{{fieldValue}}</h1> #}
@@ -480,7 +407,7 @@
 																								<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
 																								<input type="hidden" class="media_title_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
 																								<input type="hidden" class="media_alt_text_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
-																								<a class="btn btn-success" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																								<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																							</span>
 																						{% elif cf.field_type === 'date' %}
 																							<div class="kt_daterangepicker">
@@ -544,7 +471,7 @@
 																						<input type="hidden" class="media_url_field" id="{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[url]]]" value="{{ fieldValue.url }}">
 																						<input type="hidden" class="media_title_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[title]]]" value="{{fieldValue.title}}">
 																						<input type="hidden" class="media_alt_text_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[alt_text]]]" value="{{fieldValue.alt_text}}">
-																						<a class="btn btn-success" data-field="{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																						<a class="btn btn-success media-uploader-modal-btn" data-field="{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
 																					</span>
 																				{% elif cf.field_type === 'date' %}
 																					<div class="kt_daterangepicker">
@@ -572,6 +499,8 @@
 											{# //- END::Custom Fields without localisation #}
 										</div>
 									{% endif %}
+
+									{# Meta section starting #}
 									{% if reqContentType.has_meta %}
 										<div class="tab-pane fade" role="tabpanel" id="kt_tab_pane_meta">
 											<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
@@ -634,11 +563,12 @@
 											</div>
 										</div>
 									{% endif %}
-
 								</div>
 							</div>
 						</div>
 					</div>
+
+					{# Right side #}
 					<div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 ms-lg-10">
 						{% if reqContentType.has_slug %}
 							{% include "./partials/_content-slug-field.njk" %}
