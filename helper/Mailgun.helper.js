@@ -16,6 +16,7 @@ const mailGunTemplates = async () => {
         const client = mailgun.client({
             username: 'api',
             key: envConfig.mailgun.API_KEY,
+            url: envConfig.mailgun.URL,
         })
 
         // console.log(client.domains.domainTemplates.list)
