@@ -176,6 +176,10 @@
 																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{brandLanguage.prefix}}_{{cfg.row_name}}_{{cf.field_name}}{{ '_0_url' if cf.field_type == 'media' }}"></div>
 																	</div>
 																{% endfor %}
+																<div class="repeater-delete-btn text-center my-3">
+																	<a class="btn btn-sm btn-light-danger mt-5" onClick="deleteChild(event)" child-id="form-repeater-child-{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}" target-id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
+																		<i class="la la-trash-o"></i>Delete</a>
+																</div>
 															</div>
 															{# Editing section END #}
 
