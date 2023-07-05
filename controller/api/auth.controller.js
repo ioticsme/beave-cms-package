@@ -43,7 +43,8 @@ const loginSubmit = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
+        envConfig.general.CAPTCHA_ENABLED &&
+        (envConfig.general.NODE_ENV == 'production' ||
             envConfig.general.NODE_ENV == 'staging') &&
         req.source == 'web'
     ) {
@@ -87,7 +88,10 @@ const loginSubmit = async (req, res) => {
         if (bcrypt.compareSync(req.body.password, user.password)) {
             let token
             const config = await Config.findOne()
-            if (config.general?.user_email_verification && !user.email_verified) {
+            if (
+                config.general?.user_email_verification &&
+                !user.email_verified
+            ) {
                 // authenticator.options = {
                 //     digits: 8,
                 //     epoch: Date.now(),
@@ -96,7 +100,7 @@ const loginSubmit = async (req, res) => {
                 // const otp = authenticator.generate(user.mobile)
                 // let smsSettings = req.brand.settings?.notification_settings?.sms
                 // SMS.sendOTP(otp, user.mobile, req.brand.name.en, smsSettings)
-                
+
                 // TODO:: Send verification email to client
                 return res.status(403).json({
                     error: 'User email is not verified',
@@ -196,8 +200,7 @@ const socialLoginSubmit = async (req, res) => {
     if (req.body.provider == 'facebook') {
         profile = await getFacebookProfile(bearerToken)
         console.log('FB: ', profile)
-    }
-    else if (req.body.provider == 'google') {
+    } else if (req.body.provider == 'google') {
         profile = await getGoogleProfile(bearerToken)
         console.log('GP: ', profile)
     }
@@ -209,7 +212,6 @@ const socialLoginSubmit = async (req, res) => {
     }
 
     try {
-
         let user = await User.findOne({
             // email: { $regex: req.body.email, $options: 'i' },
             email: profile.email,
@@ -232,7 +234,10 @@ const socialLoginSubmit = async (req, res) => {
                 // mobile: mobile,
                 // consent_marketing:
                 //     req.body.consent_marketing == 'true' || false,
-                password: bcrypt.hashSync(`${profile.id}-${Date.now()}-${salt}`, salt),
+                password: bcrypt.hashSync(
+                    `${profile.id}-${Date.now()}-${salt}`,
+                    salt
+                ),
                 provider: req.body.provider,
                 provider_user_id: profile.id,
                 profile_image_url: profile.picture,
@@ -267,8 +272,7 @@ const socialLoginSubmit = async (req, res) => {
                 .limit(4)
                 .select('content')
 
-            const mg_settings =
-                envConfig?.mailgun
+            const mg_settings = envConfig?.mailgun
             sendEmail(
                 mg_settings.from,
                 req.body.email,
@@ -434,7 +438,8 @@ const updateMobileNo = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
+        envConfig.general.CAPTCHA_ENABLED &&
+        (envConfig.general.NODE_ENV == 'production' ||
             envConfig.general.NODE_ENV == 'staging') &&
         req.source == 'web'
     ) {
@@ -447,27 +452,26 @@ const updateMobileNo = async (req, res) => {
     try {
         const bearerToken = req.body.accessToken
 
-    if (!bearerToken) {
-        return res.status(401).json({
-            error: 'Unauthorized',
-        })
-    }
-    // console.log(bearerToken)
-    let profile = {}
-    if (req.body.provider == 'facebook') {
-        profile = await getFacebookProfile(bearerToken)
-        console.log('FB: ', profile)
-    }
-    else if (req.body.provider == 'google') {
-        profile = await getGoogleProfile(bearerToken)
-        console.log('GP: ', profile)
-    }
+        if (!bearerToken) {
+            return res.status(401).json({
+                error: 'Unauthorized',
+            })
+        }
+        // console.log(bearerToken)
+        let profile = {}
+        if (req.body.provider == 'facebook') {
+            profile = await getFacebookProfile(bearerToken)
+            console.log('FB: ', profile)
+        } else if (req.body.provider == 'google') {
+            profile = await getGoogleProfile(bearerToken)
+            console.log('GP: ', profile)
+        }
 
-    if (!profile || !profile.email) {
-        return res.status(401).json({
-            error: 'Unauthorized',
-        })
-    }
+        if (!profile || !profile.email) {
+            return res.status(401).json({
+                error: 'Unauthorized',
+            })
+        }
 
         // const CLIENT_ID_GOOGLE = process.env.GOOGLE_CLIENT_ID
 
@@ -588,7 +592,8 @@ const signupSubmit = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
+        envConfig.general.CAPTCHA_ENABLED &&
+        (envConfig.general.NODE_ENV == 'production' ||
             envConfig.general.NODE_ENV == 'staging') &&
         req.source == 'web'
     ) {
@@ -607,7 +612,7 @@ const signupSubmit = async (req, res) => {
             return res.status(422).json({
                 details: [
                     {
-                        message: '"mobile" is already exist',
+                        message: 'Mobile number has already been registered',
                         path: ['mobile'],
                         type: 'any.exist',
                         context: {
@@ -623,7 +628,7 @@ const signupSubmit = async (req, res) => {
             return res.status(422).json({
                 details: [
                     {
-                        message: '"email" is already exist',
+                        message: 'Email has already been registered',
                         path: ['email'],
                         type: 'any.exist',
                         context: {
@@ -673,9 +678,26 @@ const signupSubmit = async (req, res) => {
         // let smsSettings = req.brand.settings?.notification_settings?.sms
         // SMS.sendOTP(otp, mobile, req.brand.name.en, smsSettings)
 
+        // sending mail to the registered user
+        if (
+            envConfig.mailgun.DOMAIN &&
+            envConfig.mailgun.API_KEY &&
+            envConfig.mailgun.FROM &&
+            envConfig.mailgun.TEMPLATE_WELCOME &&
+            envConfig.general.SEND_SIGNUP_MAIL
+        ) {
+            sendEmail(
+                envConfig.mailgun.FROM,
+                user.email,
+                `Thank you for registering`,
+                envConfig.mailgun.TEMPLATE_WELCOME,
+                user,
+                envConfig.mailgun
+            )
+        }
+
         return res.status(200).json({
-            // message: 'OTP sent to mobile',
-            message: 'Success',
+            message: 'Registration successful',
         })
     } catch (error) {
         console.log(error)
@@ -700,7 +722,8 @@ const otpVerification = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
+        envConfig.general.CAPTCHA_ENABLED &&
+        (envConfig.general.NODE_ENV == 'production' ||
             envConfig.general.NODE_ENV == 'staging') &&
         req.source == 'web'
     ) {
@@ -832,7 +855,8 @@ const resendOTP = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
+        envConfig.general.CAPTCHA_ENABLED &&
+        (envConfig.general.NODE_ENV == 'production' ||
             envConfig.general.NODE_ENV == 'staging') &&
         req.source == 'web'
     ) {
@@ -928,7 +952,8 @@ const forgotCredentials = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
+        envConfig.general.CAPTCHA_ENABLED &&
+        (envConfig.general.NODE_ENV == 'production' ||
             envConfig.general.NODE_ENV == 'staging') &&
         req.source == 'web'
     ) {
@@ -1033,25 +1058,26 @@ const forgotCredentials = async (req, res) => {
             // BEGIN:: Sending Email
             let mg_settings = envConfig?.mailgun
             try {
-            sendEmail(
-                mg_settings.from,
-                req.body.auth_key,
-                `Reset password request for - ${envConfig.general.CLIENT_NAME}`,
-                envConfig.mailgun.TEMPLATE_FORGOT_PASSWORD,
-                {
-                    otp: otp,
-                },
-                // mg_settings
-            )
+                sendEmail(
+                    mg_settings.from,
+                    req.body.auth_key,
+                    `Reset password request for - ${envConfig.general.CLIENT_NAME}`,
+                    envConfig.mailgun.TEMPLATE_FORGOT_PASSWORD,
+                    {
+                        otp: otp,
+                    },
+                    mg_settings
+                )
             } catch (error) {
                 console.log(error)
             }
-
         } else if (isMobile) {
             try {
-            let mobile = req.body.auth_key.replace(/\D/g, '').replace(/^0+/, '')
-            let smsSettings = req.brand.settings?.notification_settings?.sms
-            SMS.sendOTP(otp, mobile, req.brand.name.en, smsSettings)
+                let mobile = req.body.auth_key
+                    .replace(/\D/g, '')
+                    .replace(/^0+/, '')
+                let smsSettings = req.brand.settings?.notification_settings?.sms
+                SMS.sendOTP(otp, mobile, req.brand.name.en, smsSettings)
             } catch (error) {
                 console.log(error)
             }
@@ -1101,7 +1127,8 @@ const verifyForgotOTP = async (req, res) => {
 
     // Verifying captcha with token
     if (
-        envConfig.general.CAPTCHA_ENABLED && (envConfig.general.NODE_ENV == 'production' ||
+        envConfig.general.CAPTCHA_ENABLED &&
+        (envConfig.general.NODE_ENV == 'production' ||
             envConfig.general.NODE_ENV == 'staging') &&
         req.source == 'web'
     ) {

@@ -8,16 +8,21 @@ const envConfig = {
         DOMAIN: process.env.DOMAIN,
         FRONTEND_URL: process.env.FRONTEND_URL,
         CLIENT_NAME: process.env.CLIENT_NAME,
-        CMS_LOGO_LARGE: process.env.CMS_LOGO_LARGE || '/cms-static/admin/assets/media/beave-logo.jpg',
-        CMS_LOGO_SMALL: process.env.CMS_LOGO_SMALL || '/cms-static/admin/assets/media/beave-logo.jpg',
+        CMS_LOGO_LARGE:
+            process.env.CMS_LOGO_LARGE ||
+            '/cms-static/admin/assets/media/beave-logo.jpg',
+        CMS_LOGO_SMALL:
+            process.env.CMS_LOGO_SMALL ||
+            '/cms-static/admin/assets/media/beave-logo.jpg',
         ADMIN_LANDING_URL: process.env.ADMIN_LANDING_URL || '/admin/dashboard',
         SESSION_STORAGE: process.env.SESSION_STORAGE || 'file',
         CAPTCHA_ENABLED: process.env.CAPTCHA_ENABLED || false,
         HAS_PDF_UPLOAD: process.env.HAS_PDF_UPLOAD || false,
+        SEND_SIGNUP_MAIL: process.env.SEND_SIGNUP_MAIL || false,
     },
     db: {
         URL: process.env.DB_CONNECTION,
-        NAME: process.env.DB_NAME || process.env.CLIENT_NAME?.toLowerCase()
+        NAME: process.env.DB_NAME || process.env.CLIENT_NAME?.toLowerCase(),
     },
     imagekit: {
         PUBLIC_KEY: process.env.IMAGEKIT_PUBLIC_KEY,
@@ -41,7 +46,7 @@ const envConfig = {
         ACTIVE: process.env.CACHE_LOCAL_DATA || false,
         WEB_TOKEN_EXPIRY: process.env.WEB_USER_TOKEN_EXPIRY || '24h',
         MOBILE_TOKEN_EXPIRY: process.env.MOBILE_USER_TOKEN_EXPIRY || '30days',
-        REDIS_URL: process.env.REDIS_URL  || 'redis://localhost:6379',
+        REDIS_URL: process.env.REDIS_URL || 'redis://localhost:6379',
     },
     slack: {
         ADMIN_CHANNEL: process.env.SLACK_ADMIN_CHANNEL,

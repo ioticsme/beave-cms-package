@@ -6,7 +6,7 @@ const Admin = require('../../model/Admin')
 const User = require('../../model/User')
 
 const list = async (req, res) => {
-    const userList = await User.find()
+    const userList = await User.find().sort({ _id: -1 })
     if (!userList) {
         return res.status(404).json('Not Found')
     }
