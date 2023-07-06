@@ -140,10 +140,11 @@ function cloneChild(event) {
         .querySelectorAll(
             `#form_repeater_child_${parentLang}-${
                 childIndex * 10000
-            } .form-control`
+            } .beave-cms-form-field`
         )
         .forEach(function (element) {
             element.value = null
+            element.removeAttribute('disabled')
         })
 
     // Setup media component of newly created div
