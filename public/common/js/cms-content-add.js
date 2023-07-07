@@ -5,6 +5,14 @@ document.querySelectorAll('.content_wysiwyg').forEach(function (e) {
         },
     })
         .then((editor) => {
+            // Adjust the width of the wysiwyg element
+            editor.ui.element.classList.add(
+                'w-100',
+                'w-sm-400px',
+                'w-md-500px',
+                'w-xl-700px'
+            )
+
             let latestImageElement
             editor.plugins.get('FileRepository').createUploadAdapter =
                 function (loader) {
