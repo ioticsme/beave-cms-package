@@ -133,7 +133,7 @@
 																{% for cf in cfg.fields %}
 																	<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																		<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-																			<span class="required">{{cf.field_label}} ({{brandLanguage.prefix}})</span>
+																			<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}} ({{brandLanguage.prefix}})</span>
 																		</label>
 																		{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
 																			<input disabled class="form-control form-control-solid beave-cms-form-field" type="{{cf.field_type}}" placeholder="Enter {{cf.field_label}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" value="{{fieldValue}}">
@@ -165,7 +165,7 @@
 																			</div>
 																		{% elif cf.field_type === 'dropdown' %}
 																			<select disabled class="form-select beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
-																				<option>- Select {{cf.field_label}} -</option>
+																				<option value=''>- Select {{cf.field_label}} -</option>
 																				{% for dropdown in cf.options %}
 																					<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
 																				{% endfor %}
@@ -193,7 +193,7 @@
 																		{% set fieldValue = contentDetail.content[brandLanguage.prefix][cfg.row_name][i][cf.field_name] %}
 																		<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-																				<span class="required">{{cf.field_label}} ({{brandLanguage.prefix}})</span>
+																				<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}} ({{brandLanguage.prefix}})</span>
 																			</label>
 																			{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
 																				<input class="form-control form-control-solid" type="{{cf.field_type}}" placeholder="Enter {{cf.field_label}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" value="{{fieldValue}}">
@@ -225,7 +225,7 @@
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
 																				<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
-																					<option>- Select {{cf.field_label}} -</option>
+																					<option value=''>- Select {{cf.field_label}} -</option>
 																					{% for dropdown in cf.options %}
 																						<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
 																					{% endfor %}
@@ -259,7 +259,7 @@
 																	<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																		{# // begin::Label #}
 																		<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-																			<span class="required">{{cf.field_label}} ({{brandLanguage.prefix}})</span>
+																			<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}} ({{brandLanguage.prefix}})</span>
 																			<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-kt-initialized="1"></i>
 																		</label>
 																		{# // end::Label #}
@@ -292,7 +292,7 @@
 																			</div>
 																		{% elif cf.field_type === 'dropdown' %}
 																			<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]">
-																				<option>- Select {{cf.field_label}} -</option>
+																				<option value=''>- Select {{cf.field_label}} -</option>
 																				{% for dropdown in cf.options %}
 																					<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
 																				{% endfor %}
@@ -331,7 +331,7 @@
 																				{# <h1>{{fieldValue}}</h1> #}
 																				<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																					<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-																						<span class="required">{{cf.field_label}}</span>
+																						<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}}</span>
 																						<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-kt-initialized="1"></i>
 																					</label>
 																					{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
@@ -361,7 +361,7 @@
 																						</div>
 																					{% elif cf.field_type === 'dropdown' %}
 																						<select disabled class="form-select beave-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]">
-																							<option>- Select {{cf.field_label}} -</option>
+																							<option value=''>- Select {{cf.field_label}} -</option>
 																							{% for dropdown in cf.options %}
 																								<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value}}>{{dropdown.label}}</option>
 																							{% endfor %}
@@ -389,7 +389,7 @@
 																					{# <h1>{{fieldValue}}</h1> #}
 																					<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																						<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-																							<span class="required">{{cf.field_label}}</span>
+																							<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}}</span>
 																							<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-kt-initialized="1"></i>
 																						</label>
 																						{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
@@ -419,7 +419,7 @@
 																							</div>
 																						{% elif cf.field_type === 'dropdown' %}
 																							<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]">
-																								<option>- Select {{cf.field_label}} -</option>
+																								<option value=''>- Select {{cf.field_label}} -</option>
 																								{% for dropdown in cf.options %}
 																									<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value}}>{{dropdown.label}}</option>
 																								{% endfor %}
@@ -451,7 +451,7 @@
 																			{% endif %}
 																			<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-																					<span class="required">{{ cf.field_label }}</span>
+																					<span class={{"required" if cf.validation.required else ""}}>{{ cf.field_label }}</span>
 																					<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-kt-initialized="1"></i>
 																				</label>
 																				{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
@@ -483,7 +483,7 @@
 																					</div>
 																				{% elif cf.field_type === 'dropdown' %}
 																					<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}]]">
-																						<option>- Select {{cf.field_label}} -</option>
+																						<option value=''>- Select {{cf.field_label}} -</option>
 																						{% for dropdown in cf.options %}
 																							<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
 																						{% endfor %}
