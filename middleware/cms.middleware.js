@@ -9,6 +9,7 @@ const AdminNav = require('../model/AdminNav')
 var session = require('express-session')
 const { default: collect } = require('collect.js')
 const { navConfig } = require('../config/admin.config')
+const { convertToSingular } = require('../helper/General.helper')
 
 // Getting custom navigation from cms-wrapper config
 let customNavConfig
@@ -44,6 +45,10 @@ const nunjucksFilter = async (req, res, next) => {
         } else {
             return null
         }
+    }
+    // Convert plural to singular
+    res.locals.pluralToSingular = (plural) => {
+        return convertToSingular(plural)
     }
 
     next()
