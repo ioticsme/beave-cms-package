@@ -108,11 +108,9 @@ const loginSubmit = async (req, res) => {
         }
 
         if (!admin?.active) {
-            return res
-                .status(401)
-                .json({
-                    error: 'An administrator has blocked you from this app',
-                })
+            return res.status(401).json({
+                error: 'An administrator has blocked you from this app',
+            })
         }
 
         if (bcrypt.compareSync(req.body.password, admin.password)) {
@@ -151,7 +149,7 @@ const loginSubmit = async (req, res) => {
                 }
             }
             return res.status(200).json({
-                redirect_to: '/admin/dashboard',
+                redirect_to: envConfig.general.ADMIN_LANDING_URL,
             })
         } else {
             return res.status(401).json({ error: 'Invalid email or password' })
