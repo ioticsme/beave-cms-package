@@ -311,6 +311,7 @@ const list = async (req, res) => {
                         country: mongoose.Types.ObjectId(req.country._id),
                         $or: [{ status: 'published' }, { status: 'scheduled' }],
                     })
+                        .sort('position')
                         .populate('author')
                         .populate('country')
 
@@ -360,6 +361,7 @@ const list = async (req, res) => {
                             },
                         ],
                     })
+                        .sort('position')
                         .populate('author')
                         .populate('country')
 
