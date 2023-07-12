@@ -65,10 +65,12 @@ let session_driver
 if (envConfig.general.SESSION_STORAGE == 'redis') {
     session_driver = new redisStore({
         client: new Redis(envConfig.cache.REDIS_URL),
+        ttl: envConfig.general.SESSION_MAX_AGE * 60, // Time to leave in seconds
     })
 } else {
     session_driver = new FileStore({
-        path: './sessions', // This specifies the directory to store session files
+        path: './sessions', // This specifies the directory to store session files,
+        ttl: envConfig.general.SESSION_MAX_AGE * 60 * 1000, // Time to leave in milliseconds
     })
 }
 
@@ -77,6 +79,9 @@ const sessionConfig = {
     secret: `${envConfig.general.APP_KEY}`,
     saveUninitialized: false,
     resave: false,
+    cookie: {
+        maxAge: envConfig.general.SESSION_MAX_AGE * 60 * 1000,
+    },
 }
 //session middleware
 if (envConfig.general.NODE_ENV === 'production') {

@@ -28,7 +28,13 @@
 					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">{{ pluralToSingular(reqContentType.title) }} Detail</h1>
 					<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
 						<li class="breadcrumb-item text-muted">
-							<a class="text-muted text-hover-primary" href="../{{ reqContentType.slug }}">{{ reqContentType.title }}</a>
+							<a class="text-muted" >Content</a>
+						</li>
+						<li class="breadcrumb-item">
+							<span class="bullet bg-gray-400 w-5px h-2px"></span>
+						</li>
+						<li class="breadcrumb-item text-muted">
+							<a class="text-muted text-hover-primary" href="/admin/cms/{{ reqContentType.slug }}">{{ reqContentType.title }}</a>
 						</li>
 						{% if reqContentType.single_type == false %}
 							<li class="breadcrumb-item">
