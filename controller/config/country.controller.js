@@ -27,7 +27,7 @@ const edit = async (req, res) => {
         _id: req.params.id,
     })
     // res.send(contentType)
-    return res.render('admin/config/country/form', {
+    return res.render('admin-njk/config/country/form', {
         country,
         isEdit: true,
     })

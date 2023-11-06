@@ -180,10 +180,10 @@
 								<div class="card-header">
 									<h3 class="card-title">{{ nav.nav_label }}</h3>
 									<div class="card-toolbar">
-										<a class="btn btn-sm btn-light-danger menu-link px-3" id="{{ nav._id }}" url="/admin/cms/menu/delete-position" data-kt-subscriptions-table-filter="delete_row" onClick="deleteItem(this)">
+										<a class="btn btn-sm btn-icon btn-light-danger menu-link px-3" id="{{ nav._id }}" url="/admin/cms/menu/delete-position" data-kt-subscriptions-table-filter="delete_row" onClick="deleteItem(this)">
 											<i class="fa fa-trash"></i>
 										</a>
-										<a class="btn btn-sm fw-bold btn-light-primary" href="#" data-bs-toggle="modal" data-sectionId="{{nav._id}}" data-bs-target="#kt_modal_create_item">
+										<a class="btn btn-sm btn-icon mx-1 fw-bold btn-light-primary" href="#" data-bs-toggle="modal" data-sectionId="{{nav._id}}" data-bs-target="#kt_modal_create_item">
 											<i class="fa fa-plus"></i>
 										</a>
 									</div>
@@ -193,33 +193,34 @@
 										<ul>
 											{% for menu in nav.nav_items %}
 												<li data-id="{{ menu._id }}" url="{{ menu.url | json }}" label="{{ menu.label | json }}">{{ menu.label.en }}
-													<button id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" onClick="deleteMenuItem(this)">
-														<i class="fa-solid fa-trash text-danger"></i>
+													<button class="btn btn-sm mx-1 btn-light-danger" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" onClick="deleteMenuItem(this)">
+														<i class="fa-solid fa-trash "></i>
 													</button>
-													<button id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ menu._id }}/0" onClick="editMenu(this)">
-														<i class="fa-solid fa-pen text-primary"></i>
+													<button class="btn btn-sm mx-1 btn-light-primary" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ menu._id }}/0" onClick="editMenu(this)">
+														<i class="fa-solid fa-pen"></i>
 													</button>
-
 													<ul>
+														{%set parent_index = loop.index0%}
 														{% for first_level_child in menu.child %}
 															<li data-id="{{ first_level_child._id }}" url="{{ first_level_child.url | json }}" label="{{ first_level_child.label | json }}">
 																{{ first_level_child.label.en }}
-																<button id="{{ first_level_child._id }}" nav_position="{{ nav.nav_position }}" level="1" onClick="deleteMenuItem(this)">
-																	<i class="fa-solid fa-trash text-danger"></i>
+																<button class="btn btn-sm mx-1 btn-light-danger" id="{{ first_level_child._id }}" nav_position="{{ nav.nav_position }}" level="1" onClick="deleteMenuItem(this)">
+																	<i class="fa-solid fa-trash"></i>
 																</button>
-																<button id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ first_level_child._id }}/1?parent_index={{ loop.index }}" onClick="editMenu(this)">
-																	<i class="fa-solid fa-pen text-primary"></i>
+																<button class="btn btn-sm mx-1 btn-light-primary" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ first_level_child._id }}/1?parent_index={{parent_index}}" onClick="editMenu(this)">
+																	<i class="fa-solid fa-pen"></i>
 																</button>
 
 																<ul>
+																	{%set sec_parent_index = loop.index0%}
 																	{% for second_level_child in first_level_child.child %}
 																		<li data-id="{{ second_level_child._id }}" url="{{ second_level_child.url | json }}" label="{{ second_level_child.label | json }}">
 																			{{ second_level_child.label.en }}
-																			<button id="{{ second_level_child._id }}" nav_position="{{ nav.nav_position }}" level="2" onClick="deleteMenuItem(this)">
-																				<i class="fa-solid fa-trash text-danger"></i>
+																			<button class="btn btn-sm mx-1 btn-light-danger" id="{{ second_level_child._id }}" nav_position="{{ nav.nav_position }}" level="2" onClick="deleteMenuItem(this)">
+																				<i class="fa-solid fa-trash"></i>
 																			</button>
-																			<button id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ second_level_child._id }}/2?parent_index={{ loop.index }}&sec_parent_index={{ j }}" onClick="editMenu(this)">
-																				<i class="fa-solid fa-pen text-primary"></i>
+																			<button class="btn btn-sm mx-1 btn-light-primary" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ second_level_child._id }}/2?parent_index={{parent_index}}&sec_parent_index={{sec_parent_index}}" onClick="editMenu(this)">
+																				<i class="fa-solid fa-pen"></i>
 																			</button>
 																		</li>
 																	{% endfor %}

@@ -10,7 +10,7 @@ const signup = async (req, res) => {
     try {
         const admin = await Admin.findOne()
         if (admin) {
-            res.redirect('/admin/auth/login')
+            return res.redirect('/admin/auth/login')
         }
         res.render(`admin-njk/authentication/sign-up`)
     } catch (error) {

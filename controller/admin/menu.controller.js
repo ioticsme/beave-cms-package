@@ -11,7 +11,6 @@ const listMenu = async (req, res) => {
             brand: req.authUser?.brand?._id,
             country: req.authUser?.brand?.country,
         }).sort({ position: 1 })
-        // console.log(menus[0].nav_items[2].label)
         res.render(`admin-njk/cms/menu/listing`, { menulist: menus })
     } catch (e) {
         console.log(e)
@@ -113,7 +112,7 @@ const addMenu = async (req, res) => {
         })
 
         if (!nav) {
-            return res.status(400).json({ error: 'Something went wrong' })
+            return res.status(400).json({ error: 'Nav not found' })
         }
         // Push the obj to nav_items
         const update = await Menu.findOneAndUpdate(
@@ -149,7 +148,9 @@ const addMenu = async (req, res) => {
 const editMenu = async (req, res) => {
     try {
         let { position, id, level } = req.params
-        // Findong all menis from DB
+        let parentIndex = req.query?.parent_index
+        let secParentIndex = req.query?.sec_parent_index
+        // Finding all menus from DB
         const menus = await Menu.find({
             brand: req.authUser?.brand?._id,
             country: req.authUser?.brand?.country,
@@ -164,17 +165,14 @@ const editMenu = async (req, res) => {
                     (item) => item._id.toString() == id
                 )
             } else if (level == '1') {
-                let parentIndex = req.query?.parent_index
-                menuItem = menuDetail.nav_items[parentIndex].child.find(
+                menuItem = menuDetail.nav_items[parentIndex]?.child?.find(
                     (item) => item._id.toString() == id
                 )
                 if (menuItem) menuItem.parent_index = req.query.parent_index
             } else if (level == '2') {
-                let parentIndex = req.query?.parent_index
-                let secParentIndex = req.query?.sec_parent_index
-                menuItem = menuDetail.nav_items[parentIndex].child[
+                menuItem = menuDetail.nav_items[parentIndex]?.child[
                     secParentIndex
-                ].child.find((item) => item._id.toString() == id)
+                ]?.child?.find((item) => item._id.toString() == id)
                 if (menuItem) {
                     menuItem.parent_index = req.query.parent_index
                     menuItem.sec_parent_index = req.query.sec_parent_index
@@ -189,25 +187,34 @@ const editMenu = async (req, res) => {
             menuItem: menuItem ? menuItem : {},
         })
     } catch (error) {
-        // console.log(error)
+        console.log(error)
         return res.render(`admin-njk/error-404`)
     }
 }
 
 const saveEditMenu = async (req, res) => {
     try {
+        session = req.authUser
+        let labelValidationObj = {}
+        let pathValidationObj = {}
+        req.authUser.brand.languages.forEach((lang) => {
+            _.assign(labelValidationObj, {
+                [lang.prefix]: eval(`Joi.string().required()`),
+            })
+            _.assign(pathValidationObj, {
+                [lang.prefix]: eval(`Joi.string().required()`),
+            })
+        })
         const schema = Joi.object({
             id: Joi.string().required(),
             level: Joi.string().required(),
             parent_index: Joi.optional(),
             sec_parent_index: Joi.optional(),
             label: Joi.object({
-                en: Joi.string().required(),
-                ar: Joi.string().required(),
+                ...labelValidationObj,
             }),
             path: Joi.object({
-                en: Joi.string().required(),
-                ar: Joi.string().required(),
+                ...pathValidationObj,
             }),
             external: Joi.string().allow('', null, 'true'),
         })
@@ -225,6 +232,16 @@ const saveEditMenu = async (req, res) => {
 
         let update
         let body = req.body
+        let label = {}
+        let path = {}
+        req.authUser.brand.languages.forEach((lang) => {
+            _.assign(label, {
+                [lang.prefix]: body.label[lang.prefix],
+            })
+            _.assign(path, {
+                [lang.prefix]: body.path[lang.prefix],
+            })
+        })
         // Checking the level of the child
         if (level == '0') {
             // Find menu with position
@@ -247,8 +264,8 @@ const saveEditMenu = async (req, res) => {
             }
             let obj = {
                 _id: id,
-                label: req.body.label,
-                url: eq.body.path,
+                label,
+                url: path,
                 external: req.body.external == 'true',
                 child: menuItem.child,
             }
@@ -305,11 +322,9 @@ const saveEditMenu = async (req, res) => {
 
             let obj = {
                 _id: id,
-                label: req.body.label,
-                url: {
-                    ...req.body.path,
-                    external: req.body.external == 'true',
-                },
+                label,
+                url: path,
+                external: req.body.external == 'true',
                 child: menuItem.child,
             }
             let deleteItem = await Menu.findOneAndUpdate(
@@ -368,11 +383,9 @@ const saveEditMenu = async (req, res) => {
 
             let obj = {
                 _id: id,
-                label: req.body.label,
-                url: {
-                    ...req.body.path,
-                    external: req.body.external == 'true',
-                },
+                label,
+                url: path,
+                external: req.body.external == 'true',
                 child: menuItem.child,
             }
             let deleteItem = await Menu.findOneAndUpdate(
@@ -422,8 +435,8 @@ const saveEditMenu = async (req, res) => {
             message: `Menu updated`,
         })
     } catch (error) {
-        // console.log(error)
-        return res.status(400).json({ error: 'Something went wrong' })
+        console.log(error)
+        return res.status(500).json({ error: 'Something went wrong' })
     }
 }
 

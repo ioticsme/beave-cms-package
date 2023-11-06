@@ -45,7 +45,7 @@
 		</div>
 		<div class="app-content flex-column-fluid" id="kt_app_content">
 			<div class="app-container container-xxl" id="kt_app_content_container">
-				<form class="form es-form" id="kt_modal_create_app_form" action="/admin/cms/menu/undefined/edit" data-kt-redirect-url="/admin/cms/menu" method="post">
+				<form class="form es-form" id="kt_modal_create_app_form" action="/admin/cms/menu/{{navPosition}}/edit" data-kt-redirect-url="/admin/cms/menu" method="post">
 					<input type="hidden" name="id" value="{{ menuItem._id }}">
 					<input type="hidden" name="level" value="{{ menuItem.level }}">
 					{% if menuItem.level == '1' %}
@@ -72,7 +72,7 @@
 									<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-kt-initialized="1"></i>
 								</label>
 								<select id="kt_ecommerce_add_product_status_select" class="form-select mb-2" data-control="select2" disabled name="menu_position" data-hide-search="true" data-placeholder="Select an option">
-									{% for nav, i in menulist %}
+									{% for nav in menulist %}
 										<option value="{{ nav.nav_position }}" {% if nav.nav_position == navPosition %}selected{% endif %}>{{ nav.nav_label }}</option>
 									{% endfor %}
 								</select>
@@ -87,7 +87,7 @@
 							</ul>
 							<div class="tab-content tab-content-fields" id="myTabContent">
 								{% for brandLanguage in authUser.brand.languages %}
-									<div class="tab-pane fade {% 'active show' if loop.index == 1 %}" role="tabpanel" id="kt_tab_pane_{{brandLanguage.prefix}}">
+									<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" id="kt_tab_pane_{{brandLanguage.prefix}}">
 										<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-6">
 											<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 												<span class="required">Menu name ({{ brandLanguage.prefix }})</span>
