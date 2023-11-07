@@ -83,8 +83,8 @@
                                     <label class="col-lg-4 col-form-label required fw-semibold fs-6">Languages</label>
                                     <div class="col-lg-8 fv-row">
                                         {% for lang in languages %}
-                                            <input type="checkbox" value="{{ lang._id }}" name="languages[]" id="chk_{{ lang._id }}" {{ 'checked' if brand.active }}>
-                                            <label class="check" for="chk_{{ lang._id }}">
+                                            <input class="form-check-input" type="checkbox" value="{{ lang._id }}" name="languages[]" id="chk_{{ lang._id }}" {{ 'checked' if brand.active }}>
+                                            <label class="form-check-label check" for="chk_{{ lang._id }}">
                                                 <span>{{ lang.name }}</span>
                                             </label>
                                         {% endfor %}
@@ -94,8 +94,8 @@
                                     <label class="col-lg-4 col-form-label required fw-semibold fs-6">Available Countries</label>
                                     <div class="col-lg-8 fv-row">
                                         {% for country in countries %}
-                                            <input type="checkbox" value="{{ country._id }}" name="domains[][country]" id="chk_{{ country._id }}" {{ 'checked' if brand.active }}>
-                                            <label class="check" for="chk_{{ country._id }}">
+                                            <input class="form-check-input" type="checkbox" value="{{ country._id }}" name="domains[][country]" id="chk_{{ country._id }}" {{ 'checked' if brand.active }}>
+                                            <label class="form-check-label check" for="chk_{{ country._id }}">
                                                 <span>{{ country.name.en }}</span>
                                             </label>
                                         {% endfor %}
@@ -103,7 +103,7 @@
                                 </div>
                                 <div class="row mb-6">
                                     <div class="col-lg-8 fv-row">
-                                        <input type="checkbox" value="true" id="check_1" name="active" {{ 'checked' if brand.active }}>
+                                        <input class="form-check-input" type="checkbox" value="true" id="check_1" name="active" {{ 'checked' if brand.active }}>
                                         <label class="check" for="check_1">
                                             <span>Active</span>
                                         </label>

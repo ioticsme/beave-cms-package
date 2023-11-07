@@ -180,6 +180,21 @@ function cloneChild(event) {
             })
     }
 
+    document
+        .querySelector(`#${newElement.getAttribute('id')}`)
+        .querySelectorAll('input, textarea')
+        .forEach((input) => {
+            input.value = ''
+        })
+    document
+        .querySelector(`#${newElement.getAttribute('id')}`)
+        .querySelectorAll('.invalid-feedback')
+        .forEach((errorField) => {
+            errorField.classList.remove('d-inline')
+            errorField.classList.add('d-none')
+            errorField.innerHTML = ''
+        })
+
     initDatePicker()
 }
 
