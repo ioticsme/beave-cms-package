@@ -88,10 +88,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 for (const index in result.details) {
                     // console.log(result.details[index].properties.path)
                     const errorFieldPath =
-                        result.details[index].properties.path.split('.')
-                    let field_key = errorFieldPath[0]
-                    let field_error_message_id = errorFieldPath[0]
-                    if (errorFieldPath.length > 1) {
+                        result.details[index]?.properties?.path?.split('.')
+                    let field_key = errorFieldPath?.[0]
+                    let field_error_message_id = errorFieldPath?.[0]
+                    if (errorFieldPath?.length > 1) {
                         errorFieldPath.forEach((key, index) => {
                             if (index != 0) {
                                 field_key = `${field_key}[${key}]`
@@ -318,6 +318,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else if (resStatus == 401) {
                     console.log(data?.error || 'Invalid credentials')
                     toastr.error(data?.error || 'Invalid credentials')
+                } else {
+                    console.log(data?.error || 'Something went wrong')
+                    toastr.error(data?.error || 'Something went wrong')
                 }
                 if (form.querySelector('#slug_field')) {
                     form.querySelector('#slug_field').disabled = true
@@ -342,7 +345,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     'd-none'
                 )
                 toastr.error('Something went wrong')
-                console.log(JSON.stringify(err))
+                console.log(err)
             })
     }
 

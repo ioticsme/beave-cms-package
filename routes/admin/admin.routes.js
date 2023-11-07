@@ -6,6 +6,7 @@ require('express-group-routes')
 
 // BEGIN:: Route Groups
 const configRoutes = require('./config.routes')
+const accessControlRoutes = require('./accessControl.routes')
 const authRoutes = require('./auth.routes')
 const dashboardRoutes = require('./dashboard.routes')
 const cmsRoutes = require('./cms.routes')
@@ -31,6 +32,8 @@ router.use('/auth', authRoutes)
 // router.use('/dashboard', [authCheck], dashboardRoutes)
 
 // router.use('/ecommerce', [authCheck], ecommerceRoutes)
+
+router.use('/access-control', [authCheck], accessControlRoutes)
 
 router.use('/cms', [authCheck], cmsRoutes)
 
