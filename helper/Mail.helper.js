@@ -12,7 +12,8 @@ const sendEmail = async (
     template,
     payloads,
     mg_settings = envConfig.mailgun,
-    filePath = false
+    filePath = false,
+    html = false
 ) => {
     try {
         const DOMAIN = mg_settings.DOMAIN
@@ -26,6 +27,30 @@ const sendEmail = async (
 
         // console.log(mg.domains.domainTemplates.list())
 
+        // let attachment
+        // if (filePath) {
+        //     const pdfPath = path.join(`${filePath}`)
+        //     const file = {
+        //         filename: 'invoice.pdf',
+        //         data: await fs.promises.readFile(pdfPath),
+        //     }
+        //     attachment = [file]
+        // }
+        // const mailgunData = {
+        //     from: `${from}`,
+        //     to: `${to}`,
+        //     subject: `${subject}`,
+        //     template: `${template}`,
+        //     attachment: attachment,
+        //     'h:X-Mailgun-Variables': JSON.stringify(payloads),
+        // }
+
+        const mailgunData = {
+            from: `${from}`,
+            to: `${to}`,
+            subject: `${subject}`,
+        }
+
         let attachment
         if (filePath) {
             const pdfPath = path.join(`${filePath}`)
@@ -34,15 +59,17 @@ const sendEmail = async (
                 data: await fs.promises.readFile(pdfPath),
             }
             attachment = [file]
+            mailgunData.attachment = attachment
         }
-        const mailgunData = {
-            from: `${from}`,
-            to: `${to}`,
-            subject: `${subject}`,
-            template: `${template}`,
-            attachment: attachment,
-            'h:X-Mailgun-Variables': JSON.stringify(payloads),
+        
+        if (html) {
+            mailgunData.html = html
         }
+        else {
+            mailgunData.template = `${template}`
+            mailgunData['h:X-Mailgun-Variables'] = JSON.stringify(payloads)
+        }
+        
         // console.log(mailgunData)
 
         return mg.messages.create(DOMAIN, mailgunData)
