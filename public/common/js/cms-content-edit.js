@@ -10,7 +10,8 @@ document.querySelectorAll('.content_wysiwyg').forEach(function (e) {
                 'w-100',
                 'w-sm-400px',
                 'w-md-500px',
-                'w-xl-700px'
+                'w-xl-700px',
+                'no-tailwindcss-base'
             )
 
             let latestImageElement
