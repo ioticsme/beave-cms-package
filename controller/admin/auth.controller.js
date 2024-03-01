@@ -51,7 +51,7 @@ const signupSubmit = async (req, res) => {
         if (admin?._id) {
             req.session.destroy()
             return res.status(200).json({
-                redirect_to: '/admin/login',
+                redirect_to: '/admin/auth/login',
             })
         } else {
             return res.status(500).json({ error: 'Something went wrong' })

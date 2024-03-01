@@ -5,7 +5,7 @@ const envConfig = {
         NODE_ENV: process.env.NODE_ENV || 'development',
         PORT: process.env.PORT || 8080,
         APP_KEY: process.env.APP_KEY || 'testkey',
-        SESSION_MAX_AGE: Number(process.env.SESSION_MAX_AGE) || 15, // Value must be in minutes
+        SESSION_MAX_AGE: Number(process.env.SESSION_MAX_AGE) || 720, // Value must be in minutes
         DOMAIN: process.env.DOMAIN,
         FRONTEND_URL: process.env.FRONTEND_URL,
         CLIENT_NAME: process.env.CLIENT_NAME,
