@@ -16,8 +16,10 @@ const list = async (req, res) => {
 const add = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
     // const contentTypes = await ContentType.find()
+    const timezones = ['Asia/Dubai', 'Asia/Riyadh']
     return res.render('admin-njk/config/country/form', {
         isEdit: false,
+        timezones,
     })
 }
 
@@ -26,10 +28,12 @@ const edit = async (req, res) => {
     const country = await Country.findOne({
         _id: req.params.id,
     })
+    const timezones = ['Asia/Dubai', 'Asia/Riyadh']
     // res.send(contentType)
     return res.render('admin-njk/config/country/form', {
         country,
         isEdit: true,
+        timezones
     })
 }
 

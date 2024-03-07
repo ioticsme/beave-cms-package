@@ -13,7 +13,7 @@ const list = async (req, res) => {
         })
     } catch (error) {
         console.log('error :>> ', error);
-        return res.render(`admin-njk/error-404`)
+        return res.render(`admin-njk/error-500`)
     }
 }
 
@@ -24,7 +24,7 @@ const jsonList = async (req, res) => {
         })
         return res.status(200).json(media)
     } catch (error) {
-        return res.render(`admin-njk/error-404`)
+        return res.render(`admin-njk/error-500`)
     }
 }
 
@@ -35,7 +35,7 @@ const jsonDetail = async (req, res) => {
         })
         return res.status(200).json(media)
     } catch (error) {
-        return res.render(`admin-njk/error-404`)
+        return res.render(`admin-njk/error-500`)
     }
 }
 

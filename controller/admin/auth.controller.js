@@ -14,7 +14,7 @@ const signup = async (req, res) => {
         }
         res.render(`admin-njk/authentication/sign-up`)
     } catch (error) {
-        res.render(`admin-njk/error-404`)
+        res.render(`admin-njk/error-500`)
     }
 }
 

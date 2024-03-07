@@ -98,10 +98,23 @@
 									</div>
 								</div>
 
-								<div class="row mb-6">
+								{# <div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Timezone</label>
 									<div class="col-lg-8 fv-row">
 										<input type="text" name="timezone" placeholder="Timezone" class="form-control form-control-lg form-control-solid" value="{{ country.timezone }}">
+										<div id="field-error-timezone" class="fv-plugins-message-container invalid-feedback"></div>
+									</div>
+								</div> #}
+
+								<div class="row mb-6">
+									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Timezone</label>
+									<div class="col-lg-8 fv-row">
+										<select class="form-control form-control-lg form-control-solid" name="timezone">
+											<option>-Select Timezone-</option>
+											{% for timezone in timezones %}
+												<option value="{{timezone}}" {% if country.timezone == timezone %} selected {% endif %}>{{timezone}}</option>
+											{% endfor %}
+										</select>
 										<div id="field-error-timezone" class="fv-plugins-message-container invalid-feedback"></div>
 									</div>
 								</div>

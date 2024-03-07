@@ -40,7 +40,7 @@ const list = async (req, res) => {
         }
 
         if (!contentList) {
-            return res.render(`admin-njk/error-404`)
+            return res.render(`admin-njk/error-500`)
         }
 
         // const reqContentType = req.contentType
@@ -786,7 +786,7 @@ const pageBuildEditor = async (req, res) => {
             page_id,
         })
     } catch (error) {
-        return res.render(`admin-njk/error-404`)
+        return res.render(`admin-njk/error-500`)
     }
 }
 
@@ -822,7 +822,7 @@ const previewPageBuildData = async (req, res) => {
             html_data,
         })
     } catch (error) {
-        return res.render(`admin-njk/error-404`)
+        return res.render(`admin-njk/error-500`)
     }
 }
 

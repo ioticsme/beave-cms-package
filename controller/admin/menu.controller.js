@@ -14,7 +14,7 @@ const listMenu = async (req, res) => {
         res.render(`admin-njk/cms/menu/listing`, { menulist: menus })
     } catch (e) {
         console.log(e)
-        return res.render(`admin-njk/error-404`)
+        return res.render(`admin-njk/error-500`)
     }
 }
 
@@ -188,7 +188,7 @@ const editMenu = async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        return res.render(`admin-njk/error-404`)
+        return res.render(`admin-njk/error-500`)
     }
 }
 
