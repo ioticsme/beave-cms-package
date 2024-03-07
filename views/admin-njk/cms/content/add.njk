@@ -4,6 +4,7 @@
 {% block csslib %}
 	{# <link href='/cms-static/admin/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css' rel='stylesheet' type='text/css'/> #}
 	{# //- link(href='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css' rel='stylesheet' type='text/css') #}
+	<link rel="stylesheet" href="/cms-static/admin/article-editor/css/article-editor.min.css"/>
 	<link href='/cms-static/admin/assets/plugins/global/plugins.bundle.css' rel='stylesheet' type='text/css'/>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.4.3/dist/css/tempus-dominus.min.css" crossorigin="anonymous">
 	<link href='/cms-static/admin/assets/css/style.bundle.css' rel='stylesheet' type='text/css'/>
@@ -55,12 +56,20 @@
 	<script src='/cms-static/common/js/es-form.js'></script>
 	<script src="https://cdn.quilljs.com/1.2.6/quill.min.js"></script>
 
+	<script src="/cms-static/admin/article-editor/article-editor.min.js"></script>
 	{# Custom js for cms add page #}
 	<script src='/cms-static/common/js/cms-content-add.js'></script>
 {% endblock %}
 
 {% block customScript %}
-
+	<script>
+		ArticleEditor('.article_editor_field', {
+			css: '/cms-static/admin/article-editor/css/',
+			image: {
+				upload: '/admin/upload-article-image'
+			}
+		})
+	</script>
 {% endblock %}
 
 {% block content %}
@@ -144,7 +153,7 @@
 														{% if cfg.repeater_group == true %}
 															<div>
 																<div class="group_repeater" id="kt_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
-																	
+
 																	{# Hidden Div Start #}
 																	<div class="form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }} d-none" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-0">
 																		{% for cf in cfg.fields %}
@@ -207,6 +216,8 @@
 																					<textarea class="content_wysiwyg" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ loop.index }}"></textarea>
 																				{% elif cf.field_type === 'textarea' %}
 																					<textarea class="form-control form-control-solid" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
+																				{% elif cf.field_type === 'article_editor' %}
+																					<textarea class="form-control form-control-solid article_editor_field" rows="30" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																				{% elif cf.field_type === 'media' %}
 																					<span class='media-uploader-field'>
 																						<span class="media_preview">
@@ -266,6 +277,8 @@
 																			<textarea class="content_wysiwyg" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}"></textarea>
 																		{% elif cf.field_type == 'textarea' %}
 																			<textarea class="form-control form-control-solid" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
+																		{% elif cf.field_type == 'article_editor' %}
+																			<textarea class="form-control form-control-solid article_editor_field" rows="30" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
 																		{% elif cf.field_type === 'media' %}
 																			<span class='media-uploader-field'>
 																				<span class="media_preview">
@@ -327,6 +340,8 @@
 																				<textarea disabled class="content_wysiwyg beave-cms-form-field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ loop.index }}"></textarea>
 																			{% elif cf.field_type == 'textarea' %}
 																				<textarea disabled class="form-control form-control-solid beave-cms-form-field" rows="6" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
+																			{% elif cf.field_type == 'article_editor' %}
+																				<textarea disabled class="form-control form-control-solid beave-cms-form-field article_editor_field" rows="30" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																			{% elif cf.field_type === 'media' %}
 																				<span class='media-uploader-field'>
 																					<span class="media_preview">
@@ -378,6 +393,8 @@
 																				<textarea class="content_wysiwyg" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ loop.index }}"></textarea>
 																			{% elif cf.field_type == 'textarea' %}
 																				<textarea class="form-control form-control-solid" rows="6" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
+																			{% elif cf.field_type == 'article_editor' %}
+																				<textarea class="form-control form-control-solid article_editor_field" rows="30" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																			{% elif cf.field_type === 'media' %}
 																				<span class='media-uploader-field'>
 																					<span class="media_preview">
@@ -433,6 +450,8 @@
 																			<textarea class="content_wysiwyg" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" id="wysiwyg-cf-{{ loop.index }}"></textarea>
 																		{% elif cf.field_type === 'textarea' %}
 																			<textarea class="form-control form-control-solid" rows="6" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
+																		{% elif cf.field_type === 'article_editor' %}
+																			<textarea class="form-control form-control-solid article_editor_field" rows="30" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
 																		{% elif cf.field_type == "media" %}
 																			<span class='media-uploader-field'>
 																				<span class="media_preview">
@@ -563,5 +582,4 @@
 			</div>
 		</div>
 	</div>
-
 {% endblock %}

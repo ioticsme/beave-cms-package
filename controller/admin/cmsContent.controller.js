@@ -429,6 +429,7 @@ const saveDefaultContent = async (req, res) => {
         const validTypes = {
             text: 'string()',
             textarea: 'string()',
+            article_editor: 'string()',
             richtext: 'string()',
             media: 'object()',
             dropdown: 'string()',

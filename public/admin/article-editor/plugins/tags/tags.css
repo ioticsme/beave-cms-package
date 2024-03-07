@@ -1,0 +1,14 @@
+.tags .tag {
+    background-color: gold;
+    display: inline-block;
+    border-radius: 16px;
+    font-size: 0.85em;
+    color: black;
+    line-height: 1;
+    min-height: initial;
+    padding: 4px 12px;
+    white-space: nowrap;
+    text-transform: none;
+    font-weight: normal;
+    margin-right: 3px;
+}
