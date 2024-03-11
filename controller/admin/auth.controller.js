@@ -1,6 +1,6 @@
 const envConfig = require('../../config/env.config')
 const Joi = require('joi')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const Admin = require('../../model/Admin')
 const Brand = require('../../model/Brand')
 var session = require('express-session')

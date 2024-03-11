@@ -1,7 +1,7 @@
 const envConfig = require('../../config/env.config')
 const Joi = require('joi')
 const axios = require('axios')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const Admin = require('../../model/Admin')
 const {

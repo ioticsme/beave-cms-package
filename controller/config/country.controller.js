@@ -1,7 +1,7 @@
 const path = require('path')
 const express = require('express')
 const Joi = require('joi')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 const Country = require('../../model/Country')
 

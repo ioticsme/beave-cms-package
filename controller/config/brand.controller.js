@@ -1,7 +1,7 @@
 const path = require('path')
 const express = require('express')
 const Joi = require('joi')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 const Admin = require('../../model/Admin')
 const Brand = require('../../model/Brand')

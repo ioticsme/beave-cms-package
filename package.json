@@ -14,7 +14,7 @@
         "@mongoosejs/double": "^0.3.0",
         "agenda": "^5.0.0",
         "axios": "^0.26.1",
-        "bcrypt": "^5.0.1",
+        "bcryptjs": "^2.4.3",
         "chalk": "^4.1.2",
         "collect.js": "^4.29.3",
         "connect-redis": "^6.1.3",

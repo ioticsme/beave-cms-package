@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const { joiPasswordExtendCore } = require('joi-password')
 const joiPassword = Joi.extend(joiPasswordExtendCore)
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const Admin = require('../../model/Admin')
 
 const userDetail = async (req, res) => {
