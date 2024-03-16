@@ -111,6 +111,10 @@ var njk = nunjucks
     .addFilter('json', function (obj) {
         return JSON.stringify(obj)
     })
+njk.addFilter('htmlSlice', function (value, start, end) {
+    const text = value.replace(/<[^>]*>?/gm, '') // Remove HTML tags
+    return text.slice(start, end) // Return sliced text
+})
 njk.addGlobal('ObjectKeys', Object.keys)
 app.set('view engine', 'njk')
 
