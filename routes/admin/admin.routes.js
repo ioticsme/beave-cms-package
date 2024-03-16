@@ -2,7 +2,10 @@ const envConfig = require('../../config/env.config')
 const express = require('express')
 const fs = require('fs')
 const router = express.Router()
+const multer = require('multer')
 require('express-group-routes')
+
+const upload = multer({ dest: 'uploads/' })
 
 // BEGIN:: Route Groups
 const configRoutes = require('./config.routes')
@@ -23,6 +26,8 @@ const {
     checkSuperAdmin,
 } = require('../../middleware/cms.middleware')
 // END::Admin Middleware
+
+const { articleImageUpload } = require('../../controller/admin/media.controller')
 
 // BEGIN:: Routes
 router.use('/auth', authRoutes)
@@ -45,5 +50,9 @@ router.use('/log', [authCheck], logRoutes)
 router.use('/admin-user', [authCheck], adminUserRoutes)
 router.use('/config', [authCheck, checkSuperAdmin], configRoutes)
 // END:: Routes
+
+// BEGIN::Image Uploader Path for Article Editor
+router.post('/upload-article-image', upload.any(), articleImageUpload)
+// END::Image Uploader Path for Article Editor
 
 module.exports = router

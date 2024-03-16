@@ -12,7 +12,7 @@ const list = async (req, res) => {
             hasPdfUpload,
         })
     } catch (error) {
-        console.log('error :>> ', error);
+        console.log('error :>> ', error)
         return res.render(`admin-njk/error-500`)
     }
 }
@@ -72,6 +72,43 @@ const fileUpload = async (req, res) => {
     }
     //END:: Media upload
     return res.status(200).json('uploaded')
+}
+
+const articleImageUpload = async (req, res) => {
+    try {
+        // console.log(req.files)
+        // console.log(req.files)
+        //BEGIN:: Media upload
+        let images = {}
+        if (!(req.files && req.files.length)) {
+            return res.status(400).json({ error: 'No media files found' })
+        }
+        let file = req.files[0]
+        // Creating base64 from file
+        const base64 = Buffer.from(fs.readFileSync(file.path)).toString(
+            'base64'
+        )
+        const media = await uploadMedia(base64, 'article', file, req) //file.originalname
+        // Deleting the image saved to temp/
+        // fs.unlinkSync(`temp/${file.filename}`)
+        if (!(media && media._id)) {
+            return res.status(503).json({
+                error: 'Some error occurred while uploading the image',
+            })
+        }
+
+        //END:: Media upload
+        return res.status(200).json({
+            file: {
+                url: media.url,
+                id: media._id,
+            },
+        })
+    } catch (error) {
+        logError(error)
+        console.log(error)
+        return res.status(404).json({ error: 'Something went wrong' })
+    }
 }
 
 const ckEditorFileUpload = async (req, res) => {
@@ -158,6 +195,7 @@ module.exports = {
     jsonDetail,
     addMetaInfo,
     fileUpload,
+    articleImageUpload,
     ckEditorFileUpload,
     deleteMedia,
 }
