@@ -173,9 +173,9 @@ mongoose
                     // END:: Generating firebase-messaging-sw.js
                 }
                 globalModuleConfig = {
-                    has_slack: config.general?.slack || false,
-                    firebaseConfig: config.firebase || false,
-                    slack_admin_channel: config.slack?.webhook_url,
+                    has_slack: config?.general?.slack || false,
+                    firebaseConfig: config?.firebase || false,
+                    slack_admin_channel: config?.slack?.webhook_url,
                 }
             })
     })
