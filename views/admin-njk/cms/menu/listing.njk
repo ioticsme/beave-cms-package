@@ -1,18 +1,11 @@
 {% extends "../../layouts/master.njk" %}
 
 {% block csslib %}
-	<link href='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css' rel='stylesheet' type='text/css'/>
+	{# <link href='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css' rel='stylesheet' type='text/css'/> #}
 	<link href='/cms-static/admin/assets/plugins/custom/jstree/jstree.bundle.css' rel='stylesheet' type='text/css'/>
 {% endblock %}
 
 {% block jslib %}
-	<!-- begin::Vendors Javascript(used by this page)
-	<script src="/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-	end::Vendors Javascript-->
-	<!-- begin::Custom Javascript(used by this page)-->
-	<script src="/cms-static/admin/assets/js/custom/apps/ecommerce/catalog/products.js"></script>
-	{# <script src="/cms-static/admin/assets/js/custom/utilities/modals/create-app.js"></script> #}
-	{# <script src="/cms-static/admin/assets/js/custom/utilities/modals/users-search.js"></script> #}
 	<script src="/cms-static/admin/assets/plugins/custom/jstree/jstree.bundle.js"></script>
 	<script src='/cms-static/common/js/custom-functions.js'></script>
 	<!-- Form Submission Script-->
@@ -141,7 +134,7 @@
 					.jstree(true)
 					.get_json('#', {flat: true})
 				var redrawData = JSON.stringify(v);
-				console.log(redrawData)
+				// console.log(redrawData)
 				saveMenuSorting(redrawData, menuName)
 			})
 			.jstree();
@@ -193,10 +186,10 @@
 										<ul>
 											{% for menu in nav.nav_items %}
 												<li data-id="{{ menu._id }}" url="{{ menu.url | json }}" label="{{ menu.label | json }}">{{ menu.label.en }}
-													<button class="btn btn-sm mx-1 btn-light-danger" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" onClick="deleteMenuItem(this)">
+													<button class="btn btn-sm mx-1 btn-danger" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" onClick="deleteMenuItem(this)">
 														<i class="fa-solid fa-trash "></i>
 													</button>
-													<button class="btn btn-sm mx-1 btn-light-primary" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ menu._id }}/0" onClick="editMenu(this)">
+													<button class="btn btn-sm mx-1 btn-primary" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ loop.index-1 }}/0" onClick="editMenu(this)">
 														<i class="fa-solid fa-pen"></i>
 													</button>
 													<ul>
@@ -204,10 +197,10 @@
 														{% for first_level_child in menu.child %}
 															<li data-id="{{ first_level_child._id }}" url="{{ first_level_child.url | json }}" label="{{ first_level_child.label | json }}">
 																{{ first_level_child.label.en }}
-																<button class="btn btn-sm mx-1 btn-light-danger" id="{{ first_level_child._id }}" nav_position="{{ nav.nav_position }}" level="1" onClick="deleteMenuItem(this)">
+																<button class="btn btn-sm mx-1 btn-danger" id="{{ first_level_child._id }}" nav_position="{{ nav.nav_position }}" level="1" onClick="deleteMenuItem(this)">
 																	<i class="fa-solid fa-trash"></i>
 																</button>
-																<button class="btn btn-sm mx-1 btn-light-primary" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ first_level_child._id }}/1?parent_index={{parent_index}}" onClick="editMenu(this)">
+																<button class="btn btn-sm btn-primary" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ loop.index-1 }}/1?parent_index={{parent_index}}" onClick="editMenu(this)">
 																	<i class="fa-solid fa-pen"></i>
 																</button>
 
@@ -216,10 +209,10 @@
 																	{% for second_level_child in first_level_child.child %}
 																		<li data-id="{{ second_level_child._id }}" url="{{ second_level_child.url | json }}" label="{{ second_level_child.label | json }}">
 																			{{ second_level_child.label.en }}
-																			<button class="btn btn-sm mx-1 btn-light-danger" id="{{ second_level_child._id }}" nav_position="{{ nav.nav_position }}" level="2" onClick="deleteMenuItem(this)">
+																			<button class="btn btn-sm mx-1 btn-danger" id="{{ second_level_child._id }}" nav_position="{{ nav.nav_position }}" level="2" onClick="deleteMenuItem(this)">
 																				<i class="fa-solid fa-trash"></i>
 																			</button>
-																			<button class="btn btn-sm mx-1 btn-light-primary" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ second_level_child._id }}/2?parent_index={{parent_index}}&sec_parent_index={{sec_parent_index}}" onClick="editMenu(this)">
+																			<button class="btn btn-sm mx-1 btn-primary" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ loop.index-1 }}/2?parent_index={{parent_index}}&sec_parent_index={{sec_parent_index}}" onClick="editMenu(this)">
 																				<i class="fa-solid fa-pen"></i>
 																			</button>
 																		</li>
@@ -250,13 +243,12 @@
 						</div>
 					</div>
 					<div class="modal-body">
-						<form class="form es-form" id="kt_modal_create_section_form" action="/admin/cms/menu/section/add" data-kt-redirect-url="/admin/cms/menu" method="post">
+						<form class="form es-form" id="kt_modal_create_section_form" action="/admin/cms/menu/section/add" data-redirect-url="/admin/cms/menu" method="post">
 							<div class="card card-flush">
 								<div class="card-body pt-0">
 									<div class="col">
-										<input type="text" class="form-control mb-2" name="menu_position_new" placeholder="New Menu Position" value="">
+										<input type="text" class="form-control mb-2" name="menu_position" placeholder="New Menu Position" value="">
 										<div class="fv-plugins-message-container invalid-feedback" id="field-error-menu_position"></div>
-										<div class="fv-plugins-message-container invalid-feedback" id="field-error-menu_position_new"></div>
 									</div>
 									<div class="card-toolbar mt-8 d-flex justify-content-end">
 										<button class="btn btn-sm btn-success form-submit-btn" type="submit">
@@ -282,7 +274,7 @@
 						</div>
 					</div>
 					<div class="modal-body">
-						<form class="form es-form" id="kt_modal_create_item_form" action="/admin/cms/menu/add" data-kt-redirect-url="/admin/cms/menu" method="post">
+						<form class="form es-form" id="kt_modal_create_item_form" action="/admin/cms/menu/add" data-redirect-url="/admin/cms/menu" method="post">
 							<input type="hidden" name="menu_position" id="nav-id" value="">
 							<div class="card card-flush">
 								<div class="card-body pt-0">

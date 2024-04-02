@@ -53,7 +53,7 @@
 
         <div class="app-content flex-column-fluid" id="kt_app_content">
             <div class="app-container container-xxl" id="kt_app_content_container">
-                <form class="form es-form d-flex flex-column flex-lg-row" id="kt_subscriptions_create_new" action="/admin/cms/{{reqContentType.slug}}/save" data-kt-redirect-url="/admin/cms/{{reqContentType.slug}}" enctype="multipart/form-data" method="post">
+                <form class="form es-form d-flex flex-column flex-lg-row" id="kt_subscriptions_create_new" action="/admin/cms/{{reqContentType.slug}}/save" data-redirect-url="/admin/cms/{{reqContentType.slug}}" enctype="multipart/form-data" method="post">
                     <input type="hidden" name="_id" value="{{ contentDetail._id }}">
                     <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
                         <div class="card mb-5 mb-xl-10">

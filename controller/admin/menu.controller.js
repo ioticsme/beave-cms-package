@@ -22,7 +22,7 @@ const addSection = async (req, res) => {
     try {
         session = req.authUser
         const schema = Joi.object({
-            menu_position_new: Joi.string().required(),
+            menu_position: Joi.string().required(),
         })
 
         const validationResult = schema.validate(req.body, {
@@ -34,11 +34,21 @@ const addSection = async (req, res) => {
         }
         // Form data
         let body = req.body
-        // object to insert
+
+        let isExist = await Menu.findOne({
+            brand: req.authUser?.brand?._id,
+            country: req.authUser?.brand?.country,
+            nav_position: body.menu_position,
+        })
+        if (isExist) {
+            return res
+                .status(400)
+                .json({ error: 'Menu section already exists' })
+        }
 
         await Menu.create({
-            nav_label: body.menu_position || body.menu_position_new,
-            nav_position: body.menu_position || body.menu_position_new,
+            nav_label: body.menu_position,
+            nav_position: body.menu_position,
             brand: req.authUser?.brand?._id,
             country: req.authUser?.brand?.country,
         })
@@ -147,7 +157,7 @@ const addMenu = async (req, res) => {
 
 const editMenu = async (req, res) => {
     try {
-        let { position, id, level } = req.params
+        let { position, index, level } = req.params
         let parentIndex = req.query?.parent_index
         let secParentIndex = req.query?.sec_parent_index
         // Finding all menus from DB
@@ -161,18 +171,15 @@ const editMenu = async (req, res) => {
         // Finding menu item w.r.t the menu child level
         if (menuDetail?._id) {
             if (level == '0') {
-                menuItem = menuDetail.nav_items.find(
-                    (item) => item._id.toString() == id
-                )
+                menuItem = menuDetail.nav_items?.at(index)
             } else if (level == '1') {
-                menuItem = menuDetail.nav_items[parentIndex]?.child?.find(
-                    (item) => item._id.toString() == id
-                )
+                menuItem = menuDetail.nav_items[parentIndex]?.child?.at(index)
                 if (menuItem) menuItem.parent_index = req.query.parent_index
             } else if (level == '2') {
-                menuItem = menuDetail.nav_items[parentIndex]?.child[
-                    secParentIndex
-                ]?.child?.find((item) => item._id.toString() == id)
+                menuItem =
+                    menuDetail.nav_items[parentIndex]?.child[
+                        secParentIndex
+                    ]?.child?.at(index)
                 if (menuItem) {
                     menuItem.parent_index = req.query.parent_index
                     menuItem.sec_parent_index = req.query.sec_parent_index
@@ -180,7 +187,11 @@ const editMenu = async (req, res) => {
             }
         }
         // add level value to menuItem
-        if (menuItem?._id) menuItem.level = level
+        if (menuItem?.active) {
+            menuItem.level = level
+            menuItem.index = `${index}`
+        }
+
         res.render(`admin-njk/cms/menu/edit-form`, {
             menulist: menus,
             navPosition: position,
@@ -206,7 +217,7 @@ const saveEditMenu = async (req, res) => {
             })
         })
         const schema = Joi.object({
-            id: Joi.string().required(),
+            index: Joi.string().required(),
             level: Joi.string().required(),
             parent_index: Joi.optional(),
             sec_parent_index: Joi.optional(),
@@ -227,7 +238,7 @@ const saveEditMenu = async (req, res) => {
             return res.status(422).json(validationResult.error)
         }
         // Destructuring values from req.body
-        const { id, level } = req.body
+        const { index, level } = req.body
         const { position } = req.params
 
         let update
@@ -255,50 +266,23 @@ const saveEditMenu = async (req, res) => {
             let menuItem = {}
             let menuIndex = 0
             if (menu?._id) {
-                menuItem = menu.nav_items.find(
-                    (item) => item._id.toString() == id
-                )
-                menuIndex = menu.nav_items.findIndex(
-                    (item) => item._id.toString() == id
-                )
+                menuItem = menu.nav_items.at(index)
+                menuIndex = index
             }
             let obj = {
-                _id: id,
                 label,
                 url: path,
                 external: req.body.external == 'true',
                 child: menuItem.child,
             }
-            let deleteItem = await Menu.findOneAndUpdate(
-                {
-                    // brand: req.authUser?.brand?._id,
-                    // country: req.authUser?.brand?.country,
-                    nav_position: position,
-                },
-                {
-                    $pull: {
-                        nav_items: {
-                            _id: id,
-                        },
-                    },
-                }
-            )
-            if (!deleteItem?._id) {
-                return res.status(400).json({ error: 'Something went wrong' })
-            }
 
             update = await Menu.findOneAndUpdate(
                 {
                     nav_position: position,
-                    // brand: req.authUser?.brand?._id,
-                    // country: req.authUser?.brand?.country,
-                    'nav_items.$._id': id,
+                    brand: req.authUser?.brand?._id,
+                    country: req.authUser?.brand?.country,
                 },
-                {
-                    $push: {
-                        nav_items: { $each: [obj], $position: menuIndex },
-                    },
-                },
+                { $set: { [`nav_items.${menuIndex}`]: obj } },
                 {
                     new: true,
                 }
@@ -306,58 +290,33 @@ const saveEditMenu = async (req, res) => {
         } else if (level == '1') {
             const menu = await Menu.findOne({
                 nav_position: position,
-                // brand: req.authUser?.brand?._id,
-                // country: req.authUser?.brand?.country,
+                brand: req.authUser?.brand?._id,
+                country: req.authUser?.brand?.country,
             })
             let menuItem = {}
             let menuIndex
             if (menu?._id) {
-                menuItem = menu.nav_items[body.parent_index].child.find(
-                    (item) => item._id.toString() == id
-                )
-                menuIndex = menu.nav_items[body.parent_index].child.findIndex(
-                    (item) => item._id.toString() == id
-                )
+                menuItem = menu.nav_items[body.parent_index].child?.at(index)
+                menuIndex = index
             }
 
             let obj = {
-                _id: id,
                 label,
                 url: path,
                 external: req.body.external == 'true',
                 child: menuItem.child,
             }
-            let deleteItem = await Menu.findOneAndUpdate(
-                {
-                    nav_position: position,
-                    // brand: req.authUser?.brand?._id,
-                    // country: req.authUser?.brand?.country,
-                },
-                {
-                    $pull: {
-                        [`nav_items.$[].child`]: {
-                            _id: id,
-                        },
-                    },
-                }
-            )
-            if (!deleteItem?._id) {
-                return res.status(400).json({ error: 'Something went wrong' })
-            }
 
             update = await Menu.findOneAndUpdate(
                 {
                     nav_position: position,
-                    // brand: req.authUser?.brand?._id,
-                    // country: req.authUser?.brand?.country,
-                    [`nav_items.${body.parent_index}.child.$._id`]: id,
+                    brand: req.authUser?.brand?._id,
+                    country: req.authUser?.brand?.country,
                 },
                 {
-                    $push: {
-                        [`nav_items.${body.parent_index}.child`]: {
-                            $each: [obj],
-                            $position: menuIndex,
-                        },
+                    $set: {
+                        [`nav_items.${body.parent_index}.child.${menuIndex}`]:
+                            obj,
                     },
                 },
                 {
@@ -367,57 +326,36 @@ const saveEditMenu = async (req, res) => {
         } else if (level == '2') {
             const menu = await Menu.findOne({
                 nav_position: position,
-                // brand: req.authUser?.brand?._id,
-                // country: req.authUser?.brand?.country,
+                brand: req.authUser?.brand?._id,
+                country: req.authUser?.brand?.country,
             })
             let menuItem = {}
             let menuIndex
             if (menu?._id) {
-                menuItem = menu.nav_items[body.parent_index].child[
-                    body.sec_parent_index
-                ].child.find((item) => item._id.toString() == id)
-                menuIndex = menu.nav_items[body.parent_index].child[
-                    body.sec_parent_index
-                ].child.findIndex((item) => item._id.toString() == id)
+                menuItem =
+                    menu.nav_items[body.parent_index].child[
+                        body.sec_parent_index
+                    ].child?.at(index)
+                menuIndex = index
             }
 
             let obj = {
-                _id: id,
                 label,
                 url: path,
                 external: req.body.external == 'true',
                 child: menuItem.child,
             }
-            let deleteItem = await Menu.findOneAndUpdate(
-                {
-                    nav_position: position,
-                    // brand: req.authUser?.brand?._id,
-                    // country: req.authUser?.brand?.country,
-                },
-                {
-                    $pull: {
-                        [`nav_items.$[].child.$[].child`]: {
-                            _id: id,
-                        },
-                    },
-                }
-            )
-            if (!deleteItem?._id) {
-                return res.status(400).json({ error: 'Something went wrong' })
-            }
 
             update = await Menu.findOneAndUpdate(
                 {
                     nav_position: position,
-                    // brand: req.authUser?.brand?._id,
-                    // country: req.authUser?.brand?.country,
-                    [`nav_items.${body.parent_index}.child.${body.sec_parent_index}.child.$._id`]:
-                        id,
+                    brand: req.authUser?.brand?._id,
+                    country: req.authUser?.brand?.country,
                 },
                 {
-                    $push: {
-                        [`nav_items.${body.parent_index}.child.${body.sec_parent_index}.child`]:
-                            { $each: [obj], $position: menuIndex },
+                    $set: {
+                        [`nav_items.${body.parent_index}.child.${body.sec_parent_index}.child.${menuIndex}`]:
+                            obj,
                     },
                 },
                 {

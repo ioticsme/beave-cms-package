@@ -32,7 +32,7 @@ router.group('/', (router) => {
         router.get('/', menuController.listMenu)
         router.post('/section/add', menuController.addSection)
         router.post('/add', menuController.addMenu)
-        router.get('/:position/edit/:id/:level', menuController.editMenu)
+        router.get('/:position/edit/:index/:level', menuController.editMenu)
         router.post('/:position/edit', menuController.saveEditMenu)
         router.post('/delete-position', menuController.deletePosition)
         router.post('/delete', menuController.deleteMenu)

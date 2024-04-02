@@ -1,23 +1,10 @@
 {% extends "../../layouts/master.njk" %}
 
 {% block csslib %}
-	<link href='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css' rel='stylesheet' type='text/css'/>
-	<link href='/cms-static/admin/assets/plugins/global/plugins.bundle.css' rel='stylesheet' type='text/css'/>
 	<link href='/cms-static/admin/assets/css/style.bundle.css' rel='stylesheet' type='text/css'/>
 {% endblock %}
 
 {% block jslib %}
-	<script src='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.js'></script>
-	<script src='/cms-static/admin/assets/plugins/custom/formrepeater/formrepeater.bundle.js'></script>
-	{# // end::Vendors Javascript #}
-	{# // begin::Custom Javascript(used by this page) #}
-	<script src='/cms-static/admin/assets/js/custom/apps/ecommerce/catalog/save-category.js'></script>
-	{# //- script(src='/cms-static/admin/assets/js/widgets.bundle.js') #}
-	{# //- script(src='/cms-static/admin/assets/js/custom/widgets.js') #}
-
-	<script src='/cms-static/admin/assets/js/custom/utilities/modals/create-app.js'></script>
-	<script src='/cms-static/admin/assets/js/custom/utilities/modals/users-search.js'></script>
-
 	{# //- // Form Submission Script #}
 	<script src='/cms-static/common/js/form-data-json.min.js'></script>
 	<script src='/cms-static/common/js/es-form.js'></script>
@@ -45,8 +32,8 @@
 		</div>
 		<div class="app-content flex-column-fluid" id="kt_app_content">
 			<div class="app-container container-xxl" id="kt_app_content_container">
-				<form class="form es-form" id="kt_modal_create_app_form" action="/admin/cms/menu/{{navPosition}}/edit" data-kt-redirect-url="/admin/cms/menu" method="post">
-					<input type="hidden" name="id" value="{{ menuItem._id }}">
+				<form class="form es-form" id="kt_modal_create_app_form" action="/admin/cms/menu/{{navPosition}}/edit" data-redirect-url="/admin/cms/menu" method="post">
+					<input type="hidden" name="index" value="{{ menuItem.position }}">
 					<input type="hidden" name="level" value="{{ menuItem.level }}">
 					{% if menuItem.level == '1' %}
 						<input type="hidden" name="parent_index" value="{{ menuItem.parent_index }}">
@@ -113,7 +100,7 @@
 									<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-kt-initialized="1"></i>
 								</label>
 								<div class="form-check form-check-custom form-check-solid">
-									<input id="flexCheckChecked" class="form-check-input" type="checkbox" name="external" value="true" {{ "checked" if menuItem.url.external==true}}>
+									<input id="flexCheckChecked" class="form-check-input" type="checkbox" name="external" value="true" {{ "checked" if menuItem.external==true}}>
 									<label class="form-check-label" for="flexCheckChecked">External</label>
 								</div>
 							</div>
