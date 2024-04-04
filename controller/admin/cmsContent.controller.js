@@ -537,27 +537,30 @@ const saveDefaultContent = async (req, res) => {
                             for (
                                 let i = 0;
                                 i <
-                                req.body[lang][group.row_name][
+                                req.body?.[lang]?.[group.row_name]?.[
                                     field.field_name
-                                ]['url'].length;
+                                ]?.['url']?.length;
                                 i++
                             ) {
                                 const item = {
-                                    url: req.body[lang][group.row_name][
+                                    url: req.body[lang]?.[group.row_name]?.[
                                         field.field_name
-                                    ]['url'][i],
-                                    title: req.body[lang][group.row_name][
+                                    ]?.['url']?.[i],
+                                    title: req.body?.[lang]?.[group.row_name]?.[
                                         field.field_name
-                                    ]['title'][i],
+                                    ]?.['title']?.[i],
                                     alt_text:
-                                        req.body[lang][group.row_name][
+                                        req.body[lang]?.[group.row_name]?.[
                                             field.field_name
-                                        ]['alt_text'][i],
+                                        ]?.['alt_text']?.[i],
                                 }
                                 mediaArray.push(item) // Add the object to the array
                             }
-                            req.body[lang][group.row_name][field.field_name] =
-                                mediaArray
+                            if (req.body?.[lang]?.[group.row_name]) {
+                                req.body[lang][group.row_name][
+                                    field.field_name
+                                ] = mediaArray
+                            }
                             _.assign(fieldsValidationObject, {
                                 [field.field_name]: eval(
                                     ` Joi.array().items(Joi.object({
@@ -644,26 +647,28 @@ const saveDefaultContent = async (req, res) => {
             }
 
             repeater_group_by_localisation.forEach((eachFieldGroup) => {
-                const repeater_field_keys = Object.keys(
-                    content_to_insert[lang][eachFieldGroup.row_name]
-                )
-                const content_to_change = []
-                const total_items_in_each_field =
-                    content_to_insert[lang][eachFieldGroup.row_name][
-                        repeater_field_keys[0]
-                    ].length
-                for (let i = 0; i < total_items_in_each_field; i++) {
-                    const obj = {}
-                    eachFieldGroup.fields.forEach((eachField) => {
-                        obj[eachField.field_name] =
-                            content_to_insert[lang][eachFieldGroup.row_name][
-                                eachField.field_name
-                            ][i]
-                    })
-                    content_to_change.push(obj)
+                if (content_to_insert[lang]?.[eachFieldGroup.row_name]) {
+                    const repeater_field_keys = Object.keys(
+                        content_to_insert[lang][eachFieldGroup.row_name]
+                    )
+                    const content_to_change = []
+                    const total_items_in_each_field =
+                        content_to_insert[lang][eachFieldGroup.row_name][
+                            repeater_field_keys[0]
+                        ].length
+                    for (let i = 0; i < total_items_in_each_field; i++) {
+                        const obj = {}
+                        eachFieldGroup.fields.forEach((eachField) => {
+                            obj[eachField.field_name] =
+                                content_to_insert[lang][
+                                    eachFieldGroup.row_name
+                                ][eachField.field_name][i]
+                        })
+                        content_to_change.push(obj)
+                    }
+                    content_to_insert[lang][eachFieldGroup.row_name] =
+                        content_to_change
                 }
-                content_to_insert[lang][eachFieldGroup.row_name] =
-                    content_to_change
             })
         })
         // console.log(content_to_insert.ar.featured_blocks)
