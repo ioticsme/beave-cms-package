@@ -473,7 +473,7 @@ const detail = async (req, res) => {
             return res.status(404).json({ error: `Content Type not exist` })
         }
 
-        const contents = await getCache(cache_key)
+        const content = await getCache(cache_key)
             .then(async (data) => {
                 if (envConfig.cache.ACTIVE == 'true' && data) {
                     return JSON.parse(data)
@@ -486,23 +486,27 @@ const detail = async (req, res) => {
                     })
                         .populate('author')
                         .populate('country')
+
+                    if (!liveData?._id) {
+                        return false
+                    }
                     // BEGIN:: Fetching Attached Contents
                     let attached_contents
                     if (liveData?.attached_type?.length) {
-                        const attach_conetnt_ids = collect(
+                        const attach_content_ids = collect(
                             liveData.attached_type
                         )
                             .pluck('items')
                             .toArray()
                             .flat()
                         const attached_contents_db_data = await Content.find({
-                            _id: { $in: attach_conetnt_ids },
+                            _id: { $in: attach_content_ids },
                         }).select('-meta')
                         const mapped_attached_data = ContentResource.collection(
                             attached_contents_db_data
                         )
                         attached_contents = collect(mapped_attached_data)
-                            .groupBy('type_slug')
+                            .groupBy('type')
                             .all()
                     }
                     // END:: Fetching Attached Contents
@@ -544,11 +548,11 @@ const detail = async (req, res) => {
         // return res.json(contents)
         // END::Filtering scheduled items
 
-        if (!contents) {
+        if (!content) {
             return res.status(404).json({ error: `Not Found` })
         }
         res.status(200).json({
-            [req.params.contentType]: contents,
+            [req.params.contentType]: content,
             navigation: contentType.nav_on_single_api
                 ? req.navigation
                 : undefined,
