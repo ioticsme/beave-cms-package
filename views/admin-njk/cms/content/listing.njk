@@ -90,6 +90,9 @@
 											<a class="text-gray-800 text-hover-primary mb-1" href="/admin/cms/{{reqContentType.slug}}/detail/{{item._id}}">
 												{% if reqContentType.page_builder == false %}
 													{% set defaultFieldValue = item.content[default_lang.prefix][reqContentType.field_groups[0].row_name][reqContentType.field_groups[0].fields[0].field_name] %}
+													{% if not defaultFieldValue %}
+														{% set defaultFieldValue = '- No Default Field -' %}
+													{% endif %}
 													{{defaultFieldValue | htmlSlice(0,80) }}
 												{% else %}
 													{{item.content.name | htmlSlice(0,80) }}
