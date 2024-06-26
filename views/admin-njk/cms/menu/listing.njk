@@ -182,7 +182,7 @@
 									</div>
 								</div>
 								<div class="card-body">
-									<div class="jstree_dragdrop" id="nav_{{ nav.nav_position }}" data-nav_position="{{ nav.nav_position }}">
+									<div class="jstree_dragdrop" id="nav_{{ nav._id }}" data-nav_position="{{ nav.nav_position }}">
 										<ul>
 											{% for menu in nav.nav_items %}
 												<li data-id="{{ menu._id }}" url="{{ menu.url | json }}" label="{{ menu.label | json }}">{{ menu.label.en }}

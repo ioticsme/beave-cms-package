@@ -33,7 +33,7 @@
 		<div class="app-content flex-column-fluid" id="kt_app_content">
 			<div class="app-container container-xxl" id="kt_app_content_container">
 				<form class="form es-form" id="kt_modal_create_app_form" action="/admin/cms/menu/{{navPosition}}/edit" data-redirect-url="/admin/cms/menu" method="post">
-					<input type="hidden" name="index" value="{{ menuItem.position }}">
+					<input type="hidden" name="index" value="{{ menuItem.index }}">
 					<input type="hidden" name="level" value="{{ menuItem.level }}">
 					{% if menuItem.level == '1' %}
 						<input type="hidden" name="parent_index" value="{{ menuItem.parent_index }}">

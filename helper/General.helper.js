@@ -9,7 +9,7 @@ const convertToSingular = (pluralName) => {
     // Apply the rules in order
     for (const rule of rules) {
         if (rule.pattern.test(pluralName)) {
-            return pluralName.replace(rule.pattern, rule.replace)
+            return pluralName?.replace(rule.pattern, rule.replace)
         }
     }
 
