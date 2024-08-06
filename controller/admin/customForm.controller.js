@@ -19,7 +19,7 @@ const list = async (req, res) => {
             brand: session.brand._id,
             country: session.brand.country,
         })
-        res.render(`admin-njk/custom-forms/listing`, {
+        return res.render(`admin-njk/custom-forms/listing`, {
             data: forms,
         })
     } catch (error) {
@@ -221,6 +221,9 @@ const viewSubmissions = async (req, res) => {
     try {
         session = req.authUser
 
+        const reqForm = await CustomForm.findOne({
+            _id: req.params.id,
+        })
         const submissions = await CustomFormData.find({
             form_id: req.params.id,
             brand: session.brand._id,
@@ -228,6 +231,7 @@ const viewSubmissions = async (req, res) => {
         }).sort({ _id: -1 })
         res.render(`admin-njk/custom-forms/submissions`, {
             data: submissions,
+            reqForm: reqForm,
         })
     } catch (error) {
         return res.render(`admin-njk/error-500`)
