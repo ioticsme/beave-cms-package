@@ -115,6 +115,9 @@ njk.addFilter('htmlSlice', function (value, start, end) {
     const text = value.replace(/<[^>]*>?/gm, '') // Remove HTML tags
     return text.slice(start, end) // Return sliced text
 })
+njk.addFilter('in_array', function (ar, val) {
+    return Array.isArray(ar) && ar.includes(val);
+})
 njk.addGlobal('ObjectKeys', Object.keys)
 app.set('view engine', 'njk')
 

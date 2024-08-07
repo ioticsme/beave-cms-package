@@ -180,6 +180,7 @@ const mainNavGenerator = async (req, res, next) => {
             // Section is not exist in custom build nav
             customBuildNav.push(preBuildSection)
         }
+        // console.log(preBuildSection)
     })
 
     // Finding all content types to list in the contents section
