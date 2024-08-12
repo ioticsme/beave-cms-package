@@ -188,7 +188,7 @@ const mainNavGenerator = async (req, res, next) => {
         active: true,
     })
         .select(
-            '-_id title slug admin_icon admin_nav_section position active single_type'
+            '-_id title slug admin_icon admin_nav_section position active single_type has_access'
         )
         .sort([['position', 'ascending']])
 
@@ -203,6 +203,7 @@ const mainNavGenerator = async (req, res, next) => {
                     expandable: true,
                     icon: item.admin_icon,
                     position: item.position,
+                    has_access: item.has_access,
                     child: [
                         {
                             label: `All ${item.title}`,
@@ -221,6 +222,7 @@ const mainNavGenerator = async (req, res, next) => {
                     label: item.title,
                     expandable: false,
                     icon: item.admin_icon,
+                    has_access: item.has_access,
                     path: `/admin/cms/${item.slug}`,
                 }
             }

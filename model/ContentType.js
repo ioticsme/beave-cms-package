@@ -20,6 +20,10 @@ const ContentTypeSchema = new mongoose.Schema(
             <path d="M2 10V3C2 2.4 2.4 2 3 2H21C21.6 2 22 2.4 22 3V10C22 10.6 21.6 11 21 11H3C2.4 11 2 10.6 2 10Z" fill="currentColor"/>
             </svg>`,
         },
+        has_access: {
+            type: [String],
+            default: ['super_admin', 'admin', 'editor'],
+        },
         admin_nav_section: {
             type: String,
         },
