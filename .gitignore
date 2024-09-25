@@ -13,3 +13,4 @@ log/
 *.log
 .DS_Store
 /public/firebase-messaging-sw.js
+/public/admin/assets/

@@ -1,7 +1,13 @@
 /src
+/gulp
 node_modules
+/public/admin/node_modules
+/public/admin/package.json
+/public/admin/package-lock.json
 .prettierrc.json
 package-lock.json
 tsconfig.json
 tslint.json
+gulpfile.js
+gulp.config.js
 *.d.ts
