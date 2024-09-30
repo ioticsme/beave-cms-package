@@ -48,7 +48,7 @@ var BEAVEModalUserSearch = function () {
     return {
         init: function () {
             // Elements
-            element = document.querySelector('#kt_modal_users_search_handler');
+            element = document.querySelector('#beave_modal_users_search_handler');
 
             if (!element) {
                 return;

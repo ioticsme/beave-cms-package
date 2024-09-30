@@ -4,7 +4,11 @@
 var BEAVEAccountAPIKeys = function () {
     // Private functions
     var initLicenceCopy = function() {
+<<<<<<< Updated upstream
         BEAVEUtil.each(document.querySelectorAll('#kt_api_keys_table [data-action="copy"]'), function(button) {
+=======
+        BEAVEUtil.each(document.querySelectorAll('#beave_api_keys_table [data-action="copy"]'), function(button) {
+>>>>>>> Stashed changes
             var tr = button.closest('tr');
             var license = BEAVEUtil.find(tr, '[data-bs-target="license"]');
 

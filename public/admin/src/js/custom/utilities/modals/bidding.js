@@ -241,7 +241,11 @@ var BEAVEModalBidding = function () {
     return {
         init: function () {
             // Elements
+<<<<<<< Updated upstream
             element = document.querySelector('#kt_modal_bidding');
+=======
+            element = document.querySelector('#beave_modal_bidding');
+>>>>>>> Stashed changes
             form = document.getElementById('beave_modal_bidding_form');
             modal = new bootstrap.Modal(element);
 

@@ -6,7 +6,7 @@ var BEAVETimelineWidget1 = function () {
     // Day timeline
     const initTimelineDay = () => {
         // Detect element
-        const element = document.querySelector('#kt_timeline_widget_1_1');
+        const element = document.querySelector('#beave_timeline_widget_1_1');
         if (!element) {
             return;
         }
@@ -181,7 +181,7 @@ var BEAVETimelineWidget1 = function () {
     // Week timeline
     const initTimelineWeek = () => {
         // Detect element
-        const element = document.querySelector('#kt_timeline_widget_1_2');
+        const element = document.querySelector('#beave_timeline_widget_1_2');
         if (!element) {
             return;
         }
@@ -357,7 +357,7 @@ var BEAVETimelineWidget1 = function () {
     // Month timeline
     const initTimelineMonth = () => {
         // Detect element
-        const element = document.querySelector('#kt_timeline_widget_1_3');
+        const element = document.querySelector('#beave_timeline_widget_1_3');
         if (!element) {
             return;
         }
@@ -552,12 +552,12 @@ var BEAVETimelineWidget1 = function () {
         tabs.forEach(tab => {
             tab.addEventListener('shown.bs.tab', e => {
                 // Week tab
-                if(tab.getAttribute('href') === '#kt_timeline_widget_1_tab_week'){
+                if(tab.getAttribute('href') === '#beave_timeline_widget_1_tab_week'){
                     initTimelineWeek();
                 }
 
                 // Month tab
-                if(tab.getAttribute('href') === '#kt_timeline_widget_1_tab_month'){
+                if(tab.getAttribute('href') === '#beave_timeline_widget_1_tab_month'){
                     initTimelineMonth();
                 }
             });

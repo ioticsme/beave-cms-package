@@ -73,9 +73,9 @@ var BEAVESubscriptionsProducts = function () {
     // Modal handlers
     var addProduct = function() {
         // Select modal buttons
-        const closeButton = modalEl.querySelector('#kt_modal_add_product_close');
-        const cancelButton = modalEl.querySelector('#kt_modal_add_product_cancel');
-        const submitButton = modalEl.querySelector('#kt_modal_add_product_submit');
+        const closeButton = modalEl.querySelector('#beave_modal_add_product_close');
+        const cancelButton = modalEl.querySelector('#beave_modal_add_product_cancel');
+        const submitButton = modalEl.querySelector('#beave_modal_add_product_submit');
 
         // Cancel button action
         cancelButton.addEventListener('click', function(e){
@@ -142,7 +142,7 @@ var BEAVESubscriptionsProducts = function () {
             // Select modal -- more info on Bootstrap modal: https://getbootstrap.com/docs/5.0/components/modal/
             modal = new bootstrap.Modal(modalEl);
 
-            table = document.querySelector('#kt_subscription_products_table');
+            table = document.querySelector('#beave_subscription_products_table');
 
             initDatatable();
             deleteProduct();

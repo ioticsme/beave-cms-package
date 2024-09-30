@@ -46,7 +46,7 @@ var BEAVETablesWidget5 = function () {
     // Public methods
     return {
         init: function () {
-            table = document.querySelector('#kt_table_widget_5_table');
+            table = document.querySelector('#beave_table_widget_5_table');
 
             if (!table) {
                 return;

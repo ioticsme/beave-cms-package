@@ -1,7 +1,7 @@
 {% extends "../../layouts/master.njk" %}
 
 {% block csslib %}
-	<link href='/cms-static/admin/assets/css/style.bundle.css' rel='stylesheet' type='text/css'/>
+	{# <link href='/cms-static/admin/assets/css/style.bundle.css' rel='stylesheet' type='text/css'/> #}
 {% endblock %}
 
 {% block jslib %}
@@ -68,7 +68,7 @@
 							<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 								{% for brandLanguage in authUser.brand.languages %}
 									<li class="nav-item">
-										<a class="nav-link {{ 'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#kt_tab_pane_{{brandLanguage.prefix}}">{{brandLanguage.name}}</a>
+										<a class="nav-link {{ 'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#beave_tab_pane_{{brandLanguage.prefix}}">{{brandLanguage.name}}</a>
 									</li>
 								{% endfor %}
 							</ul>

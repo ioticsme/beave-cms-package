@@ -125,7 +125,7 @@ var BEAVELayoutSearch = function() {
 	return {
 		init: function() {
             // Elements
-            element = document.querySelector('#kt_header_search');
+            element = document.querySelector('#beave_header_search');
 
             if (!element) {
                 return;

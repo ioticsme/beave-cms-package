@@ -90,14 +90,14 @@ var BEAVEModalSelectLocation = function () {
     return {
         init: function () {
             // Elements
-			modal = document.querySelector('#kt_modal_select_location');
+			modal = document.querySelector('#beave_modal_select_location');
 
 			if (!modal) {
 				return;
 			}
             
-            locationSelectTarget = document.querySelector('#kt_modal_select_location_target');
-            locationSelectButton = document.querySelector('#kt_modal_select_location_button');
+            locationSelectTarget = document.querySelector('#beave_modal_select_location_target');
+            locationSelectButton = document.querySelector('#beave_modal_select_location_button');
 
             handleSelection();
             

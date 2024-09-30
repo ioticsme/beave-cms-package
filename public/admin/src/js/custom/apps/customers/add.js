@@ -220,12 +220,12 @@ var BEAVEModalCustomersAdd = function () {
         // Public functions
         init: function () {
             // Elements
-            modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_customer'));
+            modal = new bootstrap.Modal(document.querySelector('#beave_modal_add_customer'));
 
-            form = document.querySelector('#kt_modal_add_customer_form');
-            submitButton = form.querySelector('#kt_modal_add_customer_submit');
-            cancelButton = form.querySelector('#kt_modal_add_customer_cancel');
-			closeButton = form.querySelector('#kt_modal_add_customer_close');
+            form = document.querySelector('#beave_modal_add_customer_form');
+            submitButton = form.querySelector('#beave_modal_add_customer_submit');
+            cancelButton = form.querySelector('#beave_modal_add_customer_cancel');
+			closeButton = form.querySelector('#beave_modal_add_customer_close');
 
             handleForm();
         }

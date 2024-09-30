@@ -187,7 +187,7 @@ var BEAVEModalNewTarget = function () {
 		// Public functions
 		init: function () {
 			// Elements
-			modalEl = document.querySelector('#kt_modal_new_target');
+			modalEl = document.querySelector('#beave_modal_new_target');
 
 			if (!modalEl) {
 				return;
@@ -195,7 +195,11 @@ var BEAVEModalNewTarget = function () {
 
 			modal = new bootstrap.Modal(modalEl);
 
+<<<<<<< Updated upstream
 			form = document.querySelector('#kt_modal_new_target_form');
+=======
+			form = document.querySelector('#beave_modal_new_target_form');
+>>>>>>> Stashed changes
 			submitButton = document.getElementById('beave_modal_new_target_submit');
 			cancelButton = document.getElementById('beave_modal_new_target_cancel');
 

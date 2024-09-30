@@ -187,7 +187,7 @@ var BEAVEModalNewAddress = function () {
 		// Public functions
 		init: function () {
 			// Elements
-			modalEl = document.querySelector('#kt_modal_new_address');
+			modalEl = document.querySelector('#beave_modal_new_address');
 
 			if (!modalEl) {
 				return;
@@ -195,7 +195,11 @@ var BEAVEModalNewAddress = function () {
 
 			modal = new bootstrap.Modal(modalEl);
 
+<<<<<<< Updated upstream
 			form = document.querySelector('#kt_modal_new_address_form');
+=======
+			form = document.querySelector('#beave_modal_new_address_form');
+>>>>>>> Stashed changes
 			submitButton = document.getElementById('beave_modal_new_address_submit');
 			cancelButton = document.getElementById('beave_modal_new_address_cancel');
 

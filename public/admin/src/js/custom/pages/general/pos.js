@@ -53,7 +53,7 @@ var BEAVEPosSystem = function () {
 		// Public functions
 		init: function () {
 			// Elements
-			form = document.querySelector('#kt_pos_form');
+			form = document.querySelector('#beave_pos_form');
 
 			handleQuantity();
 		}

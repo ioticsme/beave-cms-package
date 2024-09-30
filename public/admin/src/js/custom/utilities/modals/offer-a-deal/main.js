@@ -16,8 +16,8 @@ var BEAVEModalOfferADeal = function () {
 	return {
 		// Public functions
 		init: function () {
-			stepper = document.querySelector('#kt_modal_offer_a_deal_stepper');
-			form = document.querySelector('#kt_modal_offer_a_deal_form');
+			stepper = document.querySelector('#beave_modal_offer_a_deal_stepper');
+			form = document.querySelector('#beave_modal_offer_a_deal_form');
 
 			initStepper();
 		},
@@ -38,7 +38,11 @@ var BEAVEModalOfferADeal = function () {
 
 // On document ready
 BEAVEUtil.onDOMContentLoaded(function () {
+<<<<<<< Updated upstream
 	if (!document.querySelector('#kt_modal_offer_a_deal')) {
+=======
+	if (!document.querySelector('#beave_modal_offer_a_deal')) {
+>>>>>>> Stashed changes
 		return;
 	}
 

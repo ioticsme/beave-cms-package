@@ -156,19 +156,19 @@ var BEAVETablesWidget15 = function () {
     return {
         init: function () { 
             var chart1Data = [7, 10, 5, 21, 6, 11, 5, 23, 5, 11, 18, 7, 21,13];            
-            initChart(chart1, '#kt_table_widget_15_chart_1', chart1Data, true);
+            initChart(chart1, '#beave_table_widget_15_chart_1', chart1Data, true);
 
             var chart2Data = [17, 5, 23, 2, 21, 9, 17, 23, 4, 24, 9, 17, 21,7];            
-            initChart(chart2, '#kt_table_widget_15_chart_2', chart2Data, true);
+            initChart(chart2, '#beave_table_widget_15_chart_2', chart2Data, true);
 
             var chart3Data = [2, 24, 5, 17, 7, 2, 12, 24, 5, 24, 2, 8, 12,7];            
-            initChart(chart3, '#kt_table_widget_15_chart_3', chart3Data, true);
+            initChart(chart3, '#beave_table_widget_15_chart_3', chart3Data, true);
 
             var chart4Data = [24, 3, 5, 19, 3, 7, 25, 14, 5, 14, 2, 8, 5,17];            
-            initChart(chart4, '#kt_table_widget_15_chart_4', chart4Data, true);
+            initChart(chart4, '#beave_table_widget_15_chart_4', chart4Data, true);
 
             var chart5Data = [3, 23, 1, 19, 3, 17, 3, 9, 25, 4, 2, 18, 25,3];            
-            initChart(chart5, '#kt_table_widget_15_chart_5', chart5Data, true);
+            initChart(chart5, '#beave_table_widget_15_chart_5', chart5Data, true);
             
             // Update chart on theme mode change
             BEAVEThemeMode.on("beave.thememode.change", function() {
@@ -192,11 +192,11 @@ var BEAVETablesWidget15 = function () {
                     chart5.self.destroy();
                 }
 
-                initChart(chart1, '#kt_table_widget_15_chart_1', chart1Data, chart1.rendered);
-                initChart(chart2, '#kt_table_widget_15_chart_2', chart2Data, chart2.rendered);  
-                initChart(chart3, '#kt_table_widget_15_chart_3', chart3Data, chart3.rendered);
-                initChart(chart4, '#kt_table_widget_15_chart_4', chart4Data, chart4.rendered); 
-                initChart(chart5, '#kt_table_widget_15_chart_5', chart5Data, chart5.rendered); 
+                initChart(chart1, '#beave_table_widget_15_chart_1', chart1Data, chart1.rendered);
+                initChart(chart2, '#beave_table_widget_15_chart_2', chart2Data, chart2.rendered);  
+                initChart(chart3, '#beave_table_widget_15_chart_3', chart3Data, chart3.rendered);
+                initChart(chart4, '#beave_table_widget_15_chart_4', chart4Data, chart4.rendered); 
+                initChart(chart5, '#beave_table_widget_15_chart_5', chart5Data, chart5.rendered); 
             });
         }   
     }

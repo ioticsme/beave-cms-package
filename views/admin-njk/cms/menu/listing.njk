@@ -160,7 +160,7 @@
 					</ul>
 				</div>
 				<div class="d-flex align-items-center gap-2 gap-lg-3">
-					<a class="btn btn-sm fw-bold btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_create_section">Add Nav Section</a>
+					<a class="btn btn-sm fw-bold btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#beave_modal_create_section">Add Nav Section</a>
 				</div>
 			</div>
 		</div>
@@ -176,7 +176,7 @@
 										<a class="btn btn-sm btn-icon btn-light-danger menu-link px-3" id="{{ nav._id }}" url="/admin/cms/menu/delete-position" data-beave-subscriptions-table-filter="delete_row" onClick="deleteItem(this)">
 											<i class="fa fa-trash"></i>
 										</a>
-										<a class="btn btn-sm btn-icon mx-1 fw-bold btn-light-primary" href="#" data-bs-toggle="modal" data-sectionId="{{nav._id}}" data-bs-target="#kt_modal_create_item">
+										<a class="btn btn-sm btn-icon mx-1 fw-bold btn-light-primary" href="#" data-bs-toggle="modal" data-sectionId="{{nav._id}}" data-bs-target="#beave_modal_create_item">
 											<i class="fa fa-plus"></i>
 										</a>
 									</div>
@@ -282,7 +282,7 @@
 										<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 											{% for brandLanguage in authUser.brand.languages %}
 												<li class="nav-item">
-													<a class="nav-link {{ 'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
+													<a class="nav-link {{ 'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#beave_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
 												</li>
 											{% endfor %}
 										</ul>

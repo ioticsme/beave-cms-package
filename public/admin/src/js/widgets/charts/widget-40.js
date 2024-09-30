@@ -9,7 +9,7 @@ var BEAVEChartsWidget40 = (function () {
 			return;
 		}
 
-		var element = document.querySelector('#kt_charts_widget_40_chart');
+		var element = document.querySelector('#beave_charts_widget_40_chart');
 
 		if ( !element ) {
 			return;

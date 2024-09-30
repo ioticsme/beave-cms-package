@@ -112,13 +112,13 @@ var BEAVEModalUpdateCustomer = function () {
         // Public functions
         init: function () {
             // Elements
-            element = document.querySelector('#kt_modal_update_customer');
+            element = document.querySelector('#beave_modal_update_customer');
             modal = new bootstrap.Modal(element);
 
-            form = element.querySelector('#kt_modal_update_customer_form');
-            submitButton = form.querySelector('#kt_modal_update_customer_submit');
-            cancelButton = form.querySelector('#kt_modal_update_customer_cancel');
-            closeButton = element.querySelector('#kt_modal_update_customer_close');
+            form = element.querySelector('#beave_modal_update_customer_form');
+            submitButton = form.querySelector('#beave_modal_update_customer_submit');
+            cancelButton = form.querySelector('#beave_modal_update_customer_cancel');
+            closeButton = element.querySelector('#beave_modal_update_customer_close');
 
             initForm();
         }

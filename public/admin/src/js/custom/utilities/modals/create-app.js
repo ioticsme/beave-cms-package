@@ -301,7 +301,7 @@ var BEAVECreateApp = function () {
 		// Public Functions
 		init: function () {
 			// Elements
-			modalEl = document.querySelector('#kt_modal_create_app');
+			modalEl = document.querySelector('#beave_modal_create_app');
 
 			if (!modalEl) {
 				return;
@@ -309,8 +309,13 @@ var BEAVECreateApp = function () {
 
 			modal = new bootstrap.Modal(modalEl);
 
+<<<<<<< Updated upstream
 			stepper = document.querySelector('#kt_modal_create_app_stepper');
 			form = document.querySelector('#kt_modal_create_app_form');
+=======
+			stepper = document.querySelector('#beave_modal_create_app_stepper');
+			form = document.querySelector('#beave_modal_create_app_form');
+>>>>>>> Stashed changes
 			formSubmitButton = stepper.querySelector('[data-beave-stepper-action="submit"]');
 			formContinueButton = stepper.querySelector('[data-beave-stepper-action="next"]');
 

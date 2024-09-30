@@ -9,8 +9,8 @@ var BEAVEAppEcommerceSaveCategory = function () {
     const initQuill = () => {
         // Define all elements for quill editor
         const elements = [
-            '#kt_ecommerce_add_category_description',
-            '#kt_ecommerce_add_category_meta_description'
+            '#beave_ecommerce_add_category_description',
+            '#beave_ecommerce_add_category_meta_description'
         ];
 
         // Loop all elements
@@ -45,7 +45,7 @@ var BEAVEAppEcommerceSaveCategory = function () {
     const initTagify = () => {
         // Define all elements for tagify
         const elements = [
-            '#kt_ecommerce_add_category_meta_keywords'
+            '#beave_ecommerce_add_category_meta_keywords'
         ];
 
         // Loop all elements
@@ -65,7 +65,7 @@ var BEAVEAppEcommerceSaveCategory = function () {
 
     // Init form repeater --- more info: https://github.com/DubFriend/jquery.repeater
     const initFormRepeater = () => {
-        $('#kt_ecommerce_add_category_conditions').repeater({
+        $('#beave_ecommerce_add_category_conditions').repeater({
             initEmpty: false,
 
             defaultValues: {
@@ -150,7 +150,7 @@ var BEAVEAppEcommerceSaveCategory = function () {
         const datepicker = document.getElementById('beave_ecommerce_add_category_status_datepicker');
 
         // Init flatpickr --- more info: https://flatpickr.js.org/
-        $('#kt_ecommerce_add_category_status_datepicker').flatpickr({
+        $('#beave_ecommerce_add_category_status_datepicker').flatpickr({
             enableTime: true,
             dateFormat: "Y-m-d H:i",
         });

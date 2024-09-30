@@ -167,9 +167,9 @@ var BEAVESlidersWidget3 = function () {
             var data2 = [18, 22, 22, 20, 20, 18, 18, 20, 20, 18, 18, 20, 20, 22];
             
             // Init default chart
-            initChart(chart1, '#kt_sliders_widget_3_chart_1', 'danger', data1);
+            initChart(chart1, '#beave_sliders_widget_3_chart_1', 'danger', data1);
 
-            var carousel = document.querySelector('#kt_sliders_widget_3_slider');
+            var carousel = document.querySelector('#beave_sliders_widget_3_slider');
 
             if ( !carousel ){
                 return;
@@ -178,7 +178,7 @@ var BEAVESlidersWidget3 = function () {
             carousel.addEventListener('slid.bs.carousel', function (e) {
                 if (e.to === 1) {
                     // Init second chart
-                    initChart(chart2, '#kt_sliders_widget_3_chart_2', 'primary', data2);
+                    initChart(chart2, '#beave_sliders_widget_3_chart_2', 'primary', data2);
                 }                
             });
 
@@ -194,8 +194,8 @@ var BEAVESlidersWidget3 = function () {
                     chart2.rendered = false;
                 }
 
-                initChart(chart1, '#kt_sliders_widget_3_chart_1', 'danger', data1);
-                initChart(chart2, '#kt_sliders_widget_3_chart_2', 'primary', data2);
+                initChart(chart1, '#beave_sliders_widget_3_chart_1', 'danger', data1);
+                initChart(chart2, '#beave_sliders_widget_3_chart_2', 'primary', data2);
             });
         }   
     }

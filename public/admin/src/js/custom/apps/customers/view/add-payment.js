@@ -188,13 +188,13 @@ var BEAVEModalAddPayment = function () {
         // Public functions
         init: function () {
             // Elements
-            element = document.querySelector('#kt_modal_add_payment');
+            element = document.querySelector('#beave_modal_add_payment');
             modal = new bootstrap.Modal(element);
 
-            form = element.querySelector('#kt_modal_add_payment_form');
-            submitButton = form.querySelector('#kt_modal_add_payment_submit');
-            cancelButton = form.querySelector('#kt_modal_add_payment_cancel');
-            closeButton = element.querySelector('#kt_modal_add_payment_close');
+            form = element.querySelector('#beave_modal_add_payment_form');
+            submitButton = form.querySelector('#beave_modal_add_payment_submit');
+            cancelButton = form.querySelector('#beave_modal_add_payment_cancel');
+            closeButton = element.querySelector('#beave_modal_add_payment_close');
 
             initForm();
         }

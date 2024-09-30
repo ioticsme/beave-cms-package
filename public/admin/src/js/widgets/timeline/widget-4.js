@@ -6,7 +6,7 @@ var BEAVETimelineWidget4 = function () {
     // Day timeline
     const initTimelineDay = () => {
         // Detect element
-        const element = document.querySelector('#kt_timeline_widget_4_1');
+        const element = document.querySelector('#beave_timeline_widget_4_1');
         if (!element) {
             return;
         }
@@ -181,7 +181,7 @@ var BEAVETimelineWidget4 = function () {
     // Week timeline
     const initTimelineWeek = () => {
         // Detect element
-        const element = document.querySelector('#kt_timeline_widget_4_2');
+        const element = document.querySelector('#beave_timeline_widget_4_2');
         if (!element) {
             return;
         }
@@ -357,7 +357,7 @@ var BEAVETimelineWidget4 = function () {
     // Month timeline
     const initTimelineMonth = () => {
         // Detect element
-        const element = document.querySelector('#kt_timeline_widget_4_3');
+        const element = document.querySelector('#beave_timeline_widget_4_3');
         if (!element) {
             return;
         }
@@ -533,7 +533,7 @@ var BEAVETimelineWidget4 = function () {
     // 2022 timeline
     const initTimeline2022 = () => {
         // Detect element
-        const element = document.querySelector('#kt_timeline_widget_4_4');
+        const element = document.querySelector('#beave_timeline_widget_4_4');
         if (!element) {
             return;
         }
@@ -727,17 +727,17 @@ var BEAVETimelineWidget4 = function () {
         tabs.forEach(tab => {
             tab.addEventListener('shown.bs.tab', e => {
                 // Week tab
-                if(tab.getAttribute('href') === '#kt_timeline_widget_4_tab_week'){
+                if(tab.getAttribute('href') === '#beave_timeline_widget_4_tab_week'){
                     initTimelineWeek();
                 }
 
                 // Month tab
-                if(tab.getAttribute('href') === '#kt_timeline_widget_4_tab_month'){
+                if(tab.getAttribute('href') === '#beave_timeline_widget_4_tab_month'){
                     initTimelineMonth();
                 }
 
                 // 2022 tab
-                if(tab.getAttribute('href') === '#kt_timeline_widget_4_tab_2022'){
+                if(tab.getAttribute('href') === '#beave_timeline_widget_4_tab_2022'){
                     initTimeline2022();
                 }
             });

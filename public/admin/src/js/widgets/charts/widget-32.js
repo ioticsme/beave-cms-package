@@ -165,13 +165,13 @@ var BEAVEChartsWidget32 = function () {
     return {
         init: function () {   
             var chart1Data = [54, 42, 75, 110, 23, 87, 50];
-            initChart(chart1, '#kt_charts_widget_32_tab_1', '#kt_charts_widget_32_chart_1', chart1Data, true);
+            initChart(chart1, '#beave_charts_widget_32_tab_1', '#beave_charts_widget_32_chart_1', chart1Data, true);
 
             var chart2Data = [25, 55, 35, 50, 45, 20, 31];
-            initChart(chart2, '#kt_charts_widget_32_tab_2', '#kt_charts_widget_32_chart_2', chart2Data, false);
+            initChart(chart2, '#beave_charts_widget_32_tab_2', '#beave_charts_widget_32_chart_2', chart2Data, false);
 
             var chart3Data = [45, 15, 35, 70, 45, 50, 21];
-            initChart(chart3, '#kt_charts_widget_32_tab_3', '#kt_charts_widget_32_chart_3', chart3Data, false);          
+            initChart(chart3, '#beave_charts_widget_32_tab_3', '#beave_charts_widget_32_chart_3', chart3Data, false);          
             
             // Update chart on theme mode change
             BEAVEThemeMode.on("beave.thememode.change", function() {
@@ -187,9 +187,9 @@ var BEAVEChartsWidget32 = function () {
                     chart3.self.destroy();
                 } 
                 
-                initChart(chart1, '#kt_charts_widget_32_tab_1', '#kt_charts_widget_32_chart_1', chart1Data, chart1.rendered);
-                initChart(chart2, '#kt_charts_widget_32_tab_2', '#kt_charts_widget_32_chart_2', chart2Data, chart2.rendered);  
-                initChart(chart3, '#kt_charts_widget_32_tab_3', '#kt_charts_widget_32_chart_3', chart3Data, chart3.rendered);                                           
+                initChart(chart1, '#beave_charts_widget_32_tab_1', '#beave_charts_widget_32_chart_1', chart1Data, chart1.rendered);
+                initChart(chart2, '#beave_charts_widget_32_tab_2', '#beave_charts_widget_32_chart_2', chart2Data, chart2.rendered);  
+                initChart(chart3, '#beave_charts_widget_32_tab_3', '#beave_charts_widget_32_chart_3', chart3Data, chart3.rendered);                                           
             });         
         }        
     }

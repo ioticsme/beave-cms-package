@@ -3290,7 +3290,11 @@ var BEAVEWidgets = function () {
 
     // Feeds Widgets
     var initFeedWidget1 = function() {
+<<<<<<< Updated upstream
         var formEl = document.querySelector("#kt_forms_widget_1_form");
+=======
+        var formEl = document.querySelector("#beave_forms_widget_1_form");
+>>>>>>> Stashed changes
         var editorId = 'beave_forms_widget_1_editor';
 
         if ( !formEl ) {
@@ -3301,7 +3305,7 @@ var BEAVEWidgets = function () {
         var options = {
             modules: {
                 toolbar: {
-                    container: "#kt_forms_widget_1_editor_toolbar"
+                    container: "#beave_forms_widget_1_editor_toolbar"
                 }
             },
             placeholder: 'What is on your mind ?',
@@ -3317,8 +3321,8 @@ var BEAVEWidgets = function () {
     }
 
     var initFeedsWidget4 = function() {
-        var btn = document.querySelector('#kt_widget_5_load_more_btn');
-        var widget5 = document.querySelector('#kt_widget_5');        
+        var btn = document.querySelector('#beave_widget_5_load_more_btn');
+        var widget5 = document.querySelector('#beave_widget_5');        
 
         if (btn) {
             btn.addEventListener('click', function(e){
@@ -3338,7 +3342,7 @@ var BEAVEWidgets = function () {
 
     // Calendar
     var initCalendarWidget1 = function() {
-        if (typeof FullCalendar === 'undefined' || !document.querySelector('#kt_calendar_widget_1')) {
+        if (typeof FullCalendar === 'undefined' || !document.querySelector('#beave_calendar_widget_1')) {
             return;
         }
 
@@ -3480,11 +3484,11 @@ var BEAVEWidgets = function () {
 
     // Daterangepicker
     var initDaterangepicker = function () {
-        if (!document.querySelector('#kt_dashboard_daterangepicker')) {
+        if (!document.querySelector('#beave_dashboard_daterangepicker')) {
             return;
         }
 
-        var picker = $('#kt_dashboard_daterangepicker');
+        var picker = $('#beave_dashboard_daterangepicker');
         var start = moment();
         var end = moment();
 
@@ -3502,8 +3506,8 @@ var BEAVEWidgets = function () {
                 range = start.format('MMM D') + ' - ' + end.format('MMM D');
             }
 
-            $('#kt_dashboard_daterangepicker_date').html(range);
-            $('#kt_dashboard_daterangepicker_title').html(title);
+            $('#beave_dashboard_daterangepicker_date').html(range);
+            $('#beave_dashboard_daterangepicker_title').html(title);
         }
 
         picker.daterangepicker({
@@ -3528,7 +3532,7 @@ var BEAVEWidgets = function () {
 
     // Dark mode toggler
     var initDarkModeToggle = function() {
-        var toggle = document.querySelector('#kt_user_menu_dark_mode_toggle');
+        var toggle = document.querySelector('#beave_user_menu_dark_mode_toggle');
         
         if (toggle) {
             toggle.addEventListener('click', function() {

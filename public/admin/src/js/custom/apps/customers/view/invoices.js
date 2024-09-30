@@ -7,7 +7,7 @@ var BEAVECustomerViewInvoices = function () {
     // Init current year datatable
     var initInvoiceYearCurrent = function () {
         // Define table element
-        const id = '#kt_customer_details_invoices_table_1';
+        const id = '#beave_customer_details_invoices_table_1';
         var table = document.querySelector(id);
 
         // Set date data order
@@ -34,7 +34,7 @@ var BEAVECustomerViewInvoices = function () {
     // Init year 2020 datatable
     var initInvoiceYear2020 = function () {
         // Define table element
-        const id = '#kt_customer_details_invoices_table_2';
+        const id = '#beave_customer_details_invoices_table_2';
         var table = document.querySelector(id);
 
         // Set date data order
@@ -61,7 +61,7 @@ var BEAVECustomerViewInvoices = function () {
     // Init year 2019 datatable
     var initInvoiceYear2019 = function () {
         // Define table element
-        const id = '#kt_customer_details_invoices_table_3';
+        const id = '#beave_customer_details_invoices_table_3';
         var table = document.querySelector(id);
 
         // Set date data order
@@ -88,7 +88,7 @@ var BEAVECustomerViewInvoices = function () {
     // Init year 2018 datatable
     var initInvoiceYear2018 = function () {
         // Define table element
-        const id = '#kt_customer_details_invoices_table_4';
+        const id = '#beave_customer_details_invoices_table_4';
         var table = document.querySelector(id);
 
         // Set date data order

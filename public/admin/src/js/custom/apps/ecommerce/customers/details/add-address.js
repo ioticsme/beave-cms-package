@@ -196,12 +196,12 @@ var BEAVEModalAddAddress = function () {
         // Public functions
         init: function () {
             // Elements
-            modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_address'));
+            modal = new bootstrap.Modal(document.querySelector('#beave_modal_add_address'));
 
-            form = document.querySelector('#kt_modal_add_address_form');
-            submitButton = form.querySelector('#kt_modal_add_address_submit');
-            cancelButton = form.querySelector('#kt_modal_add_address_cancel');
-			closeButton = form.querySelector('#kt_modal_add_address_close');
+            form = document.querySelector('#beave_modal_add_address_form');
+            submitButton = form.querySelector('#beave_modal_add_address_submit');
+            cancelButton = form.querySelector('#beave_modal_add_address_cancel');
+			closeButton = form.querySelector('#beave_modal_add_address_close');
 
             handleForm();
         }

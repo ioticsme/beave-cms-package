@@ -134,10 +134,10 @@ var BEAVEProfileGeneral = function () {
     // Public methods
     return {
         init: function () {
-            showMoreButton = document.querySelector('#kt_followers_show_more_button');
-            showMoreCards = document.querySelector('#kt_followers_show_more_cards');
-            followBtn = document.querySelector('#kt_user_follow_button');
-            profileNav = document.querySelector('#kt_user_profile_nav');
+            showMoreButton = document.querySelector('#beave_followers_show_more_button');
+            showMoreCards = document.querySelector('#beave_followers_show_more_cards');
+            followBtn = document.querySelector('#beave_user_follow_button');
+            profileNav = document.querySelector('#beave_user_profile_nav');
 
             handleShowMore();
             handleUFollow();

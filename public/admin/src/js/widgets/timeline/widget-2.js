@@ -4,7 +4,7 @@
 var BEAVETimelineWidget2 = function () {
     // Private methods
     var handleCheckbox = function() {
-        var card = document.querySelector('#kt_timeline_widget_2_card');        
+        var card = document.querySelector('#beave_timeline_widget_2_card');        
         
         if (!card) {
             return;

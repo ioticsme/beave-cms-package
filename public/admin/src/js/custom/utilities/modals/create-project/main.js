@@ -16,8 +16,8 @@ var BEAVEModalCreateProject = function () {
 	return {
 		// Public functions
 		init: function () {
-			stepper = document.querySelector('#kt_modal_create_project_stepper');
-			form = document.querySelector('#kt_modal_create_project_form');
+			stepper = document.querySelector('#beave_modal_create_project_stepper');
+			form = document.querySelector('#beave_modal_create_project_form');
 
 			initStepper();
 		},
@@ -38,7 +38,11 @@ var BEAVEModalCreateProject = function () {
 
 // On document ready
 BEAVEUtil.onDOMContentLoaded(function () {
+<<<<<<< Updated upstream
 	if (!document.querySelector('#kt_modal_create_project')) {
+=======
+	if (!document.querySelector('#beave_modal_create_project')) {
+>>>>>>> Stashed changes
 		return;
 	}
 

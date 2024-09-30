@@ -261,7 +261,7 @@ var BEAVECustomersList = function () {
     // Public methods
     return {
         init: function () {
-            table = document.querySelector('#kt_customers_table');
+            table = document.querySelector('#beave_customers_table');
             
             if (!table) {
                 return;

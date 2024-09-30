@@ -3,7 +3,7 @@
 */
 const mediaManagementPanel = document.querySelector('#media-management-panel')
 if (mediaManagementPanel) {
-    const dropZoneDiv = document.querySelector('#kt_dropzonejs_example_1')
+    const dropZoneDiv = document.querySelector('#beave_dropzonejs_example_1')
     const hasPdfUpload = dropZoneDiv.getAttribute('data-upload-pdf') || false
     // Setting the acceptedFiles for the dropzone
     let acceptedFiles = `.jpeg,.jpg,.png,.gif`
@@ -11,7 +11,7 @@ if (mediaManagementPanel) {
     if (hasPdfUpload == 'true') {
         acceptedFiles += `,.pdf`
     }
-    var myDropzone = new Dropzone('#kt_dropzonejs_example_1', {
+    var myDropzone = new Dropzone('#beave_dropzonejs_example_1', {
         url: '/admin/cms/media/upload', // Set the url for your upload script location
         paramName: 'file', // The name that will be used to transfer the file
         maxFiles: 10,
@@ -321,7 +321,7 @@ if (cmsPublishDateClearBtn) {
 }
 
 // ROUTE: /admin/cms/menu
-const menuItemAddModal = document.querySelector('#kt_modal_create_item')
+const menuItemAddModal = document.querySelector('#beave_modal_create_item')
 if (menuItemAddModal) {
     menuItemAddModal.addEventListener('show.bs.modal', function (e) {
         const sectionId = e.relatedTarget.getAttribute('data-sectionId')

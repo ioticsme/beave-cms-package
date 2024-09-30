@@ -4,20 +4,24 @@
 var BEAVEUsersAddSchedule = function () {
     // Shared variables
     const element = document.getElementById('beave_modal_add_schedule');
+<<<<<<< Updated upstream
     const form = element.querySelector('#kt_modal_add_schedule_form');
+=======
+    const form = element.querySelector('#beave_modal_add_schedule_form');
+>>>>>>> Stashed changes
     const modal = new bootstrap.Modal(element);
 
     // Init add schedule modal
     var initAddSchedule = () => {       
 
         // Init flatpickr -- for more info: https://flatpickr.js.org/
-        $("#kt_modal_add_schedule_datepicker").flatpickr({
+        $("#beave_modal_add_schedule_datepicker").flatpickr({
             enableTime: true,
             dateFormat: "Y-m-d H:i",
         });
 
         // Init tagify -- for more info: https://yaireo.github.io/tagify/
-        const tagifyInput = form.querySelector('#kt_modal_add_schedule_tagify');
+        const tagifyInput = form.querySelector('#beave_modal_add_schedule_tagify');
         new Tagify(tagifyInput, {
             whitelist: ["sean@dellito.com", "brian@exchange.com", "mikaela@pexcom.com", "f.mitcham@kpmg.com.au", "olivia@corpmail.com", "owen.neil@gmail.com", "dam@consilting.com", "emma@intenso.com", "ana.cf@limtel.com", "robert@benko.com", "lucy.m@fentech.com", "ethan@loop.com.au"],
             maxTags: 10,

@@ -65,19 +65,19 @@
 										<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 											{% for brandLanguage in authUser.brand.languages %}
 												<li class="nav-item">
-													<a class="nav-link {{ 'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
+													<a class="nav-link {{ 'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#beave_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
 												</li>
 											{% endfor %}
 
 											{% if has_common_field_groups %}
 												<li class="nav-item">
-													<a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_common">General</a>
+													<a class="nav-link" data-bs-toggle="tab" href="#beave_tab_pane_common">General</a>
 												</li>
 											{% endif %}
 
 											{% if reqContentType.has_meta %}
 												<li class="nav-item">
-													<a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_meta">Meta</a>
+													<a class="nav-link" data-bs-toggle="tab" href="#beave_tab_pane_meta">Meta</a>
 												</li>
 											{% endif %}
 										</ul>

@@ -169,13 +169,13 @@ var BEAVECustomersExport = function () {
         // Public functions
         init: function () {
             // Elements
-            element = document.querySelector('#kt_customers_export_modal');
+            element = document.querySelector('#beave_customers_export_modal');
             modal = new bootstrap.Modal(element);
 
-            form = document.querySelector('#kt_customers_export_form');
-            submitButton = form.querySelector('#kt_customers_export_submit');
-            cancelButton = form.querySelector('#kt_customers_export_cancel');
-			closeButton = element.querySelector('#kt_customers_export_close');
+            form = document.querySelector('#beave_customers_export_form');
+            submitButton = form.querySelector('#beave_customers_export_submit');
+            cancelButton = form.querySelector('#beave_customers_export_cancel');
+			closeButton = element.querySelector('#beave_customers_export_close');
 
             handleForm();
             initForm();

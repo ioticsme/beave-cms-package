@@ -84,11 +84,11 @@ var BEAVEAppSidebar = function () {
 	return {
 		init: function () {
 			// Elements
-			sidebar = document.querySelector('#kt_app_sidebar');
-			toggle = document.querySelector('#kt_app_sidebar_toggle');
-			headerMenu = document.querySelector('#kt_app_header_menu');
-			menuDashboardsCollapse = document.querySelector('#kt_app_sidebar_menu_dashboards_collapse');
-			menuScroll = document.querySelector('#kt_app_sidebar_menu_scroll');
+			sidebar = document.querySelector('#beave_app_sidebar');
+			toggle = document.querySelector('#beave_app_sidebar_toggle');
+			headerMenu = document.querySelector('#beave_app_header_menu');
+			menuDashboardsCollapse = document.querySelector('#beave_app_sidebar_menu_dashboards_collapse');
+			menuScroll = document.querySelector('#beave_app_sidebar_menu_scroll');
 			
 			if ( sidebar === null ) {
 				return;

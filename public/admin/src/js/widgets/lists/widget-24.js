@@ -4,7 +4,7 @@
 var BEAVETimelineWidget24 = function () {
     // Private methods
     var handleActions = function() {
-        var card = document.querySelector('#kt_list_widget_24');        
+        var card = document.querySelector('#beave_list_widget_24');        
         
         if ( !card ) {
             return;

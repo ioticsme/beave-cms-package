@@ -57,7 +57,11 @@
                     <input type="hidden" name="_id" value="{{ contentDetail._id }}">
                     <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
                         <div class="card mb-5 mb-xl-10">
+<<<<<<< Updated upstream
                             {# <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="beave_account_profile_details">
+=======
+                            {# <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#beave_account_profile_details" aria-expanded="true" aria-controls="beave_account_profile_details">
+>>>>>>> Stashed changes
                                 <div class="card-title m-0">
                                     <h3 class="fw-bold m-0">New Content</h3>
                                 </div>
@@ -67,14 +71,14 @@
 
                                     <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
                                         <li class="nav-item">
-                                            <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_general">
+                                            <a class="nav-link active" data-bs-toggle="tab" href="#beave_tab_pane_general">
                                                 General
                                                 <span class="fa-solid fa-circle-exclamation d-none tab-invalid-icon"></span>
                                             </a>
                                         </li>
                                         {% if reqContentType.has_meta %}
                                             <li class="nav-item">
-                                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_meta">
+                                                <a class="nav-link" data-bs-toggle="tab" href="#beave_tab_pane_meta">
                                                     Meta
                                                     <span class="fa-solid fa-circle-exclamation d-none tab-invalid-icon"></span>
                                                 </a>
@@ -142,7 +146,7 @@
                                                                                                 <input type="hidden" class="media_url_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][url]" value="{{ metaFieldValue[url] }}">
                                                                                                 <input type="hidden" class="media_title_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][title]" value="{{ metaFieldValue[title] }}">
                                                                                                 <input type="hidden" class="media_alt_text_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][alt_text]" value="{{ metaFieldValue[alt_text] }}">
-                                                                                                <a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+                                                                                                <a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
                                                                                             </span>
                                                                                         {% else %}
                                                                                             <input type="text" class="form-control" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}" value="{{ metaFieldValue }}">

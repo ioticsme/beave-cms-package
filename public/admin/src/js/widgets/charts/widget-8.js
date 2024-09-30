@@ -184,8 +184,8 @@ var BEAVEChartsWidget8 = function () {
                 [[125, 300, 40]], [[250, 350, 35]], [[350, 450, 30]], [[450, 250, 25]], [[500, 500, 30]], [[600, 250, 28]]
             ];
 
-            initChart(chart1, '#kt_chart_widget_8_week_toggle', '#kt_chart_widget_8_week_chart', data1, false);
-            initChart(chart2, '#kt_chart_widget_8_month_toggle', '#kt_chart_widget_8_month_chart', data2, true);    
+            initChart(chart1, '#beave_chart_widget_8_week_toggle', '#beave_chart_widget_8_week_chart', data1, false);
+            initChart(chart2, '#beave_chart_widget_8_month_toggle', '#beave_chart_widget_8_month_chart', data2, true);    
 
             // Update chart on theme mode change
             var handlerId = BEAVEThemeMode.on("beave.thememode.change", function() {
@@ -197,8 +197,8 @@ var BEAVEChartsWidget8 = function () {
                     chart2.self.destroy();
                 }
 
-                initChart(chart1, '#kt_chart_widget_8_week_toggle', '#kt_chart_widget_8_week_chart', data1, chart1.rendered);
-                initChart(chart2, '#kt_chart_widget_8_month_toggle', '#kt_chart_widget_8_month_chart', data2, chart2.rendered);  
+                initChart(chart1, '#beave_chart_widget_8_week_toggle', '#beave_chart_widget_8_week_chart', data1, chart1.rendered);
+                initChart(chart2, '#beave_chart_widget_8_month_toggle', '#beave_chart_widget_8_month_chart', data2, chart2.rendered);  
             });
         }   
     }

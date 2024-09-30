@@ -328,19 +328,23 @@ var BEAVECreateAccount = function () {
 		// Public Functions
 		init: function () {
 			// Elements
-			modalEl = document.querySelector('#kt_modal_create_account');
+			modalEl = document.querySelector('#beave_modal_create_account');
 
 			if ( modalEl ) {
 				modal = new bootstrap.Modal(modalEl);	
 			}					
 
-			stepper = document.querySelector('#kt_create_account_stepper');
+			stepper = document.querySelector('#beave_create_account_stepper');
 
 			if ( !stepper ) {
 				return;
 			}
 
+<<<<<<< Updated upstream
 			form = stepper.querySelector('#kt_create_account_form');
+=======
+			form = stepper.querySelector('#beave_create_account_form');
+>>>>>>> Stashed changes
 			formSubmitButton = stepper.querySelector('[data-beave-stepper-action="submit"]');
 			formContinueButton = stepper.querySelector('[data-beave-stepper-action="next"]');
 

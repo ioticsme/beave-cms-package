@@ -98,7 +98,7 @@ var BEAVEUsersPermissionsList = function () {
     return {
         // Public functions
         init: function () {
-            table = document.querySelector('#kt_permissions_table');
+            table = document.querySelector('#beave_permissions_table');
             
             if (!table) {
                 return;

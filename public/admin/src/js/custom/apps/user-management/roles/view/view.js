@@ -205,7 +205,7 @@ var BEAVEUsersViewRole = function () {
     return {
         // Public functions
         init: function () {
-            table = document.querySelector('#kt_roles_view_table');
+            table = document.querySelector('#beave_roles_view_table');
             
             if (!table) {
                 return;

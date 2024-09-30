@@ -71,8 +71,8 @@ var BEAVEChartsWidget22 = function () {
     // Public methods
     return {
         init: function () {           
-            initChart('#kt_chart_widgets_22_tab_1', '#kt_chart_widgets_22_chart_1', [20, 100, 15, 25], true);
-            initChart('#kt_chart_widgets_22_tab_2', '#kt_chart_widgets_22_chart_2', [70, 13, 11, 2], false);              
+            initChart('#beave_chart_widgets_22_tab_1', '#beave_chart_widgets_22_chart_1', [20, 100, 15, 25], true);
+            initChart('#beave_chart_widgets_22_tab_2', '#beave_chart_widgets_22_chart_2', [70, 13, 11, 2], false);              
         }   
     }
 }();

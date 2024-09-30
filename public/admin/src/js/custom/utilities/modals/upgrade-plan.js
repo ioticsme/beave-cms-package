@@ -94,7 +94,7 @@ var BEAVEModalUpgradePlan = function () {
     return {
         init: function () {
             // Elements
-            modal = document.querySelector('#kt_modal_upgrade_plan');
+            modal = document.querySelector('#beave_modal_upgrade_plan');
 
             if (!modal) {
 				return;
@@ -102,7 +102,11 @@ var BEAVEModalUpgradePlan = function () {
 
 			planPeriodMonthButton = modal.querySelector('[data-beave-plan="month"]');
 			planPeriodAnnualButton = modal.querySelector('[data-beave-plan="annual"]');
+<<<<<<< Updated upstream
             planUpgradeButton = document.querySelector('#kt_modal_upgrade_plan_btn');
+=======
+            planUpgradeButton = document.querySelector('#beave_modal_upgrade_plan_btn');
+>>>>>>> Stashed changes
 
             // Handlers
             handlePlanPeriodSelection();

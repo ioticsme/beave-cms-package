@@ -5,8 +5,8 @@ var BEAVEAccountReferralsReferralProgram = function () {
     // Private functions
 
     var initReferralProgrammClipboard = function() {
-        var button = document.querySelector('#kt_referral_program_link_copy_btn');
-        var input = document.querySelector('#kt_referral_link_input');
+        var button = document.querySelector('#beave_referral_program_link_copy_btn');
+        var input = document.querySelector('#beave_referral_link_input');
         var clipboard = new ClipboardJS(button);
 
         clipboard.on('success', function(e) {

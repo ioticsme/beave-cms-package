@@ -50,8 +50,8 @@ var BEAVEModalCustomerSelect = function() {
 	return {
 		init: function() {
             // Elements
-            element = document.querySelector('#kt_modal_customer_search_handler');
-            modal = new bootstrap.Modal(document.querySelector('#kt_modal_customer_search'));
+            element = document.querySelector('#beave_modal_customer_search_handler');
+            modal = new bootstrap.Modal(document.querySelector('#beave_modal_customer_search'));
 
             if (!element) {
                 return;

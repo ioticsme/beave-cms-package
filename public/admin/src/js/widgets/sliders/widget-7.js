@@ -82,9 +82,9 @@ var BEAVESlidersWidget7 = function() {
     return {
         init: function () {
             // Init default chart
-            initChart(chart1, '#kt_slider_widget_7_chart_1', 76);
+            initChart(chart1, '#beave_slider_widget_7_chart_1', 76);
 
-            var carousel = document.querySelector('#kt_sliders_widget_7_slider');
+            var carousel = document.querySelector('#beave_sliders_widget_7_slider');
             
             if ( !carousel ) {
                 return;
@@ -94,12 +94,12 @@ var BEAVESlidersWidget7 = function() {
             carousel.addEventListener('slid.bs.carousel', function (e) {
                 if (e.to === 1) {
                     // Init second chart
-                    initChart(chart2, '#kt_slider_widget_7_chart_2', 55);
+                    initChart(chart2, '#beave_slider_widget_7_chart_2', 55);
                 }
 
                 if (e.to === 2) {
                     // Init third chart
-                    initChart(chart3, '#kt_slider_widget_7_chart_3', 25);
+                    initChart(chart3, '#beave_slider_widget_7_chart_3', 25);
                 }
             });
 
@@ -120,9 +120,9 @@ var BEAVESlidersWidget7 = function() {
                     chart3.rendered = false;
                 }
 
-                initChart(chart1, '#kt_slider_widget_7_chart_1', 76);
-                initChart(chart2, '#kt_slider_widget_7_chart_2', 55);
-                initChart(chart3, '#kt_slider_widget_7_chart_3', 25);
+                initChart(chart1, '#beave_slider_widget_7_chart_1', 76);
+                initChart(chart2, '#beave_slider_widget_7_chart_2', 55);
+                initChart(chart3, '#beave_slider_widget_7_chart_3', 25);
             });
         }   
     }        

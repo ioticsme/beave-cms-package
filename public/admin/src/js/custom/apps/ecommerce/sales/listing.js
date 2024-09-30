@@ -29,7 +29,7 @@ var BEAVEAppEcommerceSalesListing = function () {
 
     // Init flatpickr --- more info :https://flatpickr.js.org/getting-started/
     var initFlatpickr = () => {
-        const element = document.querySelector('#kt_ecommerce_sales_flatpickr');
+        const element = document.querySelector('#beave_ecommerce_sales_flatpickr');
         flatpickr = $(element).flatpickr({
             altInput: true,
             altFormat: "d/m/Y",
@@ -91,7 +91,7 @@ var BEAVEAppEcommerceSalesListing = function () {
 
     // Handle clear flatpickr
     var handleClearFlatpickr = () => {
-        const clearButton = document.querySelector('#kt_ecommerce_sales_flatpickr_clear');
+        const clearButton = document.querySelector('#beave_ecommerce_sales_flatpickr_clear');
         clearButton.addEventListener('click', e => {
             flatpickr.clear();
         });
@@ -159,7 +159,7 @@ var BEAVEAppEcommerceSalesListing = function () {
     // Public methods
     return {
         init: function () {
-            table = document.querySelector('#kt_ecommerce_sales_table');
+            table = document.querySelector('#beave_ecommerce_sales_table');
 
             if (!table) {
                 return;

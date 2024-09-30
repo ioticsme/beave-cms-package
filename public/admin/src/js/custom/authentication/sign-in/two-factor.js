@@ -125,8 +125,8 @@ var BEAVESigninTwoFactor = function() {
     return {
         // Initialization
         init: function() {
-            form = document.querySelector('#kt_sing_in_two_factor_form');
-            submitButton = document.querySelector('#kt_sing_in_two_factor_submit');
+            form = document.querySelector('#beave_sing_in_two_factor_form');
+            submitButton = document.querySelector('#beave_sing_in_two_factor_submit');
 
             handleForm();
             handleType();

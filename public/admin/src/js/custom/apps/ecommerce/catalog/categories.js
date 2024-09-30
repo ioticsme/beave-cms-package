@@ -95,7 +95,7 @@ var BEAVEAppEcommerceCategories = function () {
     // Public methods
     return {
         init: function () {
-            table = document.querySelector('#kt_ecommerce_category_table');
+            table = document.querySelector('#beave_ecommerce_category_table');
 
             if (!table) {
                 return;

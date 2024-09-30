@@ -4,7 +4,11 @@
 var BEAVEUsersUpdatePermissions = function () {
     // Shared variables
     const element = document.getElementById('beave_modal_update_role');
+<<<<<<< Updated upstream
     const form = element.querySelector('#kt_modal_update_role_form');
+=======
+    const form = element.querySelector('#beave_modal_update_role_form');
+>>>>>>> Stashed changes
     const modal = new bootstrap.Modal(element);
 
     // Init add schedule modal
@@ -155,7 +159,7 @@ var BEAVEUsersUpdatePermissions = function () {
     // Select all handler
     const handleSelectAll = () => {
         // Define variables
-        const selectAll = form.querySelector('#kt_roles_select_all');
+        const selectAll = form.querySelector('#beave_roles_select_all');
         const allCheckboxes = form.querySelectorAll('[type="checkbox"]');
 
         // Handle check state

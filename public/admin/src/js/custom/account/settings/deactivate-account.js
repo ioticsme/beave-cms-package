@@ -96,13 +96,13 @@ var BEAVEAccountSettingsDeactivateAccount = function () {
     // Public methods
     return {
         init: function () {
-            form = document.querySelector('#kt_account_deactivate_form');
+            form = document.querySelector('#beave_account_deactivate_form');
 
             if (!form) {
                 return;
             }
             
-            submitButton = document.querySelector('#kt_account_deactivate_account_submit');
+            submitButton = document.querySelector('#beave_account_deactivate_account_submit');
 
             initValidation();
             handleForm();

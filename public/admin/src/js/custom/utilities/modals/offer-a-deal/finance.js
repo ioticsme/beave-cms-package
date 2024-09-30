@@ -62,7 +62,11 @@ var BEAVEModalOfferADealFinance = function () {
 		);
 
 		// Revalidate on change
+<<<<<<< Updated upstream
 		BEAVEDialer.getInstance(form.querySelector('#kt_modal_finance_setup')).on('beave.dialer.changed', function() {
+=======
+		BEAVEDialer.getInstance(form.querySelector('#beave_modal_finance_setup')).on('beave.dialer.changed', function() {
+>>>>>>> Stashed changes
 			// Revalidate the field when an option is chosen
             validator.revalidateField('finance_setup');
 		});

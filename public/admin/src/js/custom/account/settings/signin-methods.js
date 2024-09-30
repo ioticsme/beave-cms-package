@@ -88,7 +88,7 @@ var BEAVEAccountSettingsSigninMethods = function () {
             }
         );
 
-        signInForm.querySelector('#kt_signin_submit').addEventListener('click', function (e) {
+        signInForm.querySelector('#beave_signin_submit').addEventListener('click', function (e) {
             e.preventDefault();
             console.log('click');
 
@@ -176,7 +176,7 @@ var BEAVEAccountSettingsSigninMethods = function () {
             }
         );
 
-        passwordForm.querySelector('#kt_password_submit').addEventListener('click', function (e) {
+        passwordForm.querySelector('#beave_password_submit').addEventListener('click', function (e) {
             e.preventDefault();
             console.log('click');
 

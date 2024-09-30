@@ -5,7 +5,7 @@ var BEAVECustomerViewPaymentTable = function () {
 
     // Define shared variables
     var datatable;
-    var table = document.querySelector('#kt_table_customers_payment');
+    var table = document.querySelector('#beave_table_customers_payment');
 
     // Private functions
     var initCustomerView = function () {

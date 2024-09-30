@@ -137,14 +137,14 @@ var BEAVEAccountSecuritySummary = function () {
     // Public methods
     return {
         init: function () {
-            initChart('#kt_security_summary_tab_hours_agents', '#kt_security_summary_chart_hours_agents', [50, 70, 90, 117, 80, 65, 80, 90, 115, 95, 70, 84], [50, 70, 90, 117, 80, 65, 70, 90, 115, 95, 70, 84], true);
-            initChart('#kt_security_summary_tab_hours_clients', '#kt_security_summary_chart_hours_clients', [50, 70, 90, 117, 80, 65, 80, 90, 115, 95, 70, 84], [50, 70, 90, 117, 80, 65, 80, 90, 115, 95, 70, 84], false);
+            initChart('#beave_security_summary_tab_hours_agents', '#beave_security_summary_chart_hours_agents', [50, 70, 90, 117, 80, 65, 80, 90, 115, 95, 70, 84], [50, 70, 90, 117, 80, 65, 70, 90, 115, 95, 70, 84], true);
+            initChart('#beave_security_summary_tab_hours_clients', '#beave_security_summary_chart_hours_clients', [50, 70, 90, 117, 80, 65, 80, 90, 115, 95, 70, 84], [50, 70, 90, 117, 80, 65, 80, 90, 115, 95, 70, 84], false);
            
-            initChart('#kt_security_summary_tab_day', '#kt_security_summary_chart_day_agents', [50, 70, 80, 100, 90, 65, 80, 90, 115, 95, 70, 84], [50, 70, 90, 117, 60, 65, 80, 90, 100, 95, 70, 84], false);
-            initChart('#kt_security_summary_tab_day_clients', '#kt_security_summary_chart_day_clients', [50, 70, 100, 90, 80, 65, 80, 90, 115, 95, 70, 84], [50, 70, 90, 115, 80, 65, 80, 90, 115, 95, 70, 84], false);
+            initChart('#beave_security_summary_tab_day', '#beave_security_summary_chart_day_agents', [50, 70, 80, 100, 90, 65, 80, 90, 115, 95, 70, 84], [50, 70, 90, 117, 60, 65, 80, 90, 100, 95, 70, 84], false);
+            initChart('#beave_security_summary_tab_day_clients', '#beave_security_summary_chart_day_clients', [50, 70, 100, 90, 80, 65, 80, 90, 115, 95, 70, 84], [50, 70, 90, 115, 80, 65, 80, 90, 115, 95, 70, 84], false);
            
-            initChart('#kt_security_summary_tab_week', '#kt_security_summary_chart_week_agents', [50, 70, 75, 117, 80, 65, 80, 90, 115, 95, 50, 84], [50, 60, 90, 117, 80, 65, 80, 90, 115, 95, 70, 84], false);
-            initChart('#kt_security_summary_tab_week_clients', '#kt_security_summary_chart_week_clients', [50, 70, 90, 117, 80, 65, 80, 90, 100, 80, 70, 84], [50, 70, 90, 117, 80, 65, 80, 90, 100, 95, 70, 84], false);
+            initChart('#beave_security_summary_tab_week', '#beave_security_summary_chart_week_agents', [50, 70, 75, 117, 80, 65, 80, 90, 115, 95, 50, 84], [50, 60, 90, 117, 80, 65, 80, 90, 115, 95, 70, 84], false);
+            initChart('#beave_security_summary_tab_week_clients', '#beave_security_summary_chart_week_clients', [50, 70, 90, 117, 80, 65, 80, 90, 100, 80, 70, 84], [50, 70, 90, 117, 80, 65, 80, 90, 100, 95, 70, 84], false);
         }
     }
 }();

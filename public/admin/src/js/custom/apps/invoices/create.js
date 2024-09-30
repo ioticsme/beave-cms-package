@@ -96,7 +96,7 @@ var BEAVEAppInvoicesCreate = function () {
 	// Public methods
 	return {
 		init: function(element) {
-            form = document.querySelector('#kt_invoice_form');
+            form = document.querySelector('#beave_invoice_form');
 
 			handeForm();
             initForm();

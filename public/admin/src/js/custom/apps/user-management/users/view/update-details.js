@@ -4,7 +4,11 @@
 var BEAVEUsersUpdateDetails = function () {
     // Shared variables
     const element = document.getElementById('beave_modal_update_details');
+<<<<<<< Updated upstream
     const form = element.querySelector('#kt_modal_update_user_form');
+=======
+    const form = element.querySelector('#beave_modal_update_user_form');
+>>>>>>> Stashed changes
     const modal = new bootstrap.Modal(element);
 
     // Init add schedule modal

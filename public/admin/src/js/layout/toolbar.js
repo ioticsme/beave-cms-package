@@ -7,8 +7,8 @@ var BEAVELayoutToolbar = function () {
 
     // Private functions
     var initForm = function () {
-        var rangeSlider = document.querySelector("#kt_app_toolbar_slider");
-        var rangeSliderValueElement = document.querySelector("#kt_app_toolbar_slider_value");
+        var rangeSlider = document.querySelector("#beave_app_toolbar_slider");
+        var rangeSliderValueElement = document.querySelector("#beave_app_toolbar_slider_value");
 
         if (!rangeSlider) {
             return;
@@ -57,7 +57,7 @@ var BEAVELayoutToolbar = function () {
     return {
         init: function () {
             // Elements
-            toolbar = document.querySelector('#kt_app_toolbar');
+            toolbar = document.querySelector('#beave_app_toolbar');
 
             if (!toolbar) {
                 return;

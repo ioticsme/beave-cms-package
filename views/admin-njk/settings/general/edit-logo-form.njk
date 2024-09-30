@@ -67,7 +67,7 @@
                                 <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
                                     {% for brandLanguage, i in authUser.brand.languages %}
                                         <li class="nav-item">
-                                            <a class="nav-link {% if loop.index == 1 %} active {% endif %}" data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
+                                            <a class="nav-link {% if loop.index == 1 %} active {% endif %}" data-bs-toggle="tab" href="#beave_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
                                         </li>
                                     {% endfor %}
                                 </ul>

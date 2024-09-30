@@ -17,7 +17,7 @@ var BEAVEModalAdjustBalance = function () {
         // Init inputmask plugin --- For more info please refer to the official documentation here: https://github.com/RobinHerbots/Inputmask
         Inputmask("US$ 9,999,999.99", {
             "numericInput": true
-        }).mask("#kt_modal_inputmask");
+        }).mask("#beave_modal_inputmask");
     }
 
     var handleBalanceCalculator = function () {
@@ -220,13 +220,13 @@ var BEAVEModalAdjustBalance = function () {
         // Public functions
         init: function () {
             // Elements
-            element = document.querySelector('#kt_modal_adjust_balance');
+            element = document.querySelector('#beave_modal_adjust_balance');
             modal = new bootstrap.Modal(element);
 
-            form = element.querySelector('#kt_modal_adjust_balance_form');
-            submitButton = form.querySelector('#kt_modal_adjust_balance_submit');
-            cancelButton = form.querySelector('#kt_modal_adjust_balance_cancel');
-            closeButton = element.querySelector('#kt_modal_adjust_balance_close');
+            form = element.querySelector('#beave_modal_adjust_balance_form');
+            submitButton = form.querySelector('#beave_modal_adjust_balance_submit');
+            cancelButton = form.querySelector('#beave_modal_adjust_balance_cancel');
+            closeButton = element.querySelector('#beave_modal_adjust_balance_close');
 
             initForm();
             handleBalanceCalculator();

@@ -4,8 +4,8 @@
 var BEAVEModalShareEarn = function () {
     // Private functions
     var handleForm = function() {
-        var button = document.querySelector('#kt_share_earn_link_copy_button');
-        var input = document.querySelector('#kt_share_earn_link_input');
+        var button = document.querySelector('#beave_share_earn_link_copy_button');
+        var input = document.querySelector('#beave_share_earn_link_input');
         var clipboard = new ClipboardJS(button);
 
         if (!clipboard) {

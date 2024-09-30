@@ -6,7 +6,7 @@ var BEAVEAppFileManagerSettings = function () {
 
 	// Private functions
 	var handleForm = function() {
-		const saveButton = form.querySelector('#kt_file_manager_settings_submit');
+		const saveButton = form.querySelector('#beave_file_manager_settings_submit');
 
         saveButton.addEventListener('click', e => {
             e.preventDefault();
@@ -42,7 +42,7 @@ var BEAVEAppFileManagerSettings = function () {
 	// Public methods
 	return {
 		init: function(element) {
-            form = document.querySelector('#kt_file_manager_settings');
+            form = document.querySelector('#beave_file_manager_settings');
 
 			handleForm();
         }

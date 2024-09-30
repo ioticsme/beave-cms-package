@@ -141,16 +141,16 @@ var BEAVESignupComingSoon = function() {
     return {
         // public functions
         init: function() {
-            form = document.querySelector('#kt_coming_soon_form');
-            submitButton = document.querySelector('#kt_coming_soon_submit');
+            form = document.querySelector('#beave_coming_soon_form');
+            submitButton = document.querySelector('#beave_coming_soon_submit');
            
             handleForm();
 
-            counterDays = document.querySelector('#kt_coming_soon_counter_days');
+            counterDays = document.querySelector('#beave_coming_soon_counter_days');
             if (counterDays) {                
-                counterHours = document.querySelector('#kt_coming_soon_counter_hours');
-                counterMinutes = document.querySelector('#kt_coming_soon_counter_minutes');
-                counterSeconds = document.querySelector('#kt_coming_soon_counter_seconds');
+                counterHours = document.querySelector('#beave_coming_soon_counter_hours');
+                counterMinutes = document.querySelector('#beave_coming_soon_counter_minutes');
+                counterSeconds = document.querySelector('#beave_coming_soon_counter_seconds');
                 
                 initCounter();
             }

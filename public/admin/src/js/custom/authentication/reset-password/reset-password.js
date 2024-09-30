@@ -190,8 +190,8 @@ var BEAVEAuthResetPassword = function () {
     return {
         // public functions
         init: function () {
-            form = document.querySelector('#kt_password_reset_form');
-            submitButton = document.querySelector('#kt_password_reset_submit');
+            form = document.querySelector('#beave_password_reset_form');
+            submitButton = document.querySelector('#beave_password_reset_submit');
 
             handleForm();
 

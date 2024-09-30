@@ -108,7 +108,7 @@ var BEAVEAppEcommerceProducts = function () {
     // Public methods
     return {
         init: function () {
-            table = '#kt_ecommerce_products_table';
+            table = '#beave_ecommerce_products_table';
             tableEl = document.querySelector(table);
 
             initDatatable();

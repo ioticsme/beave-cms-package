@@ -9,8 +9,8 @@ var BEAVEAppEcommerceSaveProduct = function () {
     const initQuill = () => {
         // Define all elements for quill editor
         const elements = [
-            '#kt_ecommerce_add_product_description',
-            '#kt_ecommerce_add_product_meta_description'
+            '#beave_ecommerce_add_product_description',
+            '#beave_ecommerce_add_product_meta_description'
         ];
 
         // Loop all elements
@@ -44,8 +44,8 @@ var BEAVEAppEcommerceSaveProduct = function () {
     const initTagify = () => {
         // Define all elements for tagify
         const elements = [
-            '#kt_ecommerce_add_product_category',
-            '#kt_ecommerce_add_product_tags'
+            '#beave_ecommerce_add_product_category',
+            '#beave_ecommerce_add_product_tags'
         ];
 
         // Loop all elements
@@ -73,7 +73,7 @@ var BEAVEAppEcommerceSaveProduct = function () {
 
     // Init form repeater --- more info: https://github.com/DubFriend/jquery.repeater
     const initFormRepeater = () => {
-        $('#kt_ecommerce_add_product_options').repeater({
+        $('#beave_ecommerce_add_product_options').repeater({
             initEmpty: false,
 
             defaultValues: {
@@ -111,8 +111,8 @@ var BEAVEAppEcommerceSaveProduct = function () {
 
     // Init noUIslider
     const initSlider = () => {
-        var slider = document.querySelector("#kt_ecommerce_add_product_discount_slider");
-        var value = document.querySelector("#kt_ecommerce_add_product_discount_label");
+        var slider = document.querySelector("#beave_ecommerce_add_product_discount_slider");
+        var value = document.querySelector("#beave_ecommerce_add_product_discount_label");
 
         noUiSlider.create(slider, {
             start: [10],
@@ -133,7 +133,7 @@ var BEAVEAppEcommerceSaveProduct = function () {
 
     // Init DropzoneJS --- more info:
     const initDropzone = () => {
-        var myDropzone = new Dropzone("#kt_ecommerce_add_product_media", {
+        var myDropzone = new Dropzone("#beave_ecommerce_add_product_media", {
             url: "https://keenthemes.com/scripts/void.php", // Set the url for your upload script location
             paramName: "file", // The name that will be used to transfer the file
             maxFiles: 10,
@@ -240,7 +240,7 @@ var BEAVEAppEcommerceSaveProduct = function () {
         const datepicker = document.getElementById('beave_ecommerce_add_product_status_datepicker');
 
         // Init flatpickr --- more info: https://flatpickr.js.org/
-        $('#kt_ecommerce_add_product_status_datepicker').flatpickr({
+        $('#beave_ecommerce_add_product_status_datepicker').flatpickr({
             enableTime: true,
             dateFormat: "Y-m-d H:i",
         });

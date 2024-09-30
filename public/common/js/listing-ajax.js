@@ -74,7 +74,7 @@ var BEAVEAppEcommerceSalesListing = (function () {
         }
     return {
         init: function () {
-            ;(e = document.querySelector('#kt_datatable_example_1')) &&
+            ;(e = document.querySelector('#beave_datatable_example_1')) &&
                 (
                 //     (t = $(e).DataTable({
                 //     info: !1,
@@ -89,7 +89,7 @@ var BEAVEAppEcommerceSalesListing = (function () {
                 // }),
                 (() => {
                     const e = document.querySelector(
-                        '#kt_ecommerce_sales_flatpickr'
+                        '#beave_ecommerce_sales_flatpickr'
                     )
                     n = $(e).flatpickr({
                         altInput: !0,
@@ -117,7 +117,7 @@ var BEAVEAppEcommerceSalesListing = (function () {
                 })(),
                 c(),
                 document
-                    .querySelector('#kt_ecommerce_sales_flatpickr_clear')
+                    .querySelector('#beave_ecommerce_sales_flatpickr_clear')
                     .addEventListener('click', (e) => {
                         n.clear()
                     }))

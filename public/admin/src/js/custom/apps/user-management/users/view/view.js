@@ -148,8 +148,13 @@ var BEAVEUsersViewMain = function () {
     const initEmailPreferenceForm = () => {
         // Define variables
         const form = document.getElementById('beave_users_email_notification_form');
+<<<<<<< Updated upstream
         const submitButton = form.querySelector('#kt_users_email_notification_submit');
         const cancelButton = form.querySelector('#kt_users_email_notification_cancel');
+=======
+        const submitButton = form.querySelector('#beave_users_email_notification_submit');
+        const cancelButton = form.querySelector('#beave_users_email_notification_cancel');
+>>>>>>> Stashed changes
 
         // Submit action handler
         submitButton.addEventListener('click', e => {

@@ -164,7 +164,11 @@ var BEAVECareersApply = function () {
 		// Public functions
 		init: function () {
 			// Elements
+<<<<<<< Updated upstream
 			form = document.querySelector('#kt_careers_form');
+=======
+			form = document.querySelector('#beave_careers_form');
+>>>>>>> Stashed changes
 			submitButton = document.getElementById('beave_careers_submit_button');
 
 			initForm();

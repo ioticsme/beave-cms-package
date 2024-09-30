@@ -414,7 +414,7 @@ var BEAVEAuthI18nDemo = function() {
     return {
         // Initialization
         init: function() {
-            menu = document.querySelector('#kt_auth_lang_menu');
+            menu = document.querySelector('#beave_auth_lang_menu');
 
 			if (menu === null) {
 				return;

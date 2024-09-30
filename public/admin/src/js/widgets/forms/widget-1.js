@@ -4,7 +4,7 @@
 var BEAVEFormsWidget1 = (function () {
     // Private methods
     var initForm1 = function () {
-        var element = document.querySelector('#kt_forms_widget_1_select_1');
+        var element = document.querySelector('#beave_forms_widget_1_select_1');
 
         if ( !element ) {
             return;
@@ -36,7 +36,7 @@ var BEAVEFormsWidget1 = (function () {
     };
 
     var initForm2 = function () {
-        var element = document.querySelector('#kt_forms_widget_1_select_2');
+        var element = document.querySelector('#beave_forms_widget_1_select_2');
 
         if ( !element ) {
             return;

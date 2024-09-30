@@ -231,7 +231,7 @@ var BEAVEModalTwoFactorAuthentication = function () {
     return {
         init: function () {
             // Elements
-            modal = document.querySelector('#kt_modal_two_factor_authentication');
+            modal = document.querySelector('#beave_modal_two_factor_authentication');
 
 			if (!modal) {
 				return;

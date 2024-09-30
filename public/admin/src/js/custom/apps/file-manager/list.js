@@ -174,7 +174,11 @@ var BEAVEFileManagerList = function () {
         // Select all checkboxes
         var checkboxes = table.querySelectorAll('[type="checkbox"]');
         if (table.getAttribute('data-beave-filemanager-table') === 'folders') {
+<<<<<<< Updated upstream
             checkboxes = document.querySelectorAll('#kt_file_manager_list_wrapper [type="checkbox"]');
+=======
+            checkboxes = document.querySelectorAll('#beave_file_manager_list_wrapper [type="checkbox"]');
+>>>>>>> Stashed changes
         }
 
         // Select elements
@@ -285,7 +289,7 @@ var BEAVEFileManagerList = function () {
             e.preventDefault();
 
             // Ignore if input already exist
-            if (table.querySelector('#kt_file_manager_new_folder_row')) {
+            if (table.querySelector('#beave_file_manager_new_folder_row')) {
                 return;
             }
 
@@ -295,10 +299,10 @@ var BEAVEFileManagerList = function () {
             tableBody.prepend(rowElement);
 
             // Define template interactive elements
-            const rowForm = rowElement.querySelector('#kt_file_manager_add_folder_form');
-            const rowButton = rowElement.querySelector('#kt_file_manager_add_folder');
-            const cancelButton = rowElement.querySelector('#kt_file_manager_cancel_folder');
-            const folderIcon = rowElement.querySelector('#kt_file_manager_folder_icon');
+            const rowForm = rowElement.querySelector('#beave_file_manager_add_folder_form');
+            const rowButton = rowElement.querySelector('#beave_file_manager_add_folder');
+            const cancelButton = rowElement.querySelector('#beave_file_manager_cancel_folder');
+            const folderIcon = rowElement.querySelector('#beave_file_manager_folder_icon');
             const rowInput = rowElement.querySelector('[name="new_folder_name"]');
 
             // Define validator
@@ -444,7 +448,7 @@ var BEAVEFileManagerList = function () {
 
     // Reset add new folder input
     const resetNewFolder = () => {
-        const newFolderRow = table.querySelector('#kt_file_manager_new_folder_row');
+        const newFolderRow = table.querySelector('#beave_file_manager_new_folder_row');
 
         if (newFolderRow) {
             newFolderRow.parentNode.removeChild(newFolderRow);
@@ -468,7 +472,7 @@ var BEAVEFileManagerList = function () {
         let nameValue;
 
         // Stop renaming if there's an input existing
-        if (table.querySelectorAll('#kt_file_manager_rename_input').length > 0) {
+        if (table.querySelectorAll('#beave_file_manager_rename_input').length > 0) {
             Swal.fire({
                 text: "Unsaved input detected. Please save or cancel the current item",
                 icon: "warning",
@@ -492,13 +496,13 @@ var BEAVEFileManagerList = function () {
 
         // Set rename input template
         const renameInput = renameTemplate.cloneNode(true);
-        renameInput.querySelector('#kt_file_manager_rename_folder_icon').innerHTML = colIcon.outerHTML;
+        renameInput.querySelector('#beave_file_manager_rename_folder_icon').innerHTML = colIcon.outerHTML;
 
         // Swap current column content with input template
         nameCol.innerHTML = renameInput.innerHTML;
 
         // Set input value with current file/folder name
-        parent.querySelector('#kt_file_manager_rename_input').value = nameValue;
+        parent.querySelector('#beave_file_manager_rename_input').value = nameValue;
 
         // Rename file / folder validator
         var renameValidator = FormValidation.formValidation(
@@ -525,7 +529,7 @@ var BEAVEFileManagerList = function () {
         );
 
         // Rename input button action
-        const renameInputButton = document.querySelector('#kt_file_manager_rename_folder');
+        const renameInputButton = document.querySelector('#beave_file_manager_rename_folder');
         renameInputButton.addEventListener('click', e => {
             e.preventDefault();
 
@@ -559,7 +563,7 @@ var BEAVEFileManagerList = function () {
                                     }
                                 }).then(function () {
                                     // Get new file / folder name value
-                                    const newValue = document.querySelector('#kt_file_manager_rename_input').value;
+                                    const newValue = document.querySelector('#beave_file_manager_rename_input').value;
 
                                     // New column data template
                                     const newData = `<div class="d-flex align-items-center">
@@ -588,7 +592,7 @@ var BEAVEFileManagerList = function () {
         });
 
         // Cancel rename input
-        const cancelInputButton = document.querySelector('#kt_file_manager_rename_folder_cancel');
+        const cancelInputButton = document.querySelector('#beave_file_manager_rename_folder_cancel');
         cancelInputButton.addEventListener('click', e => {
             e.preventDefault();
 
@@ -633,7 +637,7 @@ var BEAVEFileManagerList = function () {
     // Init dropzone
     const initDropzone = () => {
         // set the dropzone container id
-        const id = "#kt_modal_upload_dropzone";
+        const id = "#beave_modal_upload_dropzone";
         const dropzone = document.querySelector(id);
 
         // set the preview element template
@@ -798,9 +802,9 @@ var BEAVEFileManagerList = function () {
 
     // Handle move to folder
     const handleMoveToFolder = () => {
-        const element = document.querySelector('#kt_modal_move_to_folder');
-        const form = element.querySelector('#kt_modal_move_to_folder_form');
-        const saveButton = form.querySelector('#kt_modal_move_to_folder_submit');
+        const element = document.querySelector('#beave_modal_move_to_folder');
+        const form = element.querySelector('#beave_modal_move_to_folder_form');
+        const saveButton = form.querySelector('#beave_modal_move_to_folder_submit');
         const moveModal = new bootstrap.Modal(element);
 
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
@@ -911,7 +915,7 @@ var BEAVEFileManagerList = function () {
     // Public methods
     return {
         init: function () {
-            table = document.querySelector('#kt_file_manager_list');
+            table = document.querySelector('#beave_file_manager_list');
 
             if (!table) {
                 return;

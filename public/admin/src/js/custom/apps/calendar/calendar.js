@@ -332,7 +332,7 @@ var BEAVEAppCalendar = function () {
         const datepickerWrappers = form.querySelectorAll('[data-beave-calendar="datepicker"]');
 
         // Handle all day toggle
-        const allDayToggle = form.querySelector('#kt_calendar_datepicker_allday');
+        const allDayToggle = form.querySelector('#beave_calendar_datepicker_allday');
         allDayToggle.addEventListener('click', e => {
             if (e.target.checked) {
                 datepickerWrappers.forEach(dw => {
@@ -451,7 +451,7 @@ var BEAVEAppCalendar = function () {
         const datepickerWrappers = form.querySelectorAll('[data-beave-calendar="datepicker"]');
 
         // Handle all day toggle
-        const allDayToggle = form.querySelector('#kt_calendar_datepicker_allday');
+        const allDayToggle = form.querySelector('#beave_calendar_datepicker_allday');
         allDayToggle.addEventListener('click', e => {
             if (e.target.checked) {
                 datepickerWrappers.forEach(dw => {
@@ -711,7 +711,7 @@ var BEAVEAppCalendar = function () {
 
     // Handle view button
     const handleViewButton = () => {
-        const viewButton = document.querySelector('#kt_calendar_event_view_button');
+        const viewButton = document.querySelector('#beave_calendar_event_view_button');
         viewButton.addEventListener('click', e => {
             e.preventDefault();
 
@@ -744,7 +744,11 @@ var BEAVEAppCalendar = function () {
         const endDate = data.endDate ? data.endDate : moment(data.startDate).format();
         endFlatpickr.setDate(endDate, true, 'Y-m-d');
 
+<<<<<<< Updated upstream
         const allDayToggle = form.querySelector('#kt_calendar_datepicker_allday');
+=======
+        const allDayToggle = form.querySelector('#beave_calendar_datepicker_allday');
+>>>>>>> Stashed changes
         const datepickerWrappers = form.querySelectorAll('[data-beave-calendar="datepicker"]');
         if (data.allDay) {
             allDayToggle.checked = true;
@@ -784,6 +788,7 @@ var BEAVEAppCalendar = function () {
             // Define variables
             // Add event modal
             const element = document.getElementById('beave_modal_add_event');
+<<<<<<< Updated upstream
             form = element.querySelector('#kt_modal_add_event_form');
             eventName = form.querySelector('[name="calendar_event_name"]');
             eventDescription = form.querySelector('[name="calendar_event_description"]');
@@ -796,6 +801,20 @@ var BEAVEAppCalendar = function () {
             submitButton = form.querySelector('#kt_modal_add_event_submit');
             cancelButton = form.querySelector('#kt_modal_add_event_cancel');
             closeButton = element.querySelector('#kt_modal_add_event_close');
+=======
+            form = element.querySelector('#beave_modal_add_event_form');
+            eventName = form.querySelector('[name="calendar_event_name"]');
+            eventDescription = form.querySelector('[name="calendar_event_description"]');
+            eventLocation = form.querySelector('[name="calendar_event_location"]');
+            startDatepicker = form.querySelector('#beave_calendar_datepicker_start_date');
+            endDatepicker = form.querySelector('#beave_calendar_datepicker_end_date');
+            startTimepicker = form.querySelector('#beave_calendar_datepicker_start_time');
+            endTimepicker = form.querySelector('#beave_calendar_datepicker_end_time');
+            addButton = document.querySelector('[data-beave-calendar="add"]');
+            submitButton = form.querySelector('#beave_modal_add_event_submit');
+            cancelButton = form.querySelector('#beave_modal_add_event_cancel');
+            closeButton = element.querySelector('#beave_modal_add_event_close');
+>>>>>>> Stashed changes
             modalTitle = form.querySelector('[data-beave-calendar="title"]');
             modal = new bootstrap.Modal(element);
 
@@ -808,8 +827,13 @@ var BEAVEAppCalendar = function () {
             viewEventLocation = viewElement.querySelector('[data-beave-calendar="event_location"]');
             viewStartDate = viewElement.querySelector('[data-beave-calendar="event_start_date"]');
             viewEndDate = viewElement.querySelector('[data-beave-calendar="event_end_date"]');
+<<<<<<< Updated upstream
             viewEditButton = viewElement.querySelector('#kt_modal_view_event_edit');
             viewDeleteButton = viewElement.querySelector('#kt_modal_view_event_delete');
+=======
+            viewEditButton = viewElement.querySelector('#beave_modal_view_event_edit');
+            viewDeleteButton = viewElement.querySelector('#beave_modal_view_event_delete');
+>>>>>>> Stashed changes
 
             initCalendarApp();
             initValidator();

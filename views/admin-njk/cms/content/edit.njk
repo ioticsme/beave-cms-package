@@ -114,7 +114,7 @@
 								<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 									{% for brandLanguage in authUser.brand.languages %}
 										<li class="nav-item">
-											<a class="nav-link {{'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#kt_tab_pane_{{ brandLanguage.prefix }}">
+											<a class="nav-link {{'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#beave_tab_pane_{{ brandLanguage.prefix }}">
 												{{ brandLanguage.name }}
 												<span class="fa-solid fa-circle-exclamation d-none tab-invalid-icon"></span>
 											</a>
@@ -122,7 +122,7 @@
 									{% endfor %}
 									{% if has_common_field_groups %}
 										<li class="nav-item">
-											<a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_common">
+											<a class="nav-link" data-bs-toggle="tab" href="#beave_tab_pane_common">
 												General
 												<span class="fa-solid fa-circle-exclamation d-none tab-invalid-icon"></span>
 											</a>
@@ -130,7 +130,7 @@
 									{% endif %}
 									{% if reqContentType.has_meta %}
 										<li class="nav-item">
-											<a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_meta">
+											<a class="nav-link" data-bs-toggle="tab" href="#beave_tab_pane_meta">
 												Meta
 												<span class="fa-solid fa-circle-exclamation d-none tab-invalid-icon"></span>
 											</a>
@@ -179,7 +179,7 @@
 																				<input disabled type="hidden" class="media_url_field beave-cms-form-field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
 																				<input disabled type="hidden" class="media_title_field beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
 																				<input disabled type="hidden" class="media_alt_text_field beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
-																				<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																				<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																			</span>
 																		{% elif cf.field_type === 'date' %}
 																			<div class="beave_daterangepicker">
@@ -241,7 +241,7 @@
 																					<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
 																					<input type="hidden" class="media_title_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
 																					<input type="hidden" class="media_alt_text_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
-																					<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																					<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																				</span>
 																			{% elif cf.field_type === 'date' %}
 																				<div class="beave_daterangepicker">
@@ -310,7 +310,7 @@
 																				<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url]]]" value="{{fieldValue.url}}">
 																				<input type="hidden" class="media_title_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title]]]" value="{{fieldValue.title}}">
 																				<input type="hidden" class="media_alt_text_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text]]]" value="{{fieldValue.alt_text}}">
-																				<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																				<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																			</span>
 																		{% elif cf.field_type === 'date' %}
 																			<div class="beave_daterangepicker">
@@ -381,7 +381,7 @@
 																							<input disabled type="hidden" class="media_url_field beave-cms-form-field" id="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
 																							<input disabled type="hidden" class="media_title_field beave-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
 																							<input disabled type="hidden" class="media_alt_text_field beave-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
-																							<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																							<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																						</span>
 																					{% elif cf.field_type === 'date' %}
 																						<div class="beave_daterangepicker">
@@ -441,7 +441,7 @@
 																								<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
 																								<input type="hidden" class="media_title_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
 																								<input type="hidden" class="media_alt_text_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
-																								<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																								<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																							</span>
 																						{% elif cf.field_type === 'date' %}
 																							<div class="beave_daterangepicker">
@@ -507,7 +507,7 @@
 																						<input type="hidden" class="media_url_field" id="{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[url]]]" value="{{ fieldValue.url }}">
 																						<input type="hidden" class="media_title_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[title]]]" value="{{fieldValue.title}}">
 																						<input type="hidden" class="media_alt_text_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[alt_text]]]" value="{{fieldValue.alt_text}}">
-																						<a class="btn btn-success media-uploader-modal-btn" data-field="{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																						<a class="btn btn-success media-uploader-modal-btn" data-field="{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																					</span>
 																				{% elif cf.field_type === 'date' %}
 																					<div class="beave_daterangepicker">
@@ -582,7 +582,7 @@
 																							<input type="hidden" class="media_url_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][url]" value="{{ metaFieldValue[url] }}">
 																							<input type="hidden" class="media_title_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][title]" value="{{ metaFieldValue[title] }}">
 																							<input type="hidden" class="media_alt_text_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][alt_text]" value="{{ metaFieldValue[alt_text] }}">
-																							<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#kt_modal_media_list'>Attach Media</a>
+																							<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																						</span>
 																					{% else %}
 																						<input type="text" class="form-control" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}" value="{{ metaFieldValue }}">

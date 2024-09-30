@@ -9,7 +9,7 @@ try {
         var filterPayment
         // Private functions
         var initDatatable = function () {
-            dt = $('#kt_datatable_example_1').DataTable({
+            dt = $('#beave_datatable_example_1').DataTable({
                 searchDelay: 500,
                 processing: true,
                 serverSide: true,
@@ -142,7 +142,7 @@ try {
 
             table = dt.$
 
-            // let e = document.querySelector('#kt_ecommerce_sales_flatpickr')
+            // let e = document.querySelector('#beave_ecommerce_sales_flatpickr')
             // var n = $(e).flatpickr({
             //     altInput: !0,
             //     altFormat: 'd/m/Y',
@@ -154,7 +154,7 @@ try {
             // })
 
             // document
-            //     .querySelector('#kt_ecommerce_sales_flatpickr_clear')
+            //     .querySelector('#beave_ecommerce_sales_flatpickr_clear')
             //     .addEventListener('click', (e) => {
             //         n.clear()
             //         dt.column(5).search('').draw()
@@ -330,7 +330,7 @@ try {
         // var initToggleToolbar = function () {
         //     // Toggle selected action toolbar
         //     // Select all checkboxes
-        //     const container = document.querySelector('#kt_datatable_example_1')
+        //     const container = document.querySelector('#beave_datatable_example_1')
         //     const checkboxes = container.querySelectorAll('[type="checkbox"]')
 
         //     // Select elements
@@ -408,7 +408,7 @@ try {
         // Toggle toolbars
         // var toggleToolbars = function () {
         //     // Define variables
-        //     const container = document.querySelector('#kt_datatable_example_1')
+        //     const container = document.querySelector('#beave_datatable_example_1')
         //     const toolbarBase = document.querySelector(
         //         '[data-beave-docs-table-toolbar="base"]'
         //     )

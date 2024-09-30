@@ -30,7 +30,7 @@ var BEAVEAppEcommerceReportShipping = function () {
     var initDaterangepicker = () => {
         var start = moment().subtract(29, "days");
         var end = moment();
-        var input = $("#kt_ecommerce_report_shipping_daterangepicker");
+        var input = $("#beave_ecommerce_report_shipping_daterangepicker");
 
         function cb(start, end) {
             input.html(start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY"));
@@ -86,10 +86,14 @@ var BEAVEAppEcommerceReportShipping = function () {
                     title: documentTitle
                 }
             ]
-        }).container().appendTo($('#kt_ecommerce_report_shipping_export'));
+        }).container().appendTo($('#beave_ecommerce_report_shipping_export'));
 
         // Hook dropdown menu click event to datatable export buttons
+<<<<<<< Updated upstream
         const exportButtons = document.querySelectorAll('#kt_ecommerce_report_shipping_export_menu [data-beave-ecommerce-export]');
+=======
+        const exportButtons = document.querySelectorAll('#beave_ecommerce_report_shipping_export_menu [data-beave-ecommerce-export]');
+>>>>>>> Stashed changes
         exportButtons.forEach(exportButton => {
             exportButton.addEventListener('click', e => {
                 e.preventDefault();
@@ -116,7 +120,7 @@ var BEAVEAppEcommerceReportShipping = function () {
     // Public methods
     return {
         init: function () {
-            table = document.querySelector('#kt_ecommerce_report_shipping_table');
+            table = document.querySelector('#beave_ecommerce_report_shipping_table');
 
             if (!table) {
                 return;

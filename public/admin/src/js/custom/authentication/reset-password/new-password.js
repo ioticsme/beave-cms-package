@@ -224,8 +224,13 @@ var BEAVEAuthNewPassword = function() {
     return {
         // public functions
         init: function() {
+<<<<<<< Updated upstream
             form = document.querySelector('#kt_new_password_form');
             submitButton = document.querySelector('#kt_new_password_submit');
+=======
+            form = document.querySelector('#beave_new_password_form');
+            submitButton = document.querySelector('#beave_new_password_submit');
+>>>>>>> Stashed changes
             passwordMeter = BEAVEPasswordMeter.getInstance(form.querySelector('[data-beave-password-meter="true"]'));
 
             handleForm();

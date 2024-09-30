@@ -142,7 +142,7 @@ var BEAVEAccountSettingsProfileDetails = function () {
                 return;
             }
 
-            submitButton = form.querySelector('#kt_account_profile_details_submit');
+            submitButton = form.querySelector('#beave_account_profile_details_submit');
 
             initValidation();
         }

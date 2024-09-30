@@ -181,13 +181,13 @@ var BEAVEChartsWidget11 = function () {
     return {
         init: function () { 
             var chart1Data = [16, 19, 19, 16, 16, 14, 15, 15, 17, 17, 19, 19, 18, 18, 20, 20, 18, 18, 22, 22, 20, 20, 18, 18, 20, 20, 18, 20, 20, 22];
-            initChart(chart1, '#kt_charts_widget_11_tab_1', '#kt_charts_widget_11_chart_1', chart1Data, false);
+            initChart(chart1, '#beave_charts_widget_11_tab_1', '#beave_charts_widget_11_chart_1', chart1Data, false);
 
             var chart2Data = [18, 18, 20, 20, 18, 18, 22, 22, 20, 20, 18, 18, 20, 20, 18, 18, 20, 20, 22, 15, 18, 18, 17, 17, 15, 15, 17, 17, 19, 17];
-            initChart(chart2, '#kt_charts_widget_11_tab_2', '#kt_charts_widget_11_chart_2', chart2Data, false);
+            initChart(chart2, '#beave_charts_widget_11_tab_2', '#beave_charts_widget_11_chart_2', chart2Data, false);
 
             var chart3Data = [17, 20, 20, 19, 19, 17, 17, 19, 19, 21, 21, 19, 19, 21, 21, 18, 18, 16, 17, 17, 19, 19, 21, 21, 19, 19, 17, 17, 18, 18];
-            initChart(chart3, '#kt_charts_widget_11_tab_3', '#kt_charts_widget_11_chart_3', chart3Data, true);
+            initChart(chart3, '#beave_charts_widget_11_tab_3', '#beave_charts_widget_11_chart_3', chart3Data, true);
            
             // Update chart on theme mode change
             BEAVEThemeMode.on("beave.thememode.change", function() {
@@ -203,9 +203,9 @@ var BEAVEChartsWidget11 = function () {
                     chart3.self.destroy();
                 } 
                 
-                initChart(chart1, '#kt_charts_widget_11_tab_1', '#kt_charts_widget_11_chart_1', chart1Data, chart1.rendered);
-                initChart(chart2, '#kt_charts_widget_11_tab_2', '#kt_charts_widget_11_chart_2', chart2Data, chart2.rendered);  
-                initChart(chart3, '#kt_charts_widget_11_tab_3', '#kt_charts_widget_11_chart_3', chart3Data, chart3.rendered);                                           
+                initChart(chart1, '#beave_charts_widget_11_tab_1', '#beave_charts_widget_11_chart_1', chart1Data, chart1.rendered);
+                initChart(chart2, '#beave_charts_widget_11_tab_2', '#beave_charts_widget_11_chart_2', chart2Data, chart2.rendered);  
+                initChart(chart3, '#beave_charts_widget_11_tab_3', '#beave_charts_widget_11_chart_3', chart3Data, chart3.rendered);                                           
             });             
         }   
     }

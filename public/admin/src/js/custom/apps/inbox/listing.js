@@ -22,7 +22,7 @@ var BEAVEAppInboxListing = function () {
 
     // Handle datatable footer spacings
     var handleDatatableFooter = () => {
-        const footerElement = document.querySelector('#kt_inbox_listing_wrapper > .row');
+        const footerElement = document.querySelector('#beave_inbox_listing_wrapper > .row');
         const spacingClasses = ['px-9', 'pt-3', 'pb-5'];
         footerElement.classList.add(...spacingClasses);
     }
@@ -39,7 +39,7 @@ var BEAVEAppInboxListing = function () {
     // Public methods
     return {
         init: function () {
-            table = document.querySelector('#kt_inbox_listing');
+            table = document.querySelector('#beave_inbox_listing');
 
             if (!table) {
                 return;

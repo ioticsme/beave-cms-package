@@ -108,9 +108,9 @@ var BEAVECreateCampaign = function () {
 	// Init form inputs
 	var initForm = function () {
 		// Init age slider
-		var slider = document.querySelector("#kt_modal_create_campaign_age_slider");
-		var valueMin = document.querySelector("#kt_modal_create_campaign_age_min");
-		var valueMax = document.querySelector("#kt_modal_create_campaign_age_max");
+		var slider = document.querySelector("#beave_modal_create_campaign_age_slider");
+		var valueMin = document.querySelector("#beave_modal_create_campaign_age_min");
+		var valueMax = document.querySelector("#beave_modal_create_campaign_age_max");
 
 		noUiSlider.create(slider, {
 			start: [18, 40],
@@ -130,7 +130,7 @@ var BEAVECreateCampaign = function () {
 		});
 
 		// Init tagify
-		var tagifyElement = document.querySelector('#kt_modal_create_campaign_location');
+		var tagifyElement = document.querySelector('#beave_modal_create_campaign_location');
 		var tagify = new Tagify(tagifyElement, {
 			delimiters: null,
 			templates: {
@@ -213,7 +213,7 @@ var BEAVECreateCampaign = function () {
 		tagify.addTags(tagsToAdd);
 
 		// Init flatpickr
-		$("#kt_modal_create_campaign_datepicker").flatpickr({
+		$("#beave_modal_create_campaign_datepicker").flatpickr({
 			altInput: true,
 			enableTime: true,
 			altFormat: "F j, Y H:i",
@@ -222,7 +222,7 @@ var BEAVECreateCampaign = function () {
 		});
 
 		// Init dropzone
-		var myDropzone = new Dropzone("#kt_modal_create_campaign_files_upload", {
+		var myDropzone = new Dropzone("#beave_modal_create_campaign_files_upload", {
 			url: "https://keenthemes.com/scripts/void.php", // Set the url for your upload script location
 			paramName: "file", // The name that will be used to transfer the file
 			maxFiles: 10,
@@ -238,9 +238,9 @@ var BEAVECreateCampaign = function () {
 		});
 
 		// Handle campaign duration options
-		const allDuration = document.querySelector('#kt_modal_create_campaign_duration_all');
-		const fixedDuration = document.querySelector('#kt_modal_create_campaign_duration_fixed');
-		const datepicker = document.querySelector('#kt_modal_create_campaign_datepicker');
+		const allDuration = document.querySelector('#beave_modal_create_campaign_duration_all');
+		const fixedDuration = document.querySelector('#beave_modal_create_campaign_duration_fixed');
+		const datepicker = document.querySelector('#beave_modal_create_campaign_datepicker');
 
 		[allDuration, fixedDuration].forEach(option => {
 			option.addEventListener('click', e => {
@@ -259,8 +259,8 @@ var BEAVECreateCampaign = function () {
 		});
 
 		// Init budget slider
-		var budgetSlider = document.querySelector("#kt_modal_create_campaign_budget_slider");
-		var budgetValue = document.querySelector("#kt_modal_create_campaign_budget_label");
+		var budgetSlider = document.querySelector("#beave_modal_create_campaign_budget_slider");
+		var budgetValue = document.querySelector("#beave_modal_create_campaign_budget_label");
 
 		noUiSlider.create(budgetSlider, {
 			start: [5],
@@ -279,7 +279,7 @@ var BEAVECreateCampaign = function () {
 		});
 
 		// Handle create new campaign button
-		const restartButton = document.querySelector('#kt_modal_create_campaign_create_new');
+		const restartButton = document.querySelector('#beave_modal_create_campaign_create_new');
 		restartButton.addEventListener('click', function () {
 			form.reset();
 			stepperObj.goTo(1);
@@ -326,7 +326,7 @@ var BEAVECreateCampaign = function () {
 		// Public Functions
 		init: function () {
 			// Elements
-			modalEl = document.querySelector('#kt_modal_create_campaign');
+			modalEl = document.querySelector('#beave_modal_create_campaign');
 
 			if (!modalEl) {
 				return;
@@ -334,8 +334,13 @@ var BEAVECreateCampaign = function () {
 
 			modal = new bootstrap.Modal(modalEl);
 
+<<<<<<< Updated upstream
 			stepper = document.querySelector('#kt_modal_create_campaign_stepper');
 			form = document.querySelector('#kt_modal_create_campaign_stepper_form');
+=======
+			stepper = document.querySelector('#beave_modal_create_campaign_stepper');
+			form = document.querySelector('#beave_modal_create_campaign_stepper_form');
+>>>>>>> Stashed changes
 			formSubmitButton = stepper.querySelector('[data-beave-stepper-action="submit"]');
 			formContinueButton = stepper.querySelector('[data-beave-stepper-action="next"]');
 

@@ -120,7 +120,7 @@ var BEAVEAccountBillingGeneral = function () {
     // Public methods
     return {
         init: function () {            
-            cancelSubscriptionButton = document.querySelector('#kt_account_billing_cancel_subscription_btn');
+            cancelSubscriptionButton = document.querySelector('#beave_account_billing_cancel_subscription_btn');
 
             if ( cancelSubscriptionButton ) {
                 handlePlan();

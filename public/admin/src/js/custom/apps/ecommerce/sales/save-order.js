@@ -9,7 +9,7 @@ var BEAVEAppEcommerceSalesSaveOrder = function () {
     // Private functions
     const initSaveOrder = () => {
         // Init flatpickr
-        $('#kt_ecommerce_edit_order_date').flatpickr({
+        $('#beave_ecommerce_edit_order_date').flatpickr({
             altInput: true,
             altFormat: "d F, Y",
             dateFormat: "Y-m-d",
@@ -34,14 +34,14 @@ var BEAVEAppEcommerceSalesSaveOrder = function () {
         }
 
         // Init Select2 --- more info: https://select2.org/        
-        $('#kt_ecommerce_edit_order_billing_country').select2({
+        $('#beave_ecommerce_edit_order_billing_country').select2({
             placeholder: "Select a country",
             minimumResultsForSearch: Infinity,
             templateSelection: optionFormat,
             templateResult: optionFormat
         });
 
-        $('#kt_ecommerce_edit_order_shipping_country').select2({
+        $('#beave_ecommerce_edit_order_shipping_country').select2({
             placeholder: "Select a country",
             minimumResultsForSearch: Infinity,
             templateSelection: optionFormat,
@@ -49,7 +49,7 @@ var BEAVEAppEcommerceSalesSaveOrder = function () {
         });
 
         // Init datatable --- more info on datatables: https://datatables.net/manual/
-        table = document.querySelector('#kt_ecommerce_edit_order_product_table');
+        table = document.querySelector('#beave_ecommerce_edit_order_product_table');
         datatable = $(table).DataTable({
             'order': [],
             "scrollY": "400px",

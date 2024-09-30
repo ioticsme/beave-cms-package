@@ -12,7 +12,7 @@ var BEAVEModalCreateProjectFiles = function () {
 	var initForm = function() {
 		// Project logo
 		// For more info about Dropzone plugin visit:  https://www.dropzonejs.com/#usage
-		var myDropzone = new Dropzone("#kt_modal_create_project_files_upload", { 
+		var myDropzone = new Dropzone("#beave_modal_create_project_files_upload", { 
 			url: "https://keenthemes.com/scripts/void.php", // Set the url for your upload script location
             paramName: "file", // The name that will be used to transfer the file
             maxFiles: 10,

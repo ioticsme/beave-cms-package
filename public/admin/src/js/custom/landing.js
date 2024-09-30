@@ -4,7 +4,7 @@
 var BEAVELandingPage = function () {
     // Private methods
     var initTyped = function() {
-        var typed = new Typed("#kt_landing_hero_text", {
+        var typed = new Typed("#beave_landing_hero_text", {
             strings: ["The Best Theme Ever", "The Most Trusted Theme", "#1 Selling Theme"],
             typeSpeed: 50
         });

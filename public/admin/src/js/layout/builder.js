@@ -40,8 +40,8 @@ var BEAVEAppLayoutBuilder = function() {
 			const title = this.innerText;	
 			const mode = this.getAttribute("data-beave-mode");
 			const selectedLink = menu.querySelector('.menu-link.active');
-			const viewImage = document.querySelector('#kt_app_engage_prebuilts_view_image');
-			const viewText = document.querySelector('#kt_app_engage_prebuilts_view_text');
+			const viewImage = document.querySelector('#beave_app_engage_prebuilts_view_image');
+			const viewText = document.querySelector('#beave_app_engage_prebuilts_view_text');
 			selectedTitle.innerText = title;
 
 			if (selectedLink) {
@@ -232,9 +232,15 @@ var BEAVEAppLayoutBuilder = function() {
 	};
 
 	var handleThemeMode = function() {
+<<<<<<< Updated upstream
 		var checkLight = document.querySelector('#kt_layout_builder_theme_mode_light');
 		var checkDark = document.querySelector('#kt_layout_builder_theme_mode_dark');
 		var check = document.querySelector('#kt_layout_builder_theme_mode_' + BEAVEThemeMode.getMode());
+=======
+		var checkLight = document.querySelector('#beave_layout_builder_theme_mode_light');
+		var checkDark = document.querySelector('#beave_layout_builder_theme_mode_dark');
+		var check = document.querySelector('#beave_layout_builder_theme_mode_' + BEAVEThemeMode.getMode());
+>>>>>>> Stashed changes
 
 		if (checkLight) {
 			checkLight.addEventListener("click", function() {
@@ -263,10 +269,10 @@ var BEAVEAppLayoutBuilder = function() {
 	return {
 		// Public functions
 		init: function() {
-			engage = document.querySelector('#kt_app_engage');
-			engageToggleOn = document.querySelector('#kt_app_engage_toggle_on');
-			engageToggleOff = document.querySelector('#kt_app_engage_toggle_off');
-			engagePrebuiltsModal = document.querySelector('#kt_app_engage_prebuilts_modal');
+			engage = document.querySelector('#beave_app_engage');
+			engageToggleOn = document.querySelector('#beave_app_engage_toggle_on');
+			engageToggleOff = document.querySelector('#beave_app_engage_toggle_off');
+			engagePrebuiltsModal = document.querySelector('#beave_app_engage_prebuilts_modal');
 
 			if ( engage && engagePrebuiltsModal) {
 				handleEngagePrebuilts();
@@ -277,17 +283,17 @@ var BEAVEAppLayoutBuilder = function() {
 				handleEngageToggle();
 			}
 
-            form = document.querySelector("#kt_app_layout_builder_form");
+            form = document.querySelector("#beave_app_layout_builder_form");
 
             if ( !form ) {
                 return;
             }
 
             url = form.getAttribute("action");
-            actionInput = document.querySelector("#kt_app_layout_builder_action");            
-            previewButton = document.querySelector("#kt_app_layout_builder_preview");
-            exportButton = document.querySelector("#kt_app_layout_builder_export");
-            resetButton = document.querySelector("#kt_app_layout_builder_reset");			
+            actionInput = document.querySelector("#beave_app_layout_builder_action");            
+            previewButton = document.querySelector("#beave_app_layout_builder_preview");
+            exportButton = document.querySelector("#beave_app_layout_builder_export");
+            resetButton = document.querySelector("#beave_app_layout_builder_reset");			
     
 			if ( previewButton ) {
 				handlePreview();

@@ -92,8 +92,8 @@ var BEAVEEcommerceUpdateProfile = function () {
         // Public functions
         init: function () {
             // Elements
-            form = document.querySelector('#kt_ecommerce_customer_profile');
-            submitButton = form.querySelector('#kt_ecommerce_customer_profile_submit');
+            form = document.querySelector('#beave_ecommerce_customer_profile');
+            submitButton = form.querySelector('#beave_ecommerce_customer_profile_submit');
 
             handleForm();
         }

@@ -4,7 +4,7 @@
 var BEAVESearchHorizontal = function () {
     // Private functions
     var initAdvancedSearchForm = function () {
-       var form = document.querySelector('#kt_advanced_search_form');
+       var form = document.querySelector('#beave_advanced_search_form');
 
        // Init tags
        var tags = form.querySelector('[name="tags"]');
@@ -12,7 +12,7 @@ var BEAVESearchHorizontal = function () {
     }
 
     var handleAdvancedSearchToggle = function () {
-        var link = document.querySelector('#kt_horizontal_search_advanced_link');
+        var link = document.querySelector('#beave_horizontal_search_advanced_link');
 
         link.addEventListener('click', function (e) {
             e.preventDefault();

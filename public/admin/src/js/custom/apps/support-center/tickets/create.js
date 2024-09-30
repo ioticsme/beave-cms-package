@@ -13,7 +13,7 @@ var BEAVEModalNewTicket = function () {
 	var initForm = function() {
 		// Ticket attachments
 		// For more info about Dropzone plugin visit:  https://www.dropzonejs.com/#usage
-		var myDropzone = new Dropzone("#kt_modal_create_ticket_attachments", { 
+		var myDropzone = new Dropzone("#beave_modal_create_ticket_attachments", { 
 			url: "https://keenthemes.com/scripts/void.php", // Set the url for your upload script location
             paramName: "file", // The name that will be used to transfer the file
             maxFiles: 10,
@@ -195,7 +195,7 @@ var BEAVEModalNewTicket = function () {
 		// Public functions
 		init: function () {
 			// Elements
-			modalEl = document.querySelector('#kt_modal_new_ticket');
+			modalEl = document.querySelector('#beave_modal_new_ticket');
 
 			if (!modalEl) {
 				return;
@@ -203,7 +203,11 @@ var BEAVEModalNewTicket = function () {
 
 			modal = new bootstrap.Modal(modalEl);
 
+<<<<<<< Updated upstream
 			form = document.querySelector('#kt_modal_new_ticket_form');
+=======
+			form = document.querySelector('#beave_modal_new_ticket_form');
+>>>>>>> Stashed changes
 			submitButton = document.getElementById('beave_modal_new_ticket_submit');
 			cancelButton = document.getElementById('beave_modal_new_ticket_cancel');
 

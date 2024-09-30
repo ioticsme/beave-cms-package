@@ -205,7 +205,7 @@ var BEAVEProjectOverview = function () {
     }
 
     var initTable = function () {
-        var table = document.querySelector('#kt_profile_overview_table');
+        var table = document.querySelector('#beave_profile_overview_table');
 
         if (!table) {
             return;

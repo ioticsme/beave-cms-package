@@ -15,15 +15,15 @@
 
 {% block customScript %}
 	<script>
-		$('#kt_modal_nav_item_form').on('show.bs.modal', function (e) {
+		$('#beave_modal_nav_item_form').on('show.bs.modal', function (e) {
 			var dataValue = $(e.relatedTarget).data('section');
-			$('#kt_modal_nav_item_form input[name="section"]').val(dataValue);
+			$('#beave_modal_nav_item_form input[name="section"]').val(dataValue);
 		});
-		$('#kt_modal_nav_child_form').on('show.bs.modal', function (e) {
+		$('#beave_modal_nav_child_form').on('show.bs.modal', function (e) {
 			var dataSection = $(e.relatedTarget).data('section');
 			var dataItem = $(e.relatedTarget).data('item');
-			$('#kt_modal_nav_child_form input[name="section"]').val(dataSection);
-			$('#kt_modal_nav_child_form input[name="item"]').val(dataItem);
+			$('#beave_modal_nav_child_form input[name="section"]').val(dataSection);
+			$('#beave_modal_nav_child_form input[name="item"]').val(dataItem);
 		});
 	</script>
 {% endblock %}
@@ -36,7 +36,7 @@
 					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Admin Nav List</h1>
 				</div>
 				<div class="d-flex align-items-center gap-2 gap-lg-3">
-					<a class="btn btn-sm fw-bold btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_nav_section_form">Add Nav Section</a>
+					<a class="btn btn-sm fw-bold btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#beave_modal_nav_section_form">Add Nav Section</a>
 				</div>
 			</div>
 		</div>
@@ -54,7 +54,7 @@
 							{% for admin_nav in admin_navs %}
 								<li class="my-10">
 									<h1>{{ admin_nav.section }} | 
-										<a href="#" class="btn btn-success btn-sm" data-bs-toggle='modal' data-bs-target='#kt_modal_nav_item_form' data-section={{admin_nav.section}}>
+										<a href="#" class="btn btn-success btn-sm" data-bs-toggle='modal' data-bs-target='#beave_modal_nav_item_form' data-section={{admin_nav.section}}>
 											<i class="fa fa-plus"></i>
 										</a>
 										<a href="/admin/config/admin-nav/section/delete/{{ admin_nav._id }}" class="btn btn-danger btn-sm">
@@ -66,7 +66,7 @@
 											<li class="border-gray-300 border-dotted my-5">
 												<div class="px-10">
 													<h2>Label : {{ item.label }} | 
-														<a href="#" class="btn btn-info btn-sm" data-bs-toggle='modal' data-bs-target='#kt_modal_nav_child_form' data-section={{admin_nav._id}} data-item={{item._id}}>
+														<a href="#" class="btn btn-info btn-sm" data-bs-toggle='modal' data-bs-target='#beave_modal_nav_child_form' data-section={{admin_nav._id}} data-item={{item._id}}>
 															<i class="fa fa-plus"></i>
 														</a>
 														<a href="/admin/config/admin-nav/item/delete/{{ admin_nav.section }}/{{ item._id }}" class="btn btn-danger btn-sm">
