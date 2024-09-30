@@ -190,11 +190,7 @@ var BEAVEContactApply = function () {
 		// Public functions
 		init: function () {
 			// Elements
-<<<<<<< Updated upstream
-			form = document.querySelector('#kt_contact_form');
-=======
 			form = document.querySelector('#beave_contact_form');
->>>>>>> Stashed changes
 			submitButton = document.getElementById('beave_contact_submit_button');
 
 			initForm();

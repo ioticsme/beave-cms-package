@@ -174,11 +174,7 @@ var BEAVEFileManagerList = function () {
         // Select all checkboxes
         var checkboxes = table.querySelectorAll('[type="checkbox"]');
         if (table.getAttribute('data-beave-filemanager-table') === 'folders') {
-<<<<<<< Updated upstream
-            checkboxes = document.querySelectorAll('#kt_file_manager_list_wrapper [type="checkbox"]');
-=======
             checkboxes = document.querySelectorAll('#beave_file_manager_list_wrapper [type="checkbox"]');
->>>>>>> Stashed changes
         }
 
         // Select elements

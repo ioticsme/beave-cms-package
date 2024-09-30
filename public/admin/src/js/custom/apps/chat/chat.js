@@ -65,15 +65,8 @@ var BEAVEAppChat = function () {
 // On document ready
 BEAVEUtil.onDOMContentLoaded(function () {
 	// Init inline chat messenger
-<<<<<<< Updated upstream
-    BEAVEAppChat.init(document.querySelector('#kt_chat_messenger'));
-
-	// Init drawer chat messenger
-	BEAVEAppChat.init(document.querySelector('#kt_drawer_chat_messenger'));
-=======
     BEAVEAppChat.init(document.querySelector('#beave_chat_messenger'));
 
 	// Init drawer chat messenger
 	BEAVEAppChat.init(document.querySelector('#beave_drawer_chat_messenger'));
->>>>>>> Stashed changes
 });

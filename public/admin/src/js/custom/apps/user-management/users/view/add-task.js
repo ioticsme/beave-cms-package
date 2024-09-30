@@ -4,11 +4,7 @@
 var BEAVEUsersAddTask = function () {
     // Shared variables
     const element = document.getElementById('beave_modal_add_task');
-<<<<<<< Updated upstream
-    const form = element.querySelector('#kt_modal_add_task_form');
-=======
     const form = element.querySelector('#beave_modal_add_task_form');
->>>>>>> Stashed changes
     const modal = new bootstrap.Modal(element);
 
     // Init add task modal

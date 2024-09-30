@@ -34,11 +34,7 @@ var BEAVEAppInboxReply = function () {
     // Init reply form
     const initForm = () => {
         // Set variables
-<<<<<<< Updated upstream
-        const form = document.querySelector('#kt_inbox_reply_form');
-=======
         const form = document.querySelector('#beave_inbox_reply_form');
->>>>>>> Stashed changes
         const allTagify = form.querySelectorAll('[data-beave-inbox-form="tagify"]');
 
         // Handle CC and BCC

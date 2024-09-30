@@ -38,11 +38,7 @@ var BEAVEModalCreateProject = function () {
 
 // On document ready
 BEAVEUtil.onDOMContentLoaded(function () {
-<<<<<<< Updated upstream
-	if (!document.querySelector('#kt_modal_create_project')) {
-=======
 	if (!document.querySelector('#beave_modal_create_project')) {
->>>>>>> Stashed changes
 		return;
 	}
 

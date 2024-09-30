@@ -6,11 +6,7 @@ var BEAVEAppInboxCompose = function () {
     // Init reply form
     const initForm = () => {
         // Set variables
-<<<<<<< Updated upstream
-        const form = document.querySelector('#kt_inbox_compose_form');
-=======
         const form = document.querySelector('#beave_inbox_compose_form');
->>>>>>> Stashed changes
         const allTagify = form.querySelectorAll('[data-beave-inbox-form="tagify"]');
 
         // Handle CC and BCC

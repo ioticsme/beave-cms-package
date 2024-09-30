@@ -4,11 +4,7 @@
 var BEAVEUsersUpdatePermissions = function () {
     // Shared variables
     const element = document.getElementById('beave_modal_update_role');
-<<<<<<< Updated upstream
-    const form = element.querySelector('#kt_modal_update_role_form');
-=======
     const form = element.querySelector('#beave_modal_update_role_form');
->>>>>>> Stashed changes
     const modal = new bootstrap.Modal(element);
 
     // Init add schedule modal

@@ -3290,11 +3290,7 @@ var BEAVEWidgets = function () {
 
     // Feeds Widgets
     var initFeedWidget1 = function() {
-<<<<<<< Updated upstream
-        var formEl = document.querySelector("#kt_forms_widget_1_form");
-=======
         var formEl = document.querySelector("#beave_forms_widget_1_form");
->>>>>>> Stashed changes
         var editorId = 'beave_forms_widget_1_editor';
 
         if ( !formEl ) {

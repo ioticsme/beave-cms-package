@@ -47,11 +47,7 @@ var BEAVEPricingGeneral = function () {
     // Public methods
     return {
         init: function () {
-<<<<<<< Updated upstream
-            element = document.querySelector('#kt_pricing');
-=======
             element = document.querySelector('#beave_pricing');
->>>>>>> Stashed changes
 			planPeriodMonthButton = element.querySelector('[data-beave-plan="month"]');
 			planPeriodAnnualButton = element.querySelector('[data-beave-plan="annual"]');
 

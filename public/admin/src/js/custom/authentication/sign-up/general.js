@@ -334,13 +334,8 @@ var BEAVESignupGeneral = function () {
         // Initialization
         init: function () {
             // Elements
-<<<<<<< Updated upstream
-            form = document.querySelector('#kt_sign_up_form');
-            submitButton = document.querySelector('#kt_sign_up_submit');
-=======
             form = document.querySelector('#beave_sign_up_form');
             submitButton = document.querySelector('#beave_sign_up_submit');
->>>>>>> Stashed changes
             passwordMeter = BEAVEPasswordMeter.getInstance(form.querySelector('[data-beave-password-meter="true"]'));
 
             if (isValidUrl(submitButton.closest('form').getAttribute('action'))) {

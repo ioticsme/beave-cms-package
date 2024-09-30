@@ -232,15 +232,9 @@ var BEAVEAppLayoutBuilder = function() {
 	};
 
 	var handleThemeMode = function() {
-<<<<<<< Updated upstream
-		var checkLight = document.querySelector('#kt_layout_builder_theme_mode_light');
-		var checkDark = document.querySelector('#kt_layout_builder_theme_mode_dark');
-		var check = document.querySelector('#kt_layout_builder_theme_mode_' + BEAVEThemeMode.getMode());
-=======
 		var checkLight = document.querySelector('#beave_layout_builder_theme_mode_light');
 		var checkDark = document.querySelector('#beave_layout_builder_theme_mode_dark');
 		var check = document.querySelector('#beave_layout_builder_theme_mode_' + BEAVEThemeMode.getMode());
->>>>>>> Stashed changes
 
 		if (checkLight) {
 			checkLight.addEventListener("click", function() {

@@ -11,11 +11,7 @@ var BEAVEProjectSettings = function () {
         // Form validation
         var validation;
         var _form = document.getElementById('beave_project_settings_form');
-<<<<<<< Updated upstream
-        var submitButton = _form.querySelector('#kt_project_settings_submit');
-=======
         var submitButton = _form.querySelector('#beave_project_settings_submit');
->>>>>>> Stashed changes
 
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
         validation = FormValidation.formValidation(

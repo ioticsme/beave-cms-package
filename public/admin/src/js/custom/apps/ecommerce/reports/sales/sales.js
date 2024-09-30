@@ -77,11 +77,7 @@ var BEAVEAppEcommerceReportSales = function () {
         }).container().appendTo($('#beave_ecommerce_report_sales_export'));
 
         // Hook dropdown menu click event to datatable export buttons
-<<<<<<< Updated upstream
-        const exportButtons = document.querySelectorAll('#kt_ecommerce_report_sales_export_menu [data-beave-ecommerce-export]');
-=======
         const exportButtons = document.querySelectorAll('#beave_ecommerce_report_sales_export_menu [data-beave-ecommerce-export]');
->>>>>>> Stashed changes
         exportButtons.forEach(exportButton => {
             exportButton.addEventListener('click', e => {
                 e.preventDefault();

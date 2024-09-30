@@ -151,13 +151,8 @@ var BEAVESignupFreeTrial = function() {
     return {
         // Initialization
         init: function() {
-<<<<<<< Updated upstream
-            form = document.querySelector('#kt_free_trial_form');
-            submitButton = document.querySelector('#kt_free_trial_submit');
-=======
             form = document.querySelector('#beave_free_trial_form');
             submitButton = document.querySelector('#beave_free_trial_submit');
->>>>>>> Stashed changes
             passwordMeter = BEAVEPasswordMeter.getInstance(form.querySelector('[data-beave-password-meter="true"]'));
 
             handleForm();

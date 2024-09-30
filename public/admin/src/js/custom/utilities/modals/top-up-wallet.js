@@ -261,13 +261,8 @@ var BEAVEModalTopUpWallet = function () {
 
 			modal = new bootstrap.Modal(modalEl);
 
-<<<<<<< Updated upstream
-			stepper = document.querySelector('#kt_modal_top_up_wallet_stepper');
-			form = document.querySelector('#kt_modal_top_up_wallet_stepper_form');
-=======
 			stepper = document.querySelector('#beave_modal_top_up_wallet_stepper');
 			form = document.querySelector('#beave_modal_top_up_wallet_stepper_form');
->>>>>>> Stashed changes
 			formSubmitButton = stepper.querySelector('[data-beave-stepper-action="submit"]');
 			formContinueButton = stepper.querySelector('[data-beave-stepper-action="next"]');
 

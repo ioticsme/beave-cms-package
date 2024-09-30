@@ -38,11 +38,7 @@ var BEAVEModalOfferADeal = function () {
 
 // On document ready
 BEAVEUtil.onDOMContentLoaded(function () {
-<<<<<<< Updated upstream
-	if (!document.querySelector('#kt_modal_offer_a_deal')) {
-=======
 	if (!document.querySelector('#beave_modal_offer_a_deal')) {
->>>>>>> Stashed changes
 		return;
 	}
 

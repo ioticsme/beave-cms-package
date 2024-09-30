@@ -334,13 +334,8 @@ var BEAVECreateCampaign = function () {
 
 			modal = new bootstrap.Modal(modalEl);
 
-<<<<<<< Updated upstream
-			stepper = document.querySelector('#kt_modal_create_campaign_stepper');
-			form = document.querySelector('#kt_modal_create_campaign_stepper_form');
-=======
 			stepper = document.querySelector('#beave_modal_create_campaign_stepper');
 			form = document.querySelector('#beave_modal_create_campaign_stepper_form');
->>>>>>> Stashed changes
 			formSubmitButton = stepper.querySelector('[data-beave-stepper-action="submit"]');
 			formContinueButton = stepper.querySelector('[data-beave-stepper-action="next"]');
 

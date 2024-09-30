@@ -340,11 +340,7 @@ var BEAVECreateAccount = function () {
 				return;
 			}
 
-<<<<<<< Updated upstream
-			form = stepper.querySelector('#kt_create_account_form');
-=======
 			form = stepper.querySelector('#beave_create_account_form');
->>>>>>> Stashed changes
 			formSubmitButton = stepper.querySelector('[data-beave-stepper-action="submit"]');
 			formContinueButton = stepper.querySelector('[data-beave-stepper-action="next"]');
 

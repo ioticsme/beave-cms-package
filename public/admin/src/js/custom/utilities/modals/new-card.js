@@ -197,11 +197,7 @@ var BEAVEModalNewCard = function () {
 
 			modal = new bootstrap.Modal(modalEl);
 
-<<<<<<< Updated upstream
-			form = document.querySelector('#kt_modal_new_card_form');
-=======
 			form = document.querySelector('#beave_modal_new_card_form');
->>>>>>> Stashed changes
 			submitButton = document.getElementById('beave_modal_new_card_submit');
 			cancelButton = document.getElementById('beave_modal_new_card_cancel');
 

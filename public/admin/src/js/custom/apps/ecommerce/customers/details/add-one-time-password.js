@@ -4,11 +4,7 @@
 var BEAVEUsersAddOneTimePassword = function () {
     // Shared variables
     const element = document.getElementById('beave_modal_add_one_time_password');
-<<<<<<< Updated upstream
-    const form = element.querySelector('#kt_modal_add_one_time_password_form');
-=======
     const form = element.querySelector('#beave_modal_add_one_time_password_form');
->>>>>>> Stashed changes
     const modal = new bootstrap.Modal(element);
 
     // Init one time password modal
