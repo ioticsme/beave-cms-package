@@ -1,21 +1,21 @@
 "use strict";
 
 // Class definition
-var KTCardsWidget1 = function () {
+var BEAVECardsWidget1 = function () {
     // Private methods
     var initChart = function() {
-        var element = document.getElementById("kt_card_widget_1_chart");
+        var element = document.getElementById("beave_card_widget_1_chart");
         
         if (!element) {
             return;
         }
 
-        var color = element.getAttribute('data-kt-chart-color');
+        var color = element.getAttribute('data-beave-chart-color');
         
-        var height = parseInt(KTUtil.css(element, 'height'));
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');         
-        var baseColor = KTUtil.isHexColor(color) ? color : KTUtil.getCssVariableValue('--bs-' + color);
-        var secondaryColor = KTUtil.getCssVariableValue('--bs-gray-300');        
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');         
+        var baseColor = BEAVEUtil.isHexColor(color) ? color : BEAVEUtil.getCssVariableValue('--bs-' + color);
+        var secondaryColor = BEAVEUtil.getCssVariableValue('--bs-gray-300');        
 
         var options = {
             series: [{
@@ -157,12 +157,12 @@ var KTCardsWidget1 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTCardsWidget1;
+    module.exports = BEAVECardsWidget1;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTCardsWidget1.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVECardsWidget1.init();
 });
    
         

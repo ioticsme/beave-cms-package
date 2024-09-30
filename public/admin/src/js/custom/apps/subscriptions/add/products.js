@@ -1,6 +1,6 @@
 "use strict";
 
-var KTSubscriptionsProducts = function () {
+var BEAVESubscriptionsProducts = function () {
     // Shared variables
     var table;
     var datatable;
@@ -20,7 +20,7 @@ var KTSubscriptionsProducts = function () {
 
     // Delete product
     var deleteProduct = function() {
-        KTUtil.on(table, '[data-kt-action="product_remove"]', 'click', function(e) {
+        BEAVEUtil.on(table, '[data-beave-action="product_remove"]', 'click', function(e) {
             e.preventDefault();
 
             // Select parent row
@@ -121,9 +121,9 @@ var KTSubscriptionsProducts = function () {
 
             if (radio && radio.checked === true) {
                 rowNode = datatable.row.add( [
-                    radio.getAttribute('data-kt-product-name'),
+                    radio.getAttribute('data-beave-product-name'),
                     '1',
-                    radio.getAttribute('data-kt-product-price') + ' / ' + radio.getAttribute('data-kt-product-frequency'),
+                    radio.getAttribute('data-beave-product-price') + ' / ' + radio.getAttribute('data-beave-product-frequency'),
                     table.querySelector('tbody tr td:last-child').innerHTML
                 ]).draw().node();
 
@@ -137,7 +137,7 @@ var KTSubscriptionsProducts = function () {
 
     return {
         init: function () {
-            modalEl = document.getElementById('kt_modal_add_product');
+            modalEl = document.getElementById('beave_modal_add_product');
 
             // Select modal -- more info on Bootstrap modal: https://getbootstrap.com/docs/5.0/components/modal/
             modal = new bootstrap.Modal(modalEl);
@@ -152,6 +152,6 @@ var KTSubscriptionsProducts = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTSubscriptionsProducts.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVESubscriptionsProducts.init();
 });

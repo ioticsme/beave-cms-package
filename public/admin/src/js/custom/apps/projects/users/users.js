@@ -1,11 +1,11 @@
 "use strict";
 
 // Class definition
-var KTProjectUsers = function () {
+var BEAVEProjectUsers = function () {
 
     var initTable = function () {
         // Set date data order
-        const table = document.getElementById('kt_project_users_table');
+        const table = document.getElementById('beave_project_users_table');
 
         if (!table) {
             return;
@@ -30,7 +30,7 @@ var KTProjectUsers = function () {
         });
 
         // Search --- official docs reference: https://datatables.net/reference/api/search()
-        var filterSearch = document.getElementById('kt_filter_search');
+        var filterSearch = document.getElementById('beave_filter_search');
         if (filterSearch) {
             filterSearch.addEventListener('keyup', function (e) {
                 datatable.search(e.target.value).draw();
@@ -47,6 +47,6 @@ var KTProjectUsers = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTProjectUsers.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEProjectUsers.init();
 });

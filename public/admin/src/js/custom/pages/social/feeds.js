@@ -1,15 +1,15 @@
 "use strict";
 
 // Class definition
-var KTSocialFeeds = function () {    
+var BEAVESocialFeeds = function () {    
     // init variables
-    var morePostsBtn = document.getElementById('kt_social_feeds_more_posts_btn');
-    var morePosts = document.getElementById('kt_social_feeds_more_posts');
-    var posts = document.getElementById('kt_social_feeds_posts');
+    var morePostsBtn = document.getElementById('beave_social_feeds_more_posts_btn');
+    var morePosts = document.getElementById('beave_social_feeds_more_posts');
+    var posts = document.getElementById('beave_social_feeds_posts');
 
-    var postInput = document.getElementById('kt_social_feeds_post_input');
-    var postBtn =  document.getElementById('kt_social_feeds_post_btn');
-    var newPost = document.getElementById('kt_social_feeds_new_post');
+    var postInput = document.getElementById('beave_social_feeds_post_input');
+    var postBtn =  document.getElementById('beave_social_feeds_post_btn');
+    var newPost = document.getElementById('beave_social_feeds_new_post');
     
     // Private functions
     var handleMorePosts = function () {
@@ -19,7 +19,7 @@ var KTSocialFeeds = function () {
             e.preventDefault();
             
             // Show indicator
-            morePostsBtn.setAttribute('data-kt-indicator', 'on');
+            morePostsBtn.setAttribute('data-beave-indicator', 'on');
 
             // Disable button to avoid multiple click 
             morePostsBtn.disabled = true;
@@ -27,7 +27,7 @@ var KTSocialFeeds = function () {
             // Simulate form submission process
             setTimeout(function() {
                 // Hide loading indication
-                morePostsBtn.removeAttribute('data-kt-indicator');
+                morePostsBtn.removeAttribute('data-beave-indicator');
 
                 // Enable button
 				morePostsBtn.disabled = false;
@@ -39,7 +39,7 @@ var KTSocialFeeds = function () {
                 morePosts.classList.remove('d-none');
 
                 // Scroll to
-                KTUtil.scrollTo(morePosts, 200);
+                BEAVEUtil.scrollTo(morePosts, 200);
             }, 1000);
         });
     }
@@ -52,7 +52,7 @@ var KTSocialFeeds = function () {
             e.preventDefault();
 
             // Show indicator
-            postBtn.setAttribute('data-kt-indicator', 'on');
+            postBtn.setAttribute('data-beave-indicator', 'on');
 
             // Disable button to avoid multiple click 
             postBtn.disabled = true;
@@ -60,7 +60,7 @@ var KTSocialFeeds = function () {
             // Simulate form submission process
             setTimeout(function() {
                 // Hide loading indication
-                postBtn.removeAttribute('data-kt-indicator');
+                postBtn.removeAttribute('data-beave-indicator');
 
                 // Enable button
 				postBtn.disabled = false;
@@ -71,11 +71,11 @@ var KTSocialFeeds = function () {
                 posts.prepend(post);
 
                 if (message.length > 0) {
-                    post.querySelector('[data-kt-post-element="content"]').innerHTML = message;
+                    post.querySelector('[data-beave-post-element="content"]').innerHTML = message;
                 }                
 
                 // Scroll to post
-                KTUtil.scrollTo(post, 200);
+                BEAVEUtil.scrollTo(post, 200);
             }, 1000);
         });
     }
@@ -90,6 +90,6 @@ var KTSocialFeeds = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTSocialFeeds.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVESocialFeeds.init();
 });

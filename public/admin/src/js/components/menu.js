@@ -1,9 +1,9 @@
 "use strict";
 
-var KTMenuHandlersInitialized = false;
+var BEAVEMenuHandlersInitialized = false;
 
 // Class definition
-var KTMenu = function(element, options) {
+var BEAVEMenu = function(element, options) {
     ////////////////////////////
     // ** Private Variables  ** //
     ////////////////////////////
@@ -31,27 +31,27 @@ var KTMenu = function(element, options) {
     ////////////////////////////
 
     var _construct = function() {
-        if ( KTUtil.data(element).has('menu') === true ) {
-            the = KTUtil.data(element).get('menu');
+        if ( BEAVEUtil.data(element).has('menu') === true ) {
+            the = BEAVEUtil.data(element).get('menu');
         } else {
             _init();
         }
     }
 
     var _init = function() {
-        the.options = KTUtil.deepExtend({}, defaultOptions, options);
-        the.uid = KTUtil.getUniqueId('menu');
+        the.options = BEAVEUtil.deepExtend({}, defaultOptions, options);
+        the.uid = BEAVEUtil.getUniqueId('menu');
         the.element = element;
         the.triggerElement;
         the.disabled = false;
 
         // Set initialized
-        the.element.setAttribute('data-kt-menu', 'true');
+        the.element.setAttribute('data-beave-menu', 'true');
 
         _setTriggerElement();
         _update();
 
-        KTUtil.data(the.element).set('menu', the);
+        BEAVEUtil.data(the.element).set('menu', the);
     }
 
     var _destroy = function() {  // todo
@@ -90,14 +90,14 @@ var KTMenu = function(element, options) {
             return;
         }
         
-        if ( KTEventHandler.trigger(the.element, 'kt.menu.link.click', element) === false )  {
+        if ( BEAVEEventHandler.trigger(the.element, 'beave.menu.link.click', element) === false )  {
             return;
         }
 
         // Dismiss all shown dropdowns
-        KTMenu.hideDropdowns();
+        BEAVEMenu.hideDropdowns();
 
-        KTEventHandler.trigger(the.element, 'kt.menu.link.clicked', element);
+        BEAVEEventHandler.trigger(the.element, 'beave.menu.link.clicked', element);
     }
 
     // Dismiss handler
@@ -135,10 +135,10 @@ var KTMenu = function(element, options) {
             return;
         }
 
-        if ( KTUtil.data(item).get('hover') === '1' ) {
-            clearTimeout(KTUtil.data(item).get('timeout'));
-            KTUtil.data(item).remove('hover');
-            KTUtil.data(item).remove('timeout');
+        if ( BEAVEUtil.data(item).get('hover') === '1' ) {
+            clearTimeout(BEAVEUtil.data(item).get('timeout'));
+            BEAVEUtil.data(item).remove('hover');
+            BEAVEUtil.data(item).remove('timeout');
         }
 
         _show(item);
@@ -161,13 +161,13 @@ var KTMenu = function(element, options) {
         }
 
         var timeout = setTimeout(function() {
-            if ( KTUtil.data(item).get('hover') === '1' ) {
+            if ( BEAVEUtil.data(item).get('hover') === '1' ) {
                 _hide(item);
             }
         }, the.options.dropdown.hoverTimeout);
 
-        KTUtil.data(item).set('hover', '1');
-        KTUtil.data(item).set('timeout', timeout);
+        BEAVEUtil.data(item).set('hover', '1');
+        BEAVEUtil.data(item).set('timeout', timeout);
     }
 
     // Toggle item sub
@@ -200,7 +200,7 @@ var KTMenu = function(element, options) {
         }
 
         // Remember last submenu type
-        KTUtil.data(item).set('type', _getItemSubType(item));  // updated
+        BEAVEUtil.data(item).set('type', _getItemSubType(item));  // updated
     }
 
     // Hide item sub
@@ -229,16 +229,16 @@ var KTMenu = function(element, options) {
         var sub = _getItemSubElement(item);
 
         // Reset sub state if sub type is changed during the window resize
-        if ( KTUtil.data(item).has('type') && KTUtil.data(item).get('type') !== _getItemSubType(item) ) {  // updated
-            KTUtil.removeClass(item, 'hover'); 
-            KTUtil.removeClass(item, 'show'); 
-            KTUtil.removeClass(sub, 'show'); 
+        if ( BEAVEUtil.data(item).has('type') && BEAVEUtil.data(item).get('type') !== _getItemSubType(item) ) {  // updated
+            BEAVEUtil.removeClass(item, 'hover'); 
+            BEAVEUtil.removeClass(item, 'show'); 
+            BEAVEUtil.removeClass(sub, 'show'); 
         }  // updated
     }
 
     // Update all item state classes if item sub type changed
     var _update = function() {
-        var items = the.element.querySelectorAll('.menu-item[data-kt-menu-trigger]');
+        var items = the.element.querySelectorAll('.menu-item[data-beave-menu-trigger]');
 
         if ( items && items.length > 0 ) {
             for (var i = 0, len = items.length; i < len; i++) {
@@ -249,18 +249,18 @@ var KTMenu = function(element, options) {
 
     // Set external trigger element
     var _setTriggerElement = function() {
-        var target = document.querySelector('[data-kt-menu-target="#' + the.element.getAttribute('id')  + '"]');
+        var target = document.querySelector('[data-beave-menu-target="#' + the.element.getAttribute('id')  + '"]');
 
         if ( target !== null ) {
             the.triggerElement = target;
-        } else if ( the.element.closest('[data-kt-menu-trigger]') ) {
-            the.triggerElement = the.element.closest('[data-kt-menu-trigger]');
-        } else if ( the.element.parentNode && KTUtil.child(the.element.parentNode, '[data-kt-menu-trigger]')) {
-            the.triggerElement = KTUtil.child(the.element.parentNode, '[data-kt-menu-trigger]');
+        } else if ( the.element.closest('[data-beave-menu-trigger]') ) {
+            the.triggerElement = the.element.closest('[data-beave-menu-trigger]');
+        } else if ( the.element.parentNode && BEAVEUtil.child(the.element.parentNode, '[data-beave-menu-trigger]')) {
+            the.triggerElement = BEAVEUtil.child(the.element.parentNode, '[data-beave-menu-trigger]');
         }
 
         if ( the.triggerElement ) {
-            KTUtil.data(the.triggerElement).set('menu', the);
+            BEAVEUtil.data(the.triggerElement).set('menu', the);
         }
     }
 
@@ -275,13 +275,13 @@ var KTMenu = function(element, options) {
 
         if ( sub !== null ) {
             if ( _getItemSubType(item) === 'dropdown' ) {
-                if ( KTUtil.hasClass(sub, 'show') === true && sub.hasAttribute('data-popper-placement') === true ) {
+                if ( BEAVEUtil.hasClass(sub, 'show') === true && sub.hasAttribute('data-popper-placement') === true ) {
                     return true;
                 } else {
                     return false;
                 }
             } else {
-                return KTUtil.hasClass(item, 'show');
+                return BEAVEUtil.hasClass(item, 'show');
             }
         } else {
             return false;
@@ -295,22 +295,22 @@ var KTMenu = function(element, options) {
 
     // Test if item's parent is shown
     var _isItemParentShown = function(item) {
-        return KTUtil.parents(item, '.menu-item.show').length > 0;
+        return BEAVEUtil.parents(item, '.menu-item.show').length > 0;
     }
 
     // Test of it is item sub element
     var _isItemSubElement = function(item) {
-        return KTUtil.hasClass(item, 'menu-sub');
+        return BEAVEUtil.hasClass(item, 'menu-sub');
     }
 
     // Test if item has sub
     var _hasItemSub = function(item) {
-        return (KTUtil.hasClass(item, 'menu-item') && item.hasAttribute('data-kt-menu-trigger'));
+        return (BEAVEUtil.hasClass(item, 'menu-item') && item.hasAttribute('data-beave-menu-trigger'));
     }
 
     // Get link element
     var _getItemLinkElement = function(item) {
-        return KTUtil.child(item, '.menu-link');
+        return BEAVEUtil.child(item, '.menu-link');
     }
 
     // Get toggle element
@@ -328,10 +328,10 @@ var KTMenu = function(element, options) {
             return the.element;
         } if ( item.classList.contains('menu-sub') === true ) {
             return item;
-        } else if ( KTUtil.data(item).has('sub') ) {
-            return KTUtil.data(item).get('sub');
+        } else if ( BEAVEUtil.data(item).has('sub') ) {
+            return BEAVEUtil.data(item).get('sub');
         } else {
-            return KTUtil.child(item, '.menu-sub');
+            return BEAVEUtil.child(item, '.menu-sub');
         }
     }
 
@@ -339,7 +339,7 @@ var KTMenu = function(element, options) {
     var _getItemSubType = function(element) {
         var sub = _getItemSubElement(element);
 
-        if ( sub && parseInt(KTUtil.css(sub, 'z-index')) > 0 ) {
+        if ( sub && parseInt(BEAVEUtil.css(sub, 'z-index')) > 0 ) {
             return "dropdown";
         } else {
             return "accordion";
@@ -356,13 +356,13 @@ var KTMenu = function(element, options) {
         }   
 
         // Element has item toggler attribute
-        if ( element.hasAttribute('data-kt-menu-trigger') ) {
+        if ( element.hasAttribute('data-beave-menu-trigger') ) {
             return element;
         }
 
         // Element has item DOM reference in it's data storage
-        if ( KTUtil.data(element).has('item') ) {
-            return KTUtil.data(element).get('item');
+        if ( BEAVEUtil.data(element).has('item') ) {
+            return BEAVEUtil.data(element).get('item');
         }
 
         // Item is parent of element
@@ -372,8 +372,8 @@ var KTMenu = function(element, options) {
 
         // Element's parent has item DOM reference in it's data storage
         if ( (sub = element.closest('.menu-sub')) ) {
-            if ( KTUtil.data(sub).has('item') === true ) {
-                return KTUtil.data(sub).get('item')
+            if ( BEAVEUtil.data(sub).has('item') === true ) {
+                return BEAVEUtil.data(sub).get('item')
             } 
         }
     }
@@ -383,11 +383,11 @@ var KTMenu = function(element, options) {
         var sub = item.closest('.menu-sub');
         var parentItem;
 
-        if ( sub && KTUtil.data(sub).has('item') ) {
-            return KTUtil.data(sub).get('item');
+        if ( sub && BEAVEUtil.data(sub).has('item') ) {
+            return BEAVEUtil.data(sub).get('item');
         }
 
-        if ( sub && (parentItem = sub.closest('.menu-item[data-kt-menu-trigger]')) ) {
+        if ( sub && (parentItem = sub.closest('.menu-item[data-beave-menu-trigger]')) ) {
             return parentItem;
         }
 
@@ -423,13 +423,13 @@ var KTMenu = function(element, options) {
         var selector = item;
         var element;
 
-        if ( KTUtil.data(item).get('sub') ) {
-            selector = KTUtil.data(item).get('sub');
+        if ( BEAVEUtil.data(item).get('sub') ) {
+            selector = BEAVEUtil.data(item).get('sub');
         }
 
         if ( selector !== null ) {
-            //element = selector.querySelector('.show.menu-item[data-kt-menu-trigger]');
-            element = selector.querySelector('.menu-item[data-kt-menu-trigger]');
+            //element = selector.querySelector('.show.menu-item[data-beave-menu-trigger]');
+            element = selector.querySelector('.menu-item[data-beave-menu-trigger]');
 
             if ( element ) {
                 return element;
@@ -464,12 +464,12 @@ var KTMenu = function(element, options) {
     // Show item dropdown
     var _showDropdown = function(item) {
         // Handle dropdown show event
-        if ( KTEventHandler.trigger(the.element, 'kt.menu.dropdown.show', item) === false )  {
+        if ( BEAVEEventHandler.trigger(the.element, 'beave.menu.dropdown.show', item) === false )  {
             return;
         }
 
         // Hide all currently shown dropdowns except current one
-        KTMenu.hideDropdowns(item); 
+        BEAVEMenu.hideDropdowns(item); 
 
         var toggle = _isTriggerElement(item) ? item : _getItemLinkElement(item);
         var sub = _getItemSubElement(item);
@@ -478,7 +478,7 @@ var KTMenu = function(element, options) {
         var height = _getOptionFromElementAttribute(item, 'height');
 
         var zindex = the.options.dropdown.zindex; // update
-        var parentZindex = KTUtil.getHighestZindex(item); // update
+        var parentZindex = BEAVEUtil.getHighestZindex(item); // update
 
         // Apply a new z-index if dropdown's toggle element or it's parent has greater z-index // update
         if ( parentZindex !== null && parentZindex >= zindex ) {
@@ -486,76 +486,76 @@ var KTMenu = function(element, options) {
         }
 
         if ( zindex > 0 ) {
-            KTUtil.css(sub, 'z-index', zindex);
+            BEAVEUtil.css(sub, 'z-index', zindex);
         }
 
         if ( width !== null ) {
-            KTUtil.css(sub, 'width', width);
+            BEAVEUtil.css(sub, 'width', width);
         }
 
         if ( height !== null ) {
-            KTUtil.css(sub, 'height', height);
+            BEAVEUtil.css(sub, 'height', height);
         }
 
-        KTUtil.css(sub, 'display', '');
-        KTUtil.css(sub, 'overflow', '');
+        BEAVEUtil.css(sub, 'display', '');
+        BEAVEUtil.css(sub, 'overflow', '');
 
         // Init popper(new)
         _initDropdownPopper(item, sub); 
 
-        KTUtil.addClass(item, 'show');
-        KTUtil.addClass(item, 'menu-dropdown');
-        KTUtil.addClass(sub, 'show');
+        BEAVEUtil.addClass(item, 'show');
+        BEAVEUtil.addClass(item, 'menu-dropdown');
+        BEAVEUtil.addClass(sub, 'show');
 
         // Append the sub the the root of the menu
         if ( _getOptionFromElementAttribute(item, 'overflow') === true ) {
             document.body.appendChild(sub);
-            KTUtil.data(item).set('sub', sub);
-            KTUtil.data(sub).set('item', item);
-            KTUtil.data(sub).set('menu', the);
+            BEAVEUtil.data(item).set('sub', sub);
+            BEAVEUtil.data(sub).set('item', item);
+            BEAVEUtil.data(sub).set('menu', the);
         } else {
-            KTUtil.data(sub).set('item', item);
+            BEAVEUtil.data(sub).set('item', item);
         }
 
         // Handle dropdown shown event
-        KTEventHandler.trigger(the.element, 'kt.menu.dropdown.shown', item);
+        BEAVEEventHandler.trigger(the.element, 'beave.menu.dropdown.shown', item);
     }
 
     // Hide item dropdown
     var _hideDropdown = function(item) {
         // Handle dropdown hide event
-        if ( KTEventHandler.trigger(the.element, 'kt.menu.dropdown.hide', item) === false )  {
+        if ( BEAVEEventHandler.trigger(the.element, 'beave.menu.dropdown.hide', item) === false )  {
             return;
         }
 
         var sub = _getItemSubElement(item);
 
-        KTUtil.css(sub, 'z-index', '');
-        KTUtil.css(sub, 'width', '');
-        KTUtil.css(sub, 'height', '');
+        BEAVEUtil.css(sub, 'z-index', '');
+        BEAVEUtil.css(sub, 'width', '');
+        BEAVEUtil.css(sub, 'height', '');
 
-        KTUtil.removeClass(item, 'show');
-        KTUtil.removeClass(item, 'menu-dropdown');
-        KTUtil.removeClass(sub, 'show');
+        BEAVEUtil.removeClass(item, 'show');
+        BEAVEUtil.removeClass(item, 'menu-dropdown');
+        BEAVEUtil.removeClass(sub, 'show');
 
         // Append the sub back to it's parent
         if ( _getOptionFromElementAttribute(item, 'overflow') === true ) {
             if (item.classList.contains('menu-item')) {
                 item.appendChild(sub);
             } else {
-                KTUtil.insertAfter(the.element, item);
+                BEAVEUtil.insertAfter(the.element, item);
             }
             
-            KTUtil.data(item).remove('sub');
-            KTUtil.data(sub).remove('item');
-            KTUtil.data(sub).remove('menu');
+            BEAVEUtil.data(item).remove('sub');
+            BEAVEUtil.data(sub).remove('item');
+            BEAVEUtil.data(sub).remove('menu');
         } 
 
         // Destroy popper(new)
         _destroyDropdownPopper(item);
         
         // Handle dropdown hidden event 
-        KTEventHandler.trigger(the.element, 'kt.menu.dropdown.hidden', item);
+        BEAVEEventHandler.trigger(the.element, 'beave.menu.dropdown.hidden', item);
     }
 
     // Init dropdown popper(new)
@@ -575,14 +575,14 @@ var KTMenu = function(element, options) {
         }
 
         var popper = Popper.createPopper(reference, sub, _getDropdownPopperConfig(item)); 
-        KTUtil.data(item).set('popper', popper);
+        BEAVEUtil.data(item).set('popper', popper);
     }
 
     // Destroy dropdown popper(new)
     var _destroyDropdownPopper = function(item) {
-        if ( KTUtil.data(item).has('popper') === true ) {
-            KTUtil.data(item).get('popper').destroy();
-            KTUtil.data(item).remove('popper');
+        if ( BEAVEUtil.data(item).has('popper') === true ) {
+            BEAVEUtil.data(item).get('popper').destroy();
+            BEAVEUtil.data(item).remove('popper');
         }
     }
 
@@ -634,7 +634,7 @@ var KTMenu = function(element, options) {
 
     // Show item accordion
     var _showAccordion = function(item) {
-        if ( KTEventHandler.trigger(the.element, 'kt.menu.accordion.show', item) === false )  {
+        if ( BEAVEEventHandler.trigger(the.element, 'beave.menu.accordion.show', item) === false )  {
             return;
         }
 
@@ -653,41 +653,41 @@ var KTMenu = function(element, options) {
             _hideAccordions(item);
         }
 
-        if ( KTUtil.data(item).has('popper') === true ) {
+        if ( BEAVEUtil.data(item).has('popper') === true ) {
             _hideDropdown(item);
         }
 
-        KTUtil.addClass(item, 'hover');
+        BEAVEUtil.addClass(item, 'hover');
 
-        KTUtil.addClass(item, 'showing');
+        BEAVEUtil.addClass(item, 'showing');
 
-        KTUtil.slideDown(sub, the.options.accordion.slideSpeed, function() {
-            KTUtil.removeClass(item, 'showing');
-            KTUtil.addClass(item, 'show');
-            KTUtil.addClass(sub, 'show');
+        BEAVEUtil.slideDown(sub, the.options.accordion.slideSpeed, function() {
+            BEAVEUtil.removeClass(item, 'showing');
+            BEAVEUtil.addClass(item, 'show');
+            BEAVEUtil.addClass(sub, 'show');
 
-            KTEventHandler.trigger(the.element, 'kt.menu.accordion.shown', item);
+            BEAVEEventHandler.trigger(the.element, 'beave.menu.accordion.shown', item);
         });        
     }
 
     // Hide item accordion
     var _hideAccordion = function(item) {
-        if ( KTEventHandler.trigger(the.element, 'kt.menu.accordion.hide', item) === false )  {
+        if ( BEAVEEventHandler.trigger(the.element, 'beave.menu.accordion.hide', item) === false )  {
             return;
         }
         
         var sub = _getItemSubElement(item);
 
-        KTUtil.addClass(item, 'hiding');
+        BEAVEUtil.addClass(item, 'hiding');
 
-        KTUtil.slideUp(sub, the.options.accordion.slideSpeed, function() {
-            KTUtil.removeClass(item, 'hiding');
-            KTUtil.removeClass(item, 'show');
-            KTUtil.removeClass(sub, 'show');
+        BEAVEUtil.slideUp(sub, the.options.accordion.slideSpeed, function() {
+            BEAVEUtil.removeClass(item, 'hiding');
+            BEAVEUtil.removeClass(item, 'show');
+            BEAVEUtil.removeClass(sub, 'show');
 
-            KTUtil.removeClass(item, 'hover'); // update
+            BEAVEUtil.removeClass(item, 'hover'); // update
 
-            KTEventHandler.trigger(the.element, 'kt.menu.accordion.hidden', item);
+            BEAVEEventHandler.trigger(the.element, 'beave.menu.accordion.hidden', item);
         });
     }
 
@@ -758,7 +758,7 @@ var KTMenu = function(element, options) {
 
     // Hide all shown accordions of item
     var _hideAccordions = function(item) {
-        var itemsToHide = KTUtil.findAll(the.element, '.show[data-kt-menu-trigger]');
+        var itemsToHide = BEAVEUtil.findAll(the.element, '.show[data-beave-menu-trigger]');
         var itemToHide;
 
         if (itemsToHide && itemsToHide.length > 0) {
@@ -777,9 +777,9 @@ var KTMenu = function(element, options) {
         var attr;
         var value = null;
 
-        if ( item && item.hasAttribute('data-kt-menu-' + name) ) {
-            attr = item.getAttribute('data-kt-menu-' + name);
-            value = KTUtil.getResponsiveValue(attr);
+        if ( item && item.hasAttribute('data-beave-menu-' + name) ) {
+            attr = item.getAttribute('data-beave-menu-' + name);
+            value = BEAVEUtil.getResponsiveValue(attr);
 
             if ( value !== null && String(value) === 'true' ) {
                 value = true;
@@ -792,7 +792,7 @@ var KTMenu = function(element, options) {
     }
 
     var _destroy = function() {
-        KTUtil.data(the.element).remove('menu');
+        BEAVEUtil.data(the.element).remove('menu');
     }
 
     // Construct Class
@@ -915,20 +915,20 @@ var KTMenu = function(element, options) {
 
     // Event API
     the.on = function(name, handler) {
-        return KTEventHandler.on(the.element, name, handler);
+        return BEAVEEventHandler.on(the.element, name, handler);
     }
 
     the.one = function(name, handler) {
-        return KTEventHandler.one(the.element, name, handler);
+        return BEAVEEventHandler.one(the.element, name, handler);
     }
 
     the.off = function(name, handlerId) {
-        return KTEventHandler.off(the.element, name, handlerId);
+        return BEAVEEventHandler.off(the.element, name, handlerId);
     }
 };
 
-// Get KTMenu instance by element
-KTMenu.getInstance = function(element) {
+// Get BEAVEMenu instance by element
+BEAVEMenu.getInstance = function(element) {
     var menu;
     var item;
 
@@ -937,23 +937,23 @@ KTMenu.getInstance = function(element) {
     }
 
     // Element has menu DOM reference in it's DATA storage
-    if ( KTUtil.data(element).has('menu') ) {
-        return KTUtil.data(element).get('menu');
+    if ( BEAVEUtil.data(element).has('menu') ) {
+        return BEAVEUtil.data(element).get('menu');
     }
 
     // Element has .menu parent 
     if ( menu = element.closest('.menu') ) {
-        if ( KTUtil.data(menu).has('menu') ) {
-            return KTUtil.data(menu).get('menu');
+        if ( BEAVEUtil.data(menu).has('menu') ) {
+            return BEAVEUtil.data(menu).get('menu');
         }
     }
     
     // Element has a parent with DOM reference to .menu in it's DATA storage
-    if ( KTUtil.hasClass(element, 'menu-link') ) {
+    if ( BEAVEUtil.hasClass(element, 'menu-link') ) {
         var sub = element.closest('.menu-sub');
 
-        if ( KTUtil.data(sub).has('menu') ) {
-            return KTUtil.data(sub).get('menu');
+        if ( BEAVEUtil.data(sub).has('menu') ) {
+            return BEAVEUtil.data(sub).get('menu');
         }
     } 
 
@@ -961,13 +961,13 @@ KTMenu.getInstance = function(element) {
 }
 
 // Hide all dropdowns and skip one if provided
-KTMenu.hideDropdowns = function(skip) {
-    var items = document.querySelectorAll('.show.menu-dropdown[data-kt-menu-trigger]');
+BEAVEMenu.hideDropdowns = function(skip) {
+    var items = document.querySelectorAll('.show.menu-dropdown[data-beave-menu-trigger]');
 
     if (items && items.length > 0) {
         for (var i = 0, len = items.length; i < len; i++) {
             var item = items[i];
-            var menu = KTMenu.getInstance(item);
+            var menu = BEAVEMenu.getInstance(item);
 
             if ( menu && menu.getItemSubType(item) === 'dropdown' ) {
                 if ( skip ) {
@@ -983,25 +983,25 @@ KTMenu.hideDropdowns = function(skip) {
 }
 
 // Update all dropdowns popover instances
-KTMenu.updateDropdowns = function() {
-    var items = document.querySelectorAll('.show.menu-dropdown[data-kt-menu-trigger]');
+BEAVEMenu.updateDropdowns = function() {
+    var items = document.querySelectorAll('.show.menu-dropdown[data-beave-menu-trigger]');
 
     if (items && items.length > 0) {
         for (var i = 0, len = items.length; i < len; i++) {
             var item = items[i];
 
-            if ( KTUtil.data(item).has('popper') ) {
-                KTUtil.data(item).get('popper').forceUpdate();
+            if ( BEAVEUtil.data(item).has('popper') ) {
+                BEAVEUtil.data(item).get('popper').forceUpdate();
             }
         }
     }
 }
 
 // Global handlers
-KTMenu.initHandlers = function() {
+BEAVEMenu.initHandlers = function() {
     // Dropdown handler
     document.addEventListener("click", function(e) {
-        var items = document.querySelectorAll('.show.menu-dropdown[data-kt-menu-trigger]:not([data-kt-menu-static="true"])');
+        var items = document.querySelectorAll('.show.menu-dropdown[data-beave-menu-trigger]:not([data-beave-menu-static="true"])');
         var menu;
         var item;
         var sub;
@@ -1010,7 +1010,7 @@ KTMenu.initHandlers = function() {
         if ( items && items.length > 0 ) {
             for ( var i = 0, len = items.length; i < len; i++ ) {
                 item = items[i];
-                menuObj = KTMenu.getInstance(item);
+                menuObj = BEAVEMenu.getInstance(item);
 
                 if (menuObj && menuObj.getItemSubType(item) === 'dropdown') {
                     menu = menuObj.getElement();
@@ -1031,8 +1031,8 @@ KTMenu.initHandlers = function() {
     });
 
     // Sub toggle handler(updated)
-    KTUtil.on(document.body,  '.menu-item[data-kt-menu-trigger] > .menu-link, [data-kt-menu-trigger]:not(.menu-item):not([data-kt-menu-trigger="auto"])', 'click', function(e) {
-        var menu = KTMenu.getInstance(this);
+    BEAVEUtil.on(document.body,  '.menu-item[data-beave-menu-trigger] > .menu-link, [data-beave-menu-trigger]:not(.menu-item):not([data-beave-menu-trigger="auto"])', 'click', function(e) {
+        var menu = BEAVEMenu.getInstance(this);
 
         if ( menu !== null ) {
             return menu.click(this, e);
@@ -1040,8 +1040,8 @@ KTMenu.initHandlers = function() {
     });
 
     // Link handler
-    KTUtil.on(document.body,  '.menu-item:not([data-kt-menu-trigger]) > .menu-link', 'click', function(e) {
-        var menu = KTMenu.getInstance(this);
+    BEAVEUtil.on(document.body,  '.menu-item:not([data-beave-menu-trigger]) > .menu-link', 'click', function(e) {
+        var menu = BEAVEMenu.getInstance(this);
 
         if ( menu !== null ) {
             return menu.link(this, e);
@@ -1049,8 +1049,8 @@ KTMenu.initHandlers = function() {
     });
 
     // Dismiss handler
-    KTUtil.on(document.body,  '[data-kt-menu-dismiss="true"]', 'click', function(e) {
-        var menu = KTMenu.getInstance(this);
+    BEAVEUtil.on(document.body,  '[data-beave-menu-dismiss="true"]', 'click', function(e) {
+        var menu = BEAVEMenu.getInstance(this);
 
         if ( menu !== null ) {
             return menu.dismiss(this, e);
@@ -1058,8 +1058,8 @@ KTMenu.initHandlers = function() {
     });
 
     // Mouseover handler
-    KTUtil.on(document.body,  '[data-kt-menu-trigger], .menu-sub', 'mouseover', function(e) {
-        var menu = KTMenu.getInstance(this);
+    BEAVEUtil.on(document.body,  '[data-beave-menu-trigger], .menu-sub', 'mouseover', function(e) {
+        var menu = BEAVEMenu.getInstance(this);
 
         if ( menu !== null && menu.getItemSubType(this) === 'dropdown' ) {
             return menu.mouseover(this, e);
@@ -1067,8 +1067,8 @@ KTMenu.initHandlers = function() {
     });
 
     // Mouseout handler
-    KTUtil.on(document.body,  '[data-kt-menu-trigger], .menu-sub', 'mouseout', function(e) {
-        var menu = KTMenu.getInstance(this);
+    BEAVEUtil.on(document.body,  '[data-beave-menu-trigger], .menu-sub', 'mouseout', function(e) {
+        var menu = BEAVEMenu.getInstance(this);
 
         if ( menu !== null && menu.getItemSubType(this) === 'dropdown' ) {
             return menu.mouseout(this, e);
@@ -1080,13 +1080,13 @@ KTMenu.initHandlers = function() {
         var menu;
         var timer;
 
-        KTUtil.throttle(timer, function() {
+        BEAVEUtil.throttle(timer, function() {
             // Locate and update Offcanvas instances on window resize
-            var elements = document.querySelectorAll('[data-kt-menu="true"]');
+            var elements = document.querySelectorAll('[data-beave-menu="true"]');
 
             if ( elements && elements.length > 0 ) {
                 for (var i = 0, len = elements.length; i < len; i++) {
-                    menu = KTMenu.getInstance(elements[i]);
+                    menu = BEAVEMenu.getInstance(elements[i]);
                     if (menu) {
                         menu.update();
                     }
@@ -1097,13 +1097,13 @@ KTMenu.initHandlers = function() {
 }
 
 // Render menus by url
-KTMenu.updateByLinkAttribute = function(value, name = "href") {
+BEAVEMenu.updateByLinkAttribute = function(value, name = "href") {
     // Set menu link active state by attribute value
-    var elements = document.querySelectorAll('[data-kt-menu="true"]');
+    var elements = document.querySelectorAll('[data-beave-menu="true"]');
 
     if ( elements && elements.length > 0 ) {
         for (var i = 0, len = elements.length; i < len; i++) {
-            var menu = KTMenu.getInstance(elements[i]);
+            var menu = BEAVEMenu.getInstance(elements[i]);
 
             if (menu) {
                 var link = menu.getLinkByAttribute(value, name);                
@@ -1116,28 +1116,28 @@ KTMenu.updateByLinkAttribute = function(value, name = "href") {
 }
 
 // Global instances
-KTMenu.createInstances = function(selector = '[data-kt-menu="true"]') {
+BEAVEMenu.createInstances = function(selector = '[data-beave-menu="true"]') {
     // Initialize menus
     var elements = document.querySelectorAll(selector);
     if ( elements && elements.length > 0 ) {
         for (var i = 0, len = elements.length; i < len; i++) {
-            new KTMenu(elements[i]);
+            new BEAVEMenu(elements[i]);
         }
     }
 }
 
 // Global initialization
-KTMenu.init = function() {
-    KTMenu.createInstances();
+BEAVEMenu.init = function() {
+    BEAVEMenu.createInstances();
 
-    if (KTMenuHandlersInitialized === false) {
-        KTMenu.initHandlers();
+    if (BEAVEMenuHandlersInitialized === false) {
+        BEAVEMenu.initHandlers();
 
-        KTMenuHandlersInitialized = true;
+        BEAVEMenuHandlersInitialized = true;
     }    
 };
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = KTMenu;
+    module.exports = BEAVEMenu;
 }

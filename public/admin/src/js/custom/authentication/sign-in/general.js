@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTSigninGeneral = function () {
+var BEAVESigninGeneral = function () {
     // Elements
     var form;
     var submitButton;
@@ -55,7 +55,7 @@ var KTSigninGeneral = function () {
             validator.validate().then(function (status) {
                 if (status == 'Valid') {
                     // Show loading indication
-                    submitButton.setAttribute('data-kt-indicator', 'on');
+                    submitButton.setAttribute('data-beave-indicator', 'on');
 
                     // Disable button to avoid multiple click
                     submitButton.disabled = true;
@@ -64,7 +64,7 @@ var KTSigninGeneral = function () {
                     // Simulate ajax request
                     setTimeout(function () {
                         // Hide loading indication
-                        submitButton.removeAttribute('data-kt-indicator');
+                        submitButton.removeAttribute('data-beave-indicator');
 
                         // Enable button
                         submitButton.disabled = false;
@@ -84,7 +84,7 @@ var KTSigninGeneral = function () {
                                 form.querySelector('[name="password"]').value = "";
 
                                 //form.submit(); // submit form
-                                var redirectUrl = form.getAttribute('data-kt-redirect-url');
+                                var redirectUrl = form.getAttribute('data-beave-redirect-url');
                                 if (redirectUrl) {
                                     location.href = redirectUrl;
                                 }
@@ -117,7 +117,7 @@ var KTSigninGeneral = function () {
             validator.validate().then(function (status) {
                 if (status == 'Valid') {
                     // Show loading indication
-                    submitButton.setAttribute('data-kt-indicator', 'on');
+                    submitButton.setAttribute('data-beave-indicator', 'on');
 
                     // Disable button to avoid multiple click
                     submitButton.disabled = true;
@@ -138,7 +138,7 @@ var KTSigninGeneral = function () {
                                 }
                             });
 
-                            const redirectUrl = form.getAttribute('data-kt-redirect-url');
+                            const redirectUrl = form.getAttribute('data-beave-redirect-url');
 
                             if (redirectUrl) {
                                 location.href = redirectUrl;
@@ -167,7 +167,7 @@ var KTSigninGeneral = function () {
                         });
                     }).then(() => {
                         // Hide loading indication
-                        submitButton.removeAttribute('data-kt-indicator');
+                        submitButton.removeAttribute('data-beave-indicator');
 
                         // Enable button
                         submitButton.disabled = false;
@@ -216,6 +216,6 @@ var KTSigninGeneral = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTSigninGeneral.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVESigninGeneral.init();
 });

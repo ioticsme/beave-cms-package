@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget8 = function () {
+var BEAVEChartsWidget8 = function () {
     var chart1 = {
         self: null,
         rendered: false
@@ -20,8 +20,8 @@ var KTChartsWidget8 = function () {
             return;
         }
 
-        var height = parseInt(KTUtil.css(element, 'height'));    
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');    
+        var height = parseInt(BEAVEUtil.css(element, 'height'));    
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');    
 
         var options = {
             series: [
@@ -83,7 +83,7 @@ var KTChartsWidget8 = function () {
                     show: true,
                     trim: true,
                     style: {
-                        colors: KTUtil.getCssVariableValue('--bs-gray-500'),
+                        colors: BEAVEUtil.getCssVariableValue('--bs-gray-500'),
                         fontSize: '13px'
                     }
                 }
@@ -94,7 +94,7 @@ var KTChartsWidget8 = function () {
                 max: 700,
                 labels: {
                     style: {
-                        colors: KTUtil.getCssVariableValue('--bs-gray-500'),
+                        colors: BEAVEUtil.getCssVariableValue('--bs-gray-500'),
                         fontSize: '13px'
                     }
                 }               
@@ -121,17 +121,17 @@ var KTChartsWidget8 = function () {
                 show: true,
                 position: 'front',
                 stroke: {
-                    color: KTUtil.getCssVariableValue('--bs-border-dashed-color'),
+                    color: BEAVEUtil.getCssVariableValue('--bs-border-dashed-color'),
                     width: 1,
                     dashArray: 0,
                 }
             },           
             colors: [
-                KTUtil.getCssVariableValue('--bs-primary'),
-                KTUtil.getCssVariableValue('--bs-success'),   
-                KTUtil.getCssVariableValue('--bs-warning'),
-                KTUtil.getCssVariableValue('--bs-danger'),
-                KTUtil.getCssVariableValue('--bs-info'),
+                BEAVEUtil.getCssVariableValue('--bs-primary'),
+                BEAVEUtil.getCssVariableValue('--bs-success'),   
+                BEAVEUtil.getCssVariableValue('--bs-warning'),
+                BEAVEUtil.getCssVariableValue('--bs-danger'),
+                BEAVEUtil.getCssVariableValue('--bs-info'),
                 '#43CED7'
             ],
             fill: {
@@ -188,7 +188,7 @@ var KTChartsWidget8 = function () {
             initChart(chart2, '#kt_chart_widget_8_month_toggle', '#kt_chart_widget_8_month_chart', data2, true);    
 
             // Update chart on theme mode change
-            var handlerId = KTThemeMode.on("kt.thememode.change", function() {
+            var handlerId = BEAVEThemeMode.on("beave.thememode.change", function() {
                 if (chart1.rendered) {
                     chart1.self.destroy();
                 }
@@ -206,12 +206,12 @@ var KTChartsWidget8 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTChartsWidget8;
+    module.exports = BEAVEChartsWidget8;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTChartsWidget8.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEChartsWidget8.init();
 });
 
 

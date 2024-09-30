@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTCardWidget13 = function () {
+var BEAVECardWidget13 = function () {
     var chart = {
         self: null,
         rendered: false
@@ -9,16 +9,16 @@ var KTCardWidget13 = function () {
 
     // Private methods
     var initChart = function(chart) {
-        var element = document.getElementById("kt_card_widget_13_chart");
+        var element = document.getElementById("beave_card_widget_13_chart");
 
         if (!element) {
             return;
         }
 
-        var height = parseInt(KTUtil.css(element, 'height'));       
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');
-        var baseColor = KTUtil.getCssVariableValue('--bs-gray-800');
-        var lightColor = KTUtil.getCssVariableValue('--bs-success');
+        var height = parseInt(BEAVEUtil.css(element, 'height'));       
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
+        var baseColor = BEAVEUtil.getCssVariableValue('--bs-gray-800');
+        var lightColor = BEAVEUtil.getCssVariableValue('--bs-success');
 
         var options = {
             series: [{
@@ -154,7 +154,7 @@ var KTCardWidget13 = function () {
             initChart(chart);
 
             // Update chart on theme mode change
-            KTThemeMode.on("kt.thememode.change", function() {                
+            BEAVEThemeMode.on("beave.thememode.change", function() {                
                 if (chart.rendered) {
                     chart.self.destroy();
                 }
@@ -167,10 +167,10 @@ var KTCardWidget13 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTCardWidget13;
+    module.exports = BEAVECardWidget13;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTCardWidget13.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVECardWidget13.init();
 });

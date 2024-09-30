@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     toastr.options = {
-        closeButton: false,
+        closeButton: true,
         newestOnTop: false,
-        progressBar: false,
+        progressBar: true,
         positionClass: 'toastr-bottom-right',
         preventDuplicates: false,
         onclick: null,
@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
             })
-        console.log(sendData)
+        // console.log(sendData)
         // console.log(images)
         if (Object.keys(images)?.length > 0) {
             // Creating form data with json

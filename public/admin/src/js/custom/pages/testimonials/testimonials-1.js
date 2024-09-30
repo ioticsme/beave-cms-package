@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartMap = function () {
+var BEAVEChartMap = function () {
     // Charts widgets
     var initChartMap = function() {
         var element = document.getElementById("chartdiv");
@@ -106,7 +106,7 @@ polygonSeries.data.setAll([{
         initChart();
 
         // Update chart on theme mode change
-        KTThemeMode.on("kt.thememode.change", function() {                
+        BEAVEThemeMode.on("beave.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -128,10 +128,10 @@ polygonSeries.data.setAll([{
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = KTChartMap;
+    module.exports = BEAVEChartMap;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTChartMap.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEChartMap.init();
 });

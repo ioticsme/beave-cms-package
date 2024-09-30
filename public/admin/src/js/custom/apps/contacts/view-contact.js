@@ -1,11 +1,11 @@
 "use strict";
 
 // Class definition
-var KTAppContactView = function () {
+var BEAVEAppContactView = function () {
     // Private functions
     const handleDeleteButton = () => {
         // Select form
-        const deleteButton = document.getElementById('kt_contact_delete');
+        const deleteButton = document.getElementById('beave_contact_delete');
 
         if (!deleteButton) {
             return;
@@ -40,7 +40,7 @@ var KTAppContactView = function () {
                     }).then(function (result) {
                         if (result.value) {
                             // Redirect to customers list page
-                            window.location = deleteButton.getAttribute("data-kt-redirect");
+                            window.location = deleteButton.getAttribute("data-beave-redirect");
                         }
                     });
                 } else if (result.dismiss === 'cancel') {
@@ -69,6 +69,6 @@ var KTAppContactView = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTAppContactView.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEAppContactView.init();
 });

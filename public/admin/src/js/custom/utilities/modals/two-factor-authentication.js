@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalTwoFactorAuthentication = function () {
+var BEAVEModalTwoFactorAuthentication = function () {
     // Private variables
     var modal;
     var modalObject;
@@ -80,7 +80,7 @@ var KTModalTwoFactorAuthentication = function () {
 
 					if (status == 'Valid') {
 						// Show loading indication
-						smsSubmitButton.setAttribute('data-kt-indicator', 'on');
+						smsSubmitButton.setAttribute('data-beave-indicator', 'on');
 
 						// Disable button to avoid multiple click 
 						smsSubmitButton.disabled = true;						
@@ -88,7 +88,7 @@ var KTModalTwoFactorAuthentication = function () {
 						// Simulate ajax process
 						setTimeout(function() {
 							// Remove loading indication
-							smsSubmitButton.removeAttribute('data-kt-indicator');
+							smsSubmitButton.removeAttribute('data-beave-indicator');
 
 							// Enable button
 							smsSubmitButton.disabled = false;
@@ -172,13 +172,13 @@ var KTModalTwoFactorAuthentication = function () {
 					console.log('validated!');
 
 					if (status == 'Valid') {
-						appsSubmitButton.setAttribute('data-kt-indicator', 'on');
+						appsSubmitButton.setAttribute('data-beave-indicator', 'on');
 
 						// Disable button to avoid multiple click 
 						appsSubmitButton.disabled = true;
 
 						setTimeout(function() {
-							appsSubmitButton.removeAttribute('data-kt-indicator');
+							appsSubmitButton.removeAttribute('data-beave-indicator');
 
 							// Enable button
 							appsSubmitButton.disabled = false;
@@ -239,18 +239,18 @@ var KTModalTwoFactorAuthentication = function () {
 
             modalObject = new bootstrap.Modal(modal);
 
-            optionsWrapper = modal.querySelector('[data-kt-element="options"]');
-            optionsSelectButton = modal.querySelector('[data-kt-element="options-select"]');
+            optionsWrapper = modal.querySelector('[data-beave-element="options"]');
+            optionsSelectButton = modal.querySelector('[data-beave-element="options-select"]');
 
-            smsWrapper = modal.querySelector('[data-kt-element="sms"]');
-            smsForm = modal.querySelector('[data-kt-element="sms-form"]');
-            smsSubmitButton = modal.querySelector('[data-kt-element="sms-submit"]');
-            smsCancelButton = modal.querySelector('[data-kt-element="sms-cancel"]');
+            smsWrapper = modal.querySelector('[data-beave-element="sms"]');
+            smsForm = modal.querySelector('[data-beave-element="sms-form"]');
+            smsSubmitButton = modal.querySelector('[data-beave-element="sms-submit"]');
+            smsCancelButton = modal.querySelector('[data-beave-element="sms-cancel"]');
 
-            appsWrapper = modal.querySelector('[data-kt-element="apps"]');
-            appsForm = modal.querySelector('[data-kt-element="apps-form"]');
-            appsSubmitButton = modal.querySelector('[data-kt-element="apps-submit"]');
-            appsCancelButton = modal.querySelector('[data-kt-element="apps-cancel"]');
+            appsWrapper = modal.querySelector('[data-beave-element="apps"]');
+            appsForm = modal.querySelector('[data-beave-element="apps-form"]');
+            appsSubmitButton = modal.querySelector('[data-beave-element="apps-submit"]');
+            appsCancelButton = modal.querySelector('[data-beave-element="apps-cancel"]');
 
             // Handle forms
             handleOptionsForm();
@@ -261,6 +261,6 @@ var KTModalTwoFactorAuthentication = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTModalTwoFactorAuthentication.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEModalTwoFactorAuthentication.init();
 });

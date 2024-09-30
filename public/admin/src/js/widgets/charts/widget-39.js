@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget39 = (function () {
+var BEAVEChartsWidget39 = (function () {
 	// Private methods
 	var initChart = function () {
 		// Check if amchart library is included
@@ -49,7 +49,7 @@ var KTChartsWidget39 = (function () {
 			});
 
 			xRenderer.grid.template.setAll({
-				stroke: am5.color(KTUtil.getCssVariableValue("--bs-gray-700"))
+				stroke: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-700"))
 			});
 
 			var yRenderer = am5radar.AxisRendererRadial.new(root, {
@@ -57,7 +57,7 @@ var KTChartsWidget39 = (function () {
 			});	
 			
 			yRenderer.grid.template.setAll({
-				stroke: am5.color(KTUtil.getCssVariableValue("--bs-gray-700"))
+				stroke: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-700"))
 			});
 
 			var xAxis = chart.xAxes.push(
@@ -79,12 +79,12 @@ var KTChartsWidget39 = (function () {
 
 			xRenderer.labels.template.setAll({
 				fontSize: 11,
-				fill: am5.color(KTUtil.getCssVariableValue("--bs-gray-800")),
+				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-800")),
 			});
 
 			yRenderer.labels.template.setAll({
 				fontSize: 11,
-				fill: am5.color(KTUtil.getCssVariableValue("--bs-gray-800")),
+				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-800")),
 			});
 
 			//yAxis.get("renderer").labels.template.set("forceHidden", true);
@@ -183,7 +183,7 @@ var KTChartsWidget39 = (function () {
 		}); // end am5.ready()
 
 		// Update chart on theme mode change
-		KTThemeMode.on("kt.thememode.change", function() {     
+		BEAVEThemeMode.on("beave.thememode.change", function() {     
 			// Destroy chart
 			root.dispose();
 
@@ -202,10 +202,10 @@ var KTChartsWidget39 = (function () {
 
 // Webpack support
 if (typeof module !== "undefined") {
-	module.exports = KTChartsWidget39;
+	module.exports = BEAVEChartsWidget39;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-	KTChartsWidget39.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+	BEAVEChartsWidget39.init();
 });

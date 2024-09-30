@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget20 = function () {
+var BEAVEChartsWidget20 = function () {
     var chart = {
         self: null,
         rendered: false
@@ -9,18 +9,18 @@ var KTChartsWidget20 = function () {
     
     // Private methods
     var initChart = function(chart) {
-        var element = document.getElementById("kt_charts_widget_20");
+        var element = document.getElementById("beave_charts_widget_20");
 
         if (!element) {
             return;
         }
         
-        var height = parseInt(KTUtil.css(element, 'height'));
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');
-        var baseColor = KTUtil.getCssVariableValue('--bs-danger');
-        var lightColor = KTUtil.getCssVariableValue('--bs-danger');
-        var chartInfo = element.getAttribute('data-kt-chart-info');
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
+        var baseColor = BEAVEUtil.getCssVariableValue('--bs-danger');
+        var lightColor = BEAVEUtil.getCssVariableValue('--bs-danger');
+        var chartInfo = element.getAttribute('data-beave-chart-info');
 
         var options = {
             series: [{
@@ -169,7 +169,7 @@ var KTChartsWidget20 = function () {
             initChart(chart);
 
             // Update chart on theme mode change
-            KTThemeMode.on("kt.thememode.change", function() {                
+            BEAVEThemeMode.on("beave.thememode.change", function() {                
                 if (chart.rendered) {
                     chart.self.destroy();
                 }
@@ -182,10 +182,10 @@ var KTChartsWidget20 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTChartsWidget20;
+    module.exports = BEAVEChartsWidget20;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTChartsWidget20.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEChartsWidget20.init();
 });

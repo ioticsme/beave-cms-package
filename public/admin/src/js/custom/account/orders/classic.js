@@ -1,13 +1,13 @@
 "use strict";
 
 // Class definition
-var KTDatatablesClassic = function () {
+var BEAVEDatatablesClassic = function () {
     // Private functions
 
     var initClassic = function () {
 
         // Set date data order
-        const table = document.getElementById('kt_orders_classic');
+        const table = document.getElementById('beave_orders_classic');
         const tableRows = table.querySelectorAll('tbody tr');
 
         tableRows.forEach(row => {
@@ -23,8 +23,8 @@ var KTDatatablesClassic = function () {
         });
 
         // Filter dropdown elements
-        const filterOrders = document.getElementById('kt_filter_orders');
-        const filterYear = document.getElementById('kt_filter_year');
+        const filterOrders = document.getElementById('beave_filter_orders');
+        const filterYear = document.getElementById('beave_filter_year');
 
         // Filter by order status --- official docs reference: https://datatables.net/reference/api/search()
         filterOrders.addEventListener('change', function (e) {
@@ -88,7 +88,7 @@ var KTDatatablesClassic = function () {
         );
 
         // Search --- official docs reference: https://datatables.net/reference/api/search()
-        var filterSearch = document.getElementById('kt_filter_search');
+        var filterSearch = document.getElementById('beave_filter_search');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
@@ -103,6 +103,6 @@ var KTDatatablesClassic = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTDatatablesClassic.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEDatatablesClassic.init();
 });

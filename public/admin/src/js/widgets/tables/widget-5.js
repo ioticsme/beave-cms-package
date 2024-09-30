@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTTablesWidget5 = function () {
+var BEAVETablesWidget5 = function () {
     var table;
     var datatable;
 
@@ -31,7 +31,7 @@ var KTTablesWidget5 = function () {
 
     // Handle status filter
     const handleStatusFilter = () => {
-        const select = document.querySelector('[data-kt-table-widget-5="filter_status"]');
+        const select = document.querySelector('[data-beave-table-widget-5="filter_status"]');
 
         $(select).on('select2:select', function (e) {
             const value = $(this).val();
@@ -60,10 +60,10 @@ var KTTablesWidget5 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTTablesWidget5;
+    module.exports = BEAVETablesWidget5;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTTablesWidget5.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVETablesWidget5.init();
 });

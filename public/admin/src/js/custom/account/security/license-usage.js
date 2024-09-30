@@ -1,12 +1,12 @@
 "use strict";
 
 // Class definition
-var KTAccountSecurityLicenseUsage = function () {
+var BEAVEAccountSecurityLicenseUsage = function () {
     // Private functions
     var initLicenceCopy = function() {
-        KTUtil.each(document.querySelectorAll('#kt_security_license_usage_table [data-action="copy"]'), function(button) {
+        BEAVEUtil.each(document.querySelectorAll('#kt_security_license_usage_table [data-action="copy"]'), function(button) {
             var tr = button.closest('tr');
-            var license = KTUtil.find(tr, '[data-bs-target="license"]');
+            var license = BEAVEUtil.find(tr, '[data-bs-target="license"]');
 
             var clipboard = new ClipboardJS(button, {
                 target: license,
@@ -63,6 +63,6 @@ var KTAccountSecurityLicenseUsage = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTAccountSecurityLicenseUsage.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEAccountSecurityLicenseUsage.init();
 });

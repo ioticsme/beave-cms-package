@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTContactApply = function () {
+var BEAVEContactApply = function () {
 	var submitButton;
 	var validator;
 	var form;
@@ -138,13 +138,13 @@ var KTContactApply = function () {
 					console.log('validated!');
 
 					if (status == 'Valid') {
-						submitButton.setAttribute('data-kt-indicator', 'on');
+						submitButton.setAttribute('data-beave-indicator', 'on');
 
 						// Disable button to avoid multiple click 
 						submitButton.disabled = true;
 
 						setTimeout(function() {
-							submitButton.removeAttribute('data-kt-indicator');
+							submitButton.removeAttribute('data-beave-indicator');
 
 							// Enable button
 							submitButton.disabled = false;
@@ -178,7 +178,7 @@ var KTContactApply = function () {
 								confirmButton: "btn btn-primary"
 							}
 						}).then(function (result) {
-							KTUtil.scrollTop();
+							BEAVEUtil.scrollTop();
 						});
 					}
 				});
@@ -191,16 +191,16 @@ var KTContactApply = function () {
 		init: function () {
 			// Elements
 			form = document.querySelector('#kt_contact_form');
-			submitButton = document.getElementById('kt_contact_submit_button');
+			submitButton = document.getElementById('beave_contact_submit_button');
 
 			initForm();
 			handleForm();
-			initMap('kt_contact_map');
+			initMap('beave_contact_map');
 		}
 	};
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-	KTContactApply.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+	BEAVEContactApply.init();
 });

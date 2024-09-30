@@ -1,14 +1,14 @@
 "use strict";
 
 // Class definition
-var KTProjectOverview = function () {
+var BEAVEProjectOverview = function () {
     // Colors
-    var primary = KTUtil.getCssVariableValue('--bs-primary');
-    var lightPrimary = KTUtil.getCssVariableValue('--bs-primary-light');
-    var success = KTUtil.getCssVariableValue('--bs-success');
-    var lightSuccess = KTUtil.getCssVariableValue('--bs-success-light');
-    var gray200 = KTUtil.getCssVariableValue('--bs-gray-200');
-    var gray500 = KTUtil.getCssVariableValue('--bs-gray-500');
+    var primary = BEAVEUtil.getCssVariableValue('--bs-primary');
+    var lightPrimary = BEAVEUtil.getCssVariableValue('--bs-primary-light');
+    var success = BEAVEUtil.getCssVariableValue('--bs-success');
+    var lightSuccess = BEAVEUtil.getCssVariableValue('--bs-success-light');
+    var gray200 = BEAVEUtil.getCssVariableValue('--bs-gray-200');
+    var gray500 = BEAVEUtil.getCssVariableValue('--bs-gray-500');
 
     // Private functions
     var initChart = function () {        
@@ -71,8 +71,8 @@ var KTProjectOverview = function () {
     }
 
     var initGraph = function () {
-        var element = document.getElementById("kt_project_overview_graph");
-        var height = parseInt(KTUtil.css(element, 'height'));
+        var element = document.getElementById("beave_project_overview_graph");
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
 
         if (!element) {
             return;
@@ -227,8 +227,8 @@ var KTProjectOverview = function () {
         });
 
         // Filter dropdown elements
-        const filterOrders = document.getElementById('kt_filter_orders');
-        const filterYear = document.getElementById('kt_filter_year');
+        const filterOrders = document.getElementById('beave_filter_orders');
+        const filterYear = document.getElementById('beave_filter_year');
 
         // Filter by order status --- official docs reference: https://datatables.net/reference/api/search()
         filterOrders.addEventListener('change', function (e) {
@@ -293,7 +293,7 @@ var KTProjectOverview = function () {
         );
 
         // Search --- official docs reference: https://datatables.net/reference/api/search()
-        var filterSearch = document.getElementById('kt_filter_search');
+        var filterSearch = document.getElementById('beave_filter_search');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
@@ -311,6 +311,6 @@ var KTProjectOverview = function () {
 
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTProjectOverview.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEProjectOverview.init();
 });

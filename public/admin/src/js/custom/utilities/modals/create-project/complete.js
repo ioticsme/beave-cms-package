@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalCreateProjectComplete = function () {
+var BEAVEModalCreateProjectComplete = function () {
 	// Variables
 	var startButton;
 	var form;
@@ -17,9 +17,9 @@ var KTModalCreateProjectComplete = function () {
 	return {
 		// Public functions
 		init: function () {
-			form = KTModalCreateProject.getForm();
-			stepper = KTModalCreateProject.getStepperObj();
-			startButton = KTModalCreateProject.getStepper().querySelector('[data-kt-element="complete-start"]');
+			form = BEAVEModalCreateProject.getForm();
+			stepper = BEAVEModalCreateProject.getStepperObj();
+			startButton = BEAVEModalCreateProject.getStepper().querySelector('[data-beave-element="complete-start"]');
 
 			handleForm();
 		}
@@ -28,5 +28,5 @@ var KTModalCreateProjectComplete = function () {
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-	window.KTModalCreateProjectComplete = module.exports = KTModalCreateProjectComplete;
+	window.BEAVEModalCreateProjectComplete = module.exports = BEAVEModalCreateProjectComplete;
 }

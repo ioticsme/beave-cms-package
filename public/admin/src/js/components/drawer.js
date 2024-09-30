@@ -1,9 +1,9 @@
 "use strict";
 
-var KTDrawerHandlersInitialized = false; 
+var BEAVEDrawerHandlersInitialized = false; 
 
 // Class definition
-var KTDrawer = function(element, options) {
+var BEAVEDrawer = function(element, options) {
     //////////////////////////////
     // ** Private variables  ** //
     //////////////////////////////
@@ -26,8 +26,8 @@ var KTDrawer = function(element, options) {
     ////////////////////////////
 
     var _construct = function() {
-        if ( KTUtil.data(element).has('drawer') ) {
-            the = KTUtil.data(element).get('drawer');
+        if ( BEAVEUtil.data(element).has('drawer') ) {
+            the = BEAVEUtil.data(element).get('drawer');
         } else {
             _init();
         }
@@ -35,18 +35,18 @@ var KTDrawer = function(element, options) {
 
     var _init = function() {
         // Variables
-        the.options = KTUtil.deepExtend({}, defaultOptions, options);
-        the.uid = KTUtil.getUniqueId('drawer');
+        the.options = BEAVEUtil.deepExtend({}, defaultOptions, options);
+        the.uid = BEAVEUtil.getUniqueId('drawer');
         the.element = element;
         the.overlayElement = null;
-        the.name = the.element.getAttribute('data-kt-drawer-name');
+        the.name = the.element.getAttribute('data-beave-drawer-name');
         the.shown = false;
         the.lastWidth;
         the.lastHeight;
         the.toggleElement = null;
 
         // Set initialized
-        the.element.setAttribute('data-kt-drawer', 'true');
+        the.element.setAttribute('data-beave-drawer', 'true');
 
         // Event Handlers
         _handlers();
@@ -55,7 +55,7 @@ var KTDrawer = function(element, options) {
         _update();
 
         // Bind Instance
-        KTUtil.data(the.element).set('drawer', the);
+        BEAVEUtil.data(the.element).set('drawer', the);
     }
 
     var _handlers = function() {
@@ -63,7 +63,7 @@ var KTDrawer = function(element, options) {
         var closers = _getOption('close');
 
         if ( togglers !== null && togglers.length > 0 ) {
-            KTUtil.on(document.body, togglers, 'click', function(e) {
+            BEAVEUtil.on(document.body, togglers, 'click', function(e) {
                 e.preventDefault();
 
                 the.toggleElement = this;
@@ -72,7 +72,7 @@ var KTDrawer = function(element, options) {
         }
 
         if ( closers !== null && closers.length > 0 ) {
-            KTUtil.on(document.body, closers, 'click', function(e) {
+            BEAVEUtil.on(document.body, closers, 'click', function(e) {
                 e.preventDefault();
 
                 the.closeElement = this;
@@ -82,7 +82,7 @@ var KTDrawer = function(element, options) {
     }
 
     var _toggle = function() {
-        if ( KTEventHandler.trigger(the.element, 'kt.drawer.toggle', the) === false ) {
+        if ( BEAVEEventHandler.trigger(the.element, 'beave.drawer.toggle', the) === false ) {
             return;
         }
 
@@ -92,11 +92,11 @@ var KTDrawer = function(element, options) {
             _show();
         }
 
-        KTEventHandler.trigger(the.element, 'kt.drawer.toggled', the);
+        BEAVEEventHandler.trigger(the.element, 'beave.drawer.toggled', the);
     }
 
     var _hide = function() {
-        if ( KTEventHandler.trigger(the.element, 'kt.drawer.hide', the) === false ) {
+        if ( BEAVEEventHandler.trigger(the.element, 'beave.drawer.hide', the) === false ) {
             return;
         }
 
@@ -104,36 +104,36 @@ var KTDrawer = function(element, options) {
 
         _deleteOverlay();
 
-        document.body.removeAttribute('data-kt-drawer-' + the.name, 'on');
-        document.body.removeAttribute('data-kt-drawer');
+        document.body.removeAttribute('data-beave-drawer-' + the.name, 'on');
+        document.body.removeAttribute('data-beave-drawer');
 
-        KTUtil.removeClass(the.element, the.options.baseClass + '-on');
+        BEAVEUtil.removeClass(the.element, the.options.baseClass + '-on');
 
         if ( the.toggleElement !== null ) {
-            KTUtil.removeClass(the.toggleElement, 'active');
+            BEAVEUtil.removeClass(the.toggleElement, 'active');
         }
 
-        KTEventHandler.trigger(the.element, 'kt.drawer.after.hidden', the) === false
+        BEAVEEventHandler.trigger(the.element, 'beave.drawer.after.hidden', the) === false
     }
 
     var _show = function() {
-        if ( KTEventHandler.trigger(the.element, 'kt.drawer.show', the) === false ) {
+        if ( BEAVEEventHandler.trigger(the.element, 'beave.drawer.show', the) === false ) {
             return;
         }
 
         the.shown = true;
 
         _createOverlay();
-        document.body.setAttribute('data-kt-drawer-' + the.name, 'on');
-        document.body.setAttribute('data-kt-drawer', 'on');
+        document.body.setAttribute('data-beave-drawer-' + the.name, 'on');
+        document.body.setAttribute('data-beave-drawer', 'on');
 
-        KTUtil.addClass(the.element, the.options.baseClass + '-on');
+        BEAVEUtil.addClass(the.element, the.options.baseClass + '-on');
 
         if ( the.toggleElement !== null ) {
-            KTUtil.addClass(the.toggleElement, 'active');
+            BEAVEUtil.addClass(the.toggleElement, 'active');
         }
 
-        KTEventHandler.trigger(the.element, 'kt.drawer.shown', the);
+        BEAVEEventHandler.trigger(the.element, 'beave.drawer.shown', the);
     }
 
     var _update = function() {
@@ -147,7 +147,7 @@ var KTDrawer = function(element, options) {
         var end = _getOption('end');
 
         // Reset state
-        if ( KTUtil.hasClass(the.element, the.options.baseClass + '-on') === true && String(document.body.getAttribute('data-kt-drawer-' + the.name + '-')) === 'on' ) {
+        if ( BEAVEUtil.hasClass(the.element, the.options.baseClass + '-on') === true && String(document.body.getAttribute('data-beave-drawer-' + the.name + '-')) === 'on' ) {
             the.shown = true;
         } else {
             the.shown = false;
@@ -155,70 +155,70 @@ var KTDrawer = function(element, options) {
 
         // Activate/deactivate
         if ( _getOption('activate') === true ) {
-            KTUtil.addClass(the.element, the.options.baseClass);
-            KTUtil.addClass(the.element, the.options.baseClass + '-' + direction);
+            BEAVEUtil.addClass(the.element, the.options.baseClass);
+            BEAVEUtil.addClass(the.element, the.options.baseClass + '-' + direction);
             
             if (width) {
-                KTUtil.css(the.element, 'width', width, true);
+                BEAVEUtil.css(the.element, 'width', width, true);
                 the.lastWidth = width;
             }
             
             if (height) {
-                KTUtil.css(the.element, 'height', height, true);
+                BEAVEUtil.css(the.element, 'height', height, true);
                 the.lastHeight = height;
             }
 
             if (top) {
-                KTUtil.css(the.element, 'top', top);
+                BEAVEUtil.css(the.element, 'top', top);
             }
 
             if (bottom) {
-                KTUtil.css(the.element, 'bottom', bottom);
+                BEAVEUtil.css(the.element, 'bottom', bottom);
             }
 
             if (start) {
-                if (KTUtil.isRTL()) {
-                    KTUtil.css(the.element, 'right', start);
+                if (BEAVEUtil.isRTL()) {
+                    BEAVEUtil.css(the.element, 'right', start);
                 } else {
-                    KTUtil.css(the.element, 'left', start);
+                    BEAVEUtil.css(the.element, 'left', start);
                 }
             }
 
             if (end) {
-                if (KTUtil.isRTL()) {
-                    KTUtil.css(the.element, 'left', end);
+                if (BEAVEUtil.isRTL()) {
+                    BEAVEUtil.css(the.element, 'left', end);
                 } else {
-                    KTUtil.css(the.element, 'right', end);
+                    BEAVEUtil.css(the.element, 'right', end);
                 }
             }
         } else {
-            KTUtil.removeClass(the.element, the.options.baseClass);
-            KTUtil.removeClass(the.element, the.options.baseClass + '-' + direction);
+            BEAVEUtil.removeClass(the.element, the.options.baseClass);
+            BEAVEUtil.removeClass(the.element, the.options.baseClass + '-' + direction);
 
-            KTUtil.css(the.element, 'width', '');
-            KTUtil.css(the.element, 'height', '');
+            BEAVEUtil.css(the.element, 'width', '');
+            BEAVEUtil.css(the.element, 'height', '');
 
             if (top) {
-                KTUtil.css(the.element, 'top', '');
+                BEAVEUtil.css(the.element, 'top', '');
             }
 
             if (bottom) {
-                KTUtil.css(the.element, 'bottom', '');
+                BEAVEUtil.css(the.element, 'bottom', '');
             }
 
             if (start) {
-                if (KTUtil.isRTL()) {
-                    KTUtil.css(the.element, 'right', '');
+                if (BEAVEUtil.isRTL()) {
+                    BEAVEUtil.css(the.element, 'right', '');
                 } else {
-                    KTUtil.css(the.element, 'left', '');
+                    BEAVEUtil.css(the.element, 'left', '');
                 }
             }
 
             if (end) {
-                if (KTUtil.isRTL()) {
-                    KTUtil.css(the.element, 'left', '');
+                if (BEAVEUtil.isRTL()) {
+                    BEAVEUtil.css(the.element, 'left', '');
                 } else {
-                    KTUtil.css(the.element, 'right', '');
+                    BEAVEUtil.css(the.element, 'right', '');
                 }
             }
 
@@ -230,13 +230,13 @@ var KTDrawer = function(element, options) {
         if ( _getOption('overlay') === true ) {
             the.overlayElement = document.createElement('DIV');
 
-            KTUtil.css(the.overlayElement, 'z-index', KTUtil.css(the.element, 'z-index') - 1); // update
+            BEAVEUtil.css(the.overlayElement, 'z-index', BEAVEUtil.css(the.element, 'z-index') - 1); // update
 
             document.body.append(the.overlayElement);
 
-            KTUtil.addClass(the.overlayElement, _getOption('overlay-class'));
+            BEAVEUtil.addClass(the.overlayElement, _getOption('overlay-class'));
 
-            KTUtil.addEvent(the.overlayElement, 'click', function(e) {
+            BEAVEUtil.addEvent(the.overlayElement, 'click', function(e) {
                 e.preventDefault();
 
                 if ( _getOption('permanent') !== true ) {
@@ -248,14 +248,14 @@ var KTDrawer = function(element, options) {
 
     var _deleteOverlay = function() {
         if ( the.overlayElement !== null ) {
-            KTUtil.remove(the.overlayElement);
+            BEAVEUtil.remove(the.overlayElement);
         }
     }
 
     var _getOption = function(name) {
-        if ( the.element.hasAttribute('data-kt-drawer-' + name) === true ) {
-            var attr = the.element.getAttribute('data-kt-drawer-' + name);
-            var value = KTUtil.getResponsiveValue(attr);
+        if ( the.element.hasAttribute('data-beave-drawer-' + name) === true ) {
+            var attr = the.element.getAttribute('data-beave-drawer-' + name);
+            var value = BEAVEUtil.getResponsiveValue(attr);
 
             if ( value !== null && String(value) === 'true' ) {
                 value = true;
@@ -265,10 +265,10 @@ var KTDrawer = function(element, options) {
 
             return value;
         } else {
-            var optionName = KTUtil.snakeToCamel(name);
+            var optionName = BEAVEUtil.snakeToCamel(name);
 
             if ( the.options[optionName] ) {
-                return KTUtil.getResponsiveValue(the.options[optionName]);
+                return BEAVEUtil.getResponsiveValue(the.options[optionName]);
             } else {
                 return null;
             }
@@ -279,7 +279,7 @@ var KTDrawer = function(element, options) {
         var width = _getOption('width');
 
         if ( width === 'auto') {
-            width = KTUtil.css(the.element, 'width');
+            width = BEAVEUtil.css(the.element, 'width');
         }
 
         return width;
@@ -289,14 +289,14 @@ var KTDrawer = function(element, options) {
         var height = _getOption('height');
 
         if ( height === 'auto') {
-            height = KTUtil.css(the.element, 'height');
+            height = BEAVEUtil.css(the.element, 'height');
         }
 
         return height;
     }
 
     var _destroy = function() {
-        KTUtil.data(the.element).remove('drawer');
+        BEAVEUtil.data(the.element).remove('drawer');
     }
 
     // Construct class
@@ -337,39 +337,39 @@ var KTDrawer = function(element, options) {
 
     // Event API
     the.on = function(name, handler) {
-        return KTEventHandler.on(the.element, name, handler);
+        return BEAVEEventHandler.on(the.element, name, handler);
     }
 
     the.one = function(name, handler) {
-        return KTEventHandler.one(the.element, name, handler);
+        return BEAVEEventHandler.one(the.element, name, handler);
     }
 
     the.off = function(name, handlerId) {
-        return KTEventHandler.off(the.element, name, handlerId);
+        return BEAVEEventHandler.off(the.element, name, handlerId);
     }
 
     the.trigger = function(name, event) {
-        return KTEventHandler.trigger(the.element, name, event, the, event);
+        return BEAVEEventHandler.trigger(the.element, name, event, the, event);
     }
 };
 
 // Static methods
-KTDrawer.getInstance = function(element) {
-    if (element !== null && KTUtil.data(element).has('drawer')) {
-        return KTUtil.data(element).get('drawer');
+BEAVEDrawer.getInstance = function(element) {
+    if (element !== null && BEAVEUtil.data(element).has('drawer')) {
+        return BEAVEUtil.data(element).get('drawer');
     } else {
         return null;
     }
 }
 
 // Hide all drawers and skip one if provided
-KTDrawer.hideAll = function(skip = null, selector = '[data-kt-drawer="true"]') {
+BEAVEDrawer.hideAll = function(skip = null, selector = '[data-beave-drawer="true"]') {
     var items = document.querySelectorAll(selector);
 
     if (items && items.length > 0) {
         for (var i = 0, len = items.length; i < len; i++) {
             var item = items[i];
-            var drawer = KTDrawer.getInstance(item);
+            var drawer = BEAVEDrawer.getInstance(item);
 
             if (!drawer) {
                 continue;
@@ -387,12 +387,12 @@ KTDrawer.hideAll = function(skip = null, selector = '[data-kt-drawer="true"]') {
 }
 
 // Update all drawers
-KTDrawer.updateAll = function(selector = '[data-kt-drawer="true"]') {
+BEAVEDrawer.updateAll = function(selector = '[data-beave-drawer="true"]') {
     var items = document.querySelectorAll(selector);
 
     if (items && items.length > 0) {
         for (var i = 0, len = items.length; i < len; i++) {
-            var drawer = KTDrawer.getInstance(items[i]);
+            var drawer = BEAVEDrawer.getInstance(items[i]);
 
             if (drawer) {
                 drawer.update();
@@ -402,44 +402,44 @@ KTDrawer.updateAll = function(selector = '[data-kt-drawer="true"]') {
 }
 
 // Create instances
-KTDrawer.createInstances = function(selector = '[data-kt-drawer="true"]') {
+BEAVEDrawer.createInstances = function(selector = '[data-beave-drawer="true"]') {
     // Initialize Menus
     var elements = document.querySelectorAll(selector);
 
     if ( elements && elements.length > 0 ) {
         for (var i = 0, len = elements.length; i < len; i++) {
-            new KTDrawer(elements[i]);
+            new BEAVEDrawer(elements[i]);
         }
     }
 }
 
 // Toggle instances
-KTDrawer.handleShow = function() {
+BEAVEDrawer.handleShow = function() {
     // External drawer toggle handler
-    KTUtil.on(document.body,  '[data-kt-drawer-show="true"][data-kt-drawer-target]', 'click', function(e) {
+    BEAVEUtil.on(document.body,  '[data-beave-drawer-show="true"][data-beave-drawer-target]', 'click', function(e) {
         e.preventDefault();
         
-        var element = document.querySelector(this.getAttribute('data-kt-drawer-target'));
+        var element = document.querySelector(this.getAttribute('data-beave-drawer-target'));
 
         if (element) {
-            KTDrawer.getInstance(element).show();
+            BEAVEDrawer.getInstance(element).show();
         } 
     });
 }
 
 // Handle escape key press
-KTDrawer.handleEscapeKey = function() {
+BEAVEDrawer.handleEscapeKey = function() {
     document.addEventListener('keydown', (event) => {        
         if (event.key === 'Escape') {
             //if esc key was not pressed in combination with ctrl or alt or shift
             const isNotCombinedKey = !(event.ctrlKey || event.altKey || event.shiftKey);
             if (isNotCombinedKey) {
-                var elements = document.querySelectorAll('.drawer-on[data-kt-drawer="true"]:not([data-kt-drawer-escape="false"])');
+                var elements = document.querySelectorAll('.drawer-on[data-beave-drawer="true"]:not([data-beave-drawer-escape="false"])');
                 var drawer;
 
                 if ( elements && elements.length > 0 ) {
                     for (var i = 0, len = elements.length; i < len; i++) {
-                        drawer = KTDrawer.getInstance(elements[i]);
+                        drawer = BEAVEDrawer.getInstance(elements[i]);
                         if (drawer.isShown()) {
                             drawer.hide();
                         }
@@ -451,13 +451,13 @@ KTDrawer.handleEscapeKey = function() {
 }
 
 // Dismiss instances
-KTDrawer.handleDismiss = function() {
+BEAVEDrawer.handleDismiss = function() {
     // External drawer toggle handler
-    KTUtil.on(document.body,  '[data-kt-drawer-dismiss="true"]', 'click', function(e) {
-        var element = this.closest('[data-kt-drawer="true"]');
+    BEAVEUtil.on(document.body,  '[data-beave-drawer-dismiss="true"]', 'click', function(e) {
+        var element = this.closest('[data-beave-drawer="true"]');
 
         if (element) {
-            var drawer = KTDrawer.getInstance(element);
+            var drawer = BEAVEDrawer.getInstance(element);
             if (drawer.isShown()) {
                 drawer.hide();
             }
@@ -466,18 +466,18 @@ KTDrawer.handleDismiss = function() {
 }
 
 // Handle resize
-KTDrawer.handleResize = function() {
+BEAVEDrawer.handleResize = function() {
     // Window resize Handling
     window.addEventListener('resize', function() {
         var timer;
 
-        KTUtil.throttle(timer, function() {
+        BEAVEUtil.throttle(timer, function() {
             // Locate and update drawer instances on window resize
-            var elements = document.querySelectorAll('[data-kt-drawer="true"]');
+            var elements = document.querySelectorAll('[data-beave-drawer="true"]');
 
             if ( elements && elements.length > 0 ) {
                 for (var i = 0, len = elements.length; i < len; i++) {
-                    var drawer = KTDrawer.getInstance(elements[i]);
+                    var drawer = BEAVEDrawer.getInstance(elements[i]);
                     if (drawer) {
                         drawer.update();
                     }
@@ -488,20 +488,20 @@ KTDrawer.handleResize = function() {
 }
 
 // Global initialization
-KTDrawer.init = function() {
-    KTDrawer.createInstances();
+BEAVEDrawer.init = function() {
+    BEAVEDrawer.createInstances();
 
-    if (KTDrawerHandlersInitialized === false) {
-        KTDrawer.handleResize();
-        KTDrawer.handleShow();
-        KTDrawer.handleDismiss();
-        KTDrawer.handleEscapeKey();
+    if (BEAVEDrawerHandlersInitialized === false) {
+        BEAVEDrawer.handleResize();
+        BEAVEDrawer.handleShow();
+        BEAVEDrawer.handleDismiss();
+        BEAVEDrawer.handleEscapeKey();
 
-        KTDrawerHandlersInitialized = true;
+        BEAVEDrawerHandlersInitialized = true;
     }
 };
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = KTDrawer;
+    module.exports = BEAVEDrawer;
 }

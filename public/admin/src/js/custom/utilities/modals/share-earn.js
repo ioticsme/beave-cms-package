@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalShareEarn = function () {
+var BEAVEModalShareEarn = function () {
     // Private functions
     var handleForm = function() {
         var button = document.querySelector('#kt_share_earn_link_copy_button');
@@ -42,6 +42,6 @@ var KTModalShareEarn = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTModalShareEarn.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEModalShareEarn.init();
 });

@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAppFileManagerSettings = function () {
+var BEAVEAppFileManagerSettings = function () {
     var form;
 
 	// Private functions
@@ -11,7 +11,7 @@ var KTAppFileManagerSettings = function () {
         saveButton.addEventListener('click', e => {
             e.preventDefault();
 
-            saveButton.setAttribute("data-kt-indicator", "on");
+            saveButton.setAttribute("data-beave-indicator", "on");
 
             // Simulate process for demo only
             setTimeout(function(){
@@ -34,7 +34,7 @@ var KTAppFileManagerSettings = function () {
 
                 toastr.success('File manager settings have been saved');
 
-                saveButton.removeAttribute("data-kt-indicator");
+                saveButton.removeAttribute("data-beave-indicator");
             }, 1000);
         });
 	}
@@ -50,6 +50,6 @@ var KTAppFileManagerSettings = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTAppFileManagerSettings.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEAppFileManagerSettings.init();
 });

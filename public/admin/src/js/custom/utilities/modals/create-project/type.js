@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalCreateProjectType = function () {
+var BEAVEModalCreateProjectType = function () {
 	// Variables
 	var nextButton;
 	var validator;
@@ -52,12 +52,12 @@ var KTModalCreateProjectType = function () {
 
 					if (status == 'Valid') {
 						// Show loading indication
-						nextButton.setAttribute('data-kt-indicator', 'on');
+						nextButton.setAttribute('data-beave-indicator', 'on');
 
 						// Simulate form submission
 						setTimeout(function() {
 							// Simulate form submission
-							nextButton.removeAttribute('data-kt-indicator');
+							nextButton.removeAttribute('data-beave-indicator');
 							
 							// Enable button
 							nextButton.disabled = false;
@@ -88,9 +88,9 @@ var KTModalCreateProjectType = function () {
 	return {
 		// Public functions
 		init: function () {
-			form = KTModalCreateProject.getForm();
-			stepper = KTModalCreateProject.getStepperObj();
-			nextButton = KTModalCreateProject.getStepper().querySelector('[data-kt-element="type-next"]');
+			form = BEAVEModalCreateProject.getForm();
+			stepper = BEAVEModalCreateProject.getStepperObj();
+			nextButton = BEAVEModalCreateProject.getStepper().querySelector('[data-beave-element="type-next"]');
 
 			initValidation();
 			handleForm();
@@ -100,5 +100,5 @@ var KTModalCreateProjectType = function () {
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-	window.KTModalCreateProjectType = module.exports = KTModalCreateProjectType;
+	window.BEAVEModalCreateProjectType = module.exports = BEAVEModalCreateProjectType;
 }

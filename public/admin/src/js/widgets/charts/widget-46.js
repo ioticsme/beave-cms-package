@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget46 = function () {
+var BEAVEChartsWidget46 = function () {
     var chart = {
         self: null,
         rendered: false
@@ -9,19 +9,19 @@ var KTChartsWidget46 = function () {
 
     // Private methods
     var initChart = function() {
-        var element = document.getElementById("kt_charts_widget_46");
+        var element = document.getElementById("beave_charts_widget_46");
 
         if (!element) {
             return;
         }
 
-        var negativeColor = element.hasAttribute('data-kt-negative-color') ? element.getAttribute('data-kt-negative-color') : KTUtil.getCssVariableValue('--bs-gary-500');
+        var negativeColor = element.hasAttribute('data-beave-negative-color') ? element.getAttribute('data-beave-negative-color') : BEAVEUtil.getCssVariableValue('--bs-gary-500');
 
-        var height = parseInt(KTUtil.css(element, 'height'));
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
 
-        var baseColor = KTUtil.getCssVariableValue('--bs-gray-800');
+        var baseColor = BEAVEUtil.getCssVariableValue('--bs-gray-800');
 
         var options = {
             series: [{
@@ -155,7 +155,7 @@ var KTChartsWidget46 = function () {
             initChart();
 
             // Update chart on theme mode change
-            KTThemeMode.on("kt.thememode.change", function() {                
+            BEAVEThemeMode.on("beave.thememode.change", function() {                
                 if (chart.rendered) {
                     chart.self.destroy();
                 }
@@ -168,10 +168,10 @@ var KTChartsWidget46 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTChartsWidget46;
+    module.exports = BEAVEChartsWidget46;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTChartsWidget46.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEChartsWidget46.init();
 });

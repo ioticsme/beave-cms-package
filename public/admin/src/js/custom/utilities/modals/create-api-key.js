@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalCreateApiKey = function () {
+var BEAVEModalCreateApiKey = function () {
 	var submitButton;
 	var cancelButton;
 	var validator;
@@ -77,13 +77,13 @@ var KTModalCreateApiKey = function () {
 					console.log('validated!');
 
 					if (status == 'Valid') {
-						submitButton.setAttribute('data-kt-indicator', 'on');
+						submitButton.setAttribute('data-beave-indicator', 'on');
 
 						// Disable button to avoid multiple click 
 						submitButton.disabled = true;
 
 						setTimeout(function() {
-							submitButton.removeAttribute('data-kt-indicator');
+							submitButton.removeAttribute('data-beave-indicator');
 
 							// Enable button
 							submitButton.disabled = false;
@@ -168,8 +168,8 @@ var KTModalCreateApiKey = function () {
 			modal = new bootstrap.Modal(modalEl);
 
 			form = document.querySelector('#kt_modal_create_api_key_form');
-			submitButton = document.getElementById('kt_modal_create_api_key_submit');
-			cancelButton = document.getElementById('kt_modal_create_api_key_cancel');
+			submitButton = document.getElementById('beave_modal_create_api_key_submit');
+			cancelButton = document.getElementById('beave_modal_create_api_key_cancel');
 
 			initForm();
 			handleForm();
@@ -178,6 +178,6 @@ var KTModalCreateApiKey = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-	KTModalCreateApiKey.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+	BEAVEModalCreateApiKey.init();
 });

@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAppLayoutBuilder = function() {
+var BEAVEAppLayoutBuilder = function() {
 	var form;
 	var actionInput;
 	var url;
@@ -19,26 +19,26 @@ var KTAppLayoutBuilder = function() {
 			return;
 		}	
 
-		if ( KTCookie.get("app_engage_prebuilts_modal_displayed") !== "1" ) {
+		if ( BEAVECookie.get("app_engage_prebuilts_modal_displayed") !== "1" ) {
 			setTimeout(function() {
 				const modal = new bootstrap.Modal(engagePrebuiltsModal);
 				modal.show();
 	
 				const date = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days from now
-				KTCookie.set("app_engage_prebuilts_modal_displayed", "1", {expires: date});
+				BEAVECookie.set("app_engage_prebuilts_modal_displayed", "1", {expires: date});
 			}, 3000);
 		} 
 	}
 
 	var handleEngagePrebuiltsViewMenu = function() {
-		const selected = engagePrebuiltsModal.querySelector('[data-kt-element="selected"]');
-		const selectedTitle = engagePrebuiltsModal.querySelector('[data-kt-element="title"]');
-		const menu = engagePrebuiltsModal.querySelector('[data-kt-menu="true"]');
+		const selected = engagePrebuiltsModal.querySelector('[data-beave-element="selected"]');
+		const selectedTitle = engagePrebuiltsModal.querySelector('[data-beave-element="title"]');
+		const menu = engagePrebuiltsModal.querySelector('[data-beave-menu="true"]');
 
 		// Toggle Handler
-		KTUtil.on(engagePrebuiltsModal, '[data-kt-mode]', 'click', function (e) {
+		BEAVEUtil.on(engagePrebuiltsModal, '[data-beave-mode]', 'click', function (e) {
 			const title = this.innerText;	
-			const mode = this.getAttribute("data-kt-mode");
+			const mode = this.getAttribute("data-beave-mode");
 			const selectedLink = menu.querySelector('.menu-link.active');
 			const viewImage = document.querySelector('#kt_app_engage_prebuilts_view_image');
 			const viewText = document.querySelector('#kt_app_engage_prebuilts_view_text');
@@ -69,14 +69,14 @@ var KTAppLayoutBuilder = function() {
 			e.preventDefault();
 
 			const date = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000); // 1 days from now
-			KTCookie.set("app_engage_hide", "1", {expires: date});
+			BEAVECookie.set("app_engage_hide", "1", {expires: date});
 			engage.classList.add('app-engage-hide');
 		});
 
 		engageToggleOn.addEventListener("click", function (e) {
 			e.preventDefault();
 
-			KTCookie.remove("app_engage_hide");
+			BEAVECookie.remove("app_engage_hide");
 			engage.classList.remove('app-engage-hide');
 		});
 	}
@@ -89,7 +89,7 @@ var KTAppLayoutBuilder = function() {
 			actionInput.value = "preview";
 
 			// Show progress
-			previewButton.setAttribute("data-kt-indicator", "on");
+			previewButton.setAttribute("data-beave-indicator", "on");
 
 			// Prepare form data
 			var data = $(form).serialize();
@@ -125,7 +125,7 @@ var KTAppLayoutBuilder = function() {
 					);
 				},
 				complete: function() {
-					previewButton.removeAttribute("data-kt-indicator");
+					previewButton.removeAttribute("data-beave-indicator");
 				}
 			});
 		});
@@ -142,7 +142,7 @@ var KTAppLayoutBuilder = function() {
 			);
 
 			// Show progress
-			exportButton.setAttribute("data-kt-indicator", "on");
+			exportButton.setAttribute("data-beave-indicator", "on");
 
 			// Set form action value
 			actionInput.value = "export";
@@ -164,7 +164,7 @@ var KTAppLayoutBuilder = function() {
 							// Stop the timer
 							clearInterval(timer);
 
-							exportButton.removeAttribute("data-kt-indicator");
+							exportButton.removeAttribute("data-beave-indicator");
 						}).appendTo("body");
 					}, 3000);
 				},
@@ -175,7 +175,7 @@ var KTAppLayoutBuilder = function() {
 						{timeOut: 0, extendedTimeOut: 0, closeButton: true, closeDuration: 0}
 					);
 
-					exportButton.removeAttribute("data-kt-indicator");
+					exportButton.removeAttribute("data-beave-indicator");
 				},
 			});
 		});
@@ -186,7 +186,7 @@ var KTAppLayoutBuilder = function() {
 			e.preventDefault();
 
 			// Show progress
-			resetButton.setAttribute("data-kt-indicator", "on");
+			resetButton.setAttribute("data-beave-indicator", "on");
 
 			// Set form action value
 			actionInput.value = "reset";
@@ -225,7 +225,7 @@ var KTAppLayoutBuilder = function() {
 					);
 				},
 				complete: function() {
-					resetButton.removeAttribute("data-kt-indicator");
+					resetButton.removeAttribute("data-beave-indicator");
 				},
 			});
 		});
@@ -234,23 +234,23 @@ var KTAppLayoutBuilder = function() {
 	var handleThemeMode = function() {
 		var checkLight = document.querySelector('#kt_layout_builder_theme_mode_light');
 		var checkDark = document.querySelector('#kt_layout_builder_theme_mode_dark');
-		var check = document.querySelector('#kt_layout_builder_theme_mode_' + KTThemeMode.getMode());
+		var check = document.querySelector('#kt_layout_builder_theme_mode_' + BEAVEThemeMode.getMode());
 
 		if (checkLight) {
 			checkLight.addEventListener("click", function() {
 				this.checked = true;
-				this.closest('[data-kt-buttons="true"]').querySelector('.form-check-image.active').classList.remove('active');
+				this.closest('[data-beave-buttons="true"]').querySelector('.form-check-image.active').classList.remove('active');
 				this.closest('.form-check-image').classList.add('active');
-				KTThemeMode.setMode('light');
+				BEAVEThemeMode.setMode('light');
 			});
 		}
 		
 		if (checkDark) {
 			checkDark.addEventListener("click", function() {
 				this.checked = true;
-				this.closest('[data-kt-buttons="true"]').querySelector('.form-check-image.active').classList.remove('active');
+				this.closest('[data-beave-buttons="true"]').querySelector('.form-check-image.active').classList.remove('active');
 				this.closest('.form-check-image').classList.add('active');
-				KTThemeMode.setMode('dark');
+				BEAVEThemeMode.setMode('dark');
 			});
 		}
 
@@ -307,6 +307,6 @@ var KTAppLayoutBuilder = function() {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTAppLayoutBuilder.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEAppLayoutBuilder.init();
 });

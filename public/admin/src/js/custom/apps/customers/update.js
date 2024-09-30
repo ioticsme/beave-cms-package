@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalUpdateCustomer = function () {
+var BEAVEModalUpdateCustomer = function () {
     var element;
     var submitButton;
     var cancelButton;
@@ -17,12 +17,12 @@ var KTModalUpdateCustomer = function () {
             e.preventDefault();
 
             // Show loading indication
-            submitButton.setAttribute('data-kt-indicator', 'on');
+            submitButton.setAttribute('data-beave-indicator', 'on');
 
             // Simulate form submission
             setTimeout(function () {
                 // Simulate form submission
-                submitButton.removeAttribute('data-kt-indicator');
+                submitButton.removeAttribute('data-beave-indicator');
 
                 // Show popup confirmation 
                 Swal.fire({
@@ -126,6 +126,6 @@ var KTModalUpdateCustomer = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTModalUpdateCustomer.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEModalUpdateCustomer.init();
 });

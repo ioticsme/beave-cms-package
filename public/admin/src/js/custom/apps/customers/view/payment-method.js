@@ -1,17 +1,17 @@
 "use strict";
 
 // Class definition
-var KTCustomerViewPaymentMethod = function () {
+var BEAVECustomerViewPaymentMethod = function () {
 
     // Private functions
     var initPaymentMethod = function () {
         // Define variables
-        const table = document.getElementById('kt_customer_view_payment_method');
-        const tableRows = table.querySelectorAll('[ data-kt-customer-payment-method="row"]');
+        const table = document.getElementById('beave_customer_view_payment_method');
+        const tableRows = table.querySelectorAll('[ data-beave-customer-payment-method="row"]');
 
         tableRows.forEach(row => {
             // Select delete button
-            const deleteButton = row.querySelector('[data-kt-customer-payment-method="delete"]');
+            const deleteButton = row.querySelector('[data-beave-customer-payment-method="delete"]');
 
             // Delete button action
             deleteButton.addEventListener('click', e => {
@@ -52,7 +52,7 @@ var KTCustomerViewPaymentMethod = function () {
     // Handle set as primary button
     const handlePrimaryButton = () => {
         // Define variable
-        const button = document.querySelector('[data-kt-payment-mehtod-action="set_as_primary"]');
+        const button = document.querySelector('[data-beave-payment-mehtod-action="set_as_primary"]');
 
         button.addEventListener('click', e => {
             e.preventDefault();
@@ -105,6 +105,6 @@ var KTCustomerViewPaymentMethod = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTCustomerViewPaymentMethod.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVECustomerViewPaymentMethod.init();
 });

@@ -1,13 +1,13 @@
 "use strict";
 
 // Class definition
-var KTApp = function () {
+var BEAVEApp = function () {
     var initialized = false;
     var select2FocusFixInitialized = false;
     var countUpInitialized = false;
 
     var createBootstrapTooltip = function (el, options) {
-        if (el.getAttribute("data-kt-initialized") === "1") {
+        if (el.getAttribute("data-beave-initialized") === "1") {
             return;
         }
 
@@ -42,7 +42,7 @@ var KTApp = function () {
             });
         }
 
-        el.setAttribute("data-kt-initialized", "1");
+        el.setAttribute("data-beave-initialized", "1");
 
         return tp;
     }
@@ -56,7 +56,7 @@ var KTApp = function () {
     }
 
     var createBootstrapPopover = function (el, options) {
-        if (el.getAttribute("data-kt-initialized") === "1") {
+        if (el.getAttribute("data-beave-initialized") === "1") {
             return;
         }
 
@@ -104,7 +104,7 @@ var KTApp = function () {
             });
         }
 
-        el.setAttribute("data-kt-initialized", "1");
+        el.setAttribute("data-beave-initialized", "1");
 
         return popover;
     }
@@ -120,29 +120,29 @@ var KTApp = function () {
     var createBootstrapToasts = function () {
         var toastElList = [].slice.call(document.querySelectorAll('.toast'));
         var toastList = toastElList.map(function (toastEl) {
-            if (toastEl.getAttribute("data-kt-initialized") === "1") {
+            if (toastEl.getAttribute("data-beave-initialized") === "1") {
                 return;
             }
 
-            toastEl.setAttribute("data-kt-initialized", "1");
+            toastEl.setAttribute("data-beave-initialized", "1");
 
             return new bootstrap.Toast(toastEl, {})
         });
     }
 
     var createButtons = function () {
-        var buttonsGroup = [].slice.call(document.querySelectorAll('[data-kt-buttons="true"]'));
+        var buttonsGroup = [].slice.call(document.querySelectorAll('[data-beave-buttons="true"]'));
 
         buttonsGroup.map(function (group) {
-            if (group.getAttribute("data-kt-initialized") === "1") {
+            if (group.getAttribute("data-beave-initialized") === "1") {
                 return;
             }
 
-            var selector = group.hasAttribute('data-kt-buttons-target') ? group.getAttribute('data-kt-buttons-target') : '.btn';
+            var selector = group.hasAttribute('data-beave-buttons-target') ? group.getAttribute('data-beave-buttons-target') : '.btn';
             var activeButtons = [].slice.call(group.querySelectorAll(selector));
 
             // Toggle Handler
-            KTUtil.on(group, selector, 'click', function (e) {
+            BEAVEUtil.on(group, selector, 'click', function (e) {
                 activeButtons.map(function (button) {
                     button.classList.remove('active');
                 });
@@ -150,7 +150,7 @@ var KTApp = function () {
                 this.classList.add('active');
             });       
 
-            group.setAttribute("data-kt-initialized", "1");
+            group.setAttribute("data-beave-initialized", "1");
         });
     }
 
@@ -165,18 +165,18 @@ var KTApp = function () {
             return;
         }
 
-        var elements = [].slice.call(document.querySelectorAll('[data-kt-daterangepicker="true"]'));
+        var elements = [].slice.call(document.querySelectorAll('[data-beave-daterangepicker="true"]'));
         var start = moment().subtract(29, 'days');
         var end = moment();
         
         elements.map(function (element) {
-            if (element.getAttribute("data-kt-initialized") === "1") {
+            if (element.getAttribute("data-beave-initialized") === "1") {
                 return;
             }
 
             var display = element.querySelector('div');
-            var attrOpens  = element.hasAttribute('data-kt-daterangepicker-opens') ? element.getAttribute('data-kt-daterangepicker-opens') : 'left';
-            var range = element.getAttribute('data-kt-daterangepicker-range');
+            var attrOpens  = element.hasAttribute('data-beave-daterangepicker-opens') ? element.getAttribute('data-beave-daterangepicker-opens') : 'left';
+            var range = element.getAttribute('data-beave-daterangepicker-range');
 
             var cb = function(start, end) {
                 var current = moment();
@@ -211,7 +211,7 @@ var KTApp = function () {
 
             cb(start, end);
 
-            element.setAttribute("data-kt-initialized", "1");
+            element.setAttribute("data-beave-initialized", "1");
         });
     }
 
@@ -226,10 +226,10 @@ var KTApp = function () {
             return;
         }
 
-        var elements = [].slice.call(document.querySelectorAll('[data-control="select2"], [data-kt-select2="true"]'));
+        var elements = [].slice.call(document.querySelectorAll('[data-control="select2"], [data-beave-select2="true"]'));
 
         elements.map(function (element) {
-            if (element.getAttribute("data-kt-initialized") === "1") {
+            if (element.getAttribute("data-beave-initialized") === "1") {
                 return;
             }
 
@@ -243,15 +243,15 @@ var KTApp = function () {
 
             $(element).select2(options);
 
-            // Handle Select2's KTMenu parent case
+            // Handle Select2's BEAVEMenu parent case
             if (element.hasAttribute('data-dropdown-parent') && element.hasAttribute('multiple')) {
                 var parentEl = document.querySelector(element.getAttribute('data-dropdown-parent'));
 
-                if (parentEl && parentEl.hasAttribute("data-kt-menu")) {
-                    var menu = KTMenu.getInstance(parentEl);
+                if (parentEl && parentEl.hasAttribute("data-beave-menu")) {
+                    var menu = BEAVEMenu.getInstance(parentEl);
                     
                     if (!menu) {
-                        menu = new KTMenu(parentEl);
+                        menu = new BEAVEMenu(parentEl);
                     }
 
                     if (menu) {
@@ -259,7 +259,7 @@ var KTApp = function () {
                             element.setAttribute("data-multiple-unselect", "1");
                         });
 
-                        menu.on("kt.menu.dropdown.hide", function(item) {
+                        menu.on("beave.menu.dropdown.hide", function(item) {
                             if (element.getAttribute("data-multiple-unselect") === "1") {
                                 element.removeAttribute("data-multiple-unselect");
                                 return false;
@@ -269,7 +269,7 @@ var KTApp = function () {
                 }                
             }
 
-            element.setAttribute("data-kt-initialized", "1");
+            element.setAttribute("data-beave-initialized", "1");
         });
     }
 
@@ -278,16 +278,16 @@ var KTApp = function () {
             return;
         }
 
-        var inputs = [].slice.call(document.querySelectorAll('[data-kt-autosize="true"]'));
+        var inputs = [].slice.call(document.querySelectorAll('[data-beave-autosize="true"]'));
 
         inputs.map(function (input) {
-            if (input.getAttribute("data-kt-initialized") === "1") {
+            if (input.getAttribute("data-beave-initialized") === "1") {
                 return;
             }
 
             autosize(input);
 
-            input.setAttribute("data-kt-initialized", "1");
+            input.setAttribute("data-beave-initialized", "1");
         });
     }
 
@@ -296,41 +296,41 @@ var KTApp = function () {
             return;
         }
 
-        var elements = [].slice.call(document.querySelectorAll('[data-kt-countup="true"]:not(.counted)'));
+        var elements = [].slice.call(document.querySelectorAll('[data-beave-countup="true"]:not(.counted)'));
 
         elements.map(function (element) {
-            if (KTUtil.isInViewport(element) && KTUtil.visible(element)) {
-                if (element.getAttribute("data-kt-initialized") === "1") {
+            if (BEAVEUtil.isInViewport(element) && BEAVEUtil.visible(element)) {
+                if (element.getAttribute("data-beave-initialized") === "1") {
                     return;
                 }
 
                 var options = {};
 
-                var value = element.getAttribute('data-kt-countup-value');
+                var value = element.getAttribute('data-beave-countup-value');
                 value = parseFloat(value.replace(/,/g, ""));
 
-                if (element.hasAttribute('data-kt-countup-start-val')) {
-                    options.startVal = parseFloat(element.getAttribute('data-kt-countup-start-val'));
+                if (element.hasAttribute('data-beave-countup-start-val')) {
+                    options.startVal = parseFloat(element.getAttribute('data-beave-countup-start-val'));
                 }
 
-                if (element.hasAttribute('data-kt-countup-duration')) {
-                    options.duration = parseInt(element.getAttribute('data-kt-countup-duration'));
+                if (element.hasAttribute('data-beave-countup-duration')) {
+                    options.duration = parseInt(element.getAttribute('data-beave-countup-duration'));
                 }
 
-                if (element.hasAttribute('data-kt-countup-decimal-places')) {
-                    options.decimalPlaces = parseInt(element.getAttribute('data-kt-countup-decimal-places'));
+                if (element.hasAttribute('data-beave-countup-decimal-places')) {
+                    options.decimalPlaces = parseInt(element.getAttribute('data-beave-countup-decimal-places'));
                 }
 
-                if (element.hasAttribute('data-kt-countup-prefix')) {
-                    options.prefix = element.getAttribute('data-kt-countup-prefix');
+                if (element.hasAttribute('data-beave-countup-prefix')) {
+                    options.prefix = element.getAttribute('data-beave-countup-prefix');
                 }
 
-                if (element.hasAttribute('data-kt-countup-separator')) {
-                    options.separator = element.getAttribute('data-kt-countup-separator');
+                if (element.hasAttribute('data-beave-countup-separator')) {
+                    options.separator = element.getAttribute('data-beave-countup-separator');
                 }
 
-                if (element.hasAttribute('data-kt-countup-suffix')) {
-                    options.suffix = element.getAttribute('data-kt-countup-suffix');
+                if (element.hasAttribute('data-beave-countup-suffix')) {
+                    options.suffix = element.getAttribute('data-beave-countup-suffix');
                 }
 
                 var count = new countUp.CountUp(element, value, options);
@@ -339,7 +339,7 @@ var KTApp = function () {
 
                 element.classList.add('counted');
 
-                element.setAttribute("data-kt-initialized", "1");
+                element.setAttribute("data-beave-initialized", "1");
             }
         });
     }
@@ -358,15 +358,15 @@ var KTApp = function () {
         }      
 
         // Tabs shown event handler
-        var tabs = [].slice.call(document.querySelectorAll('[data-kt-countup-tabs="true"][data-bs-toggle="tab"]'));
+        var tabs = [].slice.call(document.querySelectorAll('[data-beave-countup-tabs="true"][data-bs-toggle="tab"]'));
         tabs.map(function (tab) {
-            if (tab.getAttribute("data-kt-initialized") === "1") {
+            if (tab.getAttribute("data-beave-initialized") === "1") {
                 return;
             }
 
             tab.addEventListener('shown.bs.tab', createCountUp);
 
-            tab.setAttribute("data-kt-initialized", "1");
+            tab.setAttribute("data-beave-initialized", "1");
         });
 
         countUpInitialized = true;
@@ -385,14 +385,14 @@ var KTApp = function () {
         }
 
         elements.forEach(function (el) {
-            if (el.getAttribute("data-kt-initialized") === "1") {
+            if (el.getAttribute("data-beave-initialized") === "1") {
                 return;
             }
 
             const obj = initTinySlider(el);
-            KTUtil.data(el).set('tns', tns);
+            BEAVEUtil.data(el).set('tns', tns);
 
-            el.setAttribute("data-kt-initialized", "1");
+            el.setAttribute("data-beave-initialized", "1");
         });
     }
 
@@ -449,7 +449,7 @@ var KTApp = function () {
         }, tnsOptions);
 
         if (el.closest('.tns')) {
-            KTUtil.addClass(el.closest('.tns'), 'tns-initiazlied');
+            BEAVEUtil.addClass(el.closest('.tns'), 'tns-initiazlied');
         }
 
         return tns(opt);
@@ -464,7 +464,7 @@ var KTApp = function () {
             return;
         }
 
-        new SmoothScroll('a[data-kt-scroll-toggle][href*="#"]', {
+        new SmoothScroll('a[data-beave-scroll-toggle][href*="#"]', {
             speed: 1000,
             speedAsDuration: true,
             offset: function (anchor, toggle) {
@@ -472,8 +472,8 @@ var KTApp = function () {
                 // This example is a function, but you could do something as simple as `offset: 25`
 
                 // An example returning different values based on whether the clicked link was in the header nav or not
-                if (anchor.hasAttribute('data-kt-scroll-offset')) {
-                    var val = KTUtil.getResponsiveValue(anchor.getAttribute('data-kt-scroll-offset'));
+                if (anchor.hasAttribute('data-beave-scroll-offset')) {
+                    var val = BEAVEUtil.getResponsiveValue(anchor.getAttribute('data-beave-scroll-offset'));
                     
                     return val;
                 } else {
@@ -485,7 +485,7 @@ var KTApp = function () {
 
     var initCard = function() {
         // Toggle Handler
-        KTUtil.on(document.body, '[data-kt-card-action="remove"]', 'click', function (e) {
+        BEAVEUtil.on(document.body, '[data-beave-card-action="remove"]', 'click', function (e) {
             e.preventDefault();
             
             const card = this.closest('.card');
@@ -494,8 +494,8 @@ var KTApp = function () {
                 return;
             }
 
-            const confirmMessage = this.getAttribute("data-kt-card-confirm-message");
-            const confirm = this.getAttribute("data-kt-card-confirm") === "true";
+            const confirmMessage = this.getAttribute("data-beave-card-confirm-message");
+            const confirm = this.getAttribute("data-beave-card-confirm") === "true";
 
             if (confirm) {
                 // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
@@ -525,11 +525,11 @@ var KTApp = function () {
 
         if (elements && elements.length > 0) {
             elements.forEach((element) => {
-                if (element.getAttribute("data-kt-initialized") === "1") {
+                if (element.getAttribute("data-beave-initialized") === "1") {
                     return;
                 }
     
-                element.setAttribute("data-kt-initialized", "1");
+                element.setAttribute("data-beave-initialized", "1");
     
                 element.addEventListener("click", function(e) {
                     e.preventDefault();
@@ -551,11 +551,11 @@ var KTApp = function () {
         }
 
         // Toggle Handler
-        KTUtil.on(document.body, '[data-kt-check="true"]', 'change', function (e) {
+        BEAVEUtil.on(document.body, '[data-beave-check="true"]', 'change', function (e) {
             var check = this;
-            var targets = document.querySelectorAll(check.getAttribute('data-kt-check-target'));
+            var targets = document.querySelectorAll(check.getAttribute('data-beave-check-target'));
 
-            KTUtil.each(targets, function (target) {
+            BEAVEUtil.each(targets, function (target) {
                 if (target.type == 'checkbox') {
                     target.checked = check.checked;
                 } else {
@@ -570,7 +570,7 @@ var KTApp = function () {
             return;
         }
 
-        KTUtil.on(document.body,  '.collapsible[data-bs-toggle="collapse"]', 'click', function(e) {
+        BEAVEUtil.on(document.body,  '.collapsible[data-bs-toggle="collapse"]', 'click', function(e) {
             if (this.classList.contains('collapsed')) {
                 this.classList.remove('active');
                 this.blur();
@@ -578,12 +578,12 @@ var KTApp = function () {
                 this.classList.add('active');
             }
 
-            if (this.hasAttribute('data-kt-toggle-text')) {
-                var text = this.getAttribute('data-kt-toggle-text');
-                var target = this.querySelector('[data-kt-toggle-text-target="true"]');
+            if (this.hasAttribute('data-beave-toggle-text')) {
+                var text = this.getAttribute('data-beave-toggle-text');
+                var target = this.querySelector('[data-beave-toggle-text-target="true"]');
                 var target = target ? target : this;
 
-                this.setAttribute('data-kt-toggle-text', target.innerText);
+                this.setAttribute('data-beave-toggle-text', target.innerText);
                 target.innerText = text;
             }
         });
@@ -594,7 +594,7 @@ var KTApp = function () {
             return;
         }
         
-        KTUtil.on(document.body,  '[data-kt-rotate="true"]', 'click', function(e) {
+        BEAVEUtil.on(document.body,  '[data-beave-rotate="true"]', 'click', function(e) {
             if (this.classList.contains('active')) {
                 this.classList.remove('active');
                 this.blur();
@@ -616,13 +616,13 @@ var KTApp = function () {
 
     var showPageLoading = function() {
         document.body.classList.add('page-loading');
-        document.body.setAttribute('data-kt-app-page-loading', "on");
+        document.body.setAttribute('data-beave-app-page-loading', "on");
     }
 
     var hidePageLoading = function() {
         // CSS3 Transitions only after page load(.page-loading or .app-page-loading class added to body tag and remove with JS on page load)
         document.body.classList.remove('page-loading');
-        document.body.removeAttribute('data-kt-app-page-loading');
+        document.body.removeAttribute('data-beave-app-page-loading');
     }
 
     return {
@@ -686,7 +686,7 @@ var KTApp = function () {
     };
 }();
 
-// Declare KTApp for Webpack support
+// Declare BEAVEApp for Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = KTApp;
+    module.exports = BEAVEApp;
 }

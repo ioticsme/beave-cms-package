@@ -2,7 +2,7 @@
 // DOCS: https://javascript.info/cookie
 
 // Class definition
-var KTCookie = function() {
+var BEAVECookie = function() {
     return {
         // returns the cookie with the given name,
         // or undefined if not found
@@ -58,5 +58,5 @@ var KTCookie = function() {
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = KTCookie;
+    module.exports = BEAVECookie;
 }

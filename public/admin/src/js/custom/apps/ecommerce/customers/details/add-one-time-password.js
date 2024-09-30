@@ -1,9 +1,9 @@
 "use strict";
 
 // Class definition
-var KTUsersAddOneTimePassword = function () {
+var BEAVEUsersAddOneTimePassword = function () {
     // Shared variables
-    const element = document.getElementById('kt_modal_add_one_time_password');
+    const element = document.getElementById('beave_modal_add_one_time_password');
     const form = element.querySelector('#kt_modal_add_one_time_password_form');
     const modal = new bootstrap.Modal(element);
 
@@ -43,7 +43,7 @@ var KTUsersAddOneTimePassword = function () {
         );
 
         // Close button handler
-        const closeButton = element.querySelector('[data-kt-users-modal-action="close"]');
+        const closeButton = element.querySelector('[data-beave-users-modal-action="close"]');
         closeButton.addEventListener('click', e => {
             e.preventDefault();
 
@@ -66,7 +66,7 @@ var KTUsersAddOneTimePassword = function () {
         });
 
         // Cancel button handler
-        const cancelButton = element.querySelector('[data-kt-users-modal-action="cancel"]');
+        const cancelButton = element.querySelector('[data-beave-users-modal-action="cancel"]');
         cancelButton.addEventListener('click', e => {
             e.preventDefault();
 
@@ -100,7 +100,7 @@ var KTUsersAddOneTimePassword = function () {
         });
 
         // Submit button handler
-        const submitButton = element.querySelector('[data-kt-users-modal-action="submit"]');
+        const submitButton = element.querySelector('[data-beave-users-modal-action="submit"]');
         submitButton.addEventListener('click', function (e) {
             // Prevent default button action
             e.preventDefault();
@@ -112,7 +112,7 @@ var KTUsersAddOneTimePassword = function () {
 
                     if (status == 'Valid') {
                         // Show loading indication
-                        submitButton.setAttribute('data-kt-indicator', 'on');
+                        submitButton.setAttribute('data-beave-indicator', 'on');
 
                         // Disable button to avoid multiple click 
                         submitButton.disabled = true;
@@ -120,7 +120,7 @@ var KTUsersAddOneTimePassword = function () {
                         // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         setTimeout(function () {
                             // Remove loading indication
-                            submitButton.removeAttribute('data-kt-indicator');
+                            submitButton.removeAttribute('data-beave-indicator');
 
                             // Enable button
                             submitButton.disabled = false;
@@ -168,6 +168,6 @@ var KTUsersAddOneTimePassword = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTUsersAddOneTimePassword.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEUsersAddOneTimePassword.init();
 });

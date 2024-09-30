@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTCreateApp = function () {
+var BEAVECreateApp = function () {
 	// Elements
 	var modal;	
 	var modalEl;
@@ -18,10 +18,10 @@ var KTCreateApp = function () {
 	// Private Functions
 	var initStepper = function () {
 		// Initialize Stepper
-		stepperObj = new KTStepper(stepper);
+		stepperObj = new BEAVEStepper(stepper);
 
 		// Stepper change event(handle hiding submit button for the last step)
-		stepperObj.on('kt.stepper.changed', function (stepper) {
+		stepperObj.on('beave.stepper.changed', function (stepper) {
 			if (stepperObj.getCurrentStepIndex() === 4) {
 				formSubmitButton.classList.remove('d-none');
 				formSubmitButton.classList.add('d-inline-block');
@@ -37,7 +37,7 @@ var KTCreateApp = function () {
 		});
 
 		// Validation before going to next page
-		stepperObj.on('kt.stepper.next', function (stepper) {
+		stepperObj.on('beave.stepper.next', function (stepper) {
 			console.log('stepper.next');
 
 			// Validate form before change stepper step
@@ -50,7 +50,7 @@ var KTCreateApp = function () {
 					if (status == 'Valid') {
 						stepper.goNext();
 
-						//KTUtil.scrollTop();
+						//BEAVEUtil.scrollTop();
 					} else {
 						// Show error message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
 						Swal.fire({
@@ -62,23 +62,23 @@ var KTCreateApp = function () {
 								confirmButton: "btn btn-light"
 							}
 						}).then(function () {
-							//KTUtil.scrollTop();
+							//BEAVEUtil.scrollTop();
 						});
 					}
 				});
 			} else {
 				stepper.goNext();
 
-				KTUtil.scrollTop();
+				BEAVEUtil.scrollTop();
 			}
 		});
 
 		// Prev event
-		stepperObj.on('kt.stepper.previous', function (stepper) {
+		stepperObj.on('beave.stepper.previous', function (stepper) {
 			console.log('stepper.previous');
 
 			stepper.goPrevious();
-			KTUtil.scrollTop();
+			BEAVEUtil.scrollTop();
 		});
 
 		formSubmitButton.addEventListener('click', function (e) {
@@ -96,18 +96,18 @@ var KTCreateApp = function () {
 					formSubmitButton.disabled = true;
 
 					// Show loading indication
-					formSubmitButton.setAttribute('data-kt-indicator', 'on');
+					formSubmitButton.setAttribute('data-beave-indicator', 'on');
 
 					// Simulate form submission
 					setTimeout(function() {
 						// Hide loading indication
-						formSubmitButton.removeAttribute('data-kt-indicator');
+						formSubmitButton.removeAttribute('data-beave-indicator');
 
 						// Enable button
 						formSubmitButton.disabled = false;
 
 						stepperObj.goNext();
-						//KTUtil.scrollTop();
+						//BEAVEUtil.scrollTop();
 					}, 2000);
 				} else {
 					Swal.fire({
@@ -119,7 +119,7 @@ var KTCreateApp = function () {
 							confirmButton: "btn btn-light"
 						}
 					}).then(function () {
-						KTUtil.scrollTop();
+						BEAVEUtil.scrollTop();
 					});
 				}
 			});
@@ -311,8 +311,8 @@ var KTCreateApp = function () {
 
 			stepper = document.querySelector('#kt_modal_create_app_stepper');
 			form = document.querySelector('#kt_modal_create_app_form');
-			formSubmitButton = stepper.querySelector('[data-kt-stepper-action="submit"]');
-			formContinueButton = stepper.querySelector('[data-kt-stepper-action="next"]');
+			formSubmitButton = stepper.querySelector('[data-beave-stepper-action="submit"]');
+			formContinueButton = stepper.querySelector('[data-beave-stepper-action="next"]');
 
 			initStepper();
 			initForm();
@@ -322,6 +322,6 @@ var KTCreateApp = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTCreateApp.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVECreateApp.init();
 });

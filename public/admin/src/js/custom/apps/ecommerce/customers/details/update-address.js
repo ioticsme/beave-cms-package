@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalUpdateAddress = function () {
+var BEAVEModalUpdateAddress = function () {
     var element;
     var submitButton;
     var cancelButton;
@@ -88,13 +88,13 @@ var KTModalUpdateAddress = function () {
 					console.log('validated!');
 
 					if (status == 'Valid') {
-						submitButton.setAttribute('data-kt-indicator', 'on');
+						submitButton.setAttribute('data-beave-indicator', 'on');
 
 						// Disable submit button whilst loading
 						submitButton.disabled = true;
 
 						setTimeout(function() {
-							submitButton.removeAttribute('data-kt-indicator');
+							submitButton.removeAttribute('data-beave-indicator');
 							
 							Swal.fire({
 								text: "Form has been successfully submitted!",
@@ -212,6 +212,6 @@ var KTModalUpdateAddress = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTModalUpdateAddress.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEModalUpdateAddress.init();
 });

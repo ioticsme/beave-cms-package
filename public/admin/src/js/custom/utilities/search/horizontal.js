@@ -1,7 +1,7 @@
 "use strict";
  
 // Class definition
-var KTSearchHorizontal = function () {
+var BEAVESearchHorizontal = function () {
     // Private functions
     var initAdvancedSearchForm = function () {
        var form = document.querySelector('#kt_advanced_search_form');
@@ -35,6 +35,6 @@ var KTSearchHorizontal = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTSearchHorizontal.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVESearchHorizontal.init();
 });

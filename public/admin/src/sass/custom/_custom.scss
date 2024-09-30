@@ -1264,3 +1264,19 @@ $border-color_6: rgb(75 85 99 / var(--tw-border-opacity));
 //         max-width: 1536px;
 //     }
 // }
+#toast-container {
+    & .toast-error {
+        background-color: red;
+    }
+}
+
+#main-nav {
+    .menu-accordion, .menu-item {
+        .menu-link {
+            .menu-title {
+                text-decoration: none;
+                color: white;
+            }
+        }
+    }
+}

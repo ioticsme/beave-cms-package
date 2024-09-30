@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTSlidersWidget7 = function() {
+var BEAVESlidersWidget7 = function() {
     var chart1 = {
         self: null,
         rendered: false
@@ -29,9 +29,9 @@ var KTSlidersWidget7 = function() {
             return;
         }
 
-        var height = parseInt(KTUtil.css(element, 'height'));
-        var baseColor = KTUtil.getCssVariableValue('--bs-' + 'danger');
-        var lightColor = KTUtil.getCssVariableValue('--bs-' + 'white' );         
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
+        var baseColor = BEAVEUtil.getCssVariableValue('--bs-' + 'danger');
+        var lightColor = BEAVEUtil.getCssVariableValue('--bs-' + 'white' );         
 
         var options = {
             series: [data],
@@ -104,7 +104,7 @@ var KTSlidersWidget7 = function() {
             });
 
             // Update chart on theme mode change
-            KTThemeMode.on("kt.thememode.change", function() {                
+            BEAVEThemeMode.on("beave.thememode.change", function() {                
                 if (chart1.rendered) {
                     chart1.self.destroy();
                     chart1.rendered = false;
@@ -131,12 +131,12 @@ var KTSlidersWidget7 = function() {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTSlidersWidget7;
+    module.exports = BEAVESlidersWidget7;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTSlidersWidget7.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVESlidersWidget7.init();
 });
    
         

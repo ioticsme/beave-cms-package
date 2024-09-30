@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTTablesWidget3 = function () {
+var BEAVETablesWidget3 = function () {
     var table;
     var datatable;
 
@@ -17,14 +17,14 @@ var KTTablesWidget3 = function () {
     }
 
     const handleTabStates = () => {
-        const tabs = document.querySelector('[data-kt-table-widget-3="tabs_nav"]');
-        const tabButtons = tabs.querySelectorAll('[data-kt-table-widget-3="tab"]');
+        const tabs = document.querySelector('[data-beave-table-widget-3="tabs_nav"]');
+        const tabButtons = tabs.querySelectorAll('[data-beave-table-widget-3="tab"]');
         const tabClasses = ['border-bottom', 'border-3', 'border-primary'];
 
         tabButtons.forEach(tab => {
             tab.addEventListener('click', e => {
                 // Get datatable filter value
-                const value = tab.getAttribute('data-kt-table-widget-3-value');
+                const value = tab.getAttribute('data-beave-table-widget-3-value');
                 tabButtons.forEach(t => {
                     t.classList.remove(...tabClasses);
                     t.classList.add('text-muted');
@@ -45,7 +45,7 @@ var KTTablesWidget3 = function () {
 
     // Handle status filter dropdown
     const handleStatusFilter = () => {
-        const select = document.querySelector('[data-kt-table-widget-3="filter_status"]');
+        const select = document.querySelector('[data-beave-table-widget-3="filter_status"]');
 
         $(select).on('select2:select', function (e) {
             const value = $(this).val();
@@ -75,10 +75,10 @@ var KTTablesWidget3 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTTablesWidget3;
+    module.exports = BEAVETablesWidget3;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTTablesWidget3.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVETablesWidget3.init();
 });

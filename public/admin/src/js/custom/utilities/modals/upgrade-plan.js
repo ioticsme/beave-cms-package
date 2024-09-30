@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalUpgradePlan = function () {
+var BEAVEModalUpgradePlan = function () {
     // Private variables
     var modal;
 	var planPeriodMonthButton;
@@ -10,11 +10,11 @@ var KTModalUpgradePlan = function () {
 
     // Private functions
 	var changePlanPrices = function(type) {
-		var items = [].slice.call(modal.querySelectorAll('[data-kt-plan-price-month]'));
+		var items = [].slice.call(modal.querySelectorAll('[data-beave-plan-price-month]'));
 
 		items.map(function (item) {
-			var monthPrice = item.getAttribute('data-kt-plan-price-month');
-			var annualPrice = item.getAttribute('data-kt-plan-price-annual');
+			var monthPrice = item.getAttribute('data-beave-plan-price-month');
+			var annualPrice = item.getAttribute('data-beave-plan-price-annual');
 
 			if ( type === 'month' ) {
 				item.innerHTML = monthPrice;
@@ -68,7 +68,7 @@ var KTModalUpgradePlan = function () {
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    el.setAttribute('data-kt-indicator', 'on');            
+                    el.setAttribute('data-beave-indicator', 'on');            
                     el.disabled = true;
 
                     setTimeout(function() {
@@ -100,8 +100,8 @@ var KTModalUpgradePlan = function () {
 				return;
 			}
 
-			planPeriodMonthButton = modal.querySelector('[data-kt-plan="month"]');
-			planPeriodAnnualButton = modal.querySelector('[data-kt-plan="annual"]');
+			planPeriodMonthButton = modal.querySelector('[data-beave-plan="month"]');
+			planPeriodAnnualButton = modal.querySelector('[data-beave-plan="annual"]');
             planUpgradeButton = document.querySelector('#kt_modal_upgrade_plan_btn');
 
             // Handlers
@@ -113,6 +113,6 @@ var KTModalUpgradePlan = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTModalUpgradePlan.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEModalUpgradePlan.init();
 });

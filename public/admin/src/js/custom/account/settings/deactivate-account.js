@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAccountSettingsDeactivateAccount = function () {
+var BEAVEAccountSettingsDeactivateAccount = function () {
     // Private variables
     var form;
     var validation;
@@ -111,6 +111,6 @@ var KTAccountSettingsDeactivateAccount = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTAccountSettingsDeactivateAccount.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEAccountSettingsDeactivateAccount.init();
 });

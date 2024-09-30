@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalOfferADealFinance = function () {
+var BEAVEModalOfferADealFinance = function () {
 	// Variables
 	var nextButton;
 	var previousButton;
@@ -62,7 +62,7 @@ var KTModalOfferADealFinance = function () {
 		);
 
 		// Revalidate on change
-		KTDialer.getInstance(form.querySelector('#kt_modal_finance_setup')).on('kt.dialer.changed', function() {
+		BEAVEDialer.getInstance(form.querySelector('#kt_modal_finance_setup')).on('beave.dialer.changed', function() {
 			// Revalidate the field when an option is chosen
             validator.revalidateField('finance_setup');
 		});
@@ -83,12 +83,12 @@ var KTModalOfferADealFinance = function () {
 
 					if (status == 'Valid') {
 						// Show loading indication
-						nextButton.setAttribute('data-kt-indicator', 'on');
+						nextButton.setAttribute('data-beave-indicator', 'on');
 
 						// Simulate form submission
 						setTimeout(function() {
 							// Simulate form submission
-							nextButton.removeAttribute('data-kt-indicator');
+							nextButton.removeAttribute('data-beave-indicator');
 
 							// Enable button
 							nextButton.disabled = false;
@@ -123,10 +123,10 @@ var KTModalOfferADealFinance = function () {
 	return {
 		// Public functions
 		init: function () {
-			form = KTModalOfferADeal.getForm();
-			stepper = KTModalOfferADeal.getStepperObj();
-			nextButton = KTModalOfferADeal.getStepper().querySelector('[data-kt-element="finance-next"]');
-			previousButton = KTModalOfferADeal.getStepper().querySelector('[data-kt-element="finance-previous"]');
+			form = BEAVEModalOfferADeal.getForm();
+			stepper = BEAVEModalOfferADeal.getStepperObj();
+			nextButton = BEAVEModalOfferADeal.getStepper().querySelector('[data-beave-element="finance-next"]');
+			previousButton = BEAVEModalOfferADeal.getStepper().querySelector('[data-beave-element="finance-previous"]');
 
 			initValidation();
 			handleForm();
@@ -136,5 +136,5 @@ var KTModalOfferADealFinance = function () {
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-	window.KTModalOfferADealFinance = module.exports = KTModalOfferADealFinance;
+	window.BEAVEModalOfferADealFinance = module.exports = BEAVEModalOfferADealFinance;
 }

@@ -1,9 +1,9 @@
 "use strict";
 
 // Class definition
-var KTUsersUpdatePermissions = function () {
+var BEAVEUsersUpdatePermissions = function () {
     // Shared variables
-    const element = document.getElementById('kt_modal_update_role');
+    const element = document.getElementById('beave_modal_update_role');
     const form = element.querySelector('#kt_modal_update_role_form');
     const modal = new bootstrap.Modal(element);
 
@@ -36,7 +36,7 @@ var KTUsersUpdatePermissions = function () {
         );
 
         // Close button handler
-        const closeButton = element.querySelector('[data-kt-roles-modal-action="close"]');
+        const closeButton = element.querySelector('[data-beave-roles-modal-action="close"]');
         closeButton.addEventListener('click', e => {
             e.preventDefault();
 
@@ -59,7 +59,7 @@ var KTUsersUpdatePermissions = function () {
         });
 
         // Cancel button handler
-        const cancelButton = element.querySelector('[data-kt-roles-modal-action="cancel"]');
+        const cancelButton = element.querySelector('[data-beave-roles-modal-action="cancel"]');
         cancelButton.addEventListener('click', e => {
             e.preventDefault();
 
@@ -93,7 +93,7 @@ var KTUsersUpdatePermissions = function () {
         });
 
         // Submit button handler
-        const submitButton = element.querySelector('[data-kt-roles-modal-action="submit"]');
+        const submitButton = element.querySelector('[data-beave-roles-modal-action="submit"]');
         submitButton.addEventListener('click', function (e) {
             // Prevent default button action
             e.preventDefault();
@@ -105,7 +105,7 @@ var KTUsersUpdatePermissions = function () {
 
                     if (status == 'Valid') {
                         // Show loading indication
-                        submitButton.setAttribute('data-kt-indicator', 'on');
+                        submitButton.setAttribute('data-beave-indicator', 'on');
 
                         // Disable button to avoid multiple click 
                         submitButton.disabled = true;
@@ -113,7 +113,7 @@ var KTUsersUpdatePermissions = function () {
                         // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         setTimeout(function () {
                             // Remove loading indication
-                            submitButton.removeAttribute('data-kt-indicator');
+                            submitButton.removeAttribute('data-beave-indicator');
 
                             // Enable button
                             submitButton.disabled = false;
@@ -178,6 +178,6 @@ var KTUsersUpdatePermissions = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTUsersUpdatePermissions.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEUsersUpdatePermissions.init();
 });

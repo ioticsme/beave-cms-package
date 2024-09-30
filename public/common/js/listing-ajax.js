@@ -1,5 +1,5 @@
 'use strict'
-var KTAppEcommerceSalesListing = (function () {
+var BEAVEAppEcommerceSalesListing = (function () {
     var e,
         t,
         n,
@@ -24,13 +24,13 @@ var KTAppEcommerceSalesListing = (function () {
         },
         c = () => {
             e.querySelectorAll(
-                '[data-kt-ecommerce-order-filter="delete_row"]'
+                '[data-beave-ecommerce-order-filter="delete_row"]'
             ).forEach((e) => {
                 e.addEventListener('click', function (e) {
                     e.preventDefault()
                     const n = e.target.closest('tr'),
                         r = n.querySelector(
-                            '[data-kt-ecommerce-order-filter="order_id"]'
+                            '[data-beave-ecommerce-order-filter="order_id"]'
                         ).innerText
                     Swal.fire({
                         text:
@@ -102,13 +102,13 @@ var KTAppEcommerceSalesListing = (function () {
                     })
                 })(),
                 document
-                    .querySelector('[data-kt-ecommerce-order-filter="search"]')
+                    .querySelector('[data-beave-ecommerce-order-filter="search"]')
                     .addEventListener('keyup', function (e) {
                         t.search(e.target.value).draw()
                     }),
                 (() => {
                     const e = document.querySelector(
-                        '[data-kt-ecommerce-order-filter="status"]'
+                        '[data-beave-ecommerce-order-filter="status"]'
                     )
                     $(e).on('change', (e) => {
                         let n = e.target.value
@@ -124,6 +124,6 @@ var KTAppEcommerceSalesListing = (function () {
         },
     }
 })()
-KTUtil.onDOMContentLoaded(function () {
-    KTAppEcommerceSalesListing.init()
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEAppEcommerceSalesListing.init()
 })

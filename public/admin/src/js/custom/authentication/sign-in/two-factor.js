@@ -1,7 +1,7 @@
 "use strict";
 
 // Class Definition
-var KTSigninTwoFactor = function() {
+var BEAVESigninTwoFactor = function() {
     // Elements
     var form;
     var submitButton;
@@ -23,7 +23,7 @@ var KTSigninTwoFactor = function() {
 
             if (validated === true) {
                 // Show loading indication
-                submitButton.setAttribute('data-kt-indicator', 'on');
+                submitButton.setAttribute('data-beave-indicator', 'on');
 
                 // Disable button to avoid multiple click 
                 submitButton.disabled = true;
@@ -31,7 +31,7 @@ var KTSigninTwoFactor = function() {
                 // Simulate ajax request
                 setTimeout(function() {
                     // Hide loading indication
-                    submitButton.removeAttribute('data-kt-indicator');
+                    submitButton.removeAttribute('data-beave-indicator');
 
                     // Enable button
                     submitButton.disabled = false;
@@ -51,7 +51,7 @@ var KTSigninTwoFactor = function() {
                                 input.value = '';
                             });
 
-                            var redirectUrl = form.getAttribute('data-kt-redirect-url');
+                            var redirectUrl = form.getAttribute('data-beave-redirect-url');
                             if (redirectUrl) {
                                 location.href = redirectUrl;
                             }
@@ -68,7 +68,7 @@ var KTSigninTwoFactor = function() {
                         confirmButton: "btn fw-bold btn-light-primary"
                     }
                 }).then(function() {
-                    KTUtil.scrollTop();
+                    BEAVEUtil.scrollTop();
                 });
             }
         });
@@ -135,6 +135,6 @@ var KTSigninTwoFactor = function() {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTSigninTwoFactor.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVESigninTwoFactor.init();
 });

@@ -1,18 +1,18 @@
 "use strict";
 
 // Class definition
-var KTPricingGeneral = function () {
+var BEAVEPricingGeneral = function () {
     // Private variables
     var element;
 	var planPeriodMonthButton;
 	var planPeriodAnnualButton;
 
 	var changePlanPrices = function(type) {
-		var items = [].slice.call(element.querySelectorAll('[data-kt-plan-price-month]'));
+		var items = [].slice.call(element.querySelectorAll('[data-beave-plan-price-month]'));
 
 		items.map(function (item) {
-			var monthPrice = item.getAttribute('data-kt-plan-price-month');
-			var annualPrice = item.getAttribute('data-kt-plan-price-annual');
+			var monthPrice = item.getAttribute('data-beave-plan-price-month');
+			var annualPrice = item.getAttribute('data-beave-plan-price-annual');
 
 			if ( type === 'month' ) {
 				item.innerHTML = monthPrice;
@@ -48,8 +48,8 @@ var KTPricingGeneral = function () {
     return {
         init: function () {
             element = document.querySelector('#kt_pricing');
-			planPeriodMonthButton = element.querySelector('[data-kt-plan="month"]');
-			planPeriodAnnualButton = element.querySelector('[data-kt-plan="annual"]');
+			planPeriodMonthButton = element.querySelector('[data-beave-plan="month"]');
+			planPeriodAnnualButton = element.querySelector('[data-beave-plan="annual"]');
 
             // Handlers
             handlePlanPeriodSelection();
@@ -58,6 +58,6 @@ var KTPricingGeneral = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTPricingGeneral.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEPricingGeneral.init();
 });

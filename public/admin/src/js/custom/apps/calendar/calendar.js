@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAppCalendar = function () {
+var BEAVEAppCalendar = function () {
     // Shared variables
     // Calendar variables
     var calendar;
@@ -51,7 +51,7 @@ var KTAppCalendar = function () {
     // Private functions
     var initCalendarApp = function () {
         // Define variables
-        var calendarEl = document.getElementById('kt_calendar_app');
+        var calendarEl = document.getElementById('beave_calendar_app');
         var todayDate = moment().startOf('day');
         var YM = todayDate.format('YYYY-MM');
         var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
@@ -329,7 +329,7 @@ var KTAppCalendar = function () {
         modal.show();
 
         // Select datepicker wrapper elements
-        const datepickerWrappers = form.querySelectorAll('[data-kt-calendar="datepicker"]');
+        const datepickerWrappers = form.querySelectorAll('[data-beave-calendar="datepicker"]');
 
         // Handle all day toggle
         const allDayToggle = form.querySelector('#kt_calendar_datepicker_allday');
@@ -360,7 +360,7 @@ var KTAppCalendar = function () {
 
                     if (status == 'Valid') {
                         // Show loading indication
-                        submitButton.setAttribute('data-kt-indicator', 'on');
+                        submitButton.setAttribute('data-beave-indicator', 'on');
 
                         // Disable submit button whilst loading
                         submitButton.disabled = true;
@@ -368,7 +368,7 @@ var KTAppCalendar = function () {
                         // Simulate form submission
                         setTimeout(function () {
                             // Simulate form submission
-                            submitButton.removeAttribute('data-kt-indicator');
+                            submitButton.removeAttribute('data-beave-indicator');
 
                             // Show popup confirmation 
                             Swal.fire({
@@ -448,7 +448,7 @@ var KTAppCalendar = function () {
         modal.show();
 
         // Select datepicker wrapper elements
-        const datepickerWrappers = form.querySelectorAll('[data-kt-calendar="datepicker"]');
+        const datepickerWrappers = form.querySelectorAll('[data-beave-calendar="datepicker"]');
 
         // Handle all day toggle
         const allDayToggle = form.querySelector('#kt_calendar_datepicker_allday');
@@ -479,7 +479,7 @@ var KTAppCalendar = function () {
 
                     if (status == 'Valid') {
                         // Show loading indication
-                        submitButton.setAttribute('data-kt-indicator', 'on');
+                        submitButton.setAttribute('data-beave-indicator', 'on');
 
                         // Disable submit button whilst loading
                         submitButton.disabled = true;
@@ -487,7 +487,7 @@ var KTAppCalendar = function () {
                         // Simulate form submission
                         setTimeout(function () {
                             // Simulate form submission
-                            submitButton.removeAttribute('data-kt-indicator');
+                            submitButton.removeAttribute('data-beave-indicator');
 
                             // Show popup confirmation 
                             Swal.fire({
@@ -745,7 +745,7 @@ var KTAppCalendar = function () {
         endFlatpickr.setDate(endDate, true, 'Y-m-d');
 
         const allDayToggle = form.querySelector('#kt_calendar_datepicker_allday');
-        const datepickerWrappers = form.querySelectorAll('[data-kt-calendar="datepicker"]');
+        const datepickerWrappers = form.querySelectorAll('[data-beave-calendar="datepicker"]');
         if (data.allDay) {
             allDayToggle.checked = true;
             datepickerWrappers.forEach(dw => {
@@ -783,7 +783,7 @@ var KTAppCalendar = function () {
         init: function () {
             // Define variables
             // Add event modal
-            const element = document.getElementById('kt_modal_add_event');
+            const element = document.getElementById('beave_modal_add_event');
             form = element.querySelector('#kt_modal_add_event_form');
             eventName = form.querySelector('[name="calendar_event_name"]');
             eventDescription = form.querySelector('[name="calendar_event_description"]');
@@ -792,22 +792,22 @@ var KTAppCalendar = function () {
             endDatepicker = form.querySelector('#kt_calendar_datepicker_end_date');
             startTimepicker = form.querySelector('#kt_calendar_datepicker_start_time');
             endTimepicker = form.querySelector('#kt_calendar_datepicker_end_time');
-            addButton = document.querySelector('[data-kt-calendar="add"]');
+            addButton = document.querySelector('[data-beave-calendar="add"]');
             submitButton = form.querySelector('#kt_modal_add_event_submit');
             cancelButton = form.querySelector('#kt_modal_add_event_cancel');
             closeButton = element.querySelector('#kt_modal_add_event_close');
-            modalTitle = form.querySelector('[data-kt-calendar="title"]');
+            modalTitle = form.querySelector('[data-beave-calendar="title"]');
             modal = new bootstrap.Modal(element);
 
             // View event modal
-            const viewElement = document.getElementById('kt_modal_view_event');
+            const viewElement = document.getElementById('beave_modal_view_event');
             viewModal = new bootstrap.Modal(viewElement);
-            viewEventName = viewElement.querySelector('[data-kt-calendar="event_name"]');
-            viewAllDay = viewElement.querySelector('[data-kt-calendar="all_day"]');
-            viewEventDescription = viewElement.querySelector('[data-kt-calendar="event_description"]');
-            viewEventLocation = viewElement.querySelector('[data-kt-calendar="event_location"]');
-            viewStartDate = viewElement.querySelector('[data-kt-calendar="event_start_date"]');
-            viewEndDate = viewElement.querySelector('[data-kt-calendar="event_end_date"]');
+            viewEventName = viewElement.querySelector('[data-beave-calendar="event_name"]');
+            viewAllDay = viewElement.querySelector('[data-beave-calendar="all_day"]');
+            viewEventDescription = viewElement.querySelector('[data-beave-calendar="event_description"]');
+            viewEventLocation = viewElement.querySelector('[data-beave-calendar="event_location"]');
+            viewStartDate = viewElement.querySelector('[data-beave-calendar="event_start_date"]');
+            viewEndDate = viewElement.querySelector('[data-beave-calendar="event_end_date"]');
             viewEditButton = viewElement.querySelector('#kt_modal_view_event_edit');
             viewDeleteButton = viewElement.querySelector('#kt_modal_view_event_delete');
 
@@ -825,6 +825,6 @@ var KTAppCalendar = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTAppCalendar.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEAppCalendar.init();
 });

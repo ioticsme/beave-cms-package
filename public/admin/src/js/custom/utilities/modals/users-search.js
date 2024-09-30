@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalUserSearch = function () {
+var BEAVEModalUserSearch = function () {
     // Private variables
     var element;
     var suggestionsElement;
@@ -13,7 +13,7 @@ var KTModalUserSearch = function () {
     // Private functions
     var processs = function (search) {
         var timeout = setTimeout(function () {
-            var number = KTUtil.getRandomInt(1, 3);
+            var number = BEAVEUtil.getRandomInt(1, 3);
 
             // Hide recently viewed
             suggestionsElement.classList.add('d-none');
@@ -54,24 +54,24 @@ var KTModalUserSearch = function () {
                 return;
             }
 
-            wrapperElement = element.querySelector('[data-kt-search-element="wrapper"]');
-            suggestionsElement = element.querySelector('[data-kt-search-element="suggestions"]');
-            resultsElement = element.querySelector('[data-kt-search-element="results"]');
-            emptyElement = element.querySelector('[data-kt-search-element="empty"]');
+            wrapperElement = element.querySelector('[data-beave-search-element="wrapper"]');
+            suggestionsElement = element.querySelector('[data-beave-search-element="suggestions"]');
+            resultsElement = element.querySelector('[data-beave-search-element="results"]');
+            emptyElement = element.querySelector('[data-beave-search-element="empty"]');
 
             // Initialize search handler
-            searchObject = new KTSearch(element);
+            searchObject = new BEAVESearch(element);
 
             // Search handler
-            searchObject.on('kt.search.process', processs);
+            searchObject.on('beave.search.process', processs);
 
             // Clear handler
-            searchObject.on('kt.search.clear', clear);
+            searchObject.on('beave.search.clear', clear);
         }
     };
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTModalUserSearch.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEModalUserSearch.init();
 });

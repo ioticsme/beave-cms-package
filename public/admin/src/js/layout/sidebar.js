@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAppSidebar = function () {
+var BEAVEAppSidebar = function () {
 	// Private variables
 	var toggle;
 	var sidebar;
@@ -13,15 +13,15 @@ var KTAppSidebar = function () {
 	// Private functions
 	// Handle sidebar minimize mode toggle
 	var handleToggle = function () {
-	   	var toggleObj = KTToggle.getInstance(toggle);
-	   	var headerMenuObj = KTMenu.getInstance(headerMenu);
+	   	var toggleObj = BEAVEToggle.getInstance(toggle);
+	   	var headerMenuObj = BEAVEMenu.getInstance(headerMenu);
 
 		if ( toggleObj === null) {
 			return;
 		}
 
 	   	// Add a class to prevent sidebar hover effect after toggle click
-	   	toggleObj.on('kt.toggle.change', function() {
+	   	toggleObj.on('beave.toggle.change', function() {
 			// Set animation state
 			sidebar.classList.add('animating');
 			
@@ -43,13 +43,13 @@ var KTAppSidebar = function () {
 	   	});
 
 		// Store sidebar minimize state in cookie
-		toggleObj.on('kt.toggle.changed', function() {
+		toggleObj.on('beave.toggle.changed', function() {
 			// In server side check sidebar_minimize_state cookie 
-			// value and add data-kt-app-sidebar-minimize="on" 
+			// value and add data-beave-app-sidebar-minimize="on" 
 			// attribute to Body tag and "active" class to the toggle button
 			var date = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days from now
 
-			KTCookie.set("sidebar_minimize_state", toggleObj.isEnabled() ? "on" : "off", {expires: date}); 
+			BEAVECookie.set("sidebar_minimize_state", toggleObj.isEnabled() ? "on" : "off", {expires: date}); 
 		});
 	}
 
@@ -70,12 +70,12 @@ var KTAppSidebar = function () {
 			return;
 		} 
 
-		if ( KTUtil.isVisibleInContainer(menuActiveItem, menuScroll) === true) {
+		if ( BEAVEUtil.isVisibleInContainer(menuActiveItem, menuScroll) === true) {
 			return;
 		}
 
 		menuScroll.scroll({
-			top: KTUtil.getRelativeTopPosition(menuActiveItem, menuScroll),
+			top: BEAVEUtil.getRelativeTopPosition(menuActiveItem, menuScroll),
 			behavior: 'smooth'
 		});
 	}
@@ -110,6 +110,6 @@ var KTAppSidebar = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-	KTAppSidebar.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+	BEAVEAppSidebar.init();
 });

@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTCustomersList = function () {
+var BEAVECustomersList = function () {
     // Define shared variables
     var datatable;
     var filterMonth;
@@ -34,13 +34,13 @@ var KTCustomersList = function () {
             initToggleToolbar();
             handleDeleteRows();
             toggleToolbars();
-            KTMenu.init(); // reinit KTMenu instances 
+            BEAVEMenu.init(); // reinit BEAVEMenu instances 
         });
     }
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-customer-table-filter="search"]');
+        const filterSearch = document.querySelector('[data-beave-customer-table-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
@@ -49,9 +49,9 @@ var KTCustomersList = function () {
     // Filter Datatable
     var handleFilterDatatable = () => {
         // Select filter options
-        filterMonth = $('[data-kt-customer-table-filter="month"]');
-        filterPayment = document.querySelectorAll('[data-kt-customer-table-filter="payment_type"] [name="payment_type"]');
-        const filterButton = document.querySelector('[data-kt-customer-table-filter="filter"]');
+        filterMonth = $('[data-beave-customer-table-filter="month"]');
+        filterPayment = document.querySelectorAll('[data-beave-customer-table-filter="payment_type"] [name="payment_type"]');
+        const filterButton = document.querySelector('[data-beave-customer-table-filter="filter"]');
 
         // Filter datatable on submit
         filterButton.addEventListener('click', function () {
@@ -82,7 +82,7 @@ var KTCustomersList = function () {
     // Delete customer
     var handleDeleteRows = () => {
         // Select all delete buttons
-        const deleteButtons = table.querySelectorAll('[data-kt-customer-table-filter="delete_row"]');
+        const deleteButtons = table.querySelectorAll('[data-beave-customer-table-filter="delete_row"]');
 
         deleteButtons.forEach(d => {
             // Delete button on click
@@ -140,7 +140,7 @@ var KTCustomersList = function () {
     // Reset Filter
     var handleResetForm = () => {
         // Select reset button
-        const resetButton = document.querySelector('[data-kt-customer-table-filter="reset"]');
+        const resetButton = document.querySelector('[data-beave-customer-table-filter="reset"]');
 
         // Reset datatable
         resetButton.addEventListener('click', function () {
@@ -162,7 +162,7 @@ var KTCustomersList = function () {
         const checkboxes = table.querySelectorAll('[type="checkbox"]');
 
         // Select elements
-        const deleteSelected = document.querySelector('[data-kt-customer-table-select="delete_selected"]');
+        const deleteSelected = document.querySelector('[data-beave-customer-table-select="delete_selected"]');
 
         // Toggle delete selected toolbar
         checkboxes.forEach(c => {
@@ -228,9 +228,9 @@ var KTCustomersList = function () {
     // Toggle toolbars
     const toggleToolbars = () => {
         // Define variables
-        const toolbarBase = document.querySelector('[data-kt-customer-table-toolbar="base"]');
-        const toolbarSelected = document.querySelector('[data-kt-customer-table-toolbar="selected"]');
-        const selectedCount = document.querySelector('[data-kt-customer-table-select="selected_count"]');
+        const toolbarBase = document.querySelector('[data-beave-customer-table-toolbar="base"]');
+        const toolbarSelected = document.querySelector('[data-beave-customer-table-toolbar="selected"]');
+        const selectedCount = document.querySelector('[data-beave-customer-table-select="selected_count"]');
 
         // Select refreshed checkbox DOM elements 
         const allCheckboxes = table.querySelectorAll('tbody [type="checkbox"]');
@@ -278,6 +278,6 @@ var KTCustomersList = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTCustomersList.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVECustomersList.init();
 });

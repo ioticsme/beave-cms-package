@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAuthI18nDemo = function() {
+var BEAVEAuthI18nDemo = function() {
     // Elements
     var menu;
 	
@@ -363,7 +363,7 @@ var KTAuthI18nDemo = function() {
         for (var label in translationStrings) {
 			if (translationStrings.hasOwnProperty(label)) {
 				if (translationStrings[label][lang]) {
-					let labelElement = document.querySelector('[data-kt-translate=' + label + ']');
+					let labelElement = document.querySelector('[data-beave-translate=' + label + ']');
 
 					if (labelElement !== null) {
 						if (labelElement.tagName === "INPUT") {
@@ -378,32 +378,32 @@ var KTAuthI18nDemo = function() {
     }
 
 	var setLanguage = function(lang) {
-		const selectedLang = menu.querySelector('[data-kt-lang="' + lang + '"]');
+		const selectedLang = menu.querySelector('[data-beave-lang="' + lang + '"]');
 
 		if (selectedLang !== null) {
-			const currentLangName = document.querySelector('[data-kt-element="current-lang-name"]'); 
-			const currentLangFlag = document.querySelector('[data-kt-element="current-lang-flag"]'); 
+			const currentLangName = document.querySelector('[data-beave-element="current-lang-name"]'); 
+			const currentLangFlag = document.querySelector('[data-beave-element="current-lang-flag"]'); 
 
-			const selectedLangName = selectedLang.querySelector('[data-kt-element="lang-name"]');
-			const selectedLangFlag = selectedLang.querySelector('[data-kt-element="lang-flag"]');
+			const selectedLangName = selectedLang.querySelector('[data-beave-element="lang-name"]');
+			const selectedLangFlag = selectedLang.querySelector('[data-beave-element="lang-flag"]');
 
 			currentLangName.innerText = selectedLangName.innerText;
 			currentLangFlag.setAttribute("src", selectedLangFlag.getAttribute("src"));
 
-			localStorage.setItem("kt_auth_lang", lang);
+			localStorage.setItem("beave_auth_lang", lang);
 		}
 	}
 
 	var init = function() {
-		if ( localStorage.getItem("kt_auth_lang") !== null ) {
-			let lang = localStorage.getItem("kt_auth_lang");
+		if ( localStorage.getItem("beave_auth_lang") !== null ) {
+			let lang = localStorage.getItem("beave_auth_lang");
 			
 			setLanguage(lang);
 			translate(lang);
 		}
 
-		menuObj.on("kt.menu.link.click", function(element) {
-			let lang = element.getAttribute("data-kt-lang");
+		menuObj.on("beave.menu.link.click", function(element) {
+			let lang = element.getAttribute("data-beave-lang");
 
 			setLanguage(lang);
 			translate(lang);
@@ -420,7 +420,7 @@ var KTAuthI18nDemo = function() {
 				return;
 			} 
 
-			menuObj = KTMenu.getInstance(menu);
+			menuObj = BEAVEMenu.getInstance(menu);
             
             init();
         }
@@ -428,6 +428,6 @@ var KTAuthI18nDemo = function() {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTAuthI18nDemo.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEAuthI18nDemo.init();
 });

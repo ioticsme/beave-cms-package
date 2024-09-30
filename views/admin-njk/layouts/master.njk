@@ -11,17 +11,18 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
 		{% block csslib %}{% endblock %}
 		<link href="/cms-static/admin/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
 		<link href="/cms-static/admin/assets/css/style.bundle.css" rel="stylesheet" type="text/css">
 		{# //- <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"> #}
 	</head>
 
-	{# //- body#kt_app_body.app-default(data-kt-name="metronic" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true") #}
-	<body id="kt_app_body" class="app-default" data-kt-name="metronic" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true">
+	{# //- body#kt_app_body.app-default(data-beave-name="metronic" data-beave-app-layout="dark-sidebar" data-beave-app-header-fixed="true" data-beave-app-sidebar-enabled="true" data-beave-app-sidebar-fixed="true" data-beave-app-sidebar-hoverable="true" data-beave-app-sidebar-push-header="true" data-beave-app-sidebar-push-toolbar="true" data-beave-app-sidebar-push-footer="true" data-beave-app-toolbar-enabled="true") #}
+	<body id="beave_app_body" class="app-default" data-beave-name="metronic" data-beave-app-layout="dark-sidebar" data-beave-app-header-fixed="true" data-beave-app-sidebar-enabled="true" data-beave-app-sidebar-fixed="true" data-beave-app-sidebar-hoverable="true" data-beave-app-sidebar-push-header="true" data-beave-app-sidebar-push-toolbar="true" data-beave-app-sidebar-push-footer="true" data-beave-app-toolbar-enabled="true">
 		{# <script type="text/javascript">
 			//- if (document.documentElement) {
 			//- 	const defaultThemeMode = "light";
-			//- 	const name = document.body.getAttribute("data-kt-name");
-			//- 	let themeMode = localStorage.getItem("kt_" + ( name !== null ? name + "_" : "" ) + "theme_mode_value");
+			//- 	const name = document.body.getAttribute("data-beave-name");
+			//- 	let themeMode = localStorage.getItem("beave_" + ( name !== null ? name + "_" : "" ) + "theme_mode_value");
 			//- 	if ( themeMode === null ) {
 			//- 		if ( defaultThemeMode === "system" ) {
 			//- 			themeMode = window.matchMedia("(prefers-color-scheme: light)").matches ? "dark" : "light";
@@ -34,12 +35,12 @@
 			//- }
 		</script> #}
 		{# //- #kt_app_root.d-flex.flex-column.flex-root.app-root #}
-		<div id="kt_app_root" class="flex flex-column flex-root app-root">
-			<div class="app-page flex-column flex-column-fluid hidden" id="kt_app_page">
-				<div id="kt_app_header" class="app-header">
+		<div id="beave_app_root" class="flex flex-column flex-root app-root">
+			<div class="app-page flex-column flex-column-fluid hidden" id="beave_app_page">
+				<div id="beave_app_header" class="app-header">
 					<div class="app-container container-fluid d-flex align-items-stretch justify-content-between">
 						<div class="d-flex align-items-center d-lg-none ms-n2 me-2" title="Show sidebar menu">
-							<div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="kt_app_sidebar_mobile_toggle">
+							<div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="beave_app_sidebar_mobile_toggle">
 								<span class="svg-icon svg-icon-1">
 									<svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z" fill="currentColor"></path>
@@ -52,7 +53,7 @@
 							<a class="d-lg-none" href="/admin/dashboard"><img class="h-30px" alt="Logo aa" src=`#`></a>
 						</div>
 
-						<div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="kt_app_header_wrapper">
+						<div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="beave_app_header_wrapper">
 							{# //- BEGIN:: Top Navigation #}
 							{% include '../partials/_top-nav.njk' %}
 							{# //- END:: Top Navigation #}
@@ -67,9 +68,9 @@
 							</div>
 
 							<div class="app-navbar-item align-items-stretch ms-1 ms-lg-3">
-								<div class="app-navbar-item ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
-									<div class="cursor-pointer symbol symbol-35px symbol-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end"><img src="/cms-static/admin/assets/media/avatars/blank.png" alt="user"></div>
-									<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-semibold py-4 fs-6 w-275px" data-kt-menu="true">
+								<div class="app-navbar-item ms-1 ms-lg-3" id="beave_header_user_menu_toggle">
+									<div class="cursor-pointer symbol symbol-35px symbol-md-40px" data-beave-menu-trigger="click" data-beave-menu-attach="parent" data-beave-menu-placement="bottom-end"><img src="/cms-static/admin/assets/media/avatars/blank.png" alt="user"></div>
+									<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-semibold py-4 fs-6 w-275px" data-beave-menu="true">
 										<div class="menu-item px-3">
 											<div class="menu-content d-flex align-items-center px-3">
 												<div class="symbol symbol-50px me-5">
@@ -93,7 +94,7 @@
 									</div>
 								</div>
 								<div class="app-navbar-item d-lg-none ms-2 me-n3" title="Show header menu">
-									<div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="kt_app_header_menu_toggle">
+									<div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="beave_app_header_menu_toggle">
 										<span class="svg-icon svg-icon-1">
 											<svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 												<path d="M13 11H3C2.4 11 2 10.6 2 10V9C2 8.4 2.4 8 3 8H13C13.6 8 14 8.4 14 9V10C14 10.6 13.6 11 13 11ZM22 5V4C22 3.4 21.6 3 21 3H3C2.4 3 2 3.4 2 4V5C2 5.6 2.4 6 3 6H21C21.6 6 22 5.6 22 5Z" fill="currentColor"></path>
@@ -108,20 +109,20 @@
 				</div>
 			</div>
 
-			<div class="flex flex-1 flex-row flex-row-fluid" id="kt_app_wrapper">
-				<div class="flex flex-column w-[230px] bg-slate-700 overflow-hidden h-screen fixed pb-20">
+			<div class="flex flex-1 flex-row flex-row-fluid" id="beave_app_wrapper">
+				<div class="flex flex-column w-[230px] bg-slate-700 overflow-hidden h-screen fixed pb-20" id="main-nav">
 					{# //- BEGIN:: Main Navigation #}
 					{% include '../partials/_side-nav.njk' %}
 					{# //- END:: Main Navigation #}
 				</div>
 
-				<div class="app-main flex-column flex-row-fluid" id="kt_app_main" style="padding-left: 230px">
+				<div class="app-main flex-column flex-row-fluid" id="beave_app_main" style="padding-left: 230px">
 
 					{# //- BEGIN::LOADING MAIN PAGE CONTENT PART #}
 					{% block content %}{% endblock %}
 					{# //- END::LOADING MAIN PAGE CONTENT PART #}
 
-					<div class="app-footer" id="kt_app_footer">
+					<div class="app-footer" id="beave_app_footer">
 						<div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
 							<div class="text-dark order-2 order-md-1">
 								<span class="text-muted fw-semibold me-1">2024&copy;</span></div>
@@ -129,7 +130,7 @@
 					</div>
 				</div>
 
-				<div class="scrolltop" id="kt_scrolltop" data-kt-scrolltop="true">
+				<div class="scrolltop" id="beave_scrolltop" data-beave-scrolltop="true">
 					<span class="svg-icon">
 						<svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="currentColor"></rect>
@@ -142,7 +143,7 @@
 			</div>
 		</div>
 
-		<div class="modal fade" id="kt_modal_media_list" tabindex="-1" aria-hidden="true">
+		<div class="modal fade" id="beave_modal_media_list" tabindex="-1" aria-hidden="true">
 			<input type="hidden" id="field_id"/>
 			<div class="modal-dialog modal-dialog-centered mw-1000px">
 				<div class="modal-content">
@@ -166,7 +167,7 @@
 								</ul>
 
 								<div class="tab-content" id="media-management-panel">
-									<div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel">
+									<div class="tab-pane fade show active" id="beave_tab_pane_1" role="tabpanel">
 										<div class="row">
 											<div class="col-12 col-md-8 my-3">
 												<input class="form-control form-control-sm form-control-solid" id="search-image-input-modal" placeholder="Search images with name" />
@@ -197,7 +198,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel">
+									<div class="tab-pane fade" id="beave_tab_pane_2" role="tabpanel">
 										{% include '../partials/_media-upload-DZ-form.njk' %}
 									</div>
 								</div>
@@ -226,6 +227,7 @@
 				})
 		</script>
 		<script src='/cms-static/admin/assets/plugins/global/plugins.bundle.js'></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 		<script src='/cms-static/admin/assets/js/scripts.bundle.js'></script>
 		<script src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'></script>
 		<script src='https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js'></script>

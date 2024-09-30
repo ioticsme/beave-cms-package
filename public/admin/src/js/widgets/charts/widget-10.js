@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget10 = function () {
+var BEAVEChartsWidget10 = function () {
     var chart1 = {
         self: null,
         rendered: false
@@ -30,9 +30,9 @@ var KTChartsWidget10 = function () {
             return;
         }
         
-        var height = parseInt(KTUtil.css(element, 'height'));
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-900');
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');    
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-900');
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');    
 
         var options = {
             series: [{
@@ -87,7 +87,7 @@ var KTChartsWidget10 = function () {
                 },
                 labels: {
                     style: {
-                        colors: KTUtil.getCssVariableValue('--bs-gray-500'),
+                        colors: BEAVEUtil.getCssVariableValue('--bs-gray-500'),
                         fontSize: '13px'
                     }                    
                 },
@@ -103,7 +103,7 @@ var KTChartsWidget10 = function () {
             yaxis: {
                 labels: {
                     style: {
-                        colors: KTUtil.getCssVariableValue('--bs-gray-500'),
+                        colors: BEAVEUtil.getCssVariableValue('--bs-gray-500'),
                         fontSize: '13px'
                     },
                     formatter: function (val) {
@@ -145,7 +145,7 @@ var KTChartsWidget10 = function () {
                     }
                 }
             },
-            colors: [KTUtil.getCssVariableValue('--bs-primary'), KTUtil.getCssVariableValue('--bs-primary-light')],
+            colors: [BEAVEUtil.getCssVariableValue('--bs-primary'), BEAVEUtil.getCssVariableValue('--bs-primary-light')],
             grid: {
                 borderColor: borderColor,
                 strokeDashArray: 4,
@@ -193,7 +193,7 @@ var KTChartsWidget10 = function () {
 
 
             // Update chart on theme mode change
-            KTThemeMode.on("kt.thememode.change", function() {
+            BEAVEThemeMode.on("beave.thememode.change", function() {
                 if (chart1.rendered) {
                     chart1.self.destroy();
                 }
@@ -221,12 +221,12 @@ var KTChartsWidget10 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTChartsWidget10;
+    module.exports = BEAVEChartsWidget10;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTChartsWidget10.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEChartsWidget10.init();
 });
 
 

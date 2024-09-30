@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget42 = function () {
+var BEAVEChartsWidget42 = function () {
     var chart = {
         self: null,
         rendered: false
@@ -9,17 +9,17 @@ var KTChartsWidget42 = function () {
 
     // Private methods
     var initChart = function(chart) {
-        var element = document.getElementById("kt_charts_widget_42");
+        var element = document.getElementById("beave_charts_widget_42");
 
         if (!element) {
             return;
         }
         
-        var height = parseInt(KTUtil.css(element, 'height'));
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');
-        var baseprimaryColor = KTUtil.getCssVariableValue('--bs-primary');       
-        var basesuccessColor = KTUtil.getCssVariableValue('--bs-success');        
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
+        var baseprimaryColor = BEAVEUtil.getCssVariableValue('--bs-primary');       
+        var basesuccessColor = BEAVEUtil.getCssVariableValue('--bs-success');        
 
         var options = {
             series: [{
@@ -151,7 +151,7 @@ var KTChartsWidget42 = function () {
             initChart(chart);
 
             // Update chart on theme mode change
-            KTThemeMode.on("kt.thememode.change", function() {                
+            BEAVEThemeMode.on("beave.thememode.change", function() {                
                 if (chart.rendered) {
                     chart.self.destroy();
                 }
@@ -164,10 +164,10 @@ var KTChartsWidget42 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTChartsWidget42;
+    module.exports = BEAVEChartsWidget42;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTChartsWidget42.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEChartsWidget42.init();
 }); 

@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTPosSystem = function () {
+var BEAVEPosSystem = function () {
 	var form;
 
     var moneyFormat = wNumb({
@@ -12,7 +12,7 @@ var KTPosSystem = function () {
     });
 
 	var calculateTotals = function() {
-        var items = [].slice.call(form.querySelectorAll('[data-kt-pos-element="item-total"]'));
+        var items = [].slice.call(form.querySelectorAll('[data-beave-pos-element="item-total"]'));
         var total = 0;
         var tax = 12;
         var discount = 8;
@@ -26,23 +26,23 @@ var KTPosSystem = function () {
         grantTotal -= discount;
         grantTotal += tax * 8 / 100;
 
-        form.querySelector('[data-kt-pos-element="total"]').innerHTML = moneyFormat.to(total); 
-        form.querySelector('[data-kt-pos-element="grant-total"]').innerHTML = moneyFormat.to(grantTotal); 
+        form.querySelector('[data-beave-pos-element="total"]').innerHTML = moneyFormat.to(total); 
+        form.querySelector('[data-beave-pos-element="grant-total"]').innerHTML = moneyFormat.to(grantTotal); 
     }
 
 	var handleQuantity = function() {
-		var dialers = [].slice.call(form.querySelectorAll('[data-kt-pos-element="item"] [data-kt-dialer="true"]'));
+		var dialers = [].slice.call(form.querySelectorAll('[data-beave-pos-element="item"] [data-beave-dialer="true"]'));
 
         dialers.map(function (dialer) {
-            var dialerObject = KTDialer.getInstance(dialer);
+            var dialerObject = BEAVEDialer.getInstance(dialer);
 
-            dialerObject.on('kt.dialer.changed', function(){
+            dialerObject.on('beave.dialer.changed', function(){
                 var quantity = parseInt(dialerObject.getValue());
-                var item = dialerObject.getElement().closest('[data-kt-pos-element="item"]');
-                var value = parseInt(item.getAttribute("data-kt-pos-item-price"));
+                var item = dialerObject.getElement().closest('[data-beave-pos-element="item"]');
+                var value = parseInt(item.getAttribute("data-beave-pos-item-price"));
                 var total = quantity * value;
 
-                item.querySelector('[data-kt-pos-element="item-total"]').innerHTML = moneyFormat.to(total);
+                item.querySelector('[data-beave-pos-element="item-total"]').innerHTML = moneyFormat.to(total);
 
                 calculateTotals();
             });    
@@ -61,6 +61,6 @@ var KTPosSystem = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-	KTPosSystem.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+	BEAVEPosSystem.init();
 });

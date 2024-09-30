@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalAddPayment = function () {
+var BEAVEModalAddPayment = function () {
     var element;
     var submitButton;
     var cancelButton;
@@ -70,7 +70,7 @@ var KTModalAddPayment = function () {
 
                     if (status == 'Valid') {
                         // Show loading indication
-                        submitButton.setAttribute('data-kt-indicator', 'on');
+                        submitButton.setAttribute('data-beave-indicator', 'on');
 
                         // Disable submit button whilst loading
                         submitButton.disabled = true;
@@ -78,7 +78,7 @@ var KTModalAddPayment = function () {
                         // Simulate form submission
                         setTimeout(function () {
                             // Simulate form submission
-                            submitButton.removeAttribute('data-kt-indicator');
+                            submitButton.removeAttribute('data-beave-indicator');
 
                             // Show popup confirmation 
                             Swal.fire({
@@ -202,6 +202,6 @@ var KTModalAddPayment = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTModalAddPayment.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEModalAddPayment.init();
 });

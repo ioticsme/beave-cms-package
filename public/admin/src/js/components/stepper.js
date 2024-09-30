@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTStepper = function(element, options) {
+var BEAVEStepper = function(element, options) {
     //////////////////////////////
     // ** Private variables  ** //
     //////////////////////////////
@@ -25,27 +25,27 @@ var KTStepper = function(element, options) {
     ////////////////////////////
 
     var _construct = function() {
-        if ( KTUtil.data(element).has('stepper') === true ) {
-            the = KTUtil.data(element).get('stepper');
+        if ( BEAVEUtil.data(element).has('stepper') === true ) {
+            the = BEAVEUtil.data(element).get('stepper');
         } else {
             _init();
         }
     }
 
     var _init = function() {
-        the.options = KTUtil.deepExtend({}, defaultOptions, options);
-        the.uid = KTUtil.getUniqueId('stepper');
+        the.options = BEAVEUtil.deepExtend({}, defaultOptions, options);
+        the.uid = BEAVEUtil.getUniqueId('stepper');
 
         the.element = element;
 
         // Set initialized
-        the.element.setAttribute('data-kt-stepper', 'true');
+        the.element.setAttribute('data-beave-stepper', 'true');
 
         // Elements
-        the.steps = KTUtil.findAll(the.element, '[data-kt-stepper-element="nav"]');
-        the.btnNext = KTUtil.find(the.element, '[data-kt-stepper-action="next"]');
-        the.btnPrevious = KTUtil.find(the.element, '[data-kt-stepper-action="previous"]');
-        the.btnSubmit = KTUtil.find(the.element, '[data-kt-stepper-action="submit"]');
+        the.steps = BEAVEUtil.findAll(the.element, '[data-beave-stepper-element="nav"]');
+        the.btnNext = BEAVEUtil.find(the.element, '[data-beave-stepper-action="next"]');
+        the.btnPrevious = BEAVEUtil.find(the.element, '[data-beave-stepper-action="previous"]');
+        the.btnSubmit = BEAVEUtil.find(the.element, '[data-beave-stepper-action="submit"]');
 
         // Variables
         the.totalStepsNumber = the.steps.length;
@@ -62,13 +62,13 @@ var KTStepper = function(element, options) {
         the.nextListener = function(e) {
             e.preventDefault();
 
-            KTEventHandler.trigger(the.element, 'kt.stepper.next', the);
+            BEAVEEventHandler.trigger(the.element, 'beave.stepper.next', the);
         };
 
         the.previousListener = function(e) {
             e.preventDefault();
 
-            KTEventHandler.trigger(the.element, 'kt.stepper.previous', the);
+            BEAVEEventHandler.trigger(the.element, 'beave.stepper.previous', the);
         };
 
         the.stepListener = function(e) {
@@ -79,7 +79,7 @@ var KTStepper = function(element, options) {
                     if ( the.steps[i] === this ) {
                         the.clickedStepIndex = i + 1;
 
-                        KTEventHandler.trigger(the.element, 'kt.stepper.click', the);
+                        BEAVEEventHandler.trigger(the.element, 'beave.stepper.click', the);
 
                         return;
                     }
@@ -88,19 +88,19 @@ var KTStepper = function(element, options) {
         };
 
         // Event Handlers
-        KTUtil.addEvent(the.btnNext, 'click', the.nextListener);
+        BEAVEUtil.addEvent(the.btnNext, 'click', the.nextListener);
 
-        KTUtil.addEvent(the.btnPrevious, 'click', the.previousListener);
+        BEAVEUtil.addEvent(the.btnPrevious, 'click', the.previousListener);
 
-        the.stepListenerId = KTUtil.on(the.element, '[data-kt-stepper-action="step"]', 'click', the.stepListener);
+        the.stepListenerId = BEAVEUtil.on(the.element, '[data-beave-stepper-action="step"]', 'click', the.stepListener);
 
         // Bind Instance
-        KTUtil.data(the.element).set('stepper', the);
+        BEAVEUtil.data(the.element).set('stepper', the);
     }
 
     var _goTo = function(index) {
         // Trigger "change" event
-        KTEventHandler.trigger(the.element, 'kt.stepper.change', the);
+        BEAVEEventHandler.trigger(the.element, 'beave.stepper.change', the);
 
         // Skip if this step is already shown
         if ( index === the.currentStepIndex || index > the.totalStepsNumber || index < 0 ) {
@@ -118,7 +118,7 @@ var KTStepper = function(element, options) {
         _refreshUI();
 
         // Trigger "changed" event
-        KTEventHandler.trigger(the.element, 'kt.stepper.changed', the);
+        BEAVEEventHandler.trigger(the.element, 'beave.stepper.changed', the);
 
         return the;
     }
@@ -151,38 +151,38 @@ var KTStepper = function(element, options) {
         }
 
         // Set state class
-        KTUtil.removeClass(the.element, 'last');
-        KTUtil.removeClass(the.element, 'first');
-        KTUtil.removeClass(the.element, 'between');
+        BEAVEUtil.removeClass(the.element, 'last');
+        BEAVEUtil.removeClass(the.element, 'first');
+        BEAVEUtil.removeClass(the.element, 'between');
 
-        KTUtil.addClass(the.element, state);
+        BEAVEUtil.addClass(the.element, state);
 
         // Step Items
-        var elements = KTUtil.findAll(the.element, '[data-kt-stepper-element="nav"], [data-kt-stepper-element="content"], [data-kt-stepper-element="info"]');
+        var elements = BEAVEUtil.findAll(the.element, '[data-beave-stepper-element="nav"], [data-beave-stepper-element="content"], [data-beave-stepper-element="info"]');
 
         if ( elements && elements.length > 0 ) {
             for (var i = 0, len = elements.length; i < len; i++) {
                 var element = elements[i];
-                var index = KTUtil.index(element) + 1;
+                var index = BEAVEUtil.index(element) + 1;
 
-                KTUtil.removeClass(element, 'current');
-                KTUtil.removeClass(element, 'completed');
-                KTUtil.removeClass(element, 'pending');
+                BEAVEUtil.removeClass(element, 'current');
+                BEAVEUtil.removeClass(element, 'completed');
+                BEAVEUtil.removeClass(element, 'pending');
 
                 if ( index == the.currentStepIndex ) {
-                    KTUtil.addClass(element, 'current');
+                    BEAVEUtil.addClass(element, 'current');
 
-                    if ( the.options.animation !== false && element.getAttribute('data-kt-stepper-element') == 'content' ) {
-                        KTUtil.css(element, 'animationDuration', the.options.animationSpeed);
+                    if ( the.options.animation !== false && element.getAttribute('data-beave-stepper-element') == 'content' ) {
+                        BEAVEUtil.css(element, 'animationDuration', the.options.animationSpeed);
 
                         var animation = _getStepDirection(the.passedStepIndex) === 'previous' ?  the.options.animationPreviousClass : the.options.animationNextClass;
-                        KTUtil.animateClass(element, animation);
+                        BEAVEUtil.animateClass(element, animation);
                     }
                 } else {
                     if ( index < the.currentStepIndex ) {
-                        KTUtil.addClass(element, 'completed');
+                        BEAVEUtil.addClass(element, 'completed');
                     } else {
-                        KTUtil.addClass(element, 'pending');
+                        BEAVEUtil.addClass(element, 'pending');
                     }
                 }
             }
@@ -238,7 +238,7 @@ var KTStepper = function(element, options) {
     }
 
     var _getStepContent = function(index) {
-        var content = KTUtil.findAll(the.element, '[data-kt-stepper-element="content"]');
+        var content = BEAVEUtil.findAll(the.element, '[data-beave-stepper-element="content"]');
 
         if ( content[index-1] ) {
             return content[index-1];
@@ -249,13 +249,13 @@ var KTStepper = function(element, options) {
 
     var _destroy = function() {
         // Event Handlers
-        KTUtil.removeEvent(the.btnNext, 'click', the.nextListener);
+        BEAVEUtil.removeEvent(the.btnNext, 'click', the.nextListener);
 
-        KTUtil.removeEvent(the.btnPrevious, 'click', the.previousListener);
+        BEAVEUtil.removeEvent(the.btnPrevious, 'click', the.previousListener);
 
-        KTUtil.off(the.element, 'click', the.stepListenerId);
+        BEAVEUtil.off(the.element, 'click', the.stepListenerId);
 
-        KTUtil.data(the.element).remove('stepper');
+        BEAVEUtil.data(the.element).remove('stepper');
     }
 
     // Construct Class
@@ -316,26 +316,26 @@ var KTStepper = function(element, options) {
 
     // Event API
     the.on = function(name, handler) {
-        return KTEventHandler.on(the.element, name, handler);
+        return BEAVEEventHandler.on(the.element, name, handler);
     }
 
     the.one = function(name, handler) {
-        return KTEventHandler.one(the.element, name, handler);
+        return BEAVEEventHandler.one(the.element, name, handler);
     }
 
     the.off = function(name, handlerId) {
-        return KTEventHandler.off(the.element, name, handlerId);
+        return BEAVEEventHandler.off(the.element, name, handlerId);
     }
 
     the.trigger = function(name, event) {
-        return KTEventHandler.trigger(the.element, name, event, the, event);
+        return BEAVEEventHandler.trigger(the.element, name, event, the, event);
     }
 };
 
 // Static methods
-KTStepper.getInstance = function(element) {
-    if ( element !== null && KTUtil.data(element).has('stepper') ) {
-        return KTUtil.data(element).get('stepper');
+BEAVEStepper.getInstance = function(element) {
+    if ( element !== null && BEAVEUtil.data(element).has('stepper') ) {
+        return BEAVEUtil.data(element).get('stepper');
     } else {
         return null;
     }
@@ -343,5 +343,5 @@ KTStepper.getInstance = function(element) {
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = KTStepper;
+    module.exports = BEAVEStepper;
 }

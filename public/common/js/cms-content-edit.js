@@ -104,7 +104,7 @@ document.querySelectorAll('.content_wysiwyg').forEach(function (e) {
 })
 
 function initDatePicker() {
-    document.querySelectorAll('.kt_daterangepicker input').forEach((picker) => {
+    document.querySelectorAll('.beave_daterangepicker input').forEach((picker) => {
         const options = {
             altFormat: 'd F, Y',
             enableTime: picker.getAttribute('data-hastime') || false,

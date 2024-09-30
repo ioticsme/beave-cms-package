@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTCareersApply = function () {
+var BEAVECareersApply = function () {
 	var submitButton;
 	var validator;
 	var form;
@@ -112,13 +112,13 @@ var KTCareersApply = function () {
 					console.log('validated!');
 
 					if (status == 'Valid') {
-						submitButton.setAttribute('data-kt-indicator', 'on');
+						submitButton.setAttribute('data-beave-indicator', 'on');
 
 						// Disable button to avoid multiple click 
 						submitButton.disabled = true;
 
 						setTimeout(function() {
-							submitButton.removeAttribute('data-kt-indicator');
+							submitButton.removeAttribute('data-beave-indicator');
 
 							// Enable button
 							submitButton.disabled = false;
@@ -152,7 +152,7 @@ var KTCareersApply = function () {
 								confirmButton: "btn btn-primary"
 							}
 						}).then(function (result) {
-							KTUtil.scrollTop();
+							BEAVEUtil.scrollTop();
 						});
 					}
 				});
@@ -165,7 +165,7 @@ var KTCareersApply = function () {
 		init: function () {
 			// Elements
 			form = document.querySelector('#kt_careers_form');
-			submitButton = document.getElementById('kt_careers_submit_button');
+			submitButton = document.getElementById('beave_careers_submit_button');
 
 			initForm();
 			handleForm();
@@ -174,6 +174,6 @@ var KTCareersApply = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-	KTCareersApply.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+	BEAVECareersApply.init();
 });

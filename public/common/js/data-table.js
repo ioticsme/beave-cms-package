@@ -1,5 +1,5 @@
 'use strict'
-var KTSubscriptionsList = (function () {
+var BEAVESubscriptionsList = (function () {
     var t,
         e,
         n,
@@ -7,7 +7,7 @@ var KTSubscriptionsList = (function () {
         c,
         r = function () {
             t.querySelectorAll(
-                '[data-kt-subscriptions-table-filter="delete_row"]'
+                '[data-beave-subscriptions-table-filter="delete_row"]'
             ).forEach((t) => {
                 t.addEventListener('click', function (t) {
                     t.preventDefault()
@@ -58,16 +58,16 @@ var KTSubscriptionsList = (function () {
         l = () => {
             const r = t.querySelectorAll('[type="checkbox"]')
             ;(n = document.querySelector(
-                '[data-kt-subscription-table-toolbar="base"]'
+                '[data-beave-subscription-table-toolbar="base"]'
             )),
                 (o = document.querySelector(
-                    '[data-kt-subscription-table-toolbar="selected"]'
+                    '[data-beave-subscription-table-toolbar="selected"]'
                 )),
                 (c = document.querySelector(
-                    '[data-kt-subscription-table-select="selected_count"]'
+                    '[data-beave-subscription-table-select="selected_count"]'
                 ))
             const a = document.querySelector(
-                '[data-kt-subscription-table-select="delete_selected"]'
+                '[data-beave-subscription-table-select="delete_selected"]'
             )
             r.forEach((t) => {
                 t.addEventListener('click', function () {
@@ -79,7 +79,7 @@ var KTSubscriptionsList = (function () {
         }
     return {
         init: function () {
-            ;(t = document.getElementById('kt_subscriptions_table')) &&
+            ;(t = document.getElementById('beave_subscriptions_table')) &&
                 (t.querySelectorAll('tbody tr').forEach((t) => {
                     const e = t.querySelectorAll('td'),
                         n = moment(e[5].innerHTML, 'DD MMM YYYY, LT').format()
@@ -101,7 +101,7 @@ var KTSubscriptionsList = (function () {
                 l(),
                 document
                     .querySelector(
-                        '[data-kt-subscription-table-filter="search"]'
+                        '[data-beave-subscription-table-filter="search"]'
                     )
                     .addEventListener('keyup', function (t) {
                         e.search(t.target.value).draw()
@@ -109,13 +109,13 @@ var KTSubscriptionsList = (function () {
                 r(),
                 (function () {
                     const t = document.querySelector(
-                            '[data-kt-subscription-table-filter="form"]'
+                            '[data-beave-subscription-table-filter="form"]'
                         ),
                         n = t.querySelector(
-                            '[data-kt-subscription-table-filter="filter"]'
+                            '[data-beave-subscription-table-filter="filter"]'
                         ),
                         o = t.querySelector(
-                            '[data-kt-subscription-table-filter="reset"]'
+                            '[data-beave-subscription-table-filter="reset"]'
                         ),
                         c = t.querySelectorAll('select')
                     n.addEventListener('click', function () {
@@ -137,6 +137,6 @@ var KTSubscriptionsList = (function () {
         },
     }
 })()
-KTUtil.onDOMContentLoaded(function () {
-    KTSubscriptionsList.init()
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVESubscriptionsList.init()
 })

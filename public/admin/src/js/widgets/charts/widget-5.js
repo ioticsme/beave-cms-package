@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget5 = function () {
+var BEAVEChartsWidget5 = function () {
     var chart = {
         self: null,
         rendered: false
@@ -9,13 +9,13 @@ var KTChartsWidget5 = function () {
 
     // Private methods
     var initChart = function(chart) {
-        var element = document.getElementById("kt_charts_widget_5"); 
+        var element = document.getElementById("beave_charts_widget_5"); 
 
         if (!element) {
             return;
         }
         
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
         
         var options = {
             series: [{
@@ -51,7 +51,7 @@ var KTChartsWidget5 = function () {
                       return val + "K"
                     },
                     style: {
-                        colors: KTUtil.getCssVariableValue('--bs-gray-400'),
+                        colors: BEAVEUtil.getCssVariableValue('--bs-gray-400'),
                         fontSize: '14px',
                         fontWeight: '600',
                         align: 'left'                                              
@@ -64,7 +64,7 @@ var KTChartsWidget5 = function () {
             yaxis: {
                 labels: {                   
                     style: {
-                        colors: KTUtil.getCssVariableValue('--bs-gray-800'),
+                        colors: BEAVEUtil.getCssVariableValue('--bs-gray-800'),
                         fontSize: '14px',
                         fontWeight: '600'                                                                 
                     },
@@ -103,7 +103,7 @@ var KTChartsWidget5 = function () {
             initChart(chart);
 
             // Update chart on theme mode change
-            KTThemeMode.on("kt.thememode.change", function() {                
+            BEAVEThemeMode.on("beave.thememode.change", function() {                
                 if (chart.rendered) {
                     chart.self.destroy();
                 }
@@ -116,12 +116,12 @@ var KTChartsWidget5 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTChartsWidget5;
+    module.exports = BEAVEChartsWidget5;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTChartsWidget5.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEChartsWidget5.init();
 });
 
 

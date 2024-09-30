@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget11 = function () {
+var BEAVEChartsWidget11 = function () {
     var chart1 = {
         self: null,
         rendered: false
@@ -20,15 +20,15 @@ var KTChartsWidget11 = function () {
     // Private methods
     var initChart = function(chart, toggle, chartSelector, data, initByDefault) {
         var element = document.querySelector(chartSelector);  
-        var height = parseInt(KTUtil.css(element, 'height'));
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
 
         if (!element) {
             return;
         }        
         
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');
-        var baseColor = KTUtil.getCssVariableValue('--bs-success');         
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
+        var baseColor = BEAVEUtil.getCssVariableValue('--bs-success');         
 
         var options = {
             series: [{
@@ -190,7 +190,7 @@ var KTChartsWidget11 = function () {
             initChart(chart3, '#kt_charts_widget_11_tab_3', '#kt_charts_widget_11_chart_3', chart3Data, true);
            
             // Update chart on theme mode change
-            KTThemeMode.on("kt.thememode.change", function() {
+            BEAVEThemeMode.on("beave.thememode.change", function() {
                 if (chart1.rendered) {
                     chart1.self.destroy();
                 }
@@ -213,10 +213,10 @@ var KTChartsWidget11 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTChartsWidget11;
+    module.exports = BEAVEChartsWidget11;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTChartsWidget11.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEChartsWidget11.init();
 });

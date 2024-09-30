@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAppEcommerceSaveCategory = function () {
+var BEAVEAppEcommerceSaveCategory = function () {
 
     // Private functions
 
@@ -88,7 +88,7 @@ var KTAppEcommerceSaveCategory = function () {
     // Init condition select2
     const initConditionsSelect2 = () => {
         // Tnit new repeating condition types
-        const allConditionTypes = document.querySelectorAll('[data-kt-ecommerce-catalog-add-category="condition_type"]');
+        const allConditionTypes = document.querySelectorAll('[data-beave-ecommerce-catalog-add-category="condition_type"]');
         allConditionTypes.forEach(type => {
             if ($(type).hasClass("select2-hidden-accessible")) {
                 return;
@@ -100,7 +100,7 @@ var KTAppEcommerceSaveCategory = function () {
         });
 
         // Tnit new repeating condition equals
-        const allConditionEquals = document.querySelectorAll('[data-kt-ecommerce-catalog-add-category="condition_equals"]');
+        const allConditionEquals = document.querySelectorAll('[data-beave-ecommerce-catalog-add-category="condition_equals"]');
         allConditionEquals.forEach(equal => {
             if ($(equal).hasClass("select2-hidden-accessible")) {
                 return;
@@ -114,8 +114,8 @@ var KTAppEcommerceSaveCategory = function () {
 
     // Category status handler
     const handleStatus = () => {
-        const target = document.getElementById('kt_ecommerce_add_category_status');
-        const select = document.getElementById('kt_ecommerce_add_category_status_select');
+        const target = document.getElementById('beave_ecommerce_add_category_status');
+        const select = document.getElementById('beave_ecommerce_add_category_status_select');
         const statusClasses = ['bg-success', 'bg-warning', 'bg-danger'];
 
         $(select).on('change', function (e) {
@@ -147,7 +147,7 @@ var KTAppEcommerceSaveCategory = function () {
 
 
         // Handle datepicker
-        const datepicker = document.getElementById('kt_ecommerce_add_category_status_datepicker');
+        const datepicker = document.getElementById('beave_ecommerce_add_category_status_datepicker');
 
         // Init flatpickr --- more info: https://flatpickr.js.org/
         $('#kt_ecommerce_add_category_status_datepicker').flatpickr({
@@ -167,7 +167,7 @@ var KTAppEcommerceSaveCategory = function () {
     // Condition type handler
     const handleConditions = () => {
         const allConditions = document.querySelectorAll('[name="method"][type="radio"]');
-        const conditionMatch = document.querySelector('[data-kt-ecommerce-catalog-add-category="auto-options"]');
+        const conditionMatch = document.querySelector('[data-beave-ecommerce-catalog-add-category="auto-options"]');
         allConditions.forEach(radio => {
             radio.addEventListener('change', e => {
                 if (e.target.value === '1') {
@@ -185,8 +185,8 @@ var KTAppEcommerceSaveCategory = function () {
         let validator;
 
         // Get elements
-        const form = document.getElementById('kt_ecommerce_add_category_form');
-        const submitButton = document.getElementById('kt_ecommerce_add_category_submit');
+        const form = document.getElementById('beave_ecommerce_add_category_form');
+        const submitButton = document.getElementById('beave_ecommerce_add_category_submit');
 
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
         validator = FormValidation.formValidation(
@@ -222,13 +222,13 @@ var KTAppEcommerceSaveCategory = function () {
                     console.log('validated!');
 
                     if (status == 'Valid') {
-                        submitButton.setAttribute('data-kt-indicator', 'on');
+                        submitButton.setAttribute('data-beave-indicator', 'on');
 
                         // Disable submit button whilst loading
                         submitButton.disabled = true;
 
                         setTimeout(function () {
-                            submitButton.removeAttribute('data-kt-indicator');
+                            submitButton.removeAttribute('data-beave-indicator');
 
                             Swal.fire({
                                 text: "Form has been successfully submitted!",
@@ -244,7 +244,7 @@ var KTAppEcommerceSaveCategory = function () {
                                     submitButton.disabled = false;
 
                                     // Redirect to customers list page
-                                    window.location = form.getAttribute("data-kt-redirect");
+                                    window.location = form.getAttribute("data-beave-redirect");
                                 }
                             });
                         }, 2000);
@@ -282,6 +282,6 @@ var KTAppEcommerceSaveCategory = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTAppEcommerceSaveCategory.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEAppEcommerceSaveCategory.init();
 });

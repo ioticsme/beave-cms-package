@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalNewTarget = function () {
+var BEAVEModalNewTarget = function () {
 	var submitButton;
 	var cancelButton;
 	var validator;
@@ -106,13 +106,13 @@ var KTModalNewTarget = function () {
 					console.log('validated!');
 
 					if (status == 'Valid') {
-						submitButton.setAttribute('data-kt-indicator', 'on');
+						submitButton.setAttribute('data-beave-indicator', 'on');
 
 						// Disable button to avoid multiple click 
 						submitButton.disabled = true;
 
 						setTimeout(function() {
-							submitButton.removeAttribute('data-kt-indicator');
+							submitButton.removeAttribute('data-beave-indicator');
 
 							// Enable button
 							submitButton.disabled = false;
@@ -196,8 +196,8 @@ var KTModalNewTarget = function () {
 			modal = new bootstrap.Modal(modalEl);
 
 			form = document.querySelector('#kt_modal_new_target_form');
-			submitButton = document.getElementById('kt_modal_new_target_submit');
-			cancelButton = document.getElementById('kt_modal_new_target_cancel');
+			submitButton = document.getElementById('beave_modal_new_target_submit');
+			cancelButton = document.getElementById('beave_modal_new_target_cancel');
 
 			initForm();
 			handleForm();
@@ -206,6 +206,6 @@ var KTModalNewTarget = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-	KTModalNewTarget.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+	BEAVEModalNewTarget.init();
 });

@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTThemeMode = function () {
+var BEAVEThemeMode = function () {
 	var menu;
 	var callbacks = [];
 	var the = this;
@@ -33,17 +33,17 @@ var KTThemeMode = function () {
 		}
 
 		// Read active menu mode value
-		var activeMenuItem = menu ? menu.querySelector('[data-kt-element="mode"][data-kt-value="' + menuMode + '"]') : null;
+		var activeMenuItem = menu ? menu.querySelector('[data-beave-element="mode"][data-beave-value="' + menuMode + '"]') : null;
 
 		// Enable switching state
-		document.documentElement.setAttribute("data-kt-theme-mode-switching", "true");
+		document.documentElement.setAttribute("data-beave-theme-mode-switching", "true");
 		
 		// Set mode to the target document.documentElement
 		document.documentElement.setAttribute("data-bs-theme", mode);
 
 		// Disable switching state
 		setTimeout(function() {
-			document.documentElement.removeAttribute("data-kt-theme-mode-switching");
+			document.documentElement.removeAttribute("data-beave-theme-mode-switching");
 		}, 300);
 		
 		// Store mode value in storage
@@ -56,7 +56,7 @@ var KTThemeMode = function () {
 		}			
 
 		if (mode !== currentMode) {
-			KTEventHandler.trigger(document.documentElement, 'kt.thememode.change', the);
+			BEAVEEventHandler.trigger(document.documentElement, 'beave.thememode.change', the);
 		}		
     }
 
@@ -65,10 +65,10 @@ var KTThemeMode = function () {
 			return null;
 		}
 
-		var menuItem = menu ? menu.querySelector('.active[data-kt-element="mode"]') : null;
+		var menuItem = menu ? menu.querySelector('.active[data-beave-element="mode"]') : null;
 
-		if ( menuItem && menuItem.getAttribute('data-kt-value') ) {
-            return menuItem.getAttribute('data-kt-value');
+		if ( menuItem && menuItem.getAttribute('data-beave-value') ) {
+            return menuItem.getAttribute('data-beave-value');
         } else if ( document.documentElement.hasAttribute("data-bs-theme-mode") ) {
 			return document.documentElement.getAttribute("data-bs-theme-mode")
 		} else if ( localStorage.getItem("data-bs-theme-mode") !== null ) {
@@ -84,17 +84,17 @@ var KTThemeMode = function () {
 
 	var initMode = function() {
 		setMode(getMode(), getMenuMode());
-		KTEventHandler.trigger(document.documentElement, 'kt.thememode.init', the);
+		BEAVEEventHandler.trigger(document.documentElement, 'beave.thememode.init', the);
 	}
 
 	var getActiveMenuItem = function() {
-		return menu.querySelector('[data-kt-element="mode"][data-kt-value="' + getMenuMode() + '"]');
+		return menu.querySelector('[data-beave-element="mode"][data-beave-value="' + getMenuMode() + '"]');
 	}
 
 	var setActiveMenuItem = function(item) {
-		var menuMode = item.getAttribute("data-kt-value");
+		var menuMode = item.getAttribute("data-beave-value");
 		
-		var activeItem = menu.querySelector('.active[data-kt-element="mode"]');
+		var activeItem = menu.querySelector('.active[data-beave-element="mode"]');
 
 		if ( activeItem ) {
 			activeItem.classList.remove("active");
@@ -105,13 +105,13 @@ var KTThemeMode = function () {
 	}
 
 	var handleMenu = function() {
-		var items = [].slice.call(menu.querySelectorAll('[data-kt-element="mode"]'));
+		var items = [].slice.call(menu.querySelectorAll('[data-beave-element="mode"]'));
 
         items.map(function (item) {
             item.addEventListener("click", function(e) {
 				e.preventDefault();
 
-				var menuMode = item.getAttribute("data-kt-value");
+				var menuMode = item.getAttribute("data-beave-value");
 				var mode = menuMode;
 
 				if ( menuMode === "system") {
@@ -125,7 +125,7 @@ var KTThemeMode = function () {
 
     return {
         init: function () {
-			menu = document.querySelector('[data-kt-element="theme-mode-menu"]');
+			menu = document.querySelector('[data-beave-element="theme-mode-menu"]');
 
             initMode();
 
@@ -151,21 +151,21 @@ var KTThemeMode = function () {
         },
 
 		on: function(name, handler) {
-			return KTEventHandler.on(document.documentElement, name, handler);
+			return BEAVEEventHandler.on(document.documentElement, name, handler);
 		},
 
 		off: function(name, handlerId) {
-			return KTEventHandler.off(document.documentElement, name, handlerId);
+			return BEAVEEventHandler.off(document.documentElement, name, handlerId);
 		}
     };
 }();
 
 // Initialize app on document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTThemeMode.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEThemeMode.init();
 });
 
-// Declare KTThemeMode for Webpack support
+// Declare BEAVEThemeMode for Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = KTThemeMode;
+    module.exports = BEAVEThemeMode;
 }

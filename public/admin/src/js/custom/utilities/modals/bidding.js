@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalBidding = function () {
+var BEAVEModalBidding = function () {
     // Shared variables
     var element;
     var form;
@@ -60,7 +60,7 @@ var KTModalBidding = function () {
         );
 
         // Submit button handler
-        const submitButton = form.querySelector('[data-kt-modal-action-type="submit"]');
+        const submitButton = form.querySelector('[data-beave-modal-action-type="submit"]');
         submitButton.addEventListener('click', function (e) {
             // Prevent default button action
             e.preventDefault();
@@ -72,7 +72,7 @@ var KTModalBidding = function () {
 
                     if (status == 'Valid') {
                         // Show loading indication
-                        submitButton.setAttribute('data-kt-indicator', 'on');
+                        submitButton.setAttribute('data-beave-indicator', 'on');
 
                         // Disable button to avoid multiple click 
                         submitButton.disabled = true;
@@ -80,7 +80,7 @@ var KTModalBidding = function () {
                         // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         setTimeout(function () {
                             // Remove loading indication
-                            submitButton.removeAttribute('data-kt-indicator');
+                            submitButton.removeAttribute('data-beave-indicator');
 
                             // Enable button
                             submitButton.disabled = false;
@@ -119,7 +119,7 @@ var KTModalBidding = function () {
 
     // Init Select2 template options
     const initSelect2Templates = () => {
-        const elements = form.querySelectorAll('[data-kt-modal-bidding-type] select');
+        const elements = form.querySelectorAll('[data-beave-modal-bidding-type] select');
 
         if (!elements) {
             return;
@@ -131,7 +131,7 @@ var KTModalBidding = function () {
                 return item.text;
             }
 
-            var url = 'assets/media/' + item.element.getAttribute('data-kt-bidding-modal-option-icon');
+            var url = 'assets/media/' + item.element.getAttribute('data-beave-bidding-modal-option-icon');
             var img = $("<img>", {
                 class: "rounded-circle me-2",
                 width: 26,
@@ -157,7 +157,7 @@ var KTModalBidding = function () {
 
     // Handle bid options
     const handleBidOptions = () => {
-        const options = form.querySelectorAll('[data-kt-modal-bidding="option"]');
+        const options = form.querySelectorAll('[data-beave-modal-bidding="option"]');
         const inputEl = form.querySelector('[name="bid_amount"]');
         options.forEach(option => {
             option.addEventListener('click', e => {
@@ -180,11 +180,11 @@ var KTModalBidding = function () {
 
         const swapCurrency = (target) => {
             console.log(target);
-            const currencies = form.querySelectorAll('[data-kt-modal-bidding-type]');
+            const currencies = form.querySelectorAll('[data-beave-modal-bidding-type]');
             currencies.forEach(currency => {
                 currency.classList.add('d-none');
 
-                if (currency.getAttribute('data-kt-modal-bidding-type') === target.id) {
+                if (currency.getAttribute('data-beave-modal-bidding-type') === target.id) {
                     currency.classList.remove('d-none');
                 }
             });
@@ -193,8 +193,8 @@ var KTModalBidding = function () {
 
     // Handle cancel modal
     const handleCancelAction = () => {
-        const cancelButton = element.querySelector('[data-kt-modal-action-type="cancel"]');
-        const closeButton = element.querySelector('[data-kt-modal-action-type="close"]');
+        const cancelButton = element.querySelector('[data-beave-modal-action-type="cancel"]');
+        const closeButton = element.querySelector('[data-beave-modal-action-type="close"]');
         cancelButton.addEventListener('click', e => {
             cancelAction(e);
         });
@@ -242,7 +242,7 @@ var KTModalBidding = function () {
         init: function () {
             // Elements
             element = document.querySelector('#kt_modal_bidding');
-            form = document.getElementById('kt_modal_bidding_form');
+            form = document.getElementById('beave_modal_bidding_form');
             modal = new bootstrap.Modal(element);
 
             if (!form) {
@@ -259,6 +259,6 @@ var KTModalBidding = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTModalBidding.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEModalBidding.init();
 });

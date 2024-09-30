@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTLandingPage = function () {
+var BEAVELandingPage = function () {
     // Private methods
     var initTyped = function() {
         var typed = new Typed("#kt_landing_hero_text", {
@@ -20,10 +20,10 @@ var KTLandingPage = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTLandingPage;
+    module.exports = BEAVELandingPage;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTLandingPage.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVELandingPage.init();
 });

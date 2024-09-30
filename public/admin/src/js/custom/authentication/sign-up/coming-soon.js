@@ -1,7 +1,7 @@
 "use strict";
 
 // Class Definition
-var KTSignupComingSoon = function() {
+var BEAVESignupComingSoon = function() {
     // Elements
     var form;
     var submitButton;
@@ -54,7 +54,7 @@ var KTSignupComingSoon = function() {
             validator.validate().then(function (status) {
                 if (status == 'Valid') {
                     // Show loading indication
-                    submitButton.setAttribute('data-kt-indicator', 'on');
+                    submitButton.setAttribute('data-beave-indicator', 'on');
 
                     // Disable button to avoid multiple click 
                     submitButton.disabled = true;
@@ -62,7 +62,7 @@ var KTSignupComingSoon = function() {
                     // Simulate ajax request
                     setTimeout(function() {
                         // Hide loading indication
-                        submitButton.removeAttribute('data-kt-indicator');
+                        submitButton.removeAttribute('data-beave-indicator');
 
                         // Enable button
                         submitButton.disabled = false;
@@ -82,7 +82,7 @@ var KTSignupComingSoon = function() {
                                 //form.submit();
 
                                 //form.submit(); // submit form
-                                var redirectUrl = form.getAttribute('data-kt-redirect-url');
+                                var redirectUrl = form.getAttribute('data-beave-redirect-url');
                                 if (redirectUrl) {
                                     location.href = redirectUrl;
                                 }
@@ -159,6 +159,6 @@ var KTSignupComingSoon = function() {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTSignupComingSoon.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVESignupComingSoon.init();
 });

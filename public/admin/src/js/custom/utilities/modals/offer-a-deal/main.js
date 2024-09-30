@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalOfferADeal = function () {
+var BEAVEModalOfferADeal = function () {
     // Private variables
 	var stepper;
 	var stepperObj;
@@ -10,7 +10,7 @@ var KTModalOfferADeal = function () {
 	// Private functions
 	var initStepper = function () {
 		// Initialize Stepper
-		stepperObj = new KTStepper(stepper);
+		stepperObj = new BEAVEStepper(stepper);
 	}
 
 	return {
@@ -37,19 +37,19 @@ var KTModalOfferADeal = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
+BEAVEUtil.onDOMContentLoaded(function () {
 	if (!document.querySelector('#kt_modal_offer_a_deal')) {
 		return;
 	}
 
-    KTModalOfferADeal.init();
-    KTModalOfferADealType.init();
-    KTModalOfferADealDetails.init();
-    KTModalOfferADealFinance.init();
-    KTModalOfferADealComplete.init();
+    BEAVEModalOfferADeal.init();
+    BEAVEModalOfferADealType.init();
+    BEAVEModalOfferADealDetails.init();
+    BEAVEModalOfferADealFinance.init();
+    BEAVEModalOfferADealComplete.init();
 });
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-	window.KTModalOfferADeal = module.exports = KTModalOfferADeal;
+	window.BEAVEModalOfferADeal = module.exports = BEAVEModalOfferADeal;
 }

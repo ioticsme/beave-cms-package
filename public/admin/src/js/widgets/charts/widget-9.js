@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget9 = function () {
+var BEAVEChartsWidget9 = function () {
     var chart = {
         self: null,
         rendered: false
@@ -9,18 +9,18 @@ var KTChartsWidget9 = function () {
 
     // Private methods
     var initChart = function() {
-        var element = document.getElementById("kt_charts_widget_9");
+        var element = document.getElementById("beave_charts_widget_9");
 
         if (!element) {
             return;
         }
 
-        var height = parseInt(KTUtil.css(element, 'height'));
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-400');
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');    
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-400');
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');    
 
-        var baseColor = KTUtil.getCssVariableValue('--bs-gray-200');
-        var secondaryColor = KTUtil.getCssVariableValue('--bs-primary');
+        var baseColor = BEAVEUtil.getCssVariableValue('--bs-gray-200');
+        var secondaryColor = BEAVEUtil.getCssVariableValue('--bs-primary');
 
 
         var options = {
@@ -128,7 +128,7 @@ var KTChartsWidget9 = function () {
                 show: true,
                 position: 'front',
                 stroke: {
-                    color: KTUtil.getCssVariableValue('--bs-border-dashed-color'),
+                    color: BEAVEUtil.getCssVariableValue('--bs-border-dashed-color'),
                     width: 1,
                     dashArray: 0,
                 },
@@ -145,7 +145,7 @@ var KTChartsWidget9 = function () {
             },
             markers: {
                 colors: [baseColor, secondaryColor],
-                strokeColor: [KTUtil.getCssVariableValue('--bs-primary'), KTUtil.getCssVariableValue('--bs-gray-300')],
+                strokeColor: [BEAVEUtil.getCssVariableValue('--bs-primary'), BEAVEUtil.getCssVariableValue('--bs-gray-300')],
                 strokeWidth: 3
             }
         };        
@@ -165,7 +165,7 @@ var KTChartsWidget9 = function () {
             initChart();
 
             // Update chart on theme mode change
-            KTThemeMode.on("kt.thememode.change", function() {                
+            BEAVEThemeMode.on("beave.thememode.change", function() {                
                 if (chart.rendered) {
                     chart.self.destroy();
                 }
@@ -178,12 +178,12 @@ var KTChartsWidget9 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTChartsWidget9;
+    module.exports = BEAVEChartsWidget9;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTChartsWidget9.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEChartsWidget9.init();
 });
 
 

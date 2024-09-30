@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalCustomerSelect = function() {
+var BEAVEModalCustomerSelect = function() {
     // Private variables
     var element;
     var suggestionsElement;
@@ -15,7 +15,7 @@ var KTModalCustomerSelect = function() {
     // Private functions
     var processs = function(search) {
         var timeout = setTimeout(function() {
-            var number = KTUtil.getRandomInt(1, 6);
+            var number = BEAVEUtil.getRandomInt(1, 6);
 
             // Hide recently viewed
             suggestionsElement.classList.add('d-none');
@@ -57,22 +57,22 @@ var KTModalCustomerSelect = function() {
                 return;
             }
 
-            wrapperElement = element.querySelector('[data-kt-search-element="wrapper"]');
-            suggestionsElement = element.querySelector('[data-kt-search-element="suggestions"]');
-            resultsElement = element.querySelector('[data-kt-search-element="results"]');
-            emptyElement = element.querySelector('[data-kt-search-element="empty"]');
+            wrapperElement = element.querySelector('[data-beave-search-element="wrapper"]');
+            suggestionsElement = element.querySelector('[data-beave-search-element="suggestions"]');
+            resultsElement = element.querySelector('[data-beave-search-element="results"]');
+            emptyElement = element.querySelector('[data-beave-search-element="empty"]');
             
             // Initialize search handler
-            searchObject = new KTSearch(element);
+            searchObject = new BEAVESearch(element);
 
             // Search handler
-            searchObject.on('kt.search.process', processs);
+            searchObject.on('beave.search.process', processs);
 
             // Clear handler
-            searchObject.on('kt.search.clear', clear);
+            searchObject.on('beave.search.clear', clear);
 
             // Handle select
-            KTUtil.on(element, '[data-kt-search-element="customer"]', 'click', function() {
+            BEAVEUtil.on(element, '[data-beave-search-element="customer"]', 'click', function() {
                 modal.hide();
             });
 		}
@@ -80,6 +80,6 @@ var KTModalCustomerSelect = function() {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTModalCustomerSelect.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEModalCustomerSelect.init();
 });

@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTTimelineWidget2 = function () {
+var BEAVETimelineWidget2 = function () {
     // Private methods
     var handleCheckbox = function() {
         var card = document.querySelector('#kt_timeline_widget_2_card');        
@@ -11,11 +11,11 @@ var KTTimelineWidget2 = function () {
         }
 
         // Checkbox Handler
-        KTUtil.on(card, '[data-kt-element="checkbox"]', 'change', function (e) {
+        BEAVEUtil.on(card, '[data-beave-element="checkbox"]', 'change', function (e) {
             var check = this.closest('.form-check');
             var tr = this.closest('tr');
-            var bullet = tr.querySelector('[data-kt-element="bullet"]');
-            var status = tr.querySelector('[data-kt-element="status"]');
+            var bullet = tr.querySelector('[data-beave-element="bullet"]');
+            var status = tr.querySelector('[data-beave-element="status"]');
 
             if ( this.checked === true ) {
                 check.classList.add('form-check-success');
@@ -49,12 +49,12 @@ var KTTimelineWidget2 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTTimelineWidget2;
+    module.exports = BEAVETimelineWidget2;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTTimelineWidget2.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVETimelineWidget2.init();
 });
 
 

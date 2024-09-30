@@ -1,13 +1,13 @@
 "use strict";
 
 // Class definition
-var KTThemeModeUser = function () {
+var BEAVEThemeModeUser = function () {
     
     var handleSubmit = function() {
 		// Update chart on theme mode change
-        KTThemeMode.on("kt.thememode.change", function() {                
-            var menuMode = KTThemeMode.getMenuMode();
-            var mode = KTThemeMode.getMode();
+        BEAVEThemeMode.on("beave.thememode.change", function() {                
+            var menuMode = BEAVEThemeMode.getMenuMode();
+            var mode = BEAVEThemeMode.getMode();
             console.log("user selected theme mode:" + menuMode);
             console.log("theme mode:" + mode);
 
@@ -25,11 +25,11 @@ var KTThemeModeUser = function () {
 }();
 
 // Initialize app on document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTThemeModeUser.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEThemeModeUser.init();
 });
 
-// Declare KTThemeModeUser for Webpack support
+// Declare BEAVEThemeModeUser for Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = KTThemeModeUser;
+    module.exports = BEAVEThemeModeUser;
 }

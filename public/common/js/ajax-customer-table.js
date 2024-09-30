@@ -2,7 +2,7 @@ try {
     ;('use strict')
 
     // Class definition
-    var KTDatatablesServerSide = (function () {
+    var BEAVEDatatablesServerSide = (function () {
         // Shared variables
         var table
         var dt
@@ -91,7 +91,7 @@ try {
                         className: 'text-end',
                         render: function (data, type, row) {
                             return `
-                            <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
+                            <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-beave-menu-trigger="click" data-beave-menu-placement="bottom-end" data-beave-menu-flip="top-end">
                                 Actions
                                 <span class="svg-icon svg-icon-5 m-0">
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -103,7 +103,7 @@ try {
                                 </span>
                             </a>
                             <!--begin::Menu-->
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-beave-menu="true">
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
                                     <a href="/admin/ecommerce/customers/${
@@ -172,7 +172,7 @@ try {
             // });
 
             // let select = document.querySelector(
-            //     '[data-kt-docs-table-filter="status"]'
+            //     '[data-beave-docs-table-filter="status"]'
             // )
             // $(select).on('change', (e) => {
             //     let n = e.target.value.toLowerCase()
@@ -184,15 +184,15 @@ try {
                 // initToggleToolbar()
                 // toggleToolbars()
                 // handleDeleteRows();
-                KTMenu.createInstances()
+                BEAVEMenu.createInstances()
             })
         }
 
         // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
         var handleSearchDatatable = function () {
             const filterSearch = document.querySelector(
-                '[data-kt-docs-table-filter="search"]'
-                // '[data-kt-docs-table-filter="search"]'
+                '[data-beave-docs-table-filter="search"]'
+                // '[data-beave-docs-table-filter="search"]'
             )
             filterSearch.addEventListener('keyup', function (e) {
                 dt.search(e.target.value).draw()
@@ -203,10 +203,10 @@ try {
         // var handleFilterDatatable = () => {
         //     // Select filter options
         //     filterPayment = document.querySelectorAll(
-        //         '[data-kt-docs-table-filter="payment_type"] [name="payment_type"]'
+        //         '[data-beave-docs-table-filter="payment_type"] [name="payment_type"]'
         //     )
         //     const filterButton = document.querySelector(
-        //         '[data-kt-docs-table-filter="filter"]'
+        //         '[data-beave-docs-table-filter="filter"]'
         //     )
 
         //     // Filter datatable on submit
@@ -235,7 +235,7 @@ try {
         // var handleDeleteRows = () => {
         //     // Select all delete buttons
         //     const deleteButtons = document.querySelectorAll(
-        //         '[data-kt-docs-table-filter="delete_row"]'
+        //         '[data-beave-docs-table-filter="delete_row"]'
         //     )
 
         //     deleteButtons.forEach((d) => {
@@ -313,7 +313,7 @@ try {
         // var handleResetForm = () => {
         //     // Select reset button
         //     const resetButton = document.querySelector(
-        //         '[data-kt-docs-table-filter="reset"]'
+        //         '[data-beave-docs-table-filter="reset"]'
         //     )
 
         //     // Reset datatable
@@ -335,7 +335,7 @@ try {
 
         //     // Select elements
         //     const deleteSelected = document.querySelector(
-        //         '[data-kt-docs-table-select="delete_selected"]'
+        //         '[data-beave-docs-table-select="delete_selected"]'
         //     )
 
         //     // Toggle delete selected toolbar
@@ -410,13 +410,13 @@ try {
         //     // Define variables
         //     const container = document.querySelector('#kt_datatable_example_1')
         //     const toolbarBase = document.querySelector(
-        //         '[data-kt-docs-table-toolbar="base"]'
+        //         '[data-beave-docs-table-toolbar="base"]'
         //     )
         //     const toolbarSelected = document.querySelector(
-        //         '[data-kt-docs-table-toolbar="selected"]'
+        //         '[data-beave-docs-table-toolbar="selected"]'
         //     )
         //     const selectedCount = document.querySelector(
-        //         '[data-kt-docs-table-select="selected_count"]'
+        //         '[data-beave-docs-table-select="selected_count"]'
         //     )
 
         //     // Select refreshed checkbox DOM elements
@@ -461,8 +461,8 @@ try {
     })()
 
     // On document ready
-    KTUtil.onDOMContentLoaded(function () {
-        KTDatatablesServerSide.init()
+    BEAVEUtil.onDOMContentLoaded(function () {
+        BEAVEDatatablesServerSide.init()
     })
 } catch (error) {
     console.log('ERR', error)

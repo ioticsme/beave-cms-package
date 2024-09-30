@@ -2,7 +2,7 @@
 // Dark Sidebar(used by Dark Sidebar layout only)
 //
 
-[data-kt-app-layout="dark-sidebar"] {
+[data-beave-app-layout="dark-sidebar"] {
     .app-sidebar {
         background-color: $app-sidebar-dark-bg-color;
         border-right: 0;
@@ -86,7 +86,7 @@
 
 // Desktop mode
 @include media-breakpoint-up(lg) {
-    [data-kt-app-layout="dark-sidebar"] {
+    [data-beave-app-layout="dark-sidebar"] {
         .app-sidebar {
             .menu-sub-lg-dropdown {
                 background-color: $app-sidebar-dark-bg-color;
@@ -97,7 +97,7 @@
 
 // Dark mode
 @include color-mode(dark) {
-    [data-kt-app-layout="dark-sidebar"] {
+    [data-beave-app-layout="dark-sidebar"] {
         .app-sidebar {
             border-right: 1px solid $app-sidebar-dark-separator-color;
         }

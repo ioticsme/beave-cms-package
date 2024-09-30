@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAppEcommerceSalesSaveOrder = function () {
+var BEAVEAppEcommerceSalesSaveOrder = function () {
     // Shared variables
     var table;
     var datatable;
@@ -25,7 +25,7 @@ var KTAppEcommerceSalesSaveOrder = function () {
             var span = document.createElement('span');
             var template = '';
 
-            template += '<img src="' + item.element.getAttribute('data-kt-select2-country') + '" class="rounded-circle h-20px me-2" alt="image"/>';
+            template += '<img src="' + item.element.getAttribute('data-beave-select2-country') + '" class="rounded-circle h-20px me-2" alt="image"/>';
             template += item.text;
 
             span.innerHTML = template;
@@ -64,7 +64,7 @@ var KTAppEcommerceSalesSaveOrder = function () {
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-ecommerce-edit-order-filter="search"]');
+        const filterSearch = document.querySelector('[data-beave-ecommerce-edit-order-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
@@ -73,7 +73,7 @@ var KTAppEcommerceSalesSaveOrder = function () {
     // Handle shipping form
     const handleShippingForm = () => {
         // Select elements
-        const element = document.getElementById('kt_ecommerce_edit_order_shipping_form');
+        const element = document.getElementById('beave_ecommerce_edit_order_shipping_form');
         const checkbox = document.getElementById('same_as_billing');
 
         // Show/hide shipping form
@@ -90,8 +90,8 @@ var KTAppEcommerceSalesSaveOrder = function () {
     const handleProductSelect = () => {
         // Define variables
         const checkboxes = table.querySelectorAll('[type="checkbox"]');
-        const target = document.getElementById('kt_ecommerce_edit_order_selected_products');
-        const totalPrice = document.getElementById('kt_ecommerce_edit_order_total_price');
+        const target = document.getElementById('beave_ecommerce_edit_order_selected_products');
+        const totalPrice = document.getElementById('beave_ecommerce_edit_order_total_price');
 
         // Loop through all checked products
         checkboxes.forEach(checkbox => {
@@ -100,7 +100,7 @@ var KTAppEcommerceSalesSaveOrder = function () {
                 const parent = checkbox.closest('tr');
                 
                 // Clone parent element as variable
-                const product = parent.querySelector('[data-kt-ecommerce-edit-order-filter="product"]').cloneNode(true);
+                const product = parent.querySelector('[data-beave-ecommerce-edit-order-filter="product"]').cloneNode(true);
 
                 // Create inner wrapper
                 const innerWrapper = document.createElement('div');
@@ -133,14 +133,14 @@ var KTAppEcommerceSalesSaveOrder = function () {
                 product.appendChild(innerWrapper);
 
                 // Get product id
-                const productId = product.getAttribute('data-kt-ecommerce-edit-order-id');
+                const productId = product.getAttribute('data-beave-ecommerce-edit-order-id');
 
                 if (e.target.checked) {
                     // Add product to selected product wrapper
                     target.appendChild(product);
                 } else {
                     // Remove product from selected product wrapper
-                    const selectedProduct = target.querySelector('[data-kt-ecommerce-edit-order-id="' + productId + '"]');
+                    const selectedProduct = target.querySelector('[data-beave-ecommerce-edit-order-id="' + productId + '"]');
                     if (selectedProduct) {
                         target.removeChild(selectedProduct);
                     }
@@ -155,7 +155,7 @@ var KTAppEcommerceSalesSaveOrder = function () {
         const detectEmpty = () => {
             // Select elements
             const message = target.querySelector('span');
-            const products = target.querySelectorAll('[data-kt-ecommerce-edit-order-filter="product"]');
+            const products = target.querySelectorAll('[data-beave-ecommerce-edit-order-filter="product"]');
 
             // Detect if element is empty
             if (products.length < 1) {
@@ -180,7 +180,7 @@ var KTAppEcommerceSalesSaveOrder = function () {
             // Loop through all selected prodcucts
             products.forEach(product => {
                 // Get product price
-                const price = parseFloat(product.querySelector('[data-kt-ecommerce-edit-order-filter="price"]').innerText);
+                const price = parseFloat(product.querySelector('[data-beave-ecommerce-edit-order-filter="price"]').innerText);
 
                 // Add to total
                 countPrice = parseFloat(countPrice + price);
@@ -197,8 +197,8 @@ var KTAppEcommerceSalesSaveOrder = function () {
         let validator;
 
         // Get elements
-        const form = document.getElementById('kt_ecommerce_edit_order_form');
-        const submitButton = document.getElementById('kt_ecommerce_edit_order_submit');
+        const form = document.getElementById('beave_ecommerce_edit_order_form');
+        const submitButton = document.getElementById('beave_ecommerce_edit_order_submit');
 
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
         validator = FormValidation.formValidation(
@@ -276,13 +276,13 @@ var KTAppEcommerceSalesSaveOrder = function () {
                     console.log('validated!');
 
                     if (status == 'Valid') {
-                        submitButton.setAttribute('data-kt-indicator', 'on');
+                        submitButton.setAttribute('data-beave-indicator', 'on');
 
                         // Disable submit button whilst loading
                         submitButton.disabled = true;
 
                         setTimeout(function () {
-                            submitButton.removeAttribute('data-kt-indicator');
+                            submitButton.removeAttribute('data-beave-indicator');
 
                             Swal.fire({
                                 text: "Form has been successfully submitted!",
@@ -298,7 +298,7 @@ var KTAppEcommerceSalesSaveOrder = function () {
                                     submitButton.disabled = false;
 
                                     // Redirect to customers list page
-                                    window.location = form.getAttribute("data-kt-redirect");
+                                    window.location = form.getAttribute("data-beave-redirect");
                                 }
                             });
                         }, 2000);
@@ -333,6 +333,6 @@ var KTAppEcommerceSalesSaveOrder = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTAppEcommerceSalesSaveOrder.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEAppEcommerceSalesSaveOrder.init();
 });

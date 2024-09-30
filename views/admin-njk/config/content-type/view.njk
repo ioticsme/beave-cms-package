@@ -31,8 +31,8 @@
 
 {% block content %}
 	<div class="d-flex flex-column flex-column-fluid">
-		<div class="app-toolbar py-3 py-lg-6" id="kt_app_toolbar">
-			<div class="app-container container-xxl d-flex flex-stack" id="kt_app_toolbar_container">
+		<div class="app-toolbar py-3 py-lg-6" id="beave_app_toolbar">
+			<div class="app-container container-xxl d-flex flex-stack" id="beave_app_toolbar_container">
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Content Type Details</h1>
 					<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -52,8 +52,8 @@
 			</div>
 		</div>
 
-		<div class="app-content flex-column-fluid" id="kt_app_content">
-			<div class="app-container container-xxl" id="kt_app_content_container">
+		<div class="app-content flex-column-fluid" id="beave_app_content">
+			<div class="app-container container-xxl" id="beave_app_content_container">
 				<div class="row">
 					<div class="col-3">
 						<ul class="nav nav-tabs nav-pills flex-row border-0 flex-md-column me-5 mb-3 mb-md-0 fs-6 min-w-lg-200px">
@@ -116,9 +116,9 @@
 						<div class="tab-content" id="myTabContent">
 
 							{% if contentType.page_builder == false %}
-								<div id="kt_vtab_pane_4" class="tab-pane fade" role="tabpanel">
+								<div id="beave_vtab_pane_4" class="tab-pane fade" role="tabpanel">
 									<div class="card mb-5 mb-xl-10">
-										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="beave_account_profile_details">
 											<div class="card-title m-0">
 												<h3 class="fw-bold m-0">Content Fields</h3>
 											</div>
@@ -137,14 +137,14 @@
 								</div>
 							{% endif %}
 
-							<div class="tab-pane fade show active" id="kt_vtab_pane_5" role="tabpanel">
+							<div class="tab-pane fade show active" id="beave_vtab_pane_5" role="tabpanel">
 								<div class="card mb-5 mb-xl-10">
-									<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+									<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="beave_account_profile_details">
 										<div class="card-title m-0">
 											<h3 class="fw-bold m-0">Content Type</h3>
 										</div>
 									</div>
-									<div id="kt_account_settings_profile_details">
+									<div id="beave_account_settings_profile_details">
 										<div class="card-body border-top p-9">
 											<div class="row mb-6">
 												<label class="col-lg-4 col-form-label required fw-semibold fs-6">Title</label>
@@ -189,12 +189,12 @@
 								{# //- include field-config-form	 #}
 
 								<div class="card mb-5 mb-xl-10">
-									<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+									<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="beave_account_profile_details">
 										<div class="card-title m-0">
 											<h3 class="fw-bold m-0">Features</h3>
 										</div>
 									</div>
-									<div id="kt_account_settings_profile_details">
+									<div id="beave_account_settings_profile_details">
 										<div class="card-body border-top p-9">
 											<div class="row mb-6">
 												<div class="row mt-3">
@@ -234,23 +234,23 @@
 							</div>
 
 							{% if contentType.has_meta %}
-								<div id="kt_vtab_pane_6" class="tab-pane fade" role="tabpanel">
+								<div id="beave_vtab_pane_6" class="tab-pane fade" role="tabpanel">
 									<form id="content_type_meta_form" class="form es-form" action="/admin/config/content-type/save-meta" data-disable-reset="true" method="post" autocomplete="off">
 										<input type="hidden" name="_id" value={{ contentType._id }}>
 										<div class="badge badge-danger fv-plugins-message-container invalid-feedback" id="field-error-_id"></div>
 										<div class="card mb-5 mb-xl-10">
-											<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+											<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="beave_account_profile_details">
 												<div class="card-title m-0">
 													<h3 class="fw-bold m-0">Meta Fields</h3>
 												</div>
 												<div class="card-toolbar">
-													<button class="btn btn-success btn-sm form-submit-btn" id="kt_account_profile_details_submit" type="submit">
+													<button class="btn btn-success btn-sm form-submit-btn" id="beave_account_profile_details_submit" type="submit">
 														<span class="preloader d-none">Saving...</span>
 														<span class="label">Save</span>
 													</button>
 												</div>
 											</div>
-											<div id="kt_account_settings_profile_details">
+											<div id="beave_account_settings_profile_details">
 												<div class="card-body border-top p-9">
 
 													<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">

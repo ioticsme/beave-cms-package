@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTTimelineWidget24 = function () {
+var BEAVETimelineWidget24 = function () {
     // Private methods
     var handleActions = function() {
         var card = document.querySelector('#kt_list_widget_24');        
@@ -11,7 +11,7 @@ var KTTimelineWidget24 = function () {
         }
 
         // Checkbox Handler
-        KTUtil.on(card, '[data-kt-element="follow"]', 'click', function (e) {
+        BEAVEUtil.on(card, '[data-beave-element="follow"]', 'click', function (e) {
             if ( this.innerText === 'Following' ) {
                 this.innerText = 'Follow';
                 this.classList.add('btn-light-primary');
@@ -36,10 +36,10 @@ var KTTimelineWidget24 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTTimelineWidget24;
+    module.exports = BEAVETimelineWidget24;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTTimelineWidget24.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVETimelineWidget24.init();
 }); 

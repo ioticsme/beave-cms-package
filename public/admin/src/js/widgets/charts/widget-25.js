@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget25 = (function () {
+var BEAVEChartsWidget25 = (function () {
 	// Private methods
 	var initChart1 = function () {
 		// Check if amchart library is included
@@ -9,7 +9,7 @@ var KTChartsWidget25 = (function () {
 			return;
 		}
 
-		var element = document.getElementById("kt_charts_widget_25_chart_1");
+		var element = document.getElementById("beave_charts_widget_25_chart_1");
 
 		if ( !element ) {
 			return;
@@ -63,13 +63,13 @@ var KTChartsWidget25 = (function () {
 				centerY: am5.p50,
 				fontWeight: "400",
 				fontSize: 11,
-				fill: am5.color(KTUtil.getCssVariableValue("--bs-gray-700")),
+				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-700")),
 			});
 
 			xRenderer.grid.template.setAll({
 				location: 0.5,
 				strokeDasharray: [2, 2],
-				stroke: KTUtil.getCssVariableValue('--bs-gray-400')
+				stroke: BEAVEUtil.getCssVariableValue('--bs-gray-400')
 			});
 
 			var xAxis = chart.xAxes.push(
@@ -87,7 +87,7 @@ var KTChartsWidget25 = (function () {
 			yRenderer.labels.template.setAll({
 				fontWeight: "500",
 				fontSize: 12,
-				fill: am5.color(KTUtil.getCssVariableValue("--bs-gray-700")),
+				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-700")),
 			});
 
 			var yAxis = chart.yAxes.push(
@@ -98,7 +98,7 @@ var KTChartsWidget25 = (function () {
 
 			yRenderer.grid.template.setAll({
 				strokeDasharray: [2, 2],
-				stroke: KTUtil.getCssVariableValue('--bs-gray-400')
+				stroke: BEAVEUtil.getCssVariableValue('--bs-gray-400')
 			});
 
 			// Create series
@@ -110,7 +110,7 @@ var KTChartsWidget25 = (function () {
 					yAxis: yAxis,
 					valueYField: "value1",
 					categoryXField: "name",
-					fill: am5.color(KTUtil.getCssVariableValue("--bs-primary")),
+					fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-primary")),
 				})
 			);
 
@@ -120,7 +120,7 @@ var KTChartsWidget25 = (function () {
 
 			series1.fills.template.setAll({
 				visible: true,
-				fill: am5.color(KTUtil.getCssVariableValue("--bs-primary")),
+				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-primary")),
 				fillOpacity: 0.5,
 			});
 
@@ -135,7 +135,7 @@ var KTChartsWidget25 = (function () {
 					tooltip: am5.Tooltip.new(root, {
 						labelText: "Revenue: {value1}\nExpense:{value2}",
 					}),
-					fill: am5.color(KTUtil.getCssVariableValue("--bs-success")),
+					fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-success")),
 				})
 			);
 
@@ -145,7 +145,7 @@ var KTChartsWidget25 = (function () {
 
 			series2.fills.template.setAll({
 				visible: true,
-				fill: am5.color(KTUtil.getCssVariableValue("--bs-primary")),
+				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-primary")),
 				fillOpacity: 0.5,
 			});
 
@@ -161,7 +161,7 @@ var KTChartsWidget25 = (function () {
 			legend.labels.template.setAll({
 				fontWeight: "600",
 				fontSize: 13,
-				fill: am5.color(KTUtil.getCssVariableValue("--bs-gray-700")),
+				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-700")),
 			});
 
 			// Set data
@@ -306,7 +306,7 @@ var KTChartsWidget25 = (function () {
 		}); 
 
 		// Update chart on theme mode change
-		KTThemeMode.on("kt.thememode.change", function() {     
+		BEAVEThemeMode.on("beave.thememode.change", function() {     
 			// Destroy chart
 			root.dispose();
 
@@ -321,7 +321,7 @@ var KTChartsWidget25 = (function () {
 			return;
 		}
 
-		var element = document.getElementById("kt_charts_widget_25_chart_2");
+		var element = document.getElementById("beave_charts_widget_25_chart_2");
 
 		if (!element) {
 			return;
@@ -374,13 +374,13 @@ var KTChartsWidget25 = (function () {
 				centerY: am5.p50,
 				fontWeight: "400",
 				fontSize: 11,
-				fill: am5.color(KTUtil.getCssVariableValue("--bs-gray-700")),
+				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-700")),
 			});
 
 			xRenderer.grid.template.setAll({
 				location: 0.5,
 				strokeDasharray: [2, 2],
-				stroke: KTUtil.getCssVariableValue('--bs-gray-400')
+				stroke: BEAVEUtil.getCssVariableValue('--bs-gray-400')
 			});
 
 			var xAxis = chart.xAxes.push(
@@ -403,13 +403,13 @@ var KTChartsWidget25 = (function () {
 
 			yRenderer.grid.template.setAll({
 				strokeDasharray: [2, 2],
-				stroke: KTUtil.getCssVariableValue('--bs-gray-400')
+				stroke: BEAVEUtil.getCssVariableValue('--bs-gray-400')
 			});
 
 			yRenderer.labels.template.setAll({
 				fontWeight: "500",
 				fontSize: 12,
-				fill: am5.color(KTUtil.getCssVariableValue("--bs-gray-700")),
+				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-700")),
 			});
 
 			// Create series
@@ -421,7 +421,7 @@ var KTChartsWidget25 = (function () {
 					yAxis: yAxis,
 					valueYField: "value1",
 					categoryXField: "name",
-					fill: am5.color(KTUtil.getCssVariableValue("--bs-primary")),
+					fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-primary")),
 				})
 			);
 
@@ -431,7 +431,7 @@ var KTChartsWidget25 = (function () {
 
 			series1.fills.template.setAll({
 				visible: true,
-				fill: am5.color(KTUtil.getCssVariableValue("--bs-primary")),
+				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-primary")),
 				fillOpacity: 0.5,
 			});
 
@@ -446,7 +446,7 @@ var KTChartsWidget25 = (function () {
 					tooltip: am5.Tooltip.new(root, {
 						labelText: "Revenue: {value1}\nExpense:{value2}",
 					}),
-					fill: am5.color(KTUtil.getCssVariableValue("--bs-success")),
+					fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-success")),
 				})
 			);
 
@@ -456,7 +456,7 @@ var KTChartsWidget25 = (function () {
 
 			series2.fills.template.setAll({
 				visible: true,
-				fill: am5.color(KTUtil.getCssVariableValue("--bs-primary")),
+				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-primary")),
 				fillOpacity: 0.5,
 			});
 
@@ -472,7 +472,7 @@ var KTChartsWidget25 = (function () {
 			legend.labels.template.setAll({
 				fontWeight: "600",
 				fontSize: 13,
-				fill: am5.color(KTUtil.getCssVariableValue("--bs-gray-700")),
+				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-700")),
 			});
 
 			// Set data
@@ -617,7 +617,7 @@ var KTChartsWidget25 = (function () {
 		}); // end am5.ready()
 
 		// Update chart on theme mode change
-		KTThemeMode.on("kt.thememode.change", function() {     
+		BEAVEThemeMode.on("beave.thememode.change", function() {     
 			// Destroy chart
 			root.dispose();
 
@@ -637,10 +637,10 @@ var KTChartsWidget25 = (function () {
 
 // Webpack support
 if (typeof module !== "undefined") {
-	module.exports = KTChartsWidget25;
+	module.exports = BEAVEChartsWidget25;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-	KTChartsWidget25.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+	BEAVEChartsWidget25.init();
 });

@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTDialer = function(element, options) {
+var BEAVEDialer = function(element, options) {
     ////////////////////////////
     // ** Private variables  ** //
     ////////////////////////////
@@ -28,8 +28,8 @@ var KTDialer = function(element, options) {
 
     // Constructor
     var _construct = function() {
-        if ( KTUtil.data(element).has('dialer') === true ) {
-            the = KTUtil.data(element).get('dialer');
+        if ( BEAVEUtil.data(element).has('dialer') === true ) {
+            the = BEAVEUtil.data(element).get('dialer');
         } else {
             _init();
         }
@@ -38,12 +38,12 @@ var KTDialer = function(element, options) {
     // Initialize
     var _init = function() {
         // Variables
-        the.options = KTUtil.deepExtend({}, defaultOptions, options);
+        the.options = BEAVEUtil.deepExtend({}, defaultOptions, options);
 
         // Elements
         the.element = element;
-        the.incElement = the.element.querySelector('[data-kt-dialer-control="increase"]');
-        the.decElement = the.element.querySelector('[data-kt-dialer-control="decrease"]');
+        the.incElement = the.element.querySelector('[data-beave-dialer-control="increase"]');
+        the.decElement = the.element.querySelector('[data-beave-dialer-control="decrease"]');
         the.inputElement = the.element.querySelector('input[type]'); 
         
         // Set Values
@@ -83,24 +83,24 @@ var KTDialer = function(element, options) {
         _handlers();
 
         // Bind Instance
-        KTUtil.data(the.element).set('dialer', the);
+        BEAVEUtil.data(the.element).set('dialer', the);
     }
 
     // Handlers
     var _handlers = function() {
-        KTUtil.addEvent(the.incElement, 'click', function(e) {
+        BEAVEUtil.addEvent(the.incElement, 'click', function(e) {
             e.preventDefault();
         
             _increase();
         });
 
-        KTUtil.addEvent(the.decElement, 'click', function(e) {
+        BEAVEUtil.addEvent(the.decElement, 'click', function(e) {
             e.preventDefault();
 
             _decrease();
         });
 
-        KTUtil.addEvent(the.inputElement, 'input', function(e) {
+        BEAVEUtil.addEvent(the.inputElement, 'input', function(e) {
             e.preventDefault();
 
             _setValue();
@@ -110,27 +110,27 @@ var KTDialer = function(element, options) {
     // Event handlers
     var _increase = function() {
         // Trigger "after.dialer" event
-        KTEventHandler.trigger(the.element, 'kt.dialer.increase', the);
+        BEAVEEventHandler.trigger(the.element, 'beave.dialer.increase', the);
 
         the.inputElement.value = the.value + the.options.step;
         _setValue();
 
         // Trigger "before.dialer" event
-        KTEventHandler.trigger(the.element, 'kt.dialer.increased', the);
+        BEAVEEventHandler.trigger(the.element, 'beave.dialer.increased', the);
 
         return the;
     }
 
     var _decrease = function() {
         // Trigger "after.dialer" event
-        KTEventHandler.trigger(the.element, 'kt.dialer.decrease', the);
+        BEAVEEventHandler.trigger(the.element, 'beave.dialer.decrease', the);
 
         the.inputElement.value = the.value - the.options.step;      
 
         _setValue();
 
         // Trigger "before.dialer" event
-        KTEventHandler.trigger(the.element, 'kt.dialer.decreased', the);
+        BEAVEEventHandler.trigger(the.element, 'beave.dialer.decreased', the);
 
         return the;
     }
@@ -138,7 +138,7 @@ var KTDialer = function(element, options) {
     // Set Input Value
     var _setValue = function(value) {
         // Trigger "after.dialer" event
-        KTEventHandler.trigger(the.element, 'kt.dialer.change', the);
+        BEAVEEventHandler.trigger(the.element, 'beave.dialer.change', the);
 
         if (value !== undefined) {
             the.value = value;
@@ -160,7 +160,7 @@ var KTDialer = function(element, options) {
         the.inputElement.dispatchEvent(new Event('change'));
 
         // Trigger "after.dialer" event
-        KTEventHandler.trigger(the.element, 'kt.dialer.changed', the);
+        BEAVEEventHandler.trigger(the.element, 'beave.dialer.changed', the);
     }
 
     var _parse = function(val) {
@@ -192,8 +192,8 @@ var KTDialer = function(element, options) {
 
     // Get option
     var _getOption = function(name) {
-        if ( the.element.hasAttribute('data-kt-dialer-' + name) === true ) {
-            var attr = the.element.getAttribute('data-kt-dialer-' + name);
+        if ( the.element.hasAttribute('data-beave-dialer-' + name) === true ) {
+            var attr = the.element.getAttribute('data-beave-dialer-' + name);
             var value = attr;            
 
             return value;
@@ -203,7 +203,7 @@ var KTDialer = function(element, options) {
     }
 
     var _destroy = function() {
-        KTUtil.data(the.element).remove('dialer');
+        BEAVEUtil.data(the.element).remove('dialer');
     }
 
     // Construct class
@@ -252,49 +252,49 @@ var KTDialer = function(element, options) {
 
     // Event API
     the.on = function(name, handler) {
-        return KTEventHandler.on(the.element, name, handler);
+        return BEAVEEventHandler.on(the.element, name, handler);
     }
 
     the.one = function(name, handler) {
-        return KTEventHandler.one(the.element, name, handler);
+        return BEAVEEventHandler.one(the.element, name, handler);
     }
 
     the.off = function(name, handlerId) {
-        return KTEventHandler.off(the.element, name, handlerId);
+        return BEAVEEventHandler.off(the.element, name, handlerId);
     }
 
     the.trigger = function(name, event) {
-        return KTEventHandler.trigger(the.element, name, event, the, event);
+        return BEAVEEventHandler.trigger(the.element, name, event, the, event);
     }
 };
 
 // Static methods
-KTDialer.getInstance = function(element) {
-    if ( element !== null && KTUtil.data(element).has('dialer') ) {
-        return KTUtil.data(element).get('dialer');
+BEAVEDialer.getInstance = function(element) {
+    if ( element !== null && BEAVEUtil.data(element).has('dialer') ) {
+        return BEAVEUtil.data(element).get('dialer');
     } else {
         return null;
     }
 }
 
 // Create instances
-KTDialer.createInstances = function(selector = '[data-kt-dialer="true"]') {
+BEAVEDialer.createInstances = function(selector = '[data-beave-dialer="true"]') {
     // Get instances
     var elements = document.querySelectorAll(selector);
 
     if ( elements && elements.length > 0 ) {
         for (var i = 0, len = elements.length; i < len; i++) {
-            new KTDialer(elements[i]);
+            new BEAVEDialer(elements[i]);
         }
     }
 }
 
 // Global initialization
-KTDialer.init = function() {
-    KTDialer.createInstances();
+BEAVEDialer.init = function() {
+    BEAVEDialer.createInstances();
 };
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = KTDialer;
+    module.exports = BEAVEDialer;
 }

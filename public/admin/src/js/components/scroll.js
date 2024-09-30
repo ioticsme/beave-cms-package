@@ -1,9 +1,9 @@
 "use strict";
 
-var KTScrollHandlersInitialized = false;
+var BEAVEScrollHandlersInitialized = false;
 
 // Class definition
-var KTScroll = function(element, options) {
+var BEAVEScroll = function(element, options) {
     ////////////////////////////
     // ** Private Variables  ** //
     ////////////////////////////
@@ -23,8 +23,8 @@ var KTScroll = function(element, options) {
     ////////////////////////////
 
     var _construct = function() {
-        if ( KTUtil.data(element).has('scroll') ) {
-            the = KTUtil.data(element).get('scroll');
+        if ( BEAVEUtil.data(element).has('scroll') ) {
+            the = BEAVEUtil.data(element).get('scroll');
         } else {
             _init();
         }
@@ -32,20 +32,20 @@ var KTScroll = function(element, options) {
 
     var _init = function() {
         // Variables
-        the.options = KTUtil.deepExtend({}, defaultOptions, options);
+        the.options = BEAVEUtil.deepExtend({}, defaultOptions, options);
 
         // Elements
         the.element = element;        
         the.id = the.element.getAttribute('id');
 
         // Set initialized
-        the.element.setAttribute('data-kt-scroll', 'true');
+        the.element.setAttribute('data-beave-scroll', 'true');
 
         // Update
         _update();
 
         // Bind Instance
-        KTUtil.data(the.element).set('scroll', the);
+        BEAVEUtil.data(the.element).set('scroll', the);
     }
 
     var _setupHeight = function() {
@@ -54,9 +54,9 @@ var KTScroll = function(element, options) {
 
         // Set height
         if ( height !== null && height.length > 0 ) {
-            KTUtil.css(the.element, heightType, height);
+            BEAVEUtil.css(the.element, heightType, height);
         } else {
-            KTUtil.css(the.element, heightType, '');
+            BEAVEUtil.css(the.element, heightType, '');
         }
     }
 
@@ -78,7 +78,7 @@ var KTScroll = function(element, options) {
     }
 
     var _getStorageNamespace = function(postfix) {
-        return document.body.hasAttribute("data-kt-name") ? document.body.getAttribute("data-kt-name") + "_" : "";
+        return document.body.hasAttribute("data-beave-name") ? document.body.getAttribute("data-beave-name") + "_" : "";
     }
 
     var _setupScrollHandler = function() {
@@ -94,7 +94,7 @@ var KTScroll = function(element, options) {
     }
 
     var _resetHeight = function() {
-        KTUtil.css(the.element, _getHeightType(), '');
+        BEAVEUtil.css(the.element, _getHeightType(), '');
     }
 
     var _scrollHandler = function () {
@@ -104,7 +104,7 @@ var KTScroll = function(element, options) {
 
     var _update = function() {
         // Activate/deactivate
-        if ( _getOption('activate') === true || the.element.hasAttribute('data-kt-scroll-activate') === false ) {
+        if ( _getOption('activate') === true || the.element.hasAttribute('data-beave-scroll-activate') === false ) {
             _setupHeight();
             _setupStretchHeight();
             _setupScrollHandler();
@@ -128,9 +128,9 @@ var KTScroll = function(element, options) {
                 var diff = _getElementHeight(element2) - _getElementHeight(element1);
 
                 if (diff > 0) {
-                    var height = parseInt(KTUtil.css(the.element, _getHeightType())) + diff;
+                    var height = parseInt(BEAVEUtil.css(the.element, _getHeightType())) + diff;
 
-                    KTUtil.css(the.element, _getHeightType(), String(height) + 'px');
+                    BEAVEUtil.css(the.element, _getHeightType(), String(height) + 'px');
                 }
             }
         }
@@ -149,7 +149,7 @@ var KTScroll = function(element, options) {
     }
 
     var _getAutoHeight = function() {
-        var height = KTUtil.getViewPort().height;
+        var height = BEAVEUtil.getViewPort().height;
         var dependencies = _getOption('dependencies');
         var wrappers = _getOption('wrappers');
         var offset = _getOption('offset');
@@ -165,7 +165,7 @@ var KTScroll = function(element, options) {
 
             if ( elements && elements.length > 0 ) {
                 for ( var i = 0, len = elements.length; i < len; i++ ) {
-                    if ( KTUtil.visible(elements[i]) === false ) {
+                    if ( BEAVEUtil.visible(elements[i]) === false ) {
                         continue;
                     }
 
@@ -179,7 +179,7 @@ var KTScroll = function(element, options) {
             var elements = document.querySelectorAll(wrappers);
             if ( elements && elements.length > 0 ) {
                 for ( var i = 0, len = elements.length; i < len; i++ ) {
-                    if ( KTUtil.visible(elements[i]) === false ) {
+                    if ( BEAVEUtil.visible(elements[i]) === false ) {
                         continue;
                     }
 
@@ -200,16 +200,16 @@ var KTScroll = function(element, options) {
         var height = 0;
 
         if (element !== null) {
-            height = height + parseInt(KTUtil.css(element, 'height'));
-            height = height + parseInt(KTUtil.css(element, 'margin-top'));
-            height = height + parseInt(KTUtil.css(element, 'margin-bottom'));
+            height = height + parseInt(BEAVEUtil.css(element, 'height'));
+            height = height + parseInt(BEAVEUtil.css(element, 'margin-top'));
+            height = height + parseInt(BEAVEUtil.css(element, 'margin-bottom'));
 
-            if (KTUtil.css(element, 'border-top')) {
-                height = height + parseInt(KTUtil.css(element, 'border-top'));
+            if (BEAVEUtil.css(element, 'border-top')) {
+                height = height + parseInt(BEAVEUtil.css(element, 'border-top'));
             }
 
-            if (KTUtil.css(element, 'border-bottom')) {
-                height = height + parseInt(KTUtil.css(element, 'border-bottom'));
+            if (BEAVEUtil.css(element, 'border-bottom')) {
+                height = height + parseInt(BEAVEUtil.css(element, 'border-bottom'));
             }
         } 
 
@@ -220,17 +220,17 @@ var KTScroll = function(element, options) {
         var spacing = 0;
 
         if (element !== null) {
-            spacing = spacing + parseInt(KTUtil.css(element, 'margin-top'));
-            spacing = spacing + parseInt(KTUtil.css(element, 'margin-bottom'));
-            spacing = spacing + parseInt(KTUtil.css(element, 'padding-top'));
-            spacing = spacing + parseInt(KTUtil.css(element, 'padding-bottom'));
+            spacing = spacing + parseInt(BEAVEUtil.css(element, 'margin-top'));
+            spacing = spacing + parseInt(BEAVEUtil.css(element, 'margin-bottom'));
+            spacing = spacing + parseInt(BEAVEUtil.css(element, 'padding-top'));
+            spacing = spacing + parseInt(BEAVEUtil.css(element, 'padding-bottom'));
 
-            if (KTUtil.css(element, 'border-top')) {
-                spacing = spacing + parseInt(KTUtil.css(element, 'border-top'));
+            if (BEAVEUtil.css(element, 'border-top')) {
+                spacing = spacing + parseInt(BEAVEUtil.css(element, 'border-top'));
             }
 
-            if (KTUtil.css(element, 'border-bottom')) {
-                spacing = spacing + parseInt(KTUtil.css(element, 'border-bottom'));
+            if (BEAVEUtil.css(element, 'border-bottom')) {
+                spacing = spacing + parseInt(BEAVEUtil.css(element, 'border-bottom'));
             }
         } 
 
@@ -238,10 +238,10 @@ var KTScroll = function(element, options) {
     }
 
     var _getOption = function(name) {
-        if ( the.element.hasAttribute('data-kt-scroll-' + name) === true ) {
-            var attr = the.element.getAttribute('data-kt-scroll-' + name);
+        if ( the.element.hasAttribute('data-beave-scroll-' + name) === true ) {
+            var attr = the.element.getAttribute('data-beave-scroll-' + name);
 
-            var value = KTUtil.getResponsiveValue(attr);
+            var value = BEAVEUtil.getResponsiveValue(attr);
 
             if ( value !== null && String(value) === 'true' ) {
                 value = true;
@@ -251,10 +251,10 @@ var KTScroll = function(element, options) {
 
             return value;
         } else {
-            var optionName = KTUtil.snakeToCamel(name);
+            var optionName = BEAVEUtil.snakeToCamel(name);
 
             if ( the.options[optionName] ) {
-                return KTUtil.getResponsiveValue(the.options[optionName]);
+                return BEAVEUtil.getResponsiveValue(the.options[optionName]);
             } else {
                 return null;
             }
@@ -272,7 +272,7 @@ var KTScroll = function(element, options) {
     }
 
     var _destroy = function() {
-        KTUtil.data(the.element).remove('scroll');
+        BEAVEUtil.data(the.element).remove('scroll');
     }
 
     // Construct Class
@@ -300,38 +300,38 @@ var KTScroll = function(element, options) {
 };
 
 // Static methods
-KTScroll.getInstance = function(element) {
-    if ( element !== null && KTUtil.data(element).has('scroll') ) {
-        return KTUtil.data(element).get('scroll');
+BEAVEScroll.getInstance = function(element) {
+    if ( element !== null && BEAVEUtil.data(element).has('scroll') ) {
+        return BEAVEUtil.data(element).get('scroll');
     } else {
         return null;
     }
 }
 
 // Create instances
-KTScroll.createInstances = function(selector = '[data-kt-scroll="true"]') {
+BEAVEScroll.createInstances = function(selector = '[data-beave-scroll="true"]') {
     // Initialize Menus
     var elements = document.body.querySelectorAll(selector);
 
     if ( elements && elements.length > 0 ) {
         for (var i = 0, len = elements.length; i < len; i++) {
-            new KTScroll(elements[i]);
+            new BEAVEScroll(elements[i]);
         }
     }
 }
 
 // Window resize handling
-KTScroll.handleResize = function() {
+BEAVEScroll.handleResize = function() {
     window.addEventListener('resize', function() {
         var timer;
     
-        KTUtil.throttle(timer, function() {
+        BEAVEUtil.throttle(timer, function() {
             // Locate and update Offcanvas instances on window resize
-            var elements = document.body.querySelectorAll('[data-kt-scroll="true"]');
+            var elements = document.body.querySelectorAll('[data-beave-scroll="true"]');
     
             if ( elements && elements.length > 0 ) {
                 for (var i = 0, len = elements.length; i < len; i++) {
-                    var scroll = KTScroll.getInstance(elements[i]);
+                    var scroll = BEAVEScroll.getInstance(elements[i]);
                     if (scroll) {
                         scroll.update();
                     }
@@ -342,17 +342,17 @@ KTScroll.handleResize = function() {
 }
 
 // Global initialization
-KTScroll.init = function() {
-    KTScroll.createInstances();
+BEAVEScroll.init = function() {
+    BEAVEScroll.createInstances();
 
-    if (KTScrollHandlersInitialized === false) {
-        KTScroll.handleResize();
+    if (BEAVEScrollHandlersInitialized === false) {
+        BEAVEScroll.handleResize();
 
-        KTScrollHandlersInitialized = true;
+        BEAVEScrollHandlersInitialized = true;
     }    
 };
 
 // Webpack Support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = KTScroll;
+    module.exports = BEAVEScroll;
 }

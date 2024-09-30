@@ -1,9 +1,9 @@
 "use strict";
 
-var KTSwapperHandlersInitialized = false;
+var BEAVESwapperHandlersInitialized = false;
 
 // Class definition
-var KTSwapper = function(element, options) {
+var BEAVESwapper = function(element, options) {
     ////////////////////////////
     // ** Private Variables  ** //
     ////////////////////////////
@@ -23,8 +23,8 @@ var KTSwapper = function(element, options) {
     ////////////////////////////
 
     var _construct = function() {
-        if ( KTUtil.data(element).has('swapper') === true ) {
-            the = KTUtil.data(element).get('swapper');
+        if ( BEAVEUtil.data(element).has('swapper') === true ) {
+            the = BEAVEUtil.data(element).get('swapper');
         } else {
             _init();
         }
@@ -32,16 +32,16 @@ var KTSwapper = function(element, options) {
 
     var _init = function() {
         the.element = element;
-        the.options = KTUtil.deepExtend({}, defaultOptions, options);
+        the.options = BEAVEUtil.deepExtend({}, defaultOptions, options);
 
         // Set initialized
-        the.element.setAttribute('data-kt-swapper', 'true');
+        the.element.setAttribute('data-beave-swapper', 'true');
 
         // Initial update
         _update();
 
         // Bind Instance
-        KTUtil.data(the.element).set('swapper', the);
+        BEAVEUtil.data(the.element).set('swapper', the);
     }
 
     var _update = function(e) {
@@ -61,9 +61,9 @@ var KTSwapper = function(element, options) {
     }
 
     var _getOption = function(name) {
-        if ( the.element.hasAttribute('data-kt-swapper-' + name) === true ) {
-            var attr = the.element.getAttribute('data-kt-swapper-' + name);
-            var value = KTUtil.getResponsiveValue(attr);
+        if ( the.element.hasAttribute('data-beave-swapper-' + name) === true ) {
+            var attr = the.element.getAttribute('data-beave-swapper-' + name);
+            var value = BEAVEUtil.getResponsiveValue(attr);
 
             if ( value !== null && String(value) === 'true' ) {
                 value = true;
@@ -73,10 +73,10 @@ var KTSwapper = function(element, options) {
 
             return value;
         } else {
-            var optionName = KTUtil.snakeToCamel(name);
+            var optionName = BEAVEUtil.snakeToCamel(name);
 
             if ( the.options[optionName] ) {
-                return KTUtil.getResponsiveValue(the.options[optionName]);
+                return BEAVEUtil.getResponsiveValue(the.options[optionName]);
             } else {
                 return null;
             }
@@ -84,7 +84,7 @@ var KTSwapper = function(element, options) {
     }
 
     var _destroy = function() {
-        KTUtil.data(the.element).remove('swapper');
+        BEAVEUtil.data(the.element).remove('swapper');
     }
 
     // Construct Class
@@ -105,56 +105,56 @@ var KTSwapper = function(element, options) {
 
     // Event API
     the.on = function(name, handler) {
-        return KTEventHandler.on(the.element, name, handler);
+        return BEAVEEventHandler.on(the.element, name, handler);
     }
 
     the.one = function(name, handler) {
-        return KTEventHandler.one(the.element, name, handler);
+        return BEAVEEventHandler.one(the.element, name, handler);
     }
 
     the.off = function(name, handlerId) {
-        return KTEventHandler.off(the.element, name, handlerId);
+        return BEAVEEventHandler.off(the.element, name, handlerId);
     }
 
     the.trigger = function(name, event) {
-        return KTEventHandler.trigger(the.element, name, event, the, event);
+        return BEAVEEventHandler.trigger(the.element, name, event, the, event);
     }
 };
 
 // Static methods
-KTSwapper.getInstance = function(element) {
-    if ( element !== null && KTUtil.data(element).has('swapper') ) {
-        return KTUtil.data(element).get('swapper');
+BEAVESwapper.getInstance = function(element) {
+    if ( element !== null && BEAVEUtil.data(element).has('swapper') ) {
+        return BEAVEUtil.data(element).get('swapper');
     } else {
         return null;
     }
 }
 
 // Create instances
-KTSwapper.createInstances = function(selector = '[data-kt-swapper="true"]') {
+BEAVESwapper.createInstances = function(selector = '[data-beave-swapper="true"]') {
     // Initialize Menus
     var elements = document.querySelectorAll(selector);
     var swapper;
 
     if ( elements && elements.length > 0 ) {
         for (var i = 0, len = elements.length; i < len; i++) {
-            swapper = new KTSwapper(elements[i]);
+            swapper = new BEAVESwapper(elements[i]);
         }
     }
 }
 
 // Window resize handler
-KTSwapper.handleResize = function() {
+BEAVESwapper.handleResize = function() {
     window.addEventListener('resize', function() {
         var timer;
     
-        KTUtil.throttle(timer, function() {
+        BEAVEUtil.throttle(timer, function() {
             // Locate and update Offcanvas instances on window resize
-            var elements = document.querySelectorAll('[data-kt-swapper="true"]');
+            var elements = document.querySelectorAll('[data-beave-swapper="true"]');
     
             if ( elements && elements.length > 0 ) {
                 for (var i = 0, len = elements.length; i < len; i++) {
-                    var swapper = KTSwapper.getInstance(elements[i]);
+                    var swapper = BEAVESwapper.getInstance(elements[i]);
                     if (swapper) {
                         swapper.update();
                     }                
@@ -165,16 +165,16 @@ KTSwapper.handleResize = function() {
 };
 
 // Global initialization
-KTSwapper.init = function() {
-    KTSwapper.createInstances();
+BEAVESwapper.init = function() {
+    BEAVESwapper.createInstances();
 
-    if (KTSwapperHandlersInitialized === false) {
-        KTSwapper.handleResize();
-        KTSwapperHandlersInitialized = true;
+    if (BEAVESwapperHandlersInitialized === false) {
+        BEAVESwapper.handleResize();
+        BEAVESwapperHandlersInitialized = true;
     }
 };
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = KTSwapper;
+    module.exports = BEAVESwapper;
 }

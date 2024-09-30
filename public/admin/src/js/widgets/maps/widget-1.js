@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTMapsWidget1 = (function () {
+var BEAVEMapsWidget1 = (function () {
     // Private methods
     var initMap = function () {
         // Check if amchart library is included
@@ -9,7 +9,7 @@ var KTMapsWidget1 = (function () {
             return;
         }
 
-        var element = document.getElementById("kt_maps_widget_1_map");
+        var element = document.getElementById("beave_maps_widget_1_map");
 
         if (!element) {
             return;
@@ -52,15 +52,15 @@ var KTMapsWidget1 = (function () {
                 tooltipText: "{name}",
                 toggleKey: "active",
                 interactive: true,
-				fill: am5.color(KTUtil.getCssVariableValue('--bs-gray-300')),
+				fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-gray-300')),
             });
 
             polygonSeries.mapPolygons.template.states.create("hover", {
-                fill: am5.color(KTUtil.getCssVariableValue('--bs-success')),
+                fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-success')),
             });
 
             polygonSeries.mapPolygons.template.states.create("active", {
-                fill: am5.color(KTUtil.getCssVariableValue('--bs-success')),
+                fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-success')),
             });
 
             // Highlighted Series
@@ -84,7 +84,7 @@ var KTMapsWidget1 = (function () {
 
             polygonSeriesHighlighted.mapPolygons.template.set(
                 "fill",
-				am5.color(KTUtil.getCssVariableValue('--bs-primary')),
+				am5.color(BEAVEUtil.getCssVariableValue('--bs-primary')),
             );
 
             polygonSeriesHighlighted.mapPolygons.template.states.create("hover", {
@@ -116,7 +116,7 @@ var KTMapsWidget1 = (function () {
         }); // end am5.ready()
 
         // Update chart on theme mode change
-		KTThemeMode.on("kt.thememode.change", function() {     
+		BEAVEThemeMode.on("beave.thememode.change", function() {     
 			// Destroy chart
 			root.dispose();
 
@@ -135,10 +135,10 @@ var KTMapsWidget1 = (function () {
 
 // Webpack support
 if (typeof module !== "undefined") {
-    module.exports = KTMapsWidget1;
+    module.exports = BEAVEMapsWidget1;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTMapsWidget1.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEMapsWidget1.init();
 });

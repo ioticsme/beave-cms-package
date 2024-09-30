@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTScrolltop = function(element, options) {
+var BEAVEScrolltop = function(element, options) {
     ////////////////////////////
     // ** Private variables  ** //
     ////////////////////////////
@@ -22,8 +22,8 @@ var KTScrolltop = function(element, options) {
     ////////////////////////////
 
     var _construct = function() {
-        if (KTUtil.data(element).has('scrolltop')) {
-            the = KTUtil.data(element).get('scrolltop');
+        if (BEAVEUtil.data(element).has('scrolltop')) {
+            the = BEAVEUtil.data(element).get('scrolltop');
         } else {
             _init();
         }
@@ -31,30 +31,30 @@ var KTScrolltop = function(element, options) {
 
     var _init = function() {
         // Variables
-        the.options = KTUtil.deepExtend({}, defaultOptions, options);
-        the.uid = KTUtil.getUniqueId('scrolltop');
+        the.options = BEAVEUtil.deepExtend({}, defaultOptions, options);
+        the.uid = BEAVEUtil.getUniqueId('scrolltop');
         the.element = element;
 
         // Set initialized
-        the.element.setAttribute('data-kt-scrolltop', 'true');
+        the.element.setAttribute('data-beave-scrolltop', 'true');
 
         // Event Handlers
         _handlers();
 
         // Bind Instance
-        KTUtil.data(the.element).set('scrolltop', the);
+        BEAVEUtil.data(the.element).set('scrolltop', the);
     }
 
     var _handlers = function() {
         var timer;
 
         window.addEventListener('scroll', function() {
-            KTUtil.throttle(timer, function() {
+            BEAVEUtil.throttle(timer, function() {
                 _scroll();
             }, 200);
         });
 
-        KTUtil.addEvent(the.element, 'click', function(e) {
+        BEAVEUtil.addEvent(the.element, 'click', function(e) {
             e.preventDefault();
 
             _go();
@@ -64,15 +64,15 @@ var KTScrolltop = function(element, options) {
     var _scroll = function() {
         var offset = parseInt(_getOption('offset'));
 
-        var pos = KTUtil.getScrollTop(); // current vertical position
+        var pos = BEAVEUtil.getScrollTop(); // current vertical position
 
         if ( pos > offset ) {
-            if ( document.body.hasAttribute('data-kt-scrolltop') === false ) {
-                document.body.setAttribute('data-kt-scrolltop', 'on');
+            if ( document.body.hasAttribute('data-beave-scrolltop') === false ) {
+                document.body.setAttribute('data-beave-scrolltop', 'on');
             }
         } else {
-            if ( document.body.hasAttribute('data-kt-scrolltop') === true ) {
-                document.body.removeAttribute('data-kt-scrolltop');
+            if ( document.body.hasAttribute('data-beave-scrolltop') === true ) {
+                document.body.removeAttribute('data-beave-scrolltop');
             }
         }
     }
@@ -81,13 +81,13 @@ var KTScrolltop = function(element, options) {
         var speed = parseInt(_getOption('speed'));
 
         window.scrollTo({top: 0, behavior: 'smooth'});
-        //KTUtil.scrollTop(0, speed);
+        //BEAVEUtil.scrollTop(0, speed);
     }
 
     var _getOption = function(name) {
-        if ( the.element.hasAttribute('data-kt-scrolltop-' + name) === true ) {
-            var attr = the.element.getAttribute('data-kt-scrolltop-' + name);
-            var value = KTUtil.getResponsiveValue(attr);
+        if ( the.element.hasAttribute('data-beave-scrolltop-' + name) === true ) {
+            var attr = the.element.getAttribute('data-beave-scrolltop-' + name);
+            var value = BEAVEUtil.getResponsiveValue(attr);
 
             if ( value !== null && String(value) === 'true' ) {
                 value = true;
@@ -97,10 +97,10 @@ var KTScrolltop = function(element, options) {
 
             return value;
         } else {
-            var optionName = KTUtil.snakeToCamel(name);
+            var optionName = BEAVEUtil.snakeToCamel(name);
 
             if ( the.options[optionName] ) {
-                return KTUtil.getResponsiveValue(the.options[optionName]);
+                return BEAVEUtil.getResponsiveValue(the.options[optionName]);
             } else {
                 return null;
             }
@@ -108,7 +108,7 @@ var KTScrolltop = function(element, options) {
     }
 
     var _destroy = function() {
-        KTUtil.data(the.element).remove('scrolltop');
+        BEAVEUtil.data(the.element).remove('scrolltop');
     }
 
     // Construct class
@@ -133,32 +133,32 @@ var KTScrolltop = function(element, options) {
 };
 
 // Static methods
-KTScrolltop.getInstance = function(element) {
-    if (element && KTUtil.data(element).has('scrolltop')) {
-        return KTUtil.data(element).get('scrolltop');
+BEAVEScrolltop.getInstance = function(element) {
+    if (element && BEAVEUtil.data(element).has('scrolltop')) {
+        return BEAVEUtil.data(element).get('scrolltop');
     } else {
         return null;
     }
 }
 
 // Create instances
-KTScrolltop.createInstances = function(selector = '[data-kt-scrolltop="true"]') {
+BEAVEScrolltop.createInstances = function(selector = '[data-beave-scrolltop="true"]') {
     // Initialize Menus
     var elements = document.body.querySelectorAll(selector);
 
     if ( elements && elements.length > 0 ) {
         for (var i = 0, len = elements.length; i < len; i++) {
-            new KTScrolltop(elements[i]);
+            new BEAVEScrolltop(elements[i]);
         }
     }
 }
 
 // Global initialization
-KTScrolltop.init = function() {
-    KTScrolltop.createInstances();
+BEAVEScrolltop.init = function() {
+    BEAVEScrolltop.createInstances();
 };
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = KTScrolltop;
+    module.exports = BEAVEScrolltop;
 }

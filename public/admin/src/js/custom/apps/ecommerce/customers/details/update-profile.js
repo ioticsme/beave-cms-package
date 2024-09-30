@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTEcommerceUpdateProfile = function () {
+var BEAVEEcommerceUpdateProfile = function () {
     var submitButton;
     var validator;
     var form;
@@ -49,13 +49,13 @@ var KTEcommerceUpdateProfile = function () {
 					console.log('validated!');
 
 					if (status == 'Valid') {
-						submitButton.setAttribute('data-kt-indicator', 'on');
+						submitButton.setAttribute('data-beave-indicator', 'on');
 
 						// Disable submit button whilst loading
 						submitButton.disabled = true;
 
 						setTimeout(function() {
-							submitButton.removeAttribute('data-kt-indicator');
+							submitButton.removeAttribute('data-beave-indicator');
 							
 							Swal.fire({
 								text: "Your profile has been saved!",
@@ -101,6 +101,6 @@ var KTEcommerceUpdateProfile = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-	KTEcommerceUpdateProfile.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+	BEAVEEcommerceUpdateProfile.init();
 });

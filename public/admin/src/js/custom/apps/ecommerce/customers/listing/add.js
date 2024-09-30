@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalCustomersAdd = function () {
+var BEAVEModalCustomersAdd = function () {
     var submitButton;
     var cancelButton;
 	var closeButton;
@@ -107,13 +107,13 @@ var KTModalCustomersAdd = function () {
 					console.log('validated!');
 
 					if (status == 'Valid') {
-						submitButton.setAttribute('data-kt-indicator', 'on');
+						submitButton.setAttribute('data-beave-indicator', 'on');
 
 						// Disable submit button whilst loading
 						submitButton.disabled = true;
 
 						setTimeout(function() {
-							submitButton.removeAttribute('data-kt-indicator');
+							submitButton.removeAttribute('data-beave-indicator');
 							
 							Swal.fire({
 								text: "Form has been successfully submitted!",
@@ -132,7 +132,7 @@ var KTModalCustomersAdd = function () {
 									submitButton.disabled = false;
 
 									// Redirect to customers list page
-									window.location = form.getAttribute("data-kt-redirect");
+									window.location = form.getAttribute("data-beave-redirect");
 								}
 							});							
 						}, 2000);   						
@@ -233,6 +233,6 @@ var KTModalCustomersAdd = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-	KTModalCustomersAdd.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+	BEAVEModalCustomersAdd.init();
 });

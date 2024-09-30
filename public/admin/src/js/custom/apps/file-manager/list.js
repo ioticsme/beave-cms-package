@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTFileManagerList = function () {
+var BEAVEFileManagerList = function () {
     // Define shared variables
     var datatable;
     var table
@@ -15,10 +15,10 @@ var KTFileManagerList = function () {
 
     // Private functions
     const initTemplates = () => {
-        uploadTemplate = document.querySelector('[data-kt-filemanager-template="upload"]');
-        renameTemplate = document.querySelector('[data-kt-filemanager-template="rename"]');
-        actionTemplate = document.querySelector('[data-kt-filemanager-template="action"]');
-        checkboxTemplate = document.querySelector('[data-kt-filemanager-template="checkbox"]');
+        uploadTemplate = document.querySelector('[data-beave-filemanager-template="upload"]');
+        renameTemplate = document.querySelector('[data-beave-filemanager-template="rename"]');
+        actionTemplate = document.querySelector('[data-beave-filemanager-template="action"]');
+        checkboxTemplate = document.querySelector('[data-beave-filemanager-template="checkbox"]');
     }
 
     const initDatatable = () => {
@@ -80,7 +80,7 @@ var KTFileManagerList = function () {
 
         // Define datatable options to load
         var loadOptions;
-        if (table.getAttribute('data-kt-filemanager-table') === 'folders') {
+        if (table.getAttribute('data-beave-filemanager-table') === 'folders') {
             loadOptions = foldersListOptions;
         } else {
             loadOptions = filesListOptions;
@@ -95,7 +95,7 @@ var KTFileManagerList = function () {
             handleDeleteRows();
             toggleToolbars();
             resetNewFolder();
-            KTMenu.createInstances();
+            BEAVEMenu.createInstances();
             initCopyLink();
             countTotalItems();
             handleRename();
@@ -104,7 +104,7 @@ var KTFileManagerList = function () {
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     const handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-filemanager-table-filter="search"]');
+        const filterSearch = document.querySelector('[data-beave-filemanager-table-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
@@ -113,7 +113,7 @@ var KTFileManagerList = function () {
     // Delete customer
     const handleDeleteRows = () => {
         // Select all delete buttons
-        const deleteButtons = table.querySelectorAll('[data-kt-filemanager-table-filter="delete_row"]');
+        const deleteButtons = table.querySelectorAll('[data-beave-filemanager-table-filter="delete_row"]');
 
         deleteButtons.forEach(d => {
             // Delete button on click
@@ -173,12 +173,12 @@ var KTFileManagerList = function () {
         // Toggle selected action toolbar
         // Select all checkboxes
         var checkboxes = table.querySelectorAll('[type="checkbox"]');
-        if (table.getAttribute('data-kt-filemanager-table') === 'folders') {
+        if (table.getAttribute('data-beave-filemanager-table') === 'folders') {
             checkboxes = document.querySelectorAll('#kt_file_manager_list_wrapper [type="checkbox"]');
         }
 
         // Select elements
-        const deleteSelected = document.querySelector('[data-kt-filemanager-table-select="delete_selected"]');
+        const deleteSelected = document.querySelector('[data-beave-filemanager-table-select="delete_selected"]');
 
         // Toggle delete selected toolbar
         checkboxes.forEach(c => {
@@ -245,9 +245,9 @@ var KTFileManagerList = function () {
     // Toggle toolbars
     const toggleToolbars = () => {
         // Define variables
-        const toolbarBase = document.querySelector('[data-kt-filemanager-table-toolbar="base"]');
-        const toolbarSelected = document.querySelector('[data-kt-filemanager-table-toolbar="selected"]');
-        const selectedCount = document.querySelector('[data-kt-filemanager-table-select="selected_count"]');
+        const toolbarBase = document.querySelector('[data-beave-filemanager-table-toolbar="base"]');
+        const toolbarSelected = document.querySelector('[data-beave-filemanager-table-toolbar="selected"]');
+        const selectedCount = document.querySelector('[data-beave-filemanager-table-select="selected_count"]');
 
         // Select refreshed checkbox DOM elements 
         const allCheckboxes = table.querySelectorAll('tbody [type="checkbox"]');
@@ -278,7 +278,7 @@ var KTFileManagerList = function () {
     // Handle new folder
     const handleNewFolder = () => {
         // Select button
-        const newFolder = document.getElementById('kt_file_manager_new_folder');
+        const newFolder = document.getElementById('beave_file_manager_new_folder');
 
         // Handle click action
         newFolder.addEventListener('click', e => {
@@ -331,7 +331,7 @@ var KTFileManagerList = function () {
                 e.preventDefault();
 
                 // Activate indicator
-                rowButton.setAttribute("data-kt-indicator", "on");
+                rowButton.setAttribute("data-beave-indicator", "on");
 
                 // Validate form before submit
                 if (validator) {
@@ -355,7 +355,7 @@ var KTFileManagerList = function () {
                                     "date": '-',
                                     'action': actionTemplate.innerHTML
                                 }).node();
-                                $(newRow).find('td').eq(4).attr('data-kt-filemanager-table', 'action_dropdown');
+                                $(newRow).find('td').eq(4).attr('data-beave-filemanager-table', 'action_dropdown');
                                 $(newRow).find('td').eq(4).addClass('text-end'); // Add custom class to last 'td' element --- more info: https://datatables.net/forums/discussion/22341/row-add-cell-class
 
                                 // Re-sort datatable to allow new folder added at the top
@@ -390,7 +390,7 @@ var KTFileManagerList = function () {
                                 toastr.success(rowInput.value + ' was created!');
 
                                 // Disable indicator
-                                rowButton.removeAttribute("data-kt-indicator");
+                                rowButton.removeAttribute("data-beave-indicator");
 
                                 // Reset input
                                 rowInput.value = '';
@@ -400,7 +400,7 @@ var KTFileManagerList = function () {
                             }, 2000);
                         } else {
                             // Disable indicator
-                            rowButton.removeAttribute("data-kt-indicator");
+                            rowButton.removeAttribute("data-beave-indicator");
                         }
                     });
                 }
@@ -411,11 +411,11 @@ var KTFileManagerList = function () {
                 e.preventDefault();
 
                 // Activate indicator
-                cancelButton.setAttribute("data-kt-indicator", "on");
+                cancelButton.setAttribute("data-beave-indicator", "on");
 
                 setTimeout(function () {
                     // Disable indicator
-                    cancelButton.removeAttribute("data-kt-indicator");
+                    cancelButton.removeAttribute("data-beave-indicator");
 
                     // Toggle toastr
                     toastr.options = {
@@ -453,7 +453,7 @@ var KTFileManagerList = function () {
 
     // Handle rename file or folder
     const handleRename = () => {
-        const renameButton = table.querySelectorAll('[data-kt-filemanager-table="rename"]');     
+        const renameButton = table.querySelectorAll('[data-beave-filemanager-table="rename"]');     
 
         renameButton.forEach(button => {
             button.addEventListener('click', renameCallback);
@@ -593,7 +593,7 @@ var KTFileManagerList = function () {
             e.preventDefault();
 
             // Simulate process for demo only
-            cancelInputButton.setAttribute("data-kt-indicator", "on");
+            cancelInputButton.setAttribute("data-beave-indicator", "on");
 
             setTimeout(function () {
                 const revertTemplate = `<div class="d-flex align-items-center">
@@ -602,7 +602,7 @@ var KTFileManagerList = function () {
                 </div>`;
 
                 // Remove spinner
-                cancelInputButton.removeAttribute("data-kt-indicator");
+                cancelInputButton.removeAttribute("data-beave-indicator");
 
                 // Draw datatable with new content -- Add more events here for any server-side events
                 datatable.cell($(nameCol)).data(revertTemplate).draw();
@@ -768,13 +768,13 @@ var KTFileManagerList = function () {
     // Init copy link
     const initCopyLink = () => {
         // Select all copy link elements
-        const elements = table.querySelectorAll('[data-kt-filemanger-table="copy_link"]');
+        const elements = table.querySelectorAll('[data-beave-filemanger-table="copy_link"]');
 
         elements.forEach(el => {
             // Define elements
             const button = el.querySelector('button');
-            const generator = el.querySelector('[data-kt-filemanger-table="copy_link_generator"]');
-            const result = el.querySelector('[data-kt-filemanger-table="copy_link_result"]');
+            const generator = el.querySelector('[data-beave-filemanger-table="copy_link_generator"]');
+            const result = el.querySelector('[data-beave-filemanger-table="copy_link_result"]');
             const input = el.querySelector('input');
 
             // Click action
@@ -831,7 +831,7 @@ var KTFileManagerList = function () {
         saveButton.addEventListener('click', e => {
             e.preventDefault();
 
-            saveButton.setAttribute("data-kt-indicator", "on");
+            saveButton.setAttribute("data-beave-indicator", "on");
 
             if (validator) {
                 validator.validate().then(function (status) {
@@ -876,7 +876,7 @@ var KTFileManagerList = function () {
 
                                     toastr.success('1 item has been moved.');
 
-                                    saveButton.removeAttribute("data-kt-indicator");
+                                    saveButton.removeAttribute("data-beave-indicator");
                                 } else {
                                     Swal.fire({
                                         text: "Your action has been cancelled!.",
@@ -888,12 +888,12 @@ var KTFileManagerList = function () {
                                         }
                                     });
 
-                                    saveButton.removeAttribute("data-kt-indicator");
+                                    saveButton.removeAttribute("data-beave-indicator");
                                 }
                             });
                         }, 500);
                     } else {
-                        saveButton.removeAttribute("data-kt-indicator");
+                        saveButton.removeAttribute("data-beave-indicator");
                     }
                 });
             }
@@ -902,7 +902,7 @@ var KTFileManagerList = function () {
 
     // Count total number of items
     const countTotalItems = () => {
-        const counter = document.getElementById('kt_file_manager_items_counter');
+        const counter = document.getElementById('beave_file_manager_items_counter');
 
         // Count total number of elements in datatable --- more info: https://datatables.net/reference/api/count()
         counter.innerText = datatable.rows().count() + ' items';
@@ -928,12 +928,12 @@ var KTFileManagerList = function () {
             handleRename();
             handleMoveToFolder();
             countTotalItems();
-            KTMenu.createInstances();
+            BEAVEMenu.createInstances();
         }
     }
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTFileManagerList.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEFileManagerList.init();
 });

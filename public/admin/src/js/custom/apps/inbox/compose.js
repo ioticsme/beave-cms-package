@@ -1,13 +1,13 @@
 "use strict";
 
 // Class definition
-var KTAppInboxCompose = function () {
+var BEAVEAppInboxCompose = function () {
     // Private functions
     // Init reply form
     const initForm = () => {
         // Set variables
         const form = document.querySelector('#kt_inbox_compose_form');
-        const allTagify = form.querySelectorAll('[data-kt-inbox-form="tagify"]');
+        const allTagify = form.querySelectorAll('[data-beave-inbox-form="tagify"]');
 
         // Handle CC and BCC
         handleCCandBCC(form);
@@ -30,12 +30,12 @@ var KTAppInboxCompose = function () {
     // Handle CC and BCC toggle
     const handleCCandBCC = (el) => {
         // Get elements
-        const ccElement = el.querySelector('[data-kt-inbox-form="cc"]');
-        const ccButton = el.querySelector('[data-kt-inbox-form="cc_button"]');
-        const ccClose = el.querySelector('[data-kt-inbox-form="cc_close"]');
-        const bccElement = el.querySelector('[data-kt-inbox-form="bcc"]');
-        const bccButton = el.querySelector('[data-kt-inbox-form="bcc_button"]');
-        const bccClose = el.querySelector('[data-kt-inbox-form="bcc_close"]');
+        const ccElement = el.querySelector('[data-beave-inbox-form="cc"]');
+        const ccButton = el.querySelector('[data-beave-inbox-form="cc_button"]');
+        const ccClose = el.querySelector('[data-beave-inbox-form="cc_close"]');
+        const bccElement = el.querySelector('[data-beave-inbox-form="bcc"]');
+        const bccButton = el.querySelector('[data-beave-inbox-form="bcc_button"]');
+        const bccClose = el.querySelector('[data-beave-inbox-form="bcc_close"]');
 
         // Handle CC button click
         ccButton.addEventListener('click', e => {
@@ -72,16 +72,16 @@ var KTAppInboxCompose = function () {
 
     // Handle submit form
     const handleSubmit = (el) => {
-        const submitButton = el.querySelector('[data-kt-inbox-form="send"]');
+        const submitButton = el.querySelector('[data-beave-inbox-form="send"]');
 
         // Handle button click event
         submitButton.addEventListener("click", function () {
             // Activate indicator
-            submitButton.setAttribute("data-kt-indicator", "on");
+            submitButton.setAttribute("data-beave-indicator", "on");
 
             // Disable indicator after 3 seconds
             setTimeout(function () {
-                submitButton.removeAttribute("data-kt-indicator");
+                submitButton.removeAttribute("data-beave-indicator");
             }, 3000);
         });
     }
@@ -92,7 +92,7 @@ var KTAppInboxCompose = function () {
 
         const usersList = [
             { value: 1, name: 'Emma Smith', avatar: 'avatars/300-6.jpg', email: 'e.smith@kpmg.com.au' },
-            { value: 2, name: 'Max Smith', avatar: 'avatars/300-1.jpg', email: 'max@kt.com' },
+            { value: 2, name: 'Max Smith', avatar: 'avatars/300-1.jpg', email: 'max@beave.com' },
             { value: 3, name: 'Sean Bean', avatar: 'avatars/300-5.jpg', email: 'sean@dellito.com' },
             { value: 4, name: 'Brian Cox', avatar: 'avatars/300-25.jpg', email: 'brian@exchange.com' },
             { value: 5, name: 'Francis Mitcham', avatar: 'avatars/300-9.jpg', email: 'f.mitcham@kpmg.com.au' },
@@ -222,9 +222,9 @@ var KTAppInboxCompose = function () {
     // Init dropzone
     const initDropzone = (el) => {
         // set the dropzone container id
-        const id = '[data-kt-inbox-form="dropzone"]';
+        const id = '[data-beave-inbox-form="dropzone"]';
         const dropzone = el.querySelector(id);
-        const uploadButton = el.querySelector('[data-kt-inbox-form="dropzone_upload"]');
+        const uploadButton = el.querySelector('[data-beave-inbox-form="dropzone_upload"]');
 
         // set the preview element template
         var previewNode = dropzone.querySelector(".dropzone-item");
@@ -289,6 +289,6 @@ var KTAppInboxCompose = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTAppInboxCompose.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEAppInboxCompose.init();
 });

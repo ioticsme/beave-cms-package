@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTSignupGeneral = function () {
+var BEAVESignupGeneral = function () {
     // Elements
     var form;
     var submitButton;
@@ -100,7 +100,7 @@ var KTSignupGeneral = function () {
             validator.validate().then(function (status) {
                 if (status == 'Valid') {
                     // Show loading indication
-                    submitButton.setAttribute('data-kt-indicator', 'on');
+                    submitButton.setAttribute('data-beave-indicator', 'on');
 
                     // Disable button to avoid multiple click
                     submitButton.disabled = true;
@@ -108,7 +108,7 @@ var KTSignupGeneral = function () {
                     // Simulate ajax request
                     setTimeout(function () {
                         // Hide loading indication
-                        submitButton.removeAttribute('data-kt-indicator');
+                        submitButton.removeAttribute('data-beave-indicator');
 
                         // Enable button
                         submitButton.disabled = false;
@@ -129,7 +129,7 @@ var KTSignupGeneral = function () {
                                 //form.submit();
 
                                 //form.submit(); // submit form
-                                var redirectUrl = form.getAttribute('data-kt-redirect-url');
+                                var redirectUrl = form.getAttribute('data-beave-redirect-url');
                                 if (redirectUrl) {
                                     location.href = redirectUrl;
                                 }
@@ -245,7 +245,7 @@ var KTSignupGeneral = function () {
             validator.validate().then(function (status) {
                 if (status == 'Valid') {
                     // Show loading indication
-                    submitButton.setAttribute('data-kt-indicator', 'on');
+                    submitButton.setAttribute('data-beave-indicator', 'on');
 
                     // Disable button to avoid multiple click
                     submitButton.disabled = true;
@@ -256,7 +256,7 @@ var KTSignupGeneral = function () {
                         if (response) {
                             form.reset();
 
-                            const redirectUrl = form.getAttribute('data-kt-redirect-url');
+                            const redirectUrl = form.getAttribute('data-beave-redirect-url');
 
                             if (redirectUrl) {
                                 location.href = redirectUrl;
@@ -285,7 +285,7 @@ var KTSignupGeneral = function () {
                         });
                     }).then(() => {
                         // Hide loading indication
-                        submitButton.removeAttribute('data-kt-indicator');
+                        submitButton.removeAttribute('data-beave-indicator');
 
                         // Enable button
                         submitButton.disabled = false;
@@ -336,7 +336,7 @@ var KTSignupGeneral = function () {
             // Elements
             form = document.querySelector('#kt_sign_up_form');
             submitButton = document.querySelector('#kt_sign_up_submit');
-            passwordMeter = KTPasswordMeter.getInstance(form.querySelector('[data-kt-password-meter="true"]'));
+            passwordMeter = BEAVEPasswordMeter.getInstance(form.querySelector('[data-beave-password-meter="true"]'));
 
             if (isValidUrl(submitButton.closest('form').getAttribute('action'))) {
                 handleFormAjax();
@@ -348,6 +348,6 @@ var KTSignupGeneral = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTSignupGeneral.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVESignupGeneral.init();
 });

@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAppEcommerceSaveProduct = function () {
+var BEAVEAppEcommerceSaveProduct = function () {
 
     // Private functions
 
@@ -96,7 +96,7 @@ var KTAppEcommerceSaveProduct = function () {
     // Init condition select2
     const initConditionsSelect2 = () => {
         // Tnit new repeating condition types
-        const allConditionTypes = document.querySelectorAll('[data-kt-ecommerce-catalog-add-product="product_option"]');
+        const allConditionTypes = document.querySelectorAll('[data-beave-ecommerce-catalog-add-product="product_option"]');
         allConditionTypes.forEach(type => {
             if ($(type).hasClass("select2-hidden-accessible")) {
                 return;
@@ -152,8 +152,8 @@ var KTAppEcommerceSaveProduct = function () {
     // Handle discount options
     const handleDiscount = () => {
         const discountOptions = document.querySelectorAll('input[name="discount_option"]');
-        const percentageEl = document.getElementById('kt_ecommerce_add_product_discount_percentage');
-        const fixedEl = document.getElementById('kt_ecommerce_add_product_discount_fixed');
+        const percentageEl = document.getElementById('beave_ecommerce_add_product_discount_percentage');
+        const fixedEl = document.getElementById('beave_ecommerce_add_product_discount_fixed');
 
         discountOptions.forEach(option => {
             option.addEventListener('change', e => {
@@ -182,8 +182,8 @@ var KTAppEcommerceSaveProduct = function () {
 
     // Shipping option handler
     const handleShipping = () => {
-        const shippingOption = document.getElementById('kt_ecommerce_add_product_shipping_checkbox');
-        const shippingForm = document.getElementById('kt_ecommerce_add_product_shipping');
+        const shippingOption = document.getElementById('beave_ecommerce_add_product_shipping_checkbox');
+        const shippingForm = document.getElementById('beave_ecommerce_add_product_shipping');
 
         shippingOption.addEventListener('change', e => {
             const value = e.target.checked;
@@ -198,8 +198,8 @@ var KTAppEcommerceSaveProduct = function () {
 
     // Category status handler
     const handleStatus = () => {
-        const target = document.getElementById('kt_ecommerce_add_product_status');
-        const select = document.getElementById('kt_ecommerce_add_product_status_select');
+        const target = document.getElementById('beave_ecommerce_add_product_status');
+        const select = document.getElementById('beave_ecommerce_add_product_status_select');
         const statusClasses = ['bg-success', 'bg-warning', 'bg-danger'];
 
         $(select).on('change', function (e) {
@@ -237,7 +237,7 @@ var KTAppEcommerceSaveProduct = function () {
 
 
         // Handle datepicker
-        const datepicker = document.getElementById('kt_ecommerce_add_product_status_datepicker');
+        const datepicker = document.getElementById('beave_ecommerce_add_product_status_datepicker');
 
         // Init flatpickr --- more info: https://flatpickr.js.org/
         $('#kt_ecommerce_add_product_status_datepicker').flatpickr({
@@ -257,7 +257,7 @@ var KTAppEcommerceSaveProduct = function () {
     // Condition type handler
     const handleConditions = () => {
         const allConditions = document.querySelectorAll('[name="method"][type="radio"]');
-        const conditionMatch = document.querySelector('[data-kt-ecommerce-catalog-add-category="auto-options"]');
+        const conditionMatch = document.querySelector('[data-beave-ecommerce-catalog-add-category="auto-options"]');
         allConditions.forEach(radio => {
             radio.addEventListener('change', e => {
                 if (e.target.value === '1') {
@@ -275,8 +275,8 @@ var KTAppEcommerceSaveProduct = function () {
         let validator;
 
         // Get elements
-        const form = document.getElementById('kt_ecommerce_add_product_form');
-        const submitButton = document.getElementById('kt_ecommerce_add_product_submit');
+        const form = document.getElementById('beave_ecommerce_add_product_form');
+        const submitButton = document.getElementById('beave_ecommerce_add_product_submit');
 
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
         validator = FormValidation.formValidation(
@@ -347,13 +347,13 @@ var KTAppEcommerceSaveProduct = function () {
                     console.log('validated!');
 
                     if (status == 'Valid') {
-                        submitButton.setAttribute('data-kt-indicator', 'on');
+                        submitButton.setAttribute('data-beave-indicator', 'on');
 
                         // Disable submit button whilst loading
                         submitButton.disabled = true;
 
                         setTimeout(function () {
-                            submitButton.removeAttribute('data-kt-indicator');
+                            submitButton.removeAttribute('data-beave-indicator');
 
                             Swal.fire({
                                 text: "Form has been successfully submitted!",
@@ -369,7 +369,7 @@ var KTAppEcommerceSaveProduct = function () {
                                     submitButton.disabled = false;
 
                                     // Redirect to customers list page
-                                    window.location = form.getAttribute("data-kt-redirect");
+                                    window.location = form.getAttribute("data-beave-redirect");
                                 }
                             });
                         }, 2000);
@@ -411,6 +411,6 @@ var KTAppEcommerceSaveProduct = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTAppEcommerceSaveProduct.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEAppEcommerceSaveProduct.init();
 });

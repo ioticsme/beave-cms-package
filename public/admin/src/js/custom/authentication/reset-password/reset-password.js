@@ -1,7 +1,7 @@
 "use strict";
 
 // Class Definition
-var KTAuthResetPassword = function () {
+var BEAVEAuthResetPassword = function () {
     // Elements
     var form;
     var submitButton;
@@ -46,7 +46,7 @@ var KTAuthResetPassword = function () {
             validator.validate().then(function (status) {
                 if (status == 'Valid') {
                     // Show loading indication
-                    submitButton.setAttribute('data-kt-indicator', 'on');
+                    submitButton.setAttribute('data-beave-indicator', 'on');
 
                     // Disable button to avoid multiple click
                     submitButton.disabled = true;
@@ -54,7 +54,7 @@ var KTAuthResetPassword = function () {
                     // Simulate ajax request
                     setTimeout(function () {
                         // Hide loading indication
-                        submitButton.removeAttribute('data-kt-indicator');
+                        submitButton.removeAttribute('data-beave-indicator');
 
                         // Enable button
                         submitButton.disabled = false;
@@ -73,7 +73,7 @@ var KTAuthResetPassword = function () {
                                 form.querySelector('[name="email"]').value = "";
                                 //form.submit();
 
-                                var redirectUrl = form.getAttribute('data-kt-redirect-url');
+                                var redirectUrl = form.getAttribute('data-beave-redirect-url');
                                 if (redirectUrl) {
                                     location.href = redirectUrl;
                                 }
@@ -106,7 +106,7 @@ var KTAuthResetPassword = function () {
             validator.validate().then(function (status) {
                 if (status == 'Valid') {
                     // Show loading indication
-                    submitButton.setAttribute('data-kt-indicator', 'on');
+                    submitButton.setAttribute('data-beave-indicator', 'on');
 
                     // Disable button to avoid multiple click
                     submitButton.disabled = true;
@@ -127,7 +127,7 @@ var KTAuthResetPassword = function () {
                                 }
                             });
 
-                            const redirectUrl = form.getAttribute('data-kt-redirect-url');
+                            const redirectUrl = form.getAttribute('data-beave-redirect-url');
 
                             if (redirectUrl) {
                                 location.href = redirectUrl;
@@ -156,7 +156,7 @@ var KTAuthResetPassword = function () {
                         });
                     }).then(() => {
                         // Hide loading indication
-                        submitButton.removeAttribute('data-kt-indicator');
+                        submitButton.removeAttribute('data-beave-indicator');
 
                         // Enable button
                         submitButton.disabled = false;
@@ -205,6 +205,6 @@ var KTAuthResetPassword = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTAuthResetPassword.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEAuthResetPassword.init();
 });

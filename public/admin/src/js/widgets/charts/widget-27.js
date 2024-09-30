@@ -1,21 +1,21 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget27 = function () {
+var BEAVEChartsWidget27 = function () {
     var chart = {
         self: null,
         rendered: false
     };
     // Private methods
     var initChart = function(chart) {
-        var element = document.getElementById("kt_charts_widget_27"); 
+        var element = document.getElementById("beave_charts_widget_27"); 
 
         if (!element) {
             return;
         }
         
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-800');    
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-800');    
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
         var maxValue = 18;
         
         var options = {
@@ -143,7 +143,7 @@ var KTChartsWidget27 = function () {
             initChart(chart);
 
             // Update chart on theme mode change
-            KTThemeMode.on("kt.thememode.change", function() {                
+            BEAVEThemeMode.on("beave.thememode.change", function() {                
                 if (chart.rendered) {
                     chart.self.destroy();
                 }
@@ -156,12 +156,12 @@ var KTChartsWidget27 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTChartsWidget27;
+    module.exports = BEAVEChartsWidget27;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTChartsWidget27.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEChartsWidget27.init();
 });
 
 

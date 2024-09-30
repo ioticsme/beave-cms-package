@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalOfferADealDetails = function () {
+var BEAVEModalOfferADealDetails = function () {
 	// Variables
 	var nextButton;
 	var previousButton;
@@ -88,12 +88,12 @@ var KTModalOfferADealDetails = function () {
 
 					if (status == 'Valid') {
 						// Show loading indication
-						nextButton.setAttribute('data-kt-indicator', 'on');
+						nextButton.setAttribute('data-beave-indicator', 'on');
 
 						// Simulate form submission
 						setTimeout(function() {
 							// Simulate form submission
-							nextButton.removeAttribute('data-kt-indicator');
+							nextButton.removeAttribute('data-beave-indicator');
 
 							// Enable button
 							nextButton.disabled = false;
@@ -129,10 +129,10 @@ var KTModalOfferADealDetails = function () {
 	return {
 		// Public functions
 		init: function () {
-			form = KTModalOfferADeal.getForm();
-			stepper = KTModalOfferADeal.getStepperObj();
-			nextButton = KTModalOfferADeal.getStepper().querySelector('[data-kt-element="details-next"]');
-			previousButton = KTModalOfferADeal.getStepper().querySelector('[data-kt-element="details-previous"]');
+			form = BEAVEModalOfferADeal.getForm();
+			stepper = BEAVEModalOfferADeal.getStepperObj();
+			nextButton = BEAVEModalOfferADeal.getStepper().querySelector('[data-beave-element="details-next"]');
+			previousButton = BEAVEModalOfferADeal.getStepper().querySelector('[data-beave-element="details-previous"]');
 
 			initForm();
 			initValidation();
@@ -143,5 +143,5 @@ var KTModalOfferADealDetails = function () {
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-	window.KTModalOfferADealDetails = module.exports = KTModalOfferADealDetails;
+	window.BEAVEModalOfferADealDetails = module.exports = BEAVEModalOfferADealDetails;
 }

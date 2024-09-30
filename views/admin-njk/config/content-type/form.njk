@@ -48,7 +48,7 @@
 				$(this).slideDown();
 				// Re-init select2
 				$(this)
-					.find('[data-kt-repeate="select2"]')
+					.find('[data-beave-repeate="select2"]')
 					.select2();
 			},
 
@@ -57,7 +57,7 @@
 			},
 			ready: function () {
 				// Init select2
-				$('[data-kt-repeate="select2"]').select2();
+				$('[data-beave-repeate="select2"]').select2();
 			}
 		});
 
@@ -104,8 +104,8 @@
 
 {% block content %}
 	<div class="d-flex flex-column flex-column-fluid">
-		<div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-			<div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+		<div id="beave_app_toolbar" class="app-toolbar py-3 py-lg-6">
+			<div id="beave_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
 						{{ 'Edit' if contentType else 'Add' }} Content Type
@@ -125,17 +125,17 @@
 				</div>
 			</div>
 		</div>
-		<form id="kt_account_profile_details_form" class="form es-form" action="/admin/config/content-type/save" data-redirect-url="/admin/config/content-type" method="post" autocomplete="off">
-			<div id="kt_app_content" class="app-content flex-column-fluid">
-				<div id="kt_app_content_container" class="app-container container-xxl">
+		<form id="beave_account_profile_details_form" class="form es-form" action="/admin/config/content-type/save" data-redirect-url="/admin/config/content-type" method="post" autocomplete="off">
+			<div id="beave_app_content" class="app-content flex-column-fluid">
+				<div id="beave_app_content_container" class="app-container container-xxl">
 
 					<div class="card mb-5 mb-xl-10">
-						<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+						<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="beave_account_profile_details">
 							<div class="card-title m-0">
 								<h3 class="fw-bold m-0">Content Type Form</h3>
 							</div>
 						</div>
-						<div id="kt_account_settings_profile_details">
+						<div id="beave_account_settings_profile_details">
 							<input type="hidden" name="id" value="{{ contentType._id }}">
 							<div class="card-body border-top p-9">
 								<div class="row mb-6">
@@ -160,8 +160,8 @@
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Single Type</label>
 									<div class="col-lg-8 fv-row">
 										<div class="form-check form-switch form-check-custom form-check-success form-check-solid">
-											<input id="kt_flexSwitchCustomDefault_1_1" class="form-check-input" type="checkbox" name="single_type" value="true" {{ 'checked' if contentType.single_type }}>
-											<label class="form-check-label" for="kt_flexSwitchCustomDefault_1_1"></label>
+											<input id="beave_flexSwitchCustomDefault_1_1" class="form-check-input" type="checkbox" name="single_type" value="true" {{ 'checked' if contentType.single_type }}>
+											<label class="form-check-label" for="beave_flexSwitchCustomDefault_1_1"></label>
 										</div>
 										<div class="fv-plugins-message-container invalid-feedback" id="field-error-single_type"></div>
 									</div>
@@ -170,8 +170,8 @@
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Editor Type</label>
 									<div class="col-lg-8 fv-row">
 										<div class="form-check form-switch form-check-custom form-check-success form-check-solid">
-											<input id="kt_flexSwitchCustomDefault_1_1" class="form-check-input" type="checkbox" name="page_builder" value="true" {{ 'checked' if contentType.page_builder }}>
-											<label class="form-check-label" for="kt_flexSwitchCustomDefault_1_1">
+											<input id="beave_flexSwitchCustomDefault_1_1" class="form-check-input" type="checkbox" name="page_builder" value="true" {{ 'checked' if contentType.page_builder }}>
+											<label class="form-check-label" for="beave_flexSwitchCustomDefault_1_1">
 												Page Builder
 											</label>
 										</div>
@@ -237,12 +237,12 @@
 					</div>
 
 					<div class="card mb-5 mb-xl-10">
-						<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+						<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="beave_account_profile_details">
 							<div class="card-title m-0">
 								<h3 class="fw-bold m-0">Features Checklist</h3>
 							</div>
 						</div>
-						<div id="kt_account_settings_profile_details">
+						<div id="beave_account_settings_profile_details">
 							<div class="card-body border-top p-9">
 								<div class="row mb-6">
 									<span class="col-lg-4 col-form-label required fw-semibold fs-6">Features Checklist</span>
@@ -282,7 +282,7 @@
 							</div>
 
 							<div class="card-footer d-flex justify-content-end py-6 px-9">
-								<button class="btn btn-primary form-submit-btn" id="kt_account_profile_details_submit" type="submit">
+								<button class="btn btn-primary form-submit-btn" id="beave_account_profile_details_submit" type="submit">
 									<span class="preloader d-none">Saving...</span>
 									<span class="label">Save</span>
 								</button>

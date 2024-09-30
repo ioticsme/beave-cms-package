@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget4 = function () {
+var BEAVEChartsWidget4 = function () {
     var chart = {
         self: null,
         rendered: false
@@ -9,17 +9,17 @@ var KTChartsWidget4 = function () {
 
     // Private methods
     var initChart = function() {
-        var element = document.getElementById("kt_charts_widget_4");
+        var element = document.getElementById("beave_charts_widget_4");
 
         if (!element) {
             return;
         }
         
-        var height = parseInt(KTUtil.css(element, 'height'));
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');
-        var baseColor = KTUtil.getCssVariableValue('--bs-primary');
-        var lightColor = KTUtil.getCssVariableValue('--bs-primary');
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
+        var baseColor = BEAVEUtil.getCssVariableValue('--bs-primary');
+        var lightColor = BEAVEUtil.getCssVariableValue('--bs-primary');
 
         var options = {
             series: [{
@@ -168,7 +168,7 @@ var KTChartsWidget4 = function () {
             initChart();
 
             // Update chart on theme mode change
-            KTThemeMode.on("kt.thememode.change", function() {                
+            BEAVEThemeMode.on("beave.thememode.change", function() {                
                 if (chart.rendered) {
                     chart.self.destroy();
                 }
@@ -181,10 +181,10 @@ var KTChartsWidget4 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTChartsWidget4;
+    module.exports = BEAVEChartsWidget4;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTChartsWidget4.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEChartsWidget4.init();
 });

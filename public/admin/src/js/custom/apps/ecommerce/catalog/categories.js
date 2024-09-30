@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAppEcommerceCategories = function () {
+var BEAVEAppEcommerceCategories = function () {
     // Shared variables
     var table;
     var datatable;
@@ -27,7 +27,7 @@ var KTAppEcommerceCategories = function () {
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-ecommerce-category-filter="search"]');
+        const filterSearch = document.querySelector('[data-beave-ecommerce-category-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
@@ -36,7 +36,7 @@ var KTAppEcommerceCategories = function () {
     // Delete cateogry
     var handleDeleteRows = () => {
         // Select all delete buttons
-        const deleteButtons = table.querySelectorAll('[data-kt-ecommerce-category-filter="delete_row"]');
+        const deleteButtons = table.querySelectorAll('[data-beave-ecommerce-category-filter="delete_row"]');
 
         deleteButtons.forEach(d => {
             // Delete button on click
@@ -47,7 +47,7 @@ var KTAppEcommerceCategories = function () {
                 const parent = e.target.closest('tr');
 
                 // Get category name
-                const categoryName = parent.querySelector('[data-kt-ecommerce-category-filter="category_name"]').innerText;
+                const categoryName = parent.querySelector('[data-beave-ecommerce-category-filter="category_name"]').innerText;
 
                 // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
                 Swal.fire({
@@ -109,6 +109,6 @@ var KTAppEcommerceCategories = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTAppEcommerceCategories.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEAppEcommerceCategories.init();
 });

@@ -1,13 +1,13 @@
 "use strict";
 
-var KTSubscriptionsAdvanced = function () {
+var BEAVESubscriptionsAdvanced = function () {
     // Shared variables
     var table;
     var datatable;
 
     var initCustomFieldsDatatable = function () {
         // Define variables
-        const addButton = document.getElementById('kt_create_new_custom_fields_add');
+        const addButton = document.getElementById('beave_create_new_custom_fields_add');
 
         // Duplicate input fields
         const fieldName = table.querySelector('tbody tr td:first-child').innerHTML;
@@ -62,7 +62,7 @@ var KTSubscriptionsAdvanced = function () {
 
     // Delete product
     var deleteCustomField = function() {
-        KTUtil.on(table, '[data-kt-action="field_remove"]', 'click', function(e) {
+        BEAVEUtil.on(table, '[data-beave-action="field_remove"]', 'click', function(e) {
             e.preventDefault();
 
             // Select parent row
@@ -111,7 +111,7 @@ var KTSubscriptionsAdvanced = function () {
 
     return {
         init: function () {
-            table = document.getElementById('kt_create_new_custom_fields');
+            table = document.getElementById('beave_create_new_custom_fields');
 
             initCustomFieldsDatatable();
             initCustomFieldRowIndex();            
@@ -121,6 +121,6 @@ var KTSubscriptionsAdvanced = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTSubscriptionsAdvanced.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVESubscriptionsAdvanced.init();
 });

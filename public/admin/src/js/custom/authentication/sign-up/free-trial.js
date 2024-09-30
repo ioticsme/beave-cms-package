@@ -1,7 +1,7 @@
 "use strict";
 
 // Class Definition
-var KTSignupFreeTrial = function() {
+var BEAVESignupFreeTrial = function() {
     // Elements
     var form;
     var submitButton;
@@ -85,7 +85,7 @@ var KTSignupFreeTrial = function() {
             validator.validate().then(function(status) {
 		        if (status == 'Valid') {
                     // Show loading indication
-                    submitButton.setAttribute('data-kt-indicator', 'on');
+                    submitButton.setAttribute('data-beave-indicator', 'on');
 
                     // Disable button to avoid multiple click 
                     submitButton.disabled = true;
@@ -93,7 +93,7 @@ var KTSignupFreeTrial = function() {
                     // Simulate ajax request
                     setTimeout(function() {
                         // Hide loading indication
-                        submitButton.removeAttribute('data-kt-indicator');
+                        submitButton.removeAttribute('data-beave-indicator');
 
                         // Enable button
                         submitButton.disabled = false;
@@ -113,7 +113,7 @@ var KTSignupFreeTrial = function() {
                                 passwordMeter.reset();  // reset password meter
 
                                 //form.submit(); // submit form
-                                var redirectUrl = form.getAttribute('data-kt-redirect-url');
+                                var redirectUrl = form.getAttribute('data-beave-redirect-url');
                                 if (redirectUrl) {
                                     location.href = redirectUrl;
                                 }
@@ -153,7 +153,7 @@ var KTSignupFreeTrial = function() {
         init: function() {
             form = document.querySelector('#kt_free_trial_form');
             submitButton = document.querySelector('#kt_free_trial_submit');
-            passwordMeter = KTPasswordMeter.getInstance(form.querySelector('[data-kt-password-meter="true"]'));
+            passwordMeter = BEAVEPasswordMeter.getInstance(form.querySelector('[data-beave-password-meter="true"]'));
 
             handleForm();
         }
@@ -161,8 +161,8 @@ var KTSignupFreeTrial = function() {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTSignupFreeTrial.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVESignupFreeTrial.init();
 });
 
 

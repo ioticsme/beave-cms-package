@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget12 = function () {
+var BEAVEChartsWidget12 = function () {
     // Private methods
     var initChart = function(tabSelector, chartSelector, data, initByDefault) {
         var element = document.querySelector(chartSelector);
@@ -10,10 +10,10 @@ var KTChartsWidget12 = function () {
             return;
         }
         
-        var height = parseInt(KTUtil.css(element, 'height'));
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-900');
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-900');
 
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');    
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');    
 
         var options = {
             series: [{
@@ -69,7 +69,7 @@ var KTChartsWidget12 = function () {
                 },
                 labels: {
                     style: {
-                        colors: KTUtil.getCssVariableValue('--bs-gray-500'),
+                        colors: BEAVEUtil.getCssVariableValue('--bs-gray-500'),
                         fontSize: '13px'
                     }                    
                 },
@@ -85,7 +85,7 @@ var KTChartsWidget12 = function () {
             yaxis: {
                 labels: {
                     style: {
-                        colors: KTUtil.getCssVariableValue('--bs-gray-500'),
+                        colors: BEAVEUtil.getCssVariableValue('--bs-gray-500'),
                         fontSize: '13px'
                     },
                     
@@ -128,7 +128,7 @@ var KTChartsWidget12 = function () {
                     }
                 }
             },
-            colors: [KTUtil.getCssVariableValue('--bs-primary'), KTUtil.getCssVariableValue('--bs-primary-light')],
+            colors: [BEAVEUtil.getCssVariableValue('--bs-primary'), BEAVEUtil.getCssVariableValue('--bs-primary-light')],
             grid: {
                 borderColor: borderColor,
                 strokeDashArray: 4,
@@ -170,12 +170,12 @@ var KTChartsWidget12 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTChartsWidget12;
+    module.exports = BEAVEChartsWidget12;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTChartsWidget12.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEChartsWidget12.init();
 });
 
 

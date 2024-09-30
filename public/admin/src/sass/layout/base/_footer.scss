@@ -27,7 +27,7 @@
     .app-footer {
         height: var(--#{$prefix}app-footer-height);
 
-        [data-kt-app-footer-fixed="true"] & {        
+        [data-beave-app-footer-fixed="true"] & {        
             @include property( z-index, $app-footer-fixed-z-index);   
             box-shadow: var(--#{$prefix}app-footer-box-shadow); 
             position: fixed;
@@ -40,7 +40,7 @@
     // Integration
     .app-footer {
         // Sidebar
-        [data-kt-app-sidebar-fixed="true"][data-kt-app-sidebar-push-footer="true"] & {
+        [data-beave-app-sidebar-fixed="true"][data-beave-app-sidebar-push-footer="true"] & {
             left: calc(
                 var(--#{$prefix}app-sidebar-width) + 
                 var(--#{$prefix}app-sidebar-gap-start, 0px) + 
@@ -49,7 +49,7 @@
         }   
 
         // Sidebar Panel
-        [data-kt-app-sidebar-panel-fixed="true"][data-kt-app-sidebar-panel-push-footer="true"] & {
+        [data-beave-app-sidebar-panel-fixed="true"][data-beave-app-sidebar-panel-push-footer="true"] & {
             left: calc(
                 var(--#{$prefix}app-sidebar-width) + 
                 var(--#{$prefix}app-sidebar-gap-start, 0px) + 
@@ -61,7 +61,7 @@
         }
 
         // Aside
-        [data-kt-app-aside-fixed="true"][data-kt-app-aside-push-footer="true"] & {
+        [data-beave-app-aside-fixed="true"][data-beave-app-aside-push-footer="true"] & {
             right: calc(
                 var(--#{$prefix}app-aside-width) + 
                 var(--#{$prefix}app-aside-gap-start, 0px) + 
@@ -87,7 +87,7 @@
     .app-footer {
         height: var(--#{$prefix}app-footer-height);
 
-        [data-kt-app-footer-fixed-mobile="true"] & {
+        [data-beave-app-footer-fixed-mobile="true"] & {
             @include property( z-index, $app-footer-fixed-z-index-mobile);
             box-shadow: var(--#{$prefix}app-footer-box-shadow); 
             position: fixed;

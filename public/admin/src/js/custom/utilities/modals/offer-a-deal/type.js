@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalOfferADealType = function () {
+var BEAVEModalOfferADealType = function () {
 	// Variables
 	var nextButton;
 	var validator;
@@ -51,12 +51,12 @@ var KTModalOfferADealType = function () {
 
 					if (status == 'Valid') {
 						// Show loading indication
-						nextButton.setAttribute('data-kt-indicator', 'on');
+						nextButton.setAttribute('data-beave-indicator', 'on');
 
 						// Simulate form submission
 						setTimeout(function() {
 							// Simulate form submission
-							nextButton.removeAttribute('data-kt-indicator');
+							nextButton.removeAttribute('data-beave-indicator');
 
 							// Enable button
 							nextButton.disabled = false;
@@ -87,9 +87,9 @@ var KTModalOfferADealType = function () {
 	return {
 		// Public functions
 		init: function () {
-			form = KTModalOfferADeal.getForm();
-			stepper = KTModalOfferADeal.getStepperObj();
-			nextButton = KTModalOfferADeal.getStepper().querySelector('[data-kt-element="type-next"]');
+			form = BEAVEModalOfferADeal.getForm();
+			stepper = BEAVEModalOfferADeal.getStepperObj();
+			nextButton = BEAVEModalOfferADeal.getStepper().querySelector('[data-beave-element="type-next"]');
 
 			initValidation();
 			handleForm();
@@ -99,5 +99,5 @@ var KTModalOfferADealType = function () {
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-	window.KTModalOfferADealType = module.exports = KTModalOfferADealType;
+	window.BEAVEModalOfferADealType = module.exports = BEAVEModalOfferADealType;
 }

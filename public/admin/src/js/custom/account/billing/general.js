@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAccountBillingGeneral = function () {
+var BEAVEAccountBillingGeneral = function () {
     // Private variables
     var cancelSubscriptionButton;
 
@@ -38,7 +38,7 @@ var KTAccountBillingGeneral = function () {
     }
 
     var handleCardDelete = function() {
-        KTUtil.on(document.body,  '[data-kt-billing-action="card-delete"]', 'click', function(e) {
+        BEAVEUtil.on(document.body,  '[data-beave-billing-action="card-delete"]', 'click', function(e) {
             e.preventDefault();
 
             var el = this;
@@ -56,7 +56,7 @@ var KTAccountBillingGeneral = function () {
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    el.setAttribute('data-kt-indicator', 'on');            
+                    el.setAttribute('data-beave-indicator', 'on');            
                     el.disabled = true;
 
                     setTimeout(function() {
@@ -69,7 +69,7 @@ var KTAccountBillingGeneral = function () {
                                 confirmButton: "btn btn-light-primary"
                             }
                         }).then((result) => {
-                            el.closest('[data-kt-billing-element="card"]').remove();
+                            el.closest('[data-beave-billing-element="card"]').remove();
                         });
                     }, 2000);
                 } 
@@ -78,7 +78,7 @@ var KTAccountBillingGeneral = function () {
     } 
 
     var handleAddressDelete = function() {
-        KTUtil.on(document.body,  '[data-kt-billing-action="address-delete"]', 'click', function(e) {
+        BEAVEUtil.on(document.body,  '[data-beave-billing-action="address-delete"]', 'click', function(e) {
             e.preventDefault();
 
             var el = this;
@@ -96,7 +96,7 @@ var KTAccountBillingGeneral = function () {
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    el.setAttribute('data-kt-indicator', 'on');            
+                    el.setAttribute('data-beave-indicator', 'on');            
                     el.disabled = true;
 
                     setTimeout(function() {
@@ -109,7 +109,7 @@ var KTAccountBillingGeneral = function () {
                                 confirmButton: "btn btn-light-primary"
                             }
                         }).then((result) => {
-                            el.closest('[data-kt-billing-element="address"]').remove();
+                            el.closest('[data-beave-billing-element="address"]').remove();
                         });
                     }, 2000);
                 } 
@@ -133,6 +133,6 @@ var KTAccountBillingGeneral = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTAccountBillingGeneral.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEAccountBillingGeneral.init();
 });

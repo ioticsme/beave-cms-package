@@ -1,9 +1,9 @@
 "use strict";
 
 // Class definition
-var KTModalExportUsers = function () {
+var BEAVEModalExportUsers = function () {
     // Shared variables
-    const element = document.getElementById('kt_modal_export_users');
+    const element = document.getElementById('beave_modal_export_users');
     const form = element.querySelector('#kt_modal_export_users_form');
     const modal = new bootstrap.Modal(element);
 
@@ -35,7 +35,7 @@ var KTModalExportUsers = function () {
         );
 
         // Submit button handler
-        const submitButton = element.querySelector('[data-kt-users-modal-action="submit"]');
+        const submitButton = element.querySelector('[data-beave-users-modal-action="submit"]');
         submitButton.addEventListener('click', function (e) {
             e.preventDefault();
 
@@ -45,13 +45,13 @@ var KTModalExportUsers = function () {
                     console.log('validated!');
 
                     if (status == 'Valid') {
-                        submitButton.setAttribute('data-kt-indicator', 'on');
+                        submitButton.setAttribute('data-beave-indicator', 'on');
 
                         // Disable submit button whilst loading
                         submitButton.disabled = true;
 
                         setTimeout(function () {
-                            submitButton.removeAttribute('data-kt-indicator');
+                            submitButton.removeAttribute('data-beave-indicator');
 
                             Swal.fire({
                                 text: "User list has been successfully exported!",
@@ -88,7 +88,7 @@ var KTModalExportUsers = function () {
         });
 
         // Cancel button handler
-        const cancelButton = element.querySelector('[data-kt-users-modal-action="cancel"]');
+        const cancelButton = element.querySelector('[data-beave-users-modal-action="cancel"]');
         cancelButton.addEventListener('click', function (e) {
             e.preventDefault();
 
@@ -122,7 +122,7 @@ var KTModalExportUsers = function () {
         });
 
         // Close button handler
-        const closeButton = element.querySelector('[data-kt-users-modal-action="close"]');
+        const closeButton = element.querySelector('[data-beave-users-modal-action="close"]');
         closeButton.addEventListener('click', function (e) {
             e.preventDefault();
 
@@ -165,6 +165,6 @@ var KTModalExportUsers = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTModalExportUsers.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEModalExportUsers.init();
 });

@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget32 = function () {
+var BEAVEChartsWidget32 = function () {
     var chart1 = {
         self: null,
         rendered: false
@@ -25,10 +25,10 @@ var KTChartsWidget32 = function () {
             return;
         }
         
-        var height = parseInt(KTUtil.css(element, 'height'));
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-900');
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-900');
 
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');    
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');    
 
         var options = {
             series: [{
@@ -80,7 +80,7 @@ var KTChartsWidget32 = function () {
                 },
                 labels: {
                     style: {
-                        colors: KTUtil.getCssVariableValue('--bs-gray-500'),
+                        colors: BEAVEUtil.getCssVariableValue('--bs-gray-500'),
                         fontSize: '13px'
                     }                    
                 },
@@ -96,7 +96,7 @@ var KTChartsWidget32 = function () {
             yaxis: {
                 labels: {
                     style: {
-                        colors: KTUtil.getCssVariableValue('--bs-gray-500'),
+                        colors: BEAVEUtil.getCssVariableValue('--bs-gray-500'),
                         fontSize: '13px'
                     }
                 }
@@ -130,7 +130,7 @@ var KTChartsWidget32 = function () {
                     fontSize: '12px'
                 }
             },
-            colors: [KTUtil.getCssVariableValue('--bs-primary'), KTUtil.getCssVariableValue('--bs-primary-light')],
+            colors: [BEAVEUtil.getCssVariableValue('--bs-primary'), BEAVEUtil.getCssVariableValue('--bs-primary-light')],
             grid: {
                 borderColor: borderColor,
                 strokeDashArray: 4,
@@ -174,7 +174,7 @@ var KTChartsWidget32 = function () {
             initChart(chart3, '#kt_charts_widget_32_tab_3', '#kt_charts_widget_32_chart_3', chart3Data, false);          
             
             // Update chart on theme mode change
-            KTThemeMode.on("kt.thememode.change", function() {
+            BEAVEThemeMode.on("beave.thememode.change", function() {
                 if (chart1.rendered) {
                     chart1.self.destroy();
                 }
@@ -197,12 +197,12 @@ var KTChartsWidget32 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTChartsWidget32;
+    module.exports = BEAVEChartsWidget32;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTChartsWidget32.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEChartsWidget32.init();
 });
 
 

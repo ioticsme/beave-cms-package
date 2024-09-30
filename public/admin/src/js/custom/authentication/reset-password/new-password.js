@@ -1,7 +1,7 @@
 "use strict";
 
 // Class Definition
-var KTAuthNewPassword = function() {
+var BEAVEAuthNewPassword = function() {
     // Elements
     var form;
     var submitButton;
@@ -82,7 +82,7 @@ var KTAuthNewPassword = function() {
             validator.validate().then(function(status) {
                 if (status == 'Valid') {
                     // Show loading indication
-                    submitButton.setAttribute('data-kt-indicator', 'on');
+                    submitButton.setAttribute('data-beave-indicator', 'on');
 
                     // Disable button to avoid multiple click
                     submitButton.disabled = true;
@@ -90,7 +90,7 @@ var KTAuthNewPassword = function() {
                     // Simulate ajax request
                     setTimeout(function() {
                         // Hide loading indication
-                        submitButton.removeAttribute('data-kt-indicator');
+                        submitButton.removeAttribute('data-beave-indicator');
 
                         // Enable button
                         submitButton.disabled = false;
@@ -111,7 +111,7 @@ var KTAuthNewPassword = function() {
                                 passwordMeter.reset();  // reset password meter
                                 //form.submit();
 
-                                var redirectUrl = form.getAttribute('data-kt-redirect-url');
+                                var redirectUrl = form.getAttribute('data-beave-redirect-url');
                                 if (redirectUrl) {
                                     location.href = redirectUrl;
                                 }
@@ -147,7 +147,7 @@ var KTAuthNewPassword = function() {
             validator.validate().then(function (status) {
                 if (status == 'Valid') {
                     // Show loading indication
-                    submitButton.setAttribute('data-kt-indicator', 'on');
+                    submitButton.setAttribute('data-beave-indicator', 'on');
 
                     // Disable button to avoid multiple click
                     submitButton.disabled = true;
@@ -157,7 +157,7 @@ var KTAuthNewPassword = function() {
                         if (response) {
                             form.reset();
 
-                            const redirectUrl = form.getAttribute('data-kt-redirect-url');
+                            const redirectUrl = form.getAttribute('data-beave-redirect-url');
 
                             if (redirectUrl) {
                                 location.href = redirectUrl;
@@ -186,7 +186,7 @@ var KTAuthNewPassword = function() {
                         });
                     }).then(() => {
                         // Hide loading indication
-                        submitButton.removeAttribute('data-kt-indicator');
+                        submitButton.removeAttribute('data-beave-indicator');
 
                         // Enable button
                         submitButton.disabled = false;
@@ -226,7 +226,7 @@ var KTAuthNewPassword = function() {
         init: function() {
             form = document.querySelector('#kt_new_password_form');
             submitButton = document.querySelector('#kt_new_password_submit');
-            passwordMeter = KTPasswordMeter.getInstance(form.querySelector('[data-kt-password-meter="true"]'));
+            passwordMeter = BEAVEPasswordMeter.getInstance(form.querySelector('[data-beave-password-meter="true"]'));
 
             handleForm();
 
@@ -240,6 +240,6 @@ var KTAuthNewPassword = function() {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTAuthNewPassword.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEAuthNewPassword.init();
 });

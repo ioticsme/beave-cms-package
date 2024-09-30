@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTLayoutSearch = function() {
+var BEAVELayoutSearch = function() {
     // Private variables
     var element;
     var formElement;
@@ -24,7 +24,7 @@ var KTLayoutSearch = function() {
     // Private functions
     var processs = function(search) {
         var timeout = setTimeout(function() {
-            var number = KTUtil.getRandomInt(1, 3);
+            var number = BEAVEUtil.getRandomInt(1, 3);
 
             // Hide recently viewed
             mainElement.classList.add('d-none');
@@ -131,32 +131,32 @@ var KTLayoutSearch = function() {
                 return;
             }
 
-            wrapperElement = element.querySelector('[data-kt-search-element="wrapper"]');
-            formElement = element.querySelector('[data-kt-search-element="form"]');
-            mainElement = element.querySelector('[data-kt-search-element="main"]');
-            resultsElement = element.querySelector('[data-kt-search-element="results"]');
-            emptyElement = element.querySelector('[data-kt-search-element="empty"]');
+            wrapperElement = element.querySelector('[data-beave-search-element="wrapper"]');
+            formElement = element.querySelector('[data-beave-search-element="form"]');
+            mainElement = element.querySelector('[data-beave-search-element="main"]');
+            resultsElement = element.querySelector('[data-beave-search-element="results"]');
+            emptyElement = element.querySelector('[data-beave-search-element="empty"]');
 
-            preferencesElement = element.querySelector('[data-kt-search-element="preferences"]');
-            preferencesShowElement = element.querySelector('[data-kt-search-element="preferences-show"]');
-            preferencesDismissElement = element.querySelector('[data-kt-search-element="preferences-dismiss"]');
+            preferencesElement = element.querySelector('[data-beave-search-element="preferences"]');
+            preferencesShowElement = element.querySelector('[data-beave-search-element="preferences-show"]');
+            preferencesDismissElement = element.querySelector('[data-beave-search-element="preferences-dismiss"]');
 
-            advancedOptionsFormElement = element.querySelector('[data-kt-search-element="advanced-options-form"]');
-            advancedOptionsFormShowElement = element.querySelector('[data-kt-search-element="advanced-options-form-show"]');
-            advancedOptionsFormCancelElement = element.querySelector('[data-kt-search-element="advanced-options-form-cancel"]');
-            advancedOptionsFormSearchElement = element.querySelector('[data-kt-search-element="advanced-options-form-search"]');
+            advancedOptionsFormElement = element.querySelector('[data-beave-search-element="advanced-options-form"]');
+            advancedOptionsFormShowElement = element.querySelector('[data-beave-search-element="advanced-options-form-show"]');
+            advancedOptionsFormCancelElement = element.querySelector('[data-beave-search-element="advanced-options-form-cancel"]');
+            advancedOptionsFormSearchElement = element.querySelector('[data-beave-search-element="advanced-options-form-search"]');
             
             // Initialize search handler
-            searchObject = new KTSearch(element);
+            searchObject = new BEAVESearch(element);
 
             // Demo search handler
-            searchObject.on('kt.search.process', processs);
+            searchObject.on('beave.search.process', processs);
 
             // Ajax search handler
-            //searchObject.on('kt.search.process', processsAjax);
+            //searchObject.on('beave.search.process', processsAjax);
 
             // Clear handler
-            searchObject.on('kt.search.clear', clear);
+            searchObject.on('beave.search.clear', clear);
 
             // Custom handlers
             if (preferencesElement) {
@@ -171,6 +171,6 @@ var KTLayoutSearch = function() {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTLayoutSearch.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVELayoutSearch.init();
 });

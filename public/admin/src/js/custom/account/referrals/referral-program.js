@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAccountReferralsReferralProgram = function () {
+var BEAVEAccountReferralsReferralProgram = function () {
     // Private functions
 
     var initReferralProgrammClipboard = function() {
@@ -38,6 +38,6 @@ var KTAccountReferralsReferralProgram = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTAccountReferralsReferralProgram.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEAccountReferralsReferralProgram.init();
 });

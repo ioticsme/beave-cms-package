@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalSelectLocation = function () {
+var BEAVEModalSelectLocation = function () {
     // Private variables
     var locationSelectTarget;
     var locationSelectButton;
@@ -18,7 +18,7 @@ var KTModalSelectLocation = function () {
         }
 
         // Define Map Location
-        var leaflet = L.map('kt_modal_select_location_map', {
+        var leaflet = L.map('beave_modal_select_location_map', {
             center: [40.725, -73.985],
             zoom: 30
         });
@@ -112,6 +112,6 @@ var KTModalSelectLocation = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTModalSelectLocation.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEModalSelectLocation.init();
 });

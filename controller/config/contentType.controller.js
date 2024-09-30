@@ -100,7 +100,7 @@ const view = async (req, res) => {
 
 const save = async (req, res) => {
     try {
-        // console.log(req.body.kt_docs_repeater_nested_outer)
+        // console.log(req.body.beave_docs_repeater_nested_outer)
         const schema = Joi.object({
             title: Joi.string().required().min(3).max(60),
             slug: Joi.string().required().min(3).max(60),
@@ -233,9 +233,9 @@ const saveFields = async (req, res) => {
         }
 
         // let customFieldGroups = []
-        // req.body.kt_docs_repeater_nested_outer?.map((repeater) => {
+        // req.body.beave_docs_repeater_nested_outer?.map((repeater) => {
         //     let fields = []
-        //     repeater.kt_docs_repeater_nested_inner?.map((inner) => {
+        //     repeater.beave_docs_repeater_nested_inner?.map((inner) => {
         //         let obj = {
         //             field_label: inner.field_label,
         //             field_name: inner.field_name,

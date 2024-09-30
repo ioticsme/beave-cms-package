@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTFormsWidget1 = (function () {
+var BEAVEFormsWidget1 = (function () {
     // Private methods
     var initForm1 = function () {
         var element = document.querySelector('#kt_forms_widget_1_select_1');
@@ -18,7 +18,7 @@ var KTFormsWidget1 = (function () {
             var span = document.createElement('span');
             var template = '';
 
-            template += '<img src="' + item.element.getAttribute('data-kt-select2-icon') + '" class="rounded-circle h-20px me-2" alt="image"/>';
+            template += '<img src="' + item.element.getAttribute('data-beave-select2-icon') + '" class="rounded-circle h-20px me-2" alt="image"/>';
             template += item.text;
 
             span.innerHTML = template;
@@ -50,7 +50,7 @@ var KTFormsWidget1 = (function () {
             var span = document.createElement('span');
             var template = '';
 
-            template += '<img src="' + item.element.getAttribute('data-kt-select2-icon') + '" class="rounded-circle h-20px me-2" alt="image"/>';
+            template += '<img src="' + item.element.getAttribute('data-beave-select2-icon') + '" class="rounded-circle h-20px me-2" alt="image"/>';
             template += item.text;
 
             span.innerHTML = template;
@@ -78,10 +78,10 @@ var KTFormsWidget1 = (function () {
 
 // Webpack support
 if (typeof module !== "undefined") {
-    module.exports = KTFormsWidget1;
+    module.exports = BEAVEFormsWidget1;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTFormsWidget1.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEFormsWidget1.init();
 });

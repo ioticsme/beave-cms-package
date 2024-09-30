@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTTablesWidget16 = function () {
+var BEAVETablesWidget16 = function () {
     var chart1 = {
         self: null,
         rendered: false
@@ -110,12 +110,12 @@ var KTTablesWidget16 = function () {
             return;
         }
         
-        var height = parseInt(KTUtil.css(element, 'height'));
-        var color = element.getAttribute('data-kt-chart-color');
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-800');
-        var strokeColor = KTUtil.getCssVariableValue('--bs-gray-300');
-        var baseColor = KTUtil.getCssVariableValue('--bs-' + color);
-        var lightColor = KTUtil.getCssVariableValue('--bs-body-bg');
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
+        var color = element.getAttribute('data-beave-chart-color');
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-800');
+        var strokeColor = BEAVEUtil.getCssVariableValue('--bs-gray-300');
+        var baseColor = BEAVEUtil.getCssVariableValue('--bs-' + color);
+        var lightColor = BEAVEUtil.getCssVariableValue('--bs-body-bg');
 
         var options = {
             series: [{
@@ -303,7 +303,7 @@ var KTTablesWidget16 = function () {
             initChart(chart20, '#kt_stats_widget_16_tab_link_5', '#kt_table_widget_16_chart_5_4', chart20Data, false);
 
             // Update chart on theme mode change
-            KTThemeMode.on("kt.thememode.change", function() {
+            BEAVEThemeMode.on("beave.thememode.change", function() {
                 if (chart1.rendered) {
                     chart1.self.destroy();
                 }
@@ -415,12 +415,12 @@ var KTTablesWidget16 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTTablesWidget16;
+    module.exports = BEAVETablesWidget16;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTTablesWidget16.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVETablesWidget16.init();
 });
 
 

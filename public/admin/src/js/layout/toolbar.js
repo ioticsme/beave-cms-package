@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTLayoutToolbar = function () {
+var BEAVELayoutToolbar = function () {
     // Private variables
     var toolbar;
 
@@ -69,6 +69,6 @@ var KTLayoutToolbar = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTLayoutToolbar.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVELayoutToolbar.init();
 });

@@ -60,7 +60,7 @@
 }
 
 // Initial state
-[data-kt-drawer="true"] {
+[data-beave-drawer="true"] {
 	display: none;
 }
 
@@ -72,7 +72,7 @@
 
 // Tablet & Mobile Modes
 @include media-breakpoint-down(lg) {
-	body[data-kt-drawer="on"] {
+	body[data-beave-drawer="on"] {
 		overflow: hidden;
 	}
 }

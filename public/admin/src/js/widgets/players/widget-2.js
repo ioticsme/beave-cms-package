@@ -1,28 +1,28 @@
 "use strict";
 
 // Class definition
-var KTPlayersWidget2 = function () {
+var BEAVEPlayersWidget2 = function () {
     // Private methods
     var initPlayer = function() {
         // https://www.w3schools.com/jsref/dom_obj_audio.asp
-        var element = document.getElementById("kt_player_widget_2");
+        var element = document.getElementById("beave_player_widget_2");
 
         if ( !element ) {
             return;
         }
 
-        var audio = element.querySelector('[data-kt-element="audio-track-1"]');
-        var progress = element.querySelector('[data-kt-element="progress"]');        
-        var currentTime = element.querySelector('[data-kt-element="current-time"]');
-        var duration = element.querySelector('[data-kt-element="duration"]');
-        var playButton = element.querySelector('[data-kt-element="play-button"]');
-        var playIcon = element.querySelector('[data-kt-element="play-icon"]');
-        var pauseIcon = element.querySelector('[data-kt-element="pause-icon"]');
+        var audio = element.querySelector('[data-beave-element="audio-track-1"]');
+        var progress = element.querySelector('[data-beave-element="progress"]');        
+        var currentTime = element.querySelector('[data-beave-element="current-time"]');
+        var duration = element.querySelector('[data-beave-element="duration"]');
+        var playButton = element.querySelector('[data-beave-element="play-button"]');
+        var playIcon = element.querySelector('[data-beave-element="play-icon"]');
+        var pauseIcon = element.querySelector('[data-beave-element="pause-icon"]');
 
-        var replayButton = element.querySelector('[data-kt-element="replay-button"]');
-        var shuffleButton = element.querySelector('[data-kt-element="shuffle-button"]');
-        var playNextButton = element.querySelector('[data-kt-element="play-next-button"]');
-        var playPrevButton = element.querySelector('[data-kt-element="play-prev-button"]');
+        var replayButton = element.querySelector('[data-beave-element="replay-button"]');
+        var shuffleButton = element.querySelector('[data-beave-element="shuffle-button"]');
+        var playNextButton = element.querySelector('[data-beave-element="play-next-button"]');
+        var playPrevButton = element.querySelector('[data-beave-element="play-prev-button"]');
 
         var formatTime = function(time) {
             var s = parseInt(time % 60);
@@ -132,10 +132,10 @@ var KTPlayersWidget2 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTPlayersWidget2;
+    module.exports = BEAVEPlayersWidget2;
 }
 
 // Window load
 window.addEventListener("load", function() {
-    KTPlayersWidget2.init();
+    BEAVEPlayersWidget2.init();
 }); 

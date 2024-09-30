@@ -29,8 +29,8 @@
 
 {% block content %}
     <div class="d-flex flex-column flex-column-fluid">
-        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+        <div id="beave_app_toolbar" class="app-toolbar py-3 py-lg-6">
+            <div id="beave_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
                         {{ 'Edit' if brand else 'Add' }} Brand
@@ -48,16 +48,16 @@
                 </div>
             </div>
         </div>
-        <div id="kt_app_content" class="app-content flex-column-fluid">
-            <div id="kt_app_content_container" class="app-container container-xxl">
+        <div id="beave_app_content" class="app-content flex-column-fluid">
+            <div id="beave_app_content_container" class="app-container container-xxl">
                 <div class="card mb-5 mb-xl-10">
-                    <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+                    <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="beave_account_profile_details">
                         <div class="card-title m-0">
                             <h3 class="fw-bold m-0">Brand Form</h3>
                         </div>
                     </div>
-                    <div id="kt_account_settings_profile_details">
-                        <form id="kt_account_profile_details_form" action="/admin/config/brand/save" class="es-form" method="post" data-redirect-url="/admin/config/brand" autocomplete="off">
+                    <div id="beave_account_settings_profile_details">
+                        <form id="beave_account_profile_details_form" action="/admin/config/brand/save" class="es-form" method="post" data-redirect-url="/admin/config/brand" autocomplete="off">
                             <input type="hidden" name="id" value="{{ brand._id }}">
                             <div class="card-body border-top p-9">
 
@@ -113,7 +113,7 @@
 
                             </div>
                             <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                <button class="btn btn-primary form-submit-btn" id="kt_account_profile_details_submit" type="submit">
+                                <button class="btn btn-primary form-submit-btn" id="beave_account_profile_details_submit" type="submit">
                                     <span class="preloader d-none">Updating</span>
                                     <span class="label">Save</span></button>
                             </div>

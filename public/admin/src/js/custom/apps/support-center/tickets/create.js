@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalNewTicket = function () {
+var BEAVEModalNewTicket = function () {
 	var submitButton;
 	var cancelButton;
 	var validator;
@@ -114,13 +114,13 @@ var KTModalNewTicket = function () {
 					console.log('validated!');
 
 					if (status == 'Valid') {
-						submitButton.setAttribute('data-kt-indicator', 'on');
+						submitButton.setAttribute('data-beave-indicator', 'on');
 
 						// Disable button to avoid multiple click 
 						submitButton.disabled = true;
 
 						setTimeout(function() {
-							submitButton.removeAttribute('data-kt-indicator');
+							submitButton.removeAttribute('data-beave-indicator');
 
 							// Enable button
 							submitButton.disabled = false;
@@ -204,8 +204,8 @@ var KTModalNewTicket = function () {
 			modal = new bootstrap.Modal(modalEl);
 
 			form = document.querySelector('#kt_modal_new_ticket_form');
-			submitButton = document.getElementById('kt_modal_new_ticket_submit');
-			cancelButton = document.getElementById('kt_modal_new_ticket_cancel');
+			submitButton = document.getElementById('beave_modal_new_ticket_submit');
+			cancelButton = document.getElementById('beave_modal_new_ticket_cancel');
 
 			initForm();
 			handleForm();
@@ -214,6 +214,6 @@ var KTModalNewTicket = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-	KTModalNewTicket.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+	BEAVEModalNewTicket.init();
 });

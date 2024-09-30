@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget22 = function () {
+var BEAVEChartsWidget22 = function () {
     // Private methods
     var initChart = function(tabSelector, chartSelector, data, initByDefault) {
         var element = document.querySelector(chartSelector);        
@@ -10,7 +10,7 @@ var KTChartsWidget22 = function () {
             return;
         }  
           
-        var height = parseInt(KTUtil.css(element, 'height'));
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
         
         var options = {
             series: data,                 
@@ -32,10 +32,10 @@ var KTChartsWidget22 = function () {
                 }
             },
             colors: [
-                KTUtil.getCssVariableValue('--bs-info'), 
-                KTUtil.getCssVariableValue('--bs-success'), 
-                KTUtil.getCssVariableValue('--bs-primary'), 
-                KTUtil.getCssVariableValue('--bs-danger') 
+                BEAVEUtil.getCssVariableValue('--bs-info'), 
+                BEAVEUtil.getCssVariableValue('--bs-success'), 
+                BEAVEUtil.getCssVariableValue('--bs-primary'), 
+                BEAVEUtil.getCssVariableValue('--bs-danger') 
             ],           
             stroke: {
               width: 0
@@ -79,10 +79,10 @@ var KTChartsWidget22 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTChartsWidget22;
+    module.exports = BEAVEChartsWidget22;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTChartsWidget22.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEChartsWidget22.init();
 });

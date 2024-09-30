@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget19 = (function () {
+var BEAVEChartsWidget19 = (function () {
     // Private methods
     var initChart1 = function () {
         // Check if amchart library is included
@@ -9,7 +9,7 @@ var KTChartsWidget19 = (function () {
             return;
         }
 
-        var element = document.getElementById("kt_charts_widget_19_chart_1");
+        var element = document.getElementById("beave_charts_widget_19_chart_1");
 
         if (!element) {
             return;
@@ -48,7 +48,7 @@ var KTChartsWidget19 = (function () {
                     full: 100,
                     columnSettings: {
                         fillOpacity: 1,
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-info')),
+                        fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-info')),
                     },
                 },
                 {
@@ -57,7 +57,7 @@ var KTChartsWidget19 = (function () {
                     full: 100,
                     columnSettings: {
                         fillOpacity: 1,
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-danger')),
+                        fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-danger')),
                     },
                 },
                 {
@@ -66,7 +66,7 @@ var KTChartsWidget19 = (function () {
                     full: 100,
                     columnSettings: {
                         fillOpacity: 1,
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary')),
+                        fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-primary')),
                     },
                 },
                 {
@@ -75,7 +75,7 @@ var KTChartsWidget19 = (function () {
                     full: 100,
                     columnSettings: {
                         fillOpacity: 1,
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-success')),
+                        fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-success')),
                     },
                 },
             ];
@@ -117,7 +117,7 @@ var KTChartsWidget19 = (function () {
             );
 
             xAxis.get("renderer").labels.template.setAll({
-                fill: am5.color(KTUtil.getCssVariableValue('--bs-gray-500')),
+                fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-gray-500')),
                 fontWeight: "500",
                 fontSize: 16,
             });
@@ -130,7 +130,7 @@ var KTChartsWidget19 = (function () {
                 centerX: am5.p100,
                 fontWeight: "500",
                 fontSize: 18,
-                fill: am5.color(KTUtil.getCssVariableValue('--bs-gray-500')),
+                fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-gray-500')),
                 templateField: "columnSettings",
             });
 
@@ -201,7 +201,7 @@ var KTChartsWidget19 = (function () {
         });
 
         // Update chart on theme mode change
-		KTThemeMode.on("kt.thememode.change", function() {     
+		BEAVEThemeMode.on("beave.thememode.change", function() {     
 			// Destroy chart
 			root.dispose();
 
@@ -216,7 +216,7 @@ var KTChartsWidget19 = (function () {
             return;
         }
 
-        var element = document.getElementById("kt_charts_widget_19_chart_2");
+        var element = document.getElementById("beave_charts_widget_19_chart_2");
 
         var root;
 
@@ -255,7 +255,7 @@ var KTChartsWidget19 = (function () {
                     full: 100,
                     columnSettings: {
                         fillOpacity: 1,
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-info')),
+                        fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-info')),
                     },
                 },
                 {
@@ -264,7 +264,7 @@ var KTChartsWidget19 = (function () {
                     full: 100,
                     columnSettings: {
                         fillOpacity: 1,
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-danger')),
+                        fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-danger')),
                     },
                 },
                 {
@@ -273,7 +273,7 @@ var KTChartsWidget19 = (function () {
                     full: 100,
                     columnSettings: {
                         fillOpacity: 1,
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary')),
+                        fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-primary')),
                     },
                 },
                 {
@@ -282,7 +282,7 @@ var KTChartsWidget19 = (function () {
                     full: 100,
                     columnSettings: {
                         fillOpacity: 1,
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-success')),
+                        fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-success')),
                     },
                 },
             ];
@@ -331,7 +331,7 @@ var KTChartsWidget19 = (function () {
                 centerX: am5.p100,
                 fontWeight: "500",
                 fontSize: 18,
-                fill: am5.color(KTUtil.getCssVariableValue('--bs-gray-500')),
+                fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-gray-500')),
                 templateField: "columnSettings",
             });
 
@@ -402,7 +402,7 @@ var KTChartsWidget19 = (function () {
         });
 
         // Update chart on theme mode change
-		KTThemeMode.on("kt.thememode.change", function() {     
+		BEAVEThemeMode.on("beave.thememode.change", function() {     
 			// Destroy chart
 			root.dispose();
 
@@ -422,10 +422,10 @@ var KTChartsWidget19 = (function () {
 
 // Webpack support
 if (typeof module !== "undefined") {
-    module.exports = KTChartsWidget19;
+    module.exports = BEAVEChartsWidget19;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTChartsWidget19.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEChartsWidget19.init();
 });

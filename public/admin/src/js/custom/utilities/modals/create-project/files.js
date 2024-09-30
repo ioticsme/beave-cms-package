@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalCreateProjectFiles = function () {
+var BEAVEModalCreateProjectFiles = function () {
 	// Variables
 	var nextButton;
 	var previousButton;
@@ -37,12 +37,12 @@ var KTModalCreateProjectFiles = function () {
 			nextButton.disabled = true;
 
 			// Show loading indication
-			nextButton.setAttribute('data-kt-indicator', 'on');
+			nextButton.setAttribute('data-beave-indicator', 'on');
 
 			// Simulate form submission
 			setTimeout(function() {
 				// Hide loading indication
-				nextButton.removeAttribute('data-kt-indicator');
+				nextButton.removeAttribute('data-beave-indicator');
 
 				// Enable button
 				nextButton.disabled = false;
@@ -60,10 +60,10 @@ var KTModalCreateProjectFiles = function () {
 	return {
 		// Public functions
 		init: function () {
-			form = KTModalCreateProject.getForm();
-			stepper = KTModalCreateProject.getStepperObj();
-			nextButton = KTModalCreateProject.getStepper().querySelector('[data-kt-element="files-next"]');
-			previousButton = KTModalCreateProject.getStepper().querySelector('[data-kt-element="files-previous"]');
+			form = BEAVEModalCreateProject.getForm();
+			stepper = BEAVEModalCreateProject.getStepperObj();
+			nextButton = BEAVEModalCreateProject.getStepper().querySelector('[data-beave-element="files-next"]');
+			previousButton = BEAVEModalCreateProject.getStepper().querySelector('[data-beave-element="files-previous"]');
 
 			initForm();
 			handleForm();
@@ -73,5 +73,5 @@ var KTModalCreateProjectFiles = function () {
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-	window.KTModalCreateProjectFiles = module.exports = KTModalCreateProjectFiles;
+	window.BEAVEModalCreateProjectFiles = module.exports = BEAVEModalCreateProjectFiles;
 }

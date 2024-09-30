@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget13 = (function () {
+var BEAVEChartsWidget13 = (function () {
     // Private methods
     var initChart = function () {
         // Check if amchart library is included
@@ -9,7 +9,7 @@ var KTChartsWidget13 = (function () {
             return;
         }
 
-        var element = document.getElementById("kt_charts_widget_13_chart");
+        var element = document.getElementById("beave_charts_widget_13_chart");
 
         if (!element) {
             return;
@@ -186,7 +186,7 @@ var KTChartsWidget13 = (function () {
             xAxis.get("renderer").labels.template.setAll({
                 fontWeight: "400",
                 fontSize: 13,
-                fill: am5.color(KTUtil.getCssVariableValue('--bs-gray-500'))
+                fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-gray-500'))
             });
 
             xAxis.data.setAll(data);
@@ -198,7 +198,7 @@ var KTChartsWidget13 = (function () {
             );
 
             yAxis.get("renderer").grid.template.setAll({
-                stroke: am5.color(KTUtil.getCssVariableValue('--bs-gray-300')),
+                stroke: am5.color(BEAVEUtil.getCssVariableValue('--bs-gray-300')),
                 strokeWidth: 1,
                 strokeOpacity: 1,
                 strokeDasharray: [3]
@@ -207,7 +207,7 @@ var KTChartsWidget13 = (function () {
             yAxis.get("renderer").labels.template.setAll({
                 fontWeight: "400",
                 fontSize: 13,
-                fill: am5.color(KTUtil.getCssVariableValue('--bs-gray-500'))
+                fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-gray-500'))
             });
 
             // Add series
@@ -241,9 +241,9 @@ var KTChartsWidget13 = (function () {
                 series.appear(1000);
             }
 
-            createSeries("Cars", "cars", KTUtil.getCssVariableValue('--bs-primary'));
-            createSeries("Motorcycles", "motorcycles", KTUtil.getCssVariableValue('--bs-success'));
-            createSeries("Bicycles", "bicycles", KTUtil.getCssVariableValue('--bs-warning'));
+            createSeries("Cars", "cars", BEAVEUtil.getCssVariableValue('--bs-primary'));
+            createSeries("Motorcycles", "motorcycles", BEAVEUtil.getCssVariableValue('--bs-success'));
+            createSeries("Bicycles", "bicycles", BEAVEUtil.getCssVariableValue('--bs-warning'));
 
             // Add scrollbar
             // https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
@@ -266,13 +266,13 @@ var KTChartsWidget13 = (function () {
             var range = xAxis.createAxisRange(rangeDataItem);
 
             rangeDataItem.get("grid").setAll({
-                stroke: am5.color(KTUtil.getCssVariableValue('--bs-gray-200')),
+                stroke: am5.color(BEAVEUtil.getCssVariableValue('--bs-gray-200')),
                 strokeOpacity: 0.5,
                 strokeDasharray: [3],
             });
 
             rangeDataItem.get("axisFill").setAll({
-                fill: am5.color(KTUtil.getCssVariableValue('--bs-gray-200')),
+                fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-gray-200')),
                 fillOpacity: 0.1,
             });
 
@@ -294,7 +294,7 @@ var KTChartsWidget13 = (function () {
             var range2 = xAxis.createAxisRange(rangeDataItem2);
 
             rangeDataItem2.get("grid").setAll({
-                stroke: am5.color(KTUtil.getCssVariableValue('--bs-danger')),
+                stroke: am5.color(BEAVEUtil.getCssVariableValue('--bs-danger')),
                 strokeOpacity: 1,
                 strokeDasharray: [3],
             });
@@ -320,7 +320,7 @@ var KTChartsWidget13 = (function () {
         }); // end am5.ready()
 
         // Update chart on theme mode change
-		KTThemeMode.on("kt.thememode.change", function() {     
+		BEAVEThemeMode.on("beave.thememode.change", function() {     
 			// Destroy chart
 			root.dispose();
 
@@ -339,10 +339,10 @@ var KTChartsWidget13 = (function () {
 
 // Webpack support
 if (typeof module !== "undefined") {
-    module.exports = KTChartsWidget13;
+    module.exports = BEAVEChartsWidget13;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTChartsWidget13.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEChartsWidget13.init();
 });

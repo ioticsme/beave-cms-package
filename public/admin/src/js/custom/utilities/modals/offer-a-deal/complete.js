@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalOfferADealComplete = function () {
+var BEAVEModalOfferADealComplete = function () {
 	// Variables
 	var startButton;
 	var form;
@@ -17,9 +17,9 @@ var KTModalOfferADealComplete = function () {
 	return {
 		// Public functions
 		init: function () {
-			form = KTModalOfferADeal.getForm();
-			stepper = KTModalOfferADeal.getStepperObj();
-			startButton = KTModalOfferADeal.getStepper().querySelector('[data-kt-element="complete-start"]');
+			form = BEAVEModalOfferADeal.getForm();
+			stepper = BEAVEModalOfferADeal.getStepperObj();
+			startButton = BEAVEModalOfferADeal.getStepper().querySelector('[data-beave-element="complete-start"]');
 
 			handleForm();
 		}
@@ -28,5 +28,5 @@ var KTModalOfferADealComplete = function () {
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-	window.KTModalOfferADealComplete = module.exports = KTModalOfferADealComplete;
+	window.BEAVEModalOfferADealComplete = module.exports = BEAVEModalOfferADealComplete;
 }

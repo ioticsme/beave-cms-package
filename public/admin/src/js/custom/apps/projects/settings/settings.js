@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTProjectSettings = function () {
+var BEAVEProjectSettings = function () {
 
     // Private functions
     var handleForm = function () {
@@ -10,7 +10,7 @@ var KTProjectSettings = function () {
 
         // Form validation
         var validation;
-        var _form = document.getElementById('kt_project_settings_form');
+        var _form = document.getElementById('beave_project_settings_form');
         var submitButton = _form.querySelector('#kt_project_settings_submit');
 
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
@@ -99,6 +99,6 @@ var KTProjectSettings = function () {
 
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTProjectSettings.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEProjectSettings.init();
 });

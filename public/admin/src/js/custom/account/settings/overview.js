@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAccountSettingsOverview = function () {
+var BEAVEAccountSettingsOverview = function () {
     // Private functions
     var initSettings = function() {
 
@@ -16,6 +16,6 @@ var KTAccountSettingsOverview = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTAccountSettingsOverview.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEAccountSettingsOverview.init();
 });

@@ -1,10 +1,10 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget21 = (function () {
+var BEAVEChartsWidget21 = (function () {
     // Private methods
     var initChart = function() {
-        var element = document.getElementById("kt_charts_widget_21");
+        var element = document.getElementById("beave_charts_widget_21");
 
         if (!element) {
             return;
@@ -250,10 +250,10 @@ var KTChartsWidget21 = (function () {
 
 // Webpack support
 if (typeof module !== "undefined") {
-    module.exports = KTChartsWidget21;
+    module.exports = BEAVEChartsWidget21;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTChartsWidget21.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEChartsWidget21.init();
 });

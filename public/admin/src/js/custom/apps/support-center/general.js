@@ -1,6 +1,6 @@
 "use strict";
 
-var KTSupportCenterGeneral = function() {
+var BEAVESupportCenterGeneral = function() {
     var menuWrapper;
 
     var initInstance = function(element) {
@@ -51,12 +51,12 @@ var KTSupportCenterGeneral = function() {
             return;
         } 
 
-        if ( KTUtil.isVisibleInContainer(menuActiveItem, menuWrapper) === true) {
+        if ( BEAVEUtil.isVisibleInContainer(menuActiveItem, menuWrapper) === true) {
             return;
         }
 
         menuWrapper.scroll({
-            top: KTUtil.getRelativeTopPosition(menuActiveItem, menuWrapper),
+            top: BEAVEUtil.getRelativeTopPosition(menuActiveItem, menuWrapper),
             behavior: 'smooth'
         });
     }
@@ -69,6 +69,6 @@ var KTSupportCenterGeneral = function() {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTSupportCenterGeneral.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVESupportCenterGeneral.init();
 });

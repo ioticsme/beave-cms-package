@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAppEcommerceProducts = function () {
+var BEAVEAppEcommerceProducts = function () {
     // Shared variables
     var table;
     var tableEl;
@@ -29,7 +29,7 @@ var KTAppEcommerceProducts = function () {
 
     // Search Datatable --- official docs reference: https://dts.net/reference/api/search()
     var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-ecommerce-product-filter="search"]');
+        const filterSearch = document.querySelector('[data-beave-ecommerce-product-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             dt.search(e.target.value).draw();
         });
@@ -37,7 +37,7 @@ var KTAppEcommerceProducts = function () {
 
     // Handle status filter dropdown
     var handleStatusFilter = () => {
-        const filterStatus = document.querySelector('[data-kt-ecommerce-product-filter="status"]');
+        const filterStatus = document.querySelector('[data-beave-ecommerce-product-filter="status"]');
         $(filterStatus).on('change', e => {
             let value = e.target.value;
             if(value === 'all'){
@@ -50,7 +50,7 @@ var KTAppEcommerceProducts = function () {
     // Delete cateogry
     var handleDeleteRows = () => {
         // Select all delete buttons
-        const deleteButtons = tableEl.querySelectorAll('[data-kt-ecommerce-product-filter="delete_row"]');
+        const deleteButtons = tableEl.querySelectorAll('[data-beave-ecommerce-product-filter="delete_row"]');
 
         deleteButtons.forEach(d => {
             // Delete button on click
@@ -61,7 +61,7 @@ var KTAppEcommerceProducts = function () {
                 const parent = e.target.closest('tr');
 
                 // Get category name
-                const productName = parent.querySelector('[data-kt-ecommerce-product-filter="product_name"]').innerText;
+                const productName = parent.querySelector('[data-beave-ecommerce-product-filter="product_name"]').innerText;
 
                 // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
                 Swal.fire({
@@ -120,6 +120,6 @@ var KTAppEcommerceProducts = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTAppEcommerceProducts.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEAppEcommerceProducts.init();
 });

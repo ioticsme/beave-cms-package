@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTToggle = function(element, options) {
+var BEAVEToggle = function(element, options) {
     ////////////////////////////
     // ** Private variables  ** //
     ////////////////////////////
@@ -21,8 +21,8 @@ var KTToggle = function(element, options) {
     ////////////////////////////
 
     var _construct = function() {
-        if ( KTUtil.data(element).has('toggle') === true ) {
-            the = KTUtil.data(element).get('toggle');
+        if ( BEAVEUtil.data(element).has('toggle') === true ) {
+            the = BEAVEUtil.data(element).get('toggle');
         } else {
             _init();
         }
@@ -30,26 +30,26 @@ var KTToggle = function(element, options) {
 
     var _init = function() {
         // Variables
-        the.options = KTUtil.deepExtend({}, defaultOptions, options);
-        the.uid = KTUtil.getUniqueId('toggle');
+        the.options = BEAVEUtil.deepExtend({}, defaultOptions, options);
+        the.uid = BEAVEUtil.getUniqueId('toggle');
 
         // Elements
         the.element = element;
 
-        the.target = document.querySelector(the.element.getAttribute('data-kt-toggle-target')) ? document.querySelector(the.element.getAttribute('data-kt-toggle-target')) : the.element;
-        the.state = the.element.hasAttribute('data-kt-toggle-state') ? the.element.getAttribute('data-kt-toggle-state') : '';
-        the.mode = the.element.hasAttribute('data-kt-toggle-mode') ? the.element.getAttribute('data-kt-toggle-mode') : '';
-        the.attribute = 'data-kt-' + the.element.getAttribute('data-kt-toggle-name');
+        the.target = document.querySelector(the.element.getAttribute('data-beave-toggle-target')) ? document.querySelector(the.element.getAttribute('data-beave-toggle-target')) : the.element;
+        the.state = the.element.hasAttribute('data-beave-toggle-state') ? the.element.getAttribute('data-beave-toggle-state') : '';
+        the.mode = the.element.hasAttribute('data-beave-toggle-mode') ? the.element.getAttribute('data-beave-toggle-mode') : '';
+        the.attribute = 'data-beave-' + the.element.getAttribute('data-beave-toggle-name');
 
         // Event Handlers
         _handlers();
 
         // Bind Instance
-        KTUtil.data(the.element).set('toggle', the);
+        BEAVEUtil.data(the.element).set('toggle', the);
     }
 
     var _handlers = function() {
-        KTUtil.addEvent(the.element, 'click', function(e) {
+        BEAVEUtil.addEvent(the.element, 'click', function(e) {
             e.preventDefault();
 
             if ( the.mode !== '' ) {
@@ -67,7 +67,7 @@ var KTToggle = function(element, options) {
     // Event handlers
     var _toggle = function() {
         // Trigger "after.toggle" event
-        KTEventHandler.trigger(the.element, 'kt.toggle.change', the);
+        BEAVEEventHandler.trigger(the.element, 'beave.toggle.change', the);
 
         if ( _isEnabled() ) {
             _disable();
@@ -76,7 +76,7 @@ var KTToggle = function(element, options) {
         }       
 
         // Trigger "before.toggle" event
-        KTEventHandler.trigger(the.element, 'kt.toggle.changed', the);
+        BEAVEEventHandler.trigger(the.element, 'beave.toggle.changed', the);
 
         return the;
     }
@@ -86,7 +86,7 @@ var KTToggle = function(element, options) {
             return;
         }
 
-        KTEventHandler.trigger(the.element, 'kt.toggle.enable', the);
+        BEAVEEventHandler.trigger(the.element, 'beave.toggle.enable', the);
 
         the.target.setAttribute(the.attribute, 'on');
 
@@ -94,11 +94,11 @@ var KTToggle = function(element, options) {
             the.element.classList.add(the.state);
         }        
 
-        if ( typeof KTCookie !== 'undefined' && the.options.saveState === true ) {
-            KTCookie.set(the.attribute, 'on');
+        if ( typeof BEAVECookie !== 'undefined' && the.options.saveState === true ) {
+            BEAVECookie.set(the.attribute, 'on');
         }
 
-        KTEventHandler.trigger(the.element, 'kt.toggle.enabled', the);
+        BEAVEEventHandler.trigger(the.element, 'beave.toggle.enabled', the);
 
         return the;
     }
@@ -108,7 +108,7 @@ var KTToggle = function(element, options) {
             return;
         }
 
-        KTEventHandler.trigger(the.element, 'kt.toggle.disable', the);
+        BEAVEEventHandler.trigger(the.element, 'beave.toggle.disable', the);
 
         the.target.removeAttribute(the.attribute);
 
@@ -116,11 +116,11 @@ var KTToggle = function(element, options) {
             the.element.classList.remove(the.state);
         } 
 
-        if ( typeof KTCookie !== 'undefined' && the.options.saveState === true ) {
-            KTCookie.remove(the.attribute);
+        if ( typeof BEAVECookie !== 'undefined' && the.options.saveState === true ) {
+            BEAVECookie.remove(the.attribute);
         }
 
-        KTEventHandler.trigger(the.element, 'kt.toggle.disabled', the);
+        BEAVEEventHandler.trigger(the.element, 'beave.toggle.disabled', the);
 
         return the;
     }
@@ -130,7 +130,7 @@ var KTToggle = function(element, options) {
     }
 
     var _destroy = function() {
-        KTUtil.data(the.element).remove('toggle');
+        BEAVEUtil.data(the.element).remove('toggle');
     }
 
     // Construct class
@@ -167,50 +167,50 @@ var KTToggle = function(element, options) {
 
     // Event API
     the.on = function(name, handler) {
-        return KTEventHandler.on(the.element, name, handler);
+        return BEAVEEventHandler.on(the.element, name, handler);
     }
 
     the.one = function(name, handler) {
-        return KTEventHandler.one(the.element, name, handler);
+        return BEAVEEventHandler.one(the.element, name, handler);
     }
 
     the.off = function(name, handlerId) {
-        return KTEventHandler.off(the.element, name, handlerId);
+        return BEAVEEventHandler.off(the.element, name, handlerId);
     }
 
     the.trigger = function(name, event) {
-        return KTEventHandler.trigger(the.element, name, event, the, event);
+        return BEAVEEventHandler.trigger(the.element, name, event, the, event);
     }
 };
 
 // Static methods
-KTToggle.getInstance = function(element) {
-    if ( element !== null && KTUtil.data(element).has('toggle') ) {
-        return KTUtil.data(element).get('toggle');
+BEAVEToggle.getInstance = function(element) {
+    if ( element !== null && BEAVEUtil.data(element).has('toggle') ) {
+        return BEAVEUtil.data(element).get('toggle');
     } else {
         return null;
     }
 }
 
 // Create instances
-KTToggle.createInstances = function(selector = '[data-kt-toggle]') {
+BEAVEToggle.createInstances = function(selector = '[data-beave-toggle]') {
     // Get instances
     var elements = document.body.querySelectorAll(selector);
 
     if ( elements && elements.length > 0 ) {
         for (var i = 0, len = elements.length; i < len; i++) {
             // Initialize instances
-            new KTToggle(elements[i]);
+            new BEAVEToggle(elements[i]);
         }
     }
 }
 
 // Global initialization
-KTToggle.init = function() {
-    KTToggle.createInstances();
+BEAVEToggle.init = function() {
+    BEAVEToggle.createInstances();
 };
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = KTToggle;
+    module.exports = BEAVEToggle;
 }

@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAccountSettingsProfileDetails = function () {
+var BEAVEAccountSettingsProfileDetails = function () {
     // Private variables
     var form;
     var submitButton;
@@ -136,7 +136,7 @@ var KTAccountSettingsProfileDetails = function () {
     // Public methods
     return {
         init: function () {
-            form = document.getElementById('kt_account_profile_details_form');
+            form = document.getElementById('beave_account_profile_details_form');
             
             if (!form) {
                 return;
@@ -150,6 +150,6 @@ var KTAccountSettingsProfileDetails = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTAccountSettingsProfileDetails.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEAccountSettingsProfileDetails.init();
 });

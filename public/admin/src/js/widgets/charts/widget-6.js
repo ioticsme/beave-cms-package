@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget6 = function () {
+var BEAVEChartsWidget6 = function () {
     var chart = {
         self: null,
         rendered: false
@@ -9,14 +9,14 @@ var KTChartsWidget6 = function () {
 
     // Private methods
     var initChart = function(chart) {
-        var element = document.getElementById("kt_charts_widget_6"); 
+        var element = document.getElementById("beave_charts_widget_6"); 
 
         if (!element) {
             return;
         }
         
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-800');    
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-800');    
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
         var maxValue = 18;
         
         var options = {
@@ -144,7 +144,7 @@ var KTChartsWidget6 = function () {
             initChart(chart);
 
             // Update chart on theme mode change
-            KTThemeMode.on("kt.thememode.change", function() {                
+            BEAVEThemeMode.on("beave.thememode.change", function() {                
                 if (chart.rendered) {
                     chart.self.destroy();
                 }
@@ -157,12 +157,12 @@ var KTChartsWidget6 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTChartsWidget6;
+    module.exports = BEAVEChartsWidget6;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTChartsWidget6.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEChartsWidget6.init();
 });
 
 

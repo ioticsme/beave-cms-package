@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalNewAddress = function () {
+var BEAVEModalNewAddress = function () {
 	var submitButton;
 	var cancelButton;
 	var validator;
@@ -105,14 +105,14 @@ var KTModalNewAddress = function () {
 					console.log('validated!');
 
 					if (status == 'Valid') {
-						submitButton.setAttribute('data-kt-indicator', 'on');
+						submitButton.setAttribute('data-beave-indicator', 'on');
 
 						// Disable button to avoid multiple click 
 						submitButton.disabled = true;
 
 						// Simulate ajax process
 						setTimeout(function() {
-							submitButton.removeAttribute('data-kt-indicator');
+							submitButton.removeAttribute('data-beave-indicator');
 
 							// Enable button
 							submitButton.disabled = false;
@@ -196,8 +196,8 @@ var KTModalNewAddress = function () {
 			modal = new bootstrap.Modal(modalEl);
 
 			form = document.querySelector('#kt_modal_new_address_form');
-			submitButton = document.getElementById('kt_modal_new_address_submit');
-			cancelButton = document.getElementById('kt_modal_new_address_cancel');
+			submitButton = document.getElementById('beave_modal_new_address_submit');
+			cancelButton = document.getElementById('beave_modal_new_address_cancel');
 
 			initForm();
 			handleForm();
@@ -206,6 +206,6 @@ var KTModalNewAddress = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-	KTModalNewAddress.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+	BEAVEModalNewAddress.init();
 });

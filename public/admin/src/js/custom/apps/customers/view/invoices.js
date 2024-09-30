@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTCustomerViewInvoices = function () {
+var BEAVECustomerViewInvoices = function () {
 
     // Private functions
     // Init current year datatable
@@ -124,6 +124,6 @@ var KTCustomerViewInvoices = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTCustomerViewInvoices.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVECustomerViewInvoices.init();
 });

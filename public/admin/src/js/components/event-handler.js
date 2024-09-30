@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTEventHandler = function() {
+var BEAVEEventHandler = function() {
     ////////////////////////////
     // ** Private Variables  ** //
     ////////////////////////////
@@ -14,8 +14,8 @@ var KTEventHandler = function() {
         var returnValue = true;
         var eventValue;
 
-        if ( KTUtil.data(element).has(name) === true ) {
-            var handlerIds = KTUtil.data(element).get(name);
+        if ( BEAVEUtil.data(element).has(name) === true ) {
+            var handlerIds = BEAVEUtil.data(element).get(name);
             var handlerId;
 
             for (var i = 0; i < handlerIds.length; i++) {
@@ -48,8 +48,8 @@ var KTEventHandler = function() {
     }
 
     var _addEvent = function(element, name, callback, one) {
-        var handlerId = KTUtil.getUniqueId('event');
-        var handlerIds = KTUtil.data(element).get(name);
+        var handlerId = BEAVEUtil.getUniqueId('event');
+        var handlerIds = BEAVEUtil.data(element).get(name);
 
         if ( !handlerIds ) {
             handlerIds = [];
@@ -57,7 +57,7 @@ var KTEventHandler = function() {
 
         handlerIds.push(handlerId);
 
-        KTUtil.data(element).set(name, handlerIds);
+        BEAVEUtil.data(element).set(name, handlerIds);
 
         if ( !_handlers[name] ) {
             _handlers[name] = {};
@@ -74,12 +74,12 @@ var KTEventHandler = function() {
     }
 
     var _removeEvent = function(element, name, handlerId) {
-        var handlerIds = KTUtil.data(element).get(name);
+        var handlerIds = BEAVEUtil.data(element).get(name);
         var index = handlerIds && handlerIds.indexOf(handlerId);
         
         if (index !== -1) {
             handlerIds.splice(index, 1);
-            KTUtil.data(element).set(name, handlerIds);
+            BEAVEUtil.data(element).set(name, handlerIds);
         }
 
         if (_handlers[name] && _handlers[name][handlerId]) {
@@ -117,5 +117,5 @@ var KTEventHandler = function() {
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = KTEventHandler;
+    module.exports = BEAVEEventHandler;
 }

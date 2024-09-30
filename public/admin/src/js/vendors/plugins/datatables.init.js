@@ -13,8 +13,8 @@ var defaults = {
 		"lengthMenu": "_MENU_",
 		"processing": '<span class="spinner-border w-15px h-15px text-muted align-middle me-2"></span> <span class="text-gray-600">Loading...</span>',
 		"paginate": {
-			"first": '<i class="kt-outline kt-double-left"></i>',
-			"last": '<i class="kt-outline kt-double-right"></i>',
+			"first": '<i class="beave-outline beave-double-left"></i>',
+			"last": '<i class="beave-outline beave-double-right"></i>',
 			"next": '<i class="next"></i>',
 			"previous": '<i class="previous"></i>'
 		}

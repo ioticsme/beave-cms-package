@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget7 = function () {
+var BEAVEChartsWidget7 = function () {
     // Private methods
     var initChart = function(chartSelector) {
         var element = document.querySelector(chartSelector);
@@ -10,8 +10,8 @@ var KTChartsWidget7 = function () {
             return;
         }
 
-        var height = parseInt(KTUtil.css(element, 'height'));
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
 
         var options = {
             series: [{
@@ -57,7 +57,7 @@ var KTChartsWidget7 = function () {
                 },
                 labels: {
                     style: {
-                        colors: KTUtil.getCssVariableValue('--bs-gray-700'),
+                        colors: BEAVEUtil.getCssVariableValue('--bs-gray-700'),
                         fontSize: '12px'
                     }
                 }
@@ -65,7 +65,7 @@ var KTChartsWidget7 = function () {
             yaxis: {
                 labels: {
                     style: {
-                        colors: KTUtil.getCssVariableValue('--bs-gray-700'),
+                        colors: BEAVEUtil.getCssVariableValue('--bs-gray-700'),
                         fontSize: '12px'
                     }
                 }
@@ -104,7 +104,7 @@ var KTChartsWidget7 = function () {
                     }
                 }
             },
-            colors: [KTUtil.getCssVariableValue('--bs-primary'), KTUtil.getCssVariableValue('--bs-primary-light')],
+            colors: [BEAVEUtil.getCssVariableValue('--bs-primary'), BEAVEUtil.getCssVariableValue('--bs-primary-light')],
             grid: {
                 borderColor: borderColor,
                 strokeDashArray: 4,
@@ -150,12 +150,12 @@ var KTChartsWidget7 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTChartsWidget7;
+    module.exports = BEAVEChartsWidget7;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    //KTChartsWidget7.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    //BEAVEChartsWidget7.init();
 });
 
 

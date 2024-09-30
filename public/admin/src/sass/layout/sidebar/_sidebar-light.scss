@@ -2,7 +2,7 @@
 // Light Sidebar(used by Light Sidebar layout only)
 //
 
-[data-kt-app-layout="light-sidebar"] {
+[data-beave-app-layout="light-sidebar"] {
     .app-sidebar {
         background-color: var(--#{$prefix}app-sidebar-light-bg-color);
         border-right: 1px solid var(--#{$prefix}gray-200);
@@ -89,8 +89,8 @@
     } 
 }
 
-[data-kt-app-layout="light-sidebar"][data-kt-app-header-fixed="true"] {
-    [data-kt-app-header-minimize=on] .app-header {
+[data-beave-app-layout="light-sidebar"][data-beave-app-header-fixed="true"] {
+    [data-beave-app-header-minimize=on] .app-header {
         transition: none;
         z-index: 100;
         background-color: var(--bs-app-header-minimize-bg-color);

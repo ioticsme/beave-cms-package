@@ -1,26 +1,26 @@
 "use strict";
 
 // Class definition
-var KTAppInboxReply = function () {
+var BEAVEAppInboxReply = function () {
 
     // Private functions
     const handlePreviewText = () => {
         // Get all messages
-        const accordions = document.querySelectorAll('[data-kt-inbox-message="message_wrapper"]');
+        const accordions = document.querySelectorAll('[data-beave-inbox-message="message_wrapper"]');
         accordions.forEach(accordion => {
             // Set variables
-            const header = accordion.querySelector('[data-kt-inbox-message="header"]');
-            const previewText = accordion.querySelector('[data-kt-inbox-message="preview"]');
-            const details = accordion.querySelector('[data-kt-inbox-message="details"]');
-            const message = accordion.querySelector('[data-kt-inbox-message="message"]');
+            const header = accordion.querySelector('[data-beave-inbox-message="header"]');
+            const previewText = accordion.querySelector('[data-beave-inbox-message="preview"]');
+            const details = accordion.querySelector('[data-beave-inbox-message="details"]');
+            const message = accordion.querySelector('[data-beave-inbox-message="message"]');
 
             // Init bootstrap collapse -- more info: https://getbootstrap.com/docs/5.1/components/collapse/#via-javascript
             const collapse = new bootstrap.Collapse(message, { toggle: false });
 
             // Handle header click action
             header.addEventListener('click', e => {
-                // Return if KTMenu or buttons are clicked
-                if (e.target.closest('[data-kt-menu-trigger="click"]') || e.target.closest('.btn')) {
+                // Return if BEAVEMenu or buttons are clicked
+                if (e.target.closest('[data-beave-menu-trigger="click"]') || e.target.closest('.btn')) {
                     return;
                 } else {
                     previewText.classList.toggle('d-none');
@@ -35,7 +35,7 @@ var KTAppInboxReply = function () {
     const initForm = () => {
         // Set variables
         const form = document.querySelector('#kt_inbox_reply_form');
-        const allTagify = form.querySelectorAll('[data-kt-inbox-form="tagify"]');
+        const allTagify = form.querySelectorAll('[data-beave-inbox-form="tagify"]');
 
         // Handle CC and BCC
         handleCCandBCC(form);
@@ -58,12 +58,12 @@ var KTAppInboxReply = function () {
     // Handle CC and BCC toggle
     const handleCCandBCC = (el) => {
         // Get elements
-        const ccElement = el.querySelector('[data-kt-inbox-form="cc"]');
-        const ccButton = el.querySelector('[data-kt-inbox-form="cc_button"]');
-        const ccClose = el.querySelector('[data-kt-inbox-form="cc_close"]');
-        const bccElement = el.querySelector('[data-kt-inbox-form="bcc"]');
-        const bccButton = el.querySelector('[data-kt-inbox-form="bcc_button"]');
-        const bccClose = el.querySelector('[data-kt-inbox-form="bcc_close"]');
+        const ccElement = el.querySelector('[data-beave-inbox-form="cc"]');
+        const ccButton = el.querySelector('[data-beave-inbox-form="cc_button"]');
+        const ccClose = el.querySelector('[data-beave-inbox-form="cc_close"]');
+        const bccElement = el.querySelector('[data-beave-inbox-form="bcc"]');
+        const bccButton = el.querySelector('[data-beave-inbox-form="bcc_button"]');
+        const bccClose = el.querySelector('[data-beave-inbox-form="bcc_close"]');
 
         // Handle CC button click
         ccButton.addEventListener('click', e => {
@@ -100,16 +100,16 @@ var KTAppInboxReply = function () {
 
     // Handle submit form
     const handleSubmit = (el) => {
-        const submitButton = el.querySelector('[data-kt-inbox-form="send"]');
+        const submitButton = el.querySelector('[data-beave-inbox-form="send"]');
 
         // Handle button click event
         submitButton.addEventListener("click", function () {
             // Activate indicator
-            submitButton.setAttribute("data-kt-indicator", "on");
+            submitButton.setAttribute("data-beave-indicator", "on");
 
             // Disable indicator after 3 seconds
             setTimeout(function () {
-                submitButton.removeAttribute("data-kt-indicator");
+                submitButton.removeAttribute("data-beave-indicator");
             }, 3000);
         });
     }
@@ -120,7 +120,7 @@ var KTAppInboxReply = function () {
 
         const usersList = [
             { value: 1, name: 'Emma Smith', avatar: 'avatars/300-6.jpg', email: 'e.smith@kpmg.com.au' },
-            { value: 2, name: 'Max Smith', avatar: 'avatars/300-1.jpg', email: 'max@kt.com' },
+            { value: 2, name: 'Max Smith', avatar: 'avatars/300-1.jpg', email: 'max@beave.com' },
             { value: 3, name: 'Sean Bean', avatar: 'avatars/300-5.jpg', email: 'sean@dellito.com' },
             { value: 4, name: 'Brian Cox', avatar: 'avatars/300-25.jpg', email: 'brian@exchange.com' },
             { value: 5, name: 'Francis Mitcham', avatar: 'avatars/300-9.jpg', email: 'f.mitcham@kpmg.com.au' },
@@ -250,9 +250,9 @@ var KTAppInboxReply = function () {
     // Init dropzone
     const initDropzone = (el) => {
         // set the dropzone container id
-        const id = '[data-kt-inbox-form="dropzone"]';
+        const id = '[data-beave-inbox-form="dropzone"]';
         const dropzone = el.querySelector(id);
-        const uploadButton = el.querySelector('[data-kt-inbox-form="dropzone_upload"]');
+        const uploadButton = el.querySelector('[data-beave-inbox-form="dropzone_upload"]');
 
         // set the preview element template
         var previewNode = dropzone.querySelector(".dropzone-item");
@@ -318,6 +318,6 @@ var KTAppInboxReply = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTAppInboxReply.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEAppInboxReply.init();
 });

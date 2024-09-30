@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget36 = function () {
+var BEAVEChartsWidget36 = function () {
     var chart = {
         self: null,
         rendered: false
@@ -9,19 +9,19 @@ var KTChartsWidget36 = function () {
 
     // Private methods
     var initChart = function(chart) {
-        var element = document.getElementById("kt_charts_widget_36");
+        var element = document.getElementById("beave_charts_widget_36");
 
         if (!element) {
             return;
         }
         
-        var height = parseInt(KTUtil.css(element, 'height'));
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');
-        var baseprimaryColor = KTUtil.getCssVariableValue('--bs-primary');
-        var lightprimaryColor = KTUtil.getCssVariableValue('--bs-primary');
-        var basesuccessColor = KTUtil.getCssVariableValue('--bs-success');
-        var lightsuccessColor = KTUtil.getCssVariableValue('--bs-success');
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
+        var baseprimaryColor = BEAVEUtil.getCssVariableValue('--bs-primary');
+        var lightprimaryColor = BEAVEUtil.getCssVariableValue('--bs-primary');
+        var basesuccessColor = BEAVEUtil.getCssVariableValue('--bs-success');
+        var lightsuccessColor = BEAVEUtil.getCssVariableValue('--bs-success');
 
         var options = {
             series: [{
@@ -165,7 +165,7 @@ var KTChartsWidget36 = function () {
             initChart(chart);
 
             // Update chart on theme mode change
-            KTThemeMode.on("kt.thememode.change", function() {                
+            BEAVEThemeMode.on("beave.thememode.change", function() {                
                 if (chart.rendered) {
                     chart.self.destroy();
                 }
@@ -178,10 +178,10 @@ var KTChartsWidget36 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTChartsWidget36;
+    module.exports = BEAVEChartsWidget36;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTChartsWidget36.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEChartsWidget36.init();
 });

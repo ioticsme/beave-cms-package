@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTSlidersWidget3 = function () {
+var BEAVESlidersWidget3 = function () {
     var chart1 = {
         self: null,
         rendered: false
@@ -24,10 +24,10 @@ var KTSlidersWidget3 = function () {
             return;
         }
 
-        var height = parseInt(KTUtil.css(element, 'height'));
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');
-        var baseColor = KTUtil.getCssVariableValue('--bs-' + color);
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
+        var baseColor = BEAVEUtil.getCssVariableValue('--bs-' + color);
 
         var options = {
             series: [{
@@ -183,7 +183,7 @@ var KTSlidersWidget3 = function () {
             });
 
             // Update chart on theme mode change
-            KTThemeMode.on("kt.thememode.change", function() {                
+            BEAVEThemeMode.on("beave.thememode.change", function() {                
                 if (chart1.rendered) {
                     chart1.self.destroy();
                     chart1.rendered = false;
@@ -203,10 +203,10 @@ var KTSlidersWidget3 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTSlidersWidget3;
+    module.exports = BEAVESlidersWidget3;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTSlidersWidget3.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVESlidersWidget3.init();
 });

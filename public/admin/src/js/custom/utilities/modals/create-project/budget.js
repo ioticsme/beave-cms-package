@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalCreateProjectBudget = function () {
+var BEAVEModalCreateProjectBudget = function () {
 	// Variables
 	var nextButton;
 	var previousButton;
@@ -62,7 +62,7 @@ var KTModalCreateProjectBudget = function () {
 		);
 
 		// Revalidate on change
-		KTDialer.getInstance(form.querySelector('#kt_modal_create_project_budget_setup')).on('kt.dialer.changed', function() {
+		BEAVEDialer.getInstance(form.querySelector('#kt_modal_create_project_budget_setup')).on('beave.dialer.changed', function() {
 			// Revalidate the field when an option is chosen
             validator.revalidateField('budget_setup');
 		});
@@ -83,12 +83,12 @@ var KTModalCreateProjectBudget = function () {
 
 					if (status == 'Valid') {
 						// Show loading indication
-						nextButton.setAttribute('data-kt-indicator', 'on');
+						nextButton.setAttribute('data-beave-indicator', 'on');
 
 						// Simulate form submission
 						setTimeout(function() {
 							// Simulate form submission
-							nextButton.removeAttribute('data-kt-indicator');
+							nextButton.removeAttribute('data-beave-indicator');
 
 							// Enable button
 							nextButton.disabled = false;
@@ -123,10 +123,10 @@ var KTModalCreateProjectBudget = function () {
 	return {
 		// Public functions
 		init: function () {
-			form = KTModalCreateProject.getForm();
-			stepper = KTModalCreateProject.getStepperObj();
-			nextButton = KTModalCreateProject.getStepper().querySelector('[data-kt-element="budget-next"]');
-			previousButton = KTModalCreateProject.getStepper().querySelector('[data-kt-element="budget-previous"]');
+			form = BEAVEModalCreateProject.getForm();
+			stepper = BEAVEModalCreateProject.getStepperObj();
+			nextButton = BEAVEModalCreateProject.getStepper().querySelector('[data-beave-element="budget-next"]');
+			previousButton = BEAVEModalCreateProject.getStepper().querySelector('[data-beave-element="budget-previous"]');
 
 			initValidation();
 			handleForm();
@@ -136,5 +136,5 @@ var KTModalCreateProjectBudget = function () {
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-	window.KTModalCreateProjectBudget = module.exports = KTModalCreateProjectBudget;
+	window.BEAVEModalCreateProjectBudget = module.exports = BEAVEModalCreateProjectBudget;
 }

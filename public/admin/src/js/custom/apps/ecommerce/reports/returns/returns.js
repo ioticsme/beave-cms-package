@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAppEcommerceReportReturns = function () {
+var BEAVEAppEcommerceReportReturns = function () {
     // Shared variables
     var table;
     var datatable;
@@ -76,13 +76,13 @@ var KTAppEcommerceReportReturns = function () {
         }).container().appendTo($('#kt_ecommerce_report_returns_export'));
 
         // Hook dropdown menu click event to datatable export buttons
-        const exportButtons = document.querySelectorAll('#kt_ecommerce_report_returns_export_menu [data-kt-ecommerce-export]');
+        const exportButtons = document.querySelectorAll('#kt_ecommerce_report_returns_export_menu [data-beave-ecommerce-export]');
         exportButtons.forEach(exportButton => {
             exportButton.addEventListener('click', e => {
                 e.preventDefault();
 
                 // Get clicked export value
-                const exportValue = e.target.getAttribute('data-kt-ecommerce-export');
+                const exportValue = e.target.getAttribute('data-beave-ecommerce-export');
                 const target = document.querySelector('.dt-buttons .buttons-' + exportValue);
 
                 // Trigger click event on hidden datatable export buttons
@@ -94,7 +94,7 @@ var KTAppEcommerceReportReturns = function () {
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-ecommerce-order-filter="search"]');
+        const filterSearch = document.querySelector('[data-beave-ecommerce-order-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
@@ -118,6 +118,6 @@ var KTAppEcommerceReportReturns = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTAppEcommerceReportReturns.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEAppEcommerceReportReturns.init();
 });

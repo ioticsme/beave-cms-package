@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTFeedback = function(options) {
+var BEAVEFeedback = function(options) {
     ////////////////////////////
     // ** Private Variables  ** //
     ////////////////////////////
@@ -25,8 +25,8 @@ var KTFeedback = function(options) {
 
     var _init = function() {
         // Variables
-        the.options = KTUtil.deepExtend({}, defaultOptions, options);
-        the.uid = KTUtil.getUniqueId('feedback');
+        the.options = BEAVEUtil.deepExtend({}, defaultOptions, options);
+        the.uid = BEAVEUtil.getUniqueId('feedback');
         the.element;
         the.shown = false;
 
@@ -34,11 +34,11 @@ var KTFeedback = function(options) {
         _handlers();
 
         // Bind Instance
-        KTUtil.data(the.element).set('feedback', the);
+        BEAVEUtil.data(the.element).set('feedback', the);
     }
 
     var _handlers = function() {
-        KTUtil.addEvent(the.element, 'click', function(e) {
+        BEAVEUtil.addEvent(the.element, 'click', function(e) {
             e.preventDefault();
 
             _go();
@@ -46,7 +46,7 @@ var KTFeedback = function(options) {
     }
 
     var _show = function() {
-        if ( KTEventHandler.trigger(the.element, 'kt.feedback.show', the) === false ) {
+        if ( BEAVEEventHandler.trigger(the.element, 'beave.feedback.show', the) === false ) {
             return;
         }
 
@@ -54,13 +54,13 @@ var KTFeedback = function(options) {
             _showPopup();
         }
 
-        KTEventHandler.trigger(the.element, 'kt.feedback.shown', the);
+        BEAVEEventHandler.trigger(the.element, 'beave.feedback.shown', the);
 
         return the;
     }
 
     var _hide = function() {
-        if ( KTEventHandler.trigger(the.element, 'kt.feedback.hide', the) === false ) {
+        if ( BEAVEEventHandler.trigger(the.element, 'beave.feedback.hide', the) === false ) {
             return;
         }
 
@@ -70,7 +70,7 @@ var KTFeedback = function(options) {
 
         the.shown = false;
 
-        KTEventHandler.trigger(the.element, 'kt.feedback.hidden', the);
+        BEAVEEventHandler.trigger(the.element, 'beave.feedback.hidden', the);
 
         return the;
     }
@@ -78,8 +78,8 @@ var KTFeedback = function(options) {
     var _showPopup = function() {
         the.element = document.createElement("DIV");
 
-        KTUtil.addClass(the.element, 'feedback feedback-popup');
-        KTUtil.setHTML(the.element, the.options.content);
+        BEAVEUtil.addClass(the.element, 'feedback feedback-popup');
+        BEAVEUtil.setHTML(the.element, the.options.content);
 
         if (the.options.placement == 'top-center') {
             _setPopupTopCenterPosition();
@@ -87,20 +87,20 @@ var KTFeedback = function(options) {
 
         document.body.appendChild(the.element);
 
-        KTUtil.addClass(the.element, 'feedback-shown');
+        BEAVEUtil.addClass(the.element, 'feedback-shown');
 
         the.shown = true;
     }
 
     var _setPopupTopCenterPosition = function() {
-        var width = KTUtil.getResponsiveValue(the.options.width);
-        var height = KTUtil.css(the.element, 'height');
+        var width = BEAVEUtil.getResponsiveValue(the.options.width);
+        var height = BEAVEUtil.css(the.element, 'height');
 
-        KTUtil.addClass(the.element, 'feedback-top-center');
+        BEAVEUtil.addClass(the.element, 'feedback-top-center');
 
-        KTUtil.css(the.element, 'width', width);
-        KTUtil.css(the.element, 'left', '50%');
-        KTUtil.css(the.element, 'top', '-' + height);
+        BEAVEUtil.css(the.element, 'width', width);
+        BEAVEUtil.css(the.element, 'left', '50%');
+        BEAVEUtil.css(the.element, 'top', '-' + height);
     }
 
     var _hidePopup = function() {
@@ -108,7 +108,7 @@ var KTFeedback = function(options) {
     }
 
     var _destroy = function() {
-        KTUtil.data(the.element).remove('feedback');
+        BEAVEUtil.data(the.element).remove('feedback');
     }
 
     // Construct class
@@ -141,23 +141,23 @@ var KTFeedback = function(options) {
 
     // Event API
     the.on = function(name, handler) {
-        return KTEventHandler.on(the.element, name, handler);
+        return BEAVEEventHandler.on(the.element, name, handler);
     }
 
     the.one = function(name, handler) {
-        return KTEventHandler.one(the.element, name, handler);
+        return BEAVEEventHandler.one(the.element, name, handler);
     }
 
     the.off = function(name, handlerId) {
-        return KTEventHandler.off(the.element, name, handlerId);
+        return BEAVEEventHandler.off(the.element, name, handlerId);
     }
 
     the.trigger = function(name, event) {
-        return KTEventHandler.trigger(the.element, name, event, the, event);
+        return BEAVEEventHandler.trigger(the.element, name, event, the, event);
     }
 };
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = KTFeedback;
+    module.exports = BEAVEFeedback;
 }

@@ -1,10 +1,10 @@
 "use strict";
 
 // Class definition
-var KTProjectList = function () {    
+var BEAVEProjectList = function () {    
     var initChart = function () {
         // init chart
-        var element = document.getElementById("kt_project_list_chart");
+        var element = document.getElementById("beave_project_list_chart");
 
         if (!element) {
             return;
@@ -74,6 +74,6 @@ var KTProjectList = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTProjectList.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEProjectList.init();
 });

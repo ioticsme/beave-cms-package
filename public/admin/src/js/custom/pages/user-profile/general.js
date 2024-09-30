@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTProfileGeneral = function () {
+var BEAVEProfileGeneral = function () {
     // init variables
     var showMoreButton;
     var showMoreCards;
@@ -17,14 +17,14 @@ var KTProfileGeneral = function () {
 
         // Show more click
         showMoreButton.addEventListener('click', function (e) {
-            showMoreButton.setAttribute('data-kt-indicator', 'on');
+            showMoreButton.setAttribute('data-beave-indicator', 'on');
 
             // Disable button to avoid multiple click 
             showMoreButton.disabled = true;
             
             setTimeout(function() {
                 // Hide loading indication
-                showMoreButton.removeAttribute('data-kt-indicator');
+                showMoreButton.removeAttribute('data-beave-indicator');
 
                 // Enable button
 				showMoreButton.disabled = false;
@@ -36,7 +36,7 @@ var KTProfileGeneral = function () {
                 showMoreCards.classList.remove('d-none');
 
                 // Scroll to card
-                KTUtil.scrollTo(showMoreCards, 200);
+                BEAVEUtil.scrollTo(showMoreCards, 200);
             }, 2000);
         });
     }
@@ -52,7 +52,7 @@ var KTProfileGeneral = function () {
             e.preventDefault();
             
             // Show indicator
-            followBtn.setAttribute('data-kt-indicator', 'on');
+            followBtn.setAttribute('data-beave-indicator', 'on');
             
             // Disable button to avoid multiple click 
             followBtn.disabled = true;
@@ -60,7 +60,7 @@ var KTProfileGeneral = function () {
             // Check button state
             if (followBtn.classList.contains("btn-success")) {
                     setTimeout(function() {
-                    followBtn.removeAttribute('data-kt-indicator');
+                    followBtn.removeAttribute('data-beave-indicator');
                     followBtn.classList.remove("btn-success");
                     followBtn.classList.add("btn-light");
                     followBtn.querySelector("i").classList.add("d-none");
@@ -69,7 +69,7 @@ var KTProfileGeneral = function () {
                 }, 1500);   
             } else {
                     setTimeout(function() {
-                    followBtn.removeAttribute('data-kt-indicator');
+                    followBtn.removeAttribute('data-beave-indicator');
                     followBtn.classList.add("btn-success");
                     followBtn.classList.remove("btn-light");
                     followBtn.querySelector("i").classList.remove("d-none");
@@ -81,7 +81,7 @@ var KTProfileGeneral = function () {
     }
 
     var handleFollowers = function() {
-        KTUtil.on(document.body,  '[data-kt-follow-btn="true"]', 'click', function(e) {
+        BEAVEUtil.on(document.body,  '[data-beave-follow-btn="true"]', 'click', function(e) {
             e.preventDefault();
 
             var el = this;
@@ -89,13 +89,13 @@ var KTProfileGeneral = function () {
             var following = el.querySelector(".following");
             var follow = el.querySelector(".follow");
 
-            el.setAttribute('data-kt-indicator', 'on');            
+            el.setAttribute('data-beave-indicator', 'on');            
             el.disabled = true;
             follow.classList.add("d-none");
             following.classList.add("d-none")
 
             setTimeout(function() {
-                el.removeAttribute('data-kt-indicator');
+                el.removeAttribute('data-beave-indicator');
 				el.disabled = false;
 
                 if (el.classList.contains("btn-light-primary")) { // following
@@ -118,11 +118,11 @@ var KTProfileGeneral = function () {
     }
 
     var handlePageScroll = function() {
-        if ( profileNav  && profileNav.getAttribute("data-kt-sticky") && KTUtil.isBreakpointUp('lg')) {
+        if ( profileNav  && profileNav.getAttribute("data-beave-sticky") && BEAVEUtil.isBreakpointUp('lg')) {
             
             if ( localStorage.getItem('nav-initialized') === "1") {
                 window.scroll({
-                    top: parseInt(profileNav.getAttribute("data-kt-page-scroll-position")),
+                    top: parseInt(profileNav.getAttribute("data-beave-page-scroll-position")),
                     behavior: 'smooth'
                 });
             }
@@ -148,6 +148,6 @@ var KTProfileGeneral = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTProfileGeneral.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEProfileGeneral.init();
 });

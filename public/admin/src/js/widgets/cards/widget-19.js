@@ -1,20 +1,20 @@
 "use strict";
 
 // Class definition
-var KTCardsWidget19 = function () {
+var BEAVECardsWidget19 = function () {
     // Private methods
     var initChart = function() {
-        var el = document.getElementById('kt_card_widget_19_chart'); 
+        var el = document.getElementById('beave_card_widget_19_chart'); 
 
         if (!el) {
             return;
         }
 
         var options = {
-            size: el.getAttribute('data-kt-size') ? parseInt(el.getAttribute('data-kt-size')) : 70,
-            lineWidth: el.getAttribute('data-kt-line') ? parseInt(el.getAttribute('data-kt-line')) : 11,
-            rotate: el.getAttribute('data-kt-rotate') ? parseInt(el.getAttribute('data-kt-rotate')) : 145,            
-            //percent:  el.getAttribute('data-kt-percent') ,
+            size: el.getAttribute('data-beave-size') ? parseInt(el.getAttribute('data-beave-size')) : 70,
+            lineWidth: el.getAttribute('data-beave-line') ? parseInt(el.getAttribute('data-beave-line')) : 11,
+            rotate: el.getAttribute('data-beave-rotate') ? parseInt(el.getAttribute('data-beave-rotate')) : 145,            
+            //percent:  el.getAttribute('data-beave-percent') ,
         }
 
         var canvas = document.createElement('canvas');
@@ -48,8 +48,8 @@ var KTCardsWidget19 = function () {
 
         // Init 
         drawCircle('#E4E6EF', options.lineWidth, 100 / 100); 
-        drawCircle(KTUtil.getCssVariableValue('--bs-primary'), options.lineWidth, 100 / 150);
-        drawCircle(KTUtil.getCssVariableValue('--bs-success'), options.lineWidth, 100 / 250);   
+        drawCircle(BEAVEUtil.getCssVariableValue('--bs-primary'), options.lineWidth, 100 / 150);
+        drawCircle(BEAVEUtil.getCssVariableValue('--bs-success'), options.lineWidth, 100 / 250);   
     }
 
     // Public methods
@@ -62,12 +62,12 @@ var KTCardsWidget19 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTCardsWidget19;
+    module.exports = BEAVECardsWidget19;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTCardsWidget19.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVECardsWidget19.init();
 });
    
         

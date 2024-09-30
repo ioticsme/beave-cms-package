@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTChartsWidget3 = function () {
+var BEAVEChartsWidget3 = function () {
     var chart = {
         self: null,
         rendered: false
@@ -9,17 +9,17 @@ var KTChartsWidget3 = function () {
 
     // Private methods
     var initChart = function(chart) {
-        var element = document.getElementById("kt_charts_widget_3");
+        var element = document.getElementById("beave_charts_widget_3");
 
         if (!element) {
             return;
         }
         
-        var height = parseInt(KTUtil.css(element, 'height'));
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');
-        var baseColor = KTUtil.getCssVariableValue('--bs-success');
-        var lightColor = KTUtil.getCssVariableValue('--bs-success');
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
+        var baseColor = BEAVEUtil.getCssVariableValue('--bs-success');
+        var lightColor = BEAVEUtil.getCssVariableValue('--bs-success');
 
         var options = {
             series: [{
@@ -168,7 +168,7 @@ var KTChartsWidget3 = function () {
             initChart(chart);
 
             // Update chart on theme mode change
-            KTThemeMode.on("kt.thememode.change", function() {                
+            BEAVEThemeMode.on("beave.thememode.change", function() {                
                 if (chart.rendered) {
                     chart.self.destroy();
                 }
@@ -181,10 +181,10 @@ var KTChartsWidget3 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTChartsWidget3;
+    module.exports = BEAVEChartsWidget3;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTChartsWidget3.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEChartsWidget3.init();
 });

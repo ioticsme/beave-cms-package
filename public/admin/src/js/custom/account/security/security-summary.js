@@ -1,11 +1,11 @@
 "use strict";
 
 // Class definition
-var KTAccountSecuritySummary = function () {
+var BEAVEAccountSecuritySummary = function () {
     // Private functions
     var initChart = function(tabSelector, chartSelector, data1, data2, initByDefault) {
         var element = document.querySelector(chartSelector);
-        var height = parseInt(KTUtil.css(element, 'height'));
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
 
         if (!element) {
             return;
@@ -55,7 +55,7 @@ var KTAccountSecuritySummary = function () {
                 },
                 labels: {
                     style: {
-                        colors: KTUtil.getCssVariableValue('--bs-gray-400'),
+                        colors: BEAVEUtil.getCssVariableValue('--bs-gray-400'),
                         fontSize: '12px'
                     }
                 }
@@ -63,7 +63,7 @@ var KTAccountSecuritySummary = function () {
             yaxis: {
                 labels: {
                     style: {
-                        colors: KTUtil.getCssVariableValue('--bs-gray-400'),
+                        colors: BEAVEUtil.getCssVariableValue('--bs-gray-400'),
                         fontSize: '12px'
                     }
                 }
@@ -102,9 +102,9 @@ var KTAccountSecuritySummary = function () {
                     }
                 }
             },
-            colors: [KTUtil.getCssVariableValue('--bs-primary'), KTUtil.getCssVariableValue('--bs-gray-200')],
+            colors: [BEAVEUtil.getCssVariableValue('--bs-primary'), BEAVEUtil.getCssVariableValue('--bs-gray-200')],
             grid: {
-                borderColor: KTUtil.getCssVariableValue('--bs-gray-200'),
+                borderColor: BEAVEUtil.getCssVariableValue('--bs-gray-200'),
                 strokeDashArray: 4,
                 yaxis: {
                     lines: {
@@ -150,6 +150,6 @@ var KTAccountSecuritySummary = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTAccountSecuritySummary.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEAccountSecuritySummary.init();
 });

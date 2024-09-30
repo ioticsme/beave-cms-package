@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTCustomersExport = function () {
+var BEAVECustomersExport = function () {
     var element;
     var submitButton;
     var cancelButton;
@@ -46,13 +46,13 @@ var KTCustomersExport = function () {
 					console.log('validated!');
 
 					if (status == 'Valid') {
-						submitButton.setAttribute('data-kt-indicator', 'on');
+						submitButton.setAttribute('data-beave-indicator', 'on');
 
                         // Disable submit button whilst loading
                         submitButton.disabled = true;
 
 						setTimeout(function() {
-							submitButton.removeAttribute('data-kt-indicator');
+							submitButton.removeAttribute('data-beave-indicator');
 							
 							Swal.fire({
 								text: "Customer list has been successfully exported!",
@@ -184,6 +184,6 @@ var KTCustomersExport = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTCustomersExport.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVECustomersExport.init();
 });

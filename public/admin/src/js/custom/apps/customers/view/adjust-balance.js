@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalAdjustBalance = function () {
+var BEAVEModalAdjustBalance = function () {
     var element;
     var submitButton;
     var cancelButton;
@@ -22,9 +22,9 @@ var KTModalAdjustBalance = function () {
 
     var handleBalanceCalculator = function () {
         // Select elements
-        const currentBalance = element.querySelector('[kt-modal-adjust-balance="current_balance"]');
-        newBalance = element.querySelector('[kt-modal-adjust-balance="new_balance"]');
-        maskInput = document.getElementById('kt_modal_inputmask');
+        const currentBalance = element.querySelector('[beave-modal-adjust-balance="current_balance"]');
+        newBalance = element.querySelector('[beave-modal-adjust-balance="new_balance"]');
+        maskInput = document.getElementById('beave_modal_inputmask');
 
         // Get current balance value
         const isNegative = currentBalance.innerHTML.includes('-');
@@ -101,7 +101,7 @@ var KTModalAdjustBalance = function () {
 
                     if (status == 'Valid') {
                         // Show loading indication
-                        submitButton.setAttribute('data-kt-indicator', 'on');
+                        submitButton.setAttribute('data-beave-indicator', 'on');
 
                         // Disable submit button whilst loading
                         submitButton.disabled = true;
@@ -109,7 +109,7 @@ var KTModalAdjustBalance = function () {
                         // Simulate form submission
                         setTimeout(function () {
                             // Simulate form submission
-                            submitButton.removeAttribute('data-kt-indicator');
+                            submitButton.removeAttribute('data-beave-indicator');
 
                             // Show popup confirmation 
                             Swal.fire({
@@ -236,6 +236,6 @@ var KTModalAdjustBalance = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTModalAdjustBalance.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEModalAdjustBalance.init();
 });

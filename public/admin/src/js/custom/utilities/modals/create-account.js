@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTCreateAccount = function () {
+var BEAVECreateAccount = function () {
 	// Elements
 	var modal;	
 	var modalEl;
@@ -18,10 +18,10 @@ var KTCreateAccount = function () {
 	// Private Functions
 	var initStepper = function () {
 		// Initialize Stepper
-		stepperObj = new KTStepper(stepper);
+		stepperObj = new BEAVEStepper(stepper);
 
 		// Stepper change event
-		stepperObj.on('kt.stepper.changed', function (stepper) {
+		stepperObj.on('beave.stepper.changed', function (stepper) {
 			if (stepperObj.getCurrentStepIndex() === 4) {
 				formSubmitButton.classList.remove('d-none');
 				formSubmitButton.classList.add('d-inline-block');
@@ -37,7 +37,7 @@ var KTCreateAccount = function () {
 		});
 
 		// Validation before going to next page
-		stepperObj.on('kt.stepper.next', function (stepper) {
+		stepperObj.on('beave.stepper.next', function (stepper) {
 			console.log('stepper.next');
 
 			// Validate form before change stepper step
@@ -50,7 +50,7 @@ var KTCreateAccount = function () {
 					if (status == 'Valid') {
 						stepper.goNext();
 
-						KTUtil.scrollTop();
+						BEAVEUtil.scrollTop();
 					} else {
 						Swal.fire({
 							text: "Sorry, looks like there are some errors detected, please try again.",
@@ -61,23 +61,23 @@ var KTCreateAccount = function () {
 								confirmButton: "btn btn-light"
 							}
 						}).then(function () {
-							KTUtil.scrollTop();
+							BEAVEUtil.scrollTop();
 						});
 					}
 				});
 			} else {
 				stepper.goNext();
 
-				KTUtil.scrollTop();
+				BEAVEUtil.scrollTop();
 			}
 		});
 
 		// Prev event
-		stepperObj.on('kt.stepper.previous', function (stepper) {
+		stepperObj.on('beave.stepper.previous', function (stepper) {
 			console.log('stepper.previous');
 
 			stepper.goPrevious();
-			KTUtil.scrollTop();
+			BEAVEUtil.scrollTop();
 		});
 	}
 
@@ -97,12 +97,12 @@ var KTCreateAccount = function () {
 					formSubmitButton.disabled = true;
 
 					// Show loading indication
-					formSubmitButton.setAttribute('data-kt-indicator', 'on');
+					formSubmitButton.setAttribute('data-beave-indicator', 'on');
 
 					// Simulate form submission
 					setTimeout(function() {
 						// Hide loading indication
-						formSubmitButton.removeAttribute('data-kt-indicator');
+						formSubmitButton.removeAttribute('data-beave-indicator');
 
 						// Enable button
 						formSubmitButton.disabled = false;
@@ -119,7 +119,7 @@ var KTCreateAccount = function () {
 							confirmButton: "btn btn-light"
 						}
 					}).then(function () {
-						KTUtil.scrollTop();
+						BEAVEUtil.scrollTop();
 					});
 				}
 			});
@@ -341,8 +341,8 @@ var KTCreateAccount = function () {
 			}
 
 			form = stepper.querySelector('#kt_create_account_form');
-			formSubmitButton = stepper.querySelector('[data-kt-stepper-action="submit"]');
-			formContinueButton = stepper.querySelector('[data-kt-stepper-action="next"]');
+			formSubmitButton = stepper.querySelector('[data-beave-stepper-action="submit"]');
+			formContinueButton = stepper.querySelector('[data-beave-stepper-action="next"]');
 
 			initStepper();
 			initValidation();
@@ -352,6 +352,6 @@ var KTCreateAccount = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTCreateAccount.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVECreateAccount.init();
 });

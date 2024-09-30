@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAppInboxListing = function () {
+var BEAVEAppInboxListing = function () {
     var table;
     var datatable;
 
@@ -29,7 +29,7 @@ var KTAppInboxListing = function () {
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-inbox-listing-filter="search"]');
+        const filterSearch = document.querySelector('[data-beave-inbox-listing-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
@@ -53,6 +53,6 @@ var KTAppInboxListing = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTAppInboxListing.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEAppInboxListing.init();
 });

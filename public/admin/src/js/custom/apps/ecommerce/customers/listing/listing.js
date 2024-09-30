@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTCustomersList = function () {
+var BEAVECustomersList = function () {
     // Define shared variables
     var datatable;
     var filterMonth;
@@ -39,7 +39,7 @@ var KTCustomersList = function () {
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-customer-table-filter="search"]');
+        const filterSearch = document.querySelector('[data-beave-customer-table-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
@@ -48,7 +48,7 @@ var KTCustomersList = function () {
     // Delete customer
     var handleDeleteRows = () => {
         // Select all delete buttons
-        const deleteButtons = table.querySelectorAll('[data-kt-customer-table-filter="delete_row"]');
+        const deleteButtons = table.querySelectorAll('[data-beave-customer-table-filter="delete_row"]');
 
         deleteButtons.forEach(d => {
             // Delete button on click
@@ -105,7 +105,7 @@ var KTCustomersList = function () {
 
     // Handle status filter dropdown
     var handleStatusFilter = () => {
-        const filterStatus = document.querySelector('[data-kt-ecommerce-order-filter="status"]');
+        const filterStatus = document.querySelector('[data-beave-ecommerce-order-filter="status"]');
         $(filterStatus).on('change', e => {
             let value = e.target.value;
             if (value === 'all') {
@@ -122,7 +122,7 @@ var KTCustomersList = function () {
         const checkboxes = table.querySelectorAll('[type="checkbox"]');
 
         // Select elements
-        const deleteSelected = document.querySelector('[data-kt-customer-table-select="delete_selected"]');
+        const deleteSelected = document.querySelector('[data-beave-customer-table-select="delete_selected"]');
 
         // Toggle delete selected toolbar
         checkboxes.forEach(c => {
@@ -188,9 +188,9 @@ var KTCustomersList = function () {
     // Toggle toolbars
     const toggleToolbars = () => {
         // Define variables
-        const toolbarBase = document.querySelector('[data-kt-customer-table-toolbar="base"]');
-        const toolbarSelected = document.querySelector('[data-kt-customer-table-toolbar="selected"]');
-        const selectedCount = document.querySelector('[data-kt-customer-table-select="selected_count"]');
+        const toolbarBase = document.querySelector('[data-beave-customer-table-toolbar="base"]');
+        const toolbarSelected = document.querySelector('[data-beave-customer-table-toolbar="selected"]');
+        const selectedCount = document.querySelector('[data-beave-customer-table-select="selected_count"]');
 
         // Select refreshed checkbox DOM elements 
         const allCheckboxes = table.querySelectorAll('tbody [type="checkbox"]');
@@ -237,6 +237,6 @@ var KTCustomersList = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTCustomersList.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVECustomersList.init();
 });

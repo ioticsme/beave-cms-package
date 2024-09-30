@@ -30,8 +30,8 @@
 
 {% block content %}
 	<div class="d-flex flex-column flex-column-fluid">
-		<div class="app-toolbar py-3 py-lg-6" id="kt_app_toolbar">
-			<div class="app-container container-xxl d-flex flex-stack" id="kt_app_toolbar_container">
+		<div class="app-toolbar py-3 py-lg-6" id="beave_app_toolbar">
+			<div class="app-container container-xxl d-flex flex-stack" id="beave_app_toolbar_container">
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Admin Nav List</h1>
 				</div>
@@ -40,8 +40,8 @@
 				</div>
 			</div>
 		</div>
-		<div id="kt_app_content" class="app-content flex-column-fluid">
-			<div id="kt_app_content_container" class="app-container container-xxl">
+		<div id="beave_app_content" class="app-content flex-column-fluid">
+			<div id="beave_app_content_container" class="app-container container-xxl">
 				<div class="card">
 					<div class="card-header border-0 pt-6">
 						<div class="card-title">
@@ -108,7 +108,7 @@
 
 
 {% block widgets %}
-	<div id="kt_modal_nav_section_form" class="modal fade" tabindex="-1" aria-hidden="true">
+	<div id="beave_modal_nav_section_form" class="modal fade" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered mw-400px">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -118,13 +118,13 @@
 					</div>
 				</div>
 				<div class="modal-body py-lg-5 px-lg-5">
-					<form id="kt_modal_create_app_form" class="form es-form" action="/admin/config/admin-nav/section/save" data-redirect-url="/admin/config/admin-nav/section/save" method="post">
+					<form id="beave_modal_create_app_form" class="form es-form" action="/admin/config/admin-nav/section/save" data-redirect-url="/admin/config/admin-nav/section/save" method="post">
 						<div class="card card-flush">
 							<div class="card-body pt-0">
 								<div class="col-md-12">
 									<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 										<span>Section Name</span>
-										<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-kt-initialized="1"></i>
+										<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beave-initialized="1"></i>
 									</label>
 									<input class="form-control" type="text" name="section" placeholder="Nav Section Name">
 									<input class="form-control mt-2" type="number" name="position" placeholder="Section Position">
@@ -143,7 +143,7 @@
 		</div>
 	</div>
 
-	<div id="kt_modal_nav_item_form" class="modal fade" tabindex="-1" aria-hidden="true">
+	<div id="beave_modal_nav_item_form" class="modal fade" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-center mw-400px">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -153,14 +153,14 @@
 					</button>
 				</div>
 				<div class="modal-body py-lg-5 px-lg-5">
-					<form id="kt_modal_create_item_form" action="/admin/config/admin-nav/item/save" data-redirect-url="/admin/config/admin-nav/item/save" method="post" class="form es-form">
+					<form id="beave_modal_create_item_form" action="/admin/config/admin-nav/item/save" data-redirect-url="/admin/config/admin-nav/item/save" method="post" class="form es-form">
 						<input type="hidden" name="section">
 						<div class="card card-flush">
 							<div class="card-body pt-0">
 								<div class="col-md-12">
 									<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 										<span> Nav Item</span>
-										<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-kt-initialized="1"></i>
+										<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beave-initialized="1"></i>
 									</label>
 									<div class="form-check form-check-custom form-check-solid my-1">
 										<input type="text" name="label" placeholder="Item Label" class="form-control">
@@ -193,7 +193,7 @@
 		</div>
 	</div>
 
-	<div class="modal fade" id="kt_modal_nav_child_form" tabindex="-1" aria-hidden="true">
+	<div class="modal fade" id="beave_modal_nav_child_form" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered mw-400px">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -203,7 +203,7 @@
 					</div>
 				</div>
 				<div class="modal-body py-lg-5 px-lg-5">
-					<form class="form es-form" id="kt_modal_create_child_form" action="/admin/config/admin-nav/child/save" data-redirect-url="/admin/config/admin-nav/child/save" method="post">
+					<form class="form es-form" id="beave_modal_create_child_form" action="/admin/config/admin-nav/child/save" data-redirect-url="/admin/config/admin-nav/child/save" method="post">
 						<input type="hidden" name="section"/>
 						<input type="hidden" name="item"/>
 						<div class="card card-flush">
@@ -211,7 +211,7 @@
 								<div class="col-md-12">
 									<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 										<span> Child Item</span>
-										<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-kt-initialized="1"></i>
+										<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beave-initialized="1"></i>
 									</label>
 									<div class="form-check form-check-custom form-check-solid my-1">
 										<input class="form-control" type="text" name="label" placeholder="Child Label"/>

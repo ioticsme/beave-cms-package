@@ -1,5 +1,5 @@
 // Class definition
-var KTChartsWidget24 = (function () {
+var BEAVEChartsWidget24 = (function () {
 	// Private methods
 	var initChart = function () {
 		// Check if amchart library is included
@@ -7,7 +7,7 @@ var KTChartsWidget24 = (function () {
 			return;
 		}
 
-		var element = document.getElementById("kt_charts_widget_24");
+		var element = document.getElementById("beave_charts_widget_24");
 
 		if (!element) {
 			return;
@@ -4143,11 +4143,11 @@ var KTChartsWidget24 = (function () {
 				paddingTop: 0,
 				fontWeight: "400",
 				fontSize: 11,
-				fill: am5.color(KTUtil.getCssVariableValue("--bs-gray-500")),
+				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-500")),
 			});
 
 			yAxis1.get("renderer").grid.template.setAll({
-				stroke: am5.color(KTUtil.getCssVariableValue("--bs-gray-300")),
+				stroke: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-300")),
 				strokeWidth: 1,
 				strokeOpacity: 1,
 				strokeDasharray: [3],
@@ -4163,7 +4163,7 @@ var KTChartsWidget24 = (function () {
 			}));
 
 			yAxis2.get("renderer").grid.template.setAll({
-				stroke: am5.color(KTUtil.getCssVariableValue("--bs-gray-300")),
+				stroke: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-300")),
 				strokeWidth: 1,
 				strokeOpacity: 1,
 				strokeDasharray: [3],
@@ -4173,7 +4173,7 @@ var KTChartsWidget24 = (function () {
 				paddingTop: 0,
 				fontWeight: "400",
 				fontSize: 11,
-				fill: am5.color(KTUtil.getCssVariableValue("--bs-gray-500")),
+				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-500")),
 			});
 
 			yAxis2.data.setAll(usData);
@@ -4191,7 +4191,7 @@ var KTChartsWidget24 = (function () {
 				paddingTop: 20,
 				fontWeight: "400",
 				fontSize: 11,
-				fill: am5.color(KTUtil.getCssVariableValue("--bs-gray-500")),
+				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-500")),
 			});
 
 			xAxis.get("renderer").grid.template.setAll({
@@ -4206,7 +4206,7 @@ var KTChartsWidget24 = (function () {
 				yAxis: yAxis1,
 				valueXField: "malePercent",
 				categoryYField: "age",
-				fill: am5.color(KTUtil.getCssVariableValue("--bs-success")),
+				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-success")),
 				clustered: false,
 			}));            
 			
@@ -4227,7 +4227,7 @@ var KTChartsWidget24 = (function () {
 				yAxis: yAxis1,
 				valueXField: "femalePercent",
 				categoryYField: "age",
-				fill: am5.color(KTUtil.getCssVariableValue("--bs-primary")),
+				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-primary")),
 				clustered: false,
 			}));
 			
@@ -4286,7 +4286,7 @@ var KTChartsWidget24 = (function () {
 				text: "United States",
 				fontSize: 14,
 				fontWeight: '500',
-				fill: am5.color(KTUtil.getCssVariableValue('--bs-gray-800')),
+				fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-gray-800')),
 				y: 20,
 				x: am5.p50,
 				centerX: am5.p50
@@ -4295,7 +4295,7 @@ var KTChartsWidget24 = (function () {
 			// Create polygon series
 			var polygonSeries = map.series.push(
 				am5map.MapPolygonSeries.new(root, {
-					fill: am5.color(KTUtil.getCssVariableValue('--bs-gray-300')),
+					fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-gray-300')),
 					geoJSON: am5geodata_usaLow
 				})
 			);
@@ -4306,11 +4306,11 @@ var KTChartsWidget24 = (function () {
 			});
 
 			polygonSeries.mapPolygons.template.states.create("hover", {
-				fill: am5.color(KTUtil.getCssVariableValue('--bs-success')),
+				fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-success')),
 			});
 
 			polygonSeries.mapPolygons.template.states.create("active", {
-					fill: am5.color(KTUtil.getCssVariableValue('--bs-success')),
+					fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-success')),
 			});
 			
 			var activePolygon;
@@ -4339,7 +4339,7 @@ var KTChartsWidget24 = (function () {
 		});
 
 		// Update chart on theme mode change
-		KTThemeMode.on("kt.thememode.change", function() {     
+		BEAVEThemeMode.on("beave.thememode.change", function() {     
 			// Destroy chart
 			root.dispose();
 
@@ -4358,12 +4358,12 @@ var KTChartsWidget24 = (function () {
 
 // Webpack support
 if (typeof module !== "undefined") {
-		module.exports = KTChartsWidget24;
+		module.exports = BEAVEChartsWidget24;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-		KTChartsWidget24.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+		BEAVEChartsWidget24.init();
 });
 
  

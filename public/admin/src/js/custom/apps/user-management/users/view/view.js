@@ -1,11 +1,11 @@
 "use strict";
 
 // Class definition
-var KTUsersViewMain = function () {
+var BEAVEUsersViewMain = function () {
 
     // Init login session button
     var initLoginSession = () => {
-        const button = document.getElementById('kt_modal_sign_out_sesions');
+        const button = document.getElementById('beave_modal_sign_out_sesions');
 
         button.addEventListener('click', e => {
             e.preventDefault();
@@ -50,7 +50,7 @@ var KTUsersViewMain = function () {
 
     // Init sign out single user
     var initSignOutUser = () => {
-        const signOutButtons = document.querySelectorAll('[data-kt-users-sign-out="single_user"]');
+        const signOutButtons = document.querySelectorAll('[data-beave-users-sign-out="single_user"]');
 
         signOutButtons.forEach(button => {
             button.addEventListener('click', e => {
@@ -102,7 +102,7 @@ var KTUsersViewMain = function () {
 
     // Delete two step authentication handler
     const initDeleteTwoStep = () => {
-        const deleteButton = document.getElementById('kt_users_delete_two_step');
+        const deleteButton = document.getElementById('beave_users_delete_two_step');
 
         deleteButton.addEventListener('click', e => {
             e.preventDefault();
@@ -147,7 +147,7 @@ var KTUsersViewMain = function () {
     // Email preference form handler
     const initEmailPreferenceForm = () => {
         // Define variables
-        const form = document.getElementById('kt_users_email_notification_form');
+        const form = document.getElementById('beave_users_email_notification_form');
         const submitButton = form.querySelector('#kt_users_email_notification_submit');
         const cancelButton = form.querySelector('#kt_users_email_notification_cancel');
 
@@ -156,7 +156,7 @@ var KTUsersViewMain = function () {
             e.preventDefault();
 
             // Show loading indication
-            submitButton.setAttribute('data-kt-indicator', 'on');
+            submitButton.setAttribute('data-beave-indicator', 'on');
 
             // Disable button to avoid multiple click 
             submitButton.disabled = true;
@@ -164,7 +164,7 @@ var KTUsersViewMain = function () {
             // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
             setTimeout(function () {
                 // Remove loading indication
-                submitButton.removeAttribute('data-kt-indicator');
+                submitButton.removeAttribute('data-beave-indicator');
 
                 // Enable button
                 submitButton.disabled = false;
@@ -229,6 +229,6 @@ var KTUsersViewMain = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTUsersViewMain.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEUsersViewMain.init();
 });

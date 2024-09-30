@@ -1,20 +1,20 @@
 "use strict";
 
 // Class definition
-var KTCardsWidget6 = function () {
+var BEAVECardsWidget6 = function () {
     // Private methods
     var initChart = function() {
-        var element = document.getElementById("kt_card_widget_6_chart");
+        var element = document.getElementById("beave_card_widget_6_chart");
 
         if (!element) {
             return;
         }
 
-        var height = parseInt(KTUtil.css(element, 'height'));
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-        var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');
-        var baseColor = KTUtil.getCssVariableValue('--bs-primary');
-        var secondaryColor = KTUtil.getCssVariableValue('--bs-gray-300');
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
+        var baseColor = BEAVEUtil.getCssVariableValue('--bs-primary');
+        var secondaryColor = BEAVEUtil.getCssVariableValue('--bs-gray-300');
 
         var options = {
             series: [{
@@ -151,12 +151,12 @@ var KTCardsWidget6 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTCardsWidget6;
+    module.exports = BEAVECardsWidget6;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTCardsWidget6.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVECardsWidget6.init();
 });
    
         

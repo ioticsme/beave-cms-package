@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalNewCard = function () {
+var BEAVEModalNewCard = function () {
 	var submitButton;
 	var cancelButton;
 	var validator;
@@ -104,7 +104,7 @@ var KTModalNewCard = function () {
 
 					if (status == 'Valid') {
 						// Show loading indication
-						submitButton.setAttribute('data-kt-indicator', 'on');
+						submitButton.setAttribute('data-beave-indicator', 'on');
 
 						// Disable button to avoid multiple click 
 						submitButton.disabled = true;
@@ -112,7 +112,7 @@ var KTModalNewCard = function () {
 						// Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
 						setTimeout(function() {
 							// Remove loading indication
-							submitButton.removeAttribute('data-kt-indicator');
+							submitButton.removeAttribute('data-beave-indicator');
 
 							// Enable button
 							submitButton.disabled = false;
@@ -198,8 +198,8 @@ var KTModalNewCard = function () {
 			modal = new bootstrap.Modal(modalEl);
 
 			form = document.querySelector('#kt_modal_new_card_form');
-			submitButton = document.getElementById('kt_modal_new_card_submit');
-			cancelButton = document.getElementById('kt_modal_new_card_cancel');
+			submitButton = document.getElementById('beave_modal_new_card_submit');
+			cancelButton = document.getElementById('beave_modal_new_card_cancel');
 
 			initForm();
 			handleForm();
@@ -208,6 +208,6 @@ var KTModalNewCard = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-	KTModalNewCard.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+	BEAVEModalNewCard.init();
 });

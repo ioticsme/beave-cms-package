@@ -27,17 +27,17 @@
 
 {% block content %}
 	<div class="d-flex flex-column flex-column-fluid">
-		<div class="app-toolbar py-3 py-lg-6" id="kt_app_toolbar">
-			<div class="app-container container-xxl d-flex flex-stack" id="kt_app_toolbar_container">
+		<div class="app-toolbar py-3 py-lg-6" id="beave_app_toolbar">
+			<div class="app-container container-xxl d-flex flex-stack" id="beave_app_toolbar_container">
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">App Config</h1>
 				</div>
 			</div>
 		</div>
-		<div class="app-content flex-column-fluid" id="kt_app_content">
-			<div class="app-container container-xxl" id="kt_app_content_container">
+		<div class="app-content flex-column-fluid" id="beave_app_content">
+			<div class="app-container container-xxl" id="beave_app_content_container">
 				<div class="card">
-					<form class="form es-form" id="kt_account_profile_details_form" action="/admin/config/app-settings/save" data-redirect-url="/admin/config/app-settings" method="post" autocomplete="off">
+					<form class="form es-form" id="beave_account_profile_details_form" action="/admin/config/app-settings/save" data-redirect-url="/admin/config/app-settings" method="post" autocomplete="off">
 						<div class="card-header border-0 pt-6 justify-content-end">
 							<div class="card-title">
 								<div class="d-flex align-items-right">
@@ -69,8 +69,8 @@
 							</ul>
 							<div id="myTabContent" class="tab-content">
 								{% for key, config_item in schema_fields.obj %}
-									<div class="tab-pane fade  {{ 'show active' if key=='general' }}" id="kt_tab_pane_{{ key }}" role="tabpanel">
-										<table id="kt_subscriptions_table" class="table align-middle table-row-dashed fs-6 gy-5">
+									<div class="tab-pane fade  {{ 'show active' if key=='general' }}" id="beave_tab_pane_{{ key }}" role="tabpanel">
+										<table id="beave_subscriptions_table" class="table align-middle table-row-dashed fs-6 gy-5">
 											<thead>
 												<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
 													<th class="min-w-125px">Key</th>

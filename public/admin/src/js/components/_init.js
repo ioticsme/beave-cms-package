@@ -3,21 +3,21 @@
 //
 
 // Init components
-var KTComponents = function () {
+var BEAVEComponents = function () {
     // Public methods
     return {
         init: function () {
-            KTApp.init();
-			KTDrawer.init();
-			KTMenu.init();
-			KTScroll.init();
-			KTSticky.init();
-			KTSwapper.init();
-			KTToggle.init();
-			KTScrolltop.init();
-			KTDialer.init();	
-			KTImageInput.init();
-			KTPasswordMeter.init();	
+            BEAVEApp.init();
+			BEAVEDrawer.init();
+			BEAVEMenu.init();
+			BEAVEScroll.init();
+			BEAVESticky.init();
+			BEAVESwapper.init();
+			BEAVEToggle.init();
+			BEAVEScrolltop.init();
+			BEAVEDialer.init();	
+			BEAVEImageInput.init();
+			BEAVEPasswordMeter.init();	
         }
     }	
 }();
@@ -25,18 +25,18 @@ var KTComponents = function () {
 // On document ready
 if (document.readyState === "loading") {
 	document.addEventListener("DOMContentLoaded", function() {
-		KTComponents.init();
+		BEAVEComponents.init();
 	});
  } else {
-	KTComponents.init();
+	BEAVEComponents.init();
  }
 
  // Init page loader
 window.addEventListener("load", function() {
-    KTApp.hidePageLoading();
+    BEAVEApp.hidePageLoading();
 });
 
-// Declare KTApp for Webpack support
+// Declare BEAVEApp for Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-	window.KTComponents = module.exports = KTComponents;
+	window.BEAVEComponents = module.exports = BEAVEComponents;
 }

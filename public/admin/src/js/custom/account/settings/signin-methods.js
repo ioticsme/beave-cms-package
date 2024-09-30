@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAccountSettingsSigninMethods = function () {
+var BEAVEAccountSettingsSigninMethods = function () {
     var signInForm;
     var signInMainEl;
     var signInEditEl;
@@ -126,7 +126,7 @@ var KTAccountSettingsSigninMethods = function () {
         var validation;
 
         // form elements
-        var passwordForm = document.getElementById('kt_signin_change_password');
+        var passwordForm = document.getElementById('beave_signin_change_password');
 
         if (!passwordForm) {
             return;
@@ -213,15 +213,15 @@ var KTAccountSettingsSigninMethods = function () {
     // Public methods
     return {
         init: function () {
-            signInForm = document.getElementById('kt_signin_change_email');
-            signInMainEl = document.getElementById('kt_signin_email');
-            signInEditEl = document.getElementById('kt_signin_email_edit');
-            passwordMainEl = document.getElementById('kt_signin_password');
-            passwordEditEl = document.getElementById('kt_signin_password_edit');
-            signInChangeEmail = document.getElementById('kt_signin_email_button');
-            signInCancelEmail = document.getElementById('kt_signin_cancel');
-            passwordChange = document.getElementById('kt_signin_password_button');
-            passwordCancel = document.getElementById('kt_password_cancel');
+            signInForm = document.getElementById('beave_signin_change_email');
+            signInMainEl = document.getElementById('beave_signin_email');
+            signInEditEl = document.getElementById('beave_signin_email_edit');
+            passwordMainEl = document.getElementById('beave_signin_password');
+            passwordEditEl = document.getElementById('beave_signin_password_edit');
+            signInChangeEmail = document.getElementById('beave_signin_email_button');
+            signInCancelEmail = document.getElementById('beave_signin_cancel');
+            passwordChange = document.getElementById('beave_signin_password_button');
+            passwordCancel = document.getElementById('beave_password_cancel');
 
             initSettings();
             handleChangeEmail();
@@ -231,6 +231,6 @@ var KTAccountSettingsSigninMethods = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTAccountSettingsSigninMethods.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEAccountSettingsSigninMethods.init();
 });

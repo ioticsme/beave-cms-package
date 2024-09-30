@@ -1,23 +1,23 @@
 "use strict";
 
 // Class definition
-var KTWidgets = function () {
+var BEAVEWidgets = function () {
     // Statistics widgets
     var initStatisticsWidget3 = function() {
         var charts = document.querySelectorAll('.statistics-widget-3-chart');
 
         [].slice.call(charts).map(function(element) {
-            var height = parseInt(KTUtil.css(element, 'height'));
+            var height = parseInt(BEAVEUtil.css(element, 'height'));
 
             if ( !element ) {
                 return;
             }
 
-            var color = element.getAttribute('data-kt-chart-color');
+            var color = element.getAttribute('data-beave-chart-color');
 
-            var labelColor = KTUtil.getCssVariableValue('--bs-' + 'gray-800');
-            var baseColor = KTUtil.getCssVariableValue('--bs-' + color);
-            var lightColor = KTUtil.getCssVariableValue('--bs-' + color + '-light');
+            var labelColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-800');
+            var baseColor = BEAVEUtil.getCssVariableValue('--bs-' + color);
+            var lightColor = BEAVEUtil.getCssVariableValue('--bs-' + color + '-light');
 
             var options = {
                 series: [{
@@ -147,17 +147,17 @@ var KTWidgets = function () {
         var charts = document.querySelectorAll('.statistics-widget-4-chart');
 
         [].slice.call(charts).map(function(element) {
-            var height = parseInt(KTUtil.css(element, 'height'));
+            var height = parseInt(BEAVEUtil.css(element, 'height'));
 
             if ( !element ) {
                 return;
             }
 
-            var color = element.getAttribute('data-kt-chart-color');
+            var color = element.getAttribute('data-beave-chart-color');
 
-            var labelColor = KTUtil.getCssVariableValue('--bs-' + 'gray-800');
-            var baseColor = KTUtil.getCssVariableValue('--bs-' + color);
-            var lightColor = KTUtil.getCssVariableValue('--bs-' + color + '-light' );
+            var labelColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-800');
+            var baseColor = BEAVEUtil.getCssVariableValue('--bs-' + color);
+            var lightColor = BEAVEUtil.getCssVariableValue('--bs-' + color + '-light' );
 
             var options = {
                 series: [{
@@ -285,7 +285,7 @@ var KTWidgets = function () {
 
     // Charts widgets
     var initChartsWidget1 = function() {
-        var element = document.getElementById("kt_charts_widget_1_chart");
+        var element = document.getElementById("beave_charts_widget_1_chart");
 
         if ( !element ) {
             return;
@@ -297,11 +297,11 @@ var KTWidgets = function () {
         };
 
         var initChart = function() {
-            var height = parseInt(KTUtil.css(element, 'height'));
-            var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-            var borderColor = KTUtil.getCssVariableValue('--bs-gray-200');
-            var baseColor = KTUtil.getCssVariableValue('--bs-primary');
-            var secondaryColor = KTUtil.getCssVariableValue('--bs-gray-300');        
+            var height = parseInt(BEAVEUtil.css(element, 'height'));
+            var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+            var borderColor = BEAVEUtil.getCssVariableValue('--bs-gray-200');
+            var baseColor = BEAVEUtil.getCssVariableValue('--bs-primary');
+            var secondaryColor = BEAVEUtil.getCssVariableValue('--bs-gray-300');        
 
             var options = {
                 series: [{
@@ -415,7 +415,7 @@ var KTWidgets = function () {
         initChart();
 
         // Update chart on theme mode change
-        KTThemeMode.on("kt.thememode.change", function() {                
+        BEAVEThemeMode.on("beave.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -425,7 +425,7 @@ var KTWidgets = function () {
     }
 
     var initChartsWidget2 = function() {
-        var element = document.getElementById("kt_charts_widget_2_chart");
+        var element = document.getElementById("beave_charts_widget_2_chart");
 
         if ( !element ) {
             return;
@@ -437,11 +437,11 @@ var KTWidgets = function () {
         };
 
         var initChart = function() {
-            var height = parseInt(KTUtil.css(element, 'height'));
-            var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-            var borderColor = KTUtil.getCssVariableValue('--bs-gray-200');
-            var baseColor = KTUtil.getCssVariableValue('--bs-warning');
-            var secondaryColor = KTUtil.getCssVariableValue('--bs-gray-300');
+            var height = parseInt(BEAVEUtil.css(element, 'height'));
+            var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+            var borderColor = BEAVEUtil.getCssVariableValue('--bs-gray-200');
+            var baseColor = BEAVEUtil.getCssVariableValue('--bs-warning');
+            var secondaryColor = BEAVEUtil.getCssVariableValue('--bs-gray-300');
 
             var options = {
                 series: [{
@@ -555,7 +555,7 @@ var KTWidgets = function () {
         initChart();
 
         // Update chart on theme mode change
-        KTThemeMode.on("kt.thememode.change", function() {                
+        BEAVEThemeMode.on("beave.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -565,7 +565,7 @@ var KTWidgets = function () {
     }
 
     var initChartsWidget3 = function() {
-        var element = document.getElementById("kt_charts_widget_3_chart");
+        var element = document.getElementById("beave_charts_widget_3_chart");
 
         if ( !element ) {
             return;
@@ -577,11 +577,11 @@ var KTWidgets = function () {
         };
 
         var initChart = function() {
-            var height = parseInt(KTUtil.css(element, 'height'));
-            var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-            var borderColor = KTUtil.getCssVariableValue('--bs-gray-200');
-            var baseColor = KTUtil.getCssVariableValue('--bs-info');
-            var lightColor = KTUtil.getCssVariableValue('--bs-info-light');              
+            var height = parseInt(BEAVEUtil.css(element, 'height'));
+            var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+            var borderColor = BEAVEUtil.getCssVariableValue('--bs-gray-200');
+            var baseColor = BEAVEUtil.getCssVariableValue('--bs-info');
+            var lightColor = BEAVEUtil.getCssVariableValue('--bs-info-light');              
 
             var options = {
                 series: [{
@@ -710,7 +710,7 @@ var KTWidgets = function () {
         initChart();
 
         // Update chart on theme mode change
-        KTThemeMode.on("kt.thememode.change", function() {                
+        BEAVEThemeMode.on("beave.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -720,7 +720,7 @@ var KTWidgets = function () {
     }
 
     var initChartsWidget4 = function() {
-        var element = document.getElementById("kt_charts_widget_4_chart");
+        var element = document.getElementById("beave_charts_widget_4_chart");
 
         if ( !element ) {
             return;
@@ -732,14 +732,14 @@ var KTWidgets = function () {
         };
 
         var initChart = function() {
-            var height = parseInt(KTUtil.css(element, 'height'));
-            var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-            var borderColor = KTUtil.getCssVariableValue('--bs-gray-200');
+            var height = parseInt(BEAVEUtil.css(element, 'height'));
+            var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+            var borderColor = BEAVEUtil.getCssVariableValue('--bs-gray-200');
 
-            var baseColor = KTUtil.getCssVariableValue('--bs-success');
-            var baseLightColor = KTUtil.getCssVariableValue('--bs-success-light');
-            var secondaryColor = KTUtil.getCssVariableValue('--bs-warning');
-            var secondaryLightColor = KTUtil.getCssVariableValue('--bs-warning-light');        
+            var baseColor = BEAVEUtil.getCssVariableValue('--bs-success');
+            var baseLightColor = BEAVEUtil.getCssVariableValue('--bs-success-light');
+            var secondaryColor = BEAVEUtil.getCssVariableValue('--bs-warning');
+            var secondaryLightColor = BEAVEUtil.getCssVariableValue('--bs-warning-light');        
 
             var options = {
                 series: [{
@@ -867,7 +867,7 @@ var KTWidgets = function () {
         initChart();
 
         // Update chart on theme mode change
-        KTThemeMode.on("kt.thememode.change", function() {                
+        BEAVEThemeMode.on("beave.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -877,7 +877,7 @@ var KTWidgets = function () {
     }
 
     var initChartsWidget5 = function() {
-        var element = document.getElementById("kt_charts_widget_5_chart");
+        var element = document.getElementById("beave_charts_widget_5_chart");
 
         if ( !element ) {
             return;
@@ -889,12 +889,12 @@ var KTWidgets = function () {
         };
 
         var initChart = function() {
-            var height = parseInt(KTUtil.css(element, 'height'));
-            var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-            var borderColor = KTUtil.getCssVariableValue('--bs-gray-200');
+            var height = parseInt(BEAVEUtil.css(element, 'height'));
+            var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+            var borderColor = BEAVEUtil.getCssVariableValue('--bs-gray-200');
 
-            var baseColor = KTUtil.getCssVariableValue('--bs-primary');
-            var secondaryColor = KTUtil.getCssVariableValue('--bs-info'); 
+            var baseColor = BEAVEUtil.getCssVariableValue('--bs-primary');
+            var secondaryColor = BEAVEUtil.getCssVariableValue('--bs-info'); 
 
             var options = {
                 series: [{
@@ -1011,7 +1011,7 @@ var KTWidgets = function () {
         initChart();
 
         // Update chart on theme mode change
-        KTThemeMode.on("kt.thememode.change", function() {                
+        BEAVEThemeMode.on("beave.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -1021,7 +1021,7 @@ var KTWidgets = function () {
     }
 
     var initChartsWidget6 = function() {
-        var element = document.getElementById("kt_charts_widget_6_chart");
+        var element = document.getElementById("beave_charts_widget_6_chart");
 
         if ( !element ) {
             return;
@@ -1033,13 +1033,13 @@ var KTWidgets = function () {
         };
 
         var initChart = function() {
-            var height = parseInt(KTUtil.css(element, 'height'));
-            var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-            var borderColor = KTUtil.getCssVariableValue('--bs-gray-200');
+            var height = parseInt(BEAVEUtil.css(element, 'height'));
+            var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+            var borderColor = BEAVEUtil.getCssVariableValue('--bs-gray-200');
 
-            var baseColor = KTUtil.getCssVariableValue('--bs-primary');
-            var baseLightColor = KTUtil.getCssVariableValue('--bs-primary-light');
-            var secondaryColor = KTUtil.getCssVariableValue('--bs-info');              
+            var baseColor = BEAVEUtil.getCssVariableValue('--bs-primary');
+            var baseLightColor = BEAVEUtil.getCssVariableValue('--bs-primary-light');
+            var secondaryColor = BEAVEUtil.getCssVariableValue('--bs-info');              
 
             var options = {
                 series: [{
@@ -1170,7 +1170,7 @@ var KTWidgets = function () {
         initChart();
 
         // Update chart on theme mode change
-        KTThemeMode.on("kt.thememode.change", function() {                
+        BEAVEThemeMode.on("beave.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -1180,7 +1180,7 @@ var KTWidgets = function () {
     }
 
     var initChartsWidget7 = function() {
-        var element = document.getElementById("kt_charts_widget_7_chart");
+        var element = document.getElementById("beave_charts_widget_7_chart");
 
         if ( !element ) {
             return;
@@ -1193,20 +1193,20 @@ var KTWidgets = function () {
 
         var initChart = function() {
 
-            var height = parseInt(KTUtil.css(element, 'height'));
+            var height = parseInt(BEAVEUtil.css(element, 'height'));
 
-            var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-            var borderColor = KTUtil.getCssVariableValue('--bs-gray-200');
-            var strokeColor = KTUtil.getCssVariableValue('--bs-gray-300');
+            var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+            var borderColor = BEAVEUtil.getCssVariableValue('--bs-gray-200');
+            var strokeColor = BEAVEUtil.getCssVariableValue('--bs-gray-300');
 
-            var color1 = KTUtil.getCssVariableValue('--bs-warning');
-            var color1Light = KTUtil.getCssVariableValue('--bs-warning-light');
+            var color1 = BEAVEUtil.getCssVariableValue('--bs-warning');
+            var color1Light = BEAVEUtil.getCssVariableValue('--bs-warning-light');
 
-            var color2 = KTUtil.getCssVariableValue('--bs-success');
-            var color2Light = KTUtil.getCssVariableValue('--bs-success-light');
+            var color2 = BEAVEUtil.getCssVariableValue('--bs-success');
+            var color2Light = BEAVEUtil.getCssVariableValue('--bs-success-light');
 
-            var color3 = KTUtil.getCssVariableValue('--bs-primary');  
-            var color3Light = KTUtil.getCssVariableValue('--bs-primary-light');         
+            var color3 = BEAVEUtil.getCssVariableValue('--bs-primary');  
+            var color3Light = BEAVEUtil.getCssVariableValue('--bs-primary-light');         
 
             var options = {
                 series: [{
@@ -1349,7 +1349,7 @@ var KTWidgets = function () {
         initChart();
 
         // Update chart on theme mode change
-        KTThemeMode.on("kt.thememode.change", function() {                
+        BEAVEThemeMode.on("beave.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -1359,7 +1359,7 @@ var KTWidgets = function () {
     }
 
     var initChartsWidget8 = function() {
-        var element = document.getElementById("kt_charts_widget_8_chart");
+        var element = document.getElementById("beave_charts_widget_8_chart");
 
         if ( !element ) {
             return;
@@ -1371,20 +1371,20 @@ var KTWidgets = function () {
         };
 
         var initChart = function() {
-            var height = parseInt(KTUtil.css(element, 'height'));
+            var height = parseInt(BEAVEUtil.css(element, 'height'));
 
-            var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-            var borderColor = KTUtil.getCssVariableValue('--bs-gray-200');
-            var strokeColor = KTUtil.getCssVariableValue('--bs-gray-300');
+            var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+            var borderColor = BEAVEUtil.getCssVariableValue('--bs-gray-200');
+            var strokeColor = BEAVEUtil.getCssVariableValue('--bs-gray-300');
 
-            var color1 = KTUtil.getCssVariableValue('--bs-warning');
-            var color1Light = KTUtil.getCssVariableValue('--bs-warning-light');
+            var color1 = BEAVEUtil.getCssVariableValue('--bs-warning');
+            var color1Light = BEAVEUtil.getCssVariableValue('--bs-warning-light');
 
-            var color2 = KTUtil.getCssVariableValue('--bs-success');
-            var color2Light = KTUtil.getCssVariableValue('--bs-success-light');
+            var color2 = BEAVEUtil.getCssVariableValue('--bs-success');
+            var color2Light = BEAVEUtil.getCssVariableValue('--bs-success-light');
 
-            var color3 = KTUtil.getCssVariableValue('--bs-primary');  
-            var color3Light = KTUtil.getCssVariableValue('--bs-primary-light');  
+            var color3 = BEAVEUtil.getCssVariableValue('--bs-primary');  
+            var color3Light = BEAVEUtil.getCssVariableValue('--bs-primary-light');  
     
             var options = {
                 series: [{
@@ -1543,7 +1543,7 @@ var KTWidgets = function () {
         initChart();
 
         // Update chart on theme mode change
-        KTThemeMode.on("kt.thememode.change", function() {                
+        BEAVEThemeMode.on("beave.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -1559,15 +1559,15 @@ var KTWidgets = function () {
         var color;
         var strokeColor;
         var height;
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-        var borderColor = KTUtil.getCssVariableValue('--bs-gray-200');
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-gray-200');
         var options;
         var chart;
 
         [].slice.call(charts).map(function(element) {
-            height = parseInt(KTUtil.css(element, 'height'));
-            color = KTUtil.getCssVariableValue('--bs-' + element.getAttribute("data-kt-color"));
-            strokeColor = KTUtil.colorDarken(color, 15);
+            height = parseInt(BEAVEUtil.css(element, 'height'));
+            color = BEAVEUtil.getCssVariableValue('--bs-' + element.getAttribute("data-beave-color"));
+            strokeColor = BEAVEUtil.colorDarken(color, 15);
 
             options = {
                 series: [{
@@ -1701,18 +1701,18 @@ var KTWidgets = function () {
         var charts = document.querySelectorAll('.mixed-widget-3-chart');      
         
         [].slice.call(charts).map(function(element) {
-            var height = parseInt(KTUtil.css(element, 'height'));
+            var height = parseInt(BEAVEUtil.css(element, 'height'));
 
             if ( !element ) {
                 return;
             }
 
-            var color = element.getAttribute('data-kt-chart-color');
+            var color = element.getAttribute('data-beave-chart-color');
 
-            var labelColor = KTUtil.getCssVariableValue('--bs-' + 'gray-800');
-            var strokeColor = KTUtil.getCssVariableValue('--bs-' + 'gray-300');
-            var baseColor = KTUtil.getCssVariableValue('--bs-' + color);
-            var lightColor = KTUtil.getCssVariableValue('--bs-' + color + '-light' );
+            var labelColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-800');
+            var strokeColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-300');
+            var baseColor = BEAVEUtil.getCssVariableValue('--bs-' + color);
+            var lightColor = BEAVEUtil.getCssVariableValue('--bs-' + color + '-light' );
 
             var options = {
                 series: [{
@@ -1842,17 +1842,17 @@ var KTWidgets = function () {
         var charts = document.querySelectorAll('.mixed-widget-4-chart');
 
         [].slice.call(charts).map(function(element) {
-            var height = parseInt(KTUtil.css(element, 'height'));
+            var height = parseInt(BEAVEUtil.css(element, 'height'));
 
             if ( !element ) {
                 return;
             }
 
-            var color = element.getAttribute('data-kt-chart-color');
+            var color = element.getAttribute('data-beave-chart-color');
 
-            var baseColor = KTUtil.getCssVariableValue('--bs-' + color);
-            var lightColor = KTUtil.getCssVariableValue('--bs-' + color + '-light' );
-            var labelColor = KTUtil.getCssVariableValue('--bs-' + 'gray-700');
+            var baseColor = BEAVEUtil.getCssVariableValue('--bs-' + color);
+            var lightColor = BEAVEUtil.getCssVariableValue('--bs-' + color + '-light' );
+            var labelColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-700');
 
             var options = {
                 series: [74],
@@ -1906,17 +1906,17 @@ var KTWidgets = function () {
         var charts = document.querySelectorAll('.mixed-widget-5-chart');
 
         var initChart = function(chart, element) {
-            var height = parseInt(KTUtil.css(element, 'height'));
+            var height = parseInt(BEAVEUtil.css(element, 'height'));
 
             if ( !element ) {
                 return;
             }
 
-            var color = element.getAttribute('data-kt-chart-color');
-            var labelColor = KTUtil.getCssVariableValue('--bs-' + 'gray-800');
-            var strokeColor = KTUtil.getCssVariableValue('--bs-' + 'gray-300');
-            var baseColor = KTUtil.getCssVariableValue('--bs-' + color);
-            var lightColor = KTUtil.getCssVariableValue('--bs-' + color + '-light' );
+            var color = element.getAttribute('data-beave-chart-color');
+            var labelColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-800');
+            var strokeColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-300');
+            var baseColor = BEAVEUtil.getCssVariableValue('--bs-' + color);
+            var lightColor = BEAVEUtil.getCssVariableValue('--bs-' + color + '-light' );
 
             var options = {
                 series: [{
@@ -2065,7 +2065,7 @@ var KTWidgets = function () {
             initChart(chart, element);
             
             // Update chart on theme mode change
-            KTThemeMode.on("kt.thememode.change", function() {                
+            BEAVEThemeMode.on("beave.thememode.change", function() {                
                 if (chart.rendered) {
                     chart.self.destroy();
                 }
@@ -2079,18 +2079,18 @@ var KTWidgets = function () {
         var charts = document.querySelectorAll('.mixed-widget-6-chart');
 
         [].slice.call(charts).map(function(element) {
-            var height = parseInt(KTUtil.css(element, 'height'));
+            var height = parseInt(BEAVEUtil.css(element, 'height'));
 
             if ( !element ) {
                 return;
             }
 
-            var color = element.getAttribute('data-kt-chart-color');
+            var color = element.getAttribute('data-beave-chart-color');
 
-            var labelColor = KTUtil.getCssVariableValue('--bs-' + 'gray-800');
-            var strokeColor = KTUtil.getCssVariableValue('--bs-' + 'gray-300');
-            var baseColor = KTUtil.getCssVariableValue('--bs-' + color);
-            var lightColor = KTUtil.getCssVariableValue('--bs-' + color + '-light' );
+            var labelColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-800');
+            var strokeColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-300');
+            var baseColor = BEAVEUtil.getCssVariableValue('--bs-' + color);
+            var lightColor = BEAVEUtil.getCssVariableValue('--bs-' + color + '-light' );
 
             var options = {
                 series: [{
@@ -2220,18 +2220,18 @@ var KTWidgets = function () {
         var charts = document.querySelectorAll('.mixed-widget-7-chart');
 
         [].slice.call(charts).map(function(element) {
-            var height = parseInt(KTUtil.css(element, 'height'));
+            var height = parseInt(BEAVEUtil.css(element, 'height'));
 
             if ( !element ) {
                 return;
             }
 
-            var color = element.getAttribute('data-kt-chart-color');
+            var color = element.getAttribute('data-beave-chart-color');
 
-            var labelColor = KTUtil.getCssVariableValue('--bs-' + 'gray-800');
-            var strokeColor = KTUtil.getCssVariableValue('--bs-' + 'gray-300');
-            var baseColor = KTUtil.getCssVariableValue('--bs-' + color);
-            var lightColor = KTUtil.getCssVariableValue('--bs-' + color + '-light');
+            var labelColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-800');
+            var strokeColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-300');
+            var baseColor = BEAVEUtil.getCssVariableValue('--bs-' + color);
+            var lightColor = BEAVEUtil.getCssVariableValue('--bs-' + color + '-light');
 
             var options = {
                 series: [{
@@ -2362,18 +2362,18 @@ var KTWidgets = function () {
 
         var color;
         var height;
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-        var borderColor = KTUtil.getCssVariableValue('--bs-gray-200');
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-gray-200');
         var baseLightColor;
-        var secondaryColor = KTUtil.getCssVariableValue('--bs-gray-300');
+        var secondaryColor = BEAVEUtil.getCssVariableValue('--bs-gray-300');
         var baseColor;
         var options;
         var chart;
 
         [].slice.call(charts).map(function(element) {
-            color = element.getAttribute("data-kt-color");
-            height = parseInt(KTUtil.css(element, 'height'));
-            baseColor = KTUtil.getCssVariableValue('--bs-' + color);
+            color = element.getAttribute("data-beave-color");
+            height = parseInt(BEAVEUtil.css(element, 'height'));
+            baseColor = BEAVEUtil.getCssVariableValue('--bs-' + color);
 
             options = {
                 series: [{
@@ -2495,13 +2495,13 @@ var KTWidgets = function () {
         var color;
         var strokeColor;
         var height;
-        var labelColor = KTUtil.getCssVariableValue('--bs-gray-500');
-        var borderColor = KTUtil.getCssVariableValue('--bs-gray-200');
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
+        var borderColor = BEAVEUtil.getCssVariableValue('--bs-gray-200');
         var options;
         var chart;
 
         [].slice.call(charts).map(function(element) {            
-            height = parseInt(KTUtil.css(element, 'height'));
+            height = parseInt(BEAVEUtil.css(element, 'height'));
 
             var options = {
                 series: [{
@@ -2629,14 +2629,14 @@ var KTWidgets = function () {
         var charts = document.querySelectorAll('.mixed-widget-13-chart');
 
         [].slice.call(charts).map(function(element) {
-            height = parseInt(KTUtil.css(element, 'height'));
+            height = parseInt(BEAVEUtil.css(element, 'height'));
 
             if ( !element ) {
                 return;
             }
                    
-            var labelColor = KTUtil.getCssVariableValue('--bs-' + 'gray-800');
-            var strokeColor = KTUtil.getCssVariableValue('--bs-' + 'gray-300');
+            var labelColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-800');
+            var strokeColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-300');
 
             var options = {
                 series: [{
@@ -2782,8 +2782,8 @@ var KTWidgets = function () {
         var height;
 
         [].slice.call(charts).map(function(element) {
-            height = parseInt(KTUtil.css(element, 'height'));      
-            var labelColor = KTUtil.getCssVariableValue('--bs-gray-800');      
+            height = parseInt(BEAVEUtil.css(element, 'height'));      
+            var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-800');      
 
             options = {
                 series: [{
@@ -2871,8 +2871,8 @@ var KTWidgets = function () {
 	}
     
     var initMixedWidget16 = function() {
-        var element = document.getElementById("kt_charts_mixed_widget_16_chart");
-        var height = parseInt(KTUtil.css(element, 'height'));
+        var element = document.getElementById("beave_charts_mixed_widget_16_chart");
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
 
         if (!element) {
             return;
@@ -2903,10 +2903,10 @@ var KTWidgets = function () {
                             fontSize: "13px",
                             fontWeight: "700",
                             offsetY: -5,
-                            color: KTUtil.getCssVariableValue('--bs-gray-500')
+                            color: BEAVEUtil.getCssVariableValue('--bs-gray-500')
                         },
                         value: {
-                            color: KTUtil.getCssVariableValue('--bs-gray-700'),
+                            color: BEAVEUtil.getCssVariableValue('--bs-gray-700'),
                             fontSize: "30px",
                             fontWeight: "700",
                             offsetY: -40,
@@ -2914,12 +2914,12 @@ var KTWidgets = function () {
                         }
                     },
                     track: {
-                        background: KTUtil.getCssVariableValue('--bs-primary-light'),
+                        background: BEAVEUtil.getCssVariableValue('--bs-primary-light'),
                         strokeWidth: '100%'
                     }
                 }
             },
-            colors: [KTUtil.getCssVariableValue('--bs-primary')],
+            colors: [BEAVEUtil.getCssVariableValue('--bs-primary')],
             stroke: {
                 lineCap: "round",
             }            
@@ -2933,13 +2933,13 @@ var KTWidgets = function () {
         var charts = document.querySelectorAll('.mixed-widget-17-chart');
 
         [].slice.call(charts).map(function(element) {
-            var height = parseInt(KTUtil.css(element, 'height'));
+            var height = parseInt(BEAVEUtil.css(element, 'height'));
 
             if (!element) {
                 return;
             }
 
-            var color = element.getAttribute('data-kt-chart-color');
+            var color = element.getAttribute('data-beave-chart-color');
 
             var options = {
                 labels: ["Total Orders"],
@@ -2965,10 +2965,10 @@ var KTWidgets = function () {
                                 fontSize: "12px",
                                 fontWeight: "700",
                                 offsetY: -5,
-                                color: KTUtil.getCssVariableValue('--bs-gray-500')
+                                color: BEAVEUtil.getCssVariableValue('--bs-gray-500')
                             },
                             value: {
-                                color: KTUtil.getCssVariableValue('--bs-gray-900'),
+                                color: BEAVEUtil.getCssVariableValue('--bs-gray-900'),
                                 fontSize: "24px",
                                 fontWeight: "600",
                                 offsetY: -40,
@@ -2979,12 +2979,12 @@ var KTWidgets = function () {
                             }
                         },
                         track: {
-                            background: KTUtil.getCssVariableValue('--bs-gray-300'),
+                            background: BEAVEUtil.getCssVariableValue('--bs-gray-300'),
                             strokeWidth: '100%'
                         }
                     }
                 },
-                colors: [KTUtil.getCssVariableValue('--bs-' + color)],
+                colors: [BEAVEUtil.getCssVariableValue('--bs-' + color)],
                 stroke: {
                     lineCap: "round",
                 }            
@@ -2996,16 +2996,16 @@ var KTWidgets = function () {
     }  
 
     var initMixedWidget18 = function() {
-        var element = document.getElementById("kt_charts_mixed_widget_18_chart");  
-        var height = parseInt(KTUtil.css(element, 'height'));
+        var element = document.getElementById("beave_charts_mixed_widget_18_chart");  
+        var height = parseInt(BEAVEUtil.css(element, 'height'));
 
         if ( !element ) {
             return;
         }
 
-        var labelColor = KTUtil.getCssVariableValue('--bs-' + 'gray-800');
-        var strokeColor = KTUtil.getCssVariableValue('--bs-' + 'gray-800');
-        var fillColor = KTThemeMode.getMode() === "dark" ? KTUtil.getCssVariableValue('--bs-gray-200') : '#D6D6E0';
+        var labelColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-800');
+        var strokeColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-800');
+        var fillColor = BEAVEThemeMode.getMode() === "dark" ? BEAVEUtil.getCssVariableValue('--bs-gray-200') : '#D6D6E0';
 
         var options = {
             series: [{
@@ -3137,16 +3137,16 @@ var KTWidgets = function () {
         };
 
         function initChart() {
-            var element = document.getElementById("kt_charts_mixed_widget_19_chart");  
-            var height = parseInt(KTUtil.css(element, 'height'));
+            var element = document.getElementById("beave_charts_mixed_widget_19_chart");  
+            var height = parseInt(BEAVEUtil.css(element, 'height'));
 
             if ( !element ) {
                 return;
             }
 
-            var labelColor = KTUtil.getCssVariableValue('--bs-' + 'gray-800');
-            var strokeColor = KTUtil.getCssVariableValue('--bs-' + 'info');
-            var fillColor = KTUtil.getCssVariableValue('--bs-info-light')
+            var labelColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-800');
+            var strokeColor = BEAVEUtil.getCssVariableValue('--bs-' + 'info');
+            var fillColor = BEAVEUtil.getCssVariableValue('--bs-info-light')
 
             var options = {
                 series: [{
@@ -3279,7 +3279,7 @@ var KTWidgets = function () {
         initChart();
 
         // Update chart on theme mode change
-        KTThemeMode.on("kt.thememode.change", function() {                
+        BEAVEThemeMode.on("beave.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -3291,7 +3291,7 @@ var KTWidgets = function () {
     // Feeds Widgets
     var initFeedWidget1 = function() {
         var formEl = document.querySelector("#kt_forms_widget_1_form");
-        var editorId = 'kt_forms_widget_1_editor';
+        var editorId = 'beave_forms_widget_1_editor';
 
         if ( !formEl ) {
             return;
@@ -3323,14 +3323,14 @@ var KTWidgets = function () {
         if (btn) {
             btn.addEventListener('click', function(e){
                 e.preventDefault();
-                btn.setAttribute('data-kt-indicator', 'on');
+                btn.setAttribute('data-beave-indicator', 'on');
 
                 setTimeout(function() {
-                    btn.removeAttribute('data-kt-indicator');
+                    btn.removeAttribute('data-beave-indicator');
                     widget5.classList.remove('d-none');         
                     btn.classList.add('d-none');         
                     
-                    KTUtil.scrollTo(widget5, 200);
+                    BEAVEUtil.scrollTo(widget5, 200);
                 }, 2000);                
             });
         }                 
@@ -3348,7 +3348,7 @@ var KTWidgets = function () {
         var TODAY = todayDate.format('YYYY-MM-DD');
         var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
 
-        var calendarEl = document.getElementById('kt_calendar_widget_1');
+        var calendarEl = document.getElementById('beave_calendar_widget_1');
         var calendar = new FullCalendar.Calendar(calendarEl, {
             headerToolbar: {
                 left: 'prev,next today',
@@ -3507,7 +3507,7 @@ var KTWidgets = function () {
         }
 
         picker.daterangepicker({
-            direction: KTUtil.isRTL(),
+            direction: BEAVEUtil.isRTL(),
             startDate: start,
             endDate: end,
             opens: 'left',
@@ -3532,7 +3532,7 @@ var KTWidgets = function () {
         
         if (toggle) {
             toggle.addEventListener('click', function() {
-                window.location.href = this.getAttribute('data-kt-url');
+                window.location.href = this.getAttribute('data-beave-url');
             });
         }
     }
@@ -3588,10 +3588,10 @@ var KTWidgets = function () {
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = KTWidgets;
+    module.exports = BEAVEWidgets;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTWidgets.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEWidgets.init();
 });

@@ -1,14 +1,14 @@
 "use strict";
 
 // Class definition
-var KTAppContactEdit = function () {
+var BEAVEAppContactEdit = function () {
     // Shared variables
 
 
     // Private functions
     const initForm = () => {
         // Select form
-        const form = document.getElementById('kt_ecommerce_settings_general_form');
+        const form = document.getElementById('beave_ecommerce_settings_general_form');
 
         if (!form) {
             return;
@@ -60,7 +60,7 @@ var KTAppContactEdit = function () {
         );
 
         // Submit button handler
-        const submitButton = form.querySelector('[data-kt-contacts-type="submit"]');
+        const submitButton = form.querySelector('[data-beave-contacts-type="submit"]');
         submitButton.addEventListener('click', function (e) {
             // Prevent default button action
             e.preventDefault();
@@ -72,7 +72,7 @@ var KTAppContactEdit = function () {
 
                     if (status == 'Valid') {
                         // Show loading indication
-                        submitButton.setAttribute('data-kt-indicator', 'on');
+                        submitButton.setAttribute('data-beave-indicator', 'on');
 
                         // Disable button to avoid multiple click 
                         submitButton.disabled = true;
@@ -80,7 +80,7 @@ var KTAppContactEdit = function () {
                         // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         setTimeout(function () {
                             // Remove loading indication
-                            submitButton.removeAttribute('data-kt-indicator');
+                            submitButton.removeAttribute('data-beave-indicator');
 
                             // Enable button
                             submitButton.disabled = false;
@@ -126,7 +126,7 @@ var KTAppContactEdit = function () {
             var span = document.createElement('span');
             var template = '';
 
-            template += '<img src="' + item.element.getAttribute('data-kt-select2-country') + '" class="rounded-circle me-2" style="height:19px;" alt="image"/>';
+            template += '<img src="' + item.element.getAttribute('data-beave-select2-country') + '" class="rounded-circle me-2" style="height:19px;" alt="image"/>';
             template += item.text;
 
             span.innerHTML = template;
@@ -135,7 +135,7 @@ var KTAppContactEdit = function () {
         }
 
         // Init Select2 --- more info: https://select2.org/
-        $('[data-kt-ecommerce-settings-type="select2_flags"]').select2({
+        $('[data-beave-ecommerce-settings-type="select2_flags"]').select2({
             placeholder: "Select a country",
             minimumResultsForSearch: Infinity,
             templateSelection: optionFormat,
@@ -155,6 +155,6 @@ var KTAppContactEdit = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTAppContactEdit.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEAppContactEdit.init();
 });

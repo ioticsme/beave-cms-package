@@ -48,7 +48,7 @@
 				$(this).slideDown();
 				// Re-init select2
 				$(this)
-					.find('[data-kt-repeate="select2"]')
+					.find('[data-beave-repeate="select2"]')
 					.select2();
 			},
 
@@ -57,7 +57,7 @@
 			},
 			ready: function () {
 				// Init select2
-				$('[data-kt-repeate="select2"]').select2();
+				$('[data-beave-repeate="select2"]').select2();
 			}
 		});
 	</script>
@@ -65,8 +65,8 @@
 
 {% block content %}
 	<div class="d-flex flex-column flex-column-fluid">
-		<div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-			<div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+		<div id="beave_app_toolbar" class="app-toolbar py-3 py-lg-6">
+			<div id="beave_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
 						Content Type Field Customization
@@ -92,23 +92,23 @@
 				</div>
 			</div>
 		</div>
-		<div class="app-content flex-column-fluid" id="kt_app_content">
-			<div class="app-container container-xxl" id="kt_app_content_container">
+		<div class="app-content flex-column-fluid" id="beave_app_content">
+			<div class="app-container container-xxl" id="beave_app_content_container">
 				.card.mb-5.mb-xl-10
-					<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+					<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="beave_account_profile_details">
 					<div class="card-title m-0">
 						<h3 class="fw-bold m-0">Fields</h3>
 					</div>
 				</div>
 
-				<form id="kt_account_profile_details_form" class="form es-form" action="/admin/config/content-type/save-fields" data-redirect-url="/admin/config/content-type" method="post" autocomplete="off">
+				<form id="beave_account_profile_details_form" class="form es-form" action="/admin/config/content-type/save-fields" data-redirect-url="/admin/config/content-type" method="post" autocomplete="off">
 					<input type="hidden" name="id" value="{{ contentType._id }}">
-					<div id="kt_account_settings_profile_details">
+					<div id="beave_account_settings_profile_details">
 						<div class="card-body border-top">
-							<div class="row" id="kt_docs_repeater_nested">
+							<div class="row" id="beave_docs_repeater_nested">
 								{% if contentType and contentType.custom_field_groups and contentType.custom_field_groups.length %}
 									<div class="form-group mt-10">
-										<div data-repeater-list="kt_docs_repeater_nested_outer">
+										<div data-repeater-list="beave_docs_repeater_nested_outer">
 											{% for cfg, i in contentType.custom_field_groups %}
 												<div class="border rounded p-6 pt-12 mb-4 position-relative" data-repeater-item="" style="background-color: #ebebeb">
 													<div class="position-absolute" style="top:10px; right:10px;">
@@ -147,7 +147,7 @@
 													<div>
 														<h5 class="badge badge-success"></h5>
 														<div class="inner-repeater">
-															<div class="mb-5" data-repeater-list="kt_docs_repeater_nested_inner">
+															<div class="mb-5" data-repeater-list="beave_docs_repeater_nested_inner">
 																{% for cf, j in cfg.fields %}
 																	<div class="position-relative border rounded p-6 pt-10 bg-white mt-4" data-repeater-item="">
 																		<div class="position-absolute" style="top:10px; right:10px;">
@@ -173,7 +173,7 @@
 																				<div class="fv-plugins-message-container invalid-feedback" id="field-error-validation"></div>
 																			</div>
 																			<div class="mt-2 col-md-6">
-																				<select name="field_type" class="form-select form-control select2 form-select-lg form-select-solid mb-2" data-kt-repeater='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select field type'>
+																				<select name="field_type" class="form-select form-control select2 form-select-lg form-select-solid mb-2" data-beave-repeater='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select field type'>
 																					<option value="">Select Field Type</option>
 																					{% if cf.field_type == 'text' %}
 																						<option value="text" selected>Text</option>
@@ -256,7 +256,7 @@
 									</div>
 								{% else %}
 									<div class="form-group mt-10">
-										<div data-repeater-list="kt_docs_repeater_nested_outer">
+										<div data-repeater-list="beave_docs_repeater_nested_outer">
 											<div class="border rounded p-6 pt-12 mb-4 position-relative" data-repeater-item="" style="background-color: #ebebeb">
 												<div class="position-absolute" style="top:10px; right:10px;">
 													<a class="btn btn-sm btn-light-danger border border-danger py-2 px-3" href="javascript:;" data-repeater-delete="">
@@ -275,7 +275,7 @@
 													</div>
 													<div class="col-md-6">
 														<label class="form-label">Row Type:</label>
-														<select name="repeater_group" class="form-select form-control select2 form-select-lg form-select-solid mb-2 mb-md-0" data-kt-repeater="select2" data-close-on-select="true" data-allow-clear="true" data-placeholder="Select row type">
+														<select name="repeater_group" class="form-select form-control select2 form-select-lg form-select-solid mb-2 mb-md-0" data-beave-repeater="select2" data-close-on-select="true" data-allow-clear="true" data-placeholder="Select row type">
 																//- <!-- TODO::edit selection list item -->
 															<option value="">Select Row type</option>
 															{% if contentType and contentType.repeater_group == false %}
@@ -292,7 +292,7 @@
 													</div>
 													<div class="mt-2 col-md-6">
 														<label class="form-label">Row Language type</label>
-														<select name="localisation" class="form-select form-control select2 form-select-lg form-select-solid mb-2" data-kt-repeater="select2" data-close-on-select="true" data-allow-clear="true" data-placeholder="Select language type">
+														<select name="localisation" class="form-select form-control select2 form-select-lg form-select-solid mb-2" data-beave-repeater="select2" data-close-on-select="true" data-allow-clear="true" data-placeholder="Select language type">
 															<!-- TODO::edit selection list item -->
 															<option value="">Select language type</option>
 															{% if contentType and contentType.localisation == true %}
@@ -312,7 +312,7 @@
 												<div>
 													<h5 class="badge badge-success">Fields</h5>
 													<div class="inner-repeater">
-														<div class="mb-5" data-repeater-list="kt_docs_repeater_nested_inner">
+														<div class="mb-5" data-repeater-list="beave_docs_repeater_nested_inner">
 															<div class="position-relative border rounded p-6 pt-10 bg-white mt-4" data-repeater-item="">
 																<div class="position-absolute" style="top:10px; right:10px;">
 																	<button class="btn-sm btn btn-light-danger border border-danger py-2 px-3" data-repeater-delete="" type="button">
@@ -337,7 +337,7 @@
 																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-validation"></div>
 																	</div>
 																	<div class="mt-2 col-md-6">
-																		<select class="form-select form-control select2 form-select-lg form-select-solid mb-2" name="field_type" data-kt-repeater="select2" data-close-on-select="true" data-allow-clear="true" data-placeholder="Select field type">
+																		<select class="form-select form-control select2 form-select-lg form-select-solid mb-2" name="field_type" data-beave-repeater="select2" data-close-on-select="true" data-allow-clear="true" data-placeholder="Select field type">
 																			<option value="">Select Field Type</option>
 																			<option value="text">Text</option>
 																			<option value="wysiwyg">WYSIWYG</option>
@@ -377,7 +377,7 @@
 									</div>
 								{% endif %}
 							</div>
-							<button class="btn btn-primary form-submit-btn" id="kt_account_profile_details_submit" type="submit">
+							<button class="btn btn-primary form-submit-btn" id="beave_account_profile_details_submit" type="submit">
 								<span class="preloader d-none">Saving...</span>
 								<span class="label">Save</span>
 							</button>

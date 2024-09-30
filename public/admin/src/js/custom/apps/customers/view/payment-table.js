@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTCustomerViewPaymentTable = function () {
+var BEAVECustomerViewPaymentTable = function () {
 
     // Define shared variables
     var datatable;
@@ -33,7 +33,7 @@ var KTCustomerViewPaymentTable = function () {
     // Delete customer
     var deleteRows = () => {
         // Select all delete buttons
-        const deleteButtons = table.querySelectorAll('[data-kt-customer-table-filter="delete_row"]');
+        const deleteButtons = table.querySelectorAll('[data-beave-customer-table-filter="delete_row"]');
         
         deleteButtons.forEach(d => {
             // Delete button on click
@@ -105,6 +105,6 @@ var KTCustomerViewPaymentTable = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTCustomerViewPaymentTable.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVECustomerViewPaymentTable.init();
 });

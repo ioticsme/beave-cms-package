@@ -30,8 +30,8 @@
 
 {% block content %}
 	<div class="d-flex flex-column flex-column-fluid">
-		<div class="app-toolbar py-3 py-lg-6" id="kt_app_toolbar">
-			<div class="app-container container-xxl d-flex flex-stack" id="kt_app_toolbar_container">
+		<div class="app-toolbar py-3 py-lg-6" id="beave_app_toolbar">
+			<div class="app-container container-xxl d-flex flex-stack" id="beave_app_toolbar_container">
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Media Management</h1>
 					<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -50,7 +50,7 @@
 			</div>
 		</div>
 
-		<div id="kt_app_content" class="app-content flex-column-fluid">
+		<div id="beave_app_content" class="app-content flex-column-fluid">
 			<div id="media-management-panel" class="app-container container">
 				<div class="row g-5 g-10 mb-10">
 					<div class="col-12 col-md-8 mx-auto my-5">
@@ -77,7 +77,7 @@
 									{%endif%}
 									<div class="row mt-1">
 										<div class="col-12">
-											<span class="btn btn-danger btn-sm mt-1" id="{{ item._id }}" url="/admin/cms/media/delete" data-kt-subscriptions-table-filter="delete_row" onClick="deleteItem(this)" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to delete image">
+											<span class="btn btn-danger btn-sm mt-1" id="{{ item._id }}" url="/admin/cms/media/delete" data-beave-subscriptions-table-filter="delete_row" onClick="deleteItem(this)" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to delete image">
 												<i class="fa fa-trash"></i>
 											</span>
 											<span class="btn btn-success btn-sm copy-btn mt-1" data-clipboard-target="#img-{{ loop.index }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to copy Image URL">

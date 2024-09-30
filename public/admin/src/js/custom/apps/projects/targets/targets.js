@@ -1,10 +1,10 @@
 "use strict";
 
 // Class definition
-var KTProjectTargets = function () {
+var BEAVEProjectTargets = function () {
 
     var initDatatable = function () {
-        const table = document.getElementById('kt_profile_overview_table');
+        const table = document.getElementById('beave_profile_overview_table');
 
         // set date data order
         const tableRows = table.querySelectorAll('tbody tr');
@@ -33,6 +33,6 @@ var KTProjectTargets = function () {
 
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
-    KTProjectTargets.init();
+BEAVEUtil.onDOMContentLoaded(function() {
+    BEAVEProjectTargets.init();
 });

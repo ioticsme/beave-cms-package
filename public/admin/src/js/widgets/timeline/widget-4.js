@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTTimelineWidget4 = function () {
+var BEAVETimelineWidget4 = function () {
     // Private methods
     // Day timeline
     const initTimelineDay = () => {
@@ -17,7 +17,7 @@ var KTTimelineWidget4 = function () {
 
         // Set variables
         var now = Date.now();
-        var rootImagePath = element.getAttribute('data-kt-timeline-widget-4-image-root');
+        var rootImagePath = element.getAttribute('data-beave-timeline-widget-4-image-root');
 
         // Build vis-timeline datasets
         var groups = new vis.DataSet([
@@ -121,7 +121,7 @@ var KTTimelineWidget4 = function () {
                 filterOptions: {
                     whiteList: {
                         div: ['class', 'style'],
-                        img: ['data-kt-timeline-avatar-src', 'alt'],
+                        img: ['data-beave-timeline-avatar-src', 'alt'],
                         a: ['href', 'class']
                     },
                 },
@@ -132,7 +132,7 @@ var KTTimelineWidget4 = function () {
                 const users = item.users;
                 let userTemplate = '';
                 users.forEach(user => {
-                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-kt-timeline-avatar-src="${rootImagePath + user}" alt="" /></div>`;
+                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-beave-timeline-avatar-src="${rootImagePath + user}" alt="" /></div>`;
                 });
 
                 return `<div class="rounded-pill bg-light-${item.color} d-flex align-items-center position-relative h-40px w-100 p-2 overflow-hidden">
@@ -157,8 +157,8 @@ var KTTimelineWidget4 = function () {
             onInitialDrawComplete: function () {
                 handleAvatarPath();
 
-                const target = element.closest('[data-kt-timeline-widget-4-blockui="true"]');
-                const blockUI = KTBlockUI.getInstance(target);
+                const target = element.closest('[data-beave-timeline-widget-4-blockui="true"]');
+                const blockUI = BEAVEBlockUI.getInstance(target);
 
                 if (blockUI.isBlocked()) {
                     setTimeout(() => {
@@ -192,7 +192,7 @@ var KTTimelineWidget4 = function () {
 
         // Set variables
         var now = Date.now();
-        var rootImagePath = element.getAttribute('data-kt-timeline-widget-4-image-root');
+        var rootImagePath = element.getAttribute('data-beave-timeline-widget-4-image-root');
 
         // Build vis-timeline datasets
         var groups = new vis.DataSet([
@@ -297,7 +297,7 @@ var KTTimelineWidget4 = function () {
                 filterOptions: {
                     whiteList: {
                         div: ['class', 'style'],
-                        img: ['data-kt-timeline-avatar-src', 'alt'],
+                        img: ['data-beave-timeline-avatar-src', 'alt'],
                         a: ['href', 'class']
                     },
                 },
@@ -308,7 +308,7 @@ var KTTimelineWidget4 = function () {
                 const users = item.users;
                 let userTemplate = '';
                 users.forEach(user => {
-                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-kt-timeline-avatar-src="${rootImagePath + user}" alt="" /></div>`;
+                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-beave-timeline-avatar-src="${rootImagePath + user}" alt="" /></div>`;
                 });
 
                 return `<div class="rounded-pill bg-light-${item.color} d-flex align-items-center position-relative h-40px w-100 p-2 overflow-hidden">
@@ -333,8 +333,8 @@ var KTTimelineWidget4 = function () {
             onInitialDrawComplete: function () {
                 handleAvatarPath();
 
-                const target = element.closest('[data-kt-timeline-widget-4-blockui="true"]');
-                const blockUI = KTBlockUI.getInstance(target);
+                const target = element.closest('[data-beave-timeline-widget-4-blockui="true"]');
+                const blockUI = BEAVEBlockUI.getInstance(target);
 
                 if (blockUI.isBlocked()) {
                     setTimeout(() => {
@@ -368,7 +368,7 @@ var KTTimelineWidget4 = function () {
 
         // Set variables
         var now = Date.now();
-        var rootImagePath = element.getAttribute('data-kt-timeline-widget-4-image-root');
+        var rootImagePath = element.getAttribute('data-beave-timeline-widget-4-image-root');
 
         // Build vis-timeline datasets
         var groups = new vis.DataSet([
@@ -473,7 +473,7 @@ var KTTimelineWidget4 = function () {
                 filterOptions: {
                     whiteList: {
                         div: ['class', 'style'],
-                        img: ['data-kt-timeline-avatar-src', 'alt'],
+                        img: ['data-beave-timeline-avatar-src', 'alt'],
                         a: ['href', 'class']
                     },
                 },
@@ -484,7 +484,7 @@ var KTTimelineWidget4 = function () {
                 const users = item.users;
                 let userTemplate = '';
                 users.forEach(user => {
-                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-kt-timeline-avatar-src="${rootImagePath + user}" alt="" /></div>`;
+                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-beave-timeline-avatar-src="${rootImagePath + user}" alt="" /></div>`;
                 });
 
                 return `<div class="rounded-pill bg-light-${item.color} d-flex align-items-center position-relative h-40px w-100 p-2 overflow-hidden">
@@ -509,8 +509,8 @@ var KTTimelineWidget4 = function () {
             onInitialDrawComplete: function () {
                 handleAvatarPath();
                 
-                const target = element.closest('[data-kt-timeline-widget-4-blockui="true"]');
-                const blockUI = KTBlockUI.getInstance(target);
+                const target = element.closest('[data-beave-timeline-widget-4-blockui="true"]');
+                const blockUI = BEAVEBlockUI.getInstance(target);
 
                 if (blockUI.isBlocked()) {
                     setTimeout(() => {
@@ -544,7 +544,7 @@ var KTTimelineWidget4 = function () {
 
         // Set variables
         var now = Date.now();
-        var rootImagePath = element.getAttribute('data-kt-timeline-widget-4-image-root');
+        var rootImagePath = element.getAttribute('data-beave-timeline-widget-4-image-root');
 
         // Build vis-timeline datasets
         var groups = new vis.DataSet([
@@ -649,7 +649,7 @@ var KTTimelineWidget4 = function () {
                 filterOptions: {
                     whiteList: {
                         div: ['class', 'style'],
-                        img: ['data-kt-timeline-avatar-src', 'alt'],
+                        img: ['data-beave-timeline-avatar-src', 'alt'],
                         a: ['href', 'class']
                     },
                 },
@@ -660,7 +660,7 @@ var KTTimelineWidget4 = function () {
                 const users = item.users;
                 let userTemplate = '';
                 users.forEach(user => {
-                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-kt-timeline-avatar-src="${rootImagePath + user}" alt="" /></div>`;
+                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-beave-timeline-avatar-src="${rootImagePath + user}" alt="" /></div>`;
                 });
 
                 return `<div class="rounded-pill bg-light-${item.color} d-flex align-items-center position-relative h-40px w-100 p-2 overflow-hidden">
@@ -685,8 +685,8 @@ var KTTimelineWidget4 = function () {
             onInitialDrawComplete: function () {
                 handleAvatarPath();
                 
-                const target = element.closest('[data-kt-timeline-widget-4-blockui="true"]');
-                const blockUI = KTBlockUI.getInstance(target);
+                const target = element.closest('[data-beave-timeline-widget-4-blockui="true"]');
+                const blockUI = BEAVEBlockUI.getInstance(target);
 
                 if (blockUI.isBlocked()) {
                     setTimeout(() => {
@@ -708,11 +708,11 @@ var KTTimelineWidget4 = function () {
     // Handle BlockUI
     const handleBlockUI = () => {
         // Select block ui elements
-        const elements = document.querySelectorAll('[data-kt-timeline-widget-4-blockui="true"]');
+        const elements = document.querySelectorAll('[data-beave-timeline-widget-4-blockui="true"]');
 
         // Init block ui
         elements.forEach(element => {
-            const blockUI = new KTBlockUI(element, {
+            const blockUI = new BEAVEBlockUI(element, {
                 overlayClass: "bg-body",
             });
 
@@ -722,7 +722,7 @@ var KTTimelineWidget4 = function () {
 
     // Handle tabs visibility
     const tabsVisibility = () => {
-        const tabs = document.querySelectorAll('[data-kt-timeline-widget-4="tab"]');
+        const tabs = document.querySelectorAll('[data-beave-timeline-widget-4="tab"]');
 
         tabs.forEach(tab => {
             tab.addEventListener('shown.bs.tab', e => {
@@ -746,15 +746,15 @@ var KTTimelineWidget4 = function () {
 
     // Handle avatar path conflict
     const handleAvatarPath = () => {
-        const avatars = document.querySelectorAll('[data-kt-timeline-avatar-src]');
+        const avatars = document.querySelectorAll('[data-beave-timeline-avatar-src]');
 
         if(!avatars){
             return;
         }
 
         avatars.forEach(avatar => {
-            avatar.setAttribute('src', avatar.getAttribute('data-kt-timeline-avatar-src'));
-            avatar.removeAttribute('data-kt-timeline-avatar-src');
+            avatar.setAttribute('src', avatar.getAttribute('data-beave-timeline-avatar-src'));
+            avatar.removeAttribute('data-beave-timeline-avatar-src');
         });
     }
 
@@ -770,10 +770,10 @@ var KTTimelineWidget4 = function () {
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = KTTimelineWidget4;
+    module.exports = BEAVETimelineWidget4;
 }
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTTimelineWidget4.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVETimelineWidget4.init();
 });

@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTAppEcommerceReportCustomerOrders = function () {
+var BEAVEAppEcommerceReportCustomerOrders = function () {
     // Shared variables
     var table;
     var datatable;
@@ -53,7 +53,7 @@ var KTAppEcommerceReportCustomerOrders = function () {
 
     // Handle status filter dropdown
     var handleStatusFilter = () => {
-        const filterStatus = document.querySelector('[data-kt-ecommerce-order-filter="status"]');
+        const filterStatus = document.querySelector('[data-beave-ecommerce-order-filter="status"]');
         $(filterStatus).on('change', e => {
             let value = e.target.value;
             if (value === 'all') {
@@ -88,13 +88,13 @@ var KTAppEcommerceReportCustomerOrders = function () {
         }).container().appendTo($('#kt_ecommerce_report_customer_orders_export'));
 
         // Hook dropdown menu click event to datatable export buttons
-        const exportButtons = document.querySelectorAll('#kt_ecommerce_report_customer_orders_export_menu [data-kt-ecommerce-export]');
+        const exportButtons = document.querySelectorAll('#kt_ecommerce_report_customer_orders_export_menu [data-beave-ecommerce-export]');
         exportButtons.forEach(exportButton => {
             exportButton.addEventListener('click', e => {
                 e.preventDefault();
 
                 // Get clicked export value
-                const exportValue = e.target.getAttribute('data-kt-ecommerce-export');
+                const exportValue = e.target.getAttribute('data-beave-ecommerce-export');
                 const target = document.querySelector('.dt-buttons .buttons-' + exportValue);
 
                 // Trigger click event on hidden datatable export buttons
@@ -106,7 +106,7 @@ var KTAppEcommerceReportCustomerOrders = function () {
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-ecommerce-order-filter="search"]');
+        const filterSearch = document.querySelector('[data-beave-ecommerce-order-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
@@ -131,6 +131,6 @@ var KTAppEcommerceReportCustomerOrders = function () {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTAppEcommerceReportCustomerOrders.init();
+BEAVEUtil.onDOMContentLoaded(function () {
+    BEAVEAppEcommerceReportCustomerOrders.init();
 });

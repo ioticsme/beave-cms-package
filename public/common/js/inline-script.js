@@ -144,7 +144,7 @@ $('#search-image-input-modal').on('keyup', function (e) {
     }
 })
 
-var mediaModal = document.getElementById('kt_modal_media_list')
+var mediaModal = document.getElementById('beave_modal_media_list')
 mediaModal.addEventListener('show.bs.modal', function (e) {
     document.getElementById('modal-media-holder').innerHTML = 'Loading...'
     document.querySelector('#media-modal-selected-media-url').value = ''
