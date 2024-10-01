@@ -111,15 +111,17 @@
 							</div>
 							<div class="card-body pt-0">
 								{# Tabs #}
-								<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
-									{% for brandLanguage in authUser.brand.languages %}
-										<li class="nav-item">
-											<a class="nav-link {{'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#beave_tab_pane_{{ brandLanguage.prefix }}">
-												{{ brandLanguage.name }}
-												<span class="fa-solid fa-circle-exclamation d-none tab-invalid-icon"></span>
-											</a>
-										</li>
-									{% endfor %}
+								<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6" id="cms-editor-tab-nav">
+									{% if has_bilingual_field_groups %}
+										{% for brandLanguage in authUser.brand.languages %}
+											<li class="nav-item">
+												<a class="nav-link {{'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#beave_tab_pane_{{ brandLanguage.prefix }}">
+													{{ brandLanguage.name }}
+													<span class="fa-solid fa-circle-exclamation d-none tab-invalid-icon"></span>
+												</a>
+											</li>
+										{% endfor %}
+									{% endif %}
 									{% if has_common_field_groups %}
 										<li class="nav-item">
 											<a class="nav-link" data-bs-toggle="tab" href="#beave_tab_pane_common">
@@ -140,91 +142,30 @@
 								<div class="tab-content tab-content-fields" id="myTabContent">
 
 									<!--Custom fields with localisation starting-->
-									{% for brandLanguage in authUser.brand.languages %}
-										<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" die="{{brandLanguage.dir}}" id="beave_tab_pane_{{ brandLanguage.prefix }}">
-											{% for cfg in reqContentType.field_groups %}
-												{% if cfg.repeater_group == true and cfg.localisation %}
-													<h4 class="badge bg-slate-600 text-white mb-4">{{cfg.row_label | upper()}}</h4>
-													<div class="border border-gray-200 bg-slate-200 p-4 rounded-lg mb-4">
-														<div class="group_repeater" id="beave_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
+									{% if has_bilingual_field_groups %}
+										{% for brandLanguage in authUser.brand.languages %}
+											<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" die="{{brandLanguage.dir}}" id="beave_tab_pane_{{ brandLanguage.prefix }}">
+												{% for cfg in reqContentType.field_groups %}
+													{% if cfg.repeater_group == true and cfg.localisation %}
+														<h4 class="badge bg-slate-600 text-white mb-4">{{cfg.row_label | upper()}}</h4>
+														<div class="border border-gray-200 bg-slate-200 p-4 rounded-lg mb-4">
+															<div class="group_repeater" id="beave_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
 
-															{# This section only for editing. This will be hidden and when click add this section will be cloned #}
-															<div class="form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }} d-none" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-1">
-																{% for cf in cfg.fields %}
-																	<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
-																		<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-																			<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}} ({{brandLanguage.prefix}})</span>
-																		</label>
-																		{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
-																			<input disabled class="form-control form-control-solid beave-cms-form-field" type="{{cf.field_type}}" placeholder="Enter {{cf.field_label}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" value="{{fieldValue}}">
-																		{% elif cf.field_type === 'richtext' %}
-																			<textarea disabled class="content_wysiwyg beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" id="wysiwyg-cf-{{brandLanguage.prefix}}-{{cfg.row_name}}-{{cf.field_name}}-{{i}}">{{fieldValue}}</textarea>
-																		{% elif cf.field_type === 'textarea' %}
-																			<textarea disabled class="form-control form-control-solid beave-cms-form-field" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
-																		{% elif cf.field_type === 'article_editor' %}
-																			<textarea disabled class="form-control form-control-solid beave-cms-form-field article_editor_field" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
-																		{% elif cf.field_type === 'media' %}
-																			{# <h1>Test</h1> #}
-																			<span class='media-uploader-field'>
-																				<span class="media_preview">
-																					<span class="preview-holder">
-																						{% if fieldValue %}
-																							<img src="{{fieldValue.url}}" style="max-width: 200px;"/>
-																						{% endif %}
-																					</span>
-																					<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
-																						<i class="fa fa-trash" tabindex="-1"></i>
-																					</a>
-																				</span>
-																				<input disabled type="hidden" class="media_url_field beave-cms-form-field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
-																				<input disabled type="hidden" class="media_title_field beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
-																				<input disabled type="hidden" class="media_alt_text_field beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
-																				<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
-																			</span>
-																		{% elif cf.field_type === 'date' %}
-																			<div class="beave_daterangepicker">
-																				<input disabled class="form-control form-control-solid beave-cms-form-field" data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
-																			</div>
-																		{% elif cf.field_type === 'dropdown' %}
-																			<select disabled class="form-select beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
-																				<option value=''>- Select {{cf.field_label}} -</option>
-																				{% for dropdown in cf.options %}
-																					<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
-																				{% endfor %}
-																			</select>
-
-																		{% endif %}
-																		{% include './partials/_cms-field-info.njk' %}
-																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{brandLanguage.prefix}}_{{cfg.row_name}}_{{cf.field_name}}{{ '_0_url' if cf.field_type == 'media' }}"></div>
-																	</div>
-																{% endfor %}
-																<div class="repeater-delete-btn text-center my-3">
-																	<a class="btn btn-sm btn-light-danger mt-5" onClick="deleteChild(event)" child-id="form-repeater-child-{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}" target-id="beave_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
-																		<i class="la la-trash-o"></i>Delete</a>
-																</div>
-															</div>
-															{# Editing section END #}
-
-															{% set totalItems = contentDetail
-																.content[brandLanguage.prefix][cfg.row_name]
-																.length or 1 %}
-
-															{% for i in range(totalItems) %}
-																<div class="form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index * 1000}}">
+																{# This section only for editing. This will be hidden and when click add this section will be cloned #}
+																<div class="form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }} d-none" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-1">
 																	{% for cf in cfg.fields %}
-																		{% set fieldValue = contentDetail.content[brandLanguage.prefix][cfg.row_name][i][cf.field_name] %}
 																		<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 																				<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}} ({{brandLanguage.prefix}})</span>
 																			</label>
 																			{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
-																				<input class="form-control form-control-solid" type="{{cf.field_type}}" placeholder="Enter {{cf.field_label}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" value="{{fieldValue}}">
+																				<input disabled class="form-control form-control-solid beave-cms-form-field" type="{{cf.field_type}}" placeholder="Enter {{cf.field_label}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" value="{{fieldValue}}">
 																			{% elif cf.field_type === 'richtext' %}
-																				<textarea class="content_wysiwyg" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" id="wysiwyg-cf-{{brandLanguage.prefix}}-{{cfg.row_name}}-{{cf.field_name}}-{{i}}">{{fieldValue}}</textarea>
+																				<textarea disabled class="content_wysiwyg beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" id="wysiwyg-cf-{{brandLanguage.prefix}}-{{cfg.row_name}}-{{cf.field_name}}-{{i}}">{{fieldValue}}</textarea>
 																			{% elif cf.field_type === 'textarea' %}
-																				<textarea class="form-control form-control-solid" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
+																				<textarea disabled class="form-control form-control-solid beave-cms-form-field" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
 																			{% elif cf.field_type === 'article_editor' %}
-																				<textarea class="form-control form-control-solid article_editor_field" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
+																				<textarea disabled class="form-control form-control-solid beave-cms-form-field article_editor_field" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
 																			{% elif cf.field_type === 'media' %}
 																				{# <h1>Test</h1> #}
 																				<span class='media-uploader-field'>
@@ -238,17 +179,17 @@
 																							<i class="fa fa-trash" tabindex="-1"></i>
 																						</a>
 																					</span>
-																					<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
-																					<input type="hidden" class="media_title_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
-																					<input type="hidden" class="media_alt_text_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
+																					<input disabled type="hidden" class="media_url_field beave-cms-form-field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
+																					<input disabled type="hidden" class="media_title_field beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
+																					<input disabled type="hidden" class="media_alt_text_field beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
 																					<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																				</span>
 																			{% elif cf.field_type === 'date' %}
 																				<div class="beave_daterangepicker">
-																					<input class="form-control form-control-solid" data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																					<input disabled class="form-control form-control-solid beave-cms-form-field" data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
-																				<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																				<select disabled class="form-select beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
 																					<option value=''>- Select {{cf.field_label}} -</option>
 																					{% for dropdown in cf.options %}
 																						<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
@@ -265,76 +206,139 @@
 																			<i class="la la-trash-o"></i>Delete</a>
 																	</div>
 																</div>
-															{% endfor %}
-														</div>
+																{# Editing section END #}
 
-														<div class="form-group my-3 text-center">
-															<a class="btn btn-light-primary" onClick="cloneChild(event)" target-lang="{{cfg._id}}" target-lang-prefix="{{brandLanguage.prefix}}" target-id="beave_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}" data-repeater-create="">
-																<i class="la la-plus"></i>Add</a>
-														</div>
-													</div>
-												{% else %}
-													{% if cfg.localisation %}
-														<h4 class="badge bg-slate-600 text-white mb-4">{{cfg.row_label | upper()}}</h4>
-														<div class="border border-gray-200 bg-slate-200 p-4 rounded-lg mb-4">
-															<div class="{{ 'inline-row' if cfg.inline_fields }}">
-																{% for cf in cfg.fields %}
-																	{% set fieldValue = contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name] %}
-																	<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
-																		{# // begin::Label #}
-																		<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-																			<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}} ({{brandLanguage.prefix}})</span>
-																			{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beave-initialized="1"></i> #}
-																		</label>
-																		{# // end::Label #}
-																		{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
-																			<input class="form-control form-control-solid" type="{{cf.field_type}}" placeholder="Enter {{cf.field_label}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" value="{{fieldValue}}"/>
-																		{% elif cf.field_type === 'richtext' %}
-																			<textarea class="content_wysiwyg" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" id="wysiwyg-cf-{{brandLanguage.prefix}}-{{cfg.row_name}}-{{cf.field_name}}">{{fieldValue}}</textarea>
-																		{% elif cf.field_type === 'textarea' %}
-																			<textarea class="form-control form-control-solid" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
-																		{% elif cf.field_type === 'article_editor' %}
-																			<textarea class="form-control form-control-solid article_editor_field" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
-																		{% elif cf.field_type === 'media' %}
-																			<span class='media-uploader-field'>
-																				<span class="media_preview">
-																					<span class="preview-holder">
-																						{% if fieldValue %}
-																							<img src="{{fieldValue.url}}" style="max-width: 200px;"/>
-																						{% endif %}
+																{% set totalItems = contentDetail
+																	.content[brandLanguage.prefix][cfg.row_name]
+																	.length or 1 %}
+
+																{% for i in range(totalItems) %}
+																	<div class="form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index * 1000}}">
+																		{% for cf in cfg.fields %}
+																			{% set fieldValue = contentDetail.content[brandLanguage.prefix][cfg.row_name][i][cf.field_name] %}
+																			<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
+																				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+																					<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}} ({{brandLanguage.prefix}})</span>
+																				</label>
+																				{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
+																					<input class="form-control form-control-solid" type="{{cf.field_type}}" placeholder="Enter {{cf.field_label}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" value="{{fieldValue}}">
+																				{% elif cf.field_type === 'richtext' %}
+																					<textarea class="content_wysiwyg" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" id="wysiwyg-cf-{{brandLanguage.prefix}}-{{cfg.row_name}}-{{cf.field_name}}-{{i}}">{{fieldValue}}</textarea>
+																				{% elif cf.field_type === 'textarea' %}
+																					<textarea class="form-control form-control-solid" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
+																				{% elif cf.field_type === 'article_editor' %}
+																					<textarea class="form-control form-control-solid article_editor_field" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
+																				{% elif cf.field_type === 'media' %}
+																					{# <h1>Test</h1> #}
+																					<span class='media-uploader-field'>
+																						<span class="media_preview">
+																							<span class="preview-holder">
+																								{% if fieldValue %}
+																									<img src="{{fieldValue.url}}" style="max-width: 200px;"/>
+																								{% endif %}
+																							</span>
+																							<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
+																								<i class="fa fa-trash" tabindex="-1"></i>
+																							</a>
+																						</span>
+																						<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
+																						<input type="hidden" class="media_title_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
+																						<input type="hidden" class="media_alt_text_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
+																						<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																					</span>
-																					<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
-																						<i class="fa fa-trash" tabindex="-1"></i>
-																					</a>
-																				</span>
-																				<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url]]]" value="{{fieldValue.url}}">
-																				<input type="hidden" class="media_title_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title]]]" value="{{fieldValue.title}}">
-																				<input type="hidden" class="media_alt_text_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text]]]" value="{{fieldValue.alt_text}}">
-																				<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
-																			</span>
-																		{% elif cf.field_type === 'date' %}
-																			<div class="beave_daterangepicker">
-																				<input class="form-control form-control-solid" data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ loop.index }}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																				{% elif cf.field_type === 'date' %}
+																					<div class="beave_daterangepicker">
+																						<input class="form-control form-control-solid" data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																					</div>
+																				{% elif cf.field_type === 'dropdown' %}
+																					<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																						<option value=''>- Select {{cf.field_label}} -</option>
+																						{% for dropdown in cf.options %}
+																							<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
+																						{% endfor %}
+																					</select>
+
+																				{% endif %}
+																				{% include './partials/_cms-field-info.njk' %}
+																				<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{brandLanguage.prefix}}_{{cfg.row_name}}_{{cf.field_name}}{{ '_0_url' if cf.field_type == 'media' }}"></div>
 																			</div>
-																		{% elif cf.field_type === 'dropdown' %}
-																			<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]">
-																				<option value=''>- Select {{cf.field_label}} -</option>
-																				{% for dropdown in cf.options %}
-																					<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
-																				{% endfor %}
-																			</select>
-																		{% endif %}
-																		{% include './partials/_cms-field-info.njk' %}
-																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{brandLanguage.prefix}}_{{cfg.row_name}}_{{cf.field_name}}{{ '_url' if cf.field_type == 'media' }}"></div>
+																		{% endfor %}
+																		<div class="repeater-delete-btn text-center my-3">
+																			<a class="btn btn-sm btn-light-danger mt-5" onClick="deleteChild(event)" child-id="form-repeater-child-{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}" target-id="beave_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
+																				<i class="la la-trash-o"></i>Delete</a>
+																		</div>
 																	</div>
 																{% endfor %}
 															</div>
+
+															<div class="form-group my-3 text-center">
+																<a class="btn btn-light-primary" onClick="cloneChild(event)" target-lang="{{cfg._id}}" target-lang-prefix="{{brandLanguage.prefix}}" target-id="beave_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}" data-repeater-create="">
+																	<i class="la la-plus"></i>Add</a>
+															</div>
 														</div>
+													{% else %}
+														{% if cfg.localisation %}
+															<h4 class="badge bg-slate-600 text-white mb-4">{{cfg.row_label | upper()}}</h4>
+															<div class="border border-gray-200 bg-slate-200 p-4 rounded-lg mb-4">
+																<div class="{{ 'inline-row' if cfg.inline_fields }}">
+																	{% for cf in cfg.fields %}
+																		{% set fieldValue = contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name] %}
+																		<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
+																			{# // begin::Label #}
+																			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+																				<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}} ({{brandLanguage.prefix}})</span>
+																				{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beave-initialized="1"></i> #}
+																			</label>
+																			{# // end::Label #}
+																			{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
+																				<input class="form-control form-control-solid" type="{{cf.field_type}}" placeholder="Enter {{cf.field_label}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" value="{{fieldValue}}"/>
+																			{% elif cf.field_type === 'richtext' %}
+																				<textarea class="content_wysiwyg" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" id="wysiwyg-cf-{{brandLanguage.prefix}}-{{cfg.row_name}}-{{cf.field_name}}">{{fieldValue}}</textarea>
+																			{% elif cf.field_type === 'textarea' %}
+																				<textarea class="form-control form-control-solid" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
+																			{% elif cf.field_type === 'article_editor' %}
+																				<textarea class="form-control form-control-solid article_editor_field" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
+																			{% elif cf.field_type === 'media' %}
+																				<span class='media-uploader-field'>
+																					<span class="media_preview">
+																						<span class="preview-holder">
+																							{% if fieldValue %}
+																								<img src="{{fieldValue.url}}" style="max-width: 200px;"/>
+																							{% endif %}
+																						</span>
+																						<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
+																							<i class="fa fa-trash" tabindex="-1"></i>
+																						</a>
+																					</span>
+																					<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url]]]" value="{{fieldValue.url}}">
+																					<input type="hidden" class="media_title_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title]]]" value="{{fieldValue.title}}">
+																					<input type="hidden" class="media_alt_text_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text]]]" value="{{fieldValue.alt_text}}">
+																					<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
+																				</span>
+																			{% elif cf.field_type === 'date' %}
+																				<div class="beave_daterangepicker">
+																					<input class="form-control form-control-solid" data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ loop.index }}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																				</div>
+																			{% elif cf.field_type === 'dropdown' %}
+																				<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]">
+																					<option value=''>- Select {{cf.field_label}} -</option>
+																					{% for dropdown in cf.options %}
+																						<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
+																					{% endfor %}
+																				</select>
+																			{% endif %}
+																			{% include './partials/_cms-field-info.njk' %}
+																			<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{brandLanguage.prefix}}_{{cfg.row_name}}_{{cf.field_name}}{{ '_url' if cf.field_type == 'media' }}"></div>
+																		</div>
+																	{% endfor %}
+																</div>
+															</div>
+														{% endif %}
 													{% endif %}
-												{% endif %}
-											{% endfor %}
-										</div>
-									{% endfor %}
+												{% endfor %}
+											</div>
+										{% endfor %}
+									{% endif %}
 									<!--Custom fields with localisation ending-->
 
 									{# //- BEGIN::Custom Fields without localisation #}

@@ -62,12 +62,14 @@
 							<div class="flex-lg-row-fluid me-lg-15 order-2 order-lg-1 mb-10 mb-lg-0">
 								<div class="card card-flush pt-3 mb-5 mb-lg-10">
 									<div class="card-body pt-0">
-										<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
-											{% for brandLanguage in authUser.brand.languages %}
-												<li class="nav-item">
-													<a class="nav-link {{ 'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#beave_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
-												</li>
-											{% endfor %}
+										<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6" id="cms-editor-tab-nav">
+											{% if has_bilingual_field_groups %}
+												{% for brandLanguage in authUser.brand.languages %}
+													<li class="nav-item">
+														<a class="nav-link {{ 'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#beave_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
+													</li>
+												{% endfor %}
+											{% endif %}
 
 											{% if has_common_field_groups %}
 												<li class="nav-item">
@@ -82,48 +84,50 @@
 											{% endif %}
 										</ul>
 										<div class="tab-content tab-content-fields" id="myTabContent">
-											{% for brandLanguage in authUser.brand.languages %}
-												<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" dir="{{brandLanguage.dir}}" id="beave_tab_pane_{{ brandLanguage.prefix }}">
-													<div class="row">
-														<div class="col-12">
-															{% for cfg in reqContentType.field_groups %}
-																{% if cfg.localisation == true %}
-																	<h1 class="mt-5 mb-2">{{ cfg.row_label.toUpperCase() }}</h1>
-																	{% if cfg.repeater_group %}
-																		{% for eachRepeaterObject in contentDetail.content[brandLanguage.prefix][cfg.row_name] %}
-																			<div class="row">
-																				{% for eachKey in ObjectKeys(eachRepeaterObject) %}
-																					{# {% if cfg.fields[loop.index-1].field_name.length %} #}
-																					<div class="col-12 col-sm-6">
-																						<span class="badge badge-light">{{ eachKey.toUpperCase() }} :</span>
-																						{% set fieldValue = '<img width="80" src="' + eachRepeaterObject[eachKey]['url'] + '"/>' if ObjectKeys(eachRepeaterObject[eachKey])[0] == 'url' else 
-																							eachRepeaterObject[eachKey] %}
-																						<div class="">{{ fieldValue | safe }}</div>
-																						<br>
-																					</div>
-																					{# {% endif %} #}
-																				{% endfor %}
-																			</div>
-																		{% endfor %}
-																	{% else %}
-																		{% for cf in cfg.fields %}
-																			<span class="badge badge-light-success mt-5">{{ cf.field_label }}</span>
-																			<br>
-																			<div class="card">
-																				{% if cf.field_type == 'media' %}
-																					<img src="{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name].url }}" style="max-width: 200px;">
-																				{% else %}
-																					{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name] | safe }}
-																				{% endif %}
-																			</div>
-																		{% endfor %}
+											{% if has_bilingual_field_groups %}
+												{% for brandLanguage in authUser.brand.languages %}
+													<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" dir="{{brandLanguage.dir}}" id="beave_tab_pane_{{ brandLanguage.prefix }}">
+														<div class="row">
+															<div class="col-12">
+																{% for cfg in reqContentType.field_groups %}
+																	{% if cfg.localisation == true %}
+																		<h1 class="mt-5 mb-2">{{ cfg.row_label.toUpperCase() }}</h1>
+																		{% if cfg.repeater_group %}
+																			{% for eachRepeaterObject in contentDetail.content[brandLanguage.prefix][cfg.row_name] %}
+																				<div class="row">
+																					{% for eachKey in ObjectKeys(eachRepeaterObject) %}
+																						{# {% if cfg.fields[loop.index-1].field_name.length %} #}
+																						<div class="col-12 col-sm-6">
+																							<span class="badge badge-light">{{ eachKey.toUpperCase() }} :</span>
+																							{% set fieldValue = '<img width="80" src="' + eachRepeaterObject[eachKey]['url'] + '"/>' if ObjectKeys(eachRepeaterObject[eachKey])[0] == 'url' else 
+																								eachRepeaterObject[eachKey] %}
+																							<div class="">{{ fieldValue | safe }}</div>
+																							<br>
+																						</div>
+																						{# {% endif %} #}
+																					{% endfor %}
+																				</div>
+																			{% endfor %}
+																		{% else %}
+																			{% for cf in cfg.fields %}
+																				<span class="badge badge-light-success mt-5">{{ cf.field_label }}</span>
+																				<br>
+																				<div class="card">
+																					{% if cf.field_type == 'media' %}
+																						<img src="{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name].url }}" style="max-width: 200px;">
+																					{% else %}
+																						{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name] | safe }}
+																					{% endif %}
+																				</div>
+																			{% endfor %}
+																		{% endif %}
 																	{% endif %}
-																{% endif %}
-															{% endfor %}
+																{% endfor %}
+															</div>
 														</div>
 													</div>
-												</div>
-											{% endfor %}
+												{% endfor %}
+											{% endif %}
 
 											{% if has_common_field_groups %}
 												<div class="tab-pane fade" role="tabpanel" id="beave_tab_pane_common">

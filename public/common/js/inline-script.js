@@ -366,3 +366,23 @@ document.querySelectorAll('.media-list-item').forEach((eachMediaItem) => {
             })
     })
 })
+
+// ===== BEGIN:: First Tab active for cms content editor================
+document.addEventListener('DOMContentLoaded', function () {
+    // Select the first tab link within the ul
+    const firstTabLink = document.querySelector('#cms-editor-tab-nav .nav-link')
+
+    // Check if a tab link exists, and add the 'active' class to it
+    if (firstTabLink) {
+        firstTabLink.classList.add('active')
+    }
+
+    // Select the first tab pane and add the 'show active' classes
+    const firstTabPane = document.querySelector(
+        firstTabLink.getAttribute('href')
+    )
+    if (firstTabPane) {
+        firstTabPane.classList.add('show', 'active')
+    }
+})
+// ===== END:: First Tab active for cms content editor================

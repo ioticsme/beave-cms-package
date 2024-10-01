@@ -79,6 +79,10 @@ const detail = async (req, res) => {
             .where('localisation', false)
             .count()
 
+        const has_bilingual_field_groups = collect(req.contentType.field_groups)
+            .where('localisation', true)
+            .count()
+
         const default_lang = _.find(
             req.authUser.brand.languages,
             function (item) {
@@ -98,6 +102,7 @@ const detail = async (req, res) => {
         res.render(template, {
             default_lang,
             has_common_field_groups: has_common_field_groups ? true : false,
+            has_bilingual_field_groups: has_bilingual_field_groups ? true : false,
             reqContentType: req.contentType,
             contentDetail,
             metaFields,
@@ -126,6 +131,10 @@ const add = async (req, res) => {
         const has_common_field_groups = collect(req.contentType.field_groups)
             .where('localisation', false)
             .count()
+
+        const has_bilingual_field_groups = collect(req.contentType.field_groups)
+            .where('localisation', true)
+            .count()
         // return res.send(req.contentType._id)
 
         let template = `admin-njk/cms/content/add`
@@ -135,6 +144,7 @@ const add = async (req, res) => {
         return res.render(template, {
             reqContentType: req.contentType,
             has_common_field_groups: has_common_field_groups ? true : false,
+            has_bilingual_field_groups: has_bilingual_field_groups ? true : false,
             allowed_content,
             metaFields,
         })
@@ -175,6 +185,10 @@ const edit = async (req, res) => {
             .where('localisation', false)
             .count()
 
+        const has_bilingual_field_groups = collect(req.contentType.field_groups)
+            .where('localisation', true)
+            .count()
+
         let template = `admin-njk/cms/content/edit`
         if (req.contentType?.page_builder) {
             template = `admin-njk/cms/content/html-builder/form`
@@ -183,6 +197,7 @@ const edit = async (req, res) => {
         return res.render(template, {
             reqContentType: req.contentType,
             has_common_field_groups: has_common_field_groups ? true : false,
+            has_bilingual_field_groups: has_bilingual_field_groups ? true : false,
             contentDetail,
             allowed_content,
             metaFields,
