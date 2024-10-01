@@ -152,7 +152,10 @@ const save = async (req, res) => {
                 ? req.body.attachable_type
                 : null,
         }
+
+        let c_type_id
         if (req.body.id) {
+            c_type_id = req.body.id
             await ContentType.updateOne(
                 {
                     _id: req.body.id,
@@ -160,12 +163,16 @@ const save = async (req, res) => {
                 data
             )
         } else {
-            await ContentType.create(data)
+            const new_c_type = await ContentType.create(data)
+            c_type_id = new_c_type.id
         }
 
-        return res.status(200).json({ message: 'Content Type added' })
+        return res.status(200).json({
+            message: 'Content Type added',
+            redirect_to: `/admin/config/content-type/view/${c_type_id}`,
+        })
     } catch (e) {
-        // console.log(e)
+        console.log(e)
         if (e.errors) {
             return res.status(422).json({
                 details: e.errors,
