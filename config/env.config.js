@@ -11,10 +11,10 @@ const envConfig = {
         CLIENT_NAME: process.env.CLIENT_NAME,
         CMS_LOGO_LARGE:
             process.env.CMS_LOGO_LARGE ||
-            '/cms-static/admin/assets/media/beave-logo.jpg',
+            '/cms-static/admin/assets/media/logo/beave-logo.png',
         CMS_LOGO_SMALL:
             process.env.CMS_LOGO_SMALL ||
-            '/cms-static/admin/assets/media/beave-logo.jpg',
+            '/cms-static/admin/assets/media/logo/beave-logo.png',
         ADMIN_LANDING_URL: process.env.ADMIN_LANDING_URL || '/admin/dashboard',
         SESSION_STORAGE: process.env.SESSION_STORAGE || 'file',
         CAPTCHA_ENABLED: process.env.CAPTCHA_ENABLED || false,
