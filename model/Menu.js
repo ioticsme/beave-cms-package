@@ -25,10 +25,10 @@ const MenuSchema = new mongoose.Schema(
         },
         nav_items: [
             Schema({
-                _id: {
-                    type: Schema.ObjectId,
-                    required: true,
-                },
+                // _id: {
+                //     type: Schema.ObjectId,
+                //     required: true,
+                // },
                 label: {},
                 position: {
                     type: Number,
@@ -45,10 +45,10 @@ const MenuSchema = new mongoose.Schema(
                 },
                 child: [
                     Schema({
-                        _id: {
-                            type: Schema.ObjectId,
-                            required: true,
-                        },
+                        // _id: {
+                        //     type: Schema.ObjectId,
+                        //     required: true,
+                        // },
                         label: {},
                         position: {
                             type: Number,
@@ -65,10 +65,10 @@ const MenuSchema = new mongoose.Schema(
                         },
                         child: [
                             Schema({
-                                _id: {
-                                    type: Schema.ObjectId,
-                                    required: true,
-                                },
+                                // _id: {
+                                //     type: Schema.ObjectId,
+                                //     required: true,
+                                // },
                                 label: {},
                                 position: {
                                     type: Number,
