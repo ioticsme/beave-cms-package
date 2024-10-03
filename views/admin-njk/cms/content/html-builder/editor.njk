@@ -4,8 +4,42 @@
 	<link href='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css' rel='stylesheet' type='text/css'/>
 	<link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
 	<!-- Include the CodeMirror library from the CDN -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/codemirror.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css" />
 	<link href="/cms-static/common/css/grapejs-style.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/material.min.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.0/beautify-css.min.js"></script>
+
+	<style>
+		/* Style the modal content */
+		.gjs-mdl-dialog {
+			background-color: #f9f9f9;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+		}
+
+		/* Style CodeMirror editors */
+		.CodeMirror {
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			height: 300px;
+			margin-right: 10px; /* For spacing between HTML and CSS editors */
+		}
+
+		/* Style Save button */
+		.modal-save-btn {
+			padding: 10px 20px;
+			background-color: #28a745;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		.modal-save-btn:hover {
+			background-color: #218838;
+		}
+	</style>
 {% endblock %}
 
 {% block jslib %}
@@ -15,9 +49,12 @@
 	<script src="https://unpkg.com/grapesjs-preset-webpage"></script>
 	<script src="https://unpkg.com/grapesjs-preset-newsletter"></script>
 	<!-- Include the CodeMirror library from the CDN -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/codemirror.min.js"></script>
 	<!-- Include the CodeManager plugin from the CDN -->
 	<script src="https://unpkg.com/grapesjs-codemanager"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/xml/xml.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/css/css.min.js"></script>
 
 	{# // Form Submission Script #}
 	{# <script src='/cms-static/common/js/form-data-json.min.js'></script> #}
