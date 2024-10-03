@@ -1,5 +1,5 @@
 const gulpConfig = {
-	name: "metronic",
+	name: "BeaveCMS",
 	desc: "Gulp build config",
 	version: "8.2.6",
 	config: {

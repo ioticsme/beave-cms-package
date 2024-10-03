@@ -1,8 +1,8 @@
 {
-    "name": "keenthemes",
+    "name": "beaveassets",
     "version": "8.2.6",
-    "author": "Keenthemes",
-    "homepage": "https://keenthemes.com/",
+    "author": "beaveassets",
+    "homepage": "https://beavecms.com/",
     "description": "Packages used by yarn, npm, gulp and webpack",
     "main": "gulpfile.js",
     "type": "module",
