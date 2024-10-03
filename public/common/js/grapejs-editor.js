@@ -162,7 +162,7 @@ editor.Commands.add('edit-code', {
 
         // Create a save button for the modal
         const saveBtn = document.createElement('button')
-        saveBtn.innerHTML = 'Save'
+        saveBtn.innerHTML = 'Update'
         saveBtn.style.padding = '10px 20px'
         saveBtn.style.backgroundColor = '#007acc'
         saveBtn.style.color = 'white'
