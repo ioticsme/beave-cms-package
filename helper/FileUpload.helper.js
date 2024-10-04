@@ -1,69 +1,37 @@
 const envConfig = require('../config/env.config')
-const ImageKit = require('imagekit')
-const Media = require('../model/Media')
-var FileReader = require('filereader')
+const {
+    imageKitUploadMedia,
+    imageKitUploadProductMedia,
+} = require('../adaptors/ImageKit.adaptor.js')
+const {
+    bunnyCDNUploadMedia,
+    bunnyCDNUploadProductMedia,
+    bunnyCDNUploadMediaFromURL,
+} = require('../adaptors/BunnyCdn.adaptor.js')
 
 // Upload function internally uses the ImageKit.io javascript SDK
-const uploadMedia = async (media, folder, file) => {
-    // SDK initialization
-    const imagekit = new ImageKit({
-        publicKey: envConfig.imagekit.PUBLIC_KEY,
-        privateKey: envConfig.imagekit.PRIVATE_KEY,
-        urlEndpoint: envConfig.imagekit.URL,
-    })
-
-    // URL generation
-    // const imageURL = imagekit.url({
-    //     path: '/default-image.jpg',
-    //     transformation: [
-    //         {
-    //             height: '300',
-    //             width: '400',
-    //         },
-    //     ],
-    // })
-
-    // let nodeEnv = envConfig.general.NODE_ENV
-    let baseFolder =
-        `${envConfig.imagekit?.FOLDER?.toLowerCase()}/${envConfig.general?.NODE_ENV?.toLowerCase()}` ||
-        'Sample'
-    const uploaded = await imagekit
-        .upload({
-            folder: `${baseFolder}/${folder}`,
-            file: media,
-            fileName: file?.originalname?.toLowerCase() || 'sample-image',
-            // tags : ["tag1"]
-        })
-        .then(async (result) => {
-            // const rendered_url = await imagekit.url({
-            //     src: result.url,
-            //     transformation: [{ height: 300, width: 400 }],
-            // })
-
-            let fileType = 'image'
-            if (file.mimetype == 'application/pdf') {
-                fileType = 'pdf'
-            }
-
-            const insertedMedia = await Media.create({
-                url: result.url,
-                response: result,
-                file: {
-                    name: file?.originalname?.toLowerCase() || 'sample-image',
-                },
-                file_type: fileType,
-            })
-
-            return insertedMedia
-        })
-        .catch((error) => {
-            console.log('ERR', error)
-            return false
-        })
-
-    return uploaded
+const uploadMedia = async (media, folder, file, req = {}) => {
+    if (envConfig.media_drive == 'bunny_cdn') {
+        return await bunnyCDNUploadMedia(media, folder, file, req)
+    } else {
+        return await imageKitUploadMedia(media, folder, file, req)
+    }
 }
 
-module.exports = {
-    uploadMedia,
+const uploadMediaFromURL = async (media_url, folder, req = {}) => {
+    if (envConfig.media_drive == 'bunny_cdn') {
+        return await bunnyCDNUploadMediaFromURL(media_url, folder)
+    } else {
+        return {}
+    }
 }
+
+const uploadProductMedia = async (media, folder, file) => {
+    if (envConfig.media_drive == 'bunny_cdn') {
+        return await bunnyCDNUploadProductMedia(media, folder, file)
+    } else {
+        return await imageKitUploadProductMedia(media, folder, file)
+    }
+}
+
+module.exports = { uploadMedia, uploadMediaFromURL, uploadProductMedia }

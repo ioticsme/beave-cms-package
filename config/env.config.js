@@ -31,6 +31,13 @@ const envConfig = {
         URL: process.env.IMAGEKIT_URL,
         FOLDER: process.env.IMAGEKIT_FOLDER,
     },
+    bunny_cdn: {
+        REGION: process.env.BUNNY_REGION || '', // If German region, set this to an empty string: ''
+        HOSTNAME: process.env.BUNNY_HOSTNAME || 'storage.bunnycdn.com',
+        STORAGE_ZONE_NAME: process.env.BUNNY_STORAGE_ZONE_NAME,
+        API_KEY: process.env.BUNNY_API_KEY,
+        URL: process.env.BUNNY_URL,
+    },
     mailgun: {
         DOMAIN: process.env.MAILGUN_DOMAIN,
         API_KEY: process.env.MAILGUN_API_KEY,
