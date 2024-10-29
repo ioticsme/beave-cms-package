@@ -11,6 +11,17 @@
 	<link href="/cms-static/admin/assets/css/custom/grapejs.css" rel="stylesheet" type="text/css">
 {% endblock %}
 
+{% block pageSpecificStyle %}
+	<style>
+		#beave_app_root #beave_app_wrapper #beave_app_main {
+			margin-top: 0;
+		}
+		#beave_app_root #beave_app_page #beave_app_header {
+			display: none;
+		}
+	</style>
+{% endblock %}
+
 {% block jslib %}
 	{# // begin::Vendors Javascript(used by this page) #}
 	<script src='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.js'></script>

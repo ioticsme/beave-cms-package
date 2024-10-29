@@ -1270,8 +1270,22 @@ $border-color_6: rgb(75 85 99 / var(--tw-border-opacity));
     }
 }
 
+#beave_app_root {
+    #beave_app_page {
+        #beave_app_header {
+            background-color: #fff;
+        }
+    }
+    #beave_app_wrapper {
+        #beave_app_main {
+            margin-top: 100px;
+        }
+    }
+}
+
 #main-nav {
-    .menu-accordion, .menu-item {
+    .menu-accordion,
+    .menu-item {
         .menu-link {
             .menu-title {
                 text-decoration: none;

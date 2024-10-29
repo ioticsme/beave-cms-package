@@ -10,7 +10,7 @@ const list = async (req, res) => {
         // res.render(`admin-njk/ecommerce/customers/listing`, { data: users })
         res.render(`admin-njk/ecommerce/customers/listing-ajax`)
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -78,7 +78,7 @@ const detail = async (req, res) => {
         )
         res.render(`admin-njk/ecommerce/customers/details`, { user })
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -89,7 +89,7 @@ const activateUser = async (req, res) => {
         await user.save()
         res.redirect(`/admin/ecommerce/customers`)
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 

@@ -147,6 +147,14 @@
 									<div id="beave_account_settings_profile_details">
 										<div class="card-body border-top p-9">
 											<div class="row mb-6">
+												<label class="col-lg-4 col-form-label required fw-semibold fs-6">Brand</label>
+												<div class="col-lg-8 pt-2">
+													{% for brand in contentType.brand %}
+														<span class="badge badge-dark">{{ brand.name.en }}</span>
+													{% endfor %}
+												</div>
+											</div>
+											<div class="row mb-6">
 												<label class="col-lg-4 col-form-label required fw-semibold fs-6">Title</label>
 												<div class="col-lg-8 pt-2">{{ contentType.title }}</div>
 											</div>

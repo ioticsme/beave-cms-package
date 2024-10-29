@@ -139,6 +139,22 @@
 							<input type="hidden" name="id" value="{{ contentType._id }}">
 							<div class="card-body border-top p-9">
 								<div class="row mb-6">
+									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Brand</label>
+									<div class="col-lg-8">
+										<div class="row">
+											<div class="col-lg-12 fv-row">
+												<select class="form-select form-select-lg form-select-solid" data-control="select2" data-close-on-select="false" name="brand" data-placeholder="Select Brand" multiple="multiple">
+													<option value="">Select Brand</option>
+													{% for brand in brands %}
+														<option value="{{ brand.id }}" {{'selected' if contentType.brand == brand.id }}>{{ brand.name.en }}</option>
+													{% endfor %}
+												</select>
+												<div class="fv-plugins-message-container invalid-feedback" id="field-error-brand"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Title</label>
 									<div class="col-lg-8">
 										<div class="row">

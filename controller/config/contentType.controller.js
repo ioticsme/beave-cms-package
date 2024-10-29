@@ -6,15 +6,19 @@ const ContentType = require('../../model/ContentType')
 const metaFields = require('../../config/meta-fields.config')
 const slugify = require('slugify')
 const { loadSVGIcons } = require('../../helper/Operations.helper')
+const Brand = require('../../model/Brand')
 
 const list = async (req, res) => {
     try {
-        const contentTypes = await ContentType.find()
+        const contentTypes = await ContentType.find().populate({
+            path: 'brand',
+            select: 'name',
+        })
         return res.render('admin-njk/config/content-type/listing', {
             contentTypes,
         })
     } catch (e) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -22,14 +26,15 @@ const add = async (req, res) => {
     try {
         const icons = await loadSVGIcons()
         const contentTypes = await ContentType.find()
-
+        const brands = await Brand.find()
         return res.render('admin-njk/config/content-type/form', {
             isEdit: false,
             contentTypes,
             icons,
+            brands,
         })
     } catch (e) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -41,14 +46,16 @@ const edit = async (req, res) => {
         })
         // console.log('contentType :>> ', contentType)
         const contentTypes = await ContentType.find()
+        const brands = await Brand.find()
         return res.render('admin-njk/config/content-type/form', {
             contentType,
             isEdit: true,
             contentTypes,
             icons,
+            brands,
         })
     } catch (e) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -56,7 +63,11 @@ const view = async (req, res) => {
     try {
         const contentType = await ContentType.findOne({
             _id: req.params.id,
+        }).populate({
+            path: 'brand',
+            select: 'name',
         })
+        // console.log(contentType)
         // const fields_to_map = []
         const fields_to_map = await contentType.field_groups.map(
             (eachGroup) => {
@@ -94,7 +105,7 @@ const view = async (req, res) => {
             // contentTypes,
         })
     } catch (e) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -102,6 +113,7 @@ const save = async (req, res) => {
     try {
         // console.log(req.body.beave_docs_repeater_nested_outer)
         const schema = Joi.object({
+            brand: Joi.array().required(),
             title: Joi.string().required().min(3).max(60),
             slug: Joi.string().required().min(3).max(60),
             // template_name: Joi.string().required().min(3).max(60),
@@ -131,6 +143,7 @@ const save = async (req, res) => {
         }
 
         let data = {
+            brand: req.body.brand,
             title: req.body.title,
             slug: slugify(req.body.slug.toLowerCase()),
             // template_name: req.body.template_name,
@@ -209,7 +222,7 @@ const addFields = async (req, res) => {
             contentType,
         })
     } catch (e) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 

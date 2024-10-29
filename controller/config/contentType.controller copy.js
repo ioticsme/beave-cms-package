@@ -4,6 +4,7 @@ const Joi = require('joi')
 const bcrypt = require('bcryptjs')
 const ContentType = require('../../model/ContentType')
 const { default: slugify } = require('slugify')
+const Brand = require('../../model/Brand')
 
 const list = async (req, res) => {
     const contentTypes = await ContentType.find()
@@ -34,7 +35,7 @@ const edit = async (req, res) => {
 
 const save = async (req, res) => {
     try {
-        console.log(req.body);
+        console.log(req.body)
         const schema = Joi.object({
             title: Joi.string().required().min(3).max(60),
             slug: Joi.string().required().min(3).max(60),

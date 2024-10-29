@@ -14,7 +14,7 @@ const signup = async (req, res) => {
         }
         res.render(`admin-njk/authentication/sign-up`)
     } catch (error) {
-        res.render(`admin-njk/error-500`)
+        res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -77,7 +77,7 @@ const login = async (req, res) => {
         return res.render(`admin-njk/authentication/sign-in`)
     } catch (error) {
         console.log(error)
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -126,28 +126,27 @@ const loginSubmit = async (req, res) => {
             session.admin_name = admin.name
             session.admin_role = admin.role
 
-            if (admin.role != 'super_admin') {
-                const settings = await Settings.findOne({
-                    brand: brand,
-                    country: brand.domains[0].country._id,
-                }).select(
-                    '-brand -country -__v -created_at -updated_at -author'
-                )
+            const settings = await Settings.findOne({
+                brand: brand,
+                country: brand.domains[0].country._id,
+            }).select('-brand -country -__v -created_at -updated_at -author')
 
-                session.brand = {
-                    _id: brand._id,
-                    name: brand.name,
-                    code: brand.code,
-                    languages: brand.languages,
-                    country: brand.domains[0].country._id,
-                    country_name: brand.domains[0].country.name.en,
-                    country_code: brand.domains[0].country.code,
-                    country_currency: brand.domains[0].country.currency,
-                    country_currency_symbol:
-                        brand.domains[0].country.currency_symbol,
-                    settings: settings ? settings : {},
-                }
+            // if (admin.role != 'super_admin') {
+            session.brand = {
+                _id: brand._id,
+                name: brand.name,
+                code: brand.code,
+                languages: brand.languages,
+                country: brand.domains[0].country._id,
+                country_name: brand.domains[0].country.name.en,
+                country_code: brand.domains[0].country.code,
+                country_currency: brand.domains[0].country.currency,
+                country_currency_symbol:
+                    brand.domains[0].country.currency_symbol,
+                settings: settings ? settings : {},
             }
+            // }
+            // console.log('login')
             return res.status(200).json({
                 redirect_to: envConfig.general.ADMIN_LANDING_URL,
             })
@@ -172,7 +171,7 @@ const logout = async (req, res) => {
         delete req.session.admin_role
         res.redirect('/admin/auth/login')
     } catch (error) {
-        res.render(`admin-njk/error-500`)
+        res.render(`admin-njk/app-error-500`)
     }
 }
 

@@ -23,7 +23,7 @@ const list = async (req, res) => {
             data: forms,
         })
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -45,7 +45,7 @@ const edit = async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -57,7 +57,7 @@ const add = async (req, res) => {
         res.render(`admin-njk/custom-forms/add`, { domainTemplates })
     } catch (error) {
         console.log(error)
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -234,7 +234,7 @@ const viewSubmissions = async (req, res) => {
             reqForm: reqForm,
         })
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 

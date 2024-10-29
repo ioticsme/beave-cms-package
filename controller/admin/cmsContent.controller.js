@@ -40,7 +40,7 @@ const list = async (req, res) => {
         }
 
         if (!contentList) {
-            return res.render(`admin-njk/error-500`)
+            return res.render(`admin-njk/app-error-500`)
         }
 
         // const reqContentType = req.contentType
@@ -57,7 +57,7 @@ const list = async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -72,7 +72,7 @@ const detail = async (req, res) => {
         }).populate('author')
 
         if (!contentDetail) {
-            return res.render(`admin-njk/error-404`)
+            return res.render(`admin-njk/app-error-404`)
         }
 
         const has_common_field_groups = collect(req.contentType.field_groups)
@@ -109,7 +109,7 @@ const detail = async (req, res) => {
             // findalContentFieldsGroup,
         })
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -141,6 +141,7 @@ const add = async (req, res) => {
         if (req.contentType?.page_builder) {
             template = `admin-njk/cms/content/html-builder/form`
         }
+        // console.log('test')
         return res.render(template, {
             reqContentType: req.contentType,
             has_common_field_groups: has_common_field_groups ? true : false,
@@ -150,7 +151,7 @@ const add = async (req, res) => {
         })
     } catch (error) {
         // console.log(error)
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -166,7 +167,7 @@ const edit = async (req, res) => {
         })
 
         if (!contentDetail) {
-            return res.render(`admin-njk/error-404`)
+            return res.render(`admin-njk/app-error-404`)
         }
         // return res.send(findalContentFieldsGroup)
 
@@ -204,7 +205,7 @@ const edit = async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -807,7 +808,7 @@ const pageBuildEditor = async (req, res) => {
             page_id,
         })
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -843,7 +844,7 @@ const previewPageBuildData = async (req, res) => {
             html_data,
         })
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 

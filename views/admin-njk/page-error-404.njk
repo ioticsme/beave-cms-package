@@ -1,0 +1,17 @@
+{% extends "../admin-njk/layouts/master.njk" %}
+{% block content %}
+	<div class="d-flex flex-column flex-center flex-column-fluid">
+		<div class="d-flex flex-column flex-center text-center p-10">
+			<div class="card card-flush w-lg-650px py-5">
+				<div class="card-body py-15 py-lg-20">
+					<h1 class="fw-bolder fs-2hx text-gray-900 mb-4">Oops!</h1>
+					<div class="fw-semibold fs-6 text-gray-500 mb-7">We can&apos;t find that page.</div>
+					<div class="mb-3"><img class="mw-100 mh-300px theme-light-show" src="/cms-static/admin/assets/media/auth/404-error.png" alt=""><img class="mw-100 mh-300px theme-dark-show" src="/cms-static/admin/assets/media/auth/404-error-dark.png" alt=""></div>
+					<div class="mb-0">
+						<a class="btn btn-sm btn-primary" href="javascript:history.back()">Return Back</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

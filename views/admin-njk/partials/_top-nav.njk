@@ -24,7 +24,7 @@
                         <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-active-bg px-lg-2 py-lg-4 w-lg-225px">
                             {% for domain in brand.domains %}
                                 <div class="menu-item">
-                                    <a class="menu-link" href=`/admin/settings/switch-brand?b=${brand._id}&d=${domain.country.code}`>
+                                    <a class="menu-link" href="admin/settings/switch-brand?b={{brand._id}}&d={{domain.country.code}}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>

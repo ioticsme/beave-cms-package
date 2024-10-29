@@ -35,10 +35,21 @@ const switchBrand = async (req, res) => {
                 country_currency_symbol: country?.currency_symbol,
                 settings: settings ? settings : {},
             }
+
+            // Save session (if using a session store)
+            req.session.save((err) => {
+                if (err) {
+                    console.error('Session save error:', err)
+                    return res.render('admin-njk/app-error-500')
+                }
+                // Redirect after session is successfully saved
+                return res.redirect('back')
+            })
+        } else {
+            return res.redirect('back')
         }
-        res.redirect('back')
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -62,7 +73,7 @@ const generalList = async (req, res) => {
             brand,
         })
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 // Render logo edit form
@@ -94,7 +105,7 @@ const editLogo = async (req, res) => {
             isBrand,
         })
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -253,7 +264,7 @@ const seoList = async (req, res) => {
         }
         return res.render('admin-njk/settings/seo/list', { data })
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 const seoEdit = async (req, res) => {
@@ -273,7 +284,7 @@ const seoEdit = async (req, res) => {
         }
         return res.render('admin-njk/settings/seo/form', { data })
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -408,7 +419,7 @@ const marketingList = async (req, res) => {
 
         return res.render('admin-njk/settings/marketing/list', { data: brand })
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 const marketingEdit = async (req, res) => {
@@ -419,7 +430,7 @@ const marketingEdit = async (req, res) => {
         })
         return res.render('admin-njk/settings/marketing/form', { data: brand })
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -481,7 +492,7 @@ const ecommerceList = async (req, res) => {
             data: settings?.ecommerce_settings || {},
         })
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 const invoiceEdit = async (req, res) => {
@@ -495,7 +506,7 @@ const invoiceEdit = async (req, res) => {
             data: settings?.ecommerce_settings || {},
         })
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -588,7 +599,7 @@ const notificationList = async (req, res) => {
             },
         })
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
@@ -608,7 +619,7 @@ const editNotificationSettings = async (req, res) => {
             },
         })
     } catch (error) {
-        return res.render(`admin-njk/error-500`)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 const saveNoticationSettings = async (req, res) => {

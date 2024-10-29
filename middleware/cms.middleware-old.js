@@ -362,7 +362,7 @@ const allBrands = async (req, res, next) => {
 
 const checkSuperAdmin = (req, res, next) => {
     if (req.authUser.admin_role != 'super_admin') {
-        return res.render(`admin/error-500`)
+        return res.render(`admin/app-error-500`)
     }
     next()
 }

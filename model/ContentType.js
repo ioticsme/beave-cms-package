@@ -1,8 +1,15 @@
-const mongoose = require('mongoose')
+const { mongoose, Schema } = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
+const Brand = require('./Brand')
 
 const ContentTypeSchema = new mongoose.Schema(
     {
+        brand: [
+            {
+                type: Schema.ObjectId,
+                ref: Brand,
+            },
+        ],
         title: {
             type: String,
             required: true,
