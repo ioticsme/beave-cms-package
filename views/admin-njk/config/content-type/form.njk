@@ -146,7 +146,7 @@
 												<select class="form-select form-select-lg form-select-solid" data-control="select2" data-close-on-select="false" name="brand" data-placeholder="Select Brand" multiple="multiple">
 													<option value="">Select Brand</option>
 													{% for brand in brands %}
-														<option value="{{ brand.id }}" {{'selected' if contentType.brand == brand.id }}>{{ brand.name.en }}</option>
+														<option value="{{ brand.id }}" {{'selected' if brand.id in contentType.brand }}>{{ brand.name.en }}</option>
 													{% endfor %}
 												</select>
 												<div class="fv-plugins-message-container invalid-feedback" id="field-error-brand"></div>
