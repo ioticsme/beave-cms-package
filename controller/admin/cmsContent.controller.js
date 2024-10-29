@@ -23,7 +23,7 @@ const list = async (req, res) => {
         // return res.send(req.contentType._id)
         const contentList = await Content.find({
             type_id: req.contentType._id,
-            // brand: session.brand._id,
+            brand: session.brand._id,
             country: session.brand.country,
             isDeleted: false,
         }).sort('position')
@@ -220,7 +220,7 @@ const deleteContent = async (req, res) => {
 
         await Content.softDelete({
             _id: id,
-            // brand: req.authUser.brand._id,
+            brand: req.authUser.brand._id,
             country: req.authUser.brand.country,
         })
 
@@ -254,7 +254,7 @@ const changeStatus = async (req, res) => {
         const update = await Content.findOneAndUpdate(
             {
                 _id: id,
-                // brand: req.authUser.brand._id,
+                brand: req.authUser.brand._id,
                 country: req.authUser.brand.country,
             },
             {
@@ -335,7 +335,7 @@ const savePageBuilderContent = async (req, res) => {
             type_id: type._id,
             type_slug: type.slug,
             author: req.authUser.admin_id,
-            // brand: req.authUser.brand._id,
+            brand: req.authUser.brand._id,
             country: req.authUser.brand.country,
             status: body.status,
             scheduled_at: {
@@ -698,7 +698,7 @@ const saveDefaultContent = async (req, res) => {
             author: req.authUser.admin_id,
             // banner: body?.banner || null, // If Requested content type has banner required
             // gallery: body?.gallery || null, // If Requested content type has gallery required
-            // brand: req.authUser.brand._id,
+            brand: req.authUser.brand._id,
             country: req.authUser.brand.country,
             status: body.status,
             scheduled_at: {

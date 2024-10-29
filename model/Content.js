@@ -24,11 +24,11 @@ const ContentSchema = new mongoose.Schema(
             ref: Admin,
             required: true,
         },
-        // brand: {
-        //     type: Schema.ObjectId,
-        //     ref: 'Brand',
-        //     required: true,
-        // },
+        brand: {
+            type: Schema.ObjectId,
+            ref: 'Brand',
+            required: true,
+        },
         country: {
             type: Schema.ObjectId,
             ref: Country,
