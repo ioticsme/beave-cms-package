@@ -51,6 +51,15 @@ const nunjucksFilter = async (req, res, next) => {
         return convertToSingular(plural)
     }
 
+    res.locals.brandCountryMatch = (domains, country) => {
+        return collect(domains)
+            .pluck('country')
+            .toArray()
+            .some((item) => {
+                return String(item) === String(country)
+            })
+    }
+
     next()
 }
 
@@ -71,9 +80,9 @@ const contentTypeCheck = async (req, res, next) => {
     try {
         const contentType = await ContentType.findOne({
             slug: req.params.contentType,
-            brand: { $in: [req.session.brand._id] }
+            brand: { $in: [req.session.brand._id] },
         })
-        if(!contentType) {
+        if (!contentType) {
             return res.render(`admin-njk/page-error-404`)
         }
         req.contentType = contentType
@@ -190,7 +199,7 @@ const mainNavGenerator = async (req, res, next) => {
     // Finding all content types to list in the contents section
     const contentTypes = await ContentType.find({
         active: true,
-        brand: { $in: [req.session.brand._id] }
+        brand: { $in: [req.session.brand._id] },
     })
         .select(
             '-_id title slug admin_icon admin_nav_section position active single_type has_access'

@@ -57,10 +57,10 @@ const BrandSchema = new mongoose.Schema(
                     type: Boolean,
                     default: false,
                 },
-                ecommerce_maintenance_mode: {
-                    type: Boolean,
-                    default: false,
-                },
+                // ecommerce_maintenance_mode: {
+                //     type: Boolean,
+                //     default: false,
+                // },
                 meta: {
                     type: Object,
                     default: {

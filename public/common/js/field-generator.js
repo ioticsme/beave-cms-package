@@ -66,7 +66,11 @@ const generateField = async () => {
         _.forEach(group.fields, function (field) {
             const currField = `<tr>
             <td>${field.label} <br> ${
-                field.info ? '<span class="badge badge-light-warning">' + field.info + '</span>' : ''
+                field.info
+                    ? '<span class="badge badge-light-warning">' +
+                      field.info +
+                      '</span>'
+                    : ''
             }</td>
             <td>${field.type}</td>
             <td>${
@@ -316,3 +320,14 @@ document
                 console.log(error)
             })
     })
+
+document.querySelectorAll('.back-btn').forEach((backBtn) => {
+    backBtn.addEventListener('click', function (e) {
+        e.preventDefault()
+        var modalId = e.target
+            .closest('.modal-field-sections')
+            .getAttribute('id')
+        document.getElementById(modalId).classList.add('d-none')
+        document.getElementById('field-list-section').classList.remove('d-none')
+    })
+})

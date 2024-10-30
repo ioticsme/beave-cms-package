@@ -91,11 +91,6 @@ app.use(session(sessionConfig))
 app.use(cookieParser())
 
 // Template Engine
-// Define a custom filter that returns an array of keys from an object
-nunjucks.configure().addFilter('keys', function (obj) {
-    return Object.keys(obj)
-})
-
 var njk = nunjucks
     .configure(path.join(__dirname, '/views'), {
         express: app,
@@ -110,6 +105,9 @@ var njk = nunjucks
     })
     .addFilter('json', function (obj) {
         return JSON.stringify(obj)
+    })
+    .addFilter('keys', function (obj) {
+        return Object.keys(obj)
     })
 njk.addFilter('htmlSlice', function (value, start, end) {
     const text = value.replace(/<[^>]*>?/gm, '') // Remove HTML tags
@@ -201,6 +199,7 @@ app.get('/health', async (req, res) => {
 // BEGIN:: API Route Groups
 const adminRoutes = require('./routes/admin/admin.routes')
 const webAPIRoutes = require('./routes/api/web-api.routes')
+const { default: collect } = require('collect.js')
 // END:: API Route Groups
 
 // TODO::Below code is only for continuos development purpose. Should be removed on staging and production
