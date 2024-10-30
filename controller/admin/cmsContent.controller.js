@@ -72,7 +72,7 @@ const detail = async (req, res) => {
         }).populate('author')
 
         if (!contentDetail) {
-            return res.render(`admin-njk/app-error-404`)
+            return res.render(`admin-njk/page-error-404`)
         }
 
         const has_common_field_groups = collect(req.contentType.field_groups)
@@ -94,6 +94,7 @@ const detail = async (req, res) => {
 
         let template = `admin-njk/cms/content/detail`
         if (req.contentType?.page_builder) {
+            // console.log(req.authUser.brand.languages)
             template = `admin-njk/cms/content/html-builder/detail`
         }
 
@@ -102,7 +103,9 @@ const detail = async (req, res) => {
         res.render(template, {
             default_lang,
             has_common_field_groups: has_common_field_groups ? true : false,
-            has_bilingual_field_groups: has_bilingual_field_groups ? true : false,
+            has_bilingual_field_groups: has_bilingual_field_groups
+                ? true
+                : false,
             reqContentType: req.contentType,
             contentDetail,
             metaFields,
@@ -145,7 +148,9 @@ const add = async (req, res) => {
         return res.render(template, {
             reqContentType: req.contentType,
             has_common_field_groups: has_common_field_groups ? true : false,
-            has_bilingual_field_groups: has_bilingual_field_groups ? true : false,
+            has_bilingual_field_groups: has_bilingual_field_groups
+                ? true
+                : false,
             allowed_content,
             metaFields,
         })
@@ -198,7 +203,9 @@ const edit = async (req, res) => {
         return res.render(template, {
             reqContentType: req.contentType,
             has_common_field_groups: has_common_field_groups ? true : false,
-            has_bilingual_field_groups: has_bilingual_field_groups ? true : false,
+            has_bilingual_field_groups: has_bilingual_field_groups
+                ? true
+                : false,
             contentDetail,
             allowed_content,
             metaFields,
@@ -793,7 +800,8 @@ const loadEditorData = async (req, res) => {
         // const html_data = await HtmlBuilder.findOne({
         //     _id: req.params.id,
         // })
-        return res.status(200).json(contentDetail)
+        const lang_content = contentDetail.content[req.query.lang]
+        return res.status(200).json(lang_content)
     } catch (error) {
         console.log(error)
         return res.status(500).json(`Something went wrong`)
@@ -803,9 +811,16 @@ const loadEditorData = async (req, res) => {
 const pageBuildEditor = async (req, res) => {
     try {
         const page_id = req.params.id
+        const language = collect(req.authUser.brand.languages)
+            .where('prefix', req.query.lang)
+            .first()
+        if (!language) {
+            return res.render(`admin-njk/page-error-404`)
+        }
         return res.render('admin-njk/cms/content/html-builder/editor', {
             reqContentType: req.contentType,
             page_id,
+            lang: req.query.lang,
         })
     } catch (error) {
         return res.render(`admin-njk/app-error-500`)
@@ -814,6 +829,26 @@ const pageBuildEditor = async (req, res) => {
 
 const savePageBuilderData = async (req, res) => {
     try {
+        const languages = collect(req.authUser.brand.languages)
+            .pluck('prefix')
+            .toArray()
+        // BEGIN:: Validation rule
+        const schema = Joi.object({
+            id: Joi.optional(),
+            lang: Joi.string()
+                .required()
+                .valid(...languages),
+        }).unknown()
+        // END:: Validation rule
+
+        const validationResult = schema.validate(req.body, {
+            abortEarly: false,
+        })
+
+        if (validationResult.error) {
+            return res.status(422).json(validationResult.error)
+        }
+
         const page = await Content.findOne({
             _id: req.body.id,
         })
@@ -822,12 +857,20 @@ const savePageBuilderData = async (req, res) => {
                 error: 'Not Found',
             })
         }
-        page.content = {
-            name: page.content.name,
-            html: req.body.html,
-            css: req.body.css,
-        }
-        await page.save()
+        await Content.updateOne(
+            {
+                _id: req.body.id,
+            },
+            {
+                $set: {
+                    [`content.${req.body.lang}`]: {
+                        name: page.content.name,
+                        html: req.body.html,
+                        css: req.body.css,
+                    },
+                },
+            }
+        )
 
         return res.status(200).json('Saved')
     } catch (error) {

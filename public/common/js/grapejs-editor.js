@@ -39,12 +39,12 @@ editor.Panels.addButton('options', {
 })
 
 axios
-    .get(`/admin/cms/${content_type_slug}/editor/load-data/${pageId}`)
+    .get(`/admin/cms/${content_type_slug}/editor/load-data/${pageId}?lang=${lang}`)
     .then(function (response) {
-        console.log(response.data)
+        // console.log(response.data)
         // Store the HTML and CSS in the storage manager
-        editor.setComponents(response.data.content.html)
-        editor.setStyle(response.data.content.css)
+        editor.setComponents(response.data.html)
+        editor.setStyle(response.data.css)
 
         console.log('Document loaded successfully.')
     })
@@ -59,6 +59,7 @@ editor.Commands.add('save-template', {
 
         var payloads = {
             id: pageId, // Setting from editor html file
+            lang: lang, // Setting from editor html file
             html: editor.getHtml(),
             css: editor.getCss(),
         }

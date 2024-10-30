@@ -69,6 +69,10 @@ const ContentTypeSchema = new mongoose.Schema(
                             type: Number,
                             default: 0,
                         },
+                        show_on_list: {
+                            type: Boolean,
+                            default: false,
+                        },
                         options: [
                             {
                                 label: String,

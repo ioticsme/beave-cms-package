@@ -77,14 +77,14 @@
 											<div class="tab-pane fade active show" role="tabpanel" id="beave_tab_pane_general">
 												<div class="row">
 													<div class="col-12">
-
 														<span class="badge badge-light">Name :</span>
 														<span>{{contentDetail.content.name}}</span>
-
 													</div>
 
 													<div class="col-12 mt-5">
-														<a href="/admin/cms/{{reqContentType.slug}}/editor/{{contentDetail._id}}" class="btn btn-light-success">Edit Page</a>
+														{% for lang in authUser.brand.languages %}
+															<a href="/admin/cms/{{reqContentType.slug}}/editor/{{contentDetail._id}}?lang={{lang.prefix}}" class="btn btn-light-success">Edit Page ({{lang.name}})</a>
+														{% endfor %}
 													</div>
 												</div>
 											</div>

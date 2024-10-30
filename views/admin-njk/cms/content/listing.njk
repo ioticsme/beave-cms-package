@@ -69,7 +69,17 @@
 										</div>
 									</th>
 									{# TODO: Default field should be reworked #}
-									<th class="min-w-125px">{{'Name' if reqContentType.page_builder else reqContentType.field_groups[0].fields[0].field_name}}</th>
+									{% if reqContentType.page_builder %}
+										<th class="min-w-125px">Name</th>
+									{% else %}
+										{% for fg in reqContentType.field_groups %}
+											{% if fg.repeater_group == false %}
+												{% for selected_field in fg.fields %}
+													<th class="min-w-125px">{{selected_field.field_label}}</th>
+												{% endfor %}
+											{% endif %}
+										{% endfor %}
+									{% endif %}
 									<th class="min-w-125px">URL</th>
 									<th class="min-w-125px">Status</th>
 									{# <th class="min-w-125px">In Home</th> #}
@@ -86,19 +96,31 @@
 												<input class="form-check-input" type="checkbox" value="1">
 											</div>
 										</td>
-										<td>
-											<a class="text-gray-800 text-hover-primary mb-1" href="/admin/cms/{{reqContentType.slug}}/detail/{{item._id}}">
-												{% if reqContentType.page_builder == false %}
-													{% set defaultFieldValue = item.content[default_lang.prefix][reqContentType.field_groups[0].row_name][reqContentType.field_groups[0].fields[0].field_name] %}
-													{% if not defaultFieldValue %}
-														{% set defaultFieldValue = '- No Default Field -' %}
-													{% endif %}
-													{{defaultFieldValue | htmlSlice(0,80) }}
-												{% else %}
-													{{item.content.name | htmlSlice(0,80) }}
+
+										{% if reqContentType.page_builder == false %}
+											{% for fg in reqContentType.field_groups %}
+												{% if fg.repeater_group == false %}
+													{% for selected_field in fg.fields %}
+														{% set defaultFieldValue = item.content[default_lang.prefix][fg.row_name][selected_field.field_name] %}
+														{# {% if not defaultFieldValue %}
+															{% set defaultFieldValue = '- No Default Field -' %}
+														{% endif %} #}
+														<td>
+															<a class="text-gray-800 text-hover-primary mb-1" href="/admin/cms/{{reqContentType.slug}}/detail/{{item._id}}">
+																{{defaultFieldValue | htmlSlice(0,80)}}
+															</a>
+														</td>
+													{% endfor %}
 												{% endif %}
-											</a>
-										</td>
+											{% endfor %}
+										{% else %}
+											<td>
+												<a class="text-gray-800 text-hover-primary mb-1" href="/admin/cms/{{reqContentType.slug}}/detail/{{item._id}}">
+													{{item.content.name | htmlSlice(0,80) }}
+												</a>
+											</td>
+										{% endif %}
+
 										<td>
 											{# //- if reqContentType.has_api_endpoint #}
 											<a class="badge badge-light-primary" href="/admin/cms/{{reqContentType.slug}}/detail/{{item._id}}">{{item.slug}}</a>
