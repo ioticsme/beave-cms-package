@@ -884,7 +884,7 @@ const previewPageBuildData = async (req, res) => {
             _id: req.params.id,
         })
         return res.render('admin-njk/cms/content/html-builder/view', {
-            html_data,
+            html_data: html_data.content[req.query.lang],
         })
     } catch (error) {
         return res.render(`admin-njk/app-error-500`)

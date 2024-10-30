@@ -82,9 +82,18 @@
 													</div>
 
 													<div class="col-12 mt-5">
-														{% for lang in authUser.brand.languages %}
-															<a href="/admin/cms/{{reqContentType.slug}}/editor/{{contentDetail._id}}?lang={{lang.prefix}}" class="btn btn-light-success">Edit Page ({{lang.name}})</a>
-														{% endfor %}
+														<ul>
+															{% for lang in authUser.brand.languages %}
+															{# <a class="menu-link px-3" href="/admin/cms/{{ reqContentType.slug }}/editor/preview/{{item._id}}" target="_blank">
+															Preview HTML
+														</a> #}
+																<li>
+																	{{lang.name}} - 
+																	<a href="/admin/cms/{{reqContentType.slug}}/editor/preview/{{contentDetail._id}}?lang={{lang.prefix}}" class="btn btn-sm btn-light-primary">Preview</a>
+																	<a href="/admin/cms/{{reqContentType.slug}}/editor/preview/{{contentDetail._id}}?lang={{lang.prefix}}" class="btn btn-sm btn-light-success">Edit</a>
+																</li>
+															{% endfor %}
+														</ul>
 													</div>
 												</div>
 											</div>
