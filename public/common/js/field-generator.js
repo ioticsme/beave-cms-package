@@ -223,6 +223,7 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
         const selected_field_type = e.target.field_type.value.trim()
         const selected_field_name = e.target.field_name.value.trim()
         const selected_field_info = e.target.field_info.value.trim()
+        const selected_show_on_list = e.target.show_on_list.value.trim()
         const selected_field_options =
             e.target.field_options?.value?.trim() || ''
         const options = []
@@ -262,6 +263,7 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
             label: selected_field_name,
             name: selected_field_name,
             info: selected_field_info,
+            show_on_list: selected_show_on_list,
             position: 1,
             localization: true,
             options: options,

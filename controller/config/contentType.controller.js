@@ -301,6 +301,7 @@ const saveFields = async (req, res) => {
                     field_name: slugify(field.name, '_').toLowerCase(),
                     field_type: field.type.toLowerCase(),
                     field_info: field.info,
+                    show_on_list: field.show_on_list,
                     placeholder: field.label,
                     position: field.position || 0,
                     validation: field.validation,

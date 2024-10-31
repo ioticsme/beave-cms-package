@@ -75,7 +75,9 @@
 										{% for fg in reqContentType.field_groups %}
 											{% if fg.repeater_group == false %}
 												{% for selected_field in fg.fields %}
-													<th class="min-w-125px">{{selected_field.field_label}}</th>
+													{% if selected_field.show_on_list %}
+														<th class="min-w-125px">{{selected_field.field_label}}</th>
+													{% endif %}
 												{% endfor %}
 											{% endif %}
 										{% endfor %}
@@ -101,15 +103,17 @@
 											{% for fg in reqContentType.field_groups %}
 												{% if fg.repeater_group == false %}
 													{% for selected_field in fg.fields %}
-														{% set defaultFieldValue = item.content[default_lang.prefix][fg.row_name][selected_field.field_name] %}
-														{% if not defaultFieldValue %}
-															{% set defaultFieldValue = '- No Default Field -' %}
+														{% if selected_field.show_on_list %}
+															{% set defaultFieldValue = item.content[default_lang.prefix][fg.row_name][selected_field.field_name] %}
+															{% if not defaultFieldValue %}
+																{% set defaultFieldValue = '- No Default Field -' %}
+															{% endif %}
+															<td>
+																<a class="text-gray-800 text-hover-primary mb-1" href="/admin/cms/{{reqContentType.slug}}/detail/{{item._id}}">
+																	{{defaultFieldValue | safe | htmlSlice(0,80)}}
+																</a>
+															</td>
 														{% endif %}
-														<td>
-															<a class="text-gray-800 text-hover-primary mb-1" href="/admin/cms/{{reqContentType.slug}}/detail/{{item._id}}">
-																{{defaultFieldValue | htmlSlice(0,80)}}
-															</a>
-														</td>
 													{% endfor %}
 												{% endif %}
 											{% endfor %}
