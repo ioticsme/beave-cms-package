@@ -102,9 +102,9 @@
 												{% if fg.repeater_group == false %}
 													{% for selected_field in fg.fields %}
 														{% set defaultFieldValue = item.content[default_lang.prefix][fg.row_name][selected_field.field_name] %}
-														{# {% if not defaultFieldValue %}
+														{% if not defaultFieldValue %}
 															{% set defaultFieldValue = '- No Default Field -' %}
-														{% endif %} #}
+														{% endif %}
 														<td>
 															<a class="text-gray-800 text-hover-primary mb-1" href="/admin/cms/{{reqContentType.slug}}/detail/{{item._id}}">
 																{{defaultFieldValue | htmlSlice(0,80)}}

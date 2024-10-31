@@ -12,7 +12,6 @@ const {
     BrandWithCountryCheck,
     webDefaultHeader,
     UserAuthCheck,
-    ecommerceModeCheck,
     userAgent,
 } = require('../../middleware/api.middleware')
 const { getNav } = require('../../middleware/api.middleware')
@@ -41,13 +40,6 @@ router.group('/', (router) => {
 
     // CMS Related Routes
     router.use('/cms', cmsRoutes)
-
-    // // catalog
-    // router.group('/catalog', (router) => {
-    //     // Product
-    //     router.get('/products', catalogController.productList)
-    //     router.get('/products/:id', catalogController.productDetail)
-    // })
 
     // General
     router.group('/general', (router) => {
@@ -90,8 +82,6 @@ router.group('/user', (router) => {
             userController.changePassword
         )
     })
-    // Ecommerce related routes
-    // router.use('/', [ecommerceModeCheck, UserAuthCheck], ecommerceRoutes)
 })
 
 module.exports = router

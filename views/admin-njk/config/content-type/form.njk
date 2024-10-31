@@ -96,6 +96,9 @@
 					document
 						.getElementById('admin-svg-icon-form-field')
 						.value = selectedIcon
+					document
+						.getElementById('svg-icon-preview')
+						.innerHTML = selectedIcon
 				})
 		})
 	</script>
@@ -211,13 +214,14 @@
 										</a> #}
 									</label>
 
-									<div class="col-lg-6 fv-row">
-										<textarea class="form-control form-control-lg form-control-solid" type="text" name="admin_icon" id="admin-svg-icon-form-field" placeholder="Admin Icon">{{ contentType.admin_icon }}</textarea>
+									<div class="col-lg-1 col-sm-2 fv-row">
+										<span id="svg-icon-preview">{{ contentType.admin_icon | safe }}</span>
+										<input type="hidden" name="admin_icon" id="admin-svg-icon-form-field" value="{{ contentType.admin_icon }}"></input>
 										<div class="fv-plugins-message-container invalid-feedback" id="field-error-admin_icon"></div>
 									</div>
 									<div class="col-lg-2">
 										<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#icon-list-modal">
-											Insert Icon
+											Choose Nav Icon
 										</button>
 									</div>
 								</div>

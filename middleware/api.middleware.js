@@ -181,15 +181,6 @@ const UserAuthCheck = async (req, res, next) => {
     }
 }
 
-const ecommerceModeCheck = async (req, res, next) => {
-    if (req.brand?.domains?.ecommerce_maintenance_mode) {
-        return res
-            .status(503)
-            .json({ error: 'Application on Ecommerce Maintenance Mode' })
-    }
-    next()
-}
-
 const getNav = async (req, res, next) => {
     try {
         const cache_key = `app-nav-${req.brand?.name?.en}-${req.country?.name?.en}`
@@ -288,7 +279,6 @@ module.exports = {
     webDefaultHeader,
     mobileDefaultHeader,
     UserAuthCheck,
-    ecommerceModeCheck,
     getNav,
     userAgent,
 }
