@@ -174,78 +174,6 @@ const bunnyCDNUploadMediaFromURL = async (media_url, folder, req = {}) => {
     }
 }
 
-const bunnyCDNUploadProductMedia = async (media, folder, file) => {
-    try {
-        // No region specified, defaults to Falkenstein (storage.bunnycdn.com)
-        // const bunnyStorage = new BunnyStorage.default(
-        //     ACCESS_KEY,
-        //     STORAGE_ZONE_NAME
-        // )
-        const FILE_PATH = media
-        const FOLDER = `${envConfig.general.NODE_ENV}/${folder}`
-        const FILENAME_TO_UPLOAD = encodeURIComponent(
-            `${Date.now()}-${slugify(file?.originalname, {
-                lower: true,
-            })}` || 'sample-image'
-        )
-
-        // list all files in zone / path
-        // const files = await bunnyStorage.list()
-        // const readStream = fs.createReadStream(FILE_PATH)
-        const decodedMedia = Buffer.from(FILE_PATH, 'base64')
-
-        const options = {
-            method: 'PUT',
-            host: HOSTNAME,
-            path: `/${STORAGE_ZONE_NAME}/${FOLDER}/${FILENAME_TO_UPLOAD}`,
-            headers: {
-                AccessKey: ACCESS_KEY,
-                'Content-Type': 'application/octet-stream',
-            },
-        }
-        // console.log(options)
-
-        // Wrap the request in a promise to handle it asynchronously
-        const uploaded = await new Promise((resolve, reject) => {
-            const up_req = https.request(options, (res) => {
-                res.on('data', (chunk) => {
-                    // console.log(chunk.toString('utf8'))
-                })
-                res.on('end', () => {
-                    resolve(true) // Resolve the promise when the request is completed
-                })
-            })
-
-            up_req.on('error', (error) => {
-                console.error(error)
-                reject(error) // Reject the promise if there's an error
-            })
-
-            // Write the decoded media to the request stream
-            up_req.write(decodedMedia)
-            // End the request
-            up_req.end()
-        })
-
-        if (uploaded) {
-            return {
-                // vendor: req.session?.vendor?._id,
-                // country: req.authUser?.selectedCountry,
-                // drive: envConfig.media_drive,
-                url: `${envConfig.bunny_cdn.URL}/${FOLDER}/${FILENAME_TO_UPLOAD}`,
-                response: uploaded,
-                file: FILENAME_TO_UPLOAD,
-                file_type: file.mimetype,
-            }
-        } else {
-            return `application error. Status code: 500`
-        }
-    } catch (e) {
-        console.log(e)
-        return `application error. Status code: 500`
-    }
-}
-
 const getFileNameFromUrl = async (url) => {
     // Extract the last part of the URL (after the last /)
     const urlParts = url.split('/')
@@ -260,5 +188,4 @@ const getFileNameFromUrl = async (url) => {
 module.exports = {
     bunnyCDNUploadMedia,
     bunnyCDNUploadMediaFromURL,
-    bunnyCDNUploadProductMedia,
 }

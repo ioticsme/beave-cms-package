@@ -55,6 +55,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }))
 // Assets folder
 app.use('/cms-static', express.static(path.join(__dirname, './public')))
 app.use('/static', express.static(`${process.cwd()}/public`))
+app.use('/uploads', express.static(`${process.cwd()}/uploads`))
 
 //Configure admin session storage
 let session_driver

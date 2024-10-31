@@ -379,10 +379,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Select the first tab pane and add the 'show active' classes
     const firstTabPane = document.querySelector(
-        firstTabLink.getAttribute('href')
+        firstTabLink?.getAttribute('href')
     )
     if (firstTabPane) {
-        firstTabPane.classList.add('show', 'active')
+        firstTabPane?.classList.add('show', 'active')
     }
 })
 // ===== END:: First Tab active for cms content editor================

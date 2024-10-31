@@ -1,5 +1,8 @@
 const envConfig = require('../../config/env.config')
-const { uploadMedia } = require('../../helper/FileUpload.helper')
+const {
+    uploadMedia,
+    deleteMediaFile,
+} = require('../../helper/FileUpload.helper')
 const fs = require('fs')
 const Media = require('../../model/Media')
 
@@ -145,9 +148,17 @@ const deleteMedia = async (req, res) => {
             return res.status(404).json({ error: 'Id not found' })
         }
 
-        await Media.deleteOne({
+        const media = await Media.findOne({
             _id: id,
         })
+
+        const deleteFile = await deleteMediaFile('media', media.file.name)
+
+        if (deleteFile) {
+            await Media.deleteOne({
+                _id: id,
+            })
+        }
 
         return res.status(200).json({
             message: 'Media deleted',

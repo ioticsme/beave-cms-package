@@ -5,8 +5,7 @@ const MediaSchema = new mongoose.Schema(
         drive: {
             type: String,
             required: true,
-            default: 'imagekit',
-            enum: ['embed', 'imagekit', 'cloudinary'],
+            enum: ['local', 'imagekit', 'cloudinary'],
         },
         url: {
             type: String,
