@@ -1268,6 +1268,9 @@ $border-color_6: rgb(75 85 99 / var(--tw-border-opacity));
     & .toast-error {
         background-color: red;
     }
+    & .toast-success {
+        background-color: green;
+    }
 }
 
 #beave_app_root {

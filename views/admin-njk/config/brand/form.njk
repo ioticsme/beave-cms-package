@@ -83,7 +83,7 @@
                                     <label class="col-lg-4 col-form-label required fw-semibold fs-6">Languages</label>
                                     <div class="col-lg-8 fv-row">
                                         {% for lang in languages %}
-                                            <input class="form-check-input" type="checkbox" value="{{ lang._id }}" name="languages[]" id="chk_{{ lang._id }}" {% if lang._id in brand.languages %}checked{% endif %}>
+                                            <input class="form-check-input" type="checkbox" value="{{ lang._id }}" name="languages[]" id="chk_{{ lang._id }}" {% if brand.languages and lang._id in brand.languages %}checked{% endif %}>
                                             <label class="form-check-label check" for="chk_{{ lang._id }}">
                                                 <span>{{ lang.name }}</span>
                                             </label>
