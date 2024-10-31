@@ -1,4 +1,5 @@
 const envConfig = require('../config/env.config')
+const Config = require('../model/Config')
 const { imageKitUploadMedia } = require('../adaptors/ImageKit.adaptor.js')
 const {
     bunnyCDNUploadMedia,
@@ -9,20 +10,41 @@ const {
     localDeleteMedia,
 } = require('../adaptors/localUpload.adaptor.js')
 
+const getDriveConfig = async () => {
+    const config = await Config.findOne()
+    return config?.media_drive
+}
 // Upload function internally uses the ImageKit.io javascript SDK
-const uploadMedia = async (media, folder, file, req = {}) => {
-    if (envConfig.media_drive == 'bunny_cdn') {
-        return await bunnyCDNUploadMedia(media, folder, file, req)
-    } else if (envConfig.media_drive == 'imagekit') {
-        return await imageKitUploadMedia(media, folder, file, req)
-    } else if (envConfig.media_drive == 'cloudinary') {
-        return await imageKitUploadMedia(media, folder, file, req)
-    } else if (envConfig.media_drive == 'local') {
-        const res = await localUploadMedia(media, folder, file, req)
-        // console.log(res)
+const uploadMedia = async (media, folder, file) => {
+    const media_drive_config = await getDriveConfig()
+    if (media_drive_config.local_upload) {
+        const res = await localUploadMedia(media, folder, file)
         return res
     } else {
-        return 'No Drive Configured'
+        if (
+            media_drive_config.imagekit.default &&
+            media_drive_config.imagekit.active
+        ) {
+            return await imageKitUploadMedia(
+                media,
+                folder,
+                file,
+                media_drive_config.imagekit
+            )
+        } else if (
+            media_drive_config.cloudinary.default &&
+            media_drive_config.cloudinary.active
+        ) {
+            // TODO: Replace it with cloudinary
+            return await imageKitUploadMedia(
+                media,
+                folder,
+                file,
+                media_drive_config.imagekit
+            )
+        } else {
+            return 'No Drive Configured'
+        }
     }
 }
 
@@ -34,18 +56,18 @@ const uploadMediaFromURL = async (media_url, folder, req = {}) => {
     }
 }
 
-const deleteMediaFile = async (folder, file) => {
-    if (envConfig.media_drive == 'bunny_cdn') {
+const deleteMediaFile = async (folder, mediaObj) => {
+    if (mediaObj.drive == 'bunny_cdn') {
         // TODO: Delete file from storage should be done
         return true
-    } else if (envConfig.media_drive == 'imagekit') {
+    } else if (mediaObj.drive == 'imagekit') {
         // TODO: Delete file from storage should be done
         return true
-    } else if (envConfig.media_drive == 'cloudinary') {
+    } else if (mediaObj.drive == 'cloudinary') {
         // TODO: Delete file from storage should be done
         return true
-    } else if (envConfig.media_drive == 'local') {
-        const res = await localDeleteMedia(folder, file)
+    } else if (mediaObj.drive == 'local') {
+        const res = await localDeleteMedia(folder, mediaObj.file.name)
         return res
     } else {
         return 'No Drive Configured'

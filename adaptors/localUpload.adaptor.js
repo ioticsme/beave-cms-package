@@ -4,7 +4,7 @@ var envConfig = require('../config/env.config.js')
 var Media = require('../model/Media.js')
 
 // Function to upload media to the local folder under the main app root
-const localUploadMedia = async (media, folder, file, req) => {
+const localUploadMedia = async (media, folder, file) => {
     try {
         // Log media and file objects
         // console.log('media (base64):', media) // Inspect base64 media content

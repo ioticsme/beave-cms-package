@@ -62,12 +62,13 @@ var ImageKit = require('imagekit')
 //     return uploaded
 // }
 // Upload function internally uses the ImageKit.io javascript SDK
-const imageKitUploadMedia = async (media, folder, file, req) => {
+const imageKitUploadMedia = async (media, folder, file, imagekitConfig) => {
     // SDK initialization
     const imagekit = new ImageKit({
-        publicKey: envConfig.imagekit.PUBLIC_KEY,
-        privateKey: envConfig.imagekit.PRIVATE_KEY,
-        urlEndpoint: envConfig.imagekit.URL,
+        publicKey: imagekitConfig.public_key,
+        privateKey: imagekitConfig.private_key,
+        urlEndpoint: imagekitConfig.url,
+        folder: imagekitConfig.folder,
     })
 
     // URL generation

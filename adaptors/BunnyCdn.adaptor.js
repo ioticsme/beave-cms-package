@@ -12,7 +12,7 @@ const STORAGE_ZONE_NAME = envConfig.bunny_cdn.STORAGE_ZONE_NAME
 const ACCESS_KEY = envConfig.bunny_cdn.API_KEY
 
 // Upload function internally uses the ImageKit.io javascript SDK
-const bunnyCDNUploadMedia = async (media, folder, file, req) => {
+const bunnyCDNUploadMedia = async (media, folder, file) => {
     try {
         // No region specified, defaults to Falkenstein (storage.bunnycdn.com)
         // const bunnyStorage = new BunnyStorage.default(

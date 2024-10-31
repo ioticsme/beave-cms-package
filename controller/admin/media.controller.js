@@ -152,7 +152,11 @@ const deleteMedia = async (req, res) => {
             _id: id,
         })
 
-        const deleteFile = await deleteMediaFile('media', media.file.name)
+        if (!media) {
+            return res.status(404).json({ error: 'Not Found' })
+        }
+
+        const deleteFile = await deleteMediaFile('media', media)
 
         if (deleteFile) {
             await Media.deleteOne({
