@@ -1,10 +1,6 @@
-const path = require('path')
-const express = require('express')
 const Joi = require('joi')
-const bcrypt = require('bcryptjs')
 
 const Config = require('../../model/Config')
-const { createFcmSwJS } = require('../../helper/Operations.helper')
 
 const list = async (req, res) => {
     const configs = await Config.findOne().select(
@@ -42,7 +38,10 @@ const save = async (req, res) => {
         cdry_cloud_name: Joi.string().optional().allow(null, ''),
         cdry_folder: Joi.string().optional().allow(null, ''),
         cdry_active: Joi.boolean().optional().allow(null, ''),
-        default_drive: Joi.string().optional().allow(null, '').valid('imagekit', 'cloudinary'),
+        default_drive: Joi.string()
+            .optional()
+            .allow(null, '')
+            .valid('imagekit', 'cloudinary'),
     })
 
     const validationResult = schema.validate(req.body, {
@@ -68,7 +67,8 @@ const save = async (req, res) => {
                     private_key: req.body.ik_private_key,
                     url: req.body.ik_url,
                     folder: req.body.ik_folder,
-                    default: req.body.default_drive == 'imagekit' ? true : false,
+                    default:
+                        req.body.default_drive == 'imagekit' ? true : false,
                     active: req.body.ik_active,
                 },
                 cloudinary: {
@@ -76,7 +76,8 @@ const save = async (req, res) => {
                     api_secret: req.body.cdry_api_secret,
                     cloud_name: req.body.cdry_cloud_name,
                     folder: req.body.cdry_folder,
-                    default: req.body.default_drive == 'cloudinary' ? true : false,
+                    default:
+                        req.body.default_drive == 'cloudinary' ? true : false,
                     active: req.body.cdry_active,
                 },
             },

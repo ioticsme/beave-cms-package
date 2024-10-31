@@ -10,10 +10,8 @@ const FileStore = require('session-file-store')(session)
 const Redis = require('ioredis')
 var redisStore = require('connect-redis')(session)
 
-const fs = require('fs')
 const path = require('path')
 var cors = require('cors')
-var createError = require('http-errors')
 const app = express()
 const rateLimit = require('express-rate-limit')
 const { format } = require('date-fns')
@@ -22,8 +20,6 @@ const { format } = require('date-fns')
 const setupSwagger = require('./swagger')
 setupSwagger(app)
 // END::Initiating Swagger APi Documentation
-
-const { createFcmSwJS } = require('./helper/Operations.helper')
 
 // BEGIN::Service Providers
 const {
@@ -143,9 +139,8 @@ mongoose
                 if (!data) {
                     try {
                         config = await Config.create({
-                            order_no: 1000,
                             general: {
-                                client_name: 'Iotics',
+                                client_name: envConfig.general.CLIENT_NAME,
                             },
                         })
                     } catch (error) {
@@ -159,24 +154,6 @@ mongoose
                             console.log(errors)
                         }
                     }
-                } else {
-                    // BEGIN:: Generating firebase-messaging-sw.js
-                    try {
-                        if (
-                            data.general.push_notification &&
-                            data.firebase?.admin_web
-                        ) {
-                            await createFcmSwJS(data.firebase)
-                        }
-                    } catch (err) {
-                        console.error(err)
-                    }
-                    // END:: Generating firebase-messaging-sw.js
-                }
-                globalModuleConfig = {
-                    has_slack: config?.general?.slack || false,
-                    firebaseConfig: config?.firebase || false,
-                    slack_admin_channel: config?.slack?.webhook_url,
                 }
             })
     })
@@ -199,7 +176,6 @@ app.get('/health', async (req, res) => {
 // BEGIN:: API Route Groups
 const adminRoutes = require('./routes/admin/admin.routes')
 const webAPIRoutes = require('./routes/api/web-api.routes')
-const { default: collect } = require('collect.js')
 // END:: API Route Groups
 
 // TODO::Below code is only for continuos development purpose. Should be removed on staging and production
