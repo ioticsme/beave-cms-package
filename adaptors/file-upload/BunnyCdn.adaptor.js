@@ -1,7 +1,7 @@
-var envConfig = require('../config/env.config.js')
+var envConfig = require('../../config/env.config.js')
 var https = require('https')
 var fs = require('fs')
-var Media = require('../model/Media.js')
+var Media = require('../../model/Media.js')
 var slugify = require('slugify')
 var axios = require('axios')
 

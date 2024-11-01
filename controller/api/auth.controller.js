@@ -138,18 +138,20 @@ const loginSubmit = async (req, res) => {
                     user_agent: req.user_agent_data,
                 }
 
-                await removeCache([`user-${req.source}-auth-${user._id}`])
-                if (token) {
-                    setCache(
-                        `user-${req.source}-auth-${user._id}`,
-                        token,
-                        60 *
+                if (envConfig.cache.ACTIVE) {
+                    await removeCache([`user-${req.source}-auth-${user._id}`])
+                    if (token) {
+                        setCache(
+                            `user-${req.source}-auth-${user._id}`,
+                            token,
                             60 *
-                            24 *
-                            (req.source == 'app'
-                                ? envConfig.cache.MOBILE_TOKEN_EXPIRY || 15
-                                : 1)
-                    )
+                                60 *
+                                24 *
+                                (req.source == 'app'
+                                    ? envConfig.cache.MOBILE_TOKEN_EXPIRY || 15
+                                    : 1)
+                        )
+                    }
                 }
             }
 
@@ -327,17 +329,19 @@ const socialLoginSubmit = async (req, res) => {
             }
         )
 
-        await removeCache([`user-${req.source}-auth-${user._id}`])
-        setCache(
-            `user-${req.source}-auth-${user._id}`,
-            token,
-            60 *
+        if (envConfig.cache.ACTIVE) {
+            await removeCache([`user-${req.source}-auth-${user._id}`])
+            setCache(
+                `user-${req.source}-auth-${user._id}`,
+                token,
                 60 *
-                24 *
-                (req.source == 'app'
-                    ? envConfig.cache.MOBILE_TOKEN_EXPIRY || 15
-                    : 1)
-        )
+                    60 *
+                    24 *
+                    (req.source == 'app'
+                        ? envConfig.cache.MOBILE_TOKEN_EXPIRY || 15
+                        : 1)
+            )
+        }
 
         return res.status(200).json({
             user: new UserResource(user).exec(),
@@ -804,9 +808,11 @@ const otpVerification = async (req, res) => {
                 }
             )
 
-            await removeCache([`user-web-auth-${user._id}`])
-            if (token) {
-                setCache(`user-web-auth-${user._id}`, token, 60 * 60 * 24)
+            if (envConfig.cache.ACTIVE) {
+                await removeCache([`user-web-auth-${user._id}`])
+                if (token) {
+                    setCache(`user-web-auth-${user._id}`, token, 60 * 60 * 24)
+                }
             }
 
             return res.status(200).json({
@@ -1273,7 +1279,9 @@ const verifyForgotOTP = async (req, res) => {
 }
 
 const logout = async (req, res) => {
-    await removeCache([`user-web-auth-${req.authPublicUser._id}`])
+    if (envConfig.cache.ACTIVE) {
+        await removeCache([`user-web-auth-${req.authPublicUser._id}`])
+    }
     return res.status(200).json({
         message: 'success',
     })

@@ -1,14 +1,16 @@
 const envConfig = require('../config/env.config')
 const Config = require('../model/Config')
-const { imageKitUploadMedia } = require('../adaptors/ImageKit.adaptor.js')
+const {
+    imageKitUploadMedia,
+} = require('../adaptors/file-upload/ImageKit.adaptor.js')
 const {
     bunnyCDNUploadMedia,
     bunnyCDNUploadMediaFromURL,
-} = require('../adaptors/BunnyCdn.adaptor.js')
+} = require('../adaptors/file-upload/BunnyCdn.adaptor.js')
 const {
     localUploadMedia,
     localDeleteMedia,
-} = require('../adaptors/localUpload.adaptor.js')
+} = require('../adaptors/file-upload/localUpload.adaptor.js')
 
 const getDriveConfig = async () => {
     const config = await Config.findOne()

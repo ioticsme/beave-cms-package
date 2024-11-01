@@ -245,7 +245,7 @@
 										<select class="form-select form-select-lg form-select-solid" data-control="select2" data-close-on-select="false" name="attachable_type" data-placeholder="Select a type" data-allow-clear="true" multiple="multiple">
 											{% for ct in contentTypes %}
 												{# <option value="{{ ct.slug }}" {{ 'selected' if contentType.allowed_type.find((at)=>at==ct.slug) }}>{{ ct.title }}</option> #}
-												<option value="{{ ct.slug }}">{{ ct.title }}</option>
+												<option value="{{ ct.slug }}" {{'selected' if contentType.allowed_type and ct.slug in contentType.allowed_type }}>{{ ct.title }}</option>
 											{% endfor %}
 										</select>
 										<div class="fv-plugins-message-container invalid-feedback" id="field-error-attachable_type"></div>

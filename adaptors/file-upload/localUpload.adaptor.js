@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs')
-var envConfig = require('../config/env.config.js')
-var Media = require('../model/Media.js')
+var envConfig = require('../../config/env.config.js')
+var Media = require('../../model/Media.js')
 
 // Function to upload media to the local folder under the main app root
 const localUploadMedia = async (media, folder, file) => {

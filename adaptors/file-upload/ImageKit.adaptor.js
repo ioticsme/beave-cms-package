@@ -1,5 +1,5 @@
-var envConfig = require('../config/env.config.js')
-var Media = require('../model/Media.js')
+var envConfig = require('../../config/env.config.js')
+var Media = require('../../model/Media.js')
 var ImageKit = require('imagekit')
 
 // const uploadMedia = async (media, folder, file) => {

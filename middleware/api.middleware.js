@@ -115,20 +115,24 @@ const UserAuthCheck = async (req, res, next) => {
             //     return res.status(401).json('Unauthorized')
             // }
 
-            const tokenExistInRedis = await getCache(
-                `user-${req.source}-auth-${decodedUser.data?.user?._id}`
-            )
-            if (!tokenExistInRedis || tokenExistInRedis != token[1]) {
-                return res.status(401).json({
-                    error: 'Unauthorized',
-                })
+            if (envConfig.cache.ACTIVE) {
+                const tokenExistInRedis = await getCache(
+                    `user-${req.source}-auth-${decodedUser.data?.user?._id}`
+                )
+                if (!tokenExistInRedis || tokenExistInRedis != token[1]) {
+                    return res.status(401).json({
+                        error: 'Unauthorized',
+                    })
+                }
             }
+
+            // TODO: User token data verification
             // find user
-            const cache_key = `semnox-brand-${req.brand.name.en}-${req.country.name.en}`
+            const cache_key = `user-brand-${req.brand.name.en}-${req.country.name.en}`
 
             const brandSettings = await getCache(cache_key)
                 .then(async (data) => {
-                    if (data) {
+                    if (envConfig.cache.ACTIVE && data) {
                         // console.log(JSON.parse(data))
                         return {
                             data: JSON.parse(data),
