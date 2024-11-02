@@ -1,6 +1,7 @@
 /src
 /gulp
 node_modules
+/public/admin/src
 /public/admin/node_modules
 /public/admin/package.json
 /public/admin/package-lock.json
