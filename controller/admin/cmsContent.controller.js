@@ -66,7 +66,7 @@ const detail = async (req, res) => {
         const contentDetail = await Content.findOne({
             _id: req.params.id,
             type_id: req.contentType._id,
-            // brand: session.brand._id,
+            brand: session.brand._id,
             country: session.brand.country,
         }).populate('author')
 
@@ -166,7 +166,7 @@ const edit = async (req, res) => {
         const contentDetail = await Content.findOne({
             _id: req.params.id,
             type_id: req.contentType._id,
-            // brand: session.brand._id,
+            brand: session.brand._id,
             country: session.brand.country,
         })
 
