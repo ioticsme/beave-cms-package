@@ -173,10 +173,19 @@ let buildBundleTask = (cb) => {
     return streams;
 };
 
+// New task to copy fonts from lineawesome
+// const copyFonts = (cb) => {
+//     return gulp.src(build.config.path.src +'/fonts/**/*') // Adjust the source path as necessary
+//         .pipe(gulp.dest('assets/plugins/global/fonts/')); // Destination path
+// };
+
 // don't clean assets if compile only 1 type
 if (!args.sass && !args.js && !args.media) {
     tasks.push(cleanTask);
 }
+
+// Add the copy lineawesome fonts task to the tasks array
+// tasks.push(copyFonts);
 
 if (typeof build.config.compile.rtl !== "undefined" && build.config.compile.rtl.enabled) {
     tasks.push(rtlTask);

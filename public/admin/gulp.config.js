@@ -136,22 +136,22 @@ const gulpConfig = {
 								"{$config.path.node_modules}/inputmask/dist/bindings/inputmask.binding.js",
 							],
 						},
-						tinyslider: {
-							styles: [
-								"{$config.path.node_modules}/tiny-slider/dist/tiny-slider.css",
-							],
-							scripts: [
-								"{$config.path.node_modules}/tiny-slider/dist/min/tiny-slider.js",
-							],
-						},
-						nouislider: {
-							styles: [
-								"{$config.path.node_modules}/nouislider/dist/nouislider.css",
-							],
-							scripts: [
-								"{$config.path.node_modules}/nouislider/dist/nouislider.js",
-							],
-						},
+						// tinyslider: {
+						// 	styles: [
+						// 		"{$config.path.node_modules}/tiny-slider/dist/tiny-slider.css",
+						// 	],
+						// 	scripts: [
+						// 		"{$config.path.node_modules}/tiny-slider/dist/min/tiny-slider.js",
+						// 	],
+						// },
+						// nouislider: {
+						// 	styles: [
+						// 		"{$config.path.node_modules}/nouislider/dist/nouislider.css",
+						// 	],
+						// 	scripts: [
+						// 		"{$config.path.node_modules}/nouislider/dist/nouislider.js",
+						// 	],
+						// },
 						autosize: {
 							scripts: [
 								"{$config.path.node_modules}/autosize/dist/autosize.js",
@@ -194,14 +194,14 @@ const gulpConfig = {
 								"{$config.path.node_modules}/@yaireo/tagify/dist/tagify.js",
 							],
 						},
-						toastr: {
-							styles: [
-								"{$config.path.common_src}/plugins/toastr/build/toastr.css",
-							],
-							scripts: [
-								"{$config.path.common_src}/plugins/toastr/build/toastr.min.js",
-							],
-						},
+						// toastr: {
+						// 	styles: [
+						// 		"{$config.path.common_src}/plugins/toastr/build/toastr.css",
+						// 	],
+						// 	scripts: [
+						// 		"{$config.path.common_src}/plugins/toastr/build/toastr.min.js",
+						// 	],
+						// },
 						apexcharts: {
 							styles: [
 								"{$config.path.node_modules}/apexcharts/dist/apexcharts.css",
@@ -215,11 +215,11 @@ const gulpConfig = {
 								"{$config.path.node_modules}/chart.js/dist/chart.umd.js",
 							],
 						},
-						countupjs: {
-							scripts: [
-								"{$config.path.node_modules}/countup.js/dist/countUp.umd.js",
-							],
-						},
+						// countupjs: {
+						// 	scripts: [
+						// 		"{$config.path.node_modules}/countup.js/dist/countUp.umd.js",
+						// 	],
+						// },
 						sweetalert2: {
 							styles: [
 								"{$config.path.node_modules}/sweetalert2/dist/sweetalert2.css",
@@ -230,42 +230,42 @@ const gulpConfig = {
 								"{$config.path.common_src}/js/vendors/plugins/sweetalert2.init.js",
 							],
 						},
-						keenicons: {
-							styles: [
-								"{$config.path.common_src}/plugins/keenicons/duotone/style.css",
-								"{$config.path.common_src}/plugins/keenicons/outline/style.css",
-								"{$config.path.common_src}/plugins/keenicons/solid/style.css",
-							],
-							fonts: [
-								"{$config.path.common_src}/plugins/keenicons/duotone/fonts/**",
-								"{$config.path.common_src}/plugins/keenicons/outline/fonts/**",
-								"{$config.path.common_src}/plugins/keenicons/solid/fonts/**",
-							],
-						},
-						"line-awesome": {
-							styles: [
-								"{$config.path.node_modules}/line-awesome/dist/line-awesome/css/line-awesome.css",
-							],
-							fonts: [
-								"{$config.path.node_modules}/line-awesome/dist/line-awesome/fonts/**",
-							],
-						},
-						"bootstrap-icons": {
-							styles: [
-								"{$config.path.node_modules}/bootstrap-icons/font/bootstrap-icons.css",
-							],
-							fonts: [
-								"{$config.path.node_modules}/bootstrap-icons/font/fonts/**",
-							],
-						},
-						"@fortawesome": {
-							styles: [
-								"{$config.path.node_modules}/@fortawesome/fontawesome-free/css/all.min.css",
-							],
-							fonts: [
-								"{$config.path.node_modules}/@fortawesome/fontawesome-free/webfonts/**",
-							],
-						},
+						// keenicons: {
+						// 	styles: [
+						// 		"{$config.path.common_src}/plugins/keenicons/duotone/style.css",
+						// 		"{$config.path.common_src}/plugins/keenicons/outline/style.css",
+						// 		"{$config.path.common_src}/plugins/keenicons/solid/style.css",
+						// 	],
+						// 	fonts: [
+						// 		"{$config.path.common_src}/plugins/keenicons/duotone/fonts/**",
+						// 		"{$config.path.common_src}/plugins/keenicons/outline/fonts/**",
+						// 		"{$config.path.common_src}/plugins/keenicons/solid/fonts/**",
+						// 	],
+						// },
+						// "line-awesome": {
+						// 	styles: [
+						// 		"{$config.path.node_modules}/line-awesome/dist/line-awesome/css/line-awesome.css",
+						// 	],
+						// 	fonts: [
+						// 		"{$config.path.node_modules}/line-awesome/dist/line-awesome/fonts/**",
+						// 	],
+						// },
+						// "bootstrap-icons": {
+						// 	styles: [
+						// 		"{$config.path.node_modules}/bootstrap-icons/font/bootstrap-icons.css",
+						// 	],
+						// 	fonts: [
+						// 		"{$config.path.node_modules}/bootstrap-icons/font/fonts/**",
+						// 	],
+						// },
+						// "@fortawesome": {
+						// 	styles: [
+						// 		"{$config.path.node_modules}/@fortawesome/fontawesome-free/css/all.min.css",
+						// 	],
+						// 	fonts: [
+						// 		"{$config.path.node_modules}/@fortawesome/fontawesome-free/webfonts/**",
+						// 	],
+						// },
 					},
 					override: {
 						styles: ["{$config.path.src}/sass/plugins.scss"],
@@ -290,32 +290,32 @@ const gulpConfig = {
 							"{$config.dist}/plugins/custom/draggable/draggable.bundle.js",
 					},
 				},
-				prismjs: {
-					src: {
-						styles: [
-							"{$config.path.node_modules}/prism-themes/themes/prism-shades-of-purple.css",
-						],
-						scripts: [
-							"{$config.path.node_modules}/prismjs/prism.js",
-							"{$config.path.node_modules}/prismjs/components/prism-markup.js",
-							"{$config.path.node_modules}/prismjs/components/prism-markup-templating.js",
-							"{$config.path.node_modules}/prismjs/components/prism-bash.js",
-							"{$config.path.node_modules}/prismjs/components/prism-javascript.js",
-							"{$config.path.node_modules}/prismjs/components/prism-scss.js",
-							"{$config.path.node_modules}/prismjs/components/prism-css.js",
-							"{$config.path.node_modules}/prismjs/components/prism-php.js",
-							"{$config.path.node_modules}/prismjs/components/prism-php-extras.js",
-							"{$config.path.node_modules}/prismjs/components/prism-python.js",
-							"{$config.path.node_modules}/prismjs/components/prism-aspnet.js",
-							"{$config.path.node_modules}/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.js",
-							"{$config.path.common_src}/js/vendors/plugins/prism.init.js",
-						],
-					},
-					dist: {
-						styles: "{$config.dist}/plugins/custom/prismjs/prismjs.bundle.css",
-						scripts: "{$config.dist}/plugins/custom/prismjs/prismjs.bundle.js",
-					},
-				},
+				// prismjs: {
+				// 	src: {
+				// 		styles: [
+				// 			"{$config.path.node_modules}/prism-themes/themes/prism-shades-of-purple.css",
+				// 		],
+				// 		scripts: [
+				// 			"{$config.path.node_modules}/prismjs/prism.js",
+				// 			"{$config.path.node_modules}/prismjs/components/prism-markup.js",
+				// 			"{$config.path.node_modules}/prismjs/components/prism-markup-templating.js",
+				// 			"{$config.path.node_modules}/prismjs/components/prism-bash.js",
+				// 			"{$config.path.node_modules}/prismjs/components/prism-javascript.js",
+				// 			"{$config.path.node_modules}/prismjs/components/prism-scss.js",
+				// 			"{$config.path.node_modules}/prismjs/components/prism-css.js",
+				// 			"{$config.path.node_modules}/prismjs/components/prism-php.js",
+				// 			"{$config.path.node_modules}/prismjs/components/prism-php-extras.js",
+				// 			"{$config.path.node_modules}/prismjs/components/prism-python.js",
+				// 			"{$config.path.node_modules}/prismjs/components/prism-aspnet.js",
+				// 			"{$config.path.node_modules}/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.js",
+				// 			"{$config.path.common_src}/js/vendors/plugins/prism.init.js",
+				// 		],
+				// 	},
+				// 	dist: {
+				// 		styles: "{$config.dist}/plugins/custom/prismjs/prismjs.bundle.css",
+				// 		scripts: "{$config.dist}/plugins/custom/prismjs/prismjs.bundle.js",
+				// 	},
+				// },
 				datatables: {
 					src: {
 						styles: [
@@ -370,40 +370,40 @@ const gulpConfig = {
 							"{$config.dist}/plugins/custom/datatables/datatables.bundle.js",
 					},
 				},
-				leaflet: {
-					src: {
-						styles: [
-							"{$config.path.node_modules}/leaflet/dist/leaflet.css",
-							"{$config.path.node_modules}/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css",
-						],
-						scripts: [
-							"{$config.path.node_modules}/leaflet/dist/leaflet.js",
-							"{$config.path.node_modules}/esri-leaflet/dist/esri-leaflet.js",
-							"{$config.path.node_modules}/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.js",
-						],
-					},
-					dist: {
-						styles: "{$config.dist}/plugins/custom/leaflet/leaflet.bundle.css",
-						scripts: "{$config.dist}/plugins/custom/leaflet/leaflet.bundle.js",
-					},
-				},
-				fslightbox: {
-					src: {
-						scripts: ["{$config.path.node_modules}/fslightbox/index.js"],
-					},
-					dist: {
-						scripts:
-							"{$config.dist}/plugins/custom/fslightbox/fslightbox.bundle.js",
-					},
-				},
-				typedjs: {
-					src: {
-						scripts: ["{$config.path.node_modules}/typed.js/dist/typed.umd.js"],
-					},
-					dist: {
-						scripts: "{$config.dist}/plugins/custom/typedjs/typedjs.bundle.js",
-					},
-				},
+				// leaflet: {
+				// 	src: {
+				// 		styles: [
+				// 			"{$config.path.node_modules}/leaflet/dist/leaflet.css",
+				// 			"{$config.path.node_modules}/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css",
+				// 		],
+				// 		scripts: [
+				// 			"{$config.path.node_modules}/leaflet/dist/leaflet.js",
+				// 			"{$config.path.node_modules}/esri-leaflet/dist/esri-leaflet.js",
+				// 			"{$config.path.node_modules}/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.js",
+				// 		],
+				// 	},
+				// 	dist: {
+				// 		styles: "{$config.dist}/plugins/custom/leaflet/leaflet.bundle.css",
+				// 		scripts: "{$config.dist}/plugins/custom/leaflet/leaflet.bundle.js",
+				// 	},
+				// },
+				// fslightbox: {
+				// 	src: {
+				// 		scripts: ["{$config.path.node_modules}/fslightbox/index.js"],
+				// 	},
+				// 	dist: {
+				// 		scripts:
+				// 			"{$config.dist}/plugins/custom/fslightbox/fslightbox.bundle.js",
+				// 	},
+				// },
+				// typedjs: {
+				// 	src: {
+				// 		scripts: ["{$config.path.node_modules}/typed.js/dist/typed.umd.js"],
+				// 	},
+				// 	dist: {
+				// 		scripts: "{$config.dist}/plugins/custom/typedjs/typedjs.bundle.js",
+				// 	},
+				// },
 				fullcalendar: {
 					src: {
 						styles: ["{$config.path.node_modules}/fullcalendar/main.min.css"],
@@ -488,30 +488,30 @@ const gulpConfig = {
 							"{$config.dist}/plugins/custom/ckeditor/ckeditor-document.bundle.js",
 					},
 				},
-				cropperjs: {
-					src: {
-						styles: ["{$config.path.node_modules}/cropperjs/dist/cropper.css"],
-						scripts: ["{$config.path.node_modules}/cropperjs/dist/cropper.js"],
-					},
-					dist: {
-						styles: "{$config.dist}/plugins/custom/cropper/cropper.bundle.css",
-						scripts: "{$config.dist}/plugins/custom/cropper/cropper.bundle.js",
-					},
-				},
-				jkanban: {
-					src: {
-						styles: [
-							"{$config.path.node_modules}/jkanban/dist/jkanban.min.css",
-						],
-						scripts: [
-							"{$config.path.node_modules}/jkanban/dist/jkanban.min.js",
-						],
-					},
-					dist: {
-						styles: "{$config.dist}/plugins/custom/jkanban/jkanban.bundle.css",
-						scripts: "{$config.dist}/plugins/custom/jkanban/jkanban.bundle.js",
-					},
-				},
+				// cropperjs: {
+				// 	src: {
+				// 		styles: ["{$config.path.node_modules}/cropperjs/dist/cropper.css"],
+				// 		scripts: ["{$config.path.node_modules}/cropperjs/dist/cropper.js"],
+				// 	},
+				// 	dist: {
+				// 		styles: "{$config.dist}/plugins/custom/cropper/cropper.bundle.css",
+				// 		scripts: "{$config.dist}/plugins/custom/cropper/cropper.bundle.js",
+				// 	},
+				// },
+				// jkanban: {
+				// 	src: {
+				// 		styles: [
+				// 			"{$config.path.node_modules}/jkanban/dist/jkanban.min.css",
+				// 		],
+				// 		scripts: [
+				// 			"{$config.path.node_modules}/jkanban/dist/jkanban.min.js",
+				// 		],
+				// 	},
+				// 	dist: {
+				// 		styles: "{$config.dist}/plugins/custom/jkanban/jkanban.bundle.css",
+				// 		scripts: "{$config.dist}/plugins/custom/jkanban/jkanban.bundle.js",
+				// 	},
+				// },
 				flot: {
 					src: {
 						scripts: [
@@ -529,23 +529,23 @@ const gulpConfig = {
 							"{$config.dist}/plugins/custom/flotcharts/flotcharts.bundle.js",
 					},
 				},
-				vistimeline: {
-					src: {
-						styles: [
-							"{$config.path.node_modules}/vis-timeline/dist/vis-timeline-graph2d.css",
-						],
-						scripts: [
-							"{$config.path.node_modules}/vis-timeline/standalone/umd/vis-timeline-graph2d.min.js",
-							"{$config.path.node_modules}/handlebars/dist/handlebars.min.js",
-						],
-					},
-					dist: {
-						styles:
-							"{$config.dist}/plugins/custom/vis-timeline/vis-timeline.bundle.css",
-						scripts:
-							"{$config.dist}/plugins/custom/vis-timeline/vis-timeline.bundle.js",
-					},
-				},
+				// vistimeline: {
+				// 	src: {
+				// 		styles: [
+				// 			"{$config.path.node_modules}/vis-timeline/dist/vis-timeline-graph2d.css",
+				// 		],
+				// 		scripts: [
+				// 			"{$config.path.node_modules}/vis-timeline/standalone/umd/vis-timeline-graph2d.min.js",
+				// 			"{$config.path.node_modules}/handlebars/dist/handlebars.min.js",
+				// 		],
+				// 	},
+				// 	dist: {
+				// 		styles:
+				// 			"{$config.dist}/plugins/custom/vis-timeline/vis-timeline.bundle.css",
+				// 		scripts:
+				// 			"{$config.dist}/plugins/custom/vis-timeline/vis-timeline.bundle.js",
+				// 	},
+				// },
 				jstree: {
 					src: {
 						styles: [
