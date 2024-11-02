@@ -1,6 +1,9 @@
 /src
 /gulp
 node_modules
+/public/admin/gulp
+/public/admin/gulp.config.js
+/public/admin/gulpfile.js
 /public/admin/src
 /public/admin/node_modules
 /public/admin/package.json
