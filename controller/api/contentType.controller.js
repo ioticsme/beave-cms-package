@@ -290,6 +290,7 @@ const list = async (req, res) => {
         const contentType = await ContentType.findOne({
             active: true,
             slug: req.params.contentType,
+            brand: { $in: [req.brand._id] },
         })
 
         if (!contentType) {
@@ -318,6 +319,7 @@ const list = async (req, res) => {
                     liveData = await Content.find({
                         type_id: mongoose.Types.ObjectId(contentType?._id),
                         country: mongoose.Types.ObjectId(req.country._id),
+                        brand: mongoose.Types.ObjectId(req.brand._id),
                         $or: [
                             { status: 'published' },
                             {
@@ -467,6 +469,7 @@ const detail = async (req, res) => {
         const contentType = await ContentType.findOne({
             active: true,
             slug: req.params.contentType,
+            brand: { $in: [req.brand._id] },
         })
 
         if (!contentType) {
@@ -481,6 +484,7 @@ const detail = async (req, res) => {
                     let liveData = await Content.findOne({
                         type_id: mongoose.Types.ObjectId(contentType?._id),
                         country: mongoose.Types.ObjectId(req.country._id),
+                        brand: mongoose.Types.ObjectId(req.brand._id),
                         slug: req.params.slug,
                         $or: [{ status: 'published' }, { status: 'scheduled' }],
                     })
@@ -501,6 +505,7 @@ const detail = async (req, res) => {
                             .flat()
                         const attached_contents_db_data = await Content.find({
                             _id: { $in: attach_content_ids },
+                            brand: req.brand._id,
                         }).select('-meta')
                         const mapped_attached_data = ContentResource.collection(
                             attached_contents_db_data
@@ -568,6 +573,7 @@ const generateStaticPath = async (req, res) => {
         const contentType = await ContentType.findOne({
             active: true,
             slug: req.params.contentType,
+            brand: { $in: [req.brand._id] },
         })
 
         if (!contentType) {
@@ -576,7 +582,7 @@ const generateStaticPath = async (req, res) => {
 
         const contents = await Content.find({
             type_id: contentType._id,
-            // brand: req.brand._id,
+            //brand: req.brand._id,
             // country: req.country._id,
             published: true,
         })

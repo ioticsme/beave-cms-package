@@ -15,49 +15,6 @@ const SettingsSchema = new mongoose.Schema(
             type: Schema.ObjectId,
             ref: Country,
         },
-        author: {
-            type: Schema.ObjectId,
-            ref: Admin,
-        },
-        cache_expiry_time: {
-            type: String,
-        },
-        ecommerce_settings: {
-            invoice_address: {
-                en: { type: String, default: null },
-                ar: { type: String, default: null },
-            },
-            terms_and_conditions: {
-                en: { type: String, default: null },
-                ar: { type: String, default: null },
-            },
-            footer_text: {
-                en: { type: String, default: null },
-                ar: { type: String, default: null },
-            },
-            trn_number: {
-                type: String,
-                default: null,
-            },
-            vat_percentage: {
-                type: Double,
-                default: 5,
-            },
-            frontend_url: {
-                type: String,
-                default: 'https://funcity.ae',
-            },
-            free_toy_available: {
-                type: Boolean,
-            },
-            free_toy_threshold: {
-                type: Double,
-            },
-        },
-        pam_settings: {
-            location_id: { type: Number, default: null },
-            zone_id: { type: Number, default: null }, 
-        },
         notification_settings: {
             mailgun: {
                 from: {

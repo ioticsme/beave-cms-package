@@ -19,15 +19,16 @@ const BrandWithCountryCheck = async (req, res, next) => {
             ? req.headers?.source
             : 'web'
 
-        // Splitting code and lang from req.headers.locale
         const countryCode =
             req.query.country?.toLowerCase() ||
             req.headers.country?.toLowerCase()
 
+        // TODO: Cache countries
         const country = countryCode
             ? await Country.findOne({ code: countryCode })
             : await Country.findOne()
 
+        // TODO: Cache brands
         const brand = await Brand.aggregate([
             {
                 $unwind: '$domains',
@@ -39,21 +40,20 @@ const BrandWithCountryCheck = async (req, res, next) => {
             },
         ])
 
+        if (!brand?.length) {
+            return res.status(400).json({ error: 'Invalid Brand' })
+        }
+
         let lang
         if (req.query.lang?.toLowerCase()) {
             lang = req.query.lang?.toLowerCase()
         } else if (req.headers.lang?.toLowerCase()) {
             lang = req.headers.lang?.toLowerCase()
         } else {
-            const language = await Language.findOne({
-                is_default: true,
-            })
+            const language = await Language.findOne().sort({ is_default: -1 }) // Sort by is_default in descending order, so true (1) comes first
             lang = language.prefix
         }
 
-        if (!brand?.length) {
-            return res.status(400).json({ error: 'Invalid Brand' })
-        }
         if (brand[0]?.domains?.maintenance_mode) {
             return res
                 .status(503)
