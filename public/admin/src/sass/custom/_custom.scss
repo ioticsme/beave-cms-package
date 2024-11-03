@@ -1265,6 +1265,8 @@ $border-color_6: rgb(75 85 99 / var(--tw-border-opacity));
 //     }
 // }
 #toast-container {
+    bottom: 0;
+    right: 0;
     & .toast-error {
         background-color: red;
     }
