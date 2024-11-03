@@ -182,6 +182,7 @@
 																					<input disabled type="hidden" class="media_url_field beave-cms-form-field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
 																					<input disabled type="hidden" class="media_title_field beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
 																					<input disabled type="hidden" class="media_alt_text_field beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
+																					<input disabled type="hidden" class="media_local_drive_field beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[local_drive][]]]" value="{{fieldValue.local_drive}}">
 																					<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																				</span>
 																			{% elif cf.field_type === 'date' %}
@@ -244,6 +245,7 @@
 																						<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
 																						<input type="hidden" class="media_title_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
 																						<input type="hidden" class="media_alt_text_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
+																						<input type="hidden" class="media_local_drive_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[local_drive][]]]" value="{{fieldValue.local_drive}}">
 																						<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																					</span>
 																				{% elif cf.field_type === 'date' %}
@@ -299,6 +301,7 @@
 																			{% elif cf.field_type === 'article_editor' %}
 																				<textarea class="form-control form-control-solid article_editor_field" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
 																			{% elif cf.field_type === 'media' %}
+																				{{fieldValue.local_drive}}
 																				<span class='media-uploader-field'>
 																					<span class="media_preview">
 																						<span class="preview-holder">
@@ -313,6 +316,7 @@
 																					<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url]]]" value="{{fieldValue.url}}">
 																					<input type="hidden" class="media_title_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title]]]" value="{{fieldValue.title}}">
 																					<input type="hidden" class="media_alt_text_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text]]]" value="{{fieldValue.alt_text}}">
+																					<input type="hidden" class="media_local_drive_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[local_drive]]]" value="{{fieldValue.local_drive}}">
 																					<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																				</span>
 																			{% elif cf.field_type === 'date' %}
@@ -385,6 +389,7 @@
 																							<input disabled type="hidden" class="media_url_field beave-cms-form-field" id="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
 																							<input disabled type="hidden" class="media_title_field beave-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
 																							<input disabled type="hidden" class="media_alt_text_field beave-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
+																							<input disabled type="hidden" class="media_local_drive_field beave-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[local_drive][]]]" value="{{fieldValue.local_drive}}">
 																							<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																						</span>
 																					{% elif cf.field_type === 'date' %}
@@ -445,6 +450,7 @@
 																								<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
 																								<input type="hidden" class="media_title_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
 																								<input type="hidden" class="media_alt_text_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
+																								<input type="hidden" class="media_local_drive_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[local_drive][]]]" value="{{fieldValue.local_drive}}">
 																								<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																							</span>
 																						{% elif cf.field_type === 'date' %}
@@ -511,6 +517,7 @@
 																						<input type="hidden" class="media_url_field" id="{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[url]]]" value="{{ fieldValue.url }}">
 																						<input type="hidden" class="media_title_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[title]]]" value="{{fieldValue.title}}">
 																						<input type="hidden" class="media_alt_text_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[alt_text]]]" value="{{fieldValue.alt_text}}">
+																						<input type="hidden" class="media_local_drive_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[local_drive]]]" value="{{fieldValue.local_drive}}">
 																						<a class="btn btn-success media-uploader-modal-btn" data-field="{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																					</span>
 																				{% elif cf.field_type === 'date' %}
@@ -586,6 +593,7 @@
 																							<input type="hidden" class="media_url_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][url]" value="{{ metaFieldValue[url] }}">
 																							<input type="hidden" class="media_title_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][title]" value="{{ metaFieldValue[title] }}">
 																							<input type="hidden" class="media_alt_text_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][alt_text]" value="{{ metaFieldValue[alt_text] }}">
+																							<input type="hidden" class="media_local_drive_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][local_drive]" value="{{ metaFieldValue[local_drive] }}">
 																							<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																						</span>
 																					{% else %}

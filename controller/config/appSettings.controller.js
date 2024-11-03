@@ -88,7 +88,7 @@ const save = async (req, res) => {
             // url: `/config/app-settingss`,
         })
     } catch (e) {
-        // console.log(e)
+        console.log(e.errors)
         if (e.errors) {
             return res.status(422).json({
                 details: e.errors,

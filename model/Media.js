@@ -14,6 +14,7 @@ const MediaSchema = new mongoose.Schema(
         meta: {
             title: String,
             alt_text: String,
+            local_drive: Boolean,
         },
         response: {
             type: Object,

@@ -501,6 +501,7 @@ const saveDefaultContent = async (req, res) => {
                                         url: Joi.string()${required}.label('${field.field_label}'),
                                         title: Joi.string().allow(null, ''),
                                         alt_text: Joi.string().allow(null, ''),
+                                        local_drive: Joi.boolean().allow(null, ''),
                                     })`
                                 ),
                             })
@@ -575,6 +576,10 @@ const saveDefaultContent = async (req, res) => {
                                         req.body[lang]?.[group.row_name]?.[
                                             field.field_name
                                         ]?.['alt_text']?.[i],
+                                    local_drive:
+                                        req.body[lang]?.[group.row_name]?.[
+                                            field.field_name
+                                        ]?.['local_drive']?.[i] ?? undefined,
                                 }
                                 mediaArray.push(item) // Add the object to the array
                             }
@@ -589,6 +594,7 @@ const saveDefaultContent = async (req, res) => {
                                         url: Joi.string()${required}.label('${field.field_label}'),
                                         title: Joi.string().allow(null, ''),
                                         alt_text: Joi.string().allow(null, ''),
+                                        local_drive: Joi.boolean().allow(null, ''),
                                     }))`
                                 ),
                             })

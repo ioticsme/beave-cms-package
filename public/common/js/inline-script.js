@@ -48,7 +48,10 @@ if (mediaManagementPanel) {
                                 element.url
                             }?tr=w-150,h-150" data-mediaTitle="${
                                 element.meta?.title || ''
-                            }" data-altText="${element.meta?.alt_text || ''}" />
+                            }" data-altText="${element.meta?.alt_text || ''}"
+                                data-localDrive="${
+                                    element.meta?.local_drive || ''
+                                }" />
                                 </div>`
                         })
                         mediaList = `${mediaList}</div>`
@@ -150,6 +153,7 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
     document.querySelector('#media-modal-selected-media-url').value = ''
     document.querySelector('#media-modal-selected-media-title').value = ''
     document.querySelector('#media-modal-selected-media-alt').value = ''
+    document.querySelector('#media-modal-selected-media-drive').value = ''
     document.querySelector('#media-modal-selected-preview-img').innerHTML = ''
     axios
         .get('/admin/cms/media/json')
@@ -165,7 +169,9 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
                     element.url
                 }?tr=w-150,h-150" data-mediaTitle="${
                     element.meta?.title || ''
-                }" data-altText="${element.meta?.alt_text || ''}" />
+                }" data-altText="${
+                    element.meta?.alt_text || ''
+                }" data-localDrive="${element.meta?.local_drive || ''}" />
                 </div>`
             })
             mediaList = `${mediaList}</div>`
@@ -186,6 +192,7 @@ document
         var mediaUrl = event.target.getAttribute('data-mediaUrl')
         var mediaTitle = event.target.getAttribute('data-mediaTitle')
         var altText = event.target.getAttribute('data-altText')
+        var localDrive = event.target.getAttribute('data-localDrive')
         // console.log(attachButtonId)
         if (mediaUrl) {
             document.querySelector(
@@ -198,6 +205,8 @@ document
                 mediaTitle
             document.querySelector('#media-modal-selected-media-alt').value =
                 altText
+            document.querySelector('#media-modal-selected-media-drive').value =
+                localDrive
 
             // Do something when a list item is clicked, such as displaying its text content
             // console.log(attachButtonId)
@@ -219,6 +228,9 @@ document
         var selectedMediaAltText = document.querySelector(
             '#media-modal-selected-media-alt'
         ).value
+        var selectedMediaLocalDrive = document.querySelector(
+            '#media-modal-selected-media-drive'
+        ).value
         if (selectedMediaUrl) {
             $(mediaModal).modal('hide')
             document
@@ -233,6 +245,10 @@ document
                 .querySelector(`#${attachButtonId}`)
                 .parentElement.querySelector('.media_alt_text_field').value =
                 selectedMediaAltText
+            document
+                .querySelector(`#${attachButtonId}`)
+                .parentElement.querySelector('.media_local_drive_field').value =
+                selectedMediaLocalDrive
             const imgHolderParent = document
                 .querySelector(`#${attachButtonId}`)
                 .parentElement.querySelector(`.media_preview`)

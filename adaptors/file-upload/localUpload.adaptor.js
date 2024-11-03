@@ -48,6 +48,9 @@ const localUploadMedia = async (media, folder, file) => {
             file: {
                 name: file.originalname.toLowerCase(),
             },
+            meta: {
+                local_drive: true,
+            },
             file_type: fileType,
         })
 
@@ -80,7 +83,7 @@ const localDeleteMedia = async (folder, fileName) => {
             return true
         } else {
             console.log(`File not found: ${filePath}`)
-            return false
+            return true
         }
     } catch (error) {
         console.log('File Deletion Error:', error)
