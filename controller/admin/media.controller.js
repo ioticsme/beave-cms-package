@@ -132,9 +132,13 @@ const ckEditorFileUpload = async (req, res) => {
             error: 'Some error occurred while uploading the image',
         })
     }
+    let baseUrl = ''
+    if (media.drive == 'local') {
+        baseUrl = `${req.protocol}://${req.headers.host}/`
+    }
     return res.status(200).json({
         urls: {
-            default: media.url,
+            default: `${baseUrl}${media.url}`,
         },
     }) // Return uploaded media URL
 }
