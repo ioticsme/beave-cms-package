@@ -1,98 +1,108 @@
-const User = require('../../model/User')
-const AjaxPaginationCustomerResource = require('../../resources/api/ajaxPaginationCustomer.resource')
-const envConfig = require('./config/env.config')
+const User = require('../../model/User') // Import the User model for database operations
+const AjaxPaginationCustomerResource = require('../../resources/api/ajaxPaginationCustomer.resource') // Import the resource for handling AJAX pagination
 
-let session
+let session // Declare session variable for storing user session data
 
+// Function to render the customer listing page
 const list = async (req, res) => {
     try {
-        // const users = await User.find()
-        // res.render(`admin-njk/ecommerce/customers/listing`, { data: users })
+        // Render the customer listing page using AJAX for dynamic data loading
         res.render(`admin-njk/ecommerce/customers/listing-ajax`)
     } catch (error) {
+        // If an error occurs, render a generic error page
         return res.render(`admin-njk/app-error-500`)
     }
 }
 
+// Function to handle fetching customers with AJAX pagination
 const customers = async (req, res) => {
     try {
-        session = req.authUser
+        session = req.authUser // Store the authenticated user session
 
+        // Extract pagination and sorting parameters from the request query
         let { draw, start, length } = req.query
-        let page = start / length + 1 || 1
-        let limit = req.query.length ? req.query.length : 25
+        let page = start / length + 1 || 1 // Calculate the current page
+        let limit = req.query.length ? req.query.length : 25 // Set the limit for items per page
 
-        let columns = req.query.columns
-        let dateColumn = columns?.at(5)
-        let statusColumn = columns?.at(3)
-
-        let sortColumn = req.query.order?.[0]?.column
-        let sortDirection = req.query.order?.[0]?.dir
-        let selectedColumn = columns?.at(sortColumn)
+        let columns = req.query.columns // Get the columns from the request
+        let sortColumn = req.query.order?.[0]?.column // Determine which column to sort by
+        let sortDirection = req.query.order?.[0]?.dir // Determine sort direction (asc or desc)
+        let selectedColumn = columns?.at(sortColumn) // Get the selected column object for sorting
         let sortOrder = {
-            [selectedColumn?.data]: sortDirection == 'desc' ? -1 : 1,
+            [selectedColumn?.data]: sortDirection == 'desc' ? -1 : 1, // Prepare the sort order for the query
         }
 
-        // Pagination options
+        // Pagination options for the database query
         const options = {
             page,
             limit,
             sort: sortOrder,
         }
-        // Query to fetch orders
+
+        // Initialize the query object for filtering results
         let query = {}
-        // if search order is active
+        // If a search term is provided, modify the query to search by first name
         if (req.query?.search?.value) {
             query = {
                 ...query,
-                // $text: {
-                //     $search: req.query?.search?.value?.toLowerCase(),
-                // },
                 first_name: {
-                    $regex: `.*${req.query?.search?.value?.toLowerCase()}.*`,
-                    $options: 'i',
+                    $regex: `.*${req.query?.search?.value?.toLowerCase()}.*`, // Use regex for case-insensitive search
+                    $options: 'i', // Enable case-insensitivity in the regex search
                 },
             }
         }
 
-        // Fetching orders with pagination
+        // Fetch the total count of customers matching the query
         const customersCount = await User.find(query).count()
+        // Fetch the customers with pagination applied
         const customers = await User.paginate(query, options)
 
-        customers.draw = draw
-        customers.totalItems = customersCount
+        // Prepare the response object for AJAX
+        customers.draw = draw // Add the draw parameter for DataTables
+        customers.totalItems = customersCount // Add total count of items
 
+        // Return the formatted customer data as JSON
         return res
             .status(200)
             .json(new AjaxPaginationCustomerResource(customers).exec())
     } catch (error) {
-        console.log(error)
+        console.log(error) // Log the error for debugging
+        // Return a generic error response
         return res.status(500).json({ error: 'Something went wrong' })
     }
 }
 
+// Function to render the details of a specific customer
 const detail = async (req, res) => {
     try {
+        // Find the user by ID and populate their associated cards
         const user = await User.findOne({ _id: req.params.id }).populate(
             'cards'
         )
+        // Render the user detail page
         res.render(`admin-njk/ecommerce/customers/details`, { user })
     } catch (error) {
+        // If an error occurs, render a generic error page
         return res.render(`admin-njk/app-error-500`)
     }
 }
 
+// Function to toggle the active status of a user
 const activateUser = async (req, res) => {
     try {
+        // Find the user by ID
         const user = await User.findOne({ _id: req.params.id })
-        user.active = !user.active
-        await user.save()
+        user.active = !user.active // Toggle the active status
+        await user.save() // Save the updated user status
+        // Redirect back to the customer listing page
         res.redirect(`/admin/ecommerce/customers`)
     } catch (error) {
+        // If an error occurs, render a generic error page
         return res.render(`admin-njk/app-error-500`)
     }
 }
 
+// Export the functions for use in other modules
 module.exports = {
     list,
     customers,

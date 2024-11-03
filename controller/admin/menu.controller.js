@@ -5,47 +5,54 @@ const Menu = require('../../model/Menu')
 const collect = require('collect.js')
 const { Types } = require('mongoose')
 
+// Function to list all menu items based on the authenticated user's brand and country
 const listMenu = async (req, res) => {
     try {
+        // Find menus associated with the user's brand and country, sorted by position
         const menus = await Menu.find({
             brand: req.authUser?.brand?._id,
             country: req.authUser?.brand?.country,
         }).sort({ position: 1 })
+
+        // Render the menu listing page and pass the found menus
         res.render(`admin-njk/cms/menu/listing`, { menulist: menus })
     } catch (e) {
         console.log(e)
-        return res.render(`admin-njk/app-error-500`)
+        return res.render(`admin-njk/app-error-500`) // Handle errors by rendering error page
     }
 }
 
+// Function to add a new menu section
 const addSection = async (req, res) => {
     try {
-        session = req.authUser
         const schema = Joi.object({
-            menu_position: Joi.string().required(),
+            menu_position: Joi.string().required(), // Validate that menu_position is required
         })
 
         const validationResult = schema.validate(req.body, {
-            abortEarly: false,
+            abortEarly: false, // Validate all fields before throwing an error
         })
 
         if (validationResult.error) {
-            return res.status(422).json(validationResult.error)
+            return res.status(422).json(validationResult.error) // Return validation error if schema doesn't pass
         }
-        // Form data
+
         let body = req.body
 
+        // Check if the menu section already exists for the user's brand and country
         let isExist = await Menu.findOne({
             brand: req.authUser?.brand?._id,
             country: req.authUser?.brand?.country,
             nav_position: body.menu_position,
         })
+
         if (isExist) {
             return res
                 .status(400)
                 .json({ error: 'Menu section already exists' })
         }
 
+        // Create new menu section if it doesn't already exist
         await Menu.create({
             nav_label: body.menu_position,
             nav_position: body.menu_position,
@@ -55,28 +62,31 @@ const addSection = async (req, res) => {
 
         return res.status(200).json({
             message: `New Menu Section added`,
-            redirect_to: '/admin/cms/menu',
+            redirect_to: '/admin/cms/menu', // Redirect to the menu list page after success
         })
     } catch (error) {
         console.log(error)
-        return res.status(400).json({ error: 'Something went wrong' })
+        return res.status(400).json({ error: 'Something went wrong' }) // Handle errors gracefully
     }
 }
 
+// Function to add a new menu item
 const addMenu = async (req, res) => {
-    // console.log(req.body)
     try {
-        session = req.authUser
         let labelValidationObj = {}
         let pathValidationObj = {}
+
+        // Create validation objects for each language the brand supports
         req.authUser.brand.languages.forEach((lang) => {
             _.assign(labelValidationObj, {
-                [lang.prefix]: eval(`Joi.string().required()`),
+                [lang.prefix]: eval(`Joi.string().required()`), // Require label for each language
             })
             _.assign(pathValidationObj, {
-                [lang.prefix]: eval(`Joi.string().required()`),
+                [lang.prefix]: eval(`Joi.string().required()`), // Require path for each language
             })
         })
+
+        // Schema validation for the request body
         const schema = Joi.object({
             label: Joi.object({
                 ...labelValidationObj,
@@ -84,22 +94,24 @@ const addMenu = async (req, res) => {
             path: Joi.object({
                 ...pathValidationObj,
             }),
-            external: Joi.string().allow('', null, 'true'),
-            menu_position: Joi.string().optional().allow(null, ''),
+            external: Joi.string().allow('', null, 'true'), // Allow empty or 'true' for external links
+            menu_position: Joi.string().optional().allow(null, ''), // Menu position is optional
         })
 
         const validationResult = schema.validate(req.body, {
-            abortEarly: false,
+            abortEarly: false, // Validate all fields before throwing an error
         })
 
         if (validationResult.error) {
-            res.status(422).json(validationResult.error)
+            res.status(422).json(validationResult.error) // Return validation error if schema fails
             return
         }
-        // Form data
+
         let body = req.body
         let label = {}
         let path = {}
+
+        // Assign language-specific labels and paths to the corresponding objects
         req.authUser.brand.languages.forEach((lang) => {
             _.assign(label, {
                 [lang.prefix]: body.label[lang.prefix],
@@ -109,22 +121,24 @@ const addMenu = async (req, res) => {
             })
         })
 
-        // object to insert
+        // Object to insert into the menu
         const obj = {
             _id: Types.ObjectId(),
             label,
             url: path,
-            external: body.external == 'true',
+            external: body.external == 'true', // Check if the link is external
         }
 
+        // Find the corresponding menu position to add the new menu item
         const nav = await Menu.findOne({
             _id: body.menu_position,
         })
 
         if (!nav) {
-            return res.status(400).json({ error: 'Nav not found' })
+            return res.status(400).json({ error: 'Nav not found' }) // Return error if nav position is invalid
         }
-        // Push the obj to nav_items
+
+        // Push the new menu item into the existing menu's nav_items array
         const update = await Menu.findOneAndUpdate(
             {
                 _id: body.menu_position,
@@ -135,9 +149,8 @@ const addMenu = async (req, res) => {
                 },
             }
         )
-        // console.log(req.body)
-        // console.log(update)
-        // If menu position not found
+
+        // Check if update was successful
         if (!update?._id) {
             return res
                 .status(400)
@@ -147,51 +160,57 @@ const addMenu = async (req, res) => {
         return res.status(200).json({
             message: `New Menu added`,
             item: update,
-            redirect_to: '/admin/cms/menu',
+            redirect_to: '/admin/cms/menu', // Redirect to menu list on success
         })
     } catch (error) {
         console.log(error)
-        return res.status(400).json({ error: 'Something went wrong' })
+        return res.status(400).json({ error: 'Something went wrong' }) // Handle errors
     }
 }
 
+// Function to edit an existing menu item
 const editMenu = async (req, res) => {
     try {
         let { position, index, level } = req.params
         let parentIndex = req.query?.parent_index
         let secParentIndex = req.query?.sec_parent_index
-        // Finding all menus from DB
+
+        // Find menus based on user's brand and country, sorted by position
         const menus = await Menu.find({
             brand: req.authUser?.brand?._id,
             country: req.authUser?.brand?.country,
         }).sort({ position: 1 })
-        // Finding menu with menu position
+
+        // Find the specific menu based on position
         const menuDetail = menus.find((menu) => menu.nav_position == position)
         let menuItem = {}
-        // Finding menu item w.r.t the menu child level
+
+        // Find the menu item at the correct level (0, 1, or 2)
         if (menuDetail?._id) {
             if (level == '0') {
-                menuItem = menuDetail.nav_items?.at(index)
+                menuItem = menuDetail.nav_items?.at(index) // Level 0 item
             } else if (level == '1') {
-                menuItem = menuDetail.nav_items[parentIndex]?.child?.at(index)
+                menuItem = menuDetail.nav_items[parentIndex]?.child?.at(index) // Level 1 child item
                 if (menuItem) menuItem.parent_index = req.query.parent_index
             } else if (level == '2') {
                 menuItem =
                     menuDetail.nav_items[parentIndex]?.child[
                         secParentIndex
-                    ]?.child?.at(index)
+                    ]?.child?.at(index) // Level 2 child item
                 if (menuItem) {
                     menuItem.parent_index = req.query.parent_index
                     menuItem.sec_parent_index = req.query.sec_parent_index
                 }
             }
         }
-        // add level value to menuItem
+
+        // Add level value to the menu item for rendering
         if (menuItem?.active) {
             menuItem.level = level
             menuItem.index = `${index}`
         }
 
+        // Render the menu edit form with the found menu item
         res.render(`admin-njk/cms/menu/edit-form`, {
             menulist: menus,
             navPosition: position,
@@ -199,7 +218,7 @@ const editMenu = async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        return res.render(`admin-njk/app-error-500`)
+        return res.render(`admin-njk/app-error-500`) // Handle errors
     }
 }
 
