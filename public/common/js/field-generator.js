@@ -28,7 +28,9 @@ const generateField = async () => {
     let htmlData = ``
     await _.forEach(fieldSchemaJson, function (group) {
         const currGroup = `
-        <div class="card mb-2">
+        <div class="card section-card mb-2 droppable" data-section="${
+            group.section
+        }">
             <div class="card-header col-12 mb-3">
                 <div class="card-title">
                     <h3 class="mb-1">${group.section.toUpperCase()}</h3>
@@ -61,7 +63,7 @@ const generateField = async () => {
                     }"><i class="fa-solid fa-trash-can"></i></a>
                 </div>
             </div>
-            <div class="card-body col-12">
+            <div class="card-body section-card-body col-12">
                 <div class="table-responsive">
                     <table class="table gs-7 gy-3 gx-7">
                         <thead>
@@ -79,7 +81,7 @@ const generateField = async () => {
 
         _.forEach(group.fields, function (field) {
             const currField = `
-            <tr>
+            <tr class="draggable" data-field="${field.label}">
                 <td>${field.label} <br> ${
                 field.info
                     ? '<span class="badge badge-light-warning">' +
@@ -123,9 +125,9 @@ const generateField = async () => {
     })
 
     document.querySelector(`.form-field-holder`).innerHTML = htmlData
-
-    // Comparing backup data and reinitializing drag-and-drop if needed
-    dataObjectComparison(bkupDataJson, fieldSchemaJson)
+    
+     // Comparing backup data and reinitializing drag-and-drop if needed
+     dataObjectComparison(bkupDataJson, fieldSchemaJson)
 
     return true
 }
