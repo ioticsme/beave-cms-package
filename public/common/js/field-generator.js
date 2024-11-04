@@ -23,92 +23,104 @@
 // ]
 var fieldSchemaJson
 var bkupDataJson
+
 const generateField = async () => {
-    let htmlData = `<div class="table-responsive">
-							<table class="table gs-7 gy-3 gx-7">
-								<thead>
-									<tr class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
-										<th>Name</th>
-										<th>Type</th>
-										<th>Required</th>
-										<th>Validation</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody style="font-size: 13px;">`
+    let htmlData = ``
     await _.forEach(fieldSchemaJson, function (group) {
-        const currGroup = `<tr><td colspn="3">
-        <h3 class="mb-1">${group.section.toUpperCase()}</h3>
-        <p class="my-2"><small>${
-            group.localisation
-                ? '<span class="badge badge-light-info">Multi Linguistic</span>'
-                : '<span class="badge badge-light-success">Global</span>'
-        }
-        ${
-            group.repeater_group
-                ? '<span class="badge badge-light-primary">Repeater</span>'
-                : ''
-        }
-        ${
-            group.inline_fields
-                ? '<span class="badge badge-light-warning">Inline</span>'
-                : ''
-        }
-        </small></p>
-        <a class="btn btn-light btn-xs" data-bs-toggle="modal" data-bs-target="#field_form_modal" data-section="${
-            group.section
-        }"><i class="fa-solid fa-plus"></i></a>
-        <a class="btn btn-light-danger btn-lg field-section-dlt-btn" data-section="${
-            group.section
-        }"><i class="fa-solid fa-trash-can"></i></a>
-        </td></tr>`
-        htmlData = `${htmlData} ${currGroup}`
+        const currGroup = `
+        <div class="row">
+            <div class="col-12 mb-3">
+                <h3 class="mb-1">${group.section.toUpperCase()}</h3>
+                <p class="my-2">
+                    <small>
+                        ${
+                            group.localisation
+                                ? '<span class="badge badge-light-info">Multi Linguistic</span>'
+                                : '<span class="badge badge-light-success">Global</span>'
+                        }
+                        ${
+                            group.repeater_group
+                                ? '<span class="badge badge-light-primary">Repeater</span>'
+                                : ''
+                        }
+                        ${
+                            group.inline_fields
+                                ? '<span class="badge badge-light-warning">Inline</span>'
+                                : ''
+                        }
+                    </small>
+                </p>
+                <a class="btn btn-light btn-xs" data-bs-toggle="modal" data-bs-target="#field_form_modal" data-section="${
+                    group.section
+                }"><i class="fa-solid fa-plus"></i></a>
+                <a class="btn btn-light-danger btn-lg field-section-dlt-btn" data-section="${
+                    group.section
+                }"><i class="fa-solid fa-trash-can"></i></a>
+            </div>
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table gs-7 gy-3 gx-7">
+                        <thead>
+                            <tr class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Validation</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody style="font-size: 13px;">`
+
+        htmlData += currGroup
+
         _.forEach(group.fields, function (field) {
-            const currField = `<tr>
-            <td>${field.label} <br> ${
+            const currField = `
+            <tr>
+                <td>${field.label} <br> ${
                 field.info
                     ? '<span class="badge badge-light-warning">' +
                       field.info +
                       '</span>'
                     : ''
             }</td>
-            <td>${field.type}</td>
-            <td>${
-                field.validation.required
-                    ? '<span class="badge badge-success">Yes</span>'
-                    : '<span class="badge badge-danger">No</span>'
-            }</td>
-            <td>
-            <small>
-            ${
-                field.validation.min_length
-                    ? `Min Length: ${field.validation.min_length} <br>`
-                    : ''
-            }
-            ${
-                field.validation.max_length
-                    ? `Max Length: ${field.validation.max_length} <br>`
-                    : ''
-            }
-            </small>
-            </td>
-            <td>
-                <a class="btn btn-light-danger btn-xs field-dlt-btn" data-section="${
-                    group.section
-                }" data-field="${
-                field.label
-            }"><i class="fa-solid fa-trash-can"></i></a>
-            </td>
-        </tr>`
-            htmlData = `${htmlData} ${currField}`
+                <td>${field.type}</td>
+                <td>${
+                    field.validation.required
+                        ? '<span class="badge badge-success">Yes</span>'
+                        : '<span class="badge badge-danger">No</span>'
+                }</td>
+                <td>
+                    <small>
+                    ${
+                        field.validation.min_length
+                            ? `Min Length: ${field.validation.min_length} <br>`
+                            : ''
+                    }
+                    ${
+                        field.validation.max_length
+                            ? `Max Length: ${field.validation.max_length} <br>`
+                            : ''
+                    }
+                    </small>
+                </td>
+                <td>
+                    <a class="btn btn-light-danger btn-xs field-dlt-btn" data-section="${
+                        group.section
+                    }" data-field="${field.label}">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </a>
+                </td>
+            </tr>`
+
+            htmlData += currField
         })
+
+        htmlData += `</tbody></table></div></div></div>`
     })
-    document.querySelector(
-        `.form-field-holder`
-    ).innerHTML = `${htmlData} </tbody></table></div>`
 
-    // console.log(fieldSchemaJson)
+    document.querySelector(`.form-field-holder`).innerHTML = htmlData
 
+    // Comparing backup data and reinitializing drag-and-drop if needed
     dataObjectComparison(bkupDataJson, fieldSchemaJson)
 
     return true
