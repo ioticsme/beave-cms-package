@@ -2,6 +2,7 @@ const envConfig = require('./config/env.config')
 const express = require('express')
 const nunjucks = require('nunjucks')
 const helmet = require('helmet')
+const { ApolloServer } = require('apollo-server-express')
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const chalk = require('chalk')
@@ -227,6 +228,16 @@ if (envConfig.general.NODE_ENV == 'development') {
     app.use(devAuth)
 }
 // END::Admin aautomatic auth for development purpose
+
+// Create an Apollo server instance
+const { typeDefs, resolvers } = require('./graphql/graphQLschema')
+const apolloServer = new ApolloServer({ typeDefs, resolvers })
+// Start the Apollo server
+;(async () => {
+    await apolloServer.start() // Make sure to start the server
+    // Apply Apollo middleware to the Express app
+    apolloServer.applyMiddleware({ app })
+})()
 
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes

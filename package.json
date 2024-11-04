@@ -13,6 +13,7 @@
     "dependencies": {
         "@mongoosejs/double": "^0.3.0",
         "agenda": "^5.0.0",
+        "apollo-server": "^3.13.0",
         "axios": "^0.26.1",
         "bcryptjs": "^2.4.3",
         "chalk": "^4.1.2",
@@ -35,6 +36,8 @@
         "fs": "0.0.1-security",
         "google-auth-library": "^8.7.0",
         "googleapis": "^105.0.0",
+        "graphql": "^16.9.0",
+        "graphql-type-json": "^0.3.2",
         "helmet": "^6.0.0",
         "imagekit": "^4.1.0",
         "ioredis": "^5.3.1",
