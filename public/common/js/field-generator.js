@@ -28,36 +28,40 @@ const generateField = async () => {
     let htmlData = ``
     await _.forEach(fieldSchemaJson, function (group) {
         const currGroup = `
-        <div class="row">
-            <div class="col-12 mb-3">
-                <h3 class="mb-1">${group.section.toUpperCase()}</h3>
-                <p class="my-2">
-                    <small>
-                        ${
-                            group.localisation
-                                ? '<span class="badge badge-light-info">Multi Linguistic</span>'
-                                : '<span class="badge badge-light-success">Global</span>'
-                        }
-                        ${
-                            group.repeater_group
-                                ? '<span class="badge badge-light-primary">Repeater</span>'
-                                : ''
-                        }
-                        ${
-                            group.inline_fields
-                                ? '<span class="badge badge-light-warning">Inline</span>'
-                                : ''
-                        }
-                    </small>
-                </p>
-                <a class="btn btn-light btn-xs" data-bs-toggle="modal" data-bs-target="#field_form_modal" data-section="${
-                    group.section
-                }"><i class="fa-solid fa-plus"></i></a>
-                <a class="btn btn-light-danger btn-lg field-section-dlt-btn" data-section="${
-                    group.section
-                }"><i class="fa-solid fa-trash-can"></i></a>
+        <div class="card mb-2">
+            <div class="card-header col-12 mb-3">
+                <div class="card-title">
+                    <h3 class="mb-1">${group.section.toUpperCase()}</h3>
+                    <p class="my-2">
+                        <small>
+                            ${
+                                group.localisation
+                                    ? '<span class="badge badge-light-info">Multi Linguistic</span>'
+                                    : '<span class="badge badge-light-success">Global</span>'
+                            }
+                            ${
+                                group.repeater_group
+                                    ? '<span class="badge badge-light-primary">Repeater</span>'
+                                    : ''
+                            }
+                            ${
+                                group.inline_fields
+                                    ? '<span class="badge badge-light-warning">Inline</span>'
+                                    : ''
+                            }
+                        </small>
+                    </p>
+                </div>
+                <div class="card-toolbar">
+                    <a class="btn btn-light btn-xs mx-1" data-bs-toggle="modal" data-bs-target="#field_form_modal" data-section="${
+                        group.section
+                    }"><i class="fa-solid fa-plus"></i></a>
+                    <a class="btn btn-light-danger btn-lg field-section-dlt-btn" data-section="${
+                        group.section
+                    }"><i class="fa-solid fa-trash-can"></i></a>
+                </div>
             </div>
-            <div class="col-12">
+            <div class="card-body col-12">
                 <div class="table-responsive">
                     <table class="table gs-7 gy-3 gx-7">
                         <thead>
