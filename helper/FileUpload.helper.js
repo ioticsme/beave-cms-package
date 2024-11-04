@@ -4,6 +4,9 @@ const {
     imageKitUploadMedia,
 } = require('../adaptors/file-upload/ImageKit.adaptor.js')
 const {
+    cloudinaryUploadMedia,
+} = require('../adaptors/file-upload/Cloudinary.adaptor.js')
+const {
     bunnyCDNUploadMedia,
     bunnyCDNUploadMediaFromURL,
 } = require('../adaptors/file-upload/BunnyCdn.adaptor.js')
@@ -38,11 +41,11 @@ const uploadMedia = async (media, folder, file) => {
             media_drive_config.cloudinary.active
         ) {
             // TODO: Replace it with cloudinary
-            return await imageKitUploadMedia(
+            return await cloudinaryUploadMedia(
                 media,
                 folder,
                 file,
-                media_drive_config.imagekit
+                media_drive_config.cloudinary
             )
         } else {
             return 'No Drive Configured'

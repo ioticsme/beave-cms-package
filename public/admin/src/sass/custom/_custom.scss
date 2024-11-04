@@ -1264,6 +1264,56 @@ $border-color_6: rgb(75 85 99 / var(--tw-border-opacity));
 //         max-width: 1536px;
 //     }
 // }
+.btn-block {
+    width: 100%;
+}
+.cms-attach-content .collapse {
+    visibility: initial;
+}
+.cms-attach-content .collapse:not(.show) {
+    display: none;
+}
+.tab-invalid-icon,
+.invalid {
+    color: red !important;
+}
+
+/* This for media library section */
+#page-media-holder {
+    height: 70vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.media-list-item.active img {
+    background-color: greenyellow;
+    /* padding: 15px; */
+    border-radius: 15px;
+    box-shadow: 0px 0px 5px 4px #d1d1d1;
+}
+#media-meta-panel > .row > .col-12 {
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+/* This for media attachment modal */
+#media-modal-selected-preview-img img {
+    object-fit: cover;
+    height: 100px;
+    width: 100px;
+    object-position: top left;
+}
+#modal-media-holder {
+    max-height: 500px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    .media-list-item {
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
+
 #toast-container {
     bottom: 0;
     right: 0;

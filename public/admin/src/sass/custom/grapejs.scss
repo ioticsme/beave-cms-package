@@ -54,3 +54,33 @@
 //     background-color: #333;
 //     color: #fff;
 // }
+
+#beave_app_content_container {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+#gjs {
+    width: auto;
+    height: 100vh;
+}
+
+/* Reduce the size of the Rows and Columns icons */
+.gjs-block {
+    width: 32%;
+    height: auto;
+    min-height: auto;
+    margin: 10px 0.5% 5px;
+}
+
+/* 
+.panel__top {
+    padding: 0;
+    width: 100%;
+    display: flex;
+    position: initial;
+    justify-content: center;
+    justify-content: space-between;
+}
+.panel__basic-actions {
+    position: initial;
+} */

@@ -71,17 +71,6 @@ const imageKitUploadMedia = async (media, folder, file, imagekitConfig) => {
         folder: imagekitConfig.folder,
     })
 
-    // URL generation
-    // const imageURL = imagekit.url({
-    //     path: '/default-image.jpg',
-    //     transformation: [
-    //         {
-    //             height: '300',
-    //             width: '400',
-    //         },
-    //     ],
-    // })
-
     // let nodeEnv = envConfig.general.NODE_ENV
     let baseFolder =
         `${envConfig.imagekit?.FOLDER?.toLowerCase()}/${envConfig.general?.NODE_ENV?.toLowerCase()}` ||
@@ -105,6 +94,7 @@ const imageKitUploadMedia = async (media, folder, file, imagekitConfig) => {
             }
 
             const insertedMedia = await Media.create({
+                drive: 'imagekit',
                 url: result.url,
                 response: result,
                 file: {
