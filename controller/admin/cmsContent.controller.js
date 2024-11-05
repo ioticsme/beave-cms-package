@@ -43,12 +43,7 @@ const list = async (req, res) => {
         }
 
         // const reqContentType = req.contentType
-        const default_lang = _.find(
-            req.authUser.brand.languages,
-            function (item) {
-                return item.is_default === true
-            }
-        )
+        const default_lang = collect(req.authUser.brand.languages).sortByDesc('is_default').first()
         return res.render(`admin-njk/cms/content/listing`, {
             default_lang,
             reqContentType: req.contentType,

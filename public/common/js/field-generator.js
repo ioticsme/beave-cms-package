@@ -68,6 +68,7 @@ const generateField = async () => {
                     <table class="table gs-7 gy-3 gx-7">
                         <thead>
                             <tr class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
+                                <th>Label</th>
                                 <th>Name</th>
                                 <th>Type</th>
                                 <th>Required</th>
@@ -89,6 +90,7 @@ const generateField = async () => {
                       '</span>'
                     : ''
             }</td>
+                <td>${field.name}</td>
                 <td>${field.type}</td>
                 <td>${
                     field.validation.required
@@ -227,7 +229,7 @@ document
                 fieldSchemaJson[index].fields,
                 (field) => field.label == fieldName
             )
-            // console.log(fieldName)
+            // console.log(foundField)
             $('#field_form_modal').modal('show')
             var fieldFormModal = document.querySelector(`#field_form_modal`)
             fieldFormModal.querySelector(`.modal-title`).innerHTML =
@@ -316,9 +318,15 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
         const selected_entry_type = e.target.field_entry_type.value.trim()
         const selected_section = e.target.section_name_field.value.trim()
         const selected_field_type = e.target.field_type.value.trim()
-        const selected_field_name = e.target.field_name.value.trim()
+        const selected_field_label = e.target.field_name.value
+        const selected_field_name = e.target.field_name.value
+            .toString() // Convert to string (in case it's not)
+            .trim() // Remove whitespace from both ends
+            .toLowerCase() // Convert to lowercase
+            .replace(/[\s\W-]+/g, '_') // Replace spaces and non-word characters with hyphen
+            .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
         const selected_field_info = e.target.field_info.value.trim()
-        const selected_show_on_list = e.target.show_on_list.value.trim()
+        const selected_show_on_list = e.target.show_on_list.checked ?? false
         const selected_field_options =
             e.target.field_options?.value?.trim() || ''
         const options = []
@@ -354,7 +362,7 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
             const newField = {
                 id: 'timestamp',
                 type: selected_field_type,
-                label: selected_field_name,
+                label: selected_field_label,
                 name: selected_field_name,
                 info: selected_field_info,
                 show_on_list: selected_show_on_list,
@@ -379,12 +387,11 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
                     requestedSection.fields,
                     (field) => {
                         return (
-                            field.name.toLowerCase() ===
+                            field.name.toLowerCase() ==
                             selected_field_name.toLowerCase()
                         )
                     }
                 )
-                // console.log(fieldIndex)
                 requestedSection.fields[fieldIndex] = newField
                 // console.log(requestedSection.fields[fieldIndex])
             } else {

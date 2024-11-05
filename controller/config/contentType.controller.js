@@ -78,6 +78,7 @@ const view = async (req, res) => {
                         name: field.field_name,
                         type: field.field_type,
                         info: field.field_info,
+                        show_on_list: field.show_on_list,
                         position: field.position,
                         validation: field.validation,
                         options: field.options,
@@ -228,7 +229,7 @@ const addFields = async (req, res) => {
 
 const saveFields = async (req, res) => {
     try {
-        // console.log(req.body)
+        // console.log(req.body.fieldSchemaJson[0].fields)
         const schema = Joi.object({
             id: Joi.string().required(),
             fieldSchemaJson: Joi.array().items(
