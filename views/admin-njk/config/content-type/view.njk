@@ -388,6 +388,7 @@
 
 					<div class="modal-field-sections d-none" id="text-field-section">
 						<form class="field-form">
+							<input class="field_entry_type" type="hidden" value="edit" name="field_entry_type"/>
 							<input class="section_name_field" type="hidden" name="section_name_field"/>
 							<div class="row">
 								<div class="col-12">
@@ -403,11 +404,11 @@
 								</div>
 							</div>
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" name="validation_required"/>
+								<input class="form-check-input" type="checkbox" id="validation_required" value="true" name="validation_required"/>
 								<label class="form-check-label" for="">Required</label>
 							</div>
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" value="true" name="show_on_list"/>
+								<input class="form-check-input" type="checkbox" id="show_on_list" value="true" name="show_on_list"/>
 								<label class="form-check-label" for="">Show on CMS Content List</label>
 							</div>
 							<label class="mt-3" for="section_name_field">Advanced Valdiation Rules</label>
@@ -420,7 +421,7 @@
 							<div class="row mt-5">
 								<div class="col-12">
 									<a class="btn btn-light back-btn">Back</a>
-									<button class="btn btn-primary" type="submit">Add Field</button>
+									<button class="btn btn-primary" type="submit">Save Field</button>
 								</div>
 							</div>
 						</form>
@@ -428,6 +429,7 @@
 
 					<div class="modal-field-sections d-none" id="email-field-section">
 						<form class="field-form">
+							<input class="field_entry_type" type="hidden" value="edit" name="field_entry_type"/>
 							<input class="section_name_field" type="hidden" name="section_name_field"/>
 							<label for="section_name_field">Field Name</label>
 							<input type="hidden" name="field_type" value="email"/>
@@ -439,7 +441,7 @@
 								</div>
 							</div>
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" value="true" name="validation_required" checked/>
+								<input class="form-check-input" type="checkbox" id="validation_required" value="true" name="validation_required"/>
 								<label class="form-check-label" for="">Required</label>
 							</div>
 							<label class="mt-3" for="section_name_field">Advanced Valdiation Rules</label>
@@ -450,13 +452,13 @@
 									<input class="form-control" type="text" name="validation_max" id="validation_max" placeholder="Maximum Charecters"/></div>
 							</div>
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" value="true" name="show_on_list"/>
+								<input class="form-check-input" type="checkbox" id="show_on_list" value="true" name="show_on_list"/>
 								<label class="form-check-label" for="">Show on CMS Content List</label>
 							</div>
 							<div class="row mt-5">
 								<div class="col-12">
 									<a class="btn btn-light back-btn">Back</a>
-									<button class="btn btn-primary" type="submit">Add Field</button>
+									<button class="btn btn-primary" type="submit">Save Field</button>
 								</div>
 							</div>
 						</form>
@@ -464,6 +466,7 @@
 
 					<div class="modal-field-sections d-none" id="number-field-section">
 						<form class="field-form">
+							<input class="field_entry_type" type="hidden" value="edit" name="field_entry_type"/>
 							<input class="section_name_field" type="hidden" name="section_name_field"/>
 							<label for="section_name_field">Field Name</label>
 							<input type="hidden" name="field_type" value="number"/>
@@ -475,17 +478,17 @@
 								</div>
 							</div>
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" value="true" name="validation_required" checked/>
+								<input class="form-check-input" type="checkbox" id="validation_required" value="true" name="validation_required"/>
 								<label class="form-check-label" for="">Required</label>
 							</div>
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" value="true" name="show_on_list"/>
+								<input class="form-check-input" type="checkbox" id="show_on_list" value="true" name="show_on_list"/>
 								<label class="form-check-label" for="">Show on CMS Content List</label>
 							</div>
 							<div class="row mt-5">
 								<div class="col-12">
 									<a class="btn btn-light back-btn">Back</a>
-									<button class="btn btn-primary" type="submit">Add Field</button>
+									<button class="btn btn-primary" type="submit">Save Field</button>
 								</div>
 							</div>
 						</form>
@@ -493,6 +496,7 @@
 
 					<div class="modal-field-sections d-none" id="textarea-field-section">
 						<form class="field-form">
+							<input class="field_entry_type" type="hidden" value="edit" name="field_entry_type"/>
 							<input class="section_name_field" type="hidden" name="section_name_field"/>
 							<input type="hidden" name="field_type" value="textarea"/>
 							<label for="section_name_field">Field Name</label>
@@ -504,7 +508,7 @@
 								</div>
 							</div>
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" value="true" name="validation_required" checked/>
+								<input class="form-check-input" type="checkbox" id="validation_required" value="true" name="validation_required"/>
 								<label class="form-check-label" for="">Required</label>
 							</div>
 							<label class="mt-3" for="section_name_field">Advanced Valdiation Rules</label>
@@ -515,13 +519,13 @@
 									<input class="form-control" type="text" name="validation_max" id="validation_max" placeholder="Maximum Charecters"/></div>
 							</div>
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" value="true" name="show_on_list"/>
+								<input class="form-check-input" type="checkbox" id="show_on_list" value="true" name="show_on_list"/>
 								<label class="form-check-label" for="">Show on CMS Content List</label>
 							</div>
 							<div class="row mt-5">
 								<div class="col-12">
 									<a class="btn btn-light back-btn">Back</a>
-									<button class="btn btn-primary" type="submit">Add Field</button>
+									<button class="btn btn-primary" type="submit">Save Field</button>
 								</div>
 							</div>
 						</form>
@@ -529,6 +533,7 @@
 
 					<div class="modal-field-sections d-none" id="article_editor-field-section">
 						<form class="field-form">
+							<input class="field_entry_type" type="hidden" value="edit" name="field_entry_type"/>
 							<input class="section_name_field" type="hidden" name="section_name_field"/>
 							<input type="hidden" name="field_type" value="article_editor"/>
 							<label for="section_name_field">Field Name</label>
@@ -540,11 +545,11 @@
 								</div>
 							</div>
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" value="true" name="validation_required" checked/>
+								<input class="form-check-input" type="checkbox" id="validation_required" value="true" name="validation_required"/>
 								<label class="form-check-label" for="">Required</label>
 							</div>
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" value="true" name="show_on_list"/>
+								<input class="form-check-input" type="checkbox" id="show_on_list" value="true" name="show_on_list"/>
 								<label class="form-check-label" for="">Show on CMS Content List</label>
 							</div>
 							{# <label class="mt-3" for="section_name_field">Advanced Valdiation Rules</label>
@@ -557,7 +562,7 @@
 							<div class="row mt-5">
 								<div class="col-12">
 									<a class="btn btn-light back-btn">Back</a>
-									<button class="btn btn-primary" type="submit">Add Field</button>
+									<button class="btn btn-primary" type="submit">Save Field</button>
 								</div>
 							</div>
 						</form>
@@ -565,6 +570,7 @@
 
 					<div class="modal-field-sections d-none" id="richtext-field-section">
 						<form class="field-form">
+							<input class="field_entry_type" type="hidden" value="edit" name="field_entry_type"/>
 							<input class="section_name_field" type="hidden" name="section_name_field"/>
 							<input type="hidden" name="field_type" value="richtext"/>
 							<label for="section_name_field">Field Name</label>
@@ -576,7 +582,7 @@
 								</div>
 							</div>
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" value="true" name="validation_required" checked/>
+								<input class="form-check-input" type="checkbox" id="validation_required" value="true" name="validation_required"/>
 								<label class="form-check-label" for="">Required</label>
 							</div>
 							<label class="mt-3" for="section_name_field">Advanced Valdiation Rules</label>
@@ -587,13 +593,13 @@
 									<input class="form-control" type="text" name="validation_max" id="validation_max" placeholder="Maximum Charecters"/></div>
 							</div>
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" value="true" name="show_on_list"/>
+								<input class="form-check-input" type="checkbox" id="show_on_list" value="true" name="show_on_list"/>
 								<label class="form-check-label" for="">Show on CMS Content List</label>
 							</div>
 							<div class="row mt-5">
 								<div class="col-12">
 									<a class="btn btn-light back-btn">Back</a>
-									<button class="btn btn-primary" type="submit">Add Field</button>
+									<button class="btn btn-primary" type="submit">Save Field</button>
 								</div>
 							</div>
 						</form>
@@ -601,6 +607,7 @@
 
 					<div class="modal-field-sections d-none" id="media-field-section">
 						<form class="field-form">
+							<input class="field_entry_type" type="hidden" value="edit" name="field_entry_type"/>
 							<input class="section_name_field" type="hidden" name="section_name_field"/>
 							<input type="hidden" name="field_type" value="media"/>
 							<label for="section_name_field">Field Name</label>
@@ -612,17 +619,17 @@
 								</div>
 							</div>
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" value="true" name="validation_required" checked/>
+								<input class="form-check-input" type="checkbox" id="validation_required" value="true" name="validation_required"/>
 								<label class="form-check-label" for="">Required</label>
 							</div>
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" value="true" name="show_on_list"/>
+								<input class="form-check-input" type="checkbox" id="show_on_list" value="true" name="show_on_list"/>
 								<label class="form-check-label" for="">Show on CMS Content List</label>
 							</div>
 							<div class="row mt-5">
 								<div class="col-12">
 									<a class="btn btn-light back-btn">Back</a>
-									<button class="btn btn-primary" type="submit">Add Field</button>
+									<button class="btn btn-primary" type="submit">Save Field</button>
 								</div>
 							</div>
 						</form>
@@ -630,6 +637,7 @@
 
 					<div class="modal-field-sections d-none" id="dropdown-field-section">
 						<form class="field-form">
+							<input class="field_entry_type" type="hidden" value="edit" name="field_entry_type"/>
 							<label for="section_name_field">Field Name</label>
 							<input class="section_name_field" type="hidden" name="section_name_field"/>
 							<input type="hidden" name="field_type" value="dropdown"/>
@@ -643,17 +651,17 @@
 								</div>
 							</div>
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" value="true" name="validation_required" checked/>
+								<input class="form-check-input" type="checkbox" id="validation_required" value="true" name="validation_required"/>
 								<label class="form-check-label" for="">Required</label>
 							</div>
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" value="true" name="show_on_list"/>
+								<input class="form-check-input" type="checkbox" id="show_on_list" value="true" name="show_on_list"/>
 								<label class="form-check-label" for="">Show on CMS Content List</label>
 							</div>
 							<div class="row mt-5">
 								<div class="col-12">
 									<a class="btn btn-light back-btn">Back</a>
-									<button class="btn btn-primary" type="submit">Add Field</button>
+									<button class="btn btn-primary" type="submit">Save Field</button>
 								</div>
 							</div>
 						</form>
@@ -661,6 +669,7 @@
 
 					<div class="modal-field-sections d-none" id="date-field-section">
 						<form class="field-form">
+							<input class="field_entry_type" type="hidden" value="edit" name="field_entry_type"/>
 							<input class="section_name_field" type="hidden" name="section_name_field"/>
 							<label for="section_name_field">Field Name</label>
 							<input type="hidden" name="field_type" value="date"/>
@@ -686,11 +695,11 @@
 								</div>
 							</div>
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" value="true" name="validation_required" checked/>
+								<input class="form-check-input" type="checkbox" id="validation_required" value="true" name="validation_required"/>
 								<label class="form-check-label" for="">Required</label>
 							</div>
 							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" value="true" name="show_on_list"/>
+								<input class="form-check-input" type="checkbox" id="show_on_list" value="true" name="show_on_list"/>
 								<label class="form-check-label" for="">Show on CMS Content List</label>
 							</div>
 							{# <label class="mt-3" for="section_name_field">Advanced Valdiation Rules</label>
@@ -703,7 +712,7 @@
 							<div class="row mt-5">
 								<div class="col-12">
 									<a class="btn btn-light back-btn">Back</a>
-									<button class="btn btn-primary" type="submit">Add Field</button>
+									<button class="btn btn-primary" type="submit">Save Field</button>
 								</div>
 							</div>
 						</form>

@@ -55,7 +55,7 @@ const generateField = async () => {
                     </p>
                 </div>
                 <div class="card-toolbar">
-                    <a class="btn btn-light btn-xs mx-1" data-bs-toggle="modal" data-bs-target="#field_form_modal" data-section="${
+                    <a class="btn btn-light btn-xs mx-1" data-bs-toggle="modal" data-bs-target="#field_form_modal" data-entry-type="new" data-section="${
                         group.section
                     }"><i class="fa-solid fa-plus"></i></a>
                     <a class="btn btn-light-danger btn-lg field-section-dlt-btn" data-section="${
@@ -110,6 +110,11 @@ const generateField = async () => {
                     </small>
                 </td>
                 <td>
+                    <a class="btn btn-light-dark btn-xs field-edit-btn" data-section="${
+                        group.section
+                    }" data-field="${field.label}">
+                        <i class="fa-solid fa-pencil"></i>
+                    </a>
                     <a class="btn btn-light-danger btn-xs field-dlt-btn" data-section="${
                         group.section
                     }" data-field="${field.label}">
@@ -125,9 +130,9 @@ const generateField = async () => {
     })
 
     document.querySelector(`.form-field-holder`).innerHTML = htmlData
-    
-     // Comparing backup data and reinitializing drag-and-drop if needed
-     dataObjectComparison(bkupDataJson, fieldSchemaJson)
+
+    // Comparing backup data and reinitializing drag-and-drop if needed
+    dataObjectComparison(bkupDataJson, fieldSchemaJson)
 
     return true
 }
@@ -203,11 +208,72 @@ document
             )
             _.set(fieldSchemaJson, [index, 'section'], sectionName)
             generateField()
+        } else if (event.target.classList.contains('field-edit-btn')) {
+            const sectionName = event.target.getAttribute('data-section')
+            const fieldName = event.target.getAttribute('data-field')
+
+            // const selectFieldType = fieldBtn.getAttribute('data-value')
+            // document
+            //     .querySelectorAll('.modal-field-sections')
+            //     .forEach((item) => {
+            //         item.classList.add('d-none')
+            //     })
+            // document
+            //     .querySelector(`#${selectFieldType}-field-section`)
+            //     .classList.remove('d-none')
+            const index = _.findIndex(fieldSchemaJson, { section: sectionName })
+            // console.log(fieldSchemaJson[index].fields)
+            const foundField = _.find(
+                fieldSchemaJson[index].fields,
+                (field) => field.label == fieldName
+            )
+            // console.log(fieldName)
+            $('#field_form_modal').modal('show')
+            var fieldFormModal = document.querySelector(`#field_form_modal`)
+            fieldFormModal.querySelector(`.modal-title`).innerHTML =
+                'Edit Field'
+            fieldFormModal.querySelector(`.back-btn`).classList.add('d-none')
+            fieldFormModal
+                .querySelector(`#${foundField.type}-field-section`)
+                .classList.remove('d-none')
+            fieldFormModal.querySelector(
+                `#${foundField.type}-field-section .section_name_field`
+            ).value = sectionName
+            var name_field = fieldFormModal.querySelector(
+                `#${foundField.type}-field-section #field_name`
+            )
+            name_field.value = foundField.label
+            name_field.disabled = true
+            fieldFormModal.querySelector(
+                `#${foundField.type}-field-section #field_info`
+            ).value = foundField.info
+            fieldFormModal.querySelector(
+                `#${foundField.type}-field-section #show_on_list`
+            ).checked = foundField.show_on_list
+            fieldFormModal.querySelector(
+                `#${foundField.type}-field-section #validation_required`
+            ).checked = foundField.validation.required
+
+            fieldFormModal.querySelector(
+                `#${foundField.type}-field-section #validation_min`
+            ).value = foundField.validation.min_length ?? ''
+            fieldFormModal.querySelector(
+                `#${foundField.type}-field-section #validation_max`
+            ).value = foundField.validation.max_length ?? ''
+            // _.set(fieldSchemaJson, [index, 'section'], sectionName)
+            // generateField()
         }
     })
 
 $('#field_form_modal').on('show.bs.modal', function (e) {
+    // Select all forms with the class 'field-form'
+    const forms = document.querySelectorAll('.field-form')
+    // Iterate over each form and reset it
+    forms.forEach((form) => {
+        form.reset()
+    })
     var section = $(e.relatedTarget).attr('data-section')
+    var entryType = $(e.relatedTarget).attr('data-entry-type')
     $('#field_form_modal .section_name_field').val(section)
     document
         .querySelectorAll('#field_form_modal .modal-field-sections')
@@ -215,9 +281,19 @@ $('#field_form_modal').on('show.bs.modal', function (e) {
             // console.log(field_section)
             field_section.classList.add('d-none')
         })
+    $('#field_form_modal .field_entry_type').val('edit')
     document
-        .querySelector('#field_form_modal #field-list-section')
+        .querySelector(`#field_form_modal .back-btn`)
         .classList.remove('d-none')
+    if (entryType == 'new') {
+        $('#field_form_modal .field_entry_type').val('add')
+        document
+            .querySelector('#field_form_modal #field-list-section')
+            .classList.remove('d-none')
+        document.querySelectorAll('#field_name').forEach((name_field) => {
+            name_field.disabled = false
+        })
+    }
 })
 
 document.querySelectorAll('#field-list-section .btn').forEach((fieldBtn) => {
@@ -237,6 +313,7 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
     fieldForm.addEventListener('submit', function (e) {
         e.preventDefault()
         // return false
+        const selected_entry_type = e.target.field_entry_type.value.trim()
         const selected_section = e.target.section_name_field.value.trim()
         const selected_field_type = e.target.field_type.value.trim()
         const selected_field_name = e.target.field_name.value.trim()
@@ -268,47 +345,67 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
         })
         // console.log(existingField)
 
-        if (existingField) {
+        if (existingField && selected_entry_type == 'add') {
             alert(
                 `'${selected_field_name}' Already Exist in '${selected_section}' section`
             )
             return false
+        } else {
+            const newField = {
+                id: 'timestamp',
+                type: selected_field_type,
+                label: selected_field_name,
+                name: selected_field_name,
+                info: selected_field_info,
+                show_on_list: selected_show_on_list,
+                position: 1,
+                localization: true,
+                options: options,
+                validation: {
+                    required: e.target.validation_required.checked,
+                    private: false,
+                    min_length: e.target.validation_min?.value
+                        ? parseInt(e.target.validation_min.value)
+                        : undefined,
+                    max_length: e.target.validation_max?.value
+                        ? parseInt(e.target.validation_max.value)
+                        : undefined,
+                },
+            }
+            if (selected_entry_type == 'edit') {
+                // _.remove(fieldSchemaJson, (item) => item.section == sectionName)
+                // console.log(fieldSchemaJson)
+                var fieldIndex = _.findIndex(
+                    requestedSection.fields,
+                    (field) => {
+                        return (
+                            field.name.toLowerCase() ===
+                            selected_field_name.toLowerCase()
+                        )
+                    }
+                )
+                // console.log(fieldIndex)
+                requestedSection.fields[fieldIndex] = newField
+                // console.log(requestedSection.fields[fieldIndex])
+            } else {
+                // console.log(newField)
+                // return false
+                // const fieldSection = _.find(fieldSchemaJson, (field) => {
+                //     return (
+                //         field.section.toLowerCase() === selected_section.toLowerCase()
+                //     )
+                // })
+                _.set(
+                    requestedSection,
+                    'fields',
+                    requestedSection.fields.concat([newField])
+                )
+            }
         }
+        // console.log(fieldSchemaJson)
 
-        const newField = {
-            id: 'timestamp',
-            type: selected_field_type,
-            label: selected_field_name,
-            name: selected_field_name,
-            info: selected_field_info,
-            show_on_list: selected_show_on_list,
-            position: 1,
-            localization: true,
-            options: options,
-            validation: {
-                required: e.target.validation_required.checked,
-                private: false,
-                min_length: e.target.validation_min?.value
-                    ? parseInt(e.target.validation_min.value)
-                    : undefined,
-                max_length: e.target.validation_max?.value
-                    ? parseInt(e.target.validation_max.value)
-                    : undefined,
-            },
-        }
+        // requestedSection.fields[index] = newField
 
-        // console.log(newField)
-        // return false
-        // const fieldSection = _.find(fieldSchemaJson, (field) => {
-        //     return (
-        //         field.section.toLowerCase() === selected_section.toLowerCase()
-        //     )
-        // })
-        _.set(
-            requestedSection,
-            'fields',
-            requestedSection.fields.concat([newField])
-        )
         // console.log(fieldSchemaJson)
         generateField()
         fieldForm.reset()
