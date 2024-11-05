@@ -1,5 +1,6 @@
 const path = require('path')
 const fs = require('fs')
+const crypto = require('crypto');
 var envConfig = require('../../config/env.config.js')
 var Media = require('../../model/Media.js')
 
@@ -21,12 +22,15 @@ const localUploadMedia = async (media, folder, file) => {
             fs.mkdirSync(uploadsDir, { recursive: true })
         }
 
+        // Generate a random string for uniqueness
+        const randomString = crypto.randomBytes(6).toString('hex') // Generates a 12-character random string
+        // Construct the unique file name by appending/prepending the random string
+        const originalFileName =
+            file?.originalname?.toLowerCase() || 'sample-image'
+        const uniqueFileName = `${randomString}-${originalFileName}`
+
         // Define the local file path for saving
-        const relativeFilePath = path.join(
-            'uploads',
-            folder,
-            file.originalname.toLowerCase()
-        )
+        const relativeFilePath = path.join('uploads', folder, uniqueFileName)
         const filePath = path.join(appRoot, relativeFilePath)
 
         // Decode the base64 media string to a buffer
@@ -46,7 +50,7 @@ const localUploadMedia = async (media, folder, file) => {
             drive: 'local',
             url: relativeFilePath, // Store the local path
             file: {
-                name: file.originalname.toLowerCase(),
+                name: uniqueFileName,
             },
             meta: {
                 local_drive: true,

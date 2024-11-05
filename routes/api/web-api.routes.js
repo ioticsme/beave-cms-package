@@ -31,12 +31,12 @@ router.group('/', (router) => {
         res.redirect('/health')
     })
 
-    router.group('/test', (router) => {
-        // router.get('/brand', testController.brandList)
-        // router.get('/country', testController.countryList)
-        router.get('/test', testController.populateTest)
-        // router.get('/pdf', testController.pdfGenerate)
-    })
+    // router.group('/test', (router) => {
+    //     // router.get('/brand', testController.brandList)
+    //     // router.get('/country', testController.countryList)
+    //     router.get('/test', testController.populateTest)
+    //     // router.get('/pdf', testController.pdfGenerate)
+    // })
 
     // CMS Related Routes
     router.use('/cms', cmsRoutes)
