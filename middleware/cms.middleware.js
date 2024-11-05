@@ -199,7 +199,7 @@ const mainNavGenerator = async (req, res, next) => {
     // Finding all content types to list in the contents section
     const contentTypes = await ContentType.find({
         active: true,
-        brand: { $in: [req.session.brand._id] },
+        brand: { $in: [req.session.brand?._id] },
     })
         .select(
             '-_id title slug admin_icon admin_nav_section position active single_type has_access'

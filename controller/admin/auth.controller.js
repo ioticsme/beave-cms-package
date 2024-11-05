@@ -152,21 +152,21 @@ const loginSubmit = async (req, res) => {
             // Fetch settings based on the brand and country details
             const settings = await Settings.findOne({
                 brand: brand,
-                country: brand.domains[0].country._id,
+                country: brand?.domains[0]?.country._id,
             }).select('-brand -country -__v -created_at -updated_at -author')
 
             // Set brand details in session
             session.brand = {
-                _id: brand._id,
-                name: brand.name,
-                code: brand.code,
-                languages: brand.languages,
-                country: brand.domains[0].country._id,
-                country_name: brand.domains[0].country.name.en,
-                country_code: brand.domains[0].country.code,
-                country_currency: brand.domains[0].country.currency,
+                _id: brand?._id,
+                name: brand?.name,
+                code: brand?.code,
+                languages: brand?.languages,
+                country: brand?.domains[0].country._id,
+                country_name: brand?.domains[0].country.name.en,
+                country_code: brand?.domains[0].country.code,
+                country_currency: brand?.domains[0].country.currency,
                 country_currency_symbol:
-                    brand.domains[0].country.currency_symbol,
+                    brand?.domains[0].country.currency_symbol,
                 settings: settings ? settings : {},
             }
 
