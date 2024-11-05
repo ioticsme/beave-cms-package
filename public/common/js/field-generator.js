@@ -229,12 +229,13 @@ document
                 fieldSchemaJson[index].fields,
                 (field) => field.label == fieldName
             )
-            // console.log(foundField)
             $('#field_form_modal').modal('show')
             var fieldFormModal = document.querySelector(`#field_form_modal`)
             fieldFormModal.querySelector(`.modal-title`).innerHTML =
                 'Edit Field'
-            fieldFormModal.querySelector(`.back-btn`).classList.add('d-none')
+            fieldFormModal.querySelectorAll(`.back-btn`).forEach((backBtn) => {
+                backBtn.classList.add('d-none')
+            })
             fieldFormModal
                 .querySelector(`#${foundField.type}-field-section`)
                 .classList.remove('d-none')
