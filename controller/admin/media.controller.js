@@ -10,6 +10,7 @@ const Media = require('../../model/Media')
 const list = async (req, res) => {
     try {
         const media = await Media.find().sort({ created_at: -1 }) // Fetch media and sort
+        // TODO: PDF upload config on app settings
         let hasPdfUpload = envConfig.general.HAS_PDF_UPLOAD // Check if PDF upload is enabled
         return res.render('admin-njk/cms/media/listing', {
             media,

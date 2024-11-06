@@ -6,10 +6,10 @@ const {
 const {
     cloudinaryUploadMedia,
 } = require('../adaptors/file-upload/Cloudinary.adaptor.js')
-const {
-    bunnyCDNUploadMedia,
-    bunnyCDNUploadMediaFromURL,
-} = require('../adaptors/file-upload/BunnyCdn.adaptor.js')
+// const {
+//     bunnyCDNUploadMedia,
+//     bunnyCDNUploadMediaFromURL,
+// } = require('../adaptors/file-upload/BunnyCdn.adaptor.js')
 const {
     localUploadMedia,
     localDeleteMedia,
