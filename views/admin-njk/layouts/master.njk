@@ -121,6 +121,15 @@
 
 				<div class="app-main flex-column flex-row-fluid" id="beave_app_main" style="padding-left: 230px">
 
+					{% if not authUser.brand or not authUser.brand._id %}
+						<div class="container">
+							<div class="alert alert-danger m-5">
+								Brand Configuration is missing. 
+								<a class="btn btn-sm btn-dark" href="/admin/config/brand/add">Configure Brand</a>
+							</div>
+						</div>
+					{% endif %}
+
 					{# //- BEGIN::LOADING MAIN PAGE CONTENT PART #}
 					{% block content %}{% endblock %}
 					{# //- END::LOADING MAIN PAGE CONTENT PART #}

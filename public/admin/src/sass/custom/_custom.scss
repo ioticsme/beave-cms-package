@@ -1350,3 +1350,10 @@ $border-color_6: rgb(75 85 99 / var(--tw-border-opacity));
         }
     }
 }
+
+#img-holder {
+    img#preview-img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}

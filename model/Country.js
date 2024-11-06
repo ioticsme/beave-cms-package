@@ -22,7 +22,7 @@ const CountrySchema = new mongoose.Schema(
         },
         timezone: {
             type: String,
-            default: 'Asia/Dubai',
+            default: 'UTC',
         },
     },
     {

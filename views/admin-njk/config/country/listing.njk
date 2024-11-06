@@ -31,7 +31,7 @@
 					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Country List</h1>
 				</div>
 				<div class="d-flex align-items-center gap-2 gap-lg-3">
-					<a class="btn btn-sm fw-bold btn-primary" href="/admin/config/country/add">Add Country</a>
+					<a class="btn btn-sm fw-bold btn-light-primary" href="/admin/config/country/add">Add Country</a>
 				</div>
 			</div>
 		</div>
@@ -62,8 +62,8 @@
 									</th>
 									<th class="min-w-125px">Name</th>
 									<th class="min-w-125px">Code</th>
-									<th class="min-w-125px">Currency</th>
-									<th class="min-w-125px">Timezone</th>
+									{# <th class="min-w-125px">Currency</th> #}
+									{# <th class="min-w-125px">Timezone</th> #}
 									<th class="text-end min-w-70px">Actions</th>
 								</tr>
 							</thead>
@@ -79,8 +79,8 @@
 											<a href="#" class="text-gray-800 text-hover-primary mb-1">{{ country.name.en }}</a>
 										</td>
 										<td>{{ country.code }}</td>
-										<td>{{ country.currency }} | {{ country.currency_symbol }}</td>
-										<td>{{ country.timezone }}</td>
+										{# <td>{{ country.currency }} | {{ country.currency_symbol }}</td> #}
+										{# <td>{{ country.timezone }}</td> #}
 										<td class="text-end">
 											<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-beave-menu-trigger="click" data-beave-menu-placement="bottom-end">
 												Actions

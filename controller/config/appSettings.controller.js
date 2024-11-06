@@ -25,7 +25,7 @@ const save = async (req, res) => {
     // console.log(req.body)
     const schema = Joi.object({
         client_name: Joi.string().required(),
-        frontend_url: Joi.string().optional(),
+        frontend_url: Joi.string().optional().allow(null, ''),
         user_email_verification: Joi.boolean().optional().allow(null, ''),
         local_upload: Joi.boolean().optional().allow(null, ''),
         ik_public_key: Joi.string().optional().allow(null, ''),

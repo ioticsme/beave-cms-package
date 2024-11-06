@@ -42,10 +42,10 @@ const save = async (req, res) => {
     const schema = Joi.object({
         name: Joi.string().required().min(3).max(60),
         code: Joi.string().required().min(2).max(5),
-        currency: Joi.string().required(),
-        currency_symbol: Joi.string().required(),
-        currency_decimal_points: Joi.number().required(),
-        timezone: Joi.string().required(),
+        currency: Joi.string().optional().allow(null, ''),
+        currency_symbol: Joi.string().optional().allow(null, ''),
+        currency_decimal_points: Joi.number().optional().allow(null, ''),
+        timezone: Joi.string().optional().allow(null, ''),
         id: Joi.optional(),
     })
 

@@ -5,6 +5,8 @@ const Admin = require('../../model/Admin') // Import the Admin model
 const Brand = require('../../model/Brand') // Import the Brand model
 var session = require('express-session') // Import express-session for session management
 const Settings = require('../../model/Settings') // Import Settings model
+const Country = require('../../model/Country')
+const Language = require('../../model/Language')
 
 // Handles the signup page rendering
 const signup = async (req, res) => {
@@ -58,6 +60,20 @@ const signupSubmit = async (req, res) => {
         })
 
         if (admin?._id) {
+            await Country.create({
+                name: {
+                    en: 'USA',
+                },
+                code: 'us',
+                currency: 'USD',
+                currency_symbol: 'USD',
+                currency_decimal_points: 2,
+            })
+            await Language.create({
+                name: 'English',
+                prefix: 'en',
+                dir: 'ltr',
+            })
             // Destroy session and redirect to login if signup is successful
             req.session.destroy()
             return res.status(200).json({

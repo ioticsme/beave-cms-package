@@ -110,9 +110,10 @@
 																			{% endfor %}
 																		{% else %}
 																			{% for cf in cfg.fields %}
-																				<span class="badge badge-light-success mt-5">{{ cf.field_label }}</span>
-																				<br>
-																				<div class="card">
+																				<div class="">
+																					<span class="badge badge-dark">{{ cf.field_label }}</span>
+																				</div>
+																				<div class="mt-3 mb-5">
 																					{% if cf.field_type == 'media' %}
 																						<img src="{{ contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name].url }}" style="max-width: 200px;">
 																					{% else %}
