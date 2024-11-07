@@ -1357,3 +1357,9 @@ $border-color_6: rgb(75 85 99 / var(--tw-border-opacity));
         max-height: 100%;
     }
 }
+
+#content-detail-tab {
+    img {
+        max-width: 150px;
+    }
+}

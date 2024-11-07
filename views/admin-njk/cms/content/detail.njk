@@ -83,7 +83,7 @@
 												</li>
 											{% endif %}
 										</ul>
-										<div class="tab-content tab-content-fields" id="myTabContent">
+										<div class="tab-content tab-content-fields" id="content-detail-tab">
 											{% if has_bilingual_field_groups %}
 												{% for brandLanguage in authUser.brand.languages %}
 													<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" dir="{{brandLanguage.dir}}" id="beave_tab_pane_{{ brandLanguage.prefix }}">

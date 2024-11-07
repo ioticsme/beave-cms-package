@@ -92,15 +92,15 @@
 												{% set url = '/admin/config/brand/change-status' %}
 												{% if brand.active %}
 													<div class="menu-item px-3">
-														<a href="#" id="{{ brand._id }}" url="{{ url }}" onClick="changeStatus(this,{{ brand.active }})" class="menu-link px-3">In-avtivate</a>
+														<a id="{{ brand._id }}" url="{{ url }}" onClick="changeStatus(this,{{ brand.active }})" class="menu-link px-3">In-avtivate</a>
 													</div>
 												{% else %}
 													<div class="menu-item px-3">
-														<a href="#" id="{{ brand._id }}" url="{{ url }}" onClick="changeStatus(this,{{ brand.active }})" class="menu-link px-3">Activate</a>
+														<a id="{{ brand._id }}" url="{{ url }}" onClick="changeStatus(this,{{ brand.active }})" class="menu-link px-3">Activate</a>
 													</div>
 												{% endif %}
 												<div class="menu-item px-3">
-													<a href="#" id="{{ brand._id }}" url="/admin/config/brand/delete" onClick="deleteItem(this)" class="menu-link px-3">Delete</a>
+													<a id="{{ brand._id }}" url="/admin/config/brand/delete" onClick="deleteItem(this)" class="menu-link px-3">Delete</a>
 												</div>
 											</div>
 
