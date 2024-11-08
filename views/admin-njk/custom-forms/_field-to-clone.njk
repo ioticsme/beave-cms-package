@@ -1,0 +1,193 @@
+<div class="row cf-card mt-2" id="cf-card-{{ loop.index0 | default(0) }}">
+	<!-- Loop through brand languages -->
+	{% for brandLanguage in authUser.brand.languages %}
+		<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-4">
+			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+				<span class="required">Field Label ({{ brandLanguage.prefix }})</span>
+			</label>
+			<input class="form-control cf" type="text" placeholder="Enter field label" name="field_label[{{ brandLanguage.prefix }}][]" value="{{field.field_label[brandLanguage.prefix]}}"/>
+			<span>
+				<small class="field-info">This will be shown in the frontend.</small>
+			</span>
+			<div class="fv-plugins-message-container invalid-feedback" id="field-error-field_label_0"></div>
+		</div>
+	{% endfor %}
+
+	<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-4 d-none">
+		<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+			<span class="required">Field Name</span>
+		</label>
+		<input class="form-control cf" type="text" placeholder="Enter field name" name="field_name[]" value="{{field.field_name}}"/>
+		<span>
+			<small class="field-info">This name is for storing the value in db.</small>
+		</span>
+		<div class="fv-plugins-message-container invalid-feedback" id="field-error-field_name_0"></div>
+	</div>
+
+	<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-4">
+		<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+			<span class="required">Field Type</span>
+		</label>
+		<select class="cf field_type_select form-select mb-2" data-cf-control="select" data-hide-search="true" data-placeholder="Select a type" name="field_type[]">
+			<option value="">Select an option</option>
+			{% for item in field_types %}
+				<option value="{{ item.type }}" {% if item.type == field.field_type %}selected{% endif %}>{{ item.label }}</option>
+			{% endfor %}
+		</select>
+		<span>
+			<small class="field-info">The selected type of field will be shown in frontend form.</small>
+		</span>
+		<div class="fv-plugins-message-container invalid-feedback" id="field-error-field_type_0"></div>
+	</div>
+
+	<!-- Loop through brand languages for default value -->
+	{% for brandLanguage in authUser.brand.languages %}
+		<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-4">
+			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+				<span>Default Value ({{ brandLanguage.prefix }})</span>
+			</label>
+			<input class="form-control cf" type="text" placeholder="Enter field default value" name="field_default_val[{{ brandLanguage.prefix }}][]" value="{{field.field_default_val[brandLanguage.prefix]}}"/>
+			<span>
+				<small class="field-info">This is for defining the default value for each field. You can set the default value for the field.</small>
+			</span>
+			<div class="fv-plugins-message-container invalid-feedback" id="field-error-field_default_val_0"></div>
+		</div>
+	{% endfor %}
+
+	<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-4">
+		<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+			<span class="required">Field Position</span>
+		</label>
+		<input class="form-control cf" type="number" placeholder="Enter field position" name="position[]" value="{{field.position}}"/>
+		<span>
+			<small class="field-info">The fields will be shown in this order.</small>
+		</span>
+		<div class="fv-plugins-message-container invalid-feedback" id="field-error-position_0"></div>
+	</div>
+
+	<!-- Loop through brand languages for field values -->
+	{% for brandLanguage in authUser.brand.languages %}
+		<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-4">
+			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+				<span>Field Values ({{ brandLanguage.prefix }})</span>
+			</label>
+			<textarea class="form-control cf" name="field_values[{{ brandLanguage.prefix }}][]" placeholder="Dropdown values separated by comma(,)">{{field.field_values[brandLanguage.prefix]}}</textarea>
+			<span>
+				<small class="field-info">This is only required if the field type is dropdown.</small>
+			</span>
+			<div class="fv-plugins-message-container invalid-feedback" id="field-error-field_values_0"></div>
+		</div>
+	{% endfor %}
+
+	<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-4 d-none content_type_select">
+		<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+			<span>Content Type</span>
+		</label>
+		<select class="form-control cf" name="content_type[]" placeholder="Select content type">
+			<option value="">Select content type</option>
+			{% for contentType in contentTypes %}
+				<option value="{{contentType.id}}" {% if contentType.id == field.content_type %}selected{% endif %}>{{contentType.title}}</option>
+			{% endfor %}
+		</select>
+		<span>
+			<small class="field-info">This is only required if the field type is content type.</small>
+		</span>
+		<div class="fv-plugins-message-container invalid-feedback" id="field-error-content_type_0"></div>
+	</div>
+
+	<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-12">
+		<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+			<span class="required">Field Validation</span>
+		</label>
+		<div class="row field-validation-rule-section">
+			<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-3">
+				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+					<span>
+						<small>Min. Length</small>
+					</span>
+				</label>
+				<input class="form-control cf" type="text" placeholder="Min. length" name="field_validation_min_length[]" value="{{field.field_validation_min_length | default(0)}}"/>
+				<span>
+					<small class="field-info">Minimum length required.</small>
+				</span>
+				<div class="fv-plugins-message-container invalid-feedback" id="field-error-field_validation_min_length"></div>
+			</div>
+
+			<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-3">
+				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+					<span>
+						<small>Max. Length</small>
+					</span>
+				</label>
+				<input class="form-control cf" type="text" placeholder="Max. length" name="field_validation_max_length[]" value="{{field.field_validation_min_length | default(100)}}"/>
+				<span>
+					<small class="field-info">Maximum length allowed.</small>
+				</span>
+				<div class="fv-plugins-message-container invalid-feedback" id="field-error-field_validation_max_length"></div>
+			</div>
+
+			<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-3">
+				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+					<span>
+						<small>Required</small>
+					</span>
+				</label>
+				<select class="cf form-select mb-2" name="field_validation_mandatory[]" required>
+					<option value="required" {% if field.validation.required %}selected{% endif %}>Yes</option>
+					<option value="optional" {% if not field.validation.required %}selected{% endif %}>No</option>
+				</select>
+				<span>
+					<small class="field-info">This defines if the field is mandatory or not.</small>
+				</span>
+			</div>
+
+			<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-3">
+				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+					<span>
+						<small>Data Type</small>
+					</span>
+				</label>
+				<select class="cf form-select mb-2" name="field_validation_type[]" required>
+					<option value="string" {% if field.validation.data_type == 'string' %}selected{% endif %}>String</option>
+					<option value="number" {% if field.validation.data_type == 'number' %}selected{% endif %}>Number</option>
+					<option value="boolean" {% if field.validation.data_type == 'boolean' %}selected{% endif %}>Boolean</option>
+				</select>
+				<span>
+					<small class="field-info">This defines the acceptable data type for the field.</small>
+				</span>
+			</div>
+
+			<div class="col-md-5">
+				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+					<span>
+						<small>List View</small>
+					</span>
+				</label>
+				<div class="form-check form-check-custom mt-2 mb-5 form-check-solid">
+					<input class="form-check-input cf" type="checkbox" name="field_show_in_list[]" value="true"/>
+					<label class="form-check-label"></label>
+				</div>
+				<span>
+					<small class="field-info">This defines the field is required or not in the CMS listing.</small>
+				</span>
+				<div class="fv-plugins-message-container invalid-feedback" id="field-error-field_show_in_list"></div>
+			</div>
+
+			<div class="col-md-5">
+				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+					<span>
+						<small>Enable</small>
+					</span>
+				</label>
+				<div class="form-check form-check-custom mt-2 mb-5 form-check-solid">
+					<input class="form-check-input cf" type="checkbox" name="field_enable[]" value="true"/>
+					<label class="form-check-label"></label>
+				</div>
+				<span>
+					<small class="field-info">This defines the field as enabled or disabled.</small>
+				</span>
+				<div class="fv-plugins-message-container invalid-feedback" id="field-error-field_enable"></div>
+			</div>
+		</div>
+	</div>
+</div>

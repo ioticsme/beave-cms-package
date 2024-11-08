@@ -3,6 +3,7 @@
 {% block csslib %}
 	<link href="/cms-static/admin/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css"/>
 	<link href='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css' rel='stylesheet' type='text/css'/>
+	<link href='/cms-static/admin/article-editor/css/article-editor.min.css' rel='stylesheet' type='text/css'/>
 	<link href='/cms-static/admin/assets/plugins/global/plugins.bundle.css' rel='stylesheet' type='text/css'/>
 	<link href='/cms-static/admin/assets/css/style.bundle.css' rel='stylesheet' type='text/css'/>
 {% endblock %}
@@ -35,6 +36,7 @@
 
 	{# //- custom functions  #}
 	<script src='/cms-static/common/js/custom-functions.js'></script>
+	<script src='/cms-static/admin/article-editor/article-editor.min.js'></script>
 {% endblock %}
 
 {% block customScript %}
@@ -51,7 +53,7 @@
 			})
 
 		document
-			.querySelectorAll('.beave_daterangepicker input')
+			.querySelectorAll('.kt_daterangepicker input')
 			.forEach((picker) => {
 				$(`#${picker.id}`).flatpickr({
 					altInput: !0,
@@ -66,43 +68,103 @@
 				$(item).select2()
 			})
 
-		var childIndex = 0
+		function addEventListenerToTypeSelect() {
+			const fieldTypeSelectField = document.querySelectorAll('.field_type_select')
+			fieldTypeSelectField.forEach(select => {
+				// Find the closest parent element that contains the content_type select field
+				const card = select.closest('.cf-card');
+				if (card) {
+					const contentTypeSelect = card.querySelector('.content_type_select');
+					const selectValue = select.value
+					if (selectValue === 'content_type') {
+						// Show the content_type select field
+						contentTypeSelect
+							.classList
+							.remove('d-none');
+					} else {
+						// Hide the content_type select field
+						contentTypeSelect
+							.classList
+							.add('d-none');
+					}
+				}
+				select.addEventListener('change', (event) => {
+					const selectedValue = event.target.value;
+					if (card) {
+						const contentTypeSelect = card.querySelector('.content_type_select');
+						if (selectedValue === 'content_type') {
+							// Show the content_type select field
+							contentTypeSelect
+								.classList
+								.remove('d-none');
+						} else {
+							// Hide the content_type select field
+							contentTypeSelect
+								.classList
+								.add('d-none');
+						}
+					}
+				});
+			});
+		}
+		addEventListenerToTypeSelect()
+
+		var childIndex = document
+			.querySelectorAll(".cf-card")
+			.length - 1
 		function cloneChild() {
-			let cf = document
-				.querySelector("input[name='custom_fields']")
-				.value
-			let cfLength = childIndex
-			if (cf.length) {
-				let customFields = JSON.parse(cf)
-					?.custom_fields
-				let customFieldsLength = customFields
-					?.length
-				cfLength = childIndex + customFieldsLength
-			}
 			childIndex++
-			let p = document.querySelector(".cf-card")
+			let listCfCards = document.querySelectorAll(".cf-card")
+			let p = listCfCards[listCfCards.length - 1]
+			//- console.log(listCfCards.length)
 			let p_prime = p.cloneNode(true)
 			let newElement = document
-				.getElementById('form-holder')
+				.getElementById('field-holder')
 				.appendChild(p_prime)
-			newElement.setAttribute("id", "cf-card-" + cfLength) //setting ID for newly created card
-			//- document.querySelector(`#cf-card-${cfLength} .title`).textContent = `Custom Field ${cfLength + 1}`
+			newElement.setAttribute("id", "cf-card-" + childIndex) //setting ID for newly created card
+			//- document.querySelector(`#cf-card-${childIndex} .title`).textContent = `Custom Field ${childIndex + 1}`
 			document
-				.querySelectorAll(`#cf-card-${cfLength} .cf `)
+				.querySelectorAll(`#cf-card-${childIndex} .cf `)
 				.forEach(function (element) {
-					if (element.type == 'select-one') {} else if (element.type == 'text') {
+					if (element.type == 'select-one') {
+						//- console.log(element.value)
+					} else if (element.type == 'text') {
 						element.value = null
+					} else if (element.type == 'number') {
+						element.value = 0
+					} else if (element.type == 'textarea') {
+						element.value = ''
+					} else if (element.type == 'checkbox') {
+						element.checked = false
 					}
 				})
 			document
-				.querySelectorAll(`#cf-card-${cfLength} .fv-plugins-message-container `)
+				.querySelectorAll(`#cf-card-${childIndex} .fv-plugins-message-container `)
 				.forEach(function (element) {
 					let id = element
 						.id
 						.split('_')
 					id.pop()
 					let newId = id.join('_')
-					element.setAttribute('id', `${newId}_${cfLength}`)
+					element.setAttribute('id', `${newId}_${childIndex}`)
+				})
+
+			document
+				.querySelectorAll(`#cf-card-${childIndex} .field-validation-rule-section .rule-field`)
+				.forEach(function (element) {
+					let name = element.name
+					//- console.log()
+					let array_pos = name.match(/\[(\d+)\]/)
+					let index = childIndex
+					//- console.log(`#cf-card-${childIndex} :: ${name} :: ${array_pos[1]}`)
+					let updated_name = name.replace(/\[\d+\]/, `[${childIndex}]`);
+					//- console.log(index)
+					//- let newId = id.join('_')
+					element.setAttribute('name', `${updated_name}`)
+					//- document.querySelectorAll(`[name="${updated_name}"]`).forEach(function(new_element) {
+					//- 	console.log(new_element)
+					//- 	new_element.checked = false
+					//- })
 				})
 
 			document
@@ -111,138 +173,120 @@
 					$(item).select2()
 				})
 
+			const contentTypeSelect = newElement.querySelector('.content_type_select');
+			if (contentTypeSelect) {
+				contentTypeSelect
+					.classList
+					.add('d-none');
+			}
+			addEventListenerToTypeSelect()
 		}
+
+		document.addEventListener('click', function (e) {
+			var field_length = document
+				.querySelectorAll(".cf-card")
+				.length - 1
+			if (e.target && e.target.classList.contains('delete-field-btn') && field_length) {
+				e.preventDefault();
+				// Remove the element four levels up from the delete button
+				e
+					.target
+					.parentElement
+					.parentElement
+					.parentElement
+					.parentElement
+					.remove();
+				console.log('Delete button clicked');
+			}
+		});
+
+		function deleteField(e) {
+			var fieldLength = document
+				.querySelectorAll(".cf-card")
+				.length - 1
+			if (e && fieldLength) {
+				e
+					.parentElement
+					.parentElement
+					.parentElement
+					.parentElement
+					.parentElement
+					.remove();
+			}
+		}
+
+		ArticleEditor('.page_builder_content', {
+			css: '/admin/article-editor/css/',
+			image: {
+				upload: '/admin/upload-article-image'
+			}
+		})
 	</script>
+
 {% endblock %}
 
 {% block content %}
 	<div class="d-flex flex-column flex-column-fluid">
-		<div class="app-toolbar py-3 py-lg-6" id="beave_app_toolbar">
-			<div class="app-container container-xxl d-flex flex-stack" id="beave_app_toolbar_container">
+		<div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+			<div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Create New Form</h1>
 					<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
 						<li class="breadcrumb-item text-muted">
-							<a class="text-muted text-hover-primary" href="/admin/custom-forms">Form</a>
+							<a href="/admin/custom-forms" class="text-muted text-hover-primary">Form</a>
 						</li>
 						<li class="breadcrumb-item">
-							<span class="bullet bg-gray-400 w-5px h-2px"></span></li>
+							<span class="bullet bg-gray-400 w-5px h-2px"></span>
+						</li>
 						<li class="breadcrumb-item text-muted">Add New</li>
 					</ul>
 				</div>
 			</div>
 		</div>
-		<div class="app-content flex-column-fluid" id="beave_app_content">
-			<div class="app-container container-xxl" id="beave_app_content_container">
+
+		<div id="kt_app_content" class="app-content flex-column-fluid">
+			<div id="kt_app_content_container" class="app-container container-xxl">
 				<div class="d-flex flex-column flex-lg-row">
 					<div class="flex-lg-row-fluid me-lg-15 order-2 order-lg-1 mb-10 mb-lg-0">
-						<form class="form es-form" id="beave_subscriptions_create_new" action="/admin/custom-forms/save" data-redirect-url="/admin/custom-forms" method="post">
-							<input type="hidden" name="id" value="{{ form.id }}"/>
-							{# <input type="hidden" name="custom_fields" value={{ JSON.stringify(form || {}) }}/> #}
-							<input type="hidden" name="custom_fields" value=""/>
+						<form id="kt_subscriptions_create_new" class="form es-form" action="/admin/custom-forms/save" method="post" data-kt-redirect-url="/admin/custom-forms">
+							<input type="hidden" name="id" value={{form.id}}/>
 							<div class="card card-flush pt-3 mb-5 mb-lg-10">
 								<div class="card-header">
 									<div class="card-title">
-										<h2 class="fw-bold">Form Basic Info</h2>
+										<h2 class="fw-bold">Form Info</h2>
 									</div>
 									<div class="card-toolbar">
-										<button class="btn btn-sm btn-success form-submit-btn" type="submit">
+										<button type="submit" class="btn btn-sm btn-success form-submit-btn">
 											<span class="label">Save</span>
-											<span class="preloader d-none">Saving...</span></button>
+											<span class="preloader d-none">Saving...</span>
+										</button>
 									</div>
 								</div>
 								<div class="card-body pt-0" id="form-holder">
-									<div class="row">
-										<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-4">
-											<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-												<span class="required">Form Name</span>
-											</label>
-											<input class="form-control" type="text" placeholder="Enter Form Name" value="{{ form.form_name }}" name="form_name">
-											<div class="fv-plugins-message-container invalid-feedback" id="field-error-form_name"></div>
+									<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
+										<li class="nav-item">
+											<a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_general">General</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_fields">Fields</a>
+										</li>
+									</ul>
+									<div class="tab-content tab-content-fields" id="myTabContent">
+										<div class="tab-pane fade active show" role="tabpanel" id="kt_tab_pane_general">
+											{% include './_general-tab-form.njk' %}
 										</div>
-										<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-4">
-											<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-												<span class="required">Auto Reply Email Template</span>
-											</label>
-											<select class="cf kt_field_type_select form-select mb-2" data-cf-control="select" data-hide-search="true" data-placeholder="Select a type" name="reply_email_template">
-												<option value="">Select an option</option>
-												{% for item in domainTemplates.items %}
-													<option value="{{ item.name }}" {% if item.name == form.reply_email_template %}selected{% endif %}>{{ item.name }}</option>
+										<div class="tab-pane fade" role="tabpanel" id="kt_tab_pane_fields">
+											<div id="field-holder">
+												{% for field in form.fields%}
+													{% include './_field-to-clone.njk' %}
 												{% endfor %}
-											</select>
-											<div class="fv-plugins-message-container invalid-feedback" id="field-error-reply_email_template"></div>
-										</div>
-										<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-4 pt-10">
-											<div class="form-check form-check-custom form-check-success form-check-solid">
-												<input class="form-check-input" type="checkbox" value="true" {% if form.has_captcha %}checked{% endif %}>
-												<label class="form-check-label" for="">
-												Google Captcha
-											</label>
+											</div>
+
+											<div class="row text-center mt-5">
+												<a class="btn btn-primary btn-sm mb-5" onClick="cloneChild()">Add New Field</a>
 											</div>
 										</div>
 									</div>
-
-									<h3>Notification</h3>
-									<div class="row">
-										<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
-											<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-												<span class="required">Email Form Data To:</span>
-											</label>
-											<input type="text" class="form-control" placeholder="Enter Form Name" value="{{ form.recepient_emails }}" name="recepient_emails">
-											<div class="fv-plugins-message-container invalid-feedback" id="field-error-form_name"></div>
-										</div>
-										<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-6">
-											<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-												<span class="required">Email Template</span>
-											</label>
-											<select class="cf kt_field_type_select form-select mb-2" data-cf-control="select" data-hide-search="true" data-placeholder="Select a type" name="recepient_email_template">
-												<option value="">Select an option</option>
-												{% for item in domainTemplates.items %}
-													<option value="{{ item.name }}" {% if item.name == form.recepient_email_template %}selected{% endif %}>{{ item.name }}</option>
-												{% endfor %}
-											</select>
-											<div class="fv-plugins-message-container invalid-feedback" id="field-error-recepient_email_template"></div>
-										</div>
-										<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-12">
-											<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-												<span class="required">Slack URL</span>
-											</label>
-											<input type="text" class="form-control" placeholder="Enter Form Name" value="{{ form.slack_url }}" name="slack_url">
-											<div class="fv-plugins-message-container invalid-feedback" id="field-error-form_name"></div>
-										</div>
-										<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-12">
-											<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-												<span class="required">Web Hook</span>
-											</label>
-											<input type="text" class="form-control" placeholder="Slack Web Hook URL" value="{{ form.web_hook }}" name="web_hook">
-											<div class="fv-plugins-message-container invalid-feedback" id="field-error-web_hook"></div>
-										</div>
-									</div>
-
-									<h3>Fields</h3>
-									{% if form and form.custom_fields %}
-										{% for item in form.custom_fields %}
-											<div class="row cf-card mt-2">
-												<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-6">
-													<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-														<span class="required">Field Name</span>
-													</label>
-													<input type="text" class="form-control cf" placeholder="Enter field name" value="{{ item.field_name }}" name="field_name[]">
-													<div id="field-error-field_name_{{ loop.index }}" class="fv-plugins-message-container invalid-feedback"></div>
-												</div>
-												<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-6">
-													<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-														<span class="required">Field Validation</span>
-													</label>
-													<input type="text" class="form-control cf" placeholder="Enter field name" value="{{ item.validation }}" name="field_validation[]">
-													<div id="field-error-field_validation_{{ loop.index }}" class="fv-plugins-message-container invalid-feedback"></div>
-												</div>
-											</div>
-										{% endfor %}
-									{% endif %}
-								</div>
-								<div class="text-center">
-									<div class="btn btn-primary btn-sm mb-5" onClick="cloneChild()">Add New Field</div>
 								</div>
 							</div>
 						</form>
@@ -251,5 +295,4 @@
 			</div>
 		</div>
 	</div>
-
 {% endblock %}

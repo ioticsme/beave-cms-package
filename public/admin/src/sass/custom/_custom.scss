@@ -1363,3 +1363,11 @@ $border-color_6: rgb(75 85 99 / var(--tw-border-opacity));
         max-width: 150px;
     }
 }
+
+.cf-card {
+    border: 1px dotted #d1d1d1;
+    padding: 25px 15px;
+    border: 1px dashed #d1d1d1;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}

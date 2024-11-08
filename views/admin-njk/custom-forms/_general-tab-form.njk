@@ -1,0 +1,141 @@
+<div class="row">
+	<div class="row">
+		{% for brandLanguage in authUser.brand.languages %}
+			<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-5">
+				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+					<span class="required">Form Name ({{ brandLanguage.prefix }})</span>
+				</label>
+				<input class="form-control" type="text" placeholder="Enter Form Name" name="form_name[{{ brandLanguage.prefix }}]" value="{{form.form_name[brandLanguage.prefix]}}" required>
+				<div class="fv-plugins-message-container invalid-feedback" id="field-error-form_name"></div>
+			</div>
+		{% endfor %}
+
+		<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-2">
+			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+				<span>Store In DB</span>
+			</label>
+			<input type="checkbox" name="store_in_db" value="true" {% if form.store_in_db %}checked{% endif %}>
+			<div class="fv-plugins-message-container invalid-feedback" id="field-error-store_in_db"></div>
+		</div>
+
+		<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-4">
+			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+				<span>Auto-Reply Email Template ID</span>
+			</label>
+			<input class="form-control" type="text" placeholder="Auto-Reply Email Template ID" name="auto_reply_email_template" value="{{form.auto_reply_email_template}}">
+			<div class="fv-plugins-message-container invalid-feedback" id="field-error-auto_reply_email_template"></div>
+		</div>
+
+		<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-4">
+			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+				<span>Sent To (Email/s)</span>
+			</label>
+			<input class="form-control" type="text" placeholder="Recipient Email/s" name="recipient_emails" value="{{form.recipient_emails}}">
+			<div class="fv-plugins-message-container invalid-feedback" id="field-error-recipient_emails"></div>
+		</div>
+
+		<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-4">
+			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+				<span>Recipient Email Template ID (Admin)</span>
+			</label>
+			<input class="form-control" type="text" placeholder="Recipient Email Template ID" name="recipient_email_template" value="{{form.recipient_email_template}}">
+			<div class="fv-plugins-message-container invalid-feedback" id="field-error-recipient_email_template"></div>
+		</div>
+
+		<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+				<span>Auto-Reply Email Subject</span>
+			</label>
+			<input class="form-control" type="text" placeholder="Auto-Reply Email Subject" name="auto_reply_email_subject" value="{{form.auto_reply_email_subject}}">
+			<div class="fv-plugins-message-container invalid-feedback" id="field-error-auto_reply_email_subject"></div>
+		</div>
+
+		<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+				<span>Recipient Email Subject (Admin)</span>
+			</label>
+			<input class="form-control" type="text" placeholder="Recipient Email Subject" name="recipient_email_subject" value="{{form.recipient_email_subject}}">
+			<div class="fv-plugins-message-container invalid-feedback" id="field-error-recipient_email_subject"></div>
+		</div>
+
+		<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-12">
+			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+				<span>Slack URL</span>
+			</label>
+			<input class="form-control" type="text" placeholder="Enter Slack URL" name="slack_url" value="{{form.slack_url}}">
+			<div class="fv-plugins-message-container invalid-feedback" id="field-error-slack_url"></div>
+		</div>
+
+		<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-12">
+			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+				<span>WebHook</span>
+			</label>
+			<input class="form-control" type="text" placeholder="Enter WebHook" name="web_hook" value="{{form.web_hook}}">
+			<div class="fv-plugins-message-container invalid-feedback" id="field-error-web_hook"></div>
+		</div>
+
+		<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-12">
+			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+				<span>Form Load Mode</span>
+			</label>
+			<select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select a mode" name="form_load_mode">
+				<option value="inline" {% if form.form_load_mode == 'inline' %}selected{% endif %}>Inline</option>
+				<option value="modal" {% if form.form_load_mode == 'modal' %}selected{% endif %}>Modal</option>
+			</select>
+			<div class="fv-plugins-message-container invalid-feedback" id="field-error-form_load_mode"></div>
+		</div>
+
+		{% for brandLanguage in authUser.brand.languages %}
+			<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+					<span>Description ({{ brandLanguage.prefix }})</span>
+				</label>
+				<textarea class="form-control" placeholder="Enter Description" name="description[{{ brandLanguage.prefix }}]">{{form.description[brandLanguage.prefix]}}</textarea>
+				<div class="fv-plugins-message-container invalid-feedback" id="field-error-description_{{ brandLanguage.prefix }}"></div>
+			</div>
+		{% endfor %}
+
+		{% for brandLanguage in authUser.brand.languages %}
+			<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+					<span class="required">CTA Label ({{ brandLanguage.prefix }})</span>
+				</label>
+				<input class="form-control" type="text" placeholder="Enter Button Label" name="cta_label[{{ brandLanguage.prefix }}]" value="{{form.cta_label[brandLanguage.prefix]}}" required>
+				<div class="fv-plugins-message-container invalid-feedback" id="field-error-cta_label_{{ brandLanguage.prefix }}"></div>
+			</div>
+		{% endfor %}
+
+		{% for brandLanguage in authUser.brand.languages %}
+			<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+					<span>Terms & Condition ({{ brandLanguage.prefix }})</span>
+				</label>
+				<textarea class="form-control page_builder_content" placeholder="Enter Terms and Condition" name="tnc[{{ brandLanguage.prefix }}]">{{form.tnc[brandLanguage.prefix]}}</textarea>
+				<div class="fv-plugins-message-container invalid-feedback" id="field-error-tnc_{{ brandLanguage.prefix }}"></div>
+			</div>
+		{% endfor %}
+	</div>
+
+</div>
+
+<div class="card card-flush pt-3 mb-5 mb-lg-10">
+	<div class="card-header">
+		<div class="card-title">
+			<h2 class="fw-bold">Advanced Settings</h2>
+		</div>
+	</div>
+	<div class="card-body pt-0">
+		<div class="d-flex flex-column mb-8 fv-row">
+			<label class="form-label">Enable Form Captcha</label>
+			<div class="form-check form-switch form-check-custom form-check-solid">
+				<input class="form-check-input" type="checkbox" name="enable_captcha" value="1">
+				<div class="fv-plugins-message-container invalid-feedback" id="field-error-enable_captcha"></div>
+			</div>
+		</div>
+		<div class="d-flex flex-column mb-8 fv-row">
+			<label class="form-label">Redirect URL</label>
+			<input type="text" name="redirect_url" class="form-control form-control-lg form-control-solid" placeholder="Enter URL to redirect after submission">
+			<div class="fv-plugins-message-container invalid-feedback" id="field-error-redirect_url"></div>
+		</div>
+	</div>
+</div>

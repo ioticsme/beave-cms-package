@@ -2,9 +2,6 @@ const { formatInTimeZone } = require('date-fns-tz')
 const { mongoose, Schema } = require('mongoose')
 const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
 
-const Brand = require('./Brand')
-const Country = require('./Country')
-
 const CustomFormSchema = new mongoose.Schema(
     {
         type: {
@@ -12,41 +9,103 @@ const CustomFormSchema = new mongoose.Schema(
             required: true,
         },
         form_name: {
-            type: String,
+            type: Object,
             required: true,
         },
-        reply_email_template: String,
-        has_captcha: Boolean,
-        recepient_emails: String,
-        recepient_email_template: String,
+        description: {
+            type: Object,
+        },
+        cta_label: {
+            type: Object,
+            required: true,
+        },
+        auto_reply_email_template: String,
+        auto_reply_email_subject: String,
+        store_in_db: {
+            type: Boolean,
+            default: false,
+        },
+        recipient_emails: String,
+        recipient_email_template: String,
+        recipient_email_subject: String,
         slack_url: String,
         web_hook: String,
-        custom_fields: [
+        form_load_mode: {
+            type: String,
+            enum: ['inline', 'modal'],
+            default: 'inline',
+        },
+        fields: [
             {
+                field_label: {
+                    type: Object,
+                    required: true,
+                },
                 field_name: {
                     type: String,
                     required: true,
                 },
-                // field_type: {
-                //     type: String,
-                // },
-                validation: {
+                field_type: {
                     type: String,
+                },
+                content_type: {
+                    type: Schema.ObjectId,
+                    ref: 'ContentType',
+                    default: null,
+                },
+                field_default_val: {
+                    type: Object,
+                },
+                field_values: {
+                    type: Object,
+                },
+                field_show_in_list: {
+                    type: Boolean,
+                    default: false,
+                },
+                use_for_notification: {
+                    type: Boolean,
+                    default: false,
+                },
+                position: {
+                    type: Number,
+                    default: 0,
+                },
+                validation: {
+                    required: {
+                        type: String,
+                        default: 'required',
+                    },
+                    data_type: {
+                        type: String,
+                        default: 'string',
+                    },
+                    min_length: {
+                        type: Number,
+                        default: 0,
+                    },
+                    max_length: {
+                        type: Number,
+                        default: 100,
+                    },
                 },
             },
         ],
+        tnc: {
+            type: Object,
+        },
         published: {
             type: Boolean,
             default: true,
         },
         brand: {
             type: Schema.ObjectId,
-            ref: Brand,
+            ref: 'Brand',
             required: true,
         },
         country: {
             type: Schema.ObjectId,
-            ref: Country,
+            ref: 'Country',
             required: true,
         },
     },
@@ -83,4 +142,4 @@ CustomFormSchema.virtual('date_updated').get(function () {
     )
 })
 
-module.exports = mongoose.model('beave_CustomForm', CustomFormSchema)
+module.exports = mongoose.model('CustomForm', CustomFormSchema)

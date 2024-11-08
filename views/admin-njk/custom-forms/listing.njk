@@ -83,7 +83,7 @@
 											</div>
 										</td>
 										<td>
-											<a href="/admin/custom-forms/submissions/{{ item._id }}" class="text-gray-800 text-hover-primary mb-1">{{ item.form_name }}</a>
+											<a href="/admin/custom-forms/submissions/{{ item._id }}" class="text-gray-800 text-hover-primary mb-1">{{ item.form_name[authUser.brand.languages[0].prefix] }}</a>
 										</td>
 										<td>
 											<a href="/admin/custom-forms/submissions/{{ item._id }}" class="badge badge-light-primary">{{ item.type }}</a>
