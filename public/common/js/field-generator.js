@@ -438,11 +438,13 @@ document
                 if (res.status === 200) {
                     bkupDataJson = _.cloneDeep(fieldSchemaJson)
                     generateField()
+                    toastr.success('Field Schema saved!')
                 }
                 // console.log(res)
             })
             .catch(function (error) {
                 console.log(error)
+                toastr.error('Something went wrong!')
             })
     })
 

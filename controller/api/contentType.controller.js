@@ -366,6 +366,7 @@ const list = async (req, res) => {
                         .sort('position')
                         .populate('author')
                         .populate('country')
+                        .select(contentType.has_meta ? {} : '-meta')
 
                     let liveContent = []
                     if (liveData?.length) {
