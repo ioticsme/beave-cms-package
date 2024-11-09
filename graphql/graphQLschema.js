@@ -8,6 +8,10 @@ const { getContentListFromDB, getContentSingleFromDB } = require('./data-fetch')
 // Define your GraphQL types and queries
 const typeDefs = gql`
     scalar JSON
+    input ContentTypeInput {
+        type_slug: String
+    }
+
     type Admin {
         id: ID!
         name: String!
@@ -27,7 +31,7 @@ const typeDefs = gql`
     }
 
     type Query {
-        contents: [Content]
+        contents(where: ContentTypeInput): [Content!]
         content(id: ID!): Content
         admins: [Admin]
     }
@@ -37,12 +41,24 @@ const typeDefs = gql`
 const resolvers = {
     JSON: GraphQLJSON, // Add JSON scalar resolver
     Query: {
-        contents: async () => {
-            return await getContentListFromDB()
+        // Adding a `where` filter to the contents query
+        contents: async (_, { where }) => {
+            // Build the filter object based on the `where` input
+            const filter = {}
+
+            if (where?.type_slug) {
+                filter.type_slug = where.type_slug
+            }
+            // Query the database using the filter
+            return await getContentListFromDB(filter)
         },
+
+        // Single content by ID
         content: async (_, { id }) => {
             return await getContentSingleFromDB(id)
         },
+
+        // Fetching all admins
         admins: async () => {
             return await Admin.find()
         },

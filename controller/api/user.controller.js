@@ -6,9 +6,7 @@ const User = require('../../model/User')
 const UserResource = require('../../resources/api/user.resource')
 const collect = require('collect.js')
 const bcrypt = require('bcryptjs')
-const PaginationOrderResource = require('../../resources/api/paginationOrder.resource')
 const { setCache, getCache, removeCache } = require('../../helper/Redis.helper')
-const PAMParentResource = require('../../resources/api/pamParent.resource')
 
 // user detail
 const detail = async (req, res) => {
@@ -200,149 +198,8 @@ const changePassword = async (req, res) => {
     }
 }
 
-const orderHistory = async (req, res) => {
-    try {
-        let { page, limit } = req.query
-        if (!req.query.page) {
-            page = 1
-        }
-        if (!req.query.limit) {
-            limit = 20
-        }
-
-        // Pagination options
-        const options = {
-            page,
-            limit,
-            populate: 'country',
-        }
-        // Fetching orders with pagination
-        const orders = await Order.paginate(
-            {
-                brand: req.brand._id,
-                user: req.authPublicUser._id,
-            },
-            options
-        )
-
-        return res.status(200).json(new PaginationOrderResource(orders).exec())
-    } catch (error) {
-        return res.status(500).json({ error: `Something went wrong` })
-    }
-}
-
-const orderDetail = async (req, res) => {
-    try {
-        // Fetching order details
-        const order = await Order.findOne({
-            brand: req.brand._id,
-            user: req.authPublicUser._id,
-            _id: req.params.id,
-            // order_status: 'success',
-        }).populate('country')
-
-        if (!order) {
-            return res.status(404).json({ error: `Not Found` })
-        }
-        return res.status(200).json(new OrderResource(order).exec())
-    } catch (error) {
-        console.log(error)
-        return res.status(500).json({ error: `Something went wrong` })
-    }
-}
-
-const getPaymentCards = async (req) => {
-    try {
-        const user = await User.findOne({
-            _id: req.authPublicUser._id,
-        })
-        if (!user?.payment_cards?.length) {
-            return []
-        }
-        const saved_cards = collect(user.payment_cards)
-            .where('saved', true)
-            .all()
-        return saved_cards
-    } catch (error) {
-        return false
-    }
-}
-
-const listPaymentCard = async (req, res) => {
-    const paymentCards = await getPaymentCards(req)
-
-    if (paymentCards) return res.status(200).json(paymentCards)
-
-    return res.status(500).json({ error: `Something went wrong` })
-}
-
-const deletePaymentCards = async (req, res) => {
-    const schema = Joi.object({
-        card_id: Joi.string().required(),
-    })
-
-    const validationResult = schema.validate(req.body, {
-        abortEarly: false,
-    })
-
-    if (validationResult.error) {
-        return res.status(422).json({
-            details: validationResult.error.details,
-        })
-    }
-
-    try {
-        const user = await User.findOne({
-            'payment_cards._id': req.body.card_id,
-        })
-        const req_card = collect(user.payment_cards).firstWhere(
-            'id',
-            req.body.card_id
-        )
-        if (!req_card) {
-            return res.status(400).json({ error: 'Invalid Cardsss' })
-        }
-
-        // console.log('CARD:', req_card)
-
-        const remove_token = await removeSavedToken(req_card)
-        // console.log('RE CARD:', req_card)
-
-        // if (!remove_token) {
-        //     // TODO::send slack notification to admin
-        //     return res.status(400).json({ error: 'Invalid Card' })
-        // }
-
-        await User.findOneAndUpdate(
-            {
-                _id: req.authPublicUser._id,
-            },
-            {
-                $pull: {
-                    payment_cards: { _id: req.body.card_id },
-                },
-            }
-        )
-
-        const paymentCards = await getPaymentCards(req)
-
-        if (paymentCards) return res.status(200).json(paymentCards)
-
-        return res.status(500).json({ error: `Something went wrong` })
-
-        // return res.status(200).json('Card Deleted')
-    } catch (error) {
-        console.log(error)
-        return res.status(500).json({ error: `Something went wrong` })
-    }
-}
-
 module.exports = {
     detail,
     editUser,
     changePassword,
-    listPaymentCard,
-    deletePaymentCards,
-    orderHistory,
-    orderDetail,
 }

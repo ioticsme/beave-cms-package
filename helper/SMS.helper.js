@@ -3,8 +3,7 @@ const envConfig = require('../config/env.config')
 const axios = require('axios')
 const User = require('../model/User')
 const senderID = `Fun City`
-// const baseURL = `https://smsapi.aptivadigi.com/api/?username=${envConfig.sms.USRNAME}&password=${envConfig.sms.PASSWORD}&cmd=sendSMS&message=`
-const baseURL = `https://smsapi.aptivadigi.com/api/?username=lmleisure&password=Leisure@123&cmd=sendSMS&message=`
+const baseURL = `${envConfig.sms_url}`
 
 const sendSMS = async (mobile, senderID, message) => {
     console.log(mobile, senderID, message)
@@ -37,7 +36,7 @@ const sendTransactionOTP = async (otp, mobile, brand) => {
 }
 const sendThanks = async (message, mobile, brand, smsSettings) => {
     const senderID = `${smsSettings.sender_id}`
-    const baseURL = `https://smsapi.aptivadigi.com/api/?username=${smsSettings.username}&password=${smsSettings.password}&cmd=sendSMS&message=`
+    const baseURL = `${envConfig.sms_url}`
     if (envConfig.general.NODE_ENV == 'production') {
         sendSMS(mobile, senderID, message)
         // axios

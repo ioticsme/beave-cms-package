@@ -59,6 +59,7 @@ const envConfig = {
     slack: {
         ADMIN_CHANNEL: process.env.SLACK_ADMIN_CHANNEL,
     },
+    sms_url: '',
 }
 
 module.exports = envConfig

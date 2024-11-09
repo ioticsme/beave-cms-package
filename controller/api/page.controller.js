@@ -2,8 +2,6 @@ const collect = require('collect.js')
 const Content = require('../../model/Content')
 const Brand = require('../../model/Brand')
 
-const ProductResource = require('../../resources/api/product.resource')
-
 // Home
 const homePage = async (req, res) => {
     try {
