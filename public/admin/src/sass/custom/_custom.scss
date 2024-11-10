@@ -1382,8 +1382,9 @@ $border-color_6: rgb(75 85 99 / var(--tw-border-opacity));
             justify-content: center;
             align-items: center;
             text-align: center;
-            border: 1px dashed #d1d1d1;
             margin-bottom: 15px;
+            border: 1px dashed #d1d1d1;
+            border-radius: 10px;
             .btn {
                 .fa,
                 .fas,
