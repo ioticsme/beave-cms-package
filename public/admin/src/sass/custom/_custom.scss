@@ -1371,3 +1371,38 @@ $border-color_6: rgb(75 85 99 / var(--tw-border-opacity));
     border-radius: 15px;
     margin-bottom: 15px;
 }
+
+#field_form_modal {
+    #field-list-section {
+        .each-field-type {
+            background-color: whitesmoke;
+            width: 100%;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 1px dashed #d1d1d1;
+            margin-bottom: 15px;
+            .btn {
+                .fa,
+                .fas,
+                .far {
+                    font-size: 3rem;
+                    color: #313131;
+                    margin-bottom: 15px;
+                }
+                span {
+                    display: block;
+                    &.field-label-text {
+                        margin-bottom: 10px;
+                        font-size: 17px;
+                    }
+                    &.field-label-description {
+                        font-weight: 300;
+                    }
+                }
+            }
+        }
+    }
+}

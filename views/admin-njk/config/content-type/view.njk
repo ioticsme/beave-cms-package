@@ -352,7 +352,7 @@
 		</div>
 	</div>
 	<div class="modal fade" id="field_form_modal" tabindex="-1">
-		<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
 			<div class="modal-content position-absolute">
 				<div class="modal-header">
 					<h3 class="modal-title">Add Field</h3>
@@ -364,25 +364,89 @@
 				<div class="modal-body">
 
 					<div class="modal-field-sections" id="field-list-section">
-						<a class="btn btn-primary m-1" href="#" data-value="text">
-							<i class="fas fa-font"></i> Text
-						</a>
-						<a class="btn btn-secondary m-1" href="#" data-value="email">
-							<i class="fas fa-at"></i> Email</a>
-						<a class="btn btn-success m-1" href="#" data-value="number">
-							<i class="fas fa-sort-numeric-down"></i> Number</a>
-						<a class="btn btn-info m-1" href="#" data-value="textarea">
-							<i class="fas fa-text-width"></i> Textarea</a>
-						<a class="btn btn-info m-1" href="#" data-value="article_editor">
-							<i class="fas fa-code"></i> Article Editor</a>
-						<a class="btn btn-warning m-1" href="#" data-value="richtext">
-							<i class="far fa-newspaper"></i> Rich Text</a>
-						<a class="btn btn-dark m-1" href="#" data-value="dropdown">
-							<i class="fas fa-chevron-circle-down"></i> Dropdown</a>
-						<a class="btn btn-dark m-1" href="#" data-value="media">
-							<i class="fas fa-photo-video"></i> Media</a>
-						<a class="btn btn-info m-1" href="#" data-value="date">
-							<i class="fas fa-calendar-alt"></i> Date</a>
+						<div class="row">
+							<div class="col-12 col-md-4">
+								<div class="each-field-type">
+									<a class="btn" href="#" data-value="text">
+										<i class="fas fa-font"></i>
+										<span class="field-label-text">Text</span>
+										<span class="field-label-description">The field type for adding single-line plain text.</span>
+									</a>
+								</div>
+							</div>
+							<div class="col-12 col-md-4">
+								<div class="each-field-type">
+									<a class="btn" href="#" data-value="email">
+										<i class="fas fa-at"></i>
+										<span class="field-label-text">Email</span>
+										<span class="field-label-description">The field type for entering a valid email address.</span>
+									</a>
+								</div>
+							</div>
+							<div class="col-12 col-md-4">
+								<div class="each-field-type">
+									<a class="btn" href="#" data-value="number">
+										<i class="fas fa-sort-numeric-down"></i>
+										<span class="field-label-text">Number</span>
+										<span class="field-label-description">The field type for entering numeric values only.</span>
+									</a>
+								</div>
+							</div>
+							<div class="col-12 col-md-4">
+								<div class="each-field-type">
+									<a class="btn" href="#" data-value="textarea">
+										<i class="fas fa-text-width"></i>
+										<span class="field-label-text">Textarea</span>
+										<span class="field-label-description">The field type for adding multi-line text content.</span>
+									</a>
+								</div>
+							</div>
+							<div class="col-12 col-md-4">
+								<div class="each-field-type">
+									<a class="btn" href="#" data-value="article_editor">
+										<i class="fas fa-code"></i>
+										<span class="field-label-text">Article Editor</span>
+										<span class="field-label-description">The field type for creating and editing article content using code.</span>
+									</a>
+								</div>
+							</div>
+							<div class="col-12 col-md-4">
+								<div class="each-field-type">
+									<a class="btn" href="#" data-value="richtext">
+										<i class="far fa-newspaper"></i>
+										<span class="field-label-text">Rich Text</span>
+										<span class="field-label-description">The field type for adding formatted and styled text content.</span>
+									</a>
+								</div>
+							</div>
+							<div class="col-12 col-md-4">
+								<div class="each-field-type">
+									<a class="btn" href="#" data-value="dropdown">
+										<i class="fas fa-chevron-circle-down"></i>
+										<span class="field-label-text">Dropdown</span>
+										<span class="field-label-description">The field type for selecting an option from a predefined list.</span>
+									</a>
+								</div>
+							</div>
+							<div class="col-12 col-md-4">
+								<div class="each-field-type">
+									<a class="btn" href="#" data-value="media">
+										<i class="fas fa-photo-video"></i>
+										<span class="field-label-text">Media</span>
+										<span class="field-label-description">The field type for uploading and managing media files like images or videos.</span>
+									</a>
+								</div>
+							</div>
+							<div class="col-12 col-md-4">
+								<div class="each-field-type">
+									<a class="btn" href="#" data-value="date">
+										<i class="fas fa-calendar-alt"></i>
+										<span class="field-label-text">Date</span>
+										<span class="field-label-description">The field type for selecting a date from a calendar.</span>
+									</a>
+								</div>
+							</div>
+						</div>
 
 					</div>
 
