@@ -453,6 +453,9 @@ const saveDefaultContent = async (req, res) => {
             email: 'string()',
             number: 'number()',
             date: 'date()',
+            time: 'string()',
+            color: 'string()',
+            url: 'string()',
         }
 
         const language_prefixes = _.map(req.authUser.brand.languages, 'prefix')

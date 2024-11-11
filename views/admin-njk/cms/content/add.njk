@@ -48,7 +48,6 @@
 	{# // CKEditor #}
 	<script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
 
-
 	{# <script src='/cms-static/admin/assets/js/scripts.bundle.js'></script> #}
 	<script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.4.3/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
 
@@ -277,8 +276,8 @@
 																			</label>
 
 																			{# // end::Label #}
-																			{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' %}
-																				<input class="form-control form-control-solid" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]">
+																			{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' or cf.field_type == 'time' or cf.field_type == 'color' or cf.field_type == 'url' %}
+																				<input class="{% if cf.field_type != 'color' %} form-control form-control-solid {% endif %}" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]">
 																			{% elif cf.field_type == 'richtext' %}
 																				<textarea class="content_wysiwyg" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}"></textarea>
 																			{% elif cf.field_type == 'textarea' %}
@@ -307,7 +306,7 @@
 																			{% elif cf.field_type === 'dropdown' %}
 																				<select class="form-select" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]">
 																					<option value='' >- Select {{cf.field_label}} -</option>
-																					{% for dropdown, dd_i in cf.options %}
+																					{% for dropdown in cf.options %}
 																						<option value="{{ dropdown.value }}">{{ dropdown.label }}</option>
 																					{% endfor %}
 																				</select>
@@ -342,8 +341,8 @@
 																				<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}}</span>
 																				{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beave-initialized="1"></i> #}
 																			</label>
-																			{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' %}
-																				<input disabled class="form-control form-control-solid beave-cms-form-field" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
+																			{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' or cf.field_type == 'time' or cf.field_type == 'color' or cf.field_type == 'url' %}
+																				<input disabled class="{% if cf.field_type != 'color' %} form-control form-control-solid {% endif %} beave-cms-form-field" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
 																			{% elif cf.field_type == 'richtext' %}
 																				<textarea disabled class="content_wysiwyg beave-cms-form-field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ loop.index }}"></textarea>
 																			{% elif cf.field_type == 'textarea' %}
@@ -396,8 +395,8 @@
 																				<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}}</span>
 																				{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beave-initialized="1"></i> #}
 																			</label>
-																			{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' %}
-																				<input class="form-control form-control-solid" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
+																			{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' or cf.field_type == 'time' or cf.field_type == 'color' or cf.field_type == 'url' %}
+																				<input class="{% if cf.field_type != 'color' %} form-control form-control-solid {% endif %}" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
 																			{% elif cf.field_type == 'richtext' %}
 																				<textarea class="content_wysiwyg" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ loop.index }}"></textarea>
 																			{% elif cf.field_type == 'textarea' %}
@@ -497,7 +496,7 @@
 																		{% elif cf.field_type == 'dropdown' %}
 																			<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}]]">
 																				<option value=''>- Select {{cf.field_label}} -</option>
-																				{% for dropdown, dd_i in cf.options %}
+																				{% for dropdown in cf.options %}
 																					<option value="{{dropdown.value}}">{{dropdown.label}}</option>
 																				{% endfor %}
 																			</select>
