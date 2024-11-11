@@ -46,8 +46,7 @@
 					</ul>
 				</div>
 				<div class="d-flex align-items-center gap-2 gap-lg-3">
-					<a class="btn btn-sm fw-bold btn-light-primary" data-bs-toggle="modal" data-bs-target="#field_section_form_modal">Add Field Section</a>
-					<a href="{{ '/admin/config/content-type/edit/' + contentType._id }}" class="btn btn-sm fw-bold btn-light-primary">Edit</a>
+					<a href="{{ '/admin/config/content-type/edit/' + contentType._id }}" class="btn btn-sm fw-bold btn-light-primary">Edit Content Type</a>
 				</div>
 			</div>
 		</div>
@@ -122,11 +121,14 @@
 											<div class="card-title m-0">
 												<h3 class="fw-bold m-0">Content Fields</h3>
 											</div>
-											<div class="card-toolbar pt-5">
+											<div class="card-toolbar">
+												<a class="btn btn-sm fw-bold btn-light-primary me-2" data-bs-toggle="modal" data-bs-target="#field_section_form_modal">
+													<i class="fa fa-plus"></i>
+													Add Field Section
+												</a>
 												<button class="btn btn-sm btn-dark" type="button" disabled="true" id="schema-save-btn">
-													<i class="las la-save"></i>
-												Save
-											</button>
+													<i class="las la-save"></i> Save
+  												</button>
 											</div>
 										</div>
 										<input type="hidden" name="id" value="{{ contentType._id }}">
