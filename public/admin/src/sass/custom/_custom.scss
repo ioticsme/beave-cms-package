@@ -1375,7 +1375,7 @@ $border-color_6: rgb(75 85 99 / var(--tw-border-opacity));
 #field_form_modal {
     #field-list-section {
         .each-field-type {
-            background-color: whitesmoke;
+            background-color: rgba(#d1d1d1, 20%);
             width: 100%;
             height: 200px;
             display: flex;
@@ -1403,6 +1403,10 @@ $border-color_6: rgb(75 85 99 / var(--tw-border-opacity));
                         font-weight: 300;
                     }
                 }
+            }
+            &:hover {
+                background-color: rgba(#d1d1d1, 50%);
+                border: 2px dashed #1b84ff;
             }
         }
     }
