@@ -83,7 +83,7 @@ const generateField = async () => {
         _.forEach(group.fields, function (field) {
             const currField = `
             <tr class="draggable" data-field="${field.label}">
-                <td>${field.label} <br> ${
+                <td>${field.label}<br> ${
                 field.info
                     ? '<span class="badge badge-light-warning">' +
                       field.info +
@@ -94,8 +94,8 @@ const generateField = async () => {
                 <td>${field.type}</td>
                 <td>${
                     field.validation.required
-                        ? '<span class="badge badge-success">Yes</span>'
-                        : '<span class="badge badge-danger">No</span>'
+                        ? '<i class="fa fa-check text-success"></i>'
+                        : ''
                 }</td>
                 <td>
                     <small>
