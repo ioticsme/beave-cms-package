@@ -78,7 +78,10 @@
 								<div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Direction</label>
 									<div class="col-lg-8 fv-row">
-										<input type="text" class="form-control form-control-lg form-control-solid" name="dir" placeholder="Direction" value="{{ language.dir }}">
+										<select name="dir" data-placeholder="Select a role" class="form-select mb-2">
+											<option value="ltr" {{ 'selected' if language.dir == 'ltr'}}>LTR</option>
+											<option value="rtl" {{ 'selected' if language.dir == 'rtl'}}>RTL</option>
+										</select>
 										<div class="fv-plugins-message-container invalid-feedback" id="field-error-dir"></div>
 									</div>
 								</div>

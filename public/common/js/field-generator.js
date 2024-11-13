@@ -55,12 +55,12 @@ const generateField = async () => {
                     </p>
                 </div>
                 <div class="card-toolbar">
-                    <a class="btn btn-light btn-xs mx-1" data-bs-toggle="modal" data-bs-target="#field_form_modal" data-entry-type="new" data-section="${
+                    <a class="btn btn-light btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#field_form_modal" data-entry-type="new" data-section="${
                         group.section
-                    }"><i class="fa-solid fa-plus"></i></a>
-                    <a class="btn btn-light-danger btn-lg field-section-dlt-btn" data-section="${
+                    }"><i class="fa-solid fa-plus"></i> Add Field</a>
+                    <a class="btn btn-light-danger btn-sm field-section-dlt-btn" data-section="${
                         group.section
-                    }"><i class="fa-solid fa-trash-can"></i></a>
+                    }"><i class="fa-solid fa-trash-can"></i> Delete Section</a>
                 </div>
             </div>
             <div class="card-body section-card-body col-12">
