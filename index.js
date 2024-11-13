@@ -201,6 +201,7 @@ if (envConfig.general.NODE_ENV == 'development') {
                 session.admin_id = admin._id
                 session.admin_name = admin.name
                 session.admin_role = admin.role
+                session.admin_privileges = admin.privileges
                 const settings = await Settings.findOne({
                     brand: brand,
                     country: brand.domains[0].country._id,

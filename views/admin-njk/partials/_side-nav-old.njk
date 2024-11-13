@@ -111,51 +111,45 @@
             <hr>
         {% endif %}
         {% for navSection in mainNav %}
-            {% if allowedSections.includes(navSection.section_slug) %}
+            {% if navSection.has_access | in_array(authUser.admin_role) %}
                 <div class="menu-item pt-5">
                     <div class="menu-content">
                         <span class="menu-heading fw-bold text-uppercase fs-7">{{navSection.section}}</span>
                     </div>
                 </div>
                 {% for navItem in navSection.items %}
-                    {# {% if navItem.has_access | in_array(authUser.admin_role) %} #}
                     {% if navItem.has_access | in_array(authUser.admin_role) %}
-                        {# {{navItem.path}} #}
-                        {% if allowedURLs.includes(navItem.path) %}
-                            {% if navItem.expandable %}
-                                <div class="menu-item menu-accordion {{ 'here show' if activeNav.includes(navItem.path) }}" data-beave-menu-trigger="click">
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <span class="svg-icon svg-icon-2">{{navItem.icon|safe}}</span>
-                                        </span>
-                                        <span class="menu-title">{{navItem.label}}</span>
-                                        <span class="menu-arrow"></span>
+                        {% if navItem.expandable %}
+                            <div class="menu-item menu-accordion {{ 'here show' if activeNav.includes(navItem.path) }}" data-beave-menu-trigger="click">
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <span class="svg-icon svg-icon-2">{{navItem.icon|safe}}</span>
                                     </span>
-                                    <div class="menu-sub menu-sub-accordion">
-                                        {% for child in navItem.child %}
-                                            {% if allowedURLs.includes(child.path) %}
-                                                <div class="menu-item">
-                                                    <a class="menu-link {{ 'active' if activeNav == child.path }}" href="{{child.path}}">
-                                                        <span class="menu-bullet">
-                                                            <span class="bullet bullet-dot"></span>
-                                                        </span>
-                                                        <span class="menu-title">{{child.label}}</span>
-                                                    </a>
-                                                </div>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </div>
+                                    <span class="menu-title">{{navItem.label}}</span>
+                                    <span class="menu-arrow"></span>
+                                </span>
+                                <div class="menu-sub menu-sub-accordion">
+                                    {% for child in navItem.child %}
+                                        <div class="menu-item">
+                                            <a class="menu-link {{ 'active' if activeNav == child.path }}" href="{{child.path}}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">{{child.label}}</span>
+                                            </a>
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                            {% else %}
-                                <div class="menu-item">
-                                    <a class="menu-link {{ 'active' if activeNav == navItem.path }}" href="{{navItem.path}}">
-                                        <span class="menu-icon">
-                                            <span class="svg-icon svg-icon-2">{{navItem.icon|safe}}</span>
-                                        </span>
-                                        <span class="menu-title">{{navItem.label}}</span>
-                                    </a>
-                                </div>
-                            {% endif %}
+                            </div>
+                        {% else %}
+                            <div class="menu-item">
+                                <a class="menu-link {{ 'active' if activeNav == navItem.path }}" href="{{navItem.path}}">
+                                    <span class="menu-icon">
+                                        <span class="svg-icon svg-icon-2">{{navItem.icon|safe}}</span>
+                                    </span>
+                                    <span class="menu-title">{{navItem.label}}</span>
+                                </a>
+                            </div>
                         {% endif %}
                     {% endif %}
                 {% endfor %}

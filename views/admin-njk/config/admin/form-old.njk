@@ -1,7 +1,7 @@
 {% extends "../../layouts/master.njk" %}
 
 {% block csslib %}
-	<link href='/cms-static/admin/assets/plugins/custom/jstree/jstree.bundle.css' rel='stylesheet' type='text/css'/>
+	<link href="/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block jslib %}
@@ -20,54 +20,9 @@
 	<script src="/cms-static/admin/assets/js/custom/utilities/modals/offer-a-deal/finance.js"></script>
 	<script src="/cms-static/admin/assets/js/custom/utilities/modals/offer-a-deal/complete.js"></script>
 	<script src="/cms-static/admin/assets/js/custom/utilities/modals/offer-a-deal/main.js"></script>
-	<script src="/cms-static/common/js/tree.min.js"></script>
 	<!-- end::Custom Javascript -->
 	<script src="/cms-static/common/js/form-data-json.min.js"></script>
 	<script src="/cms-static/common/js/es-form.js"></script>
-{% endblock %}
-
-{% block customScript %}
-	<script>
-		// prettier-ignore
-		{# console.log(document.getElementById('admin_details_field').value)
-		console.log(document.getElementById('config_privilege_routes').value)
-		console.log(JSON.parse(document.getElementById('config_privilege_routes').value)) #}
-		const admin = JSON.parse(document.getElementById('admin_details_field').value)
-		const config_privilege_routes = JSON.parse(document.getElementById('config_privilege_routes').value)
-		const current_privileges = JSON.parse(document.getElementById('current_privileges').value)
-		console.log("AD",admin)
-		//- console.log("config_privilege_routes",config_privilege_routes)
-		//- console.log("current_privileges",current_privileges)
-		{# let data = `${JSON.stringify(config_privilege_routes)}` #}
-		let data = config_privilege_routes
-		console.log(data)
-		let tree = new Tree('.user-privileges-tree-container', {
-			data: [
-				{
-					id: '-1',
-					text: 'ROOT',
-					children: data
-				}
-			],
-			closeDepth: 3,
-			loaded: function () {
-				let adminRole = admin?.role || ''
-				if ((!adminRole || typeof adminRole != 'undefined') && (adminRole == 'super_admin' || adminRole == 'admin')) {
-					this.values = ['0', '1', '2', '3', '4']
-					this.disables = ['0', '1', '2', '3', '4']
-				} else {
-					this.values = ['dashboard.page']
-					this.disables = ['dashboard.page']
-					this.values = current_privileges
-				}
-
-			},
-			onChange: function () {
-				//- console.log(this.values);
-				document.getElementById('user_privilege_field').value = this.values
-			}
-		})
-	</script>
 {% endblock %}
 
 {% block content %}
@@ -77,7 +32,7 @@
 			<div id="beave_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-						{{ 'Edit' if admin else 'Add' }} User
+						{{ 'Edit' if admin else 'Add' }} Admin
 				</h1>
 					<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
 						<li class="breadcrumb-item text-muted">
@@ -104,11 +59,8 @@
 						</div>
 					</div>
 					<div id="beave_account_settings_profile_details">
-						<form id="beave_account_profile_details_form" class="form es-form" action="/admin/access-control/users/save" data-redirect-url="/admin/access-control/users" method="post" autocomplete="off">
+						<form id="beave_account_profile_details_form" class="form es-form" action="/admin/config/admin/save" data-redirect-url="/admin/config/admin" method="post" autocomplete="off">
 							<input type="hidden" name="id" value="{{ admin._id }}">
-							<input id="admin_details_field" type="hidden" value="{{jsonToString(admin)}}">
-							<input id="config_privilege_routes" type="hidden" value="{{jsonToString(config_privilege_routes)}}">
-							<input id="current_privileges" type="hidden" value="{{jsonToString(current_privileges)}}">
 							<div class="card-body border-top p-9">
 								<div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Name</label>
@@ -125,13 +77,11 @@
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Role</label>
 									<div class="col-lg-8 fv-row">
 										<select name="role" data-placeholder="Select a role" class="form-select mb-2">
-											{%if not admin%}
-												<option value="admin" {{ 'selected' if admin.role == 'admin'}}>Admin</option>
-											{%endif%}
+											<option value="super_admin" {{ 'selected' if admin.role == 'super_admin'}}>Super Admin</option>
+											<option value="admin" {{ 'selected' if admin.role == 'admin'}}>Admin</option>
 											<option value="editor" {{ 'selected' if admin.role == 'editor' }}>Editor</option>
 											<option value="finance" {{ 'selected' if admin.role == 'finance'}}>Finance</option>
 										</select>
-										<div class="fv-plugins-message-container invalid-feedback" id="field-error-role"></div>
 									</div>
 								</div>
 								<div class="row mb-6">
@@ -160,16 +110,12 @@
 										<div class="fv-plugins-message-container invalid-feedback" id="field-error-password"></div>
 									</div>
 								</div>
-								<input id="user_privilege_field" type="hidden" name="privileges" value="{{admin.privileges or ''}}">
 							</div>
 							<div class="card-footer d-flex justify-content-end py-6 px-9">
-								<button id="beave_account_profile_details_submit" class="btn btn-primary form-submit-btn" type="submit">
+								<button id="beave_account_profile_details_submit" class="btn btn-dark form-submit-btn" type="submit">
 									<span class="preloader d-none">Updating</span>
 									<span class="label">Save</span>
 								</button>
-							</div>
-							<div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 ms-lg-10">
-								<div class="user-privileges-tree-container"></div>
 							</div>
 						</form>
 					</div>

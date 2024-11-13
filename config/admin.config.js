@@ -17,6 +17,7 @@ const navConfig = [
     // },
     {
         section: 'Content',
+        section_slug: 'content',
         position: 2,
         has_access: ['super_admin', 'admin', 'editor'],
         items: [
@@ -64,6 +65,7 @@ const navConfig = [
     },
     {
         section: 'Assets',
+        section_slug: 'assets',
         position: 3,
         has_access: ['super_admin', 'admin', 'editor'],
         items: [
@@ -94,6 +96,7 @@ const navConfig = [
     },
     {
         section: 'Public',
+        section_slug: 'public',
         position: 3,
         has_access: ['super_admin', 'admin'],
         items: [
@@ -115,6 +118,7 @@ const navConfig = [
     },
     {
         section: 'Custom Forms',
+        section_slug: 'custom-forms',
         position: 4,
         has_access: ['super_admin', 'admin', 'editor'],
         items: [
@@ -144,6 +148,7 @@ const navConfig = [
     },
     {
         section: 'Settings',
+        section_slug: 'settings',
         position: 5,
         has_access: ['super_admin', 'admin'],
         items: [

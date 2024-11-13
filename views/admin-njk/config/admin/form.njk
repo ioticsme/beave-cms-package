@@ -1,32 +1,67 @@
 {% extends "../../layouts/master.njk" %}
 
 {% block csslib %}
-	<link href="/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css">
+	<link href='/cms-static/admin/assets/plugins/custom/jstree/jstree.bundle.css' rel='stylesheet' type='text/css'/>
 {% endblock %}
 
 {% block jslib %}
-	<!-- begin::Vendors Javascript(used by this page) -->
-	<script src="/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-	<!-- end::Vendors Javascript -->
-	<!-- begin::Custom Javascript(used by this page) -->
-	<!-- - <script src="/cms-static/admin/assets/js/custom/apps/subscriptions/add/advanced.js"></script>
-  - <script src="/cms-static/admin/assets/js/custom/apps/subscriptions/add/customer-select.js"></script>
-  - <script src="/cms-static/admin/assets/js/custom/apps/subscriptions/add/products.js"></script>
-  - <script src="/cms-static/admin/assets/js/widgets.bundle.js"></script>
-  - <script src="/cms-static/admin/assets/js/custom/widgets.js"></script> -->
 	<script src="/cms-static/admin/assets/js/custom/utilities/modals/create-app.js"></script>
 	<script src="/cms-static/admin/assets/js/custom/utilities/modals/offer-a-deal/type.js"></script>
 	<script src="/cms-static/admin/assets/js/custom/utilities/modals/offer-a-deal/details.js"></script>
 	<script src="/cms-static/admin/assets/js/custom/utilities/modals/offer-a-deal/finance.js"></script>
 	<script src="/cms-static/admin/assets/js/custom/utilities/modals/offer-a-deal/complete.js"></script>
 	<script src="/cms-static/admin/assets/js/custom/utilities/modals/offer-a-deal/main.js"></script>
+	<script src="/cms-static/common/js/tree.min.js"></script>
 	<!-- end::Custom Javascript -->
 	<script src="/cms-static/common/js/form-data-json.min.js"></script>
 	<script src="/cms-static/common/js/es-form.js"></script>
 {% endblock %}
 
-{% block content %}
+{% block customScript %}
+	<script>
+		// prettier-ignore
+		{# console.log(document.getElementById('admin_details_field').value)
+		console.log(document.getElementById('config_privilege_routes').value)
+		console.log(JSON.parse(document.getElementById('config_privilege_routes').value)) #}
+		const admin = JSON.parse(document.getElementById('admin_details_field').value)
+		const config_privilege_routes = JSON.parse(document.getElementById('config_privilege_routes').value)
+		const current_privileges = JSON.parse(document.getElementById('current_privileges').value)
+		console.log("AD",admin)
+		//- console.log("config_privilege_routes",config_privilege_routes)
+		//- console.log("current_privileges",current_privileges)
+		{# let data = `${JSON.stringify(config_privilege_routes)}` #}
+		let data = config_privilege_routes
+		console.log(data)
+		let tree = new Tree('.user-privileges-tree-container', {
+			data: [
+				{
+					id: '-1',
+					text: 'ROOT',
+					children: data
+				}
+			],
+			closeDepth: 3,
+			loaded: function () {
+				let adminRole = admin?.role || ''
+				if ((!adminRole || typeof adminRole != 'undefined') && (adminRole == 'super_admin' || adminRole == 'admin')) {
+					this.values = ['0', '1', '2', '3', '4']
+					this.disables = ['0', '1', '2', '3', '4']
+				} else {
+					this.values = ['dashboard.page']
+					this.disables = ['dashboard.page']
+					this.values = current_privileges
+				}
 
+			},
+			onChange: function () {
+				//- console.log(this.values);
+				document.getElementById('user_privilege_field').value = this.values
+			}
+		})
+	</script>
+{% endblock %}
+
+{% block content %}
 	<div class="d-flex flex-column flex-column-fluid">
 		<div id="beave_app_toolbar" class="app-toolbar py-3 py-lg-6">
 			<div id="beave_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
@@ -52,74 +87,79 @@
 
 		<div id="beave_app_content" class="app-content flex-column-fluid">
 			<div id="beave_app_content_container" class="app-container container-xxl">
-				<div class="card mb-5 mb-xl-10">
-					<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#beave_account_profile_details" aria-expanded="true" aria-controls="beave_account_profile_details">
-						<div class="card-title m-0">
-							<h3 class="fw-bold m-0">Admin Form</h3>
+				<form id="beave_account_profile_details_form" class="form es-form" action="/admin/config/admin/save" data-redirect-url="/admin/config/admin" method="post" autocomplete="off">
+					<div class="card mb-5 mb-xl-10">
+						<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#beave_account_profile_details" aria-expanded="true" aria-controls="beave_account_profile_details">
+							<div class="card-title m-0">
+								<h3 class="fw-bold m-0">Admin Form</h3>
+							</div>
 						</div>
-					</div>
-					<div id="beave_account_settings_profile_details">
-						<form id="beave_account_profile_details_form" class="form es-form" action="/admin/config/admin/save" data-redirect-url="/admin/config/admin" method="post" autocomplete="off">
-							<input type="hidden" name="id" value="{{ admin._id }}">
-							<div class="card-body border-top p-9">
-								<div class="row mb-6">
-									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Name</label>
-									<div class="col-lg-8">
-										<div class="row">
-											<div class="col-lg-12 fv-row">
-												<input type="text" name="name" placeholder="Name" value="{{ admin.name }}" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0">
-												<div class="fv-plugins-message-container invalid-feedback" id="field-error-name"></div>
-											</div>
+						<input type="hidden" name="id" value="{{ admin._id }}">
+						<input id="admin_details_field" type="hidden" value="{{jsonToString(admin)}}">
+						<input id="config_privilege_routes" type="hidden" value="{{jsonToString(config_privilege_routes)}}">
+						<input id="current_privileges" type="hidden" value="{{jsonToString(current_privileges)}}">
+						<div class="card-body border-top p-9">
+							<div class="row mb-6">
+								<label class="col-lg-4 col-form-label required fw-semibold fs-6">Name</label>
+								<div class="col-lg-8">
+									<div class="row">
+										<div class="col-lg-12 fv-row">
+											<input type="text" name="name" placeholder="Name" value="{{ admin.name }}" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0">
+											<div class="fv-plugins-message-container invalid-feedback" id="field-error-name"></div>
 										</div>
 									</div>
 								</div>
-								<div class="row mb-6">
-									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Role</label>
-									<div class="col-lg-8 fv-row">
-										<select name="role" data-placeholder="Select a role" class="form-select mb-2">
-											<option value="super_admin" {{ 'selected' if admin.role == 'super_admin'}}>Super Admin</option>
-											<option value="admin" {{ 'selected' if admin.role == 'admin'}}>Admin</option>
-											<option value="editor" {{ 'selected' if admin.role == 'editor' }}>Editor</option>
-											<option value="finance" {{ 'selected' if admin.role == 'finance'}}>Finance</option>
-										</select>
-									</div>
-								</div>
-								<div class="row mb-6">
-									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Status</label>
-									<div class="col-lg-8 fv-row">
-										<select name="status" data-placeholder="Select Status" class="form-select mb-2">
-											<option value="true" {{ 'selected' if admin.active }}>Active</option>
-											<option value="false" {{ 'selected' if admin.active == false }}>In Active</option>
-										</select>
-									</div>
-								</div>
-								<div class="row mb-6">
-									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Email</label>
-									<div class="col-lg-8 fv-row">
-										<input type="text" name="email" placeholder="Email" value="{{ admin.email }}" class="form-control form-control-lg form-control-solid">
-										<div class="fv-plugins-message-container invalid-feedback" id="field-error-email"></div>
-									</div>
-								</div>
-								<div class="row mb-6">
-									<label class="col-lg-4 col-form-label fw-semibold fs-6">
-										<span class="required">Password</span>
-										<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Current password should be enter to update profile details"></i>
-									</label>
-									<div class="col-lg-8 fv-row">
-										<input type="password" name="password" placeholder="Password" value="" autocomplete="off" class="form-control form-control-lg form-control-solid">
-										<div class="fv-plugins-message-container invalid-feedback" id="field-error-password"></div>
-									</div>
+							</div>
+							<div class="row mb-6">
+								<label class="col-lg-4 col-form-label required fw-semibold fs-6">Role</label>
+								<div class="col-lg-8 fv-row">
+									<select name="role" data-placeholder="Select a role" class="form-select mb-2">
+										<option value="super_admin" {{ 'selected' if admin.role == 'super_admin'}}>Super Admin</option>
+										<option value="admin" {{ 'selected' if admin.role == 'admin'}}>Admin</option>
+										<option value="editor" {{ 'selected' if admin.role == 'editor' }}>Editor</option>
+										<option value="finance" {{ 'selected' if admin.role == 'finance'}}>Finance</option>
+									</select>
 								</div>
 							</div>
-							<div class="card-footer d-flex justify-content-end py-6 px-9">
-								<button id="beave_account_profile_details_submit" class="btn btn-dark form-submit-btn" type="submit">
-									<span class="preloader d-none">Updating</span>
-									<span class="label">Save</span>
-								</button>
+							<div class="row mb-6">
+								<label class="col-lg-4 col-form-label required fw-semibold fs-6">Status</label>
+								<div class="col-lg-8 fv-row">
+									<select name="status" data-placeholder="Select Status" class="form-select mb-2">
+										<option value="true" {{ 'selected' if admin.active }}>Active</option>
+										<option value="false" {{ 'selected' if admin.active == false }}>In Active</option>
+									</select>
+								</div>
 							</div>
-						</form>
+							<div class="row mb-6">
+								<label class="col-lg-4 col-form-label required fw-semibold fs-6">Email</label>
+								<div class="col-lg-8 fv-row">
+									<input type="text" name="email" placeholder="Email" value="{{ admin.email }}" class="form-control form-control-lg form-control-solid">
+									<div class="fv-plugins-message-container invalid-feedback" id="field-error-email"></div>
+								</div>
+							</div>
+							<div class="row mb-6">
+								<label class="col-lg-4 col-form-label fw-semibold fs-6">
+									<span class="required">Password</span>
+									<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Current password should be enter to update profile details"></i>
+								</label>
+								<div class="col-lg-8 fv-row">
+									<input type="password" name="password" placeholder="Password" value="" autocomplete="off" class="form-control form-control-lg form-control-solid">
+									<div class="fv-plugins-message-container invalid-feedback" id="field-error-password"></div>
+								</div>
+							</div>
+							<input id="user_privilege_field" type="hidden" name="privileges" value="{{admin.privileges or ''}}">
+						</div>
+						<div class="card-footer d-flex justify-content-end py-6 px-9">
+							<button id="beave_account_profile_details_submit" class="btn btn-dark form-submit-btn" type="submit">
+								<span class="preloader d-none">Updating</span>
+								<span class="label">Save</span>
+							</button>
+						</div>
+						<div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 ms-lg-10">
+							<div class="user-privileges-tree-container"></div>
+						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 		</div>
 	</div>

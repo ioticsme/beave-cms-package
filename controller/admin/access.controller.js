@@ -2,6 +2,7 @@ const Joi = require('joi')
 const bcrypt = require('bcryptjs')
 
 const Admin = require('../../model/Admin')
+const { privileges } = require('../../config/userPrivilege.config')
 
 // List all admins excluding the super admin
 const list = async (req, res) => {
@@ -10,6 +11,7 @@ const list = async (req, res) => {
             $ne: 'super_admin', // Exclude 'super_admin' from the results
         },
     })
+
     return res.render('admin-njk/access-control/users/listing', {
         admins, // Pass the list of admins to the view
     })
@@ -17,7 +19,11 @@ const list = async (req, res) => {
 
 // Render the form to add a new admin
 const add = async (req, res) => {
+    const config_privilege_routes = await privileges(req)
     return res.render('admin-njk/access-control/users/form', {
+        admin: {},
+        current_privileges: [],
+        config_privilege_routes,
         isEdit: false, // Specify that it's not an edit operation
     })
 }
@@ -27,8 +33,11 @@ const edit = async (req, res) => {
     const admin = await Admin.findOne({
         _id: req.params.id, // Find the admin by ID from the URL
     })
+    const config_privilege_routes = await privileges(req)
     return res.render('admin-njk/access-control/users/form', {
         admin, // Pass the admin data to the form for editing
+        current_privileges: admin.privileges?.split(',') ?? [],
+        config_privilege_routes,
         isEdit: true, // Specify that it's an edit operation
     })
 }
@@ -43,10 +52,11 @@ const save = async (req, res) => {
         const schema = Joi.object({
             name: Joi.string().required().min(3).max(60), // Validate the name field
             email: Joi.string().required().min(3).max(60), // Validate the email field
-            password: Joi.string().required().min(3).max(20), // Validate the password field
+            password: Joi.string().allow('', null), // Validate the password field
             role: Joi.string().required().valid('admin', 'editor', 'finance'), // Role validation
             status: Joi.boolean().required(), // Status must be boolean
             id: Joi.optional(), // Optional id field for updates
+            privileges: Joi.string().optional().allow(null, ''),
         })
 
         const validationResult = schema.validate(req.body, {
@@ -76,13 +86,16 @@ const save = async (req, res) => {
         let data = {
             name: req.body.name,
             email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, salt), // Hash the password
             role: req.body.role,
             active: req.body.status || false, // Default to false if no status provided
+            privileges: req.body.privileges,
         }
 
         // Update existing admin if ID is provided, else create a new admin
         if (req.body.id) {
+            if (req.body.password) {
+                data['password'] = bcrypt.hashSync(req.body.password, salt)
+            }
             await Admin.updateOne(
                 {
                     _id: req.body.id, // Find the admin by ID for update
@@ -90,6 +103,7 @@ const save = async (req, res) => {
                 data
             )
         } else {
+            data['password'] = bcrypt.hashSync(req.body.password, salt)
             await Admin.create(data) // Create a new admin
         }
 
