@@ -99,64 +99,68 @@
 						<input id="config_privilege_routes" type="hidden" value="{{jsonToString(config_privilege_routes)}}">
 						<input id="current_privileges" type="hidden" value="{{jsonToString(current_privileges)}}">
 						<div class="card-body border-top p-9">
-							<div class="row mb-6">
-								<label class="col-lg-4 col-form-label required fw-semibold fs-6">Name</label>
-								<div class="col-lg-8">
-									<div class="row">
-										<div class="col-lg-12 fv-row">
-											<input type="text" name="name" placeholder="Name" value="{{ admin.name }}" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0">
-											<div class="fv-plugins-message-container invalid-feedback" id="field-error-name"></div>
+							<div class="row">
+								<div class="col-md-9">
+									<div class="row mb-6">
+										<label class="col-lg-4 col-form-label required fw-semibold fs-6">Name</label>
+										<div class="col-lg-8">
+											<div class="row">
+												<div class="col-lg-12 fv-row">
+													<input type="text" name="name" placeholder="Name" value="{{ admin.name }}" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0">
+													<div class="fv-plugins-message-container invalid-feedback" id="field-error-name"></div>
+												</div>
+											</div>
 										</div>
 									</div>
+									<div class="row mb-6">
+										<label class="col-lg-4 col-form-label required fw-semibold fs-6">Role</label>
+										<div class="col-lg-8 fv-row">
+											<select name="role" data-placeholder="Select a role" class="form-select mb-2">
+												<option value="super_admin" {{ 'selected' if admin.role == 'super_admin'}}>Super Admin</option>
+												<option value="admin" {{ 'selected' if admin.role == 'admin'}}>Admin</option>
+												<option value="editor" {{ 'selected' if admin.role == 'editor' }}>Editor</option>
+												<option value="finance" {{ 'selected' if admin.role == 'finance'}}>Finance</option>
+											</select>
+										</div>
+									</div>
+									<div class="row mb-6">
+										<label class="col-lg-4 col-form-label required fw-semibold fs-6">Status</label>
+										<div class="col-lg-8 fv-row">
+											<select name="status" data-placeholder="Select Status" class="form-select mb-2">
+												<option value="true" {{ 'selected' if admin.active }}>Active</option>
+												<option value="false" {{ 'selected' if admin.active == false }}>In Active</option>
+											</select>
+										</div>
+									</div>
+									<div class="row mb-6">
+										<label class="col-lg-4 col-form-label required fw-semibold fs-6">Email</label>
+										<div class="col-lg-8 fv-row">
+											<input type="text" name="email" placeholder="Email" value="{{ admin.email }}" class="form-control form-control-lg form-control-solid">
+											<div class="fv-plugins-message-container invalid-feedback" id="field-error-email"></div>
+										</div>
+									</div>
+									<div class="row mb-6">
+										<label class="col-lg-4 col-form-label fw-semibold fs-6">
+											<span class="required">Password</span>
+											<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Current password should be enter to update profile details"></i>
+										</label>
+										<div class="col-lg-8 fv-row">
+											<input type="password" name="password" placeholder="Password" value="" autocomplete="off" class="form-control form-control-lg form-control-solid">
+											<div class="fv-plugins-message-container invalid-feedback" id="field-error-password"></div>
+										</div>
+									</div>
+									<input id="user_privilege_field" type="hidden" name="privileges" value="{{admin.privileges or ''}}">
+								</div>
+								<div class="col-md-3">
+									<div class="user-privileges-tree-container"></div>
 								</div>
 							</div>
-							<div class="row mb-6">
-								<label class="col-lg-4 col-form-label required fw-semibold fs-6">Role</label>
-								<div class="col-lg-8 fv-row">
-									<select name="role" data-placeholder="Select a role" class="form-select mb-2">
-										<option value="super_admin" {{ 'selected' if admin.role == 'super_admin'}}>Super Admin</option>
-										<option value="admin" {{ 'selected' if admin.role == 'admin'}}>Admin</option>
-										<option value="editor" {{ 'selected' if admin.role == 'editor' }}>Editor</option>
-										<option value="finance" {{ 'selected' if admin.role == 'finance'}}>Finance</option>
-									</select>
-								</div>
-							</div>
-							<div class="row mb-6">
-								<label class="col-lg-4 col-form-label required fw-semibold fs-6">Status</label>
-								<div class="col-lg-8 fv-row">
-									<select name="status" data-placeholder="Select Status" class="form-select mb-2">
-										<option value="true" {{ 'selected' if admin.active }}>Active</option>
-										<option value="false" {{ 'selected' if admin.active == false }}>In Active</option>
-									</select>
-								</div>
-							</div>
-							<div class="row mb-6">
-								<label class="col-lg-4 col-form-label required fw-semibold fs-6">Email</label>
-								<div class="col-lg-8 fv-row">
-									<input type="text" name="email" placeholder="Email" value="{{ admin.email }}" class="form-control form-control-lg form-control-solid">
-									<div class="fv-plugins-message-container invalid-feedback" id="field-error-email"></div>
-								</div>
-							</div>
-							<div class="row mb-6">
-								<label class="col-lg-4 col-form-label fw-semibold fs-6">
-									<span class="required">Password</span>
-									<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Current password should be enter to update profile details"></i>
-								</label>
-								<div class="col-lg-8 fv-row">
-									<input type="password" name="password" placeholder="Password" value="" autocomplete="off" class="form-control form-control-lg form-control-solid">
-									<div class="fv-plugins-message-container invalid-feedback" id="field-error-password"></div>
-								</div>
-							</div>
-							<input id="user_privilege_field" type="hidden" name="privileges" value="{{admin.privileges or ''}}">
 						</div>
 						<div class="card-footer d-flex justify-content-end py-6 px-9">
 							<button id="beave_account_profile_details_submit" class="btn btn-dark form-submit-btn" type="submit">
 								<span class="preloader d-none">Updating</span>
 								<span class="label">Save</span>
 							</button>
-						</div>
-						<div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 ms-lg-10">
-							<div class="user-privileges-tree-container"></div>
 						</div>
 					</div>
 				</form>
