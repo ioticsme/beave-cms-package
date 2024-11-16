@@ -40,11 +40,11 @@ router.group('/', (router) => {
     })
 
     // Custom Forms
-    router.group('/forms', (router) => {
-        router.get('/', customFormController.list)
-        router.get('/add', customFormController.add)
-        router.post('/save', customFormController.save)
-    })
+    // router.group('/forms', (router) => {
+    //     router.get('/', customFormController.list)
+    //     router.get('/add', customFormController.add)
+    //     router.post('/save', customFormController.save)
+    // })
 
     // Content Management Routes
     router.get('/:contentType', contentTypeCheck, cmsContentController.list)

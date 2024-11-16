@@ -35,6 +35,7 @@ const AdminSchema = new mongoose.Schema(
             },
         },
         firebase_tokens: [{ type: String }],
+        privileges: String,
         active: {
             type: Boolean,
             default: true,

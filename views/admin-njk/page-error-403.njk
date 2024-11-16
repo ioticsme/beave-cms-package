@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<base href="../../">
+		<title>Error 403</title>
+		<meta charset="utf-8">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta property="og:locale" content="en_US">
+		<meta property="og:type" content="article">
+		<meta property="og:title" content="">
+		<meta property="og:url" content="">
+		<meta property="og:site_name" content="Landmark Leisure | Error 500">
+		<link rel="canonical" href="">
+		<link rel="shortcut icon" href="assets/media/logos/favicon.ico">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
+		<link href="/cms-static/admin/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css">
+		<link href="/cms-static/admin/assets/css/style.bundle.css" rel="stylesheet" type="text/css">
+		<script>
+			if (document.documentElement) {
+				const defaultThemeMode = "system";
+				const name = document
+					.body
+					.getAttribute("data-kt-name");
+				let themeMode = localStorage.getItem("kt_" + (
+					name !== null
+					? name + "_"
+					: "") + "theme_mode_value");
+				if (themeMode === null) {
+					if (defaultThemeMode === "system") {
+						themeMode = window
+							.matchMedia("(prefers-color-scheme: dark)")
+							.matches
+								? "dark"
+								: "light";
+					} else {
+						themeMode = defaultThemeMode;
+					}
+				}
+				document
+					.documentElement
+					.setAttribute("data-theme", themeMode);
+			}
+		</script>
+	</head>
+	<body>
+		<div id="kt_app_root" class="d-flex flex-column flex-root">
+			<style>
+				body {
+					background-image: url("/admin/assets/media/auth/bg7.jpg");
+				}
+				[data-theme="dark"] body {
+					background-image: url("assets/media/auth/bg7-dark.jpg");
+				}
+			</style>
+
+			<div class="d-flex flex-column flex-center flex-column-fluid">
+				<div class="d-flex flex-column flex-center text-center p-10">
+					<div class="card card-flush w-lg-650px py-5">
+						<div class="card-body py-15 py-lg-20">
+							<h1 class="fw-bolder fs-2qx text-gray-900 mb-4">403</h1>
+							<h1>Access Denied</h1>
+
+							<div class="fw-semibold fs-6 text-gray-500 mb-7">
+              You don't have access to perform this operation. <br> Please contact the Web Admin.
+            </div>
+
+							<div class="mb-0">
+								<a class="btn btn-sm btn-primary" href="javascript:history.back()">Return Back</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			var hostUrl = "assets/";
+		</script>
+		<!-- begin::Global Javascript Bundle (used by all pages) -->
+		<script src="/cms-static/admin/assets/plugins/global/plugins.bundle.js"></script>
+		<script src="/cms-static/admin/assets/js/scripts.bundle.js"></script>
+	</body>
+</html>

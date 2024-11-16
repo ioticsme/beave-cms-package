@@ -8,6 +8,7 @@ const bcrypt = require('bcryptjs')
 
 const Admin = require('../../model/Admin')
 const { object } = require('joi')
+const { privileges } = require('../../config/userPrivilege.config')
 
 const list = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
@@ -18,38 +19,44 @@ const list = async (req, res) => {
 }
 
 const add = async (req, res) => {
-    // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
-    // const contentTypes = await ContentType.find()
-    return res.render('admin-njk/config/admin/form', {
-        isEdit: false,
-    })
+    try {
+        const config_privilege_routes = await privileges(req)
+        return res.render('admin-njk/config/admin/form', {
+            isEdit: false,
+            admin: {},
+            current_privileges: [],
+            config_privilege_routes,
+        })
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 const edit = async (req, res) => {
-    // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
+    const config_privilege_routes = await privileges(req)
     const admin = await Admin.findOne({
         _id: req.params.id,
     })
-    // console.log('admin :>> ', admin);
-    // res.send(contentType)
+
     return res.render('admin-njk/config/admin/form', {
         admin,
+        current_privileges: admin.privileges?.split(',') ?? [],
+        config_privilege_routes,
         isEdit: true,
     })
 }
 
 const save = async (req, res) => {
-    // console.log(req.body)
-
     const saltRounds = 10
     const salt = bcrypt.genSaltSync(saltRounds)
 
     const schema = Joi.object({
         name: Joi.string().required().min(3).max(60),
         email: Joi.string().required().min(3).max(60),
-        password: Joi.string().required().min(3).max(20),
+        password: Joi.string().allow('', null),
         role: Joi.string().required().valid('super_admin', 'admin', 'editor'),
         status: Joi.boolean().required(),
+        privileges: Joi.string().required(),
         id: Joi.optional(),
     })
 
@@ -89,12 +96,15 @@ const save = async (req, res) => {
     let data = {
         name: req.body.name,
         email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, salt),
         role: req.body.role,
         active: req.body.status || false,
+        privileges: req.body.privileges,
     }
 
     if (req.body.id) {
+        if (req.body.password) {
+            data['password'] = bcrypt.hashSync(req.body.password, salt)
+        }
         await Admin.updateOne(
             {
                 _id: req.body.id,
@@ -102,6 +112,7 @@ const save = async (req, res) => {
             data
         )
     } else {
+        data['password'] = bcrypt.hashSync(req.body.password, salt)
         await Admin.create(data)
     }
 
