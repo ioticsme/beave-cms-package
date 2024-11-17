@@ -170,6 +170,8 @@
 																						<textarea disabled class="content_wysiwyg beave-cms-form-field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ loop.index }}"></textarea>
 																					{% elif cf.field_type === 'textarea' %}
 																						<textarea disabled class="form-control form-control-solid beave-cms-form-field" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
+																					{% elif cf.field_type === 'article_editor' %}
+																						<textarea class="form-control form-control-solid article_editor_field beave-cms-form-field" rows="30" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																					{% elif cf.field_type === 'media' %}
 																						<span class='media-uploader-field'>
 																							<span class="media_preview">
