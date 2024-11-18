@@ -1411,3 +1411,20 @@ $border-color_6: rgb(75 85 99 / var(--tw-border-opacity));
         }
     }
 }
+
+.group_repeater {
+    .form-repeater-group-item {
+        background-color: darken($color: whitesmoke, $amount: 5);
+        padding: 15px;
+        border: 1px dashed darken($color: whitesmoke, $amount: 15);
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+}
+
+.non-repeat-field-group-section {
+    background-color: whitesmoke;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+}

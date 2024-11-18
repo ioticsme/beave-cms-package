@@ -158,7 +158,7 @@ function cloneChild(event) {
         .forEach(function (element) {
             element.value = null
             element.removeAttribute('disabled')
-            // console.log(element)
+
             // BEGIN::Re-Initiate Article Editor if clone child has article editor
             const arxContainer =
                 element.parentElement.querySelector('.arx-container')
@@ -217,7 +217,6 @@ function cloneChild(event) {
     initDatePicker()
 }
 
-// Function to delete div
 function deleteChild(event) {
     let targetElement = event.target
     let parentDiv = targetElement.parentElement.parentElement.parentElement

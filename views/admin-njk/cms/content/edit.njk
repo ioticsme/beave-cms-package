@@ -73,8 +73,7 @@
 		<div class="app-toolbar py-3 py-lg-6" id="beave_app_toolbar">
 			<div class="app-container container-xxl d-flex flex-stack" id="beave_app_toolbar_container">
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">{{'Edit' if contentDetail._id else 'Add'}}
-						{{pluralToSingular(reqContentType.title)}}</h1>
+					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Edit {{pluralToSingular(reqContentType.title)}}</h1>
 					<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
 						<li class="breadcrumb-item text-muted">
 							<a class="text-muted" >Content</a>
@@ -83,11 +82,11 @@
 							<span class="bullet bg-gray-400 w-5px h-2px"></span>
 						</li>
 						<li class="breadcrumb-item text-muted">
-							<a class="text-muted text-hover-primary" href="/admin/cms/{{reqContentType.slug}}">{{reqContentType.title}}</a>
+							<a class="text-muted text-hover-primary" href="/admin/cms/{{ reqContentType.slug }}">{{ reqContentType.title }}</a>
 						</li>
 						<li class="breadcrumb-item">
 							<span class="bullet bg-gray-400 w-5px h-2px"></span></li>
-						<li class="breadcrumb-item text-muted">{{'Edit' if contentDetail._id else 'Add New'}}</li>
+						<li class="breadcrumb-item text-muted">Edit</li>
 					</ul>
 				</div>
 			</div>
@@ -110,7 +109,6 @@
 								</div>
 							</div>
 							<div class="card-body pt-0">
-								{# Tabs #}
 								<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6" id="cms-editor-tab-nav">
 									{% if has_bilingual_field_groups %}
 										{% for brandLanguage in authUser.brand.languages %}
@@ -123,6 +121,7 @@
 										{% endfor %}
 									{% endif %}
 									{% if has_common_field_groups %}
+									
 										<li class="nav-item">
 											<a class="nav-link" data-bs-toggle="tab" href="#beave_tab_pane_common">
 												General
@@ -131,6 +130,7 @@
 										</li>
 									{% endif %}
 									{% if reqContentType.has_meta %}
+									
 										<li class="nav-item">
 											<a class="nav-link" data-bs-toggle="tab" href="#beave_tab_pane_meta">
 												Meta
@@ -144,15 +144,16 @@
 									<!--Custom fields with localisation starting-->
 									{% if has_bilingual_field_groups %}
 										{% for brandLanguage in authUser.brand.languages %}
-											<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" die="{{brandLanguage.dir}}" id="beave_tab_pane_{{ brandLanguage.prefix }}">
+											<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" dir="{{brandLanguage.dir}}" id="beave_tab_pane_{{ brandLanguage.prefix }}">
+												{# //- BEGIN::Fields with localisation #}
 												{% for cfg in reqContentType.field_groups %}
 													{% if cfg.repeater_group == true and cfg.localisation %}
 														<h4 class="badge bg-slate-600 text-white mb-4">{{cfg.row_label | upper()}}</h4>
-														<div class="border border-gray-200 bg-slate-200 p-4 rounded-lg mb-4">
+														<div class="non-repeat-field-group-section">
 															<div class="group_repeater" id="beave_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
 
 																{# This section only for editing. This will be hidden and when click add this section will be cloned #}
-																<div class="form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }} d-none" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-1">
+																<div class="form-repeater-group-item form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }} d-none" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-1">
 																	{% for cf in cfg.fields %}
 																		<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
@@ -214,7 +215,7 @@
 																	.length or 1 %}
 
 																{% for i in range(totalItems) %}
-																	<div class="form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index * 1000}}">
+																	<div class="form-repeater-group-item form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index * 1000}}">
 																		{% for cf in cfg.fields %}
 																			{% set fieldValue = contentDetail.content[brandLanguage.prefix][cfg.row_name][i][cf.field_name] %}
 																			<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
@@ -281,7 +282,7 @@
 													{% else %}
 														{% if cfg.localisation %}
 															<h4 class="badge bg-slate-600 text-white mb-4">{{cfg.row_label | upper()}}</h4>
-															<div class="border border-gray-200 bg-slate-200 p-4 rounded-lg mb-4">
+															<div class="non-repeat-field-group-section">
 																<div class="{{ 'inline-row' if cfg.inline_fields }}">
 																	{% for cf in cfg.fields %}
 																		{% set fieldValue = contentDetail.content[brandLanguage.prefix][cfg.row_name][cf.field_name] %}
@@ -353,13 +354,13 @@
 													{% for cfg in reqContentType.field_groups %}
 														{% if cfg.localisation == false %}
 															<h4 class="badge bg-slate-600 text-white mb-4">{{cfg.row_label | upper()}}</h4>
-															<div class="border border-gray-200 bg-slate-200 p-4 rounded-lg mb-4">
+															<div class="non-repeat-field-group-section">
 																{% if cfg.repeater_group == true %}
 																	{# <h4>{{cfg.row_label}}</h4> #}
 																	<div class="group_repeater" id="beave_docs_repeater_{{cfg._id}}_{{loop.index}}">
 
 																		{# This section only for editing this will be hidden #}
-																		<div class="form-group form-repeater-group-{{cfg._id}}-en {{ 'inline-row' if cfg.inline_fields }} d-none" id="form_repeater_child_{{cfg._id}}-1">
+																		<div class="form-group form-repeater-group-item form-repeater-group-{{cfg._id}}-en {{ 'inline-row' if cfg.inline_fields }} d-none" id="form_repeater_child_{{cfg._id}}-1">
 																			{% for cf in cfg.fields %}
 																				{% set fieldValue = contentDetail.content['common'][cfg.row_name][i][cf.field_name] %}
 																				{# <h1>{{fieldValue}}</h1> #}
@@ -420,7 +421,7 @@
 																			.length or 1 %}
 
 																		{% for i in range(totalItems) %}
-																			<div class="form-group form-repeater-group-{{cfg._id}}-en {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{cfg._id}}-{{loop.index * 1000}}">
+																			<div class="form-group form-repeater-group-item form-repeater-group-{{cfg._id}}-en {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{cfg._id}}-{{loop.index * 1000}}">
 																				{% for cf in cfg.fields %}
 																					{% set fieldValue = contentDetail.content['common'][cfg.row_name][i][cf.field_name] %}
 																					{# <h1>{{fieldValue}}</h1> #}
@@ -563,7 +564,7 @@
 														<div class="row mt-5 pt-5">
 															<div class="col-12 mt-5">
 																{% for meta_section in metaFields %}
-																	<div class="border border-gray-200 bg-slate-200 p-4 rounded-lg mb-4">
+																	<div class="non-repeat-field-group-section">
 																		<h3 class="badge badge-light-success">{{ meta_section.name }}</h3>
 																		{% for meta_field in meta_section.fields %}
 																			<div class="row mb-6">
