@@ -192,6 +192,13 @@ document
         // document.querySelector('#field_section_form_modal').classList.remove('fade')
     })
 
+// Function to format the field into "label | value" format
+function formatOptions(field) {
+    return (
+        field.map((option) => `${option.label} | ${option.value}`).join(', ') +
+        ','
+    )
+}
 document
     .querySelector('.form-field-holder')
     .addEventListener('click', (event) => {
@@ -257,14 +264,38 @@ document
                 `#${foundField.type}-field-section #validation_required`
             ).checked = foundField.validation.required
 
-            fieldFormModal.querySelector(
-                `#${foundField.type}-field-section #validation_min`
-            ).value = foundField.validation.min_length ?? ''
-            fieldFormModal.querySelector(
-                `#${foundField.type}-field-section #validation_max`
-            ).value = foundField.validation.max_length ?? ''
+            if (
+                fieldFormModal.querySelector(
+                    `#${foundField.type}-field-section #validation_min`
+                )
+            ) {
+                fieldFormModal.querySelector(
+                    `#${foundField.type}-field-section #validation_min`
+                ).value = foundField.validation.min_length ?? ''
+            }
+
+            if (
+                fieldFormModal.querySelector(
+                    `#${foundField.type}-field-section #validation_max`
+                )
+            ) {
+                fieldFormModal.querySelector(
+                    `#${foundField.type}-field-section #validation_max`
+                ).value = foundField.validation.max_length ?? ''
+            }
+
             // _.set(fieldSchemaJson, [index, 'section'], sectionName)
             // generateField()
+
+            fieldFormModal
+                .querySelectorAll(`.drop_down_field_options`)
+                .forEach((ddField) => {
+                    const lang = ddField
+                        .getAttribute('id')
+                        .replace('field_options_', '')
+
+                    ddField.value = formatOptions(foundField.options[lang])
+                })
         }
     })
 
@@ -328,19 +359,30 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
             .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
         const selected_field_info = e.target.field_info.value.trim()
         const selected_show_on_list = e.target.show_on_list.checked ?? false
-        const selected_field_options =
-            e.target.field_options?.value?.trim() || ''
-        const options = []
-        selected_field_options.split(',').map((option) => {
-            if (option.length) {
-                const label = option.split('|')[0].trim()
-                const value = option.split('|')[1].trim()
-                if (label.length) {
-                    options.push({ label, value })
-                }
-            }
-        })
 
+        const options = {}
+        e.target
+            .querySelectorAll('.drop_down_field_options')
+            .forEach((ddField) => {
+                // console.log(ddField.value)
+                // console.log(ddField.getAttribute('id'))
+                const lang = ddField
+                    .getAttribute('id')
+                    .replace('field_options_', '')
+                options[lang] = []
+                const selected_field_options = ddField.value?.trim() || ''
+                selected_field_options.split(',').map((option) => {
+                    if (option.length) {
+                        const label = option.split('|')[0].trim()
+                        const value = option.split('|')[1].trim()
+                        if (label.length) {
+                            options[lang].push({ label, value })
+                        }
+                    }
+                })
+            })
+
+        // console.log(options)
         const requestedSection = _.find(fieldSchemaJson, (field) => {
             return (
                 field.section.toLowerCase() === selected_section.toLowerCase()

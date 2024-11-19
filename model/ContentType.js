@@ -73,12 +73,7 @@ const ContentTypeSchema = new mongoose.Schema(
                             type: Boolean,
                             default: false,
                         },
-                        options: [
-                            {
-                                label: String,
-                                value: String,
-                            },
-                        ],
+                        options: {},
                         // addValidation: String,
                         // editValidation: String,
                         validation: {},

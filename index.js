@@ -107,6 +107,10 @@ var njk = nunjucks
     .addFilter('keys', function (obj) {
         return Object.keys(obj)
     })
+    .addFilter('log', (value) => {
+        console.log(value)
+        return value // Return the value to ensure it continues rendering
+    })
 njk.addFilter('htmlSlice', function (value, start, end) {
     const text = value.replace(/<[^>]*>?/gm, '') // Remove HTML tags
     return text.slice(start, end) // Return sliced text
