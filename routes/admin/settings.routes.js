@@ -31,14 +31,14 @@ router.group('/', (router) => {
         router.get('/edit', settingsController.seoEdit)
         router.post('/save', upload.any(), settingsController.seoSave)
     })
-    router.group('/integrations', (router) => {
-        // Marketing
-        router.group('/marketing', (router) => {
-            router.get('/', settingsController.marketingList)
-            router.get('/edit', settingsController.marketingEdit)
-            router.post('/save', upload.any(), settingsController.marketingSave)
-        })
-    })
+    // router.group('/integrations', (router) => {
+    //     // Marketing
+    //     router.group('/marketing', (router) => {
+    //         router.get('/', settingsController.marketingList)
+    //         router.get('/edit', settingsController.marketingEdit)
+    //         router.post('/save', upload.any(), settingsController.marketingSave)
+    //     })
+    // })
     // Ecommerce
     router.group('/ecommerce', (router) => {
         router.get('/', settingsController.ecommerceList)

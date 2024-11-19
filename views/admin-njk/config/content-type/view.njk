@@ -11,7 +11,6 @@
 	{# //- // begin::Custom Javascript(used by this page) #}
 	<script src='/cms-static/admin/assets/js/widgets.bundle.js'></script>
 	<script src='/cms-static/admin/assets/js/custom/widgets.js'></script>
-	{# //- <script src='/cms-static/admin/assets/js/custom/utilities/modals/offer-a-deal/main.js'></script> #}
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js'></script>
 	<script src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'></script>
 	{# //- // end::Custom Javascript #}
@@ -34,7 +33,7 @@
 		<div class="app-toolbar py-3 py-lg-6" id="beave_app_toolbar">
 			<div class="app-container container-xxl d-flex flex-stack" id="beave_app_toolbar_container">
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Content Type Details</h1>
+					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Content Type Details | {{contentType.title}}</h1>
 					<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
 						<li class="breadcrumb-item text-muted">
 							<a class="text-muted text-hover-primary" href="/admin/dashboard">Dashboard</a>
@@ -46,6 +45,10 @@
 					</ul>
 				</div>
 				<div class="d-flex align-items-center gap-2 gap-lg-3">
+					<a href="/admin/config/content-type/" class="btn btn-sm fw-bold btn-light">
+						<i class="fa fa-arrow-left"></i>
+						Back
+					</a>
 					<a href="{{ '/admin/config/content-type/edit/' + contentType._id }}" class="btn btn-sm fw-bold btn-light-primary">Edit Content Type</a>
 				</div>
 			</div>
@@ -396,6 +399,42 @@
 							</div>
 							<div class="col-12 col-md-4">
 								<div class="each-field-type">
+									<a class="btn" href="#" data-value="date">
+										<i class="fas fa-calendar-alt"></i>
+										<span class="field-label-text">Date</span>
+										<span class="field-label-description">The field type for selecting a date from a calendar.</span>
+									</a>
+								</div>
+							</div>
+							<div class="col-12 col-md-4">
+								<div class="each-field-type">
+									<a class="btn" href="#" data-value="time">
+										<i class="fas fa-clock"></i>
+										<span class="field-label-text">Time</span>
+										<span class="field-label-description">The field type for adding time.</span>
+									</a>
+								</div>
+							</div>
+							<div class="col-12 col-md-4">
+								<div class="each-field-type">
+									<a class="btn" href="#" data-value="color">
+										<i class="fas fa-eye-dropper"></i>
+										<span class="field-label-text">Color</span>
+										<span class="field-label-description">The field type for adding color.</span>
+									</a>
+								</div>
+							</div>
+							<div class="col-12 col-md-4">
+								<div class="each-field-type">
+									<a class="btn" href="#" data-value="url">
+										<i class="fas fa-link"></i>
+										<span class="field-label-text">URL</span>
+										<span class="field-label-description">The field type for adding URLs.</span>
+									</a>
+								</div>
+							</div>
+							<div class="col-12 col-md-4">
+								<div class="each-field-type">
 									<a class="btn" href="#" data-value="textarea">
 										<i class="fas fa-text-width"></i>
 										<span class="field-label-text">Textarea</span>
@@ -439,15 +478,6 @@
 									</a>
 								</div>
 							</div>
-							<div class="col-12 col-md-4">
-								<div class="each-field-type">
-									<a class="btn" href="#" data-value="date">
-										<i class="fas fa-calendar-alt"></i>
-										<span class="field-label-text">Date</span>
-										<span class="field-label-description">The field type for selecting a date from a calendar.</span>
-									</a>
-								</div>
-							</div>
 						</div>
 
 					</div>
@@ -456,10 +486,10 @@
 						<form class="field-form">
 							<input class="field_entry_type" type="hidden" value="edit" name="field_entry_type"/>
 							<input class="section_name_field" type="hidden" name="section_name_field"/>
+							<input type="hidden" name="field_type" value="text"/>
 							<div class="row">
 								<div class="col-12">
 									<label for="section_name_field">Field Name</label>
-									<input type="hidden" name="field_type" value="text"/>
 									<input class="form-control" type="text" name="field_name" id="field_name" placeholder="Field Name"/>
 								</div>
 							</div>
@@ -537,6 +567,159 @@
 							<label for="section_name_field">Field Name</label>
 							<input type="hidden" name="field_type" value="number"/>
 							<input class="form-control" type="text" name="field_name" id="field_name" placeholder="Field Name"/>
+							<div class="row">
+								<div class="col-12">
+									<label for="section_name_field">Field Info</label>
+									<input class="form-control" type="text" name="field_info" id="field_info" placeholder="Field Info"/>
+								</div>
+							</div>
+							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
+								<input class="form-check-input" type="checkbox" id="validation_required" value="true" name="validation_required"/>
+								<label class="form-check-label" for="">Required</label>
+							</div>
+							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
+								<input class="form-check-input" type="checkbox" id="show_on_list" value="true" name="show_on_list"/>
+								<label class="form-check-label" for="">Show on CMS Content List</label>
+							</div>
+							<div class="row mt-5">
+								<div class="col-12">
+									<a class="btn btn-light back-btn">Back</a>
+									<button class="btn btn-primary" type="submit">Save Field</button>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<div class="modal-field-sections d-none" id="date-field-section">
+						<form class="field-form">
+							<input class="field_entry_type" type="hidden" value="edit" name="field_entry_type"/>
+							<input class="section_name_field" type="hidden" name="section_name_field"/>
+							<label for="section_name_field">Field Name</label>
+							<input type="hidden" name="field_type" value="date"/>
+							<input class="form-control" type="text" name="field_name" id="field_name" placeholder="Field Name"/>
+							{# <div class="row mb-3">
+								<div class="col-12 col-sm-6">
+									<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
+										<input class="form-check-input" type="checkbox" value="date_range" name="options[]"/>
+										<label class="form-check-label" for="">Date Range</label>
+									</div>
+								</div>
+								<div class="col-12 col-sm-6">
+									<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
+										<input class="form-check-input" type="checkbox" value="time" name="options[]"/>
+										<label class="form-check-label" for="">With Time</label>
+									</div>
+								</div>
+							</div> #}
+							<div class="row">
+								<div class="col-12">
+									<label for="section_name_field">Field Info</label>
+									<input class="form-control" type="text" name="field_info" id="field_info" placeholder="Field Info"/>
+								</div>
+							</div>
+							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
+								<input class="form-check-input" type="checkbox" id="validation_required" value="true" name="validation_required"/>
+								<label class="form-check-label" for="">Required</label>
+							</div>
+							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
+								<input class="form-check-input" type="checkbox" id="show_on_list" value="true" name="show_on_list"/>
+								<label class="form-check-label" for="">Show on CMS Content List</label>
+							</div>
+							{# <label class="mt-3" for="section_name_field">Advanced Valdiation Rules</label>
+							<div class="row my-3">
+								<div class="col-6">
+									<input class="form-control" type="text" name="validation_min" id="validation_min" placeholder="Minimum Charecters"/></div>
+								<div class="col-6">
+									<input class="form-control" type="text" name="validation_max" id="validation_max" placeholder="Maximum Charecters"/></div>
+							</div> #}
+							<div class="row mt-5">
+								<div class="col-12">
+									<a class="btn btn-light back-btn">Back</a>
+									<button class="btn btn-primary" type="submit">Save Field</button>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<div class="modal-field-sections d-none" id="time-field-section">
+						<form class="field-form">
+							<input class="field_entry_type" type="hidden" value="edit" name="field_entry_type"/>
+							<input class="section_name_field" type="hidden" name="section_name_field"/>
+							<input type="hidden" name="field_type" value="time"/>
+							<div class="row">
+								<div class="col-12">
+									<label for="section_name_field">Field Name</label>
+									<input class="form-control" type="text" name="field_name" id="field_name" placeholder="Field Name"/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12">
+									<label for="section_name_field">Field Info</label>
+									<input class="form-control" type="text" name="field_info" id="field_info" placeholder="Field Info"/>
+								</div>
+							</div>
+							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
+								<input class="form-check-input" type="checkbox" id="validation_required" value="true" name="validation_required"/>
+								<label class="form-check-label" for="">Required</label>
+							</div>
+							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
+								<input class="form-check-input" type="checkbox" id="show_on_list" value="true" name="show_on_list"/>
+								<label class="form-check-label" for="">Show on CMS Content List</label>
+							</div>
+							<div class="row mt-5">
+								<div class="col-12">
+									<a class="btn btn-light back-btn">Back</a>
+									<button class="btn btn-primary" type="submit">Save Field</button>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<div class="modal-field-sections d-none" id="color-field-section">
+						<form class="field-form">
+							<input class="field_entry_type" type="hidden" value="edit" name="field_entry_type"/>
+							<input class="section_name_field" type="hidden" name="section_name_field"/>
+							<input type="hidden" name="field_type" value="color"/>
+							<div class="row">
+								<div class="col-12">
+									<label for="section_name_field">Field Name</label>
+									<input class="form-control" type="text" name="field_name" id="field_name" placeholder="Field Name"/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12">
+									<label for="section_name_field">Field Info</label>
+									<input class="form-control" type="text" name="field_info" id="field_info" placeholder="Field Info"/>
+								</div>
+							</div>
+							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
+								<input class="form-check-input" type="checkbox" id="validation_required" value="true" name="validation_required"/>
+								<label class="form-check-label" for="">Required</label>
+							</div>
+							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
+								<input class="form-check-input" type="checkbox" id="show_on_list" value="true" name="show_on_list"/>
+								<label class="form-check-label" for="">Show on CMS Content List</label>
+							</div>
+							<div class="row mt-5">
+								<div class="col-12">
+									<a class="btn btn-light back-btn">Back</a>
+									<button class="btn btn-primary" type="submit">Save Field</button>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<div class="modal-field-sections d-none" id="url-field-section">
+						<form class="field-form">
+							<input class="field_entry_type" type="hidden" value="edit" name="field_entry_type"/>
+							<input class="section_name_field" type="hidden" name="section_name_field"/>
+							<input type="hidden" name="field_type" value="url"/>
+							<div class="row">
+								<div class="col-12">
+									<label for="section_name_field">Field Name</label>
+									<input class="form-control" type="text" name="field_name" id="field_name" placeholder="Field Name"/>
+								</div>
+							</div>
 							<div class="row">
 								<div class="col-12">
 									<label for="section_name_field">Field Info</label>
@@ -708,8 +891,28 @@
 							<input class="section_name_field" type="hidden" name="section_name_field"/>
 							<input type="hidden" name="field_type" value="dropdown"/>
 							<input class="form-control" type="text" name="field_name" id="field_name" placeholder="Field Name"/>
+							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
+								<input class="form-check-input" type="checkbox" id="multi_select" value="true" name="multi_select"/>
+								<label class="form-check-label" for="">Multi-Select</label>
+							</div>
 							<label class="mt-3" for="section_name_field">Field Pre-Defined Values</label>
-							<textarea class="form-control mt-2" name="field_options" id="field_options" placeholder="Example : Male | m, Female | f,"></textarea>
+							<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6" id="cms-editor-tab-nav">
+								{% for brandLanguage in authUser.brand.languages %}
+									<li class="nav-item">
+										<a class="nav-link {{'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#beave_tab_pane_{{ brandLanguage.prefix }}">
+											{{ brandLanguage.name }}
+											<span class="fa-solid fa-circle-exclamation d-none tab-invalid-icon"></span>
+										</a>
+									</li>
+								{% endfor %}
+							</ul>
+							<div class="tab-content tab-content-fields mb-5" id="myTabContent">
+								{% for brandLanguage in authUser.brand.languages %}
+									<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" dir="{{brandLanguage.dir}}" id="beave_tab_pane_{{ brandLanguage.prefix }}">
+										<textarea class="form-control mt-2 drop_down_field_options" name="field_options[{{ brandLanguage.prefix }}]" id="field_options_{{ brandLanguage.prefix }}" placeholder="Example : Male | m, Female | f,"></textarea>
+									</div>
+								{% endfor %}
+							</div>
 							<div class="row">
 								<div class="col-12">
 									<label for="section_name_field">Field Info</label>
@@ -724,57 +927,6 @@
 								<input class="form-check-input" type="checkbox" id="show_on_list" value="true" name="show_on_list"/>
 								<label class="form-check-label" for="">Show on CMS Content List</label>
 							</div>
-							<div class="row mt-5">
-								<div class="col-12">
-									<a class="btn btn-light back-btn">Back</a>
-									<button class="btn btn-primary" type="submit">Save Field</button>
-								</div>
-							</div>
-						</form>
-					</div>
-
-					<div class="modal-field-sections d-none" id="date-field-section">
-						<form class="field-form">
-							<input class="field_entry_type" type="hidden" value="edit" name="field_entry_type"/>
-							<input class="section_name_field" type="hidden" name="section_name_field"/>
-							<label for="section_name_field">Field Name</label>
-							<input type="hidden" name="field_type" value="date"/>
-							<input class="form-control" type="text" name="field_name" id="field_name" placeholder="Field Name"/>
-							{# <div class="row mb-3">
-								<div class="col-12 col-sm-6">
-									<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-										<input class="form-check-input" type="checkbox" value="date_range" name="options[]"/>
-										<label class="form-check-label" for="">Date Range</label>
-									</div>
-								</div>
-								<div class="col-12 col-sm-6">
-									<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-										<input class="form-check-input" type="checkbox" value="time" name="options[]"/>
-										<label class="form-check-label" for="">With Time</label>
-									</div>
-								</div>
-							</div> #}
-							<div class="row">
-								<div class="col-12">
-									<label for="section_name_field">Field Info</label>
-									<input class="form-control" type="text" name="field_info" id="field_info" placeholder="Field Info"/>
-								</div>
-							</div>
-							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" id="validation_required" value="true" name="validation_required"/>
-								<label class="form-check-label" for="">Required</label>
-							</div>
-							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
-								<input class="form-check-input" type="checkbox" id="show_on_list" value="true" name="show_on_list"/>
-								<label class="form-check-label" for="">Show on CMS Content List</label>
-							</div>
-							{# <label class="mt-3" for="section_name_field">Advanced Valdiation Rules</label>
-							<div class="row my-3">
-								<div class="col-6">
-									<input class="form-control" type="text" name="validation_min" id="validation_min" placeholder="Minimum Charecters"/></div>
-								<div class="col-6">
-									<input class="form-control" type="text" name="validation_max" id="validation_max" placeholder="Maximum Charecters"/></div>
-							</div> #}
 							<div class="row mt-5">
 								<div class="col-12">
 									<a class="btn btn-light back-btn">Back</a>

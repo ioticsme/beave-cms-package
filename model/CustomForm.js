@@ -142,4 +142,4 @@ CustomFormSchema.virtual('date_updated').get(function () {
     )
 })
 
-module.exports = mongoose.model('CustomForm', CustomFormSchema)
+module.exports = mongoose.model('beave_CustomForm', CustomFormSchema)

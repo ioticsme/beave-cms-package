@@ -5,8 +5,7 @@
 	{# <link href='/cms-static/admin/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css' rel='stylesheet' type='text/css'/> #}
 	{# //- link(href='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css' rel='stylesheet' type='text/css') #}
 	<link rel="stylesheet" href="/cms-static/admin/article-editor/css/article-editor.min.css"/>
-	{# <link href='/cms-static/admin/assets/plugins/global/plugins.bundle.css' rel='stylesheet' type='text/css'/> #}
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.4.3/dist/css/tempus-dominus.min.css" crossorigin="anonymous">
+	<link href='/cms-static/admin/assets/plugins/global/plugins.bundle.css' rel='stylesheet' type='text/css'/>
 	<link href='/cms-static/admin/assets/css/style.bundle.css' rel='stylesheet' type='text/css'/>
 
 	<style>
@@ -34,28 +33,14 @@
 {% endblock %}
 
 {% block jslib %}
-	{# // begin::Vendors Javascript(used by this page) #}
-	{# //- script(src='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.js') #}
-	{# // end::Vendors Javascript #}
-	{# // begin::Custom Javascript(used by this page) #}
-	{# //- script(src='/cms-static/admin/assets/js/widgets.bundle.js') #}
-	{# //- script(src='/cms-static/admin/assets/js/custom/widgets.js') #}
-	<script src='/cms-static/admin/assets/js/custom/utilities/modals/new-card.js'></script>
-	{# //- script(src='/cms-static/admin/assets/js/custom/utilities/modals/users-search.js') #}
-	{# //- script(src='/cms-static/admin/assets/plugins/custom/formrepeater/formrepeater.bundle.js') #}
-	{# // end::Custom Javascript #}
-
 	{# // CKEditor #}
 	<script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
 
-
-	{# <script src='/cms-static/admin/assets/js/scripts.bundle.js'></script> #}
-	<script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.4.3/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
+	<script src='/cms-static/admin/assets/js/scripts.bundle.js'></script>
 
 	{# // Form Submission Script #}
 	<script src='/cms-static/common/js/form-data-json.min.js'></script>
 	<script src='/cms-static/common/js/es-form.js'></script>
-	<script src="https://cdn.quilljs.com/1.2.6/quill.min.js"></script>
 
 	<script src="/cms-static/admin/article-editor/article-editor.min.js"></script>
 	{# Custom js for cms add page #}
@@ -146,6 +131,7 @@
 								</ul>
 								<div class="tab-content tab-content-fields" id="myTabContent">
 
+									<!--Custom fields with localisation starting-->
 									{% if has_bilingual_field_groups %}
 										{% for brandLanguage in authUser.brand.languages %}
 											<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" dir="{{brandLanguage.dir}}" id="beave_tab_pane_{{ brandLanguage.prefix }}">
@@ -153,13 +139,13 @@
 												{% for cfg in reqContentType.field_groups %}
 													{% if cfg.localisation %}
 														<h4 class="badge bg-slate-600 text-white mb-4">{{ cfg.row_label | upper() }}</h4>
-														<div class="border border-gray-100 bg-slate-200 p-4 rounded-lg mb-4">
+														<div class="non-repeat-field-group-section p-4 rounded-lg mb-4">
 															{% if cfg.repeater_group == true %}
 																<div>
 																	<div class="group_repeater" id="beave_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
 
 																		{# Hidden Div Start #}
-																		<div class="form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }} d-none" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-0">
+																		<div class="form-repeater-group-item form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }} d-none" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-0">
 																			{% for cf in cfg.fields %}
 																				<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																					<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
@@ -168,9 +154,11 @@
 																					{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
 																						<input disabled class="form-control form-control-solid beave-cms-form-field" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
 																					{% elif cf.field_type === 'richtext' %}
-																						<textarea disabled class="content_wysiwyg beave-cms-form-field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ loop.index }}"></textarea>
+																						<textarea disabled class="content_wysiwyg beave-cms-form-field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ mathRandom() }}"></textarea>
 																					{% elif cf.field_type === 'textarea' %}
 																						<textarea disabled class="form-control form-control-solid beave-cms-form-field" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
+																					{% elif cf.field_type === 'article_editor' %}
+																						<textarea class="form-control form-control-solid article_editor_field beave-cms-form-field" rows="30" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																					{% elif cf.field_type === 'media' %}
 																						<span class='media-uploader-field'>
 																							<span class="media_preview">
@@ -190,9 +178,9 @@
 																							<input disabled type="text" class="form-control form-control-solid beave-cms-form-field" data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}">
 																						</div>
 																					{% elif cf.field_type == "dropdown" %}
-																						<select disabled class="form-select beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																						<select disabled class="form-select beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																							<option value=''>- Select {{cf.field_label}} -</option>
-																							{% for dropdown in cf.options %}
+																							{% for dropdown in cf.options[brandLanguage.prefix] %}
 																								<option value="{{dropdown.value}}">{{dropdown.label}}</option>
 																							{% endfor %}
 																						</select>
@@ -205,20 +193,19 @@
 																				<a class="btn btn-sm btn-light-danger mt-5" onClick="deleteChild(event)" child-id="form-repeater-child-{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}" target-id="beave_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
 																					<i class="la la-trash-o"></i>Delete</a>
 																			</div>
-																			<hr class="my-6"/>
 																		</div>
 																		{# Hidden Div End #}
 
-																		<div class="form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}">
+																		<div class="form-repeater-group-item form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}">
 																			{% for cf in cfg.fields %}
 																				<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																					<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 																						<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}} ({{brandLanguage.prefix}})</span>
 																					</label>
-																					{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
+																					{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' or cf.field_type == 'time' or cf.field_type == 'color' or cf.field_type == 'url' %}
 																						<input class="form-control form-control-solid" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
 																					{% elif cf.field_type === 'richtext' %}
-																						<textarea class="content_wysiwyg" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ loop.index }}"></textarea>
+																						<textarea class="content_wysiwyg beave-cms-form-field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ mathRandom() }}"></textarea>
 																					{% elif cf.field_type === 'textarea' %}
 																						<textarea class="form-control form-control-solid" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																					{% elif cf.field_type === 'article_editor' %}
@@ -242,9 +229,9 @@
 																							<input type="text" class="form-control form-control-solid" data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}">
 																						</div>
 																					{% elif cf.field_type == "dropdown" %}
-																						<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																						<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																							<option value=''>- Select {{cf.field_label}} -</option>
-																							{% for dropdown in cf.options %}
+																							{% for dropdown in cf.options[brandLanguage.prefix] %}
 																								<option value="{{dropdown.value}}">{{dropdown.label}}</option>
 																							{% endfor %}
 																						</select>
@@ -257,7 +244,6 @@
 																				<a class="btn btn-sm btn-light-danger mt-5" onClick="deleteChild(event)" child-id="form-repeater-child-{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}" target-id="beave_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
 																					<i class="la la-trash-o"></i>Delete</a>
 																			</div>
-																			<hr class="my-6"/>
 																		</div>
 																	</div>
 
@@ -277,10 +263,10 @@
 																			</label>
 
 																			{# // end::Label #}
-																			{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' %}
-																				<input class="form-control form-control-solid" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]">
+																			{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' or cf.field_type == 'time' or cf.field_type == 'color' or cf.field_type == 'url' %}
+																				<input class="{% if cf.field_type != 'color' %} form-control form-control-solid {% endif %}" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]">
 																			{% elif cf.field_type == 'richtext' %}
-																				<textarea class="content_wysiwyg" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}"></textarea>
+																				<textarea class="content_wysiwyg beave-cms-form-field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ mathRandom() }}"></textarea>
 																			{% elif cf.field_type == 'textarea' %}
 																				<textarea class="form-control form-control-solid" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
 																			{% elif cf.field_type == 'article_editor' %}
@@ -305,9 +291,9 @@
 																					<input class="form-control form-control-solid" id="beave_daterangepicker_{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ loop.index }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="{{ cf.placeholder }}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
-																				<select class="form-select" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]">
+																				<select class="form-select" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																					<option value='' >- Select {{cf.field_label}} -</option>
-																					{% for dropdown, dd_i in cf.options %}
+																					{% for dropdown in cf.options[brandLanguage.prefix] %}
 																						<option value="{{ dropdown.value }}">{{ dropdown.label }}</option>
 																					{% endfor %}
 																				</select>
@@ -330,22 +316,22 @@
 											{% for cfg in reqContentType.field_groups %}
 												{% if cfg.localisation == false %}
 													<h4 class="badge bg-slate-600 text-white mb-4">{{cfg.row_label | upper()}}</h4>
-													<div class="border border-gray-100 bg-slate-200 p-4 rounded-lg mb-4">
+													<div class="non-repeat-field-group-section">
 														{% if cfg.repeater_group == true %}
 															<div class="group_repeater" id="beave_docs_repeater_{{cfg._id}}_{{loop.index}}">
 
 																{# Hidden Div start #}
-																<div class="form-group form-repeater-group-{{cfg._id}}-en {{ 'inline-row' if cfg.inline_fields }} d-none" id="form_repeater_child_{{cfg._id}}-0">
+																<div class="form-group form-repeater-group-item form-repeater-group-{{cfg._id}}-en {{ 'inline-row' if cfg.inline_fields }} d-none" id="form_repeater_child_{{cfg._id}}-0">
 																	{% for cf in cfg.fields %}
 																		<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 																				<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}}</span>
 																				{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beave-initialized="1"></i> #}
 																			</label>
-																			{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' %}
-																				<input disabled class="form-control form-control-solid beave-cms-form-field" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
+																			{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' or cf.field_type == 'time' or cf.field_type == 'color' or cf.field_type == 'url' %}
+																				<input disabled class="{% if cf.field_type != 'color' %} form-control form-control-solid {% endif %} beave-cms-form-field" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
 																			{% elif cf.field_type == 'richtext' %}
-																				<textarea disabled class="content_wysiwyg beave-cms-form-field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ loop.index }}"></textarea>
+																				<textarea disabled class="content_wysiwyg beave-cms-form-field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ mathRandom() }}"></textarea>
 																			{% elif cf.field_type == 'textarea' %}
 																				<textarea disabled class="form-control form-control-solid beave-cms-form-field" rows="6" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																			{% elif cf.field_type == 'article_editor' %}
@@ -369,9 +355,9 @@
 																					<input disabled class="form-control form-control-solid beave-cms-form-field" id="beave_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="{{ cf.placeholder }}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
-																				<select disabled class="form-select beave-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																				<select disabled class="form-select beave-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																					<option value=''>- Select {{cf.field_label}} -</option>
-																					{% for dropdown in cf.options %}
+																					{% for dropdown in cf.options[brandLanguage.prefix] %}
 																						<option value="{{dropdown.value}}">{{dropdown.label}}</option>
 																					{% endfor %}
 																				</select>
@@ -389,17 +375,17 @@
 																</div>
 																{# Hidden Div End #}
 
-																<div class="form-group form-repeater-group-{{cfg._id}}-en {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{cfg._id}}-{{loop.index}}">
+																<div class="form-group form-repeater-group-item form-repeater-group-{{cfg._id}}-en {{ 'inline-row' if cfg.inline_fields }}" id="form_repeater_child_{{cfg._id}}-{{loop.index}}">
 																	{% for cf in cfg.fields %}
 																		<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 																				<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}}</span>
 																				{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beave-initialized="1"></i> #}
 																			</label>
-																			{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' %}
-																				<input class="form-control form-control-solid" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
+																			{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' or cf.field_type == 'time' or cf.field_type == 'color' or cf.field_type == 'url' %}
+																				<input class="{% if cf.field_type != 'color' %} form-control form-control-solid {% endif %}" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
 																			{% elif cf.field_type == 'richtext' %}
-																				<textarea class="content_wysiwyg" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ loop.index }}"></textarea>
+																				<textarea class="content_wysiwyg beave-cms-form-field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ mathRandom() }}"></textarea>
 																			{% elif cf.field_type == 'textarea' %}
 																				<textarea class="form-control form-control-solid" rows="6" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																			{% elif cf.field_type == 'article_editor' %}
@@ -423,9 +409,9 @@
 																					<input class="form-control form-control-solid" id="beave_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="{{ cf.placeholder }}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
-																				<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																				<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																					<option value=''>- Select {{cf.field_label}} -</option>
-																					{% for dropdown in cf.options %}
+																					{% for dropdown in cf.options[brandLanguage.prefix] %}
 																						<option value="{{dropdown.value}}">{{dropdown.label}}</option>
 																					{% endfor %}
 																				</select>
@@ -457,7 +443,7 @@
 																		{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
 																			<input type="{{ cf.field_type }}" class="form-control form-control-solid" placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]">
 																		{% elif cf.field_type === 'richtext' %}
-																			<textarea class="content_wysiwyg" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" id="wysiwyg-cf-{{ loop.index }}"></textarea>
+																			<textarea class="content_wysiwyg beave-cms-form-field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" id="wysiwyg-cf-{{ mathRandom() }}"></textarea>
 																		{% elif cf.field_type === 'textarea' %}
 																			<textarea class="form-control form-control-solid" rows="6" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
 																		{% elif cf.field_type === 'article_editor' %}
@@ -483,7 +469,7 @@
 																			</div>
 																		{% elif cf.field_type === 'radio' %}
 																			<div class="row row-cols-1 row-cols-md-3 row-cols-lg-1 row-cols-xl-3 g-9" data-beave-buttons="true" data-beave-buttons-target="[data-beave-button='true']">
-																				{% for option in cf.options %}
+																				{% for option in cf.options[brandLanguage.prefix] %}
 																					<div class="col d-flex text-start p-6">
 																						<span class="form-check form-check-custom form-check-solid form-check-sm align-items-start" data-beave-button="true">
 																							<input class="form-check-input" type="radio" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" id="{{ option.value }}-{{ loop.index }}" value="{{ option.value }}" {% if loop.index == 1 %}checked{% endif %}>
@@ -495,9 +481,9 @@
 																				{% endfor %}
 																			</div>
 																		{% elif cf.field_type == 'dropdown' %}
-																			<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}]]">
+																			<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																				<option value=''>- Select {{cf.field_label}} -</option>
-																				{% for dropdown, dd_i in cf.options %}
+																				{% for dropdown in cf.options[brandLanguage.prefix] %}
 																					<option value="{{dropdown.value}}">{{dropdown.label}}</option>
 																				{% endfor %}
 																			</select>

@@ -5,11 +5,11 @@ const path = require('path')
 const Brand = require('../model/Brand')
 const Settings = require('../model/Settings')
 const ContentType = require('../model/ContentType')
-const AdminNav = require('../model/AdminNav')
-var session = require('express-session')
 const { default: collect } = require('collect.js')
 const { navConfig } = require('../config/admin.config')
 const { convertToSingular } = require('../helper/General.helper')
+const { privileges } = require('../config/userPrivilege.config')
+const { default: slugify } = require('slugify')
 
 // Getting custom navigation from cms-wrapper config
 let customNavConfig
@@ -60,16 +60,10 @@ const nunjucksFilter = async (req, res, next) => {
             })
     }
 
-    next()
-}
-
-const authCheck = async (req, res, next) => {
-    if (!req.session || !req.session.admin_id) {
-        res.redirect('/admin/auth/login')
-        return
+    res.locals.mathRandom = () => {
+        return Math.floor(Math.random() * 1000 + 1)
     }
 
-    req.authUser = req.session
     next()
 }
 
@@ -89,46 +83,6 @@ const contentTypeCheck = async (req, res, next) => {
         next()
     } catch (err) {
         return res.json('Not Found')
-    }
-}
-
-const authUser = async (req, res, next) => {
-    try {
-        if (!req.session.brand) {
-            const brand = await Brand.findOne()
-                .populate({
-                    path: 'languages',
-                    options: { sort: { is_default: -1 } },
-                })
-                .populate('domains.country')
-            if (brand) {
-                const settings = await Settings.findOne({
-                    brand: brand,
-                    country: brand.domains[0].country._id,
-                }).select(
-                    '-brand -country -__v -created_at -updated_at -author'
-                )
-
-                req.session.brand = {
-                    _id: brand._id,
-                    name: brand.name,
-                    code: brand.code,
-                    languages: brand.languages,
-                    country: brand.domains[0].country._id,
-                    country_name: brand.domains[0].country.name.en,
-                    country_code: brand.domains[0].country.code,
-                    country_currency: brand.domains[0].country.currency,
-                    country_currency_symbol:
-                        brand.domains[0].country.currency_symbol,
-                    settings: settings ? settings : {},
-                }
-            }
-        }
-        res.locals.authUser = req.session
-        // console.log(req.session)
-        next()
-    } catch (e) {
-        return res.redirect('/admin/auth/login')
     }
 }
 
@@ -206,6 +160,8 @@ const mainNavGenerator = async (req, res, next) => {
         )
         .sort([['position', 'ascending']])
 
+    // console.log('contentTypes :>> ', contentTypes)
+
     // Looping through all content types and creating navigation
     const listTypeItems = collect(contentTypes)
         .map((item) => {
@@ -218,6 +174,7 @@ const mainNavGenerator = async (req, res, next) => {
                     icon: item.admin_icon,
                     position: item.position,
                     has_access: item.has_access,
+                    path: `/admin/cms/${item.slug}`,
                     child: [
                         {
                             label: `All ${item.title}`,
@@ -233,6 +190,9 @@ const mainNavGenerator = async (req, res, next) => {
                 // single type content types
                 return {
                     section: item.admin_nav_section || 'Content',
+                    section_slug: slugify(item.admin_nav_section || 'Content', {
+                        lower: true,
+                    }),
                     label: item.title,
                     expandable: false,
                     icon: item.admin_icon,
@@ -260,9 +220,11 @@ const mainNavGenerator = async (req, res, next) => {
         customBuildNav.filter((nav) => nav.items?.length),
         'position'
     )
-    // console.log('mixedNav :>> ', mixedNav)
+
     res.locals.mainNav = mixedNav
     res.locals.activeNav = req.originalUrl
+    res.locals.allowedURLs = []
+    res.locals.allowedSections = []
     next()
 }
 
@@ -274,20 +236,51 @@ const allBrands = async (req, res, next) => {
     next()
 }
 
-const checkSuperAdmin = (req, res, next) => {
-    if (req.authUser.admin_role != 'super_admin') {
-        return res.render(`admin/app-error-500`)
+const authUser = async (req, res, next) => {
+    try {
+        if (!req.session.brand) {
+            const brand = await Brand.findOne()
+                .populate({
+                    path: 'languages',
+                    options: { sort: { is_default: -1 } },
+                })
+                .populate('domains.country')
+            if (brand) {
+                const settings = await Settings.findOne({
+                    brand: brand,
+                    country: brand.domains[0].country._id,
+                }).select(
+                    '-brand -country -__v -created_at -updated_at -author'
+                )
+
+                req.session.brand = {
+                    _id: brand._id,
+                    name: brand.name,
+                    code: brand.code,
+                    languages: brand.languages,
+                    country: brand.domains[0].country._id,
+                    country_name: brand.domains[0].country.name.en,
+                    country_code: brand.domains[0].country.code,
+                    country_currency: brand.domains[0].country.currency,
+                    country_currency_symbol:
+                        brand.domains[0].country.currency_symbol,
+                    settings: settings ? settings : {},
+                }
+            }
+        }
+        res.locals.authUser = req.session
+        // console.log(req.session)
+        next()
+    } catch (e) {
+        return res.redirect('/admin/auth/login')
     }
-    next()
 }
 
 module.exports = {
     baseConfig,
-    authCheck,
     contentTypeCheck,
-    authUser,
     mainNavGenerator,
     allBrands,
-    checkSuperAdmin,
     nunjucksFilter,
+    authUser,
 }

@@ -55,12 +55,12 @@ const generateField = async () => {
                     </p>
                 </div>
                 <div class="card-toolbar">
-                    <a class="btn btn-light btn-xs mx-1" data-bs-toggle="modal" data-bs-target="#field_form_modal" data-entry-type="new" data-section="${
+                    <a class="btn btn-light btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#field_form_modal" data-entry-type="new" data-section="${
                         group.section
-                    }"><i class="fa-solid fa-plus"></i></a>
-                    <a class="btn btn-light-danger btn-lg field-section-dlt-btn" data-section="${
+                    }"><i class="fa-solid fa-plus"></i> Add Field</a>
+                    <a class="btn btn-light-danger btn-sm field-section-dlt-btn" data-section="${
                         group.section
-                    }"><i class="fa-solid fa-trash-can"></i></a>
+                    }"><i class="fa-solid fa-trash-can"></i> Delete Section</a>
                 </div>
             </div>
             <div class="card-body section-card-body col-12">
@@ -83,7 +83,7 @@ const generateField = async () => {
         _.forEach(group.fields, function (field) {
             const currField = `
             <tr class="draggable" data-field="${field.label}">
-                <td>${field.label} <br> ${
+                <td>${field.label}<br> ${
                 field.info
                     ? '<span class="badge badge-light-warning">' +
                       field.info +
@@ -94,8 +94,8 @@ const generateField = async () => {
                 <td>${field.type}</td>
                 <td>${
                     field.validation.required
-                        ? '<span class="badge badge-success">Yes</span>'
-                        : '<span class="badge badge-danger">No</span>'
+                        ? '<i class="fa fa-check text-success"></i>'
+                        : ''
                 }</td>
                 <td>
                     <small>
@@ -192,6 +192,13 @@ document
         // document.querySelector('#field_section_form_modal').classList.remove('fade')
     })
 
+// Function to format the field into "label | value" format
+function formatOptions(field) {
+    return (
+        field.map((option) => `${option.label} | ${option.value}`).join(', ') +
+        ','
+    )
+}
 document
     .querySelector('.form-field-holder')
     .addEventListener('click', (event) => {
@@ -256,15 +263,42 @@ document
             fieldFormModal.querySelector(
                 `#${foundField.type}-field-section #validation_required`
             ).checked = foundField.validation.required
+            fieldFormModal.querySelector(
+                `#${foundField.type}-field-section #multi_select`
+            ).checked = foundField.multi_select
 
-            fieldFormModal.querySelector(
-                `#${foundField.type}-field-section #validation_min`
-            ).value = foundField.validation.min_length ?? ''
-            fieldFormModal.querySelector(
-                `#${foundField.type}-field-section #validation_max`
-            ).value = foundField.validation.max_length ?? ''
+            if (
+                fieldFormModal.querySelector(
+                    `#${foundField.type}-field-section #validation_min`
+                )
+            ) {
+                fieldFormModal.querySelector(
+                    `#${foundField.type}-field-section #validation_min`
+                ).value = foundField.validation.min_length ?? ''
+            }
+
+            if (
+                fieldFormModal.querySelector(
+                    `#${foundField.type}-field-section #validation_max`
+                )
+            ) {
+                fieldFormModal.querySelector(
+                    `#${foundField.type}-field-section #validation_max`
+                ).value = foundField.validation.max_length ?? ''
+            }
+
             // _.set(fieldSchemaJson, [index, 'section'], sectionName)
             // generateField()
+
+            fieldFormModal
+                .querySelectorAll(`.drop_down_field_options`)
+                .forEach((ddField) => {
+                    const lang = ddField
+                        .getAttribute('id')
+                        .replace('field_options_', '')
+
+                    ddField.value = formatOptions(foundField.options[lang])
+                })
         }
     })
 
@@ -328,19 +362,31 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
             .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
         const selected_field_info = e.target.field_info.value.trim()
         const selected_show_on_list = e.target.show_on_list.checked ?? false
-        const selected_field_options =
-            e.target.field_options?.value?.trim() || ''
-        const options = []
-        selected_field_options.split(',').map((option) => {
-            if (option.length) {
-                const label = option.split('|')[0].trim()
-                const value = option.split('|')[1].trim()
-                if (label.length) {
-                    options.push({ label, value })
-                }
-            }
-        })
+        const selected_multi_select = e.target.multi_select.checked ?? undefined
 
+        const options = {}
+        e.target
+            .querySelectorAll('.drop_down_field_options')
+            .forEach((ddField) => {
+                // console.log(ddField.value)
+                // console.log(ddField.getAttribute('id'))
+                const lang = ddField
+                    .getAttribute('id')
+                    .replace('field_options_', '')
+                options[lang] = []
+                const selected_field_options = ddField.value?.trim() || ''
+                selected_field_options.split(',').map((option) => {
+                    if (option.length) {
+                        const label = option.split('|')[0].trim()
+                        const value = option.split('|')[1].trim()
+                        if (label.length) {
+                            options[lang].push({ label, value })
+                        }
+                    }
+                })
+            })
+
+        // console.log(options)
         const requestedSection = _.find(fieldSchemaJson, (field) => {
             return (
                 field.section.toLowerCase() === selected_section.toLowerCase()
@@ -367,6 +413,7 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
                 name: selected_field_name,
                 info: selected_field_info,
                 show_on_list: selected_show_on_list,
+                multi_select: selected_multi_select,
                 position: 1,
                 localization: true,
                 options: options,

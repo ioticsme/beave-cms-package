@@ -104,20 +104,24 @@ document.querySelectorAll('.content_wysiwyg').forEach(function (e) {
 })
 
 function initDatePicker() {
-    document.querySelectorAll('.beave_daterangepicker input').forEach((picker) => {
-        const options = {
-            altFormat: 'd F, Y',
-            enableTime: picker.getAttribute('data-hastime') || false,
-        }
-        options.dateFormat =
-            picker.getAttribute('data-hastime') == true ? 'Y-m-d H:i' : 'Y-m-d'
-        if (picker.getAttribute('data-daterange') == true) {
-            options.mode = picker.getAttribute('data-daterange')
-                ? 'range'
-                : 'single'
-        }
-        picker.flatpickr(options)
-    })
+    document
+        .querySelectorAll('.beave_daterangepicker input')
+        .forEach((picker) => {
+            const options = {
+                altFormat: 'd F, Y',
+                enableTime: picker.getAttribute('data-hastime') || false,
+            }
+            options.dateFormat =
+                picker.getAttribute('data-hastime') == true
+                    ? 'Y-m-d H:i'
+                    : 'Y-m-d'
+            if (picker.getAttribute('data-daterange') == true) {
+                options.mode = picker.getAttribute('data-daterange')
+                    ? 'range'
+                    : 'single'
+            }
+            picker.flatpickr(options)
+        })
 }
 
 initDatePicker()
@@ -154,6 +158,20 @@ function cloneChild(event) {
         .forEach(function (element) {
             element.value = null
             element.removeAttribute('disabled')
+
+            // BEGIN::Re-Initiate Article Editor if clone child has article editor
+            const arxContainer =
+                element.parentElement.querySelector('.arx-container')
+            if (arxContainer) {
+                arxContainer.remove() // Remove .arx-container
+                ArticleEditor(element, {
+                    css: '/cms-static/admin/article-editor/css/',
+                    image: {
+                        upload: '/admin/upload-article-image',
+                    },
+                })
+            }
+            // END::Re-Initiate Article Editor if clone child has article editor
         })
 
     // Setup media component of newly created div
@@ -199,7 +217,6 @@ function cloneChild(event) {
     initDatePicker()
 }
 
-// Function to delete div
 function deleteChild(event) {
     let targetElement = event.target
     let parentDiv = targetElement.parentElement.parentElement.parentElement

@@ -164,6 +164,7 @@ const loginSubmit = async (req, res) => {
             session.admin_id = admin._id
             session.admin_name = admin.name
             session.admin_role = admin.role
+            session.admin_privileges = admin.privileges
 
             // Fetch settings based on the brand and country details
             const settings = await Settings.findOne({

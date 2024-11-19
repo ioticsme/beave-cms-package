@@ -13,7 +13,7 @@ const list = async (req, res) => {
     })
 }
 
-const add = async (req, res) => { 
+const add = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
     // const contentTypes = await ContentType.find()
     return res.render('admin-njk/config/language/form', {
@@ -57,6 +57,17 @@ const save = async (req, res) => {
         prefix: req.body.prefix,
         dir: req.body.dir,
         is_default: req.body.is_default || false,
+    }
+
+    if (data.is_default) {
+        await Language.updateMany(
+            {
+                is_default: true,
+            },
+            {
+                is_default: false,
+            }
+        )
     }
 
     if (req.body.id) {
