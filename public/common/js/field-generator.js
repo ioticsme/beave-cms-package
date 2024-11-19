@@ -263,6 +263,9 @@ document
             fieldFormModal.querySelector(
                 `#${foundField.type}-field-section #validation_required`
             ).checked = foundField.validation.required
+            fieldFormModal.querySelector(
+                `#${foundField.type}-field-section #multi_select`
+            ).checked = foundField.multi_select
 
             if (
                 fieldFormModal.querySelector(
@@ -359,6 +362,7 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
             .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
         const selected_field_info = e.target.field_info.value.trim()
         const selected_show_on_list = e.target.show_on_list.checked ?? false
+        const selected_multi_select = e.target.multi_select.checked ?? undefined
 
         const options = {}
         e.target
@@ -409,6 +413,7 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
                 name: selected_field_name,
                 info: selected_field_info,
                 show_on_list: selected_show_on_list,
+                multi_select: selected_multi_select,
                 position: 1,
                 localization: true,
                 options: options,

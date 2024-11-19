@@ -891,6 +891,10 @@
 							<input class="section_name_field" type="hidden" name="section_name_field"/>
 							<input type="hidden" name="field_type" value="dropdown"/>
 							<input class="form-control" type="text" name="field_name" id="field_name" placeholder="Field Name"/>
+							<div class="form-check form-check-custom form-check-success form-check-solid mt-1">
+								<input class="form-check-input" type="checkbox" id="multi_select" value="true" name="multi_select"/>
+								<label class="form-check-label" for="">Multi-Select</label>
+							</div>
 							<label class="mt-3" for="section_name_field">Field Pre-Defined Values</label>
 							<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6" id="cms-editor-tab-nav">
 								{% for brandLanguage in authUser.brand.languages %}

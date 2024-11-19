@@ -73,6 +73,7 @@ const ContentTypeSchema = new mongoose.Schema(
                             type: Boolean,
                             default: false,
                         },
+                        multi_select: Boolean,
                         options: {},
                         // addValidation: String,
                         // editValidation: String,

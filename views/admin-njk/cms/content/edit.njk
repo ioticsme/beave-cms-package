@@ -191,7 +191,7 @@
 																					<input disabled class="form-control form-control-solid beave-cms-form-field" data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
-																				<select disabled class="form-select beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																				<select disabled class="form-select beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																					<option value=''>- Select {{cf.field_label}} -</option>
 																					{% for dropdown in cf.options[brandLanguage.prefix] %}
 																						<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
@@ -254,7 +254,7 @@
 																						<input class="form-control form-control-solid" data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																					</div>
 																				{% elif cf.field_type === 'dropdown' %}
-																					<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																					<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																						<option value=''>- Select {{cf.field_label}} -</option>
 																						{% for dropdown in cf.options[brandLanguage.prefix] %}
 																							<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
@@ -325,7 +325,7 @@
 																					<input class="form-control form-control-solid" data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ loop.index }}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
-																				<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]">
+																				<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																					<option value=''>- Select {{cf.field_label}} -</option>
 																					{% for dropdown in cf.options[brandLanguage.prefix] %}
 																						<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
@@ -398,7 +398,7 @@
 																							<input disabled class="form-control form-control-solid beave-cms-form-field" id="beave_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																						</div>
 																					{% elif cf.field_type === 'dropdown' %}
-																						<select disabled class="form-select beave-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																						<select disabled class="form-select beave-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																							<option value=''>- Select {{cf.field_label}} -</option>
 																							{% for dropdown in cf.options[brandLanguage.prefix] %}
 																								<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value}}>{{dropdown.label}}</option>
@@ -459,7 +459,7 @@
 																								<input class="form-control form-control-solid" id="beave_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																							</div>
 																						{% elif cf.field_type === 'dropdown' %}
-																							<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																							<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																								<option value=''>- Select {{cf.field_label}} -</option>
 																								{% for dropdown in cf.options[brandLanguage.prefix] %}
 																									<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value}}>{{dropdown.label}}</option>
@@ -526,7 +526,7 @@
 																						<input id="beave_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" class="form-control mb-2" type="text" name="common[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																					</div>
 																				{% elif cf.field_type === 'dropdown' %}
-																					<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}]]">
+																					<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																						<option value=''>- Select {{cf.field_label}} -</option>
 																						{% for dropdown in cf.options[brandLanguage.prefix] %}
 																							<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>

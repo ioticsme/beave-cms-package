@@ -449,7 +449,7 @@ const saveDefaultContent = async (req, res) => {
             article_editor: 'string()',
             richtext: 'string()',
             media: 'object()',
-            dropdown: 'string()',
+            dropdown: 'array()',
             email: 'string()',
             number: 'number()',
             date: 'date()',
