@@ -60,6 +60,10 @@ const nunjucksFilter = async (req, res, next) => {
             })
     }
 
+    res.locals.mathRandom = () => {
+        return Math.floor(Math.random() * 1000 + 1)
+    }
+
     next()
 }
 
