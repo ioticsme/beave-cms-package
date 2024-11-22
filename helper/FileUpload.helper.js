@@ -22,24 +22,18 @@ const getDriveConfig = async () => {
 // Upload function internally uses the ImageKit.io javascript SDK
 const uploadMedia = async (media, folder, file) => {
     const media_drive_config = await getDriveConfig()
-    if (media_drive_config.local_upload) {
+    if (media_drive_config.default_drive == 'local') {
         const res = await localUploadMedia(media, folder, file)
         return res
     } else {
-        if (
-            media_drive_config.imagekit.default &&
-            media_drive_config.imagekit.active
-        ) {
+        if (media_drive_config.default_drive == 'imagekit') {
             return await imageKitUploadMedia(
                 media,
                 folder,
                 file,
                 media_drive_config.imagekit
             )
-        } else if (
-            media_drive_config.cloudinary.default &&
-            media_drive_config.cloudinary.active
-        ) {
+        } else if (media_drive_config.default_drive == 'cloudinary') {
             // TODO: Replace it with cloudinary
             return await cloudinaryUploadMedia(
                 media,
@@ -54,7 +48,7 @@ const uploadMedia = async (media, folder, file) => {
 }
 
 const uploadMediaFromURL = async (media_url, folder, req = {}) => {
-    if (envConfig.media_drive == 'bunny_cdn') {
+    if (envConfig.default_drive == 'bunny_cdn') {
         return await bunnyCDNUploadMediaFromURL(media_url, folder)
     } else {
         return {}

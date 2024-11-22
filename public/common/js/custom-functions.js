@@ -113,3 +113,18 @@ function changeStatus(element, status) {
             })
         })
 }
+
+function mediaConfigFormSwitching(element) {
+    document.querySelectorAll('.media-config-form').forEach((media_config) => {
+        media_config.classList.add('d-none')
+    })
+    if (element.value == 'imagekit') {
+        document
+            .getElementById('imagekit_config_form')
+            .classList.remove('d-none')
+    } else if (element.value == 'cloudinary') {
+        document
+            .getElementById('cloudinary_config_form')
+            .classList.remove('d-none')
+    }
+}

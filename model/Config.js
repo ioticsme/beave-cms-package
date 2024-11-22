@@ -21,12 +21,16 @@ const ConfigSchema = new mongoose.Schema(
                 type: Boolean,
                 default: false,
             },
+            default_drive: {
+                type: String,
+                required: true,
+                enum: ['local', 'imagekit', 'cloudinary'],
+            },
             imagekit: {
                 public_key: String,
                 private_key: String,
                 url: String,
                 folder: String,
-                default: Boolean,
                 active: Boolean,
             },
             cloudinary: {
@@ -34,7 +38,6 @@ const ConfigSchema = new mongoose.Schema(
                 api_secret: String,
                 cloud_name: String,
                 folder: String,
-                default: Boolean,
                 active: Boolean,
             },
         },

@@ -192,10 +192,10 @@ document
         // document.querySelector('#field_section_form_modal').classList.remove('fade')
     })
 
-// Function to format the field into "label | value" format
+// Function to format the field into "label : value" format
 function formatOptions(field) {
     return (
-        field.map((option) => `${option.label} | ${option.value}`).join(', ') +
+        field.map((option) => `${option.label} : ${option.value}`).join(', ') +
         ','
     )
 }
@@ -377,8 +377,8 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
                 const selected_field_options = ddField.value?.trim() || ''
                 selected_field_options.split(',').map((option) => {
                     if (option.length) {
-                        const label = option.split('|')[0].trim()
-                        const value = option.split('|')[1].trim()
+                        const label = option.split(':')[0].trim()
+                        const value = option.split(':')[1].trim()
                         if (label.length) {
                             options[lang].push({ label, value })
                         }
