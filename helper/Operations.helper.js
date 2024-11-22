@@ -1,6 +1,7 @@
 const envConfig = require('../config/env.config')
 const winston = require('winston')
 const { format } = require('date-fns')
+const crypto = require('crypto')
 
 const _ = require('lodash')
 // BEGIN:FOR PDF Generation
@@ -11,6 +12,10 @@ const path = require('path')
 // END:FOR PDF Generation
 
 const projectRootDir = require('path').resolve('./')
+
+// Generate and store this securely, e.g., in an environment variable
+const ENCRYPTION_KEY = envConfig.general.APP_KEY // 32 bytes key
+const IV_LENGTH = 16 // Initialization vector length
 
 const getRequestIp = async (req) => {
     let ip = (
@@ -175,10 +180,46 @@ const filteringScheduledCMSItems = async (items) => {
     // END::Filtering scheduled items
 }
 
+/**
+ * Encrypts a given text using AES-256-CBC.
+ * @param {string} text - The plaintext to encrypt.
+ * @returns {string} The encrypted text in base64 format.
+ */
+const encryptData = async (text) => {
+    const iv = crypto.randomBytes(IV_LENGTH) // Generate a random IV
+    const cipher = crypto.createCipheriv(
+        'aes-256-cbc',
+        Buffer.from(ENCRYPTION_KEY, 'hex'),
+        iv
+    )
+    let encrypted = cipher.update(text, 'utf8', 'base64')
+    encrypted += cipher.final('base64')
+    return `${iv.toString('hex')}:${encrypted}` // Combine IV and encrypted data
+}
+
+/**
+ * Decrypts an encrypted string using AES-256-CBC.
+ * @param {string} encryptedText - The encrypted text in the format 'IV:encryptedData'.
+ * @returns {string} The decrypted plaintext.
+ */
+const decryptData = async (encryptedText) => {
+    const [iv, encrypted] = encryptedText.split(':') // Split IV and encrypted data
+    const decipher = crypto.createDecipheriv(
+        'aes-256-cbc',
+        Buffer.from(ENCRYPTION_KEY, 'hex'),
+        Buffer.from(iv, 'hex')
+    )
+    let decrypted = decipher.update(encrypted, 'base64', 'utf8')
+    decrypted += decipher.final('utf8')
+    return decrypted
+}
+
 module.exports = {
     getRequestIp,
     fileLogger,
     // createFcmSwJS,
     loadSVGIcons,
     filteringScheduledCMSItems,
+    encryptData,
+    decryptData,
 }

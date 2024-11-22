@@ -23,7 +23,7 @@ const ConfigSchema = new mongoose.Schema(
             },
             default_drive: {
                 type: String,
-                required: true,
+                default: 'local',
                 enum: ['local', 'imagekit', 'cloudinary'],
             },
             imagekit: {
