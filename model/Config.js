@@ -41,6 +41,31 @@ const ConfigSchema = new mongoose.Schema(
                 active: Boolean,
             },
         },
+        email_settings: {
+            default_channel: {
+                type: String,
+                default: 'local',
+                enum: ['none', 'local', 'mailgun', 'sendgrid'],
+            },
+            local: {
+                from: String,
+                host: String,
+                port: Number,
+                secure: Boolean,
+                auth_user: String,
+                auth_password: String,
+            },
+            mailgun: {
+                from: String,
+                domain: String,
+                api_key: String,
+            },
+            sendgrid: {
+                from: String,
+                domain: String,
+                api_key: String,
+            },
+        },
     },
     {
         timestamps: {

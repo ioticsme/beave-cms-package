@@ -4,75 +4,45 @@ const axios = require('axios')
 const Mailgun = require('mailgun.js')
 const formData = require('form-data')
 const fs = require('fs')
+const Config = require('../model/Config')
+const { sendMailGunEmail } = require('../adaptors/email/mailgun.adaptor')
+const { sendLocalMail } = require('../adaptors/email/nodemailer.adaptor')
 
 const sendEmail = async (
-    from,
     to,
     subject,
     template,
     payloads,
-    mg_settings = envConfig.mailgun,
     filePath = false,
     html = false
 ) => {
     try {
-        const DOMAIN = mg_settings.DOMAIN
-        const mailgun = new Mailgun(formData)
-        const mg = mailgun.client({
-            username: 'api',
-            key: mg_settings.API_KEY,
-            url: mg_settings.URL,
-        })
-        // console.log(mg)
-
-        // console.log(mg.domains.domainTemplates.list())
-
-        // let attachment
-        // if (filePath) {
-        //     const pdfPath = path.join(`${filePath}`)
-        //     const file = {
-        //         filename: 'invoice.pdf',
-        //         data: await fs.promises.readFile(pdfPath),
-        //     }
-        //     attachment = [file]
-        // }
-        // const mailgunData = {
-        //     from: `${from}`,
-        //     to: `${to}`,
-        //     subject: `${subject}`,
-        //     template: `${template}`,
-        //     attachment: attachment,
-        //     'h:X-Mailgun-Variables': JSON.stringify(payloads),
-        // }
-
-        const mailgunData = {
-            from: `${from}`,
-            to: `${to}`,
-            subject: `${subject}`,
+        const email_settings = await Config.findOne().select('email_settings')
+        const default_channel = email_settings.email_settings.default_channel
+        if (default_channel == 'local') {
+            await sendLocalMail(
+                to,
+                subject,
+                template,
+                payloads,
+                email_settings.email_settings.local,
+                (filePath = false),
+                (html = false)
+            )
+        } else if (default_channel == 'mailgun') {
+            await sendMailGunEmail(
+                to,
+                subject,
+                template,
+                payloads,
+                email_settings.email_settings.mailgun,
+                (filePath = false),
+                (html = false)
+            )
         }
 
-        let attachment
-        if (filePath) {
-            const pdfPath = path.join(`${filePath}`)
-            const file = {
-                filename: 'invoice.pdf',
-                data: await fs.promises.readFile(pdfPath),
-            }
-            attachment = [file]
-            mailgunData.attachment = attachment
-        }
-        
-        if (html) {
-            mailgunData.html = html
-        }
-        else {
-            mailgunData.template = `${template}`
-            mailgunData['h:X-Mailgun-Variables'] = JSON.stringify(payloads)
-        }
-        
         // console.log(mailgunData)
-
-        return mg.messages.create(DOMAIN, mailgunData)
+        return 'Done'
     } catch (error) {
         console.log(error)
         return false
