@@ -121,7 +121,7 @@
 										{% endfor %}
 									{% endif %}
 									{% if has_common_field_groups %}
-									
+
 										<li class="nav-item">
 											<a class="nav-link" data-bs-toggle="tab" href="#beave_tab_pane_common">
 												General
@@ -130,7 +130,7 @@
 										</li>
 									{% endif %}
 									{% if reqContentType.has_meta %}
-									
+
 										<li class="nav-item">
 											<a class="nav-link" data-bs-toggle="tab" href="#beave_tab_pane_meta">
 												Meta
@@ -627,6 +627,10 @@
 
 						{% if reqContentType.allowed_type and reqContentType.allowed_type.length %}
 							{% include "./partials/_attach-content-type.njk" %}
+						{% endif %}
+
+						{% if reqContentType.has_form %}
+							{% include "./partials/_attach-form.njk" %}
 						{% endif %}
 
 						{# {% include "./partials/_add-to-home.njk" %} #}

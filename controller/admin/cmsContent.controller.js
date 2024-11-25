@@ -4,6 +4,7 @@ const slugify = require('slugify')
 const Joi = require('joi')
 const Content = require('../../model/Content')
 const Country = require('../../model/Country')
+const CustomForm = require('../../model/CustomForm')
 const fs = require('fs')
 const { uploadMedia } = require('../../helper/FileUpload.helper')
 const { formatInTimeZone } = require('date-fns-tz')
@@ -43,7 +44,9 @@ const list = async (req, res) => {
         }
 
         // const reqContentType = req.contentType
-        const default_lang = collect(req.authUser.brand.languages).sortByDesc('is_default').first()
+        const default_lang = collect(req.authUser.brand.languages)
+            .sortByDesc('is_default')
+            .first()
         return res.render(`admin-njk/cms/content/listing`, {
             default_lang,
             reqContentType: req.contentType,
@@ -134,6 +137,15 @@ const add = async (req, res) => {
             .count()
         // return res.send(req.contentType._id)
 
+        let forms
+        if (req.contentType?.has_form) {
+            forms = await CustomForm.find({
+                brand: session?.brand?._id,
+                country: session?.brand?.country,
+                published: true,
+            })
+        }
+
         let template = `admin-njk/cms/content/add`
         if (req.contentType?.page_builder) {
             template = `admin-njk/cms/content/html-builder/form`
@@ -147,6 +159,7 @@ const add = async (req, res) => {
                 : false,
             allowed_content,
             metaFields,
+            forms,
         })
     } catch (error) {
         // console.log(error)
@@ -181,6 +194,18 @@ const edit = async (req, res) => {
             const grouped = collection.groupBy('type_slug')
             allowed_content = JSON.parse(JSON.stringify(grouped.items))
         }
+
+        let forms
+        if (req.contentType?.has_form) {
+            forms = await CustomForm.find({
+                brand: session?.brand?._id,
+                country: session?.brand?.country,
+                published: true,
+            })
+        }
+
+        // console.log(req.contentType.has_form)
+
         const has_common_field_groups = collect(req.contentType.field_groups)
             .where('localisation', false)
             .count()
@@ -202,6 +227,7 @@ const edit = async (req, res) => {
                 : false,
             contentDetail,
             allowed_content,
+            forms,
             metaFields,
         })
     } catch (error) {
@@ -427,6 +453,7 @@ const saveDefaultContent = async (req, res) => {
         let content_to_insert = _.omit(body, [
             '_id',
             'slug',
+            'form',
             'status',
             'cms_publish_start',
             'cms_publish_end',
@@ -626,6 +653,7 @@ const saveDefaultContent = async (req, res) => {
                 ? Joi.string().required()
                 : Joi.string().optional(),
             ...validationSchema,
+            form: Joi.optional(),
             attached_type: Joi.optional(),
             meta: Joi.object().optional().allow(null, ''),
             status: Joi.string()
@@ -706,9 +734,8 @@ const saveDefaultContent = async (req, res) => {
             type_id: type._id,
             type_slug: type.slug,
             author: req.authUser.admin_id,
-            // banner: body?.banner || null, // If Requested content type has banner required
-            // gallery: body?.gallery || null, // If Requested content type has gallery required
             brand: req.authUser.brand._id,
+            form: body?.form || null, // If Requested content type has form required1
             country: req.authUser.brand.country,
             status: body.status,
             scheduled_at: {

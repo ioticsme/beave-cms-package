@@ -121,4 +121,4 @@ UserSchema.virtual('date_updated').get(function () {
     )
 })
 
-module.exports = mongoose.model('beave_User', UserSchema)
+module.exports = mongoose.model('User', UserSchema)

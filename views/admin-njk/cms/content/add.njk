@@ -569,6 +569,10 @@
 
 						{# {% include './partials/_add-to-home.njk' %} #}
 
+						{% if reqContentType.has_form %}
+							{% include "./partials/_attach-form.njk" %}
+						{% endif %}
+
 						{% if reqContentType.single_type == false %}
 							{% include './partials/_position.njk' %}
 						{% endif %}

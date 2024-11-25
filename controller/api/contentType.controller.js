@@ -491,6 +491,15 @@ const detail = async (req, res) => {
                     })
                         .populate('author')
                         .populate('country')
+                        .populate({
+                            path: 'form',
+                            // populate: {
+                            //     path: 'fields.product',
+                            //     populate: {
+                            //         path: 'country',
+                            //     },
+                            // },
+                        })
 
                     if (!liveData?._id) {
                         return false

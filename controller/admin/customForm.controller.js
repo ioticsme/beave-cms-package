@@ -91,6 +91,7 @@ const edit = async (req, res) => {
         // const domainTemplates = await mailGunTemplates(
         //     req.brand?.settings?.notification_settings?.mailgun
         // )
+
         return res.render(`admin-njk/custom-forms/edit`, {
             form,
             // domainTemplates,
@@ -98,6 +99,47 @@ const edit = async (req, res) => {
             contentTypes,
             has_email_config:
                 config.email_settings.default_channel != 'none' ? true : false,
+        })
+    } catch (error) {
+        console.log(error)
+        return res.render(`admin-njk/app-error-500`)
+    }
+}
+const viewAPI = async (req, res) => {
+    try {
+        session = req.authUser
+        const form = await CustomForm.findOne({
+            _id: req.params.id,
+            brand: session.brand._id,
+            country: session.brand.country,
+            isDeleted: false,
+        })
+            .populate('brand')
+            .populate('country')
+        // const domainTemplates = await mailGunTemplates(
+        //     req.brand?.settings?.notification_settings?.mailgun
+        // )
+
+        const protocol = req.protocol // 'http' or 'https'
+        const host = req.get('host') // Includes hostname and port
+        const fullDomain = `${protocol}://${host}` // Construct full domain
+
+        // const test =
+        let api_body = {}
+        api_body['type'] = form.type
+        form.fields.forEach((field) => {
+            if (field.validation.data_type == 'number') {
+                api_body[field.field_name] = 12
+            } else if (field.validation.data_type == 'boolean') {
+                api_body[field.field_name] = true
+            } else {
+                api_body[field.field_name] = 'sample value'
+            }
+        })
+        return res.render(`admin-njk/custom-forms/view-api`, {
+            api_body: JSON.stringify(api_body),
+            fullDomain,
+            form,
         })
     } catch (error) {
         console.log(error)
@@ -417,6 +459,7 @@ const deleteSubmissions = async (req, res) => {
 module.exports = {
     list,
     edit,
+    viewAPI,
     add,
     save,
     changeStatus,

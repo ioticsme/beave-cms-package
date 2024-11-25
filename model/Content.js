@@ -34,6 +34,13 @@ const ContentSchema = new mongoose.Schema(
             ref: Country,
             required: true,
         },
+        form: [
+            {
+                type: Schema.ObjectId,
+                ref: 'CustomForm',
+                required: false,
+            },
+        ],
         attached_type: [
             {
                 content_type: {
@@ -141,4 +148,4 @@ ContentSchema.virtual('date_updated').get(function () {
     )
 })
 
-module.exports = mongoose.model('beave_Content', ContentSchema)
+module.exports = mongoose.model('Content', ContentSchema)

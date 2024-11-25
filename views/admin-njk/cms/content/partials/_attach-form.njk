@@ -1,0 +1,17 @@
+<div class="card card-flush py-4">
+	<div class="card-header">
+		<div class="card-title">
+			<h3>Select Form</h3>
+		</div>
+	</div>
+	<div class="card-body pt-0">
+		<select id="beave_ecommerce_add_gallery_status_select" class="form-select mb-2" name="form">
+			<option value="">- SELECT A FORM -</option>
+			{% for item in forms %}
+				<option value="{{ item._id }}" {% if item.id == contentDetail.form[0] %} selected {% endif %}>{{ item.form_name.en }}</option>
+			{% endfor %}
+		</select>
+		<div class="text-muted fs-7">Select the form</div>
+		<div class="fv-plugins-message-container invalid-feedback" id="field-error-gallery"></div>
+	</div>
+</div>

@@ -100,10 +100,13 @@ const customFormSubmit = async (req, res) => {
             country: req.country._id,
         }
 
-        let save = await CustomFormData.create(data)
+        let save
+        if (customForm.store_in_db) {
+            save = await CustomFormData.create(data)
 
-        if (!save?._id) {
-            return res.status(400).json({ error: 'Submission error' })
+            if (!save?._id) {
+                return res.status(400).json({ error: 'Submission error' })
+            }
         }
 
         let field_map_for_email = {}

@@ -100,4 +100,4 @@ const MenuSchema = new mongoose.Schema(
 
 MenuSchema.plugin(softDeletePlugin)
 
-module.exports = mongoose.model('beave_Menu', MenuSchema)
+module.exports = mongoose.model('Menu', MenuSchema)

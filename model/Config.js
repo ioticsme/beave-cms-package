@@ -75,4 +75,4 @@ const ConfigSchema = new mongoose.Schema(
     }
 )
 
-module.exports = mongoose.model('beave_Config', ConfigSchema)
+module.exports = mongoose.model('Config', ConfigSchema)

@@ -164,16 +164,16 @@
 					</span>
 				</label>
 				<div class="form-check form-check-custom mt-2 mb-5 form-check-solid">
-					<input class="form-check-input cf" type="checkbox" name="field_show_in_list[]" value="true"/>
+					<input class="form-check-input cf" type="checkbox" name="field_show_in_list[]" {% if field.field_show_in_list %} checked {% endif %} value="true"/>
 					<label class="form-check-label"></label>
 				</div>
 				<span>
-					<small class="field-info">This defines the field is required or not in the CMS listing.</small>
+					<small class="field-info">This defines the field is required or not in the form submission list on cms.</small>
 				</span>
 				<div class="fv-plugins-message-container invalid-feedback" id="field-error-field_show_in_list"></div>
 			</div>
 
-			<div class="col-md-5">
+			{# <div class="col-md-5">
 				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 					<span>
 						<small>Enable</small>
@@ -187,7 +187,7 @@
 					<small class="field-info">This defines the field as enabled or disabled.</small>
 				</span>
 				<div class="fv-plugins-message-container invalid-feedback" id="field-error-field_enable"></div>
-			</div>
+			</div> #}
 		</div>
 	</div>
 </div>

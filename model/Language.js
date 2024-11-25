@@ -26,4 +26,4 @@ const LanguageSchema = new mongoose.Schema(
     }
 )
 
-module.exports = mongoose.model('beave_Language', LanguageSchema)
+module.exports = mongoose.model('Language', LanguageSchema)
