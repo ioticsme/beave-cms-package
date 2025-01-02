@@ -14,6 +14,7 @@ const {
     localUploadMedia,
     localDeleteMedia,
 } = require('../adaptors/file-upload/localUpload.adaptor.js')
+const { decryptData } = require('./Operations.helper.js')
 
 const getDriveConfig = async () => {
     const config = await Config.findOne()
@@ -27,20 +28,30 @@ const uploadMedia = async (media, folder, file) => {
         return res
     } else {
         if (media_drive_config.default_drive == 'imagekit') {
-            return await imageKitUploadMedia(
-                media,
-                folder,
-                file,
-                media_drive_config.imagekit
+            const public_key = decryptData(
+                media_drive_config?.imagekit?.public_key
             )
+            const private_key = decryptData(
+                media_drive_config?.imagekit?.private_key
+            )
+            let driveConfig = {
+                public_key: public_key || envConfig.imagekit.PUBLIC_KEY,
+                private_key: private_key || envConfig.imagekit.PRIVATE_KEY,
+                url: media_drive_config?.imagekit?.url,
+                folder: media_drive_config?.imagekit?.folder,
+            }
+            return await imageKitUploadMedia(media, folder, file, driveConfig)
         } else if (media_drive_config.default_drive == 'cloudinary') {
+            const api_key = decryptData(media_drive_config?.api_key)
+            const api_secret = decryptData(media_drive_config?.api_secret)
+            let driveConfig = {
+                api_key: api_key,
+                api_secret: api_secret,
+                cloud_name: media_drive_config?.cloud_name,
+                folder: media_drive_config?.folder,
+            }
             // TODO: Replace it with cloudinary
-            return await cloudinaryUploadMedia(
-                media,
-                folder,
-                file,
-                media_drive_config.cloudinary
-            )
+            return await cloudinaryUploadMedia(media, folder, file, driveConfig)
         } else {
             return 'No Drive Configured'
         }

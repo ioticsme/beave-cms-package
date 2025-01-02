@@ -60,7 +60,6 @@ const list = async (req, res) => {
 }
 
 const save = async (req, res) => {
-    // console.log(req.body)
     const schema = Joi.object({
         client_name: Joi.string().required(),
         frontend_url: Joi.string().optional().allow(null, ''),
@@ -259,13 +258,13 @@ const save = async (req, res) => {
             // url: `/config/app-settingss`,
         })
     } catch (e) {
-        console.log(e.errors)
+        console.log(e)
         if (e.errors) {
             return res.status(422).json({
                 details: e.errors,
             })
         }
-        return res.status(404).json({ error: 'Something went wrong' })
+        return res.status(500).json({ error: 'Something went wrong' })
     }
 }
 

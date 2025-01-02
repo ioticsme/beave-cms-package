@@ -25,12 +25,12 @@ const envConfig = {
         URL: process.env.DB_CONNECTION,
         NAME: process.env.DB_NAME || process.env.CLIENT_NAME?.toLowerCase(),
     },
-    // imagekit: {
-    //     PUBLIC_KEY: process.env.IMAGEKIT_PUBLIC_KEY,
-    //     PRIVATE_KEY: process.env.IMAGEKIT_PRIVATE_KEY,
-    //     URL: process.env.IMAGEKIT_URL,
-    //     FOLDER: process.env.IMAGEKIT_FOLDER,
-    // },
+    imagekit: {
+        PUBLIC_KEY: process.env.IMAGEKIT_PUBLIC_KEY,
+        PRIVATE_KEY: process.env.IMAGEKIT_PRIVATE_KEY,
+        URL: process.env.IMAGEKIT_URL,
+        FOLDER: process.env.IMAGEKIT_FOLDER,
+    },
     // bunny_cdn: {
     //     REGION: process.env.BUNNY_REGION || '', // If German region, set this to an empty string: ''
     //     HOSTNAME: process.env.BUNNY_HOSTNAME || 'storage.bunnycdn.com',
