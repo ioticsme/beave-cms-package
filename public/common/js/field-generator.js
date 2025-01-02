@@ -362,7 +362,8 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
             .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
         const selected_field_info = e.target.field_info?.value?.trim()
         const selected_show_on_list = e.target.show_on_list?.checked ?? false
-        const selected_multi_select = e.target.multi_select?.checked ?? undefined
+        const selected_multi_select =
+            e.target.multi_select?.checked ?? undefined
 
         const options = {}
         e.target

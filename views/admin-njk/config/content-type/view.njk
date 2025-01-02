@@ -908,7 +908,7 @@
 							</ul>
 							<div class="tab-content tab-content-fields mb-5" id="myTabContent">
 								{% for brandLanguage in authUser.brand.languages %}
-									<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" dir="{{brandLanguage.dir}}" id="beave_tab_pane_{{ brandLanguage.prefix }}">
+									<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" id="beave_tab_pane_{{ brandLanguage.prefix }}">
 										<textarea class="form-control mt-2 drop_down_field_options" name="field_options[{{ brandLanguage.prefix }}]" id="field_options_{{ brandLanguage.prefix }}" placeholder="Example : Male:m, Female:f,"></textarea>
 									</div>
 								{% endfor %}

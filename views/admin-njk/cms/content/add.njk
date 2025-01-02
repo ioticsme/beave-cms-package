@@ -357,7 +357,7 @@
 																			{% elif cf.field_type === 'dropdown' %}
 																				<select disabled class="form-select beave-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																					<option value=''>- Select {{cf.field_label}} -</option>
-																					{% for dropdown in cf.options[brandLanguage.prefix] %}
+																					{% for dropdown in cf.options.en %}
 																						<option value="{{dropdown.value}}">{{dropdown.label}}</option>
 																					{% endfor %}
 																				</select>
@@ -411,7 +411,7 @@
 																			{% elif cf.field_type === 'dropdown' %}
 																				<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																					<option value=''>- Select {{cf.field_label}} -</option>
-																					{% for dropdown in cf.options[brandLanguage.prefix] %}
+																					{% for dropdown in cf.options.en %}
 																						<option value="{{dropdown.value}}">{{dropdown.label}}</option>
 																					{% endfor %}
 																				</select>
@@ -433,7 +433,8 @@
 																	<i class="la la-plus"></i>Add</a>
 															</div>
 														{% else %}
-															<div clas="{{ 'inline-row' if cfg.inline_fields }}">
+															{# Non repeating fields #}
+															<div class="{{ 'inline-row' if cfg.inline_fields }}">
 																{% for cf in cfg.fields %}
 																	<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																		<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
@@ -483,7 +484,7 @@
 																		{% elif cf.field_type == 'dropdown' %}
 																			<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																				<option value=''>- Select {{cf.field_label}} -</option>
-																				{% for dropdown in cf.options[brandLanguage.prefix] %}
+																				{% for dropdown in cf.options.en %}
 																					<option value="{{dropdown.value}}">{{dropdown.label}}</option>
 																				{% endfor %}
 																			</select>
