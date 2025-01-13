@@ -157,14 +157,18 @@
 				</span>
 			</div>
 
-			<div class="col-md-5">
+			<div class="col-md-3">
 				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 					<span>
 						<small>List View</small>
 					</span>
 				</label>
 				<div class="form-check form-check-custom mt-2 mb-5 form-check-solid">
-					<input class="form-check-input cf" type="checkbox" name="field_show_in_list[]" {% if field.field_show_in_list %} checked {% endif %} value="true"/>
+					{# <input class="form-check-input cf" type="checkbox" name="field_show_in_list[]" {% if field.field_show_in_list %} checked {% endif %} value="true"/> #}
+					<select class="cf form-select mb-2" name="field_show_in_list[]" required>
+						<option value="false" {% if not field.field_show_in_list %}selected{% endif %}>No</option>
+						<option value="true" {% if field.field_show_in_list  %}selected{% endif %}>Yes</option>
+					</select>
 					<label class="form-check-label"></label>
 				</div>
 				<span>

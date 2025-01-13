@@ -95,6 +95,10 @@ const CustomFormSchema = new mongoose.Schema(
         tnc: {
             type: Object,
         },
+        is_captcha_required: {
+            type: Boolean,
+            default: false,
+        },
         published: {
             type: Boolean,
             default: true,

@@ -279,7 +279,7 @@ const save = async (req, res) => {
                 content_type: input.content_type[i]
                     ? input.content_type[i]
                     : null,
-                field_show_in_list: input.field_show_in_list?.[i] ?? false,
+                field_show_in_list: input.field_show_in_list?.[i] == 'true',
                 use_for_notification: input.use_for_notification?.[i] ?? false,
                 position: input.position?.[i] ?? 0,
                 validation: {
@@ -325,6 +325,7 @@ const save = async (req, res) => {
             slack_url: input.slack_url,
             web_hook: input.web_hook,
             form_load_mode: input.form_load_mode,
+            is_captcha_required: input.is_captcha_required == 'true',
             fields: form_fields,
             brand: session.brand._id,
             country: session.brand.country,
