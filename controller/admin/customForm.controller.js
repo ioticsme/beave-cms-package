@@ -306,8 +306,8 @@ const save = async (req, res) => {
                     ar: input.field_default_val.ar[i],
                 },
                 field_values: {
-                    en: input.field_values.en[i],
-                    ar: input.field_values.ar[i],
+                    en: input.field_values.en[i]?.split(','),
+                    ar: input.field_values.ar[i]?.split(','),
                 },
                 content_type: input.content_type[i]
                     ? input.content_type[i]
