@@ -171,31 +171,12 @@
 			addEventListenerToTypeSelect()
 		}
 
-		document.addEventListener('click', function (e) {
-			var field_length = document
-				.querySelectorAll(".cf-card")
-				.length - 1
-			if (e.target && e.target.classList.contains('delete-field-btn') && field_length) {
-				e.preventDefault();
-				// Remove the element four levels up from the delete button
-				e
-					.target
-					.parentElement
-					.parentElement
-					.parentElement
-					.parentElement
-					.remove();
-				console.log('Delete button clicked');
-			}
-		});
-
 		function deleteField(e) {
 			var fieldLength = document
 				.querySelectorAll(".cf-card")
 				.length - 1
 			if (e && fieldLength) {
 				e
-					.parentElement
 					.parentElement
 					.parentElement
 					.parentElement

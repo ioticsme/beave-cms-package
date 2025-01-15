@@ -157,24 +157,31 @@
 				</span>
 			</div>
 
-			<div class="col-md-3">
-				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+			<div class="col-md-10">
+				<div class="col-md-3">
+					<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+						<span>
+							<small>List View</small>
+						</span>
+					</label>
+					<div class="form-check form-check-custom mt-2 mb-5 form-check-solid">
+						{# <input class="form-check-input cf" type="checkbox" name="field_show_in_list[]" {% if field.field_show_in_list %} checked {% endif %} value="true"/> #}
+						<select class="cf form-select mb-2" name="field_show_in_list[]" required>
+							<option value="false" {% if not field.field_show_in_list %}selected{% endif %}>No</option>
+							<option value="true" {% if field.field_show_in_list  %}selected{% endif %}>Yes</option>
+						</select>
+						<label class="form-check-label"></label>
+					</div>
 					<span>
-						<small>List View</small>
+						<small class="field-info">This defines the field is required or not in the form submission list on cms.</small>
 					</span>
-				</label>
-				<div class="form-check form-check-custom mt-2 mb-5 form-check-solid">
-					{# <input class="form-check-input cf" type="checkbox" name="field_show_in_list[]" {% if field.field_show_in_list %} checked {% endif %} value="true"/> #}
-					<select class="cf form-select mb-2" name="field_show_in_list[]" required>
-						<option value="false" {% if not field.field_show_in_list %}selected{% endif %}>No</option>
-						<option value="true" {% if field.field_show_in_list  %}selected{% endif %}>Yes</option>
-					</select>
-					<label class="form-check-label"></label>
+					<div class="fv-plugins-message-container invalid-feedback" id="field-error-field_show_in_list"></div>
 				</div>
-				<span>
-					<small class="field-info">This defines the field is required or not in the form submission list on cms.</small>
-				</span>
-				<div class="fv-plugins-message-container invalid-feedback" id="field-error-field_show_in_list"></div>
+			</div>
+			<div class="col-md-2 mt-10">
+				<button class="btn btn-danger delete-field-btn btn-sm" type="button" id="delete-field-btn-0" onclick="deleteField(this)">
+					<i class="las la-trash fs-2x"></i>
+				</button>
 			</div>
 
 			{# <div class="col-md-5">

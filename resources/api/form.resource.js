@@ -1,7 +1,6 @@
 const Resource = require('resources.js')
 // const UserAddressResource = require('./userAddress.resource');
 
-
 class FieldResource extends Resource {
     toArray() {
         return {
@@ -20,12 +19,12 @@ class FormResource extends Resource {
         return {
             _id: this.id,
             type: this.type,
-            forma_name: this.forma_name,
+            form_name: this.form_name,
             description: this.description,
             cta_label: this.cta_label,
             form_load_mode: this.form_load_mode,
             tnc: this.tnc,
-			fields: FieldResource.collection(this.fields)
+            fields: FieldResource.collection(this.fields),
         }
     }
 }
