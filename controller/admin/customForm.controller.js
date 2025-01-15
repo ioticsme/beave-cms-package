@@ -136,10 +136,38 @@ const viewAPI = async (req, res) => {
                 api_body[field.field_name] = 'sample value'
             }
         })
+
+        const sampleAPI = `
+const axios = require('axios');
+const qs = require('qs');
+let data = qs.stringify(${JSON.stringify(api_body)});
+
+let config = {
+  method: 'post',
+  maxBodyLength: Infinity,
+  url: '${fullDomain}/api/custom-forms/submit',
+  headers: { 
+    'brand': '${form.brand.code}', 
+    'locale': '${req.authUser.brand.languages[0].prefix}-${form.country.code}', 
+    'Content-Type': 'application/x-www-form-urlencoded'
+  },
+  data : data
+};
+
+axios.request(config)
+.then((response) => {
+  console.log(JSON.stringify(response.data));
+})
+.catch((error) => {
+  console.log(error);
+});
+`
+
         return res.render(`admin-njk/custom-forms/view-api`, {
             api_body: JSON.stringify(api_body),
             fullDomain,
             form,
+            sampleAPI,
         })
     } catch (error) {
         console.log(error)
@@ -180,6 +208,10 @@ const save = async (req, res) => {
                 en: Joi.string().required(),
                 ar: Joi.string().required(),
             }).required(),
+            form_title: Joi.object({
+                en: Joi.string().required(),
+                ar: Joi.string().required(),
+            }).required(),
             description: Joi.object({
                 en: Joi.string().optional().allow(null, ''),
                 ar: Joi.string().optional().allow(null, ''),
@@ -202,6 +234,7 @@ const save = async (req, res) => {
             recipient_emails: Joi.string().optional().allow(null, ''),
             recipient_email_template: Joi.string().optional().allow(null, ''),
             recipient_email_subject: Joi.string().optional().allow(null, ''),
+            success_message: Joi.string().optional().allow(null, ''),
             slack_url: Joi.string().optional().allow(null, ''),
             web_hook: Joi.string().optional().allow(null, ''),
             form_load_mode: Joi.string().optional().allow(null, ''),
@@ -312,6 +345,7 @@ const save = async (req, res) => {
         // Data object to insert
         let data = {
             form_name: input.form_name,
+            form_title: input.form_title,
             description: input.description,
             tnc: input.tnc,
             cta_label: input.cta_label,
@@ -323,6 +357,7 @@ const save = async (req, res) => {
             recipient_email_template: input.recipient_email_template,
             recipient_email_subject: input.recipient_email_subject,
             slack_url: input.slack_url,
+            success_message: input.success_message,
             web_hook: input.web_hook,
             form_load_mode: input.form_load_mode,
             is_captcha_required: input.is_captcha_required == 'true',

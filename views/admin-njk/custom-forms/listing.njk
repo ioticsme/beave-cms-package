@@ -84,7 +84,7 @@
 										<td>
 											<a href="/admin/custom-forms/submissions/{{ item._id }}" class="badge badge-light-primary">{{ item.type }}</a>
 										</td>
-										<td class="text-center">{{ item.custom_fields.length if item.custom_fields else 0 }}</td>
+										<td class="text-center">{{ item.fields.length if item.fields else 0 }}</td>
 										<td>
 											{% if item.published %}
 												<div class="badge badge-light-success">Published</div>

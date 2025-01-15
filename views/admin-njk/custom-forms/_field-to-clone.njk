@@ -133,8 +133,8 @@
 					</span>
 				</label>
 				<select class="cf form-select mb-2" name="field_validation_mandatory[]" required>
-					<option value="required" {% if field.validation.required %}selected{% endif %}>Yes</option>
-					<option value="optional" {% if not field.validation.required %}selected{% endif %}>No</option>
+					<option value="required" {% if field.validation.required == 'required' %}selected{% endif %}>Yes</option>
+					<option value="optional" {% if field.validation.required == 'optional' %}selected{% endif %}>No</option>
 				</select>
 				<span>
 					<small class="field-info">This defines if the field is mandatory or not.</small>

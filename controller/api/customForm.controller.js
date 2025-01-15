@@ -25,14 +25,21 @@ const customFormSubmit = async (req, res) => {
         let cfValidationObj = {}
         // const joiStart = `Joi.`
         customForm?.fields.forEach((element) => {
-            let validation_eval_string = `Joi.${element.validation.data_type}().${element.validation.required}()`
-            if (element.validation.min_length > 0) {
-                validation_eval_string = `${validation_eval_string}.min(${element.validation.min_length})`
+            let validation_eval_string
+            if (
+                element.validation.data_type == 'string' &&
+                element.validation.required == 'optional'
+            ) {
+                validation_eval_string = `Joi.optional()`
+            } else {
+                validation_eval_string = `Joi.${element.validation.data_type}().${element.validation.required}()`
+                if (element.validation.min_length > 0) {
+                    validation_eval_string = `${validation_eval_string}.min(${element.validation.min_length})`
+                }
+                if (element.validation.max_length > 0) {
+                    validation_eval_string = `${validation_eval_string}.max(${element.validation.max_length})`
+                }
             }
-            if (element.validation.max_length > 0) {
-                validation_eval_string = `${validation_eval_string}.max(${element.validation.max_length})`
-            }
-            // console.log(validation_eval_string)
             cfValidationObj[element.field_name] = eval(
                 `${validation_eval_string}.label('${element.field_label?.en}')`
             )
@@ -76,16 +83,6 @@ const customFormSubmit = async (req, res) => {
         for (i = 0; i < customForm.fields?.length; i++) {
             let cf = customForm.fields[i]
             let value = input?.[cf.field_name]
-            // if (cf.field_type) {
-            //     let ObjectId = mongoose.Types.ObjectId
-            //     if (!ObjectId.isValid(req.body?.[cf.field_name])) {
-            //         return res.status(422).json({ error: 'Invalid content' })
-            //     }
-            //     let content = await Content.findOne({
-            //         _id: req.body?.[cf.field_name],
-            //     })
-            //     value = new ContentResource(content).exec()
-            // }
             cfValues = {
                 ...cfValues,
                 [cf.field_name]: value,
@@ -129,7 +126,6 @@ const customFormSubmit = async (req, res) => {
         // BEGIN::Calling webhook
         if (customForm.web_hook) {
             // call webhook
-            // console.log(customForm.web_hook)
             axios
                 .post(customForm.web_hook, {
                     form_id: save.data.form_id,
@@ -142,9 +138,10 @@ const customFormSubmit = async (req, res) => {
         }
         // END::Calling webhook
 
-        return res
-            .status(200)
-            .json({ message: 'Custom Form Submitted', data: save })
+        return res.status(200).json({
+            message: customForm.success_message || 'Custom Form Submitted',
+            data: save,
+        })
     } catch (error) {
         console.log(error)
         return res

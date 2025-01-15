@@ -13,6 +13,9 @@ const CustomFormSchema = new mongoose.Schema(
             type: Object,
             required: true,
         },
+        form_title: {
+            type: Object,
+        },
         description: {
             type: Object,
         },
@@ -29,6 +32,7 @@ const CustomFormSchema = new mongoose.Schema(
         recipient_emails: String,
         recipient_email_template: String,
         recipient_email_subject: String,
+        success_message: String,
         slack_url: String,
         web_hook: String,
         form_load_mode: {
