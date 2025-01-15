@@ -14,6 +14,7 @@ const { default: mongoose } = require('mongoose')
 const { ObjectId } = require('mongodb')
 const { group } = require('console')
 const metaFields = require('../../config/meta-fields.config')
+const ContentType = require('../../model/ContentType')
 
 let session
 
@@ -110,6 +111,172 @@ const detail = async (req, res) => {
         })
     } catch (error) {
         return res.render(`admin-njk/app-error-500`)
+    }
+}
+
+const duplicateContent = async (req, res) => {
+    try {
+        if (req.contentType.single_type) {
+            return await duplicateSingleTypeContent(req, res)
+        }
+
+        session = req.authUser
+        const contentDetail = await Content.findOne({
+            _id: req.params.id,
+            type_id: req.contentType._id,
+            brand: session.brand._id,
+            country: session.brand.country,
+        }).lean()
+
+        if (!contentDetail) {
+            return res.render(`admin-njk/page-error-404`)
+        }
+
+        let newSlug = await generateSlugForContent(
+            req.authUser,
+            contentDetail.type_slug,
+            contentDetail.slug
+        )
+        console.log('🚀 ~ duplicateContent ~ newSlug:', newSlug)
+
+        await Content.create({
+            ...contentDetail,
+            _id: new ObjectId(),
+            slug: newSlug,
+            author: req.authUser?._id,
+        })
+
+        return res.redirect('back')
+    } catch (error) {
+        console.log('error :>> ', error)
+        return res.render(`admin-njk/app-error-500`)
+    }
+}
+
+const duplicateSingleTypeContent = async (req, res) => {
+    try {
+        session = req.authUser
+        const contentDetail = await Content.findOne({
+            _id: req.params.id,
+            type_id: req.contentType._id,
+            brand: session.brand._id,
+            country: session.brand.country,
+        })
+        .lean()
+
+        if (!contentDetail) {
+            return res.render(`admin-njk/page-error-404`)
+        }
+
+        let contentType = await ContentType.findOne({
+            _id: req.contentType._id,
+        }).lean()
+        if (!contentType) {
+            return res.render(`admin-njk/page-error-404`)
+        }
+
+        let newContentTypeSlug = await generateSlugForContentType(
+            req.authUser,
+            contentType.slug
+        )
+
+        let newContentType = await ContentType.create({
+            ...contentType,
+            _id: new ObjectId(),
+            title: `${contentType.title}-${newContentTypeSlug?.count}`,
+            slug: newContentTypeSlug?.slug,
+        })
+
+        if (!newContentType?._id) {
+            return res.render(`admin-njk/app-error-500`)
+        }
+
+        let newContentSlug = await generateSlugForContent(
+            req.authUser,
+            contentDetail.type_slug,
+            contentDetail.slug
+        )
+
+        await Content.create({
+            ...contentDetail,
+            _id: new ObjectId(),
+            slug: newContentSlug,
+            type_id: newContentType._id,
+            type_slug: newContentType.slug,
+            author: req.authUser?._id,
+        })
+
+        return res.redirect(`/admin/cms/${newContentType.slug}`)
+    } catch (error) {
+        console.log('error :>> ', error)
+        return res.render(`admin-njk/app-error-500`)
+    }
+}
+
+const generateSlugForContentType = async (authUser, currentSlug, count = 1) => {
+    // Check if the currentSlug already ends with a number
+    const slugParts = currentSlug.match(/^(.*?)-(\d+)$/)
+    const baseSlug = slugParts ? slugParts[1] : currentSlug
+    const currentCount = slugParts ? parseInt(slugParts[2], 10) : 0
+
+    // Generate new slug with updated count
+    const newSlug =
+        currentCount > 0
+            ? `${baseSlug}-${currentCount + 1}`
+            : `${baseSlug}-${count}`
+
+    const isDBExist = await ContentType.findOne({
+        slug: newSlug,
+        brand: authUser.brand._id,
+    })
+
+    if (isDBExist) {
+        return await generateSlugForContentType(
+            authUser,
+            baseSlug,
+            currentCount > 0 ? currentCount + 1 : count + 1
+        )
+    } else {
+        return {
+            count,
+            slug: newSlug,
+        }
+    }
+}
+
+const generateSlugForContent = async (
+    authUser,
+    typeSlug,
+    currentSlug,
+    count = 1
+) => {
+    // Check if currentSlug already has a count at the end
+    const slugParts = currentSlug.match(/^(.*?)-(\d+)$/)
+    const baseSlug = slugParts ? slugParts[1] : currentSlug
+    const currentCount = slugParts ? parseInt(slugParts[2], 10) : 0
+
+    // Generate new slug with updated count
+    const newSlug =
+        currentCount > 0
+            ? `${baseSlug}-${currentCount + 1}`
+            : `${baseSlug}-${count}`
+
+    const isDBExist = await Content.findOne({
+        type_slug: typeSlug,
+        slug: newSlug,
+        brand: authUser.brand._id,
+        country: authUser.brand.country,
+    })
+
+    if (isDBExist) {
+        return await generateSlugForContent(
+            authUser,
+            typeSlug,
+            baseSlug,
+            currentCount > 0 ? currentCount + 1 : count + 1
+        )
+    } else {
+        return newSlug
     }
 }
 
@@ -933,4 +1100,5 @@ module.exports = {
     pageBuildEditor,
     savePageBuilderData,
     previewPageBuildData,
+    duplicateContent,
 }

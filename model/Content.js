@@ -9,7 +9,20 @@ const Country = require('./Country')
 
 const ContentSchema = new mongoose.Schema(
     {
-        slug: String,
+        brand: {
+            type: Schema.ObjectId,
+            ref: 'Brand',
+            required: true,
+        },
+        country: {
+            type: Schema.ObjectId,
+            ref: Country,
+            required: true,
+        },
+        slug: {
+            type: String,
+            required: true,
+        },
         type_id: {
             type: Schema.ObjectId,
             ref: ContentType,
@@ -22,16 +35,6 @@ const ContentSchema = new mongoose.Schema(
         author: {
             type: Schema.ObjectId,
             ref: Admin,
-            required: true,
-        },
-        brand: {
-            type: Schema.ObjectId,
-            ref: 'Brand',
-            required: true,
-        },
-        country: {
-            type: Schema.ObjectId,
-            ref: Country,
             required: true,
         },
         form: [

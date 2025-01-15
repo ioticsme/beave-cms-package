@@ -39,6 +39,7 @@
 					{% if reqContentType.single_type == false %}
 						<a class="btn btn-sm fw-bold btn-success" href="/admin/cms/{{ reqContentType.slug }}/add">Add New {{ pluralToSingular(reqContentType.title) }}</a>
 					{% endif %}
+					<a class="btn btn-sm fw-bold btn-primary" href="/admin/cms/{{ reqContentType.slug }}/duplicate/{{ contentDetail._id }}">Duplicate {{ pluralToSingular(reqContentType.title) }}</a>
 					<a class="btn btn-sm fw-bold btn-primary" href="/admin/cms/{{ reqContentType.slug }}/edit/{{ contentDetail._id }}">Edit {{ pluralToSingular(reqContentType.title) }}</a>
 				</div>
 			</div>

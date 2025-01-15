@@ -149,6 +149,9 @@
 												<div class="menu-item px-3">
 													<a class="menu-link px-3" href="/admin/cms/{{ reqContentType.slug }}/detail/{{ item._id }}">View</a>
 												</div>
+												<div class="menu-item px-3">
+													<a class="menu-link px-3" href="/admin/cms/{{ reqContentType.slug }}/duplicate/{{ item._id }}">Duplicate</a>
+												</div>
 												{% if reqContentType.page_builder %}
 													<div class="menu-item px-3">
 														<a class="menu-link px-3" href="/admin/cms/{{ reqContentType.slug }}/editor/preview/{{item._id}}" target="_blank">
