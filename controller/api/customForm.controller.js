@@ -117,13 +117,15 @@ const customFormSubmit = async (req, res) => {
                 data.field_values[field.field_name]
         })
 
-        // BEGIN:: Sending Email to admin
-        sendEmail(
-            customForm.recipient_emails.split(','),
-            `${customForm.form_name} Form Submission`,
-            customForm.recipient_email_template,
-            data
-        )
+        if (customForm.recipient_emails) {
+            // BEGIN:: Sending Email to admin
+            sendEmail(
+                customForm.recipient_emails?.split(','),
+                `${customForm.form_name} Form Submission`,
+                customForm.recipient_email_template,
+                data
+            )
+        }
         // BEGIN::Calling webhook
         if (customForm.web_hook) {
             // call webhook
