@@ -21,7 +21,7 @@ BeaveCMS is a powerful, flexible, and open-source headless CMS built with Node.j
 npx create-beave-app my-app
 ```
 
-Full Documentation [https://cms-documentation-eight.vercel.app/]
+See [Full Documentation](https://cms-documentation-eight.vercel.app/)
 
 ## Usage
 
@@ -54,7 +54,7 @@ BeaveCMS is licensed under the **Server Side Public License (SSPL) v1**, with ad
 You are NOT allowed to use BeaveCMS as a SaaS or a hosted service without explicit permission from Iotics (iotics.me).  
 If you wish to offer BeaveCMS as a SaaS, you must obtain a **commercial license** from Iotics.
 
-For details, see the [LICENSE](./LICENSE) file.
+For details, see the [LICENSE](./LICENSE.md) file.
 
 ## Community & Support
 
