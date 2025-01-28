@@ -143,7 +143,7 @@ const duplicateContent = async (req, res) => {
             ...contentDetail,
             _id: new ObjectId(),
             slug: newSlug,
-            author: req.authUser?._id,
+            author: req.authUser?.admin_id,
         })
 
         return res.redirect('back')
@@ -161,8 +161,7 @@ const duplicateSingleTypeContent = async (req, res) => {
             type_id: req.contentType._id,
             brand: session.brand._id,
             country: session.brand.country,
-        })
-        .lean()
+        }).lean()
 
         if (!contentDetail) {
             return res.render(`admin-njk/page-error-404`)
@@ -197,13 +196,15 @@ const duplicateSingleTypeContent = async (req, res) => {
             contentDetail.slug
         )
 
+        console.log(req.authUser)
+
         await Content.create({
             ...contentDetail,
             _id: new ObjectId(),
             slug: newContentSlug,
             type_id: newContentType._id,
             type_slug: newContentType.slug,
-            author: req.authUser?._id,
+            author: req.authUser?.admin_id,
         })
 
         return res.redirect(`/admin/cms/${newContentType.slug}`)
