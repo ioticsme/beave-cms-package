@@ -137,7 +137,6 @@ const duplicateContent = async (req, res) => {
             contentDetail.type_slug,
             contentDetail.slug
         )
-        console.log('🚀 ~ duplicateContent ~ newSlug:', newSlug)
 
         await Content.create({
             ...contentDetail,
@@ -196,8 +195,6 @@ const duplicateSingleTypeContent = async (req, res) => {
             contentDetail.slug
         )
 
-        console.log(req.authUser)
-
         await Content.create({
             ...contentDetail,
             _id: new ObjectId(),
@@ -252,7 +249,7 @@ const generateSlugForContent = async (
     count = 1
 ) => {
     // Check if currentSlug already has a count at the end
-    const slugParts = currentSlug.match(/^(.*?)-(\d+)$/)
+    const slugParts = currentSlug?.match(/^(.*?)-(\d+)$/)
     const baseSlug = slugParts ? slugParts[1] : currentSlug
     const currentCount = slugParts ? parseInt(slugParts[2], 10) : 0
 
