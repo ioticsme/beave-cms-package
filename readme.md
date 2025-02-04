@@ -1,6 +1,6 @@
 # BeaveCMS - Open Source Headless CMS
 
-![BeaveCMS Logo](./public/admin/assets/media/logo/beave-logo.jpg)
+![BeaveCMS Logo](./public/common/media/beave-logo.jpg)
 
 BeaveCMS is a powerful, flexible, and open-source headless CMS built with Node.js, MongoDB, Redis, and Docker. It provides developers with a customizable API-driven content management system while allowing full control over the front-end development.
 
