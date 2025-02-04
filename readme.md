@@ -60,7 +60,8 @@ For details, see the [LICENSE](./LICENSE.md) file.
 
 📌 [GitHub Issues](https://github.com/ioticsme/beavecms/issues) - Report bugs and request features.  
 📌 [Discussions](https://github.com/ioticsme/beavecms/discussions) - Ask questions and engage with the community.  
-📌 [Website](https://beavecms.com) - Official documentation and updates.  
+📌 [Website](https://beavecms.com) - Official Website.  
+📌 [Documentation](https://cms-documentation-eight.vercel.app/) - Official documentation and updates.  
 
 ---
 🚀 **BeaveCMS – Empowering developers to build better content experiences!**
