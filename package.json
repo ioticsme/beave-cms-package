@@ -1,6 +1,6 @@
 {
     "name": "@ioticsme/beave-cms",
-    "version": "2.2.5",
+    "version": "2.2.6",
     "description": "BeaveCMS - NPM Package",
     "main": "index.js",
     "scripts": {
@@ -8,7 +8,7 @@
         "start": "node app.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "author": "Iotics Middle East",
+    "author": "Iotics",
     "license": "ISC",
     "dependencies": {
         "@mongoosejs/double": "^0.3.0",
