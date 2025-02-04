@@ -3,6 +3,15 @@
 		{% for brandLanguage in authUser.brand.languages %}
 			<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-5">
 				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+					<span class="required">Form Title ({{ brandLanguage.prefix }})</span>
+				</label>
+				<input class="form-control" type="text" placeholder="Enter Form Name" name="form_title[{{ brandLanguage.prefix }}]" value="{{form.form_title[brandLanguage.prefix]}}" required>
+				<div class="fv-plugins-message-container invalid-feedback" id="field-error-form_title"></div>
+			</div>
+		{% endfor %}
+		{% for brandLanguage in authUser.brand.languages %}
+			<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-5">
+				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 					<span class="required">Form Name ({{ brandLanguage.prefix }})</span>
 				</label>
 				<input class="form-control" type="text" placeholder="Enter Form Name" name="form_name[{{ brandLanguage.prefix }}]" value="{{form.form_name[brandLanguage.prefix]}}" required>
@@ -18,46 +27,56 @@
 			<div class="fv-plugins-message-container invalid-feedback" id="field-error-store_in_db"></div>
 		</div>
 
-		<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-4">
-			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-				<span>Auto-Reply Email Template ID</span>
-			</label>
-			<input class="form-control" type="text" placeholder="Auto-Reply Email Template ID" name="auto_reply_email_template" value="{{form.auto_reply_email_template}}">
-			<div class="fv-plugins-message-container invalid-feedback" id="field-error-auto_reply_email_template"></div>
-		</div>
+		{% if has_email_config %}
+			<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-4">
+				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+					<span>Auto-Reply Email Template ID</span>
+				</label>
+				<input class="form-control" type="text" placeholder="Auto-Reply Email Template ID" name="auto_reply_email_template" value="{{form.auto_reply_email_template}}">
+				<div class="fv-plugins-message-container invalid-feedback" id="field-error-auto_reply_email_template"></div>
+			</div>
 
-		<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-4">
-			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-				<span>Sent To (Email/s)</span>
-			</label>
-			<input class="form-control" type="text" placeholder="Recipient Email/s" name="recipient_emails" value="{{form.recipient_emails}}">
-			<div class="fv-plugins-message-container invalid-feedback" id="field-error-recipient_emails"></div>
-		</div>
+			<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-4">
+				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+					<span>Sent To (Email/s)</span>
+				</label>
+				<input class="form-control" type="text" placeholder="Recipient Email/s" name="recipient_emails" value="{{form.recipient_emails}}">
+				<div class="fv-plugins-message-container invalid-feedback" id="field-error-recipient_emails"></div>
+			</div>
 
-		<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-4">
-			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-				<span>Recipient Email Template ID (Admin)</span>
-			</label>
-			<input class="form-control" type="text" placeholder="Recipient Email Template ID" name="recipient_email_template" value="{{form.recipient_email_template}}">
-			<div class="fv-plugins-message-container invalid-feedback" id="field-error-recipient_email_template"></div>
-		</div>
+			<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-4">
+				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+					<span>Recipient Email Template ID (Admin)</span>
+				</label>
+				<input class="form-control" type="text" placeholder="Recipient Email Template ID" name="recipient_email_template" value="{{form.recipient_email_template}}">
+				<div class="fv-plugins-message-container invalid-feedback" id="field-error-recipient_email_template"></div>
+			</div>
 
-		<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
-			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-				<span>Auto-Reply Email Subject</span>
-			</label>
-			<input class="form-control" type="text" placeholder="Auto-Reply Email Subject" name="auto_reply_email_subject" value="{{form.auto_reply_email_subject}}">
-			<div class="fv-plugins-message-container invalid-feedback" id="field-error-auto_reply_email_subject"></div>
-		</div>
+			<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+					<span>Auto-Reply Email Subject</span>
+				</label>
+				<input class="form-control" type="text" placeholder="Auto-Reply Email Subject" name="auto_reply_email_subject" value="{{form.auto_reply_email_subject}}">
+				<div class="fv-plugins-message-container invalid-feedback" id="field-error-auto_reply_email_subject"></div>
+			</div>
 
-		<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
-			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-				<span>Recipient Email Subject (Admin)</span>
-			</label>
-			<input class="form-control" type="text" placeholder="Recipient Email Subject" name="recipient_email_subject" value="{{form.recipient_email_subject}}">
-			<div class="fv-plugins-message-container invalid-feedback" id="field-error-recipient_email_subject"></div>
-		</div>
+			<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-6">
+				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+					<span>Recipient Email Subject (Admin)</span>
+				</label>
+				<input class="form-control" type="text" placeholder="Recipient Email Subject" name="recipient_email_subject" value="{{form.recipient_email_subject}}">
+				<div class="fv-plugins-message-container invalid-feedback" id="field-error-recipient_email_subject"></div>
+			</div>
 
+		{% endif %}
+
+		<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-12">
+			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+				<span>Form Submit Success Message</span>
+			</label>
+			<input class="form-control" type="text" placeholder="Enter success message to shown after form submission" name="success_message" value="{{form.success_message}}">
+			<div class="fv-plugins-message-container invalid-feedback" id="field-error-success_message"></div>
+		</div>
 		<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container col-md-12">
 			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 				<span>Slack URL</span>

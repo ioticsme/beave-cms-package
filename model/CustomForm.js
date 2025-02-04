@@ -1,6 +1,7 @@
 const { formatInTimeZone } = require('date-fns-tz')
 const { mongoose, Schema } = require('mongoose')
 const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
+const Brand = require('../model/Brand')
 
 const CustomFormSchema = new mongoose.Schema(
     {
@@ -11,6 +12,9 @@ const CustomFormSchema = new mongoose.Schema(
         form_name: {
             type: Object,
             required: true,
+        },
+        form_title: {
+            type: Object,
         },
         description: {
             type: Object,
@@ -28,6 +32,7 @@ const CustomFormSchema = new mongoose.Schema(
         recipient_emails: String,
         recipient_email_template: String,
         recipient_email_subject: String,
+        success_message: String,
         slack_url: String,
         web_hook: String,
         form_load_mode: {
@@ -94,6 +99,10 @@ const CustomFormSchema = new mongoose.Schema(
         tnc: {
             type: Object,
         },
+        is_captcha_required: {
+            type: Boolean,
+            default: false,
+        },
         published: {
             type: Boolean,
             default: true,
@@ -142,4 +151,4 @@ CustomFormSchema.virtual('date_updated').get(function () {
     )
 })
 
-module.exports = mongoose.model('beave_CustomForm', CustomFormSchema)
+module.exports = mongoose.model('CustomForm', CustomFormSchema)

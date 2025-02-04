@@ -4,6 +4,7 @@ const slugify = require('slugify')
 const Joi = require('joi')
 const Content = require('../../model/Content')
 const Country = require('../../model/Country')
+const CustomForm = require('../../model/CustomForm')
 const fs = require('fs')
 const { uploadMedia } = require('../../helper/FileUpload.helper')
 const { formatInTimeZone } = require('date-fns-tz')
@@ -13,6 +14,7 @@ const { default: mongoose } = require('mongoose')
 const { ObjectId } = require('mongodb')
 const { group } = require('console')
 const metaFields = require('../../config/meta-fields.config')
+const ContentType = require('../../model/ContentType')
 
 let session
 
@@ -43,7 +45,9 @@ const list = async (req, res) => {
         }
 
         // const reqContentType = req.contentType
-        const default_lang = collect(req.authUser.brand.languages).sortByDesc('is_default').first()
+        const default_lang = collect(req.authUser.brand.languages)
+            .sortByDesc('is_default')
+            .first()
         return res.render(`admin-njk/cms/content/listing`, {
             default_lang,
             reqContentType: req.contentType,
@@ -110,6 +114,170 @@ const detail = async (req, res) => {
     }
 }
 
+const duplicateContent = async (req, res) => {
+    try {
+        if (req.contentType.single_type) {
+            return await duplicateSingleTypeContent(req, res)
+        }
+
+        session = req.authUser
+        const contentDetail = await Content.findOne({
+            _id: req.params.id,
+            type_id: req.contentType._id,
+            brand: session.brand._id,
+            country: session.brand.country,
+        }).lean()
+
+        if (!contentDetail) {
+            return res.render(`admin-njk/page-error-404`)
+        }
+
+        let newSlug = await generateSlugForContent(
+            req.authUser,
+            contentDetail.type_slug,
+            contentDetail.slug
+        )
+
+        await Content.create({
+            ...contentDetail,
+            _id: new ObjectId(),
+            slug: newSlug,
+            author: req.authUser?.admin_id,
+        })
+
+        return res.redirect('back')
+    } catch (error) {
+        console.log('error :>> ', error)
+        return res.render(`admin-njk/app-error-500`)
+    }
+}
+
+const duplicateSingleTypeContent = async (req, res) => {
+    try {
+        session = req.authUser
+        const contentDetail = await Content.findOne({
+            _id: req.params.id,
+            type_id: req.contentType._id,
+            brand: session.brand._id,
+            country: session.brand.country,
+        }).lean()
+
+        if (!contentDetail) {
+            return res.render(`admin-njk/page-error-404`)
+        }
+
+        let contentType = await ContentType.findOne({
+            _id: req.contentType._id,
+        }).lean()
+        if (!contentType) {
+            return res.render(`admin-njk/page-error-404`)
+        }
+
+        let newContentTypeSlug = await generateSlugForContentType(
+            req.authUser,
+            contentType.slug
+        )
+
+        let newContentType = await ContentType.create({
+            ...contentType,
+            _id: new ObjectId(),
+            title: `${contentType.title}-${newContentTypeSlug?.count}`,
+            slug: newContentTypeSlug?.slug,
+        })
+
+        if (!newContentType?._id) {
+            return res.render(`admin-njk/app-error-500`)
+        }
+
+        let newContentSlug = await generateSlugForContent(
+            req.authUser,
+            contentDetail.type_slug,
+            contentDetail.slug
+        )
+
+        await Content.create({
+            ...contentDetail,
+            _id: new ObjectId(),
+            slug: newContentSlug,
+            type_id: newContentType._id,
+            type_slug: newContentType.slug,
+            author: req.authUser?.admin_id,
+        })
+
+        return res.redirect(`/admin/cms/${newContentType.slug}`)
+    } catch (error) {
+        console.log('error :>> ', error)
+        return res.render(`admin-njk/app-error-500`)
+    }
+}
+
+const generateSlugForContentType = async (authUser, currentSlug, count = 1) => {
+    // Check if the currentSlug already ends with a number
+    const slugParts = currentSlug.match(/^(.*?)-(\d+)$/)
+    const baseSlug = slugParts ? slugParts[1] : currentSlug
+    const currentCount = slugParts ? parseInt(slugParts[2], 10) : 0
+
+    // Generate new slug with updated count
+    const newSlug =
+        currentCount > 0
+            ? `${baseSlug}-${currentCount + 1}`
+            : `${baseSlug}-${count}`
+
+    const isDBExist = await ContentType.findOne({
+        slug: newSlug,
+        brand: authUser.brand._id,
+    })
+
+    if (isDBExist) {
+        return await generateSlugForContentType(
+            authUser,
+            baseSlug,
+            currentCount > 0 ? currentCount + 1 : count + 1
+        )
+    } else {
+        return {
+            count,
+            slug: newSlug,
+        }
+    }
+}
+
+const generateSlugForContent = async (
+    authUser,
+    typeSlug,
+    currentSlug,
+    count = 1
+) => {
+    // Check if currentSlug already has a count at the end
+    const slugParts = currentSlug?.match(/^(.*?)-(\d+)$/)
+    const baseSlug = slugParts ? slugParts[1] : currentSlug
+    const currentCount = slugParts ? parseInt(slugParts[2], 10) : 0
+
+    // Generate new slug with updated count
+    const newSlug =
+        currentCount > 0
+            ? `${baseSlug}-${currentCount + 1}`
+            : `${baseSlug}-${count}`
+
+    const isDBExist = await Content.findOne({
+        type_slug: typeSlug,
+        slug: newSlug,
+        brand: authUser.brand._id,
+        country: authUser.brand.country,
+    })
+
+    if (isDBExist) {
+        return await generateSlugForContent(
+            authUser,
+            typeSlug,
+            baseSlug,
+            currentCount > 0 ? currentCount + 1 : count + 1
+        )
+    } else {
+        return newSlug
+    }
+}
+
 const add = async (req, res) => {
     try {
         session = req.authUser
@@ -134,6 +302,15 @@ const add = async (req, res) => {
             .count()
         // return res.send(req.contentType._id)
 
+        let forms
+        if (req.contentType?.has_form) {
+            forms = await CustomForm.find({
+                brand: session?.brand?._id,
+                country: session?.brand?.country,
+                published: true,
+            })
+        }
+
         let template = `admin-njk/cms/content/add`
         if (req.contentType?.page_builder) {
             template = `admin-njk/cms/content/html-builder/form`
@@ -147,6 +324,7 @@ const add = async (req, res) => {
                 : false,
             allowed_content,
             metaFields,
+            forms,
         })
     } catch (error) {
         // console.log(error)
@@ -181,6 +359,18 @@ const edit = async (req, res) => {
             const grouped = collection.groupBy('type_slug')
             allowed_content = JSON.parse(JSON.stringify(grouped.items))
         }
+
+        let forms
+        if (req.contentType?.has_form) {
+            forms = await CustomForm.find({
+                brand: session?.brand?._id,
+                country: session?.brand?.country,
+                published: true,
+            })
+        }
+
+        // console.log(req.contentType.has_form)
+
         const has_common_field_groups = collect(req.contentType.field_groups)
             .where('localisation', false)
             .count()
@@ -202,6 +392,7 @@ const edit = async (req, res) => {
                 : false,
             contentDetail,
             allowed_content,
+            forms,
             metaFields,
         })
     } catch (error) {
@@ -427,6 +618,7 @@ const saveDefaultContent = async (req, res) => {
         let content_to_insert = _.omit(body, [
             '_id',
             'slug',
+            'form',
             'status',
             'cms_publish_start',
             'cms_publish_end',
@@ -626,6 +818,7 @@ const saveDefaultContent = async (req, res) => {
                 ? Joi.string().required()
                 : Joi.string().optional(),
             ...validationSchema,
+            form: Joi.optional(),
             attached_type: Joi.optional(),
             meta: Joi.object().optional().allow(null, ''),
             status: Joi.string()
@@ -706,9 +899,8 @@ const saveDefaultContent = async (req, res) => {
             type_id: type._id,
             type_slug: type.slug,
             author: req.authUser.admin_id,
-            // banner: body?.banner || null, // If Requested content type has banner required
-            // gallery: body?.gallery || null, // If Requested content type has gallery required
             brand: req.authUser.brand._id,
+            form: body?.form || null, // If Requested content type has form required1
             country: req.authUser.brand.country,
             status: body.status,
             scheduled_at: {
@@ -906,4 +1098,5 @@ module.exports = {
     pageBuildEditor,
     savePageBuilderData,
     previewPageBuildData,
+    duplicateContent,
 }

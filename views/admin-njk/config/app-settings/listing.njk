@@ -46,6 +46,9 @@
 								<li class="nav-item">
 									<a class="nav-link" data-bs-toggle="tab" href="#beave_tab_pane_media">Media</a>
 								</li>
+								<li class="nav-item">
+									<a class="nav-link" data-bs-toggle="tab" href="#beave_tab_pane_email">Email</a>
+								</li>
 								{# {% for key, config_item in schema_fields.obj %}
 									{% if configs %}
 										{% set fieldType = configs
@@ -120,16 +123,135 @@
 													<a class="text-gray-800 text-hover-primary mb-1">Upload Local</a>
 												</td>
 												<td>
-													<div class="form-check form-switch form-check-custom form-check-success form-check-solid">
+
+													<div class="form-check form-check-custom form-check-solid me-10">
+														<input class="form-check-input h-30px w-30px" name="media_drive" type="radio" value="local" onChange="mediaConfigFormSwitching(this)" {% if configs.media_drive.default_drive == 'local' %} checked {% endif %} id="flexRadio30"/>
+														<label class="form-check-label" for="flexRadio30">
+															Local
+														</label>
+													</div>
+													<div class="form-check form-check-custom form-check-solid me-10">
+														<input class="form-check-input h-30px w-30px" name="media_drive" {% if configs.media_drive.default_drive == 'imagekit' %} checked {% endif %} type="radio" value="imagekit" onChange="mediaConfigFormSwitching(this)" id="flexRadio30"/>
+														<label class="form-check-label" for="flexRadio30">
+															ImageKit
+														</label>
+													</div>
+													<div class="form-check form-check-custom form-check-solid me-10">
+														<input class="form-check-input h-30px w-30px" name="media_drive" {% if configs.media_drive.default_drive == 'cloudinary' %} checked {% endif %} type="radio" value="cloudinary" onChange="mediaConfigFormSwitching(this)" id="flexRadio30"/>
+														<label class="form-check-label" for="flexRadio30">
+															Cloudinary
+														</label>
+													</div>
+
+													{# <div class="form-check form-switch form-check-custom form-check-success form-check-solid">
 														<input id="beave_flexSwitchCustomDefault_1_1" type="checkbox" class="form-check-input" name="local_upload" value="true" {{'checked' if configs.media_drive.local_upload}}>
 														<i>This will upload medias to the same server and uploading to CDN will not work</i>
-													</div>
+													</div> #}
 													<div class="fv-plugins-message-container invalid-feedback" id="field-error-local_upload"></div>
 												</td>
 											</tr>
 										</tbody>
 									</table>
-									<h2 class="mt-5">ImageKit Config</h2>
+									<div id="imagekit_config_form" class="media-config-form {% if configs.media_drive.default_drive != 'imagekit' %} d-none {% endif %}">
+										<h2 class="mt-5">ImageKit Config</h2>
+										<table id="beave_subscriptions_table" class="table align-middle table-row-dashed fs-6 gy-5">
+											<thead>
+												<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+													<th class="min-w-125px">Key</th>
+													<th class="min-w-125px">Value</th>
+												</tr>
+											</thead>
+											<tbody class="text-gray-600 fw-semibold">
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Public Key</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="ik_public_key" placeholder="" value="{{configs.media_drive.imagekit.public_key}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-ik_public_key"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Private Key</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="ik_private_key" placeholder="" value="{{configs.media_drive.imagekit.private_key}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-ik_private_key"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">URL</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="ik_url" placeholder="" value="{{configs.media_drive.imagekit.url}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-ik_url"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Folder</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="ik_folder" placeholder="" value="{{configs.media_drive.imagekit.folder}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-ik_folder"></div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div id="cloudinary_config_form" class="media-config-form {% if configs.media_drive.default_drive != 'cloudinary' %} d-none {% endif %}">
+										<h2 class="mt-5">Cloudinary Config</h2>
+										<table id="beave_subscriptions_table" class="table align-middle table-row-dashed fs-6 gy-5">
+											<thead>
+												<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+													<th class="min-w-125px">Key</th>
+													<th class="min-w-125px">Value</th>
+												</tr>
+											</thead>
+											<tbody class="text-gray-600 fw-semibold">
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">API Key</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="cdry_api_key" placeholder="" value="{{configs.media_drive.cloudinary.api_key}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-cdry_api_key"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">API Secret</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="cdry_api_secret" placeholder="" value="{{configs.media_drive.cloudinary.api_secret}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-cdry_api_secret"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">CLoud Name</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="cdry_cloud_name" placeholder="" value="{{configs.media_drive.cloudinary.cloud_name}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-cdry_cloud_name"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Folder</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="cdry_folder" placeholder="" value="{{configs.media_drive.cloudinary.folder}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-cdry_folder"></div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="beave_tab_pane_email" role="tabpanel">
 									<table id="beave_subscriptions_table" class="table align-middle table-row-dashed fs-6 gy-5">
 										<thead>
 											<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
@@ -137,136 +259,199 @@
 												<th class="min-w-125px">Value</th>
 											</tr>
 										</thead>
+										<h2 class="mt-5">Local</h2>
 										<tbody class="text-gray-600 fw-semibold">
 											<tr>
 												<td>
-													<a class="text-gray-800 text-hover-primary mb-1">Public Key</a>
+													<a class="text-gray-800 text-hover-primary mb-1">Email Channel</a>
 												</td>
 												<td>
-													<input type="text" class="form-control form-control-lg form-control-solid" name="ik_public_key" placeholder="" value="{{configs.media_drive.imagekit.public_key}}">
-													<div class="fv-plugins-message-container invalid-feedback" id="field-error-ik_public_key"></div>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<a class="text-gray-800 text-hover-primary mb-1">Private Key</a>
-												</td>
-												<td>
-													<input type="text" class="form-control form-control-lg form-control-solid" name="ik_private_key" placeholder="" value="{{configs.media_drive.imagekit.private_key}}">
-													<div class="fv-plugins-message-container invalid-feedback" id="field-error-ik_private_key"></div>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<a class="text-gray-800 text-hover-primary mb-1">URL</a>
-												</td>
-												<td>
-													<input type="text" class="form-control form-control-lg form-control-solid" name="ik_url" placeholder="" value="{{configs.media_drive.imagekit.url}}">
-													<div class="fv-plugins-message-container invalid-feedback" id="field-error-ik_url"></div>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<a class="text-gray-800 text-hover-primary mb-1">Folder</a>
-												</td>
-												<td>
-													<input type="text" class="form-control form-control-lg form-control-solid" name="ik_folder" placeholder="" value="{{configs.media_drive.imagekit.folder}}">
-													<div class="fv-plugins-message-container invalid-feedback" id="field-error-ik_folder"></div>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<a class="text-gray-800 text-hover-primary mb-1">Activate Drive</a>
-												</td>
-												<td>
-													<div class="form-check form-switch form-check-custom form-check-success form-check-solid">
-														<input id="beave_flexSwitchCustomDefault_1_1" type="checkbox" class="form-check-input" name="ik_active" value="true" {{'checked' if configs.media_drive.imagekit.active}}>
+
+													<div class="form-check form-check-custom form-check-solid me-10">
+														<input class="form-check-input h-30px w-30px" name="email_channel" type="radio" value="none" onChange="emailConfigFormSwitching(this)" {% if configs.email_settings.default_channel == 'none' %} checked {% endif %} id="flexRadio30"/>
+														<label class="form-check-label" for="flexRadio30">
+															None
+														</label>
 													</div>
-													<div class="fv-plugins-message-container invalid-feedback" id="field-error-ik_active"></div>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<a class="text-gray-800 text-hover-primary mb-1">Default Drive</a>
-												</td>
-												<td>
-													<label>
-														<input id="imagekit_option" type="radio" class="form-check-input" name="default_drive" value="imagekit" {% if configs.media_drive.imagekit.default %}checked{% endif %}>
-															Default
-													</label>
+													<div class="form-check form-check-custom form-check-solid me-10">
+														<input class="form-check-input h-30px w-30px" name="email_channel" type="radio" value="local" onChange="emailConfigFormSwitching(this)" {% if configs.email_settings.default_channel == 'local' %} checked {% endif %} id="flexRadio30"/>
+														<label class="form-check-label" for="flexRadio30">
+															Local
+														</label>
+													</div>
+													<div class="form-check form-check-custom form-check-solid me-10">
+														<input class="form-check-input h-30px w-30px" name="email_channel" {% if configs.email_settings.default_channel == 'mailgun' %} checked {% endif %} type="radio" value="mailgun" onChange="emailConfigFormSwitching(this)" id="flexRadio30"/>
+														<label class="form-check-label" for="flexRadio30">
+															MailGun
+														</label>
+													</div>
+													<div class="form-check form-check-custom form-check-solid me-10">
+														<input class="form-check-input h-30px w-30px" name="email_channel" {% if configs.email_settings.default_channel == 'sendgrid' %} checked {% endif %} type="radio" value="sendgrid" onChange="emailConfigFormSwitching(this)" id="flexRadio30"/>
+														<label class="form-check-label" for="flexRadio30">
+															SendGrid
+														</label>
+													</div>
+
+													{# <div class="form-check form-switch form-check-custom form-check-success form-check-solid">
+														<input id="beave_flexSwitchCustomDefault_1_1" type="checkbox" class="form-check-input" name="local_upload" value="true" {{'checked' if configs.media_drive.local_upload}}>
+														<i>This will upload medias to the same server and uploading to CDN will not work</i>
+													</div> #}
+													<div class="fv-plugins-message-container invalid-feedback" id="field-error-email_channel"></div>
 												</td>
 											</tr>
 										</tbody>
 									</table>
-									<h2 class="mt-5">Cloudinary Config</h2>
-									<table id="beave_subscriptions_table" class="table align-middle table-row-dashed fs-6 gy-5">
-										<thead>
-											<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-												<th class="min-w-125px">Key</th>
-												<th class="min-w-125px">Value</th>
-											</tr>
-										</thead>
-										<tbody class="text-gray-600 fw-semibold">
-											<tr>
-												<td>
-													<a class="text-gray-800 text-hover-primary mb-1">API Key</a>
-												</td>
-												<td>
-													<input type="text" class="form-control form-control-lg form-control-solid" name="cdry_api_key" placeholder="" value="{{configs.media_drive.cloudinary.api_key}}">
-													<div class="fv-plugins-message-container invalid-feedback" id="field-error-cdry_api_key"></div>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<a class="text-gray-800 text-hover-primary mb-1">API Secret</a>
-												</td>
-												<td>
-													<input type="text" class="form-control form-control-lg form-control-solid" name="cdry_api_secret" placeholder="" value="{{configs.media_drive.cloudinary.api_secret}}">
-													<div class="fv-plugins-message-container invalid-feedback" id="field-error-cdry_api_secret"></div>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<a class="text-gray-800 text-hover-primary mb-1">CLoud Name</a>
-												</td>
-												<td>
-													<input type="text" class="form-control form-control-lg form-control-solid" name="cdry_cloud_name" placeholder="" value="{{configs.media_drive.cloudinary.cloud_name}}">
-													<div class="fv-plugins-message-container invalid-feedback" id="field-error-cdry_cloud_name"></div>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<a class="text-gray-800 text-hover-primary mb-1">Folder</a>
-												</td>
-												<td>
-													<input type="text" class="form-control form-control-lg form-control-solid" name="cdry_folder" placeholder="" value="{{configs.media_drive.cloudinary.folder}}">
-													<div class="fv-plugins-message-container invalid-feedback" id="field-error-cdry_folder"></div>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<a class="text-gray-800 text-hover-primary mb-1">Activate Drive</a>
-												</td>
-												<td>
-													<div class="form-check form-switch form-check-custom form-check-success form-check-solid">
-														<input id="beave_flexSwitchCustomDefault_1_1" type="checkbox" class="form-check-input" name="cdry_active" value="true" {{'checked' if configs.media_drive.cloudinary.active}}>
-													</div>
-													<div class="fv-plugins-message-container invalid-feedback" id="field-error-cdry_active"></div>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<a class="text-gray-800 text-hover-primary mb-1">Default Drive</a>
-												</td>
-												<td>
-													<label>
-														<input id="imagekit_option" type="radio" class="form-check-input" name="default_drive" value="cloudinary" {% if configs.media_drive.cloudinary.default %}checked{% endif %}>
-															Default
-													</label>
-												</td>
-											</tr>
-										</tbody>
-									</table>
+									<div id="localmail_config_form" class="email-config-form {% if configs.email_settings.default_channel != 'local' %} d-none {% endif %}">
+										<h2 class="mt-5">Local Email Config</h2>
+										<table id="beave_subscriptions_table" class="table align-middle table-row-dashed fs-6 gy-5">
+											<thead>
+												<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+													<th class="min-w-125px">Key</th>
+													<th class="min-w-125px">Value</th>
+												</tr>
+											</thead>
+											<tbody class="text-gray-600 fw-semibold">
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">From</a>
+													</td>
+													<td>
+														<input type="email" class="form-control form-control-lg form-control-solid" name="local_from" placeholder="" value="{{configs.email_settings.local.from}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-local_from"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Host</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="local_host" placeholder="" value="{{configs.email_settings.local.host}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-local_host"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Port</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="local_port" placeholder="" value="{{configs.email_settings.local.port}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-local_port"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Secure</a>
+													</td>
+													<td>
+														<select class="form-control form-control-lg form-control-solid" name="local_secure">
+															<option value="true" {% if configs.email_settings.local.secure %}{% endif %}>True</option>
+															<option value="false" {% if not configs.email_settings.local.secure %}{% endif %}>False</option>
+														</select>
+														{# <input type="text" class="form-control form-control-lg form-control-solid" name="local_secure" placeholder="" value="{{configs.email_settings.local.secure}}"> #}
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-local_secure"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Auth User</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="local_auth_user" placeholder="" value="{{configs.email_settings.local.auth_user}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-local_auth_user"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Auth Password</a>
+													</td>
+													<td>
+														<input type="password" class="form-control form-control-lg form-control-solid" name="local_auth_password" placeholder="" value="{{configs.email_settings.local.auth_password}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-local_auth_password"></div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div id="mailgun_config_form" class="email-config-form {% if configs.email_settings.default_channel != 'mailgun' %} d-none {% endif %}">
+										<h2 class="mt-5">Mailgun Config</h2>
+										<table id="beave_subscriptions_table" class="table align-middle table-row-dashed fs-6 gy-5">
+											<thead>
+												<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+													<th class="min-w-125px">Key</th>
+													<th class="min-w-125px">Value</th>
+												</tr>
+											</thead>
+											<tbody class="text-gray-600 fw-semibold">
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">From</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="mg_from" placeholder="" value="{{configs.email_settings.mailgun.from}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-mg_from"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Domain</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="mg_domain" placeholder="" value="{{configs.email_settings.mailgun.domain}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-mg_domain"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">API Key</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="mg_api_key" placeholder="" value="{{configs.email_settings.mailgun.api_key}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-mg_api_key"></div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div id="sendgrid_config_form" class="email-config-form {% if configs.email_settings.default_channel != 'sendgrid' %} d-none {% endif %}">
+										<h2 class="mt-5">SendGrid Config</h2>
+										<table id="beave_subscriptions_table" class="table align-middle table-row-dashed fs-6 gy-5">
+											<thead>
+												<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+													<th class="min-w-125px">Key</th>
+													<th class="min-w-125px">Value</th>
+												</tr>
+											</thead>
+											<tbody class="text-gray-600 fw-semibold">
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">From</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="sg_from" placeholder="" value="{{configs.email_settings.sendgrid.from}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-sg_from"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Domain</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="sg_domain" placeholder="" value="{{configs.email_settings.sendgrid.domain}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-sg_domain"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">API Key</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="sg_api_key" placeholder="" value="{{configs.email_settings.sendgrid.api_key}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-sg_api_key"></div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
 								</div>
 								{# {% for key, config_item in schema_fields.obj %}
 									<div class="tab-pane fade  {{ 'show active' if key=='general' }}" id="beave_tab_pane_{{ key }}" role="tabpanel">

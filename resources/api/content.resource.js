@@ -2,6 +2,7 @@ const Resource = require('resources.js')
 // const BannerResource = require('./banner.resource')
 // const GalleryResource = require('./gallery.resources')
 const ContentFieldResource = require('./contentField.resource')
+const FormResource = require('./form.resource')
 const { default: collect } = require('collect.js')
 // const UserAddressResource = require('./userAddress.resource');
 
@@ -33,6 +34,8 @@ class ContentResource extends Resource {
                 timezone: this.country.timezone,
             },
             content: this.content,
+            // forms: this.form,
+            forms: FormResource.collection(this.form),
             // content: collect(this.fields)
             //     .groupBy('group_name')
             //     .map((group) => {

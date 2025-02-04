@@ -52,4 +52,4 @@ const AdminSchema = new mongoose.Schema(
 // AdminSchema.plugin(softDeletePlugin)
 AdminSchema.plugin(uniqueValidator)
 
-module.exports = mongoose.model('beave_Admin', AdminSchema)
+module.exports = mongoose.model('Admin', AdminSchema)

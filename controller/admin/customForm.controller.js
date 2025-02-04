@@ -3,8 +3,10 @@ const _ = require('lodash')
 const slugify = require('slugify')
 const Joi = require('joi')
 const formData = require('form-data')
+const collect = require('collect.js')
 const { v4: uuidv4 } = require('uuid')
 const Mailgun = require('mailgun.js')
+const Config = require('../../model/Config')
 const CustomForm = require('../../model/CustomForm')
 const ContentType = require('../../model/ContentType')
 const CustomFormData = require('../../model/CustomFormData')
@@ -85,14 +87,87 @@ const edit = async (req, res) => {
             isDeleted: false,
         })
         const contentTypes = await ContentType.find()
+        const config = await Config.findOne()
         // const domainTemplates = await mailGunTemplates(
         //     req.brand?.settings?.notification_settings?.mailgun
         // )
+
         return res.render(`admin-njk/custom-forms/edit`, {
             form,
             // domainTemplates,
             field_types: FIELD_TYPES,
             contentTypes,
+            has_email_config:
+                config.email_settings.default_channel != 'none' ? true : false,
+        })
+    } catch (error) {
+        console.log(error)
+        return res.render(`admin-njk/app-error-500`)
+    }
+}
+const viewAPI = async (req, res) => {
+    try {
+        session = req.authUser
+        const form = await CustomForm.findOne({
+            _id: req.params.id,
+            brand: session.brand._id,
+            country: session.brand.country,
+            isDeleted: false,
+        })
+            .populate('brand')
+            .populate('country')
+        // const domainTemplates = await mailGunTemplates(
+        //     req.brand?.settings?.notification_settings?.mailgun
+        // )
+
+        const protocol = req.protocol // 'http' or 'https'
+        const host = req.get('host') // Includes hostname and port
+        const fullDomain = `${protocol}://${host}` // Construct full domain
+
+        // const test =
+        let api_body = {}
+        api_body['type'] = form.type
+        form.fields.forEach((field) => {
+            if (field.validation.data_type == 'number') {
+                api_body[field.field_name] = 12
+            } else if (field.validation.data_type == 'boolean') {
+                api_body[field.field_name] = true
+            } else {
+                api_body[field.field_name] = 'sample value'
+            }
+        })
+
+        const sampleAPI = `
+const axios = require('axios');
+const qs = require('qs');
+let data = qs.stringify(${JSON.stringify(api_body)});
+
+let config = {
+  method: 'post',
+  maxBodyLength: Infinity,
+  url: '${fullDomain}/api/custom-forms/submit',
+  headers: { 
+    'brand': '${form.brand.code}', 
+    'locale': '${req.authUser.brand.languages[0].prefix}-${form.country.code}', 
+    'Content-Type': 'application/x-www-form-urlencoded'
+  },
+  data : data
+};
+
+axios.request(config)
+.then((response) => {
+  console.log(JSON.stringify(response.data));
+})
+.catch((error) => {
+  console.log(error);
+});
+`
+
+        return res.render(`admin-njk/custom-forms/view-api`, {
+            api_body: JSON.stringify(api_body),
+            fullDomain,
+            form,
+            sampleAPI,
         })
     } catch (error) {
         console.log(error)
@@ -107,10 +182,13 @@ const add = async (req, res) => {
         // domainTemplates = await mailGunTemplates()
         domainTemplates = []
         const contentTypes = await ContentType.find()
+        const config = await Config.findOne()
         return res.render(`admin-njk/custom-forms/add`, {
             field_types: FIELD_TYPES,
             domainTemplates,
             contentTypes,
+            has_email_config:
+                config.email_settings.default_channel != 'none' ? true : false,
         })
     } catch (error) {
         console.log(error)
@@ -127,6 +205,10 @@ const save = async (req, res) => {
             id: Joi.optional().allow(null, ''),
             // custom_fields: Joi.optional(),
             form_name: Joi.object({
+                en: Joi.string().required(),
+                ar: Joi.string().required(),
+            }).required(),
+            form_title: Joi.object({
                 en: Joi.string().required(),
                 ar: Joi.string().required(),
             }).required(),
@@ -152,6 +234,7 @@ const save = async (req, res) => {
             recipient_emails: Joi.string().optional().allow(null, ''),
             recipient_email_template: Joi.string().optional().allow(null, ''),
             recipient_email_subject: Joi.string().optional().allow(null, ''),
+            success_message: Joi.string().optional().allow(null, ''),
             slack_url: Joi.string().optional().allow(null, ''),
             web_hook: Joi.string().optional().allow(null, ''),
             form_load_mode: Joi.string().optional().allow(null, ''),
@@ -223,13 +306,13 @@ const save = async (req, res) => {
                     ar: input.field_default_val.ar[i],
                 },
                 field_values: {
-                    en: input.field_values.en[i],
-                    ar: input.field_values.ar[i],
+                    en: input.field_values.en[i]?.split(','),
+                    ar: input.field_values.ar[i]?.split(','),
                 },
                 content_type: input.content_type[i]
                     ? input.content_type[i]
                     : null,
-                field_show_in_list: input.field_show_in_list?.[i] ?? false,
+                field_show_in_list: input.field_show_in_list?.[i] == 'true',
                 use_for_notification: input.use_for_notification?.[i] ?? false,
                 position: input.position?.[i] ?? 0,
                 validation: {
@@ -262,6 +345,7 @@ const save = async (req, res) => {
         // Data object to insert
         let data = {
             form_name: input.form_name,
+            form_title: input.form_title,
             description: input.description,
             tnc: input.tnc,
             cta_label: input.cta_label,
@@ -273,8 +357,10 @@ const save = async (req, res) => {
             recipient_email_template: input.recipient_email_template,
             recipient_email_subject: input.recipient_email_subject,
             slack_url: input.slack_url,
+            success_message: input.success_message,
             web_hook: input.web_hook,
             form_load_mode: input.form_load_mode,
+            is_captcha_required: input.is_captcha_required == 'true',
             fields: form_fields,
             brand: session.brand._id,
             country: session.brand.country,
@@ -361,27 +447,59 @@ const viewSubmissions = async (req, res) => {
 
         const reqForm = await CustomForm.findOne({
             _id: req.params.id,
+            // brand: session.selected_brand._id,
+            // country: session.selected_brand.country,
         })
         const submissions = await CustomFormData.find({
             form_id: req.params.id,
             brand: session.brand._id,
             country: session.brand.country,
         }).sort({ _id: -1 })
-        res.render(`admin-njk/custom-forms/submissions`, {
+
+        // const fields = form.fields
+        let column_to_list = collect(reqForm.fields)
+            .where('field_show_in_list', true)
+            .all()
+
+        return res.render(`admin-njk/custom-forms/submissions`, {
             data: submissions,
             reqForm: reqForm,
+            column_to_list: column_to_list,
         })
     } catch (error) {
+        console.log(error)
         return res.render(`admin-njk/app-error-500`)
+    }
+}
+
+const deleteSubmissions = async (req, res) => {
+    try {
+        const { id } = req.body
+        // If id not found
+        if (!id) {
+            return res.status(404).json({ error: 'Id not found' })
+        }
+
+        await CustomFormData.deleteOne({
+            _id: id,
+        })
+        return res.status(200).json({
+            message: 'Form data deleted',
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ error: 'Something went wrong' })
     }
 }
 
 module.exports = {
     list,
     edit,
+    viewAPI,
     add,
     save,
     changeStatus,
     deleteForm,
     viewSubmissions,
+    deleteSubmissions,
 }

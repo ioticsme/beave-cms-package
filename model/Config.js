@@ -21,12 +21,16 @@ const ConfigSchema = new mongoose.Schema(
                 type: Boolean,
                 default: false,
             },
+            default_drive: {
+                type: String,
+                default: 'local',
+                enum: ['local', 'imagekit', 'cloudinary'],
+            },
             imagekit: {
                 public_key: String,
                 private_key: String,
                 url: String,
                 folder: String,
-                default: Boolean,
                 active: Boolean,
             },
             cloudinary: {
@@ -34,8 +38,32 @@ const ConfigSchema = new mongoose.Schema(
                 api_secret: String,
                 cloud_name: String,
                 folder: String,
-                default: Boolean,
                 active: Boolean,
+            },
+        },
+        email_settings: {
+            default_channel: {
+                type: String,
+                default: 'local',
+                enum: ['none', 'local', 'mailgun', 'sendgrid'],
+            },
+            local: {
+                from: String,
+                host: String,
+                port: Number,
+                secure: Boolean,
+                auth_user: String,
+                auth_password: String,
+            },
+            mailgun: {
+                from: String,
+                domain: String,
+                api_key: String,
+            },
+            sendgrid: {
+                from: String,
+                domain: String,
+                api_key: String,
             },
         },
     },
@@ -47,4 +75,4 @@ const ConfigSchema = new mongoose.Schema(
     }
 )
 
-module.exports = mongoose.model('beave_Config', ConfigSchema)
+module.exports = mongoose.model('Config', ConfigSchema)

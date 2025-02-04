@@ -54,6 +54,11 @@ router.group('/', (router) => {
         cmsContentController.detail
     )
     router.get(
+        '/:contentType/duplicate/:id',
+        contentTypeCheck,
+        cmsContentController.duplicateContent
+    )
+    router.get(
         '/:contentType/edit/:id',
         contentTypeCheck,
         cmsContentController.edit

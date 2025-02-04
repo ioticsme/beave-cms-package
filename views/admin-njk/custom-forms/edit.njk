@@ -171,31 +171,12 @@
 			addEventListenerToTypeSelect()
 		}
 
-		document.addEventListener('click', function (e) {
-			var field_length = document
-				.querySelectorAll(".cf-card")
-				.length - 1
-			if (e.target && e.target.classList.contains('delete-field-btn') && field_length) {
-				e.preventDefault();
-				// Remove the element four levels up from the delete button
-				e
-					.target
-					.parentElement
-					.parentElement
-					.parentElement
-					.parentElement
-					.remove();
-				console.log('Delete button clicked');
-			}
-		});
-
 		function deleteField(e) {
 			var fieldLength = document
 				.querySelectorAll(".cf-card")
 				.length - 1
 			if (e && fieldLength) {
 				e
-					.parentElement
 					.parentElement
 					.parentElement
 					.parentElement
@@ -237,8 +218,8 @@
 			<div id="kt_app_content_container" class="app-container container-xxl">
 				<div class="d-flex flex-column flex-lg-row">
 					<div class="flex-lg-row-fluid me-lg-15 order-2 order-lg-1 mb-10 mb-lg-0">
-						<form id="kt_subscriptions_create_new" class="form es-form" action="/admin/custom-forms/save" method="post" data-kt-redirect-url="/admin/custom-forms">
-							<input type="hidden" name="id" value={{form.id}}/>
+						<form id="kt_subscriptions_create_new" class="form es-form" action="/admin/custom-forms/save" method="post" data-redirect-url="/admin/custom-forms">
+							<input type="hidden" name="id" value={{form.id}} />
 							<div class="card card-flush pt-3 mb-5 mb-lg-10">
 								<div class="card-header">
 									<div class="card-title">

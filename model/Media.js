@@ -37,4 +37,4 @@ const MediaSchema = new mongoose.Schema(
     }
 )
 
-module.exports = mongoose.model('beave_Media', MediaSchema)
+module.exports = mongoose.model('Media', MediaSchema)

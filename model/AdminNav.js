@@ -44,4 +44,4 @@ const AdminNavSchema = new mongoose.Schema(
 // AdminSchema.plugin(softDeletePlugin)
 AdminNavSchema.plugin(uniqueValidator)
 
-module.exports = mongoose.model('beave_AdminNav', AdminNavSchema)
+module.exports = mongoose.model('AdminNav', AdminNavSchema)

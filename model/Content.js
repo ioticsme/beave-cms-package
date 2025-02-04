@@ -9,7 +9,20 @@ const Country = require('./Country')
 
 const ContentSchema = new mongoose.Schema(
     {
-        slug: String,
+        brand: {
+            type: Schema.ObjectId,
+            ref: 'Brand',
+            required: true,
+        },
+        country: {
+            type: Schema.ObjectId,
+            ref: Country,
+            required: true,
+        },
+        slug: {
+            type: String,
+            required: true,
+        },
         type_id: {
             type: Schema.ObjectId,
             ref: ContentType,
@@ -24,16 +37,13 @@ const ContentSchema = new mongoose.Schema(
             ref: Admin,
             required: true,
         },
-        brand: {
-            type: Schema.ObjectId,
-            ref: 'Brand',
-            required: true,
-        },
-        country: {
-            type: Schema.ObjectId,
-            ref: Country,
-            required: true,
-        },
+        form: [
+            {
+                type: Schema.ObjectId,
+                ref: 'CustomForm',
+                required: false,
+            },
+        ],
         attached_type: [
             {
                 content_type: {
@@ -141,4 +151,4 @@ ContentSchema.virtual('date_updated').get(function () {
     )
 })
 
-module.exports = mongoose.model('beave_Content', ContentSchema)
+module.exports = mongoose.model('Content', ContentSchema)

@@ -1,13 +1,11 @@
 const Joi = require('joi')
 const axios = require('axios')
-const { default: mongoose } = require('mongoose')
+const collect = require('collect.js')
 const { verifyCaptcha } = require('../../helper/Captcha.helper')
 const { sendEmail } = require('../../helper/Mail.helper')
 // const Content = require('../../node_modules/@ioticsme/cms/model/Content')
 const CustomForm = require('../../model/CustomForm')
 const CustomFormData = require('../../model/CustomFormData')
-const ContentResource = require('../../resources/api/content.resource')
-const envConfig = require('../../config/env.config')
 
 const customFormSubmit = async (req, res) => {
     try {
@@ -17,6 +15,7 @@ const customFormSubmit = async (req, res) => {
             type: req.body.type,
             brand: req.brand,
             country: req.country,
+            published: true,
             isDeleted: false,
         })
         if (!customForm?._id) {
@@ -24,10 +23,25 @@ const customFormSubmit = async (req, res) => {
         }
         // Creating dynamic validation rules
         let cfValidationObj = {}
-        const joiStart = `Joi.`
-        customForm?.custom_fields.forEach((element) => {
+        // const joiStart = `Joi.`
+        customForm?.fields.forEach((element) => {
+            let validation_eval_string
+            if (
+                element.validation.data_type == 'string' &&
+                element.validation.required == 'optional'
+            ) {
+                validation_eval_string = `Joi.optional()`
+            } else {
+                validation_eval_string = `Joi.${element.validation.data_type}().${element.validation.required}()`
+                if (element.validation.min_length > 0) {
+                    validation_eval_string = `${validation_eval_string}.min(${element.validation.min_length})`
+                }
+                if (element.validation.max_length > 0) {
+                    validation_eval_string = `${validation_eval_string}.max(${element.validation.max_length})`
+                }
+            }
             cfValidationObj[element.field_name] = eval(
-                joiStart + element.validation.replace(',', '.')
+                `${validation_eval_string}.label('${element.field_label?.en}')`
             )
         })
 
@@ -50,33 +64,25 @@ const customFormSubmit = async (req, res) => {
 
         // Verifying captcha with token
         if (
-            customForm.has_captcha &&
-            envConfig.general.CAPTCHA_ENABLED && 
-            (envConfig.general.NODE_ENV == 'production' ||
-                envConfig.general.NODE_ENV == 'staging')
+            customForm.is_captcha_required &&
+            (process.env.NODE_ENV == 'production' ||
+                process.env.NODE_ENV == 'staging') &&
+            req.source == 'web'
         ) {
-            const isVerified = await verifyCaptcha(req.body.token)
+            const isVerified = await verifyCaptcha(req.body.captcha_token)
             if (!isVerified) {
                 return res
                     .status(400)
                     .json({ error: 'captcha token not verified' })
             }
         }
+
+        let { captcha_token, ...input } = req.body
         // Dynamic custom field values
         let cfValues = {}
-        for (i = 0; i < customForm.custom_fields?.length; i++) {
-            let cf = customForm.custom_fields[i]
-            let value = req.body?.[cf.field_name]
-            if (cf.field_type) {
-                let ObjectId = mongoose.Types.ObjectId
-                if (!ObjectId.isValid(req.body?.[cf.field_name])) {
-                    return res.status(422).json({ error: 'Invalid content' })
-                }
-                let content = await Content.findOne({
-                    _id: req.body?.[cf.field_name],
-                })
-                value = new ContentResource(content).exec()
-            }
+        for (i = 0; i < customForm.fields?.length; i++) {
+            let cf = customForm.fields[i]
+            let value = input?.[cf.field_name]
             cfValues = {
                 ...cfValues,
                 [cf.field_name]: value,
@@ -92,48 +98,34 @@ const customFormSubmit = async (req, res) => {
             country: req.country._id,
         }
 
-        let save = await CustomFormData.create(data)
+        let save
+        if (customForm.store_in_db) {
+            save = await CustomFormData.create(data)
 
-        if (!save?._id) {
-            return res.status(400).json({ error: 'Submission error' })
-        }
-
-        // BEGIN:: Sending Email
-        if (
-            envConfig.mailgun.DOMAIN &&
-            envConfig.mailgun.API_KEY &&
-            envConfig.mailgun.FROM
-        ) {
-            if (customForm.reply_email_template && req.body.email) {
-                sendEmail(
-                    envConfig.mailgun.FROM,
-                    req.body.email,
-                    `${customForm.form_name} Form Submitted`,
-                    customForm.reply_email_template,
-                    {},
-                    envConfig.mailgun
-                )
-            }
-
-            if (
-                customForm.recepient_email_template &&
-                customForm.recepient_emails
-            ) {
-                sendEmail(
-                    envConfig.mailgun.FROM,
-                    customForm.recepient_emails.split(','),
-                    `${customForm.form_name} Form Submission`,
-                    customForm.recepient_email_template,
-                    req.body,
-                    envConfig.mailgun
-                )
+            if (!save?._id) {
+                return res.status(400).json({ error: 'Submission error' })
             }
         }
 
+        let field_map_for_email = {}
+        customForm.fields.forEach((field) => {
+            // TODO: .en should be replaced with middleware language
+            field_map_for_email[field.field_label.en] =
+                data.field_values[field.field_name]
+        })
+
+        if (customForm.recipient_emails) {
+            // BEGIN:: Sending Email to admin
+            sendEmail(
+                customForm.recipient_emails?.split(','),
+                `${customForm.form_name} Form Submission`,
+                customForm.recipient_email_template,
+                data
+            )
+        }
         // BEGIN::Calling webhook
         if (customForm.web_hook) {
             // call webhook
-            // console.log(customForm.web_hook)
             axios
                 .post(customForm.web_hook, {
                     form_id: save.data.form_id,
@@ -146,9 +138,10 @@ const customFormSubmit = async (req, res) => {
         }
         // END::Calling webhook
 
-        return res
-            .status(200)
-            .json({ message: 'Custom Form Submitted', data: save })
+        return res.status(200).json({
+            message: customForm.success_message || 'Custom Form Submitted',
+            data: save,
+        })
     } catch (error) {
         console.log(error)
         return res

@@ -192,10 +192,10 @@ document
         // document.querySelector('#field_section_form_modal').classList.remove('fade')
     })
 
-// Function to format the field into "label | value" format
+// Function to format the field into "label : value" format
 function formatOptions(field) {
     return (
-        field.map((option) => `${option.label} | ${option.value}`).join(', ') +
+        field.map((option) => `${option.label} : ${option.value}`).join(', ') +
         ','
     )
 }
@@ -360,9 +360,10 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
             .toLowerCase() // Convert to lowercase
             .replace(/[\s\W-]+/g, '_') // Replace spaces and non-word characters with hyphen
             .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
-        const selected_field_info = e.target.field_info.value.trim()
-        const selected_show_on_list = e.target.show_on_list.checked ?? false
-        const selected_multi_select = e.target.multi_select.checked ?? undefined
+        const selected_field_info = e.target.field_info?.value?.trim()
+        const selected_show_on_list = e.target.show_on_list?.checked ?? false
+        const selected_multi_select =
+            e.target.multi_select?.checked ?? undefined
 
         const options = {}
         e.target
@@ -377,8 +378,8 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
                 const selected_field_options = ddField.value?.trim() || ''
                 selected_field_options.split(',').map((option) => {
                     if (option.length) {
-                        const label = option.split('|')[0].trim()
-                        const value = option.split('|')[1].trim()
+                        const label = option.split(':')[0].trim()
+                        const value = option.split(':')[1].trim()
                         if (label.length) {
                             options[lang].push({ label, value })
                         }

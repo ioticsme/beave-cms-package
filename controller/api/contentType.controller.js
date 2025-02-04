@@ -315,6 +315,15 @@ const list = async (req, res) => {
                         .sort('position')
                         .populate('author')
                         .populate('country')
+                        .populate({
+                            path: 'form',
+                            // populate: {
+                            //     path: 'fields.product',
+                            //     populate: {
+                            //         path: 'country',
+                            //     },
+                            // },
+                        })
 
                     liveData = await Content.find({
                         type_id: mongoose.Types.ObjectId(contentType?._id),
@@ -366,6 +375,15 @@ const list = async (req, res) => {
                         .sort('position')
                         .populate('author')
                         .populate('country')
+                        .populate({
+                            path: 'form',
+                            // populate: {
+                            //     path: 'fields.product',
+                            //     populate: {
+                            //         path: 'country',
+                            //     },
+                            // },
+                        })
                         .select(contentType.has_meta ? {} : '-meta')
 
                     let liveContent = []
@@ -491,6 +509,15 @@ const detail = async (req, res) => {
                     })
                         .populate('author')
                         .populate('country')
+                        .populate({
+                            path: 'form',
+                            // populate: {
+                            //     path: 'fields.product',
+                            //     populate: {
+                            //         path: 'country',
+                            //     },
+                            // },
+                        })
 
                     if (!liveData?._id) {
                         return false

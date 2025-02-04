@@ -85,4 +85,4 @@ SettingsSchema.virtual('date_updated').get(() => {
     )
 })
 
-module.exports = mongoose.model('beave_Settings', SettingsSchema)
+module.exports = mongoose.model('Settings', SettingsSchema)

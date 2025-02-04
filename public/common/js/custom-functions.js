@@ -31,27 +31,27 @@ function deleteItem(element) {
                     const status = res.status
                     let data = await res.json()
                     if (status >= 200 && status < 300) {
-                        Swal.fire({
-                            text: data.message || 'You have deleted  !.',
-                            icon: 'success',
-                            buttonsStyling: !1,
-                            confirmButtonText: 'Ok',
-                            customClass: {
-                                confirmButton: 'btn fw-bold btn-primary',
-                            },
-                        }).then((e) => {
+                        // Swal.fire({
+                        //     text: data.message || 'You have deleted  !.',
+                        //     icon: 'success',
+                        //     buttonsStyling: !1,
+                        //     confirmButtonText: 'Ok',
+                        //     customClass: {
+                        //         confirmButton: 'btn fw-bold btn-primary',
+                        //     },
+                        // }).then((e) => {
                             location.reload()
-                        })
+                        // })
                     } else {
-                        Swal.fire({
-                            text: data.error || 'Something went wrong !.',
-                            icon: 'warning',
-                            buttonsStyling: !1,
-                            confirmButtonText: 'Ok, got it!',
-                            customClass: {
-                                confirmButton: 'btn fw-bold btn-primary',
-                            },
-                        })
+                        // Swal.fire({
+                        //     text: data.error || 'Something went wrong !.',
+                        //     icon: 'warning',
+                        //     buttonsStyling: !1,
+                        //     confirmButtonText: 'Ok, got it!',
+                        //     customClass: {
+                        //         confirmButton: 'btn fw-bold btn-primary',
+                        //     },
+                        // })
                     }
                 })
                 .catch((err) => {
@@ -112,4 +112,37 @@ function changeStatus(element, status) {
                 },
             })
         })
+}
+
+function mediaConfigFormSwitching(element) {
+    document.querySelectorAll('.media-config-form').forEach((media_config) => {
+        media_config.classList.add('d-none')
+    })
+    if (element.value == 'imagekit') {
+        document
+            .getElementById('imagekit_config_form')
+            .classList.remove('d-none')
+    } else if (element.value == 'cloudinary') {
+        document
+            .getElementById('cloudinary_config_form')
+            .classList.remove('d-none')
+    }
+}
+function emailConfigFormSwitching(element) {
+    document.querySelectorAll('.email-config-form').forEach((media_config) => {
+        media_config.classList.add('d-none')
+    })
+    if (element.value == 'mailgun') {
+        document
+            .getElementById('mailgun_config_form')
+            .classList.remove('d-none')
+    } else if (element.value == 'sendgrid') {
+        document
+            .getElementById('sendgrid_config_form')
+            .classList.remove('d-none')
+    } else if (element.value == 'local') {
+        document
+            .getElementById('localmail_config_form')
+            .classList.remove('d-none')
+    }
 }
