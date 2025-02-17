@@ -58,8 +58,8 @@ For details, see the [LICENSE](./LICENSE.md) file.
 
 ## Community & Support
 
-📌 [GitHub Issues](https://github.com/ioticsme/beavecms/issues) - Report bugs and request features.  
-📌 [Discussions](https://github.com/ioticsme/beavecms/discussions) - Ask questions and engage with the community.  
+📌 [GitHub Issues](https://github.com/ioticsme/beave-cms/issues) - Report bugs and request features.  
+📌 [Discussions](https://github.com/ioticsme/beave-cms/discussions) - Ask questions and engage with the community.  
 📌 [Website](https://beavecms.com) - Official Website.  
 📌 [Documentation](https://cms-documentation-eight.vercel.app/) - Official documentation and updates.  
 
