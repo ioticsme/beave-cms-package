@@ -1,7 +1,7 @@
 const { mongoose, Schema } = require('mongoose')
 const { formatInTimeZone } = require('date-fns-tz')
 const { format } = require('date-fns')
-const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
+// const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
 const ContentType = require('./ContentType')
 const Admin = require('./Admin')
 const Country = require('./Country')
@@ -85,7 +85,7 @@ const ContentSchema = new mongoose.Schema(
     }
 )
 
-ContentSchema.plugin(softDeletePlugin)
+// ContentSchema.plugin(softDeletePlugin)
 
 ContentSchema.virtual('date_created').get(function () {
     return formatInTimeZone(
