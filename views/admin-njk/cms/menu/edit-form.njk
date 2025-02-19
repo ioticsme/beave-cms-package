@@ -96,6 +96,16 @@
 							</div>
 							<div class="col-md-6">
 								<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+									<span>Active</span>
+									<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beave-initialized="1"></i>
+								</label>
+								<div class="form-check form-check-custom form-check-solid">
+									<input id="flexCheckChecked" class="form-check-input" type="checkbox" name="active" value="true" {{ "checked" if menuItem.active}}>
+									<label class="form-check-label" for="flexCheckChecked">Active</label>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 									<span>Link Type</span>
 									<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beave-initialized="1"></i>
 								</label>

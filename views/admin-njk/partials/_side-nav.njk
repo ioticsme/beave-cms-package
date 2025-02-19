@@ -145,7 +145,7 @@
                             </div>
                         {% else %}
                             <div class="menu-item">
-                                <a class="menu-link {{ 'active' if activeNav == navItem.path }}" href="{{navItem.path}}">
+                                <a class="menu-link {{ 'active' if activeNav.includes(navItem.path) }}" href="{{navItem.path}}">
                                     <span class="menu-icon">
                                         <span class="svg-icon svg-icon-2">{{navItem.icon|safe}}</span>
                                     </span>
