@@ -11,10 +11,21 @@ router.group('/', (router) => {
         router.get('/edit/:id', customFormsController.edit)
         router.get('/view-api/:id', customFormsController.viewAPI)
         router.post('/save', customFormsController.save)
-        router.post('/change-status', customFormsController.changeStatus) 
+        router.post('/change-status', customFormsController.changeStatus)
         router.post('/delete', customFormsController.deleteForm)
         router.get('/submissions/:id', customFormsController.viewSubmissions)
-        router.post('/submissions/delete', customFormsController.deleteSubmissions)
+        router.post(
+            '/submissions/delete',
+            customFormsController.deleteSubmissions
+        )
+        router.get(
+            '/submissions/:id/export',
+            customFormsController.exportSubmissions
+        )
+        router.get(
+            '/submissions/:formId/:formDataId',
+            customFormsController.viewSubmission
+        )
     })
 })
 
