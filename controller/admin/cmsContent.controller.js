@@ -691,6 +691,8 @@ const saveDefaultContent = async (req, res) => {
                                         url: Joi.string()${required}.label('${field.field_label}'),
                                         title: Joi.string().allow(null, ''),
                                         alt_text: Joi.string().allow(null, ''),
+                                        link_url: Joi.string().allow(null, ''),
+                                        open_link_in_new_tab: Joi.boolean().allow(null, ''),
                                         local_drive: Joi.boolean().allow(null, ''),
                                     })`
                                 ),
@@ -766,6 +768,15 @@ const saveDefaultContent = async (req, res) => {
                                         req.body[lang]?.[group.row_name]?.[
                                             field.field_name
                                         ]?.['alt_text']?.[i],
+                                    link_url:
+                                        req.body[lang]?.[group.row_name]?.[
+                                            field.field_name
+                                        ]?.['link_url']?.[i] ?? '',
+                                    open_link_in_new_tab:
+                                        req.body[lang]?.[group.row_name]?.[
+                                            field.field_name
+                                        ]?.['open_link_in_new_tab']?.[i] ??
+                                        false,
                                     local_drive:
                                         req.body[lang]?.[group.row_name]?.[
                                             field.field_name
@@ -784,6 +795,8 @@ const saveDefaultContent = async (req, res) => {
                                         url: Joi.string()${required}.label('${field.field_label}'),
                                         title: Joi.string().allow(null, ''),
                                         alt_text: Joi.string().allow(null, ''),
+                                        link_url: Joi.string().allow(null, ''),
+                                        open_link_in_new_tab: Joi.boolean().allow(null, ''),
                                         local_drive: Joi.boolean().allow(null, ''),
                                     }))`
                                 ),
@@ -841,7 +854,7 @@ const saveDefaultContent = async (req, res) => {
             return res.status(422).json(validationResult.error)
         }
 
-        // BEGIN: Restructing repeating array fields to Array of Objects and replaing it to `request.body` object to insert.
+        // BEGIN: Restructuring repeating array fields to Array of Objects and replacing it to `request.body` object to insert.
         language_prefixes.forEach((lang) => {
             let fieldGroupValidationObj = {}
             let repeater_group_by_localisation
@@ -892,7 +905,7 @@ const saveDefaultContent = async (req, res) => {
         })
         // console.log(content_to_insert.ar.featured_blocks)
         // return false
-        // END: Restructing repeating array fields to Array of Objects and replaing it to `request.body` object to insert.
+        // END: Restructuring repeating array fields to Array of Objects and replacing it to `request.body` object to insert.
 
         // return false
         let data = {
@@ -900,7 +913,7 @@ const saveDefaultContent = async (req, res) => {
             type_slug: type.slug,
             author: req.authUser.admin_id,
             brand: req.authUser.brand._id,
-            form: body?.form || null, // If Requested content type has form required1
+            form: body?.form || null, // If Requested content type has form required
             country: req.authUser.brand.country,
             status: body.status,
             scheduled_at: {

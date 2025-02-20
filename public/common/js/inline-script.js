@@ -6,7 +6,7 @@ if (mediaManagementPanel) {
     const dropZoneDiv = document.querySelector('#beave_dropzonejs_example_1')
     const hasPdfUpload = dropZoneDiv.getAttribute('data-upload-pdf') || false
     // Setting the acceptedFiles for the dropzone
-    let acceptedFiles = `.jpeg,.jpg,.png,.gif`
+    let acceptedFiles = `.jpeg,.jpg,.png,.gif,.webp`
     // if hasPdfUpload is true then .pdf extension will be added to the acceptedFiles
     if (hasPdfUpload == 'true') {
         acceptedFiles += `,.pdf`
@@ -51,7 +51,12 @@ if (mediaManagementPanel) {
                             }" data-altText="${element.meta?.alt_text || ''}"
                                 data-localDrive="${
                                     element.meta?.local_drive || ''
-                                }" />
+                                }"
+                                data-link="${element.link_url || ''}"
+                                data-openLinkInNewTab="${
+                                    element.open_link_in_new_tab || false
+                                }"
+                                />
                                 </div>`
                         })
                         mediaList = `${mediaList}</div>`
@@ -154,6 +159,10 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
     document.querySelector('#media-modal-selected-media-title').value = ''
     document.querySelector('#media-modal-selected-media-alt').value = ''
     document.querySelector('#media-modal-selected-media-drive').value = ''
+    document.querySelector('#media-modal-selected-media-link').value = ''
+    document.querySelector(
+        '#media-modal-selected-media-link-new-tab'
+    ).checked = false
     document.querySelector('#media-modal-selected-preview-img').innerHTML = ''
     axios
         .get('/admin/cms/media/json')
@@ -171,7 +180,13 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
                     element.meta?.title || ''
                 }" data-altText="${
                     element.meta?.alt_text || ''
-                }" data-localDrive="${element.meta?.local_drive || ''}" />
+                }" data-localDrive="${
+                    element.meta?.local_drive || ''
+                }" data-link="${
+                    element.link_url || ''
+                }" data-openLinkInNewTab="${
+                    element.open_link_in_new_tab || false
+                }" />
                 </div>`
             })
             mediaList = `${mediaList}</div>`
@@ -193,7 +208,10 @@ document
         var mediaTitle = event.target.getAttribute('data-mediaTitle')
         var altText = event.target.getAttribute('data-altText')
         var localDrive = event.target.getAttribute('data-localDrive')
-        // console.log(attachButtonId)
+        var linkUrl = event.target.getAttribute('data-link')
+        var openLinkInNewTab = event.target.getAttribute(
+            'data-openLinkInNewTab'
+        )
         if (mediaUrl) {
             document.querySelector(
                 '#media-modal-selected-preview-img'
@@ -207,6 +225,11 @@ document
                 altText
             document.querySelector('#media-modal-selected-media-drive').value =
                 localDrive
+            document.querySelector('#media-modal-selected-media-link').value =
+                linkUrl
+            document.querySelector(
+                '#media-modal-selected-media-link-new-tab'
+            ).checked = openLinkInNewTab
 
             // Do something when a list item is clicked, such as displaying its text content
             // console.log(attachButtonId)
@@ -231,6 +254,12 @@ document
         var selectedMediaLocalDrive = document.querySelector(
             '#media-modal-selected-media-drive'
         ).value
+        var selectedMediaLink = document.querySelector(
+            '#media-modal-selected-media-link'
+        ).value
+        var selectedMediaOpenLinkInNewTab = document.querySelector(
+            '#media-modal-selected-media-link-new-tab'
+        ).checked
         if (selectedMediaUrl) {
             $(mediaModal).modal('hide')
             document
@@ -249,6 +278,15 @@ document
                 .querySelector(`#${attachButtonId}`)
                 .parentElement.querySelector('.media_local_drive_field').value =
                 selectedMediaLocalDrive
+            document
+                .querySelector(`#${attachButtonId}`)
+                .parentElement.querySelector('.media_link_url_field').value =
+                selectedMediaLink
+            document
+                .querySelector(`#${attachButtonId}`)
+                .parentElement.querySelector(
+                    '.media_open_link_in_new_tab_field'
+                ).value = selectedMediaOpenLinkInNewTab
             const imgHolderParent = document
                 .querySelector(`#${attachButtonId}`)
                 .parentElement.querySelector(`.media_preview`)
@@ -375,6 +413,12 @@ document.querySelectorAll('.media-list-item').forEach((eachMediaItem) => {
                 document.querySelector(
                     '#media-meta-panel input[name="alt_text"]'
                 ).value = response.data.meta?.alt_text || ''
+                document.querySelector(
+                    '#media-meta-panel input[name="link"]'
+                ).value = response.data?.link_url || ''
+                document.querySelector(
+                    '#media-meta-panel input[name="link_new_tab"]'
+                ).checked = response.data?.open_link_in_new_tab
             })
             .catch(function (err) {
                 // Handle the error
