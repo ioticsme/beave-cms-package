@@ -15,6 +15,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css">
 		<link href="/cms-static/admin/assets/css/style.bundle.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
 		{% block pageSpecificStyle %}{% endblock %}
 		{# //- <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"> #}
 	</head>
@@ -221,6 +222,11 @@
 									</div>
 									<div class="tab-pane fade" id="beave_tab_pane_2" role="tabpanel">
 										{% include '../partials/_media-upload-DZ-form.njk' %}
+										<!-- Cropper Container (Initially Hidden) -->
+										<div id="cropperContainer" style="display: none; text-align: center;">
+											<img id="cropImage" style="max-width: 100%;">
+											<button class="btn btn-primary btn-sm my-3" id="cropButton">Crop & Upload</button>
+										</div>
 									</div>
 								</div>
 
@@ -254,6 +260,7 @@
 		<script src='https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js'></script>
 
 		<script src='/cms-static/common/js/inline-script.js'></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
 
 		{% block jslib %}{% endblock %}
 		{% block customScript %}{% endblock %}

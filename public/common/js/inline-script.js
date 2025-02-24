@@ -3,6 +3,7 @@
 */
 const mediaManagementPanel = document.querySelector('#media-management-panel')
 if (mediaManagementPanel) {
+    Dropzone.autoDiscover = false
     const dropZoneDiv = document.querySelector('#beave_dropzonejs_example_1')
     const hasPdfUpload = dropZoneDiv.getAttribute('data-upload-pdf') || false
     // Setting the acceptedFiles for the dropzone
@@ -18,14 +19,68 @@ if (mediaManagementPanel) {
         maxFilesize: 10, // MB
         addRemoveLinks: true,
         acceptedFiles,
+        autoProcessQueue: false, // Prevent auto-upload until cropping is done
         accept: function (file, done) {
-            if (file.name == 'wow.jpg') {
-                done("Naha, you don't.")
-            } else {
+            if (file.isCropped) {
+                // ✅ If the file is already cropped, allow upload
                 done()
+            } else {
+                // ❌ If not cropped, open Cropper UI
+                openCropper(file)
+                done() // Prevent auto-upload
             }
         },
     })
+
+    // Cropper.js variables
+    let cropper, selectedFile
+
+    function openCropper(file) {
+        selectedFile = file
+        const reader = new FileReader()
+
+        reader.onload = function (event) {
+            // Hide Dropzone and show Cropper UI inside the same modal
+            document.getElementById('dropzoneContainer').style.display = 'none'
+            document.getElementById('cropperContainer').style.display = 'block'
+
+            document.getElementById('cropImage').src = event.target.result
+
+            if (cropper) cropper.destroy() // Destroy previous instance
+            cropper = new Cropper(document.getElementById('cropImage'), {
+                aspectRatio: 1, // Adjust as needed
+                viewMode: 1,
+            })
+        }
+
+        reader.readAsDataURL(file)
+    }
+
+    // Crop and upload
+    document
+        .getElementById('cropButton')
+        .addEventListener('click', function () {
+            cropper.getCroppedCanvas().toBlob((blob) => {
+                const croppedFile = new File([blob], selectedFile.name, {
+                    type: 'image/jpeg',
+                    lastModified: Date.now(),
+                })
+
+                croppedFile.isCropped = true // ✅ Mark file as cropped
+
+                myDropzone.removeFile(selectedFile) // Remove original file
+                myDropzone.addFile(croppedFile) // Add cropped file to Dropzone
+
+                // Show Dropzone UI again
+                document.getElementById('dropzoneContainer').style.display =
+                    'block'
+                document.getElementById('cropperContainer').style.display =
+                    'none'
+
+                myDropzone.processQueue() // Upload cropped file
+            })
+        })
+
     // Listen for upload complete event
     myDropzone.on('complete', function (file) {
         // Check if upload was successful
