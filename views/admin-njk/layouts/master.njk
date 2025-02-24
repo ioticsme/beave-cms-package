@@ -222,10 +222,18 @@
 									</div>
 									<div class="tab-pane fade" id="beave_tab_pane_2" role="tabpanel">
 										{% include '../partials/_media-upload-DZ-form.njk' %}
+										<!-- Hidden by default, shown only when Cropper is visible -->
+										<div id="aspect-ratio-buttons" class="text-center" style="display: none;">
+											<button class="aspect-ratio-btn btn btn-sm btn-primary mx-1 my-2" data-ratio="4/3">4:3</button>
+											<button class="aspect-ratio-btn btn btn-sm btn-primary mx-1 my-2" data-ratio="16/9">16:9</button>
+											<button class="aspect-ratio-btn btn btn-sm btn-primary mx-1 my-2" data-ratio="1/1">1:1</button>
+											<button class="aspect-ratio-btn btn btn-sm btn-primary mx-1 my-2" data-ratio="NaN">Free</button>
+										</div>
 										<!-- Cropper Container (Initially Hidden) -->
 										<div id="cropperContainer" style="display: none; text-align: center;">
-											<img id="cropImage" style="max-width: 100%;">
-											<button class="btn btn-primary btn-sm my-3" id="cropButton">Crop & Upload</button>
+											<img id="cropImage" class="my-3" style="max-width: 100%;">
+											<button id="cancelButton" class="btn btn-sm mx-1 btn-danger">Cancel</button>
+											<button class="btn btn-sm btn-success mx-1 my-2" id="cropButton">Crop & Upload</button>
 										</div>
 									</div>
 								</div>
