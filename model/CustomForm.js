@@ -117,6 +117,14 @@ const CustomFormSchema = new mongoose.Schema(
             ref: 'Country',
             required: true,
         },
+        isDeleted: {
+            type: Boolean,
+            default: false,
+        },
+        deletedAt: {
+            type: Date,
+            default: null,
+        },
     },
     {
         timestamps: {
@@ -125,6 +133,22 @@ const CustomFormSchema = new mongoose.Schema(
         },
     }
 )
+
+CustomFormSchema.pre('find', function (next) {
+    this.where({
+        isDeleted: { $ne: true },
+        deletedAt: null,
+    })
+    next()
+})
+
+CustomFormSchema.pre('findOne', function (next) {
+    this.where({
+        isDeleted: { $ne: true },
+        deletedAt: null,
+    })
+    next()
+})
 
 // CustomFormSchema.plugin(softDeletePlugin)
 

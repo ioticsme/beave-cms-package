@@ -150,9 +150,11 @@ document.addEventListener('DOMContentLoaded', function () {
                             const tabElm = document.querySelector(
                                 `a[href="#${tabPane.getAttribute('id')}"]`
                             )
-                            tabElm
-                                .querySelector('.tab-invalid-icon')
-                                .classList.remove('d-none')
+                            if (tabElm.querySelector('.tab-invalid-icon')) {
+                                tabElm
+                                    .querySelector('.tab-invalid-icon')
+                                    .classList.remove('d-none')
+                            }
                         }
                     })
             }

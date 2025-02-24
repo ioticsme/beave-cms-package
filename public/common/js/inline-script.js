@@ -3,10 +3,11 @@
 */
 const mediaManagementPanel = document.querySelector('#media-management-panel')
 if (mediaManagementPanel) {
+    Dropzone.autoDiscover = false
     const dropZoneDiv = document.querySelector('#beave_dropzonejs_example_1')
     const hasPdfUpload = dropZoneDiv.getAttribute('data-upload-pdf') || false
     // Setting the acceptedFiles for the dropzone
-    let acceptedFiles = `.jpeg,.jpg,.png,.gif`
+    let acceptedFiles = `.jpeg,.jpg,.png,.gif,.webp`
     // if hasPdfUpload is true then .pdf extension will be added to the acceptedFiles
     if (hasPdfUpload == 'true') {
         acceptedFiles += `,.pdf`
@@ -18,14 +19,126 @@ if (mediaManagementPanel) {
         maxFilesize: 10, // MB
         addRemoveLinks: true,
         acceptedFiles,
+        autoProcessQueue: false, // Prevent auto-upload until cropping is done
         accept: function (file, done) {
-            if (file.name == 'wow.jpg') {
-                done("Naha, you don't.")
-            } else {
+            if (file.isCropped) {
+                // If the file is already cropped, allow upload
                 done()
+            } else {
+                // Add to queue for cropping
+                fileQueue.push(file)
+                if (!isCropping) {
+                    processNextFile() // Start cropping
+                }
+                done() // Prevent upload until cropped
             }
         },
     })
+
+    // File queue and cropping state
+    let fileQueue = []
+    let isCropping = false
+
+    // Cropper.js variables
+    let cropper, selectedFile
+
+    function processNextFile() {
+        if (fileQueue.length === 0) {
+            isCropping = false
+            myDropzone.processQueue() // Start uploading remaining files
+            return
+        }
+
+        isCropping = true
+        selectedFile = fileQueue.shift() // Get the next file
+
+        const reader = new FileReader()
+        reader.onload = function (event) {
+            // Hide Dropzone and show Cropper UI inside the same modal
+            document.getElementById('dropzoneContainer').style.display = 'none'
+            document.getElementById('cropperContainer').style.display = 'block'
+            document.getElementById('aspect-ratio-buttons').style.display =
+                'block'
+
+            document.getElementById('cropImage').src = event.target.result
+
+            if (cropper) cropper.destroy()
+            cropper = new Cropper(document.getElementById('cropImage'), {
+                aspectRatio: NaN,
+                viewMode: 1,
+                dragMode: 'move',
+                minCropBoxWidth: 50,
+                minCropBoxHeight: 50,
+            })
+        }
+        reader.readAsDataURL(selectedFile)
+    }
+
+    // Crop and upload
+    document
+        .getElementById('cropButton')
+        .addEventListener('click', function () {
+            cropper.getCroppedCanvas().toBlob((blob) => {
+                const croppedFile = new File([blob], selectedFile.name, {
+                    type: 'image/jpeg',
+                    lastModified: Date.now(),
+                })
+
+                croppedFile.isCropped = true // ✅ Mark file as cropped
+
+                myDropzone.removeFile(selectedFile) // Remove original file
+                myDropzone.addFile(croppedFile) // Add cropped file to Dropzone
+
+                // Show Dropzone UI again
+                document.getElementById('dropzoneContainer').style.display =
+                    'block'
+                document.getElementById('cropperContainer').style.display =
+                    'none'
+                document.getElementById('aspect-ratio-buttons').style.display =
+                    'none'
+
+                // ✅ Process next file in queue
+                processNextFile()
+            })
+        })
+
+    // Cancel cropping and go back to Dropzone
+    document
+        .getElementById('cancelButton')
+        .addEventListener('click', function () {
+            // Show Dropzone UI again
+            document.getElementById('dropzoneContainer').style.display = 'block'
+            document.getElementById('cropperContainer').style.display = 'none'
+            document.getElementById('aspect-ratio-buttons').style.display =
+                'none' // Hide aspect ratio buttons again
+
+            // Prevent the file from being uploaded
+            myDropzone.removeFile(selectedFile)
+
+            // ✅ Process next file in queue (without cropping)
+            processNextFile()
+        })
+
+    // Listen for aspect ratio button clicks
+    document.querySelectorAll('.aspect-ratio-btn').forEach((button) => {
+        button.addEventListener('click', function () {
+            const ratio = this.getAttribute('data-ratio')
+
+            // Update the aspect ratio of Cropper
+            if (cropper) {
+                cropper.destroy() // Destroy current instance
+            }
+
+            cropper = new Cropper(document.getElementById('cropImage'), {
+                aspectRatio: ratio === 'NaN' ? NaN : eval(ratio), // Free cropping or fixed ratio
+                viewMode: 1,
+                dragMode: 'move',
+                minCropBoxWidth: 50,
+                minCropBoxHeight: 50,
+            })
+        })
+    })
+
     // Listen for upload complete event
     myDropzone.on('complete', function (file) {
         // Check if upload was successful
@@ -51,7 +164,12 @@ if (mediaManagementPanel) {
                             }" data-altText="${element.meta?.alt_text || ''}"
                                 data-localDrive="${
                                     element.meta?.local_drive || ''
-                                }" />
+                                }"
+                                data-link="${element.link_url || ''}"
+                                data-openLinkInNewTab="${
+                                    element.open_link_in_new_tab || false
+                                }"
+                                />
                                 </div>`
                         })
                         mediaList = `${mediaList}</div>`
@@ -154,6 +272,10 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
     document.querySelector('#media-modal-selected-media-title').value = ''
     document.querySelector('#media-modal-selected-media-alt').value = ''
     document.querySelector('#media-modal-selected-media-drive').value = ''
+    document.querySelector('#media-modal-selected-media-link').value = ''
+    document.querySelector(
+        '#media-modal-selected-media-link-new-tab'
+    ).checked = false
     document.querySelector('#media-modal-selected-preview-img').innerHTML = ''
     axios
         .get('/admin/cms/media/json')
@@ -171,7 +293,13 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
                     element.meta?.title || ''
                 }" data-altText="${
                     element.meta?.alt_text || ''
-                }" data-localDrive="${element.meta?.local_drive || ''}" />
+                }" data-localDrive="${
+                    element.meta?.local_drive || ''
+                }" data-link="${
+                    element.link_url || ''
+                }" data-openLinkInNewTab="${
+                    element.open_link_in_new_tab || false
+                }" />
                 </div>`
             })
             mediaList = `${mediaList}</div>`
@@ -193,7 +321,10 @@ document
         var mediaTitle = event.target.getAttribute('data-mediaTitle')
         var altText = event.target.getAttribute('data-altText')
         var localDrive = event.target.getAttribute('data-localDrive')
-        // console.log(attachButtonId)
+        var linkUrl = event.target.getAttribute('data-link')
+        var openLinkInNewTab = event.target.getAttribute(
+            'data-openLinkInNewTab'
+        )
         if (mediaUrl) {
             document.querySelector(
                 '#media-modal-selected-preview-img'
@@ -207,6 +338,11 @@ document
                 altText
             document.querySelector('#media-modal-selected-media-drive').value =
                 localDrive
+            document.querySelector('#media-modal-selected-media-link').value =
+                linkUrl
+            document.querySelector(
+                '#media-modal-selected-media-link-new-tab'
+            ).checked = openLinkInNewTab
 
             // Do something when a list item is clicked, such as displaying its text content
             // console.log(attachButtonId)
@@ -231,6 +367,12 @@ document
         var selectedMediaLocalDrive = document.querySelector(
             '#media-modal-selected-media-drive'
         ).value
+        var selectedMediaLink = document.querySelector(
+            '#media-modal-selected-media-link'
+        ).value
+        var selectedMediaOpenLinkInNewTab = document.querySelector(
+            '#media-modal-selected-media-link-new-tab'
+        ).checked
         if (selectedMediaUrl) {
             $(mediaModal).modal('hide')
             document
@@ -249,6 +391,15 @@ document
                 .querySelector(`#${attachButtonId}`)
                 .parentElement.querySelector('.media_local_drive_field').value =
                 selectedMediaLocalDrive
+            document
+                .querySelector(`#${attachButtonId}`)
+                .parentElement.querySelector('.media_link_url_field').value =
+                selectedMediaLink
+            document
+                .querySelector(`#${attachButtonId}`)
+                .parentElement.querySelector(
+                    '.media_open_link_in_new_tab_field'
+                ).value = selectedMediaOpenLinkInNewTab
             const imgHolderParent = document
                 .querySelector(`#${attachButtonId}`)
                 .parentElement.querySelector(`.media_preview`)
@@ -375,6 +526,12 @@ document.querySelectorAll('.media-list-item').forEach((eachMediaItem) => {
                 document.querySelector(
                     '#media-meta-panel input[name="alt_text"]'
                 ).value = response.data.meta?.alt_text || ''
+                document.querySelector(
+                    '#media-meta-panel input[name="link"]'
+                ).value = response.data?.link_url || ''
+                document.querySelector(
+                    '#media-meta-panel input[name="link_new_tab"]'
+                ).checked = response.data?.open_link_in_new_tab
             })
             .catch(function (err) {
                 // Handle the error

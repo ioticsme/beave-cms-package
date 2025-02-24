@@ -185,7 +185,7 @@ const addMetaInfo = async (req, res) => {
         const { id, title, alt_text, drive } = req.body
         // If id is not provided
         if (!id) {
-            return res.status(404).json({ error: 'Id not found' })
+            return res.status(404).json({ error: 'Media not found' })
         }
 
         await Media.updateOne(
@@ -193,6 +193,12 @@ const addMetaInfo = async (req, res) => {
                 _id: id,
             },
             {
+                has_link: req.body.link ? true : false,
+                link_url: req.body.link,
+                open_link_in_new_tab:
+                    req.body.link && req.body.link_new_tab == 'true'
+                        ? true
+                        : false,
                 meta: {
                     title: req.body.title,
                     alt_text: req.body.alt_text,

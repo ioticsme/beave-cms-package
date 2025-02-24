@@ -16,6 +16,18 @@ const MediaSchema = new mongoose.Schema(
             alt_text: String,
             local_drive: Boolean,
         },
+        has_link: {
+            type: Boolean,
+            default: false,
+        },
+        link_url: {
+            type: String,
+            default: null,
+        },
+        open_link_in_new_tab: {
+            type: Boolean,
+            default: false,
+        },
         response: {
             type: Object,
         },

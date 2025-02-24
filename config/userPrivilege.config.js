@@ -209,6 +209,7 @@ let privileges = async (req) => [
                 urls: [
                     '/admin/custom-forms/submissions/:id',
                     '/admin/custom-forms/submissions/:id/export',
+                    '/admin/custom-forms/submissions/:formId/:formDataId',
                 ],
             },
         ],

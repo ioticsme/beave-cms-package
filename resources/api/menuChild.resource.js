@@ -10,6 +10,7 @@ class MenuChildResource extends Resource {
             url: this.url,
             // content_path: this.content_path,
             active: this.active ? true : false,
+            external: this.external ? true : false,
             child: this.child
                 ? MenuChildResource.collection(this.child)
                 : undefined,

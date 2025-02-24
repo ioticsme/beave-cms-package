@@ -185,36 +185,49 @@
 									<div class="jstree_dragdrop" id="nav_{{ nav._id }}" data-nav_position="{{ nav.nav_position }}">
 										<ul>
 											{% for menu in nav.nav_items %}
-												<li data-id="{{ menu._id }}" url="{{ menu.url | json }}" label="{{ menu.label | json }}">{{ menu.label.en }}
-													<button class="btn btn-sm mx-1 btn-danger" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" onClick="deleteMenuItem(this)">
-														<i class="fa-solid fa-trash "></i>
-													</button>
-													<button class="btn btn-sm mx-1 btn-primary" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ loop.index-1 }}/0" onClick="editMenu(this)">
-														<i class="fa-solid fa-pen"></i>
-													</button>
+												<li data-id="{{ menu._id }}" url="{{ menu.url | json }}" label="{{ menu.label | json }}" active="{{ menu.active }}" external="{{ menu.external }}" >{{ menu.label.en }}
+													<span class="" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" onClick="deleteMenuItem(this)">
+														<i class="fa-solid fa-trash text-danger"></i>
+													</span>
+													{# <span class="btn btn-sm mx-1 btn-primary" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ loop.index-1 }}/0" onClick="editMenu(this)"> #}
+													<span class="mx-1" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ loop.index-1 }}/0" onClick="editMenu(this)">
+														<i class="fa-solid fa-pen text-primary"></i>
+													</span>
 													<ul>
 														{%set parent_index = loop.index0%}
 														{% for first_level_child in menu.child %}
-															<li data-id="{{ first_level_child._id }}" url="{{ first_level_child.url | json }}" label="{{ first_level_child.label | json }}">
+															<li data-id="{{ first_level_child._id }}" url="{{ first_level_child.url | json }}" label="{{ first_level_child.label | json }}" active="{{ first_level_child.active }}" external="{{ first_level_child.external }}" >
 																{{ first_level_child.label.en }}
-																<button class="btn btn-sm mx-1 btn-danger" id="{{ first_level_child._id }}" nav_position="{{ nav.nav_position }}" level="1" onClick="deleteMenuItem(this)">
+																{# <button class="btn btn-sm mx-1 btn-danger" id="{{ first_level_child._id }}" nav_position="{{ nav.nav_position }}" level="1" onClick="deleteMenuItem(this)">
 																	<i class="fa-solid fa-trash"></i>
 																</button>
 																<button class="btn btn-sm btn-primary" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ loop.index-1 }}/1?parent_index={{parent_index}}" onClick="editMenu(this)">
 																	<i class="fa-solid fa-pen"></i>
-																</button>
+																</button> #}
+																<span class="mx-1" id="{{ first_level_child._id }}" nav_position="{{ nav.nav_position }}" level="1" onClick="deleteMenuItem(this)">
+																	<i class="fa-solid fa-trash text-danger"></i>
+																</span>
+																<span class="mx-1" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ loop.index-1 }}/1?parent_index={{parent_index}}" onClick="editMenu(this)">
+																	<i class="fa-solid fa-pen text-primary"></i>
+																</span>
 
 																<ul>
 																	{%set sec_parent_index = loop.index0%}
 																	{% for second_level_child in first_level_child.child %}
-																		<li data-id="{{ second_level_child._id }}" url="{{ second_level_child.url | json }}" label="{{ second_level_child.label | json }}">
+																		<li data-id="{{ second_level_child._id }}" url="{{ second_level_child.url | json }}" label="{{ second_level_child.label | json }}" active="{{ second_level_child.active }}" external="{{ second_level_child.external }}" >
 																			{{ second_level_child.label.en }}
-																			<button class="btn btn-sm mx-1 btn-danger" id="{{ second_level_child._id }}" nav_position="{{ nav.nav_position }}" level="2" onClick="deleteMenuItem(this)">
+																			{# <button class="btn btn-sm mx-1 btn-danger" id="{{ second_level_child._id }}" nav_position="{{ nav.nav_position }}" level="2" onClick="deleteMenuItem(this)">
 																				<i class="fa-solid fa-trash"></i>
 																			</button>
 																			<button class="btn btn-sm mx-1 btn-primary" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ loop.index-1 }}/2?parent_index={{parent_index}}&sec_parent_index={{sec_parent_index}}" onClick="editMenu(this)">
 																				<i class="fa-solid fa-pen"></i>
-																			</button>
+																			</button> #}
+																			<span class="mx-1" id="{{ second_level_child._id }}" nav_position="{{ nav.nav_position }}" level="2" onClick="deleteMenuItem(this)">
+																				<i class="fa-solid fa-trash text-danger"></i>
+																			</span>
+																			<span class="mx-1" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" href="/admin/cms/menu/{{ nav.nav_position }}/edit/{{ loop.index-1 }}/2?parent_index={{parent_index}}&sec_parent_index={{sec_parent_index}}" onClick="editMenu(this)">
+																				<i class="fa-solid fa-pen text-primary"></i>
+																			</span>
 																		</li>
 																	{% endfor %}
 																</ul>
@@ -294,7 +307,7 @@
 												<div class="d-flex flex-column fv-row fv-plugins-icon-container col-12">
 													<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 														<span class="required"> Menu name ({{ brandLanguage.prefix }}) </span>
-														<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="label" data-beave-initialized="1"></i>
+														{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="label" data-beave-initialized="1"></i> #}
 													</label>
 													<input type="text" class="form-control mb-2" name="label[{{ brandLanguage.prefix }}]" placeholder="Menu label" value="">
 													<div class="fv-plugins-message-container invalid-feedback" id="field-error-label_{{ brandLanguage.prefix }}"></div>
@@ -302,7 +315,7 @@
 												<div class="col-12">
 													<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 														<span class="required"> Path ({{ brandLanguage.prefix }}) </span>
-														<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beave-initialized="1"></i>
+														{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beave-initialized="1"></i> #}
 													</label>
 													<input type="text" class="form-control mb-2" name="path[{{ brandLanguage.prefix }}]" placeholder="Menu path url" value="">
 													<div class="fv-plugins-message-container invalid-feedback" id="field-error-path_{{ brandLanguage.prefix }}"></div>
@@ -312,8 +325,16 @@
 									</div>
 									<div class="col-12">
 										<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+											<span>Active</span>
+											{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beave-initialized="1"></i> #}
+										</label>
+										<div class="form-check form-check-custom form-check-solid mb-2">
+											<input id="flexCheckChecked" class="form-check-input" type="checkbox" name="active" value="true" checked/>
+											<label class="form-check-label" for="flexCheckChecked">Active</label>
+										</div>
+										<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 											<span>Link Type</span>
-											<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beave-initialized="1"></i>
+											{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beave-initialized="1"></i> #}
 										</label>
 										<div class="form-check form-check-custom form-check-solid">
 											<input id="flexCheckChecked" class="form-check-input" type="checkbox" name="external" value="true"/>

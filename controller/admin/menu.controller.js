@@ -94,6 +94,7 @@ const addMenu = async (req, res) => {
             path: Joi.object({
                 ...pathValidationObj,
             }),
+            active: Joi.string().allow('', null, 'true'), // Allow empty or 'true' for external links
             external: Joi.string().allow('', null, 'true'), // Allow empty or 'true' for external links
             menu_position: Joi.string().optional().allow(null, ''), // Menu position is optional
         })
@@ -127,6 +128,7 @@ const addMenu = async (req, res) => {
             label,
             url: path,
             external: body.external == 'true', // Check if the link is external
+            active: body.active == 'true', // Check if the link is active
         }
 
         // Find the corresponding menu position to add the new menu item
@@ -247,6 +249,7 @@ const saveEditMenu = async (req, res) => {
                 ...pathValidationObj,
             }),
             external: Joi.string().allow('', null, 'true'),
+            active: Joi.string().allow('', null, 'true'),
         })
 
         const validationResult = schema.validate(req.body, {
@@ -292,6 +295,7 @@ const saveEditMenu = async (req, res) => {
                 label,
                 url: path,
                 external: req.body.external == 'true',
+                active: req.body.active == 'true',
                 child: menuItem.child,
             }
 
@@ -323,6 +327,7 @@ const saveEditMenu = async (req, res) => {
                 label,
                 url: path,
                 external: req.body.external == 'true',
+                active: req.body.active == 'true',
                 child: menuItem.child,
             }
 
@@ -362,6 +367,7 @@ const saveEditMenu = async (req, res) => {
                 label,
                 url: path,
                 external: req.body.external == 'true',
+                active: req.body.active == 'true',
                 child: menuItem.child,
             }
 
@@ -518,12 +524,13 @@ const saveMenu = async (req, res) => {
         const treeData = collect(JSON.parse(req.body.menu))
         const root_items = treeData.where('parent', '#').all()
         root_items.forEach((rootElement, rootIndex) => {
-            // console.log(JSON.parse(JSON.stringify(rootElement.li_attr.label)))
             const parent = {
                 _id: rootElement.li_attr.data_id,
                 position: rootIndex,
                 label: JSON.parse(rootElement.li_attr.label),
                 url: JSON.parse(rootElement.li_attr.url),
+                active: JSON.parse(rootElement.li_attr.active == 'true'),
+                external: JSON.parse(rootElement.li_attr.external == 'true'),
             }
             parent.child = []
             treeData
@@ -535,6 +542,12 @@ const saveMenu = async (req, res) => {
                         position: fcIndex,
                         label: JSON.parse(firstChildElement.li_attr.label),
                         url: JSON.parse(firstChildElement.li_attr.url),
+                        active: JSON.parse(
+                            firstChildElement.li_attr.active == 'true'
+                        ),
+                        external: JSON.parse(
+                            firstChildElement.li_attr.external == 'true'
+                        ),
                     }
                     firstChild.child = []
                     treeData
@@ -548,6 +561,13 @@ const saveMenu = async (req, res) => {
                                     secondChildElement.li_attr.label
                                 ),
                                 url: JSON.parse(secondChildElement.li_attr.url),
+                                active: JSON.parse(
+                                    secondChildElement.li_attr.active == 'true'
+                                ),
+                                external: JSON.parse(
+                                    secondChildElement.li_attr.external ==
+                                        'true'
+                                ),
                             }
                             firstChild.child.push(secondChild)
                         })
@@ -555,9 +575,6 @@ const saveMenu = async (req, res) => {
                 })
             dataToSave.push(parent)
         })
-
-        // console.log(dataToSave)
-        // return
 
         const save = await Menu.findOneAndUpdate(
             {

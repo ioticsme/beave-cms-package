@@ -93,7 +93,7 @@
 							{% endfor %}
 						</div>
 					</div>
-					<div class="col-12 col-sm-5 col-md-3" id="media-meta-panel">
+					<div class="col-12 col-sm-5 col-md-3 rounded bg-light-primary py-3" id="media-meta-panel">
 						<div class="row">
 							<div class="col-12" id="img-holder">
 								<img id="preview-img" src="">
@@ -113,6 +113,14 @@
 												<span>Media Alt Text</span>
 											</label>
 											<input type="text" name="alt_text" class="form-control" id="alt_text_field">
+										</div>
+										<div class="mb-3">
+											<label for="media-modal-link" class="form-label">Link</label>
+											<input type="text" name="link" id="media-modal-link" class="form-control form-control-solid" placeholder="Enter link (optional)"/>
+										</div>
+										<div class="my-3 ms-2 form-check">
+											<input type="checkbox" class="form-check-input form-control-light" name="link_new_tab" id="media-modal-link-new-tab" value="true" >
+											<label class="form-check-label" for="media-modal-link-new-tab">Open link in new tab</label>
 										</div>
 										<div class="col-12 mt-5">
 											<button class="btn btn-sm btn-success form-submit-btn btn-block" type="submit">

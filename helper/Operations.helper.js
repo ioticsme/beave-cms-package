@@ -185,7 +185,7 @@ const filteringScheduledCMSItems = async (items) => {
  * @param {string} text - The plaintext to encrypt.
  * @returns {string} The encrypted text in base64 format.
  */
-const encryptData = async (text) => {
+const encryptData = (text) => {
     const iv = crypto.randomBytes(IV_LENGTH) // Generate a random IV
     const cipher = crypto.createCipheriv(
         'aes-256-cbc',
@@ -202,7 +202,7 @@ const encryptData = async (text) => {
  * @param {string} encryptedText - The encrypted text in the format 'IV:encryptedData'.
  * @returns {string} The decrypted plaintext.
  */
-const decryptData = async (encryptedText) => {
+const decryptData = (encryptedText) => {
     const [iv, encrypted] = encryptedText.split(':') // Split IV and encrypted data
     const decipher = crypto.createDecipheriv(
         'aes-256-cbc',

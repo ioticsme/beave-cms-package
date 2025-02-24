@@ -6,11 +6,15 @@ const formData = require('form-data')
 const collect = require('collect.js')
 const { v4: uuidv4 } = require('uuid')
 const Mailgun = require('mailgun.js')
+const Excel = require('exceljs/dist/es5')
+
 const Config = require('../../model/Config')
 const CustomForm = require('../../model/CustomForm')
 const ContentType = require('../../model/ContentType')
 const CustomFormData = require('../../model/CustomFormData')
 const { mailGunTemplates } = require('../../helper/Mailgun.helper')
+const { formatInTimeZone } = require('date-fns-tz')
+const { format } = require('date-fns')
 
 let session
 
@@ -428,11 +432,19 @@ const deleteForm = async (req, res) => {
             return res.status(404).json({ error: 'Id not found' })
         }
 
-        await CustomForm.softDelete({
-            _id: id,
-            brand: req.authUser.brand._id,
-            country: req.authUser.brand.country,
-        })
+        await CustomForm.updateOne(
+            {
+                _id: id,
+                brand: req.authUser.brand._id,
+                country: req.authUser.brand.country,
+            },
+            {
+                $set: {
+                    isDeleted: true,
+                    deletedAt: Date.now(),
+                },
+            }
+        )
         return res.status(200).json({
             message: 'Custom form deleted',
         })
@@ -472,6 +484,46 @@ const viewSubmissions = async (req, res) => {
     }
 }
 
+const viewSubmission = async (req, res) => {
+    try {
+        session = req.authUser
+
+        const customForm = await CustomForm.findOne({
+            _id: req.params.formId,
+        })
+
+        if (!customForm) {
+            return res.render(`admin-njk/app-error-404`)
+        }
+
+        const submission = await CustomFormData.findOne({
+            _id: req.params.formDataId,
+            form_id: req.params.formId,
+        })
+
+        if (!submission) {
+            return res.render(`admin-njk/app-error-404`)
+        }
+
+        const fieldValues = []
+        customForm.fields.forEach((field) => {
+            fieldValues.push({
+                name: field.field_label.en,
+                value: submission.field_values[field.field_name],
+            })
+        })
+
+        return res.render(`admin-njk/custom-forms/view-submission`, {
+            customForm,
+            submission,
+            fieldValues,
+        })
+    } catch (error) {
+        console.log(error)
+        return res.render(`admin-njk/app-error-500`)
+    }
+}
+
 const deleteSubmissions = async (req, res) => {
     try {
         const { id } = req.body
@@ -492,6 +544,137 @@ const deleteSubmissions = async (req, res) => {
     }
 }
 
+const exportSubmissions = async (req, res) => {
+    session = req.authUser
+    // Create a new workbook
+    const workbook = new Excel.Workbook()
+    // Add a new worksheet
+    const worksheet = workbook.addWorksheet('Submissions')
+    try {
+        const form = await CustomForm.findOne({
+            _id: req.params.id,
+        })
+        if (!form) {
+            return workbook.xlsx.write(res).then(function () {
+                res.status(200).end()
+            })
+        }
+
+        const submissions = await CustomFormData.find({
+            form_id: req.params.id,
+        }).sort({ _id: -1 })
+
+        let headers = []
+        for (const field of form.fields) {
+            headers.push({
+                header: field?.field_label?.en,
+                key: field?.field_name,
+            })
+        }
+
+        headers.push({ header: 'Submitted At', key: 'created_at' })
+
+        worksheet.columns = headers
+
+        let timeZone =
+            req.authUser?.selected_brand?.country_object?.timezone ||
+            'Asia/Dubai'
+        submissions.forEach((submission) => {
+            let row = []
+            headers.forEach((header) => {
+                if (header.key == 'created_at') {
+                    row.push(
+                        formatInTimeZone(
+                            submission.created_at,
+                            timeZone,
+                            'dd/MM/yyyy HH:mm:ss'
+                        )
+                    )
+                } else {
+                    row.push(submission?.field_values?.[header.key] || '')
+                }
+            })
+
+            worksheet.addRow(row)
+        })
+
+        // Add bold style to all column headers
+        worksheet.getRow(1).font = { bold: true }
+
+        // Adjust column widths dynamically based on content
+        worksheet.columns.forEach((column) => {
+            // Some columns need custom width
+            let keysHaveCustomWidth = []
+            let customWidths = {}
+            let maxLength = 0
+            if (keysHaveCustomWidth.includes(column._key)) {
+                maxLength = customWidths[column._key]
+                    ? customWidths[column._key]
+                    : 10
+            } else {
+                column.eachCell({ includeEmpty: true }, (cell) => {
+                    let cellValue = cell.value
+                    let longestString =
+                        (cellValue &&
+                            findLongestString(
+                                cellValue.toString().split('\n')
+                            )) ||
+                        5
+                    if (longestString?.length > maxLength) {
+                        maxLength = longestString?.length
+                    }
+                })
+            }
+            column.width = maxLength < 10 ? 10 : maxLength
+        })
+
+        // Align cell values vertically centered
+        worksheet.eachRow((row) => {
+            row.eachCell((cell) => {
+                cell.alignment = { vertical: 'middle' }
+            })
+        })
+
+        // Set the filename and send the workbook as a response
+        res.setHeader(
+            'Content-Type',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        res.setHeader(
+            'Content-Disposition',
+            `attachment; filename=${form?.form_name?.en}-submissions-${format(
+                Date.now(),
+                'dd-MM-yyyy'
+            )}.xlsx`
+        )
+        return workbook.xlsx.write(res).then(function () {
+            res.status(200).end()
+        })
+    } catch (error) {
+        console.log('error :>> ', error)
+        return workbook.xlsx.write(res).then(function () {
+            res.status(200).end()
+        })
+    }
+}
+
+const findLongestString = (array) => {
+    if (!Array.isArray(array) || array.length === 0) {
+        return null // Handle edge case for an empty or non-array input
+    }
+
+    let longestString = array[0] // Assume the first string is the longest initially
+
+    for (let i = 1; i < array.length; i++) {
+        const currentString = array[i]
+        if (currentString.length > longestString.length) {
+            longestString = currentString
+        }
+    }
+
+    return longestString
+}
+
 module.exports = {
     list,
     edit,
@@ -501,5 +684,7 @@ module.exports = {
     changeStatus,
     deleteForm,
     viewSubmissions,
+    viewSubmission,
     deleteSubmissions,
+    exportSubmissions,
 }
