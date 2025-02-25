@@ -12,14 +12,31 @@ if (mediaManagementPanel) {
     if (hasPdfUpload == 'true') {
         acceptedFiles += `,.pdf`
     }
+    let totalFiles = 0
+    let uploadedFiles = 0
     var myDropzone = new Dropzone('#beave_dropzonejs_example_1', {
         url: '/admin/cms/media/upload', // Set the url for your upload script location
         paramName: 'file', // The name that will be used to transfer the file
         maxFiles: 10,
-        maxFilesize: 10, // MB
+        maxFilesize: 100, // MB
         addRemoveLinks: true,
+        uploadMultiple: true, // Upload all files in a single request
+        parallelUploads: 10,
         acceptedFiles,
         autoProcessQueue: false, // Prevent auto-upload until cropping is done
+        init: function () {
+            this.on('addedfile', function () {
+                totalFiles++ // Count total files added
+            })
+
+            this.on('success', function () {
+                uploadedFiles++ // Count successfully uploaded files
+            })
+
+            this.on('removedfile', function () {
+                totalFiles-- // Reduce count if a file is removed before upload
+            })
+        },
         accept: function (file, done) {
             if (file.isCropped) {
                 // If the file is already cropped, allow upload
@@ -152,7 +169,6 @@ if (mediaManagementPanel) {
                     .then(function (response) {
                         // Handle the successful response
                         var mediaList = `<div class="row">`
-                        // console.log(response.data)
                         response.data.forEach((element) => {
                             mediaList = `${mediaList} <div class="col-12 col-sm-3 col-md-2 p-2 media-list-item" data-name="${
                                 element?.file?.name
@@ -185,8 +201,10 @@ if (mediaManagementPanel) {
                         console.error(error)
                     })
             } else {
-                console.log('ssss')
-                location.reload()
+                // Refresh only when all files are uploaded
+                if (uploadedFiles === totalFiles) {
+                    location.reload()
+                }
             }
         } else {
             console.log('Upload failed: ' + file.status)
@@ -282,7 +300,6 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
         .then(function (response) {
             // Handle the successful response
             var mediaList = `<div class="row">`
-            // console.log(response.data)
             response.data.forEach((element) => {
                 mediaList = `${mediaList} <div class="col-12 col-sm-3 col-md-2 p-2 media-list-item" data-name="${
                     element?.file?.name
