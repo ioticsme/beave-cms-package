@@ -37,7 +37,7 @@ var BEAVEChartsWidget35 = function () {
         }     
          
         var height = parseInt(BEAVEUtil.css(element, 'height'));
-        var color = element.getAttribute('data-beave-chart-color');        
+        var color = element.getAttribute('data-beaver-chart-color');        
         
         var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
         var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
@@ -216,7 +216,7 @@ var BEAVEChartsWidget35 = function () {
             initChart(chart5, '#beave_charts_widget_35_tab_5', '#beave_charts_widget_35_chart_5', chart5Data, chart5Labels, false);
 
             // Update chart on theme mode change
-            BEAVEThemeMode.on("beave.thememode.change", function() {
+            BEAVEThemeMode.on("beaver.thememode.change", function() {
                 if (chart1.rendered) {
                     chart1.self.destroy();
                 }

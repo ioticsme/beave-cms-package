@@ -15,7 +15,7 @@ var BEAVEChartsWidget43 = function () {
             return;
         }
 
-        var color = element.getAttribute('data-beave-chart-color');
+        var color = element.getAttribute('data-beaver-chart-color');
         var height = parseInt(BEAVEUtil.css(element, 'height'));
         var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-800');
         var strokeColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
@@ -156,7 +156,7 @@ var BEAVEChartsWidget43 = function () {
             initChart();
 
             // Update chart on theme mode change
-            BEAVEThemeMode.on("beave.thememode.change", function() {                
+            BEAVEThemeMode.on("beaver.thememode.change", function() {                
                 if (chart.rendered) {
                     chart.self.destroy();
                 }

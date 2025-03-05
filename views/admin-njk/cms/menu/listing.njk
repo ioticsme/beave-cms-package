@@ -173,7 +173,7 @@
 								<div class="card-header">
 									<h3 class="card-title">{{ nav.nav_label }}</h3>
 									<div class="card-toolbar">
-										<a class="btn btn-sm btn-icon btn-light-danger menu-link px-3" id="{{ nav._id }}" url="/admin/cms/menu/delete-position" data-beave-subscriptions-table-filter="delete_row" onClick="deleteItem(this)">
+										<a class="btn btn-sm btn-icon btn-light-danger menu-link px-3" id="{{ nav._id }}" url="/admin/cms/menu/delete-position" data-beaver-subscriptions-table-filter="delete_row" onClick="deleteItem(this)">
 											<i class="fa fa-trash"></i>
 										</a>
 										<a class="btn btn-sm btn-icon mx-1 fw-bold btn-light-primary" href="#" data-bs-toggle="modal" data-sectionId="{{nav._id}}" data-bs-target="#beave_modal_create_item">
@@ -307,7 +307,7 @@
 												<div class="d-flex flex-column fv-row fv-plugins-icon-container col-12">
 													<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 														<span class="required"> Menu name ({{ brandLanguage.prefix }}) </span>
-														{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="label" data-beave-initialized="1"></i> #}
+														{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="label" data-beaver-initialized="1"></i> #}
 													</label>
 													<input type="text" class="form-control mb-2" name="label[{{ brandLanguage.prefix }}]" placeholder="Menu label" value="">
 													<div class="fv-plugins-message-container invalid-feedback" id="field-error-label_{{ brandLanguage.prefix }}"></div>
@@ -315,7 +315,7 @@
 												<div class="col-12">
 													<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 														<span class="required"> Path ({{ brandLanguage.prefix }}) </span>
-														{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beave-initialized="1"></i> #}
+														{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beaver-initialized="1"></i> #}
 													</label>
 													<input type="text" class="form-control mb-2" name="path[{{ brandLanguage.prefix }}]" placeholder="Menu path url" value="">
 													<div class="fv-plugins-message-container invalid-feedback" id="field-error-path_{{ brandLanguage.prefix }}"></div>
@@ -326,7 +326,7 @@
 									<div class="col-12">
 										<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 											<span>Active</span>
-											{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beave-initialized="1"></i> #}
+											{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beaver-initialized="1"></i> #}
 										</label>
 										<div class="form-check form-check-custom form-check-solid mb-2">
 											<input id="flexCheckChecked" class="form-check-input" type="checkbox" name="active" value="true" checked/>
@@ -334,7 +334,7 @@
 										</div>
 										<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 											<span>Link Type</span>
-											{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beave-initialized="1"></i> #}
+											{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beaver-initialized="1"></i> #}
 										</label>
 										<div class="form-check form-check-custom form-check-solid">
 											<input id="flexCheckChecked" class="form-check-input" type="checkbox" name="external" value="true"/>

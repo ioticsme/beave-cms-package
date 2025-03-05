@@ -13,7 +13,7 @@ var BEAVEWidgets = function () {
                 return;
             }
 
-            var color = element.getAttribute('data-beave-chart-color');
+            var color = element.getAttribute('data-beaver-chart-color');
 
             var labelColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-800');
             var baseColor = BEAVEUtil.getCssVariableValue('--bs-' + color);
@@ -153,7 +153,7 @@ var BEAVEWidgets = function () {
                 return;
             }
 
-            var color = element.getAttribute('data-beave-chart-color');
+            var color = element.getAttribute('data-beaver-chart-color');
 
             var labelColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-800');
             var baseColor = BEAVEUtil.getCssVariableValue('--bs-' + color);
@@ -415,7 +415,7 @@ var BEAVEWidgets = function () {
         initChart();
 
         // Update chart on theme mode change
-        BEAVEThemeMode.on("beave.thememode.change", function() {                
+        BEAVEThemeMode.on("beaver.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -555,7 +555,7 @@ var BEAVEWidgets = function () {
         initChart();
 
         // Update chart on theme mode change
-        BEAVEThemeMode.on("beave.thememode.change", function() {                
+        BEAVEThemeMode.on("beaver.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -710,7 +710,7 @@ var BEAVEWidgets = function () {
         initChart();
 
         // Update chart on theme mode change
-        BEAVEThemeMode.on("beave.thememode.change", function() {                
+        BEAVEThemeMode.on("beaver.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -867,7 +867,7 @@ var BEAVEWidgets = function () {
         initChart();
 
         // Update chart on theme mode change
-        BEAVEThemeMode.on("beave.thememode.change", function() {                
+        BEAVEThemeMode.on("beaver.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -1011,7 +1011,7 @@ var BEAVEWidgets = function () {
         initChart();
 
         // Update chart on theme mode change
-        BEAVEThemeMode.on("beave.thememode.change", function() {                
+        BEAVEThemeMode.on("beaver.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -1170,7 +1170,7 @@ var BEAVEWidgets = function () {
         initChart();
 
         // Update chart on theme mode change
-        BEAVEThemeMode.on("beave.thememode.change", function() {                
+        BEAVEThemeMode.on("beaver.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -1349,7 +1349,7 @@ var BEAVEWidgets = function () {
         initChart();
 
         // Update chart on theme mode change
-        BEAVEThemeMode.on("beave.thememode.change", function() {                
+        BEAVEThemeMode.on("beaver.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -1543,7 +1543,7 @@ var BEAVEWidgets = function () {
         initChart();
 
         // Update chart on theme mode change
-        BEAVEThemeMode.on("beave.thememode.change", function() {                
+        BEAVEThemeMode.on("beaver.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -1566,7 +1566,7 @@ var BEAVEWidgets = function () {
 
         [].slice.call(charts).map(function(element) {
             height = parseInt(BEAVEUtil.css(element, 'height'));
-            color = BEAVEUtil.getCssVariableValue('--bs-' + element.getAttribute("data-beave-color"));
+            color = BEAVEUtil.getCssVariableValue('--bs-' + element.getAttribute("data-beaver-color"));
             strokeColor = BEAVEUtil.colorDarken(color, 15);
 
             options = {
@@ -1707,7 +1707,7 @@ var BEAVEWidgets = function () {
                 return;
             }
 
-            var color = element.getAttribute('data-beave-chart-color');
+            var color = element.getAttribute('data-beaver-chart-color');
 
             var labelColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-800');
             var strokeColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-300');
@@ -1848,7 +1848,7 @@ var BEAVEWidgets = function () {
                 return;
             }
 
-            var color = element.getAttribute('data-beave-chart-color');
+            var color = element.getAttribute('data-beaver-chart-color');
 
             var baseColor = BEAVEUtil.getCssVariableValue('--bs-' + color);
             var lightColor = BEAVEUtil.getCssVariableValue('--bs-' + color + '-light' );
@@ -1912,7 +1912,7 @@ var BEAVEWidgets = function () {
                 return;
             }
 
-            var color = element.getAttribute('data-beave-chart-color');
+            var color = element.getAttribute('data-beaver-chart-color');
             var labelColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-800');
             var strokeColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-300');
             var baseColor = BEAVEUtil.getCssVariableValue('--bs-' + color);
@@ -2065,7 +2065,7 @@ var BEAVEWidgets = function () {
             initChart(chart, element);
             
             // Update chart on theme mode change
-            BEAVEThemeMode.on("beave.thememode.change", function() {                
+            BEAVEThemeMode.on("beaver.thememode.change", function() {                
                 if (chart.rendered) {
                     chart.self.destroy();
                 }
@@ -2085,7 +2085,7 @@ var BEAVEWidgets = function () {
                 return;
             }
 
-            var color = element.getAttribute('data-beave-chart-color');
+            var color = element.getAttribute('data-beaver-chart-color');
 
             var labelColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-800');
             var strokeColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-300');
@@ -2226,7 +2226,7 @@ var BEAVEWidgets = function () {
                 return;
             }
 
-            var color = element.getAttribute('data-beave-chart-color');
+            var color = element.getAttribute('data-beaver-chart-color');
 
             var labelColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-800');
             var strokeColor = BEAVEUtil.getCssVariableValue('--bs-' + 'gray-300');
@@ -2371,7 +2371,7 @@ var BEAVEWidgets = function () {
         var chart;
 
         [].slice.call(charts).map(function(element) {
-            color = element.getAttribute("data-beave-color");
+            color = element.getAttribute("data-beaver-color");
             height = parseInt(BEAVEUtil.css(element, 'height'));
             baseColor = BEAVEUtil.getCssVariableValue('--bs-' + color);
 
@@ -2939,7 +2939,7 @@ var BEAVEWidgets = function () {
                 return;
             }
 
-            var color = element.getAttribute('data-beave-chart-color');
+            var color = element.getAttribute('data-beaver-chart-color');
 
             var options = {
                 labels: ["Total Orders"],
@@ -3279,7 +3279,7 @@ var BEAVEWidgets = function () {
         initChart();
 
         // Update chart on theme mode change
-        BEAVEThemeMode.on("beave.thememode.change", function() {                
+        BEAVEThemeMode.on("beaver.thememode.change", function() {                
             if (chart.rendered) {
                 chart.self.destroy();
             }
@@ -3323,10 +3323,10 @@ var BEAVEWidgets = function () {
         if (btn) {
             btn.addEventListener('click', function(e){
                 e.preventDefault();
-                btn.setAttribute('data-beave-indicator', 'on');
+                btn.setAttribute('data-beaver-indicator', 'on');
 
                 setTimeout(function() {
-                    btn.removeAttribute('data-beave-indicator');
+                    btn.removeAttribute('data-beaver-indicator');
                     widget5.classList.remove('d-none');         
                     btn.classList.add('d-none');         
                     
@@ -3532,7 +3532,7 @@ var BEAVEWidgets = function () {
         
         if (toggle) {
             toggle.addEventListener('click', function() {
-                window.location.href = this.getAttribute('data-beave-url');
+                window.location.href = this.getAttribute('data-beaver-url');
             });
         }
     }

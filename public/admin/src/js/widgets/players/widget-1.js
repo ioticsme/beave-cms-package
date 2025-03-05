@@ -6,12 +6,12 @@ var BEAVEPlayersWidget1 = function () {
     var initPlayers = function() {
         // https://www.w3schools.com/jsref/dom_obj_audio.asp
         // Toggle Handler
-        BEAVEUtil.on(document.body, '[data-beave-element="list-play-button"]', 'click', function (e) {
+        BEAVEUtil.on(document.body, '[data-beaver-element="list-play-button"]', 'click', function (e) {
             var currentButton = this;
 
-            var audio = document.querySelector('[data-beave-element="audio-track-1"]');
-            var playIcon = this.querySelector('[data-beave-element="list-play-icon"]');
-            var pauseIcon = this.querySelector('[data-beave-element="list-pause-icon"]');
+            var audio = document.querySelector('[data-beaver-element="audio-track-1"]');
+            var playIcon = this.querySelector('[data-beaver-element="list-play-icon"]');
+            var pauseIcon = this.querySelector('[data-beaver-element="list-pause-icon"]');
 
             if (pauseIcon.classList.contains('d-none')) {
                 audio.play();
@@ -25,11 +25,11 @@ var BEAVEPlayersWidget1 = function () {
                 pauseIcon.classList.add('d-none');
             }
             
-            var buttons = [].slice.call(document.querySelectorAll('[data-beave-element="list-play-button"]'));
+            var buttons = [].slice.call(document.querySelectorAll('[data-beaver-element="list-play-button"]'));
             buttons.map(function (button) {
                 if (button !== currentButton) {
-                    var playIcon = button.querySelector('[data-beave-element="list-play-icon"]');
-                    var pauseIcon = button.querySelector('[data-beave-element="list-pause-icon"]');
+                    var playIcon = button.querySelector('[data-beaver-element="list-play-icon"]');
+                    var pauseIcon = button.querySelector('[data-beaver-element="list-pause-icon"]');
 
                     playIcon.classList.remove('d-none');
                     pauseIcon.classList.add('d-none');

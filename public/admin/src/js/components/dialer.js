@@ -42,8 +42,8 @@ var BEAVEDialer = function(element, options) {
 
         // Elements
         the.element = element;
-        the.incElement = the.element.querySelector('[data-beave-dialer-control="increase"]');
-        the.decElement = the.element.querySelector('[data-beave-dialer-control="decrease"]');
+        the.incElement = the.element.querySelector('[data-beaver-dialer-control="increase"]');
+        the.decElement = the.element.querySelector('[data-beaver-dialer-control="decrease"]');
         the.inputElement = the.element.querySelector('input[type]'); 
         
         // Set Values
@@ -110,27 +110,27 @@ var BEAVEDialer = function(element, options) {
     // Event handlers
     var _increase = function() {
         // Trigger "after.dialer" event
-        BEAVEEventHandler.trigger(the.element, 'beave.dialer.increase', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.dialer.increase', the);
 
         the.inputElement.value = the.value + the.options.step;
         _setValue();
 
         // Trigger "before.dialer" event
-        BEAVEEventHandler.trigger(the.element, 'beave.dialer.increased', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.dialer.increased', the);
 
         return the;
     }
 
     var _decrease = function() {
         // Trigger "after.dialer" event
-        BEAVEEventHandler.trigger(the.element, 'beave.dialer.decrease', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.dialer.decrease', the);
 
         the.inputElement.value = the.value - the.options.step;      
 
         _setValue();
 
         // Trigger "before.dialer" event
-        BEAVEEventHandler.trigger(the.element, 'beave.dialer.decreased', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.dialer.decreased', the);
 
         return the;
     }
@@ -138,7 +138,7 @@ var BEAVEDialer = function(element, options) {
     // Set Input Value
     var _setValue = function(value) {
         // Trigger "after.dialer" event
-        BEAVEEventHandler.trigger(the.element, 'beave.dialer.change', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.dialer.change', the);
 
         if (value !== undefined) {
             the.value = value;
@@ -160,7 +160,7 @@ var BEAVEDialer = function(element, options) {
         the.inputElement.dispatchEvent(new Event('change'));
 
         // Trigger "after.dialer" event
-        BEAVEEventHandler.trigger(the.element, 'beave.dialer.changed', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.dialer.changed', the);
     }
 
     var _parse = function(val) {
@@ -192,8 +192,8 @@ var BEAVEDialer = function(element, options) {
 
     // Get option
     var _getOption = function(name) {
-        if ( the.element.hasAttribute('data-beave-dialer-' + name) === true ) {
-            var attr = the.element.getAttribute('data-beave-dialer-' + name);
+        if ( the.element.hasAttribute('data-beaver-dialer-' + name) === true ) {
+            var attr = the.element.getAttribute('data-beaver-dialer-' + name);
             var value = attr;            
 
             return value;
@@ -278,7 +278,7 @@ BEAVEDialer.getInstance = function(element) {
 }
 
 // Create instances
-BEAVEDialer.createInstances = function(selector = '[data-beave-dialer="true"]') {
+BEAVEDialer.createInstances = function(selector = '[data-beaver-dialer="true"]') {
     // Get instances
     var elements = document.querySelectorAll(selector);
 

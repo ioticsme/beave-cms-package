@@ -46,7 +46,7 @@ var BEAVEFeedback = function(options) {
     }
 
     var _show = function() {
-        if ( BEAVEEventHandler.trigger(the.element, 'beave.feedback.show', the) === false ) {
+        if ( BEAVEEventHandler.trigger(the.element, 'beaver.feedback.show', the) === false ) {
             return;
         }
 
@@ -54,13 +54,13 @@ var BEAVEFeedback = function(options) {
             _showPopup();
         }
 
-        BEAVEEventHandler.trigger(the.element, 'beave.feedback.shown', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.feedback.shown', the);
 
         return the;
     }
 
     var _hide = function() {
-        if ( BEAVEEventHandler.trigger(the.element, 'beave.feedback.hide', the) === false ) {
+        if ( BEAVEEventHandler.trigger(the.element, 'beaver.feedback.hide', the) === false ) {
             return;
         }
 
@@ -70,7 +70,7 @@ var BEAVEFeedback = function(options) {
 
         the.shown = false;
 
-        BEAVEEventHandler.trigger(the.element, 'beave.feedback.hidden', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.feedback.hidden', the);
 
         return the;
     }

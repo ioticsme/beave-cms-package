@@ -36,10 +36,10 @@ var BEAVEToggle = function(element, options) {
         // Elements
         the.element = element;
 
-        the.target = document.querySelector(the.element.getAttribute('data-beave-toggle-target')) ? document.querySelector(the.element.getAttribute('data-beave-toggle-target')) : the.element;
-        the.state = the.element.hasAttribute('data-beave-toggle-state') ? the.element.getAttribute('data-beave-toggle-state') : '';
-        the.mode = the.element.hasAttribute('data-beave-toggle-mode') ? the.element.getAttribute('data-beave-toggle-mode') : '';
-        the.attribute = 'data-beave-' + the.element.getAttribute('data-beave-toggle-name');
+        the.target = document.querySelector(the.element.getAttribute('data-beaver-toggle-target')) ? document.querySelector(the.element.getAttribute('data-beaver-toggle-target')) : the.element;
+        the.state = the.element.hasAttribute('data-beaver-toggle-state') ? the.element.getAttribute('data-beaver-toggle-state') : '';
+        the.mode = the.element.hasAttribute('data-beaver-toggle-mode') ? the.element.getAttribute('data-beaver-toggle-mode') : '';
+        the.attribute = 'data-beaver-' + the.element.getAttribute('data-beaver-toggle-name');
 
         // Event Handlers
         _handlers();
@@ -67,7 +67,7 @@ var BEAVEToggle = function(element, options) {
     // Event handlers
     var _toggle = function() {
         // Trigger "after.toggle" event
-        BEAVEEventHandler.trigger(the.element, 'beave.toggle.change', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.toggle.change', the);
 
         if ( _isEnabled() ) {
             _disable();
@@ -76,7 +76,7 @@ var BEAVEToggle = function(element, options) {
         }       
 
         // Trigger "before.toggle" event
-        BEAVEEventHandler.trigger(the.element, 'beave.toggle.changed', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.toggle.changed', the);
 
         return the;
     }
@@ -86,7 +86,7 @@ var BEAVEToggle = function(element, options) {
             return;
         }
 
-        BEAVEEventHandler.trigger(the.element, 'beave.toggle.enable', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.toggle.enable', the);
 
         the.target.setAttribute(the.attribute, 'on');
 
@@ -98,7 +98,7 @@ var BEAVEToggle = function(element, options) {
             BEAVECookie.set(the.attribute, 'on');
         }
 
-        BEAVEEventHandler.trigger(the.element, 'beave.toggle.enabled', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.toggle.enabled', the);
 
         return the;
     }
@@ -108,7 +108,7 @@ var BEAVEToggle = function(element, options) {
             return;
         }
 
-        BEAVEEventHandler.trigger(the.element, 'beave.toggle.disable', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.toggle.disable', the);
 
         the.target.removeAttribute(the.attribute);
 
@@ -120,7 +120,7 @@ var BEAVEToggle = function(element, options) {
             BEAVECookie.remove(the.attribute);
         }
 
-        BEAVEEventHandler.trigger(the.element, 'beave.toggle.disabled', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.toggle.disabled', the);
 
         return the;
     }
@@ -193,7 +193,7 @@ BEAVEToggle.getInstance = function(element) {
 }
 
 // Create instances
-BEAVEToggle.createInstances = function(selector = '[data-beave-toggle]') {
+BEAVEToggle.createInstances = function(selector = '[data-beaver-toggle]') {
     // Get instances
     var elements = document.body.querySelectorAll(selector);
 

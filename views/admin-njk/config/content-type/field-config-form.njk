@@ -35,7 +35,7 @@
 				$(this).slideDown();
 				// Re-init select2
 				$(this)
-					.find('[data-beave-repeate="select2"]')
+					.find('[data-beaver-repeate="select2"]')
 					.select2();
 			},
 
@@ -44,7 +44,7 @@
 			},
 			ready: function () {
 				// Init select2
-				$('[data-beave-repeate="select2"]').select2();
+				$('[data-beaver-repeate="select2"]').select2();
 			}
 		});
 	</script>
@@ -160,7 +160,7 @@
 																				<div class="fv-plugins-message-container invalid-feedback" id="field-error-validation"></div>
 																			</div>
 																			<div class="mt-2 col-md-6">
-																				<select name="field_type" class="form-select form-control select2 form-select-lg form-select-solid mb-2" data-beave-repeater='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select field type'>
+																				<select name="field_type" class="form-select form-control select2 form-select-lg form-select-solid mb-2" data-beaver-repeater='select2' data-close-on-select='true' data-allow-clear="true" data-placeholder='Select field type'>
 																					<option value="">Select Field Type</option>
 																					{% if cf.field_type == 'text' %}
 																						<option value="text" selected>Text</option>
@@ -262,7 +262,7 @@
 													</div>
 													<div class="col-md-6">
 														<label class="form-label">Row Type:</label>
-														<select name="repeater_group" class="form-select form-control select2 form-select-lg form-select-solid mb-2 mb-md-0" data-beave-repeater="select2" data-close-on-select="true" data-allow-clear="true" data-placeholder="Select row type">
+														<select name="repeater_group" class="form-select form-control select2 form-select-lg form-select-solid mb-2 mb-md-0" data-beaver-repeater="select2" data-close-on-select="true" data-allow-clear="true" data-placeholder="Select row type">
 																//- <!-- TODO::edit selection list item -->
 															<option value="">Select Row type</option>
 															{% if contentType and contentType.repeater_group == false %}
@@ -279,7 +279,7 @@
 													</div>
 													<div class="mt-2 col-md-6">
 														<label class="form-label">Row Language type</label>
-														<select name="localisation" class="form-select form-control select2 form-select-lg form-select-solid mb-2" data-beave-repeater="select2" data-close-on-select="true" data-allow-clear="true" data-placeholder="Select language type">
+														<select name="localisation" class="form-select form-control select2 form-select-lg form-select-solid mb-2" data-beaver-repeater="select2" data-close-on-select="true" data-allow-clear="true" data-placeholder="Select language type">
 															<!-- TODO::edit selection list item -->
 															<option value="">Select language type</option>
 															{% if contentType and contentType.localisation == true %}
@@ -324,7 +324,7 @@
 																		<div class="fv-plugins-message-container invalid-feedback" id="field-error-validation"></div>
 																	</div>
 																	<div class="mt-2 col-md-6">
-																		<select class="form-select form-control select2 form-select-lg form-select-solid mb-2" name="field_type" data-beave-repeater="select2" data-close-on-select="true" data-allow-clear="true" data-placeholder="Select field type">
+																		<select class="form-select form-control select2 form-select-lg form-select-solid mb-2" name="field_type" data-beaver-repeater="select2" data-close-on-select="true" data-allow-clear="true" data-placeholder="Select field type">
 																			<option value="">Select Field Type</option>
 																			<option value="text">Text</option>
 																			<option value="wysiwyg">WYSIWYG</option>

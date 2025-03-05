@@ -11,18 +11,18 @@ var BEAVEPlayersWidget2 = function () {
             return;
         }
 
-        var audio = element.querySelector('[data-beave-element="audio-track-1"]');
-        var progress = element.querySelector('[data-beave-element="progress"]');        
-        var currentTime = element.querySelector('[data-beave-element="current-time"]');
-        var duration = element.querySelector('[data-beave-element="duration"]');
-        var playButton = element.querySelector('[data-beave-element="play-button"]');
-        var playIcon = element.querySelector('[data-beave-element="play-icon"]');
-        var pauseIcon = element.querySelector('[data-beave-element="pause-icon"]');
+        var audio = element.querySelector('[data-beaver-element="audio-track-1"]');
+        var progress = element.querySelector('[data-beaver-element="progress"]');        
+        var currentTime = element.querySelector('[data-beaver-element="current-time"]');
+        var duration = element.querySelector('[data-beaver-element="duration"]');
+        var playButton = element.querySelector('[data-beaver-element="play-button"]');
+        var playIcon = element.querySelector('[data-beaver-element="play-icon"]');
+        var pauseIcon = element.querySelector('[data-beaver-element="pause-icon"]');
 
-        var replayButton = element.querySelector('[data-beave-element="replay-button"]');
-        var shuffleButton = element.querySelector('[data-beave-element="shuffle-button"]');
-        var playNextButton = element.querySelector('[data-beave-element="play-next-button"]');
-        var playPrevButton = element.querySelector('[data-beave-element="play-prev-button"]');
+        var replayButton = element.querySelector('[data-beaver-element="replay-button"]');
+        var shuffleButton = element.querySelector('[data-beaver-element="shuffle-button"]');
+        var playNextButton = element.querySelector('[data-beaver-element="play-next-button"]');
+        var playPrevButton = element.querySelector('[data-beaver-element="play-prev-button"]');
 
         var formatTime = function(time) {
             var s = parseInt(time % 60);

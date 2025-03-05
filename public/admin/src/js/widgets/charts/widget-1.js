@@ -15,7 +15,7 @@ var BEAVEChartsWidget1 = function () {
             return;
         }
 
-        var negativeColor = element.hasAttribute('data-beave-negative-color') ? element.getAttribute('data-beave-negative-color') : BEAVEUtil.getCssVariableValue('--bs-success');
+        var negativeColor = element.hasAttribute('data-beaver-negative-color') ? element.getAttribute('data-beaver-negative-color') : BEAVEUtil.getCssVariableValue('--bs-success');
 
         var height = parseInt(BEAVEUtil.css(element, 'height'));
         var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
@@ -155,7 +155,7 @@ var BEAVEChartsWidget1 = function () {
             initChart();
 
             // Update chart on theme mode change
-            BEAVEThemeMode.on("beave.thememode.change", function() {                
+            BEAVEThemeMode.on("beaver.thememode.change", function() {                
                 if (chart.rendered) {
                     chart.self.destroy();
                 }

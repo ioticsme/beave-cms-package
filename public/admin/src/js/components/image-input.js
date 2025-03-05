@@ -37,13 +37,13 @@ var BEAVEImageInput = function(element, options) {
         the.element = element;
         the.inputElement = BEAVEUtil.find(element, 'input[type="file"]');
         the.wrapperElement = BEAVEUtil.find(element, '.image-input-wrapper');
-        the.cancelElement = BEAVEUtil.find(element, '[data-beave-image-input-action="cancel"]');
-        the.removeElement = BEAVEUtil.find(element, '[data-beave-image-input-action="remove"]');
+        the.cancelElement = BEAVEUtil.find(element, '[data-beaver-image-input-action="cancel"]');
+        the.removeElement = BEAVEUtil.find(element, '[data-beaver-image-input-action="remove"]');
         the.hiddenElement = BEAVEUtil.find(element, 'input[type="hidden"]');
         the.src = BEAVEUtil.css(the.wrapperElement, 'backgroundImage');
 
         // Set initialized
-        the.element.setAttribute('data-beave-image-input', 'true');
+        the.element.setAttribute('data-beaver-image-input', 'true');
 
         // Event Handlers
         _handlers();
@@ -65,7 +65,7 @@ var BEAVEImageInput = function(element, options) {
 
         if ( the.inputElement !== null && the.inputElement.files && the.inputElement.files[0] ) {
             // Fire change event
-            if ( BEAVEEventHandler.trigger(the.element, 'beave.imageinput.change', the) === false ) {
+            if ( BEAVEEventHandler.trigger(the.element, 'beaver.imageinput.change', the) === false ) {
                 return;
             }
 
@@ -81,7 +81,7 @@ var BEAVEImageInput = function(element, options) {
             the.element.classList.remove('image-input-empty');
 
             // Fire removed event
-            BEAVEEventHandler.trigger(the.element, 'beave.imageinput.changed', the);
+            BEAVEEventHandler.trigger(the.element, 'beaver.imageinput.changed', the);
         }
     }
 
@@ -89,7 +89,7 @@ var BEAVEImageInput = function(element, options) {
         e.preventDefault();
 
         // Fire cancel event
-        if ( BEAVEEventHandler.trigger(the.element, 'beave.imageinput.cancel', the) === false ) {
+        if ( BEAVEEventHandler.trigger(the.element, 'beaver.imageinput.cancel', the) === false ) {
             return;
         }
 
@@ -110,14 +110,14 @@ var BEAVEImageInput = function(element, options) {
         }
 
         // Fire canceled event
-        BEAVEEventHandler.trigger(the.element, 'beave.imageinput.canceled', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.imageinput.canceled', the);
     }
 
     var _remove = function(e) {
         e.preventDefault();
 
         // Fire remove event
-        if ( BEAVEEventHandler.trigger(the.element, 'beave.imageinput.remove', the) === false ) {
+        if ( BEAVEEventHandler.trigger(the.element, 'beaver.imageinput.remove', the) === false ) {
             return;
         }
 
@@ -132,7 +132,7 @@ var BEAVEImageInput = function(element, options) {
         }
 
         // Fire removed event
-        BEAVEEventHandler.trigger(the.element, 'beave.imageinput.removed', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.imageinput.removed', the);
     }
 
     var _destroy = function() {
@@ -187,7 +187,7 @@ BEAVEImageInput.getInstance = function(element) {
 }
 
 // Create instances
-BEAVEImageInput.createInstances = function(selector = '[data-beave-image-input]') {
+BEAVEImageInput.createInstances = function(selector = '[data-beaver-image-input]') {
     // Initialize Menus
     var elements = document.querySelectorAll(selector);
 

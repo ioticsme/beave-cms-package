@@ -160,13 +160,13 @@
 																				<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}} ({{brandLanguage.prefix}})</span>
 																			</label>
 																			{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' or cf.field_type == 'time' or cf.field_type == 'color' or cf.field_type == 'url' %}
-																				<input disabled class="{% if cf.field_type != 'color' %} form-control form-control-solid {% endif %} beave-cms-form-field" type="{{cf.field_type}}" placeholder="Enter {{cf.field_label}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" value="{{fieldValue}}">
+																				<input disabled class="{% if cf.field_type != 'color' %} form-control form-control-solid {% endif %} beaver-cms-form-field" type="{{cf.field_type}}" placeholder="Enter {{cf.field_label}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" value="{{fieldValue}}">
 																			{% elif cf.field_type === 'richtext' %}
-																				<textarea disabled class="content_wysiwyg beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" id="wysiwyg-cf-{{brandLanguage.prefix}}-{{cfg.row_name}}-{{cf.field_name}}-{{mathRandom()}}">{{fieldValue}}</textarea>
+																				<textarea disabled class="content_wysiwyg beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" id="wysiwyg-cf-{{brandLanguage.prefix}}-{{cfg.row_name}}-{{cf.field_name}}-{{mathRandom()}}">{{fieldValue}}</textarea>
 																			{% elif cf.field_type === 'textarea' %}
-																				<textarea disabled class="form-control form-control-solid beave-cms-form-field" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
+																				<textarea disabled class="form-control form-control-solid beaver-cms-form-field" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
 																			{% elif cf.field_type === 'article_editor' %}
-																				<textarea disabled class="form-control form-control-solid beave-cms-form-field article_editor_field" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
+																				<textarea disabled class="form-control form-control-solid beaver-cms-form-field article_editor_field" rows="6" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
 																			{% elif cf.field_type === 'media' %}
 																				{# <h1>Test</h1> #}
 																				<span class='media-uploader-field'>
@@ -180,20 +180,20 @@
 																							<i class="fa fa-trash" tabindex="-1"></i>
 																						</a>
 																					</span>
-																					<input disabled type="hidden" class="media_url_field beave-cms-form-field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
-																					<input disabled type="hidden" class="media_title_field beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
-																					<input disabled type="hidden" class="media_alt_text_field beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
-																					<input disabled type="hidden" class="media_link_url_field beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[link_url][]]]" value="{{fieldValue.link_url}}">
-																					<input disabled type="hidden" class="media_open_link_in_new_tab_field beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[open_link_in_new_tab][]]]" value="{{fieldValue.open_link_in_new_tab}}">
-																					<input disabled type="hidden" class="media_local_drive_field beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[local_drive][]]]" value="{{fieldValue.local_drive}}">
-																					<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
+																					<input disabled type="hidden" class="media_url_field beaver-cms-form-field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
+																					<input disabled type="hidden" class="media_title_field beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
+																					<input disabled type="hidden" class="media_alt_text_field beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
+																					<input disabled type="hidden" class="media_link_url_field beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[link_url][]]]" value="{{fieldValue.link_url}}">
+																					<input disabled type="hidden" class="media_open_link_in_new_tab_field beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[open_link_in_new_tab][]]]" value="{{fieldValue.open_link_in_new_tab}}">
+																					<input disabled type="hidden" class="media_local_drive_field beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[local_drive][]]]" value="{{fieldValue.local_drive}}">
+																					<a class="btn btn-success media-uploader-modal-btn" id="beaver-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																				</span>
 																			{% elif cf.field_type === 'date' %}
 																				<div class="beave_daterangepicker">
-																					<input disabled class="form-control form-control-solid beave-cms-form-field" data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																					<input disabled class="form-control form-control-solid beaver-cms-form-field" data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
-																				<select disabled class="form-select beave-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
+																				<select disabled class="form-select beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																					<option value=''>- Select {{cf.field_label}} -</option>
 																					{% for dropdown in cf.options[brandLanguage.prefix] %}
 																						<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
@@ -251,7 +251,7 @@
 																						<input type="hidden" class="media_link_url_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[link_url][]]]" value="{{fieldValue.link_url}}">
 																						<input type="hidden" class="media_open_link_in_new_tab_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[open_link_in_new_tab][]]]" value="{{fieldValue.open_link_in_new_tab}}">
 																						<input type="hidden" class="media_local_drive_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[local_drive][]]]" value="{{fieldValue.local_drive}}">
-																						<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
+																						<a class="btn btn-success media-uploader-modal-btn" id="beaver-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																					</span>
 																				{% elif cf.field_type === 'date' %}
 																					<div class="beave_daterangepicker">
@@ -294,7 +294,7 @@
 																			{# // begin::Label #}
 																			<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 																				<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}} ({{brandLanguage.prefix}})</span>
-																				{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beave-initialized="1"></i> #}
+																				{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beaver-initialized="1"></i> #}
 																			</label>
 																			{# // end::Label #}
 																			{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' or cf.field_type == 'time' or cf.field_type == 'color' or cf.field_type == 'url' %}
@@ -324,7 +324,7 @@
 																					<input type="hidden" class="media_link_url_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[link_url]]]" value="{{fieldValue.link_url}}">
 																					<input type="hidden" class="media_open_link_in_new_tab_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[open_link_in_new_tab]]]" value="{{fieldValue.open_link_in_new_tab}}">
 																					<input type="hidden" class="media_local_drive_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[local_drive]]]" value="{{fieldValue.local_drive}}">
-																					<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
+																					<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" id="beaver-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																				</span>
 																			{% elif cf.field_type === 'date' %}
 																				<div class="beave_daterangepicker">
@@ -373,16 +373,16 @@
 																				<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																					<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 																						<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}}</span>
-																						{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beave-initialized="1"></i> #}
+																						{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beaver-initialized="1"></i> #}
 																					</label>
 																					{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' or cf.field_type == 'time' or cf.field_type == 'color' or cf.field_type == 'url' %}
-																						<input disabled class="{% if cf.field_type != 'color' %} form-control form-control-solid {% endif %} beave-cms-form-field" type="{{cf.field_type}}" placeholder="Enter {{cf.field_label}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" value="{{fieldValue}}">
+																						<input disabled class="{% if cf.field_type != 'color' %} form-control form-control-solid {% endif %} beaver-cms-form-field" type="{{cf.field_type}}" placeholder="Enter {{cf.field_label}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" value="{{fieldValue}}">
 																					{% elif cf.field_type === 'richtext' %}
-																						<textarea disabled class="content_wysiwyg beave-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" id="wysiwyg-cf-{{mathRandom()}}">{{fieldValue}}</textarea>
+																						<textarea disabled class="content_wysiwyg beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" id="wysiwyg-cf-{{mathRandom()}}">{{fieldValue}}</textarea>
 																					{% elif cf.field_type === 'textarea' %}
-																						<textarea disabled class="form-control form-control-solid beave-cms-form-field" rows="6" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
+																						<textarea disabled class="form-control form-control-solid beaver-cms-form-field" rows="6" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
 																					{% elif cf.field_type === 'article_editor' %}
-																						<textarea disabled class="form-control form-control-solid beave-cms-form-field article_editor_field" rows="6" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
+																						<textarea disabled class="form-control form-control-solid beaver-cms-form-field article_editor_field" rows="6" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="" spellcheck="false">{{fieldValue}}</textarea>
 																					{% elif cf.field_type === 'media' %}
 																						<span class='media-uploader-field'>
 																							<span class="media_preview">
@@ -393,20 +393,20 @@
 																									<i class="fa fa-trash" tabindex="-1"></i>
 																								</a>
 																							</span>
-																							<input disabled type="hidden" class="media_url_field beave-cms-form-field" id="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
-																							<input disabled type="hidden" class="media_title_field beave-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
-																							<input disabled type="hidden" class="media_alt_text_field beave-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
-																							<input disabled type="hidden" class="media_link_url_field beave-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[link_url][]]]" value="{{fieldValue.link_url}}">
-																							<input disabled type="hidden" class="media_open_link_in_new_tab_field beave-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[open_link_in_new_tab][]]]" value="{{fieldValue.open_link_in_new_tab}}">
-																							<input disabled type="hidden" class="media_local_drive_field beave-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[local_drive][]]]" value="{{fieldValue.local_drive}}">
-																							<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
+																							<input disabled type="hidden" class="media_url_field beaver-cms-form-field" id="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
+																							<input disabled type="hidden" class="media_title_field beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
+																							<input disabled type="hidden" class="media_alt_text_field beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
+																							<input disabled type="hidden" class="media_link_url_field beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[link_url][]]]" value="{{fieldValue.link_url}}">
+																							<input disabled type="hidden" class="media_open_link_in_new_tab_field beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[open_link_in_new_tab][]]]" value="{{fieldValue.open_link_in_new_tab}}">
+																							<input disabled type="hidden" class="media_local_drive_field beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[local_drive][]]]" value="{{fieldValue.local_drive}}">
+																							<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beaver-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																						</span>
 																					{% elif cf.field_type === 'date' %}
 																						<div class="beave_daterangepicker">
-																							<input disabled class="form-control form-control-solid beave-cms-form-field" id="beave_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																							<input disabled class="form-control form-control-solid beaver-cms-form-field" id="beave_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																						</div>
 																					{% elif cf.field_type === 'dropdown' %}
-																						<select disabled class="form-select beave-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
+																						<select disabled class="form-select beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																							<option value=''>- Select {{cf.field_label}} -</option>
 																							{% for dropdown in cf.options.en %}
 																								<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value}}>{{dropdown.label}}</option>
@@ -436,7 +436,7 @@
 																					<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																						<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 																							<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}}</span>
-																							{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beave-initialized="1"></i> #}
+																							{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beaver-initialized="1"></i> #}
 																						</label>
 																						{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' or cf.field_type == 'time' or cf.field_type == 'color' or cf.field_type == 'url' %}
 																							<input class="{% if cf.field_type != 'color' %} form-control form-control-solid {% endif %}" type="{{cf.field_type}}" placeholder="Enter {{cf.field_label}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" value="{{fieldValue}}">
@@ -462,7 +462,7 @@
 																								<input type="hidden" class="media_link_url_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[link_url][]]]" value="{{fieldValue.link_url}}">
 																								<input type="hidden" class="media_open_link_in_new_tab_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[open_link_in_new_tab][]]]" value="{{fieldValue.open_link_in_new_tab}}">
 																								<input type="hidden" class="media_local_drive_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[local_drive][]]]" value="{{fieldValue.local_drive}}">
-																								<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
+																								<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beaver-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																							</span>
 																						{% elif cf.field_type === 'date' %}
 																							<div class="beave_daterangepicker">
@@ -503,7 +503,7 @@
 																			<div class="d-flex flex-column my-3 fv-row fv-plugins-icon-container">
 																				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 																					<span class={{"required" if cf.validation.required else ""}}>{{ cf.field_label }}</span>
-																					{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beave-initialized="1"></i> #}
+																					{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beaver-initialized="1"></i> #}
 																				</label>
 																				{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' or cf.field_type == 'time' or cf.field_type == 'color' or cf.field_type == 'url' %}
 																					<input type="{{ cf.field_type }}" class="{% if cf.field_type != 'color' %} form-control form-control-solid {% endif %}" placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" value="{{ fieldValue }}">
@@ -531,7 +531,7 @@
 																						<input type="hidden" class="media_link_url_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[link_url]]]" value="{{fieldValue.link_url}}">
 																						<input type="hidden" class="media_open_link_in_new_tab_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[open_link_in_new_tab]]]" value="{{fieldValue.open_link_in_new_tab}}">
 																						<input type="hidden" class="media_local_drive_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[local_drive]]]" value="{{fieldValue.local_drive}}">
-																						<a class="btn btn-success media-uploader-modal-btn" data-field="{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" id="beave-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
+																						<a class="btn btn-success media-uploader-modal-btn" data-field="{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" id="beaver-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																					</span>
 																				{% elif cf.field_type === 'date' %}
 																					<div class="beave_daterangepicker">
@@ -607,7 +607,7 @@
 																							<input type="hidden" class="media_title_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][title]" value="{{ metaFieldValue[title] }}">
 																							<input type="hidden" class="media_alt_text_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][alt_text]" value="{{ metaFieldValue[alt_text] }}">
 																							<input type="hidden" class="media_local_drive_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][local_drive]" value="{{ metaFieldValue[local_drive] }}">
-																							<a class="btn btn-success media-uploader-modal-btn" id="beave-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
+																							<a class="btn btn-success media-uploader-modal-btn" id="beaver-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
 																						</span>
 																					{% else %}
 																						<input type="text" class="form-control" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}" value="{{ metaFieldValue }}">

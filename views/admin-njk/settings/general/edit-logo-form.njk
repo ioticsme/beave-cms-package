@@ -75,7 +75,7 @@
                                                 <div class="col-md-6">
                                                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                                         <span class="required">Name ({{ brandLanguage.prefix }})</span>
-                                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beave-initialized="1"></i>
+                                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beaver-initialized="1"></i>
                                                     </label>
                                                     <input type="text" placeholder="Name" class="form-control" name="name[{{ brandLanguage.prefix }}]" value="{{ isBrand ? data.name[brandLanguage.prefix] : data.country.name[brandLanguage.prefix] }}" disabled>
                                                     <input type="text" placeholder="Country name" class="form-control d-none" name="id" value="{{ isBrand ? data._id : data.country._id }}">
@@ -96,7 +96,7 @@
                                                     <label class="d-flex align-items-center fs-6 fw-semibold mb-5">
                                                         <span class="required">Brand Logo ({{brandLanguage.prefix}})</span>
                                                     </label>
-                                                    <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3" data-beave-image-input="true">
+                                                    <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3" data-beaver-image-input="true">
                                                         {% if data and data
                                                             .logo and data
                                                             .logo[brandLanguage.prefix] and data
@@ -107,14 +107,14 @@
                                                                 <div class="image-input-wrapper w-150px h-150px">
                                                                 {% endif %}
                                                             </div>
-                                                            <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-beave-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                                                            <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-beaver-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
                                                                 <i class="bi bi-pencil-fill fs-7"></i>
                                                                 <input type="file" name="image.{{brandLanguage.prefix}}" accept=".png, .jpg, .jpeg">
                                                             </label>
-                                                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-beave-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                                                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-beaver-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
                                                                 <i class="bi bi-x fs-2"></i>
                                                             </span>
-                                                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-beave-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                                                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-beaver-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
                                                                 <i class="bi bi-x fs-2"></i>
                                                             </span>
                                                         </div>

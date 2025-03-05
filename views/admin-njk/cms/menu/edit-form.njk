@@ -56,7 +56,7 @@
 							<div class="col-md-6">
 								<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 									<span class="required">Menu Position</span>
-									<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beave-initialized="1"></i>
+									<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beaver-initialized="1"></i>
 								</label>
 								<select id="beave_ecommerce_add_product_status_select" class="form-select mb-2" data-control="select2" disabled name="menu_position" data-hide-search="true" data-placeholder="Select an option">
 									{% for nav in menulist %}
@@ -78,7 +78,7 @@
 										<div class="d-flex flex-column fv-row fv-plugins-icon-container col-md-6">
 											<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 												<span class="required">Menu name ({{ brandLanguage.prefix }})</span>
-												<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="label" data-beave-initialized="1"></i>
+												<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="label" data-beaver-initialized="1"></i>
 											</label>
 											<input type="text" class="form-control mb-2" name="label[{{ brandLanguage.prefix }}]" placeholder="Menu label" value="{{ menuItem.label[brandLanguage.prefix] }}">
 											<div id="field-error-label_{{ brandLanguage.prefix }}" class="fv-plugins-message-container invalid-feedback"></div>
@@ -86,7 +86,7 @@
 										<div class="col-md-6">
 											<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 												<span class="required">Path ({{ brandLanguage.prefix }})</span>
-												<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beave-initialized="1"></i>
+												<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beaver-initialized="1"></i>
 											</label>
 											<input type="text" class="form-control mb-2" name="path[{{ brandLanguage.prefix }}]" placeholder="Menu path url" value="{{ menuItem.url[brandLanguage.prefix] }}">
 											<div id="field-error-path_{{ brandLanguage.prefix }}" class="fv-plugins-message-container invalid-feedback"></div>
@@ -97,7 +97,7 @@
 							<div class="col-md-6">
 								<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 									<span>Active</span>
-									<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beave-initialized="1"></i>
+									<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beaver-initialized="1"></i>
 								</label>
 								<div class="form-check form-check-custom form-check-solid">
 									<input id="flexCheckChecked" class="form-check-input" type="checkbox" name="active" value="true" {{ "checked" if menuItem.active}}>
@@ -107,7 +107,7 @@
 							<div class="col-md-6">
 								<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 									<span>Link Type</span>
-									<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beave-initialized="1"></i>
+									<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="path" data-beaver-initialized="1"></i>
 								</label>
 								<div class="form-check form-check-custom form-check-solid">
 									<input id="flexCheckChecked" class="form-check-input" type="checkbox" name="external" value="true" {{ "checked" if menuItem.external==true}}>

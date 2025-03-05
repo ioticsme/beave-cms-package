@@ -22,19 +22,19 @@
     }    
 
     // Vars
-    [data-beave-app-header-secondary-enabled="true"] {
+    [data-beaver-app-header-secondary-enabled="true"] {
         --#{$prefix}app-header-secondary-height: #{$app-header-secondary-base-height};
     }
 
-    [data-beave-app-header-secondary-enabled="true"][data-beave-app-header-sticky="on"] {
+    [data-beaver-app-header-secondary-enabled="true"][data-beaver-app-header-sticky="on"] {
         --#{$prefix}app-header-secondary-height: #{$app-header-secondary-sticky-height};
     }
 
-    [data-beave-app-header-secondary-enabled="true"][data-beave-app-header-minimize="on"] {
+    [data-beaver-app-header-secondary-enabled="true"][data-beaver-app-header-minimize="on"] {
         --#{$prefix}app-header-secondary-height: #{$app-header-secondary-minimize-height};
     } 
 
-    [data-beave-app-header-secondary-enabled="true"][data-beave-app-header-sticky="on"][data-beave-app-header-secondary-sticky-hide="true"] {
+    [data-beaver-app-header-secondary-enabled="true"][data-beaver-app-header-sticky="on"][data-beaver-app-header-secondary-sticky-hide="true"] {
         --#{$prefix}app-header-secondary-height: 0;
     }
 
@@ -42,7 +42,7 @@
     .app-header-secondary {
         height: var(--#{$prefix}app-header-secondary-height);
 
-        [data-beave-app-header-secondary-fixed="true"] & {
+        [data-beaver-app-header-secondary-fixed="true"] & {
             @include property( z-index, $app-header-secondary-fixed-z-index);
             position: fixed;
             left: 0;
@@ -50,11 +50,11 @@
             top: 0;            
         }
 
-        [data-beave-app-header-secondary-static="true"] & {
+        [data-beaver-app-header-secondary-static="true"] & {
             position: static;
         }
 
-        [data-beave-app-header-secondary-sticky="on"] & {
+        [data-beaver-app-header-secondary-sticky="on"] & {
             transition: $app-header-secondary-base-transition;
             position: fixed;
             left: 0;
@@ -68,7 +68,7 @@
             border-bottom: var(--#{$prefix}app-header-secondary-sticky-border-bottom);
         }
 
-        [data-beave-app-header-secondary-minimize="on"] & {
+        [data-beaver-app-header-secondary-minimize="on"] & {
             transition: $app-header-secondary-base-transition;
             @include property( height, $app-header-secondary-minimize-height);
             @include property( z-index, $app-header-secondary-minimize-z-index);
@@ -78,7 +78,7 @@
             border-bottom: var(--#{$prefix}app-header-secondary-minimize-border-bottom);
         }
 
-        [data-beave-app-header-sticky="on"][data-beave-app-header-secondary-sticky-hide="true"] & {
+        [data-beaver-app-header-sticky="on"][data-beaver-app-header-secondary-sticky-hide="true"] & {
             display: none !important;
         }
     }
@@ -86,7 +86,7 @@
     // Integration
     .app-header-secondary {
         // Sidebar
-        [data-beave-app-header-secondary-enabled="true"][data-beave-app-sidebar-fixed="true"][data-beave-app-sidebar-push-header="true"] & {
+        [data-beaver-app-header-secondary-enabled="true"][data-beaver-app-sidebar-fixed="true"][data-beaver-app-sidebar-push-header="true"] & {
             left: calc(
                 var(--#{$prefix}app-sidebar-width) + 
                 var(--#{$prefix}app-sidebar-gap-start, 0px) + 
@@ -95,7 +95,7 @@
         }  
 
         // Sidebar Panel
-        [data-beave-app-header-secondary-enabled="true"][data-beave-app-sidebar-panel-fixed="true"][data-beave-app-sidebar-panel-push-header="true"] & {
+        [data-beaver-app-header-secondary-enabled="true"][data-beaver-app-sidebar-panel-fixed="true"][data-beaver-app-sidebar-panel-push-header="true"] & {
             left: calc(
                 var(--#{$prefix}app-sidebar-width) + 
                 var(--#{$prefix}app-sidebar-gap-start, 0px) + 
@@ -125,15 +125,15 @@
     }
 
     // Vars
-    [data-beave-app-header-secondary-enabled="true"] {
+    [data-beaver-app-header-secondary-enabled="true"] {
         --#{$prefix}app-header-secondary-height: #{$app-header-secondary-base-height-mobile};
     }
 
-    [data-beave-app-header-secondary-enabled="true"][data-beave-app-header-sticky="on"] {
+    [data-beaver-app-header-secondary-enabled="true"][data-beaver-app-header-sticky="on"] {
         --#{$prefix}app-header-secondary-height: #{$app-header-secondary-sticky-height-mobile};
     }
     
-    [data-beave-app-header-secondary-enabled="true"][data-beave-app-header-minimize="on"] {
+    [data-beaver-app-header-secondary-enabled="true"][data-beaver-app-header-minimize="on"] {
         --#{$prefix}app-header-secondary-height: #{$app-header-secondary-minimize-height-mobile};
     }
 }

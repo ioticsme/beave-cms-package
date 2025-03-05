@@ -39,7 +39,7 @@ var BEAVEScroll = function(element, options) {
         the.id = the.element.getAttribute('id');
 
         // Set initialized
-        the.element.setAttribute('data-beave-scroll', 'true');
+        the.element.setAttribute('data-beaver-scroll', 'true');
 
         // Update
         _update();
@@ -78,7 +78,7 @@ var BEAVEScroll = function(element, options) {
     }
 
     var _getStorageNamespace = function(postfix) {
-        return document.body.hasAttribute("data-beave-name") ? document.body.getAttribute("data-beave-name") + "_" : "";
+        return document.body.hasAttribute("data-beaver-name") ? document.body.getAttribute("data-beaver-name") + "_" : "";
     }
 
     var _setupScrollHandler = function() {
@@ -104,7 +104,7 @@ var BEAVEScroll = function(element, options) {
 
     var _update = function() {
         // Activate/deactivate
-        if ( _getOption('activate') === true || the.element.hasAttribute('data-beave-scroll-activate') === false ) {
+        if ( _getOption('activate') === true || the.element.hasAttribute('data-beaver-scroll-activate') === false ) {
             _setupHeight();
             _setupStretchHeight();
             _setupScrollHandler();
@@ -238,8 +238,8 @@ var BEAVEScroll = function(element, options) {
     }
 
     var _getOption = function(name) {
-        if ( the.element.hasAttribute('data-beave-scroll-' + name) === true ) {
-            var attr = the.element.getAttribute('data-beave-scroll-' + name);
+        if ( the.element.hasAttribute('data-beaver-scroll-' + name) === true ) {
+            var attr = the.element.getAttribute('data-beaver-scroll-' + name);
 
             var value = BEAVEUtil.getResponsiveValue(attr);
 
@@ -309,7 +309,7 @@ BEAVEScroll.getInstance = function(element) {
 }
 
 // Create instances
-BEAVEScroll.createInstances = function(selector = '[data-beave-scroll="true"]') {
+BEAVEScroll.createInstances = function(selector = '[data-beaver-scroll="true"]') {
     // Initialize Menus
     var elements = document.body.querySelectorAll(selector);
 
@@ -327,7 +327,7 @@ BEAVEScroll.handleResize = function() {
     
         BEAVEUtil.throttle(timer, function() {
             // Locate and update Offcanvas instances on window resize
-            var elements = document.body.querySelectorAll('[data-beave-scroll="true"]');
+            var elements = document.body.querySelectorAll('[data-beaver-scroll="true"]');
     
             if ( elements && elements.length > 0 ) {
                 for (var i = 0, len = elements.length; i < len; i++) {

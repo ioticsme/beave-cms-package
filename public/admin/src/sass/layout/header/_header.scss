@@ -103,7 +103,7 @@
         }
     }    
 
-    [data-beave-app-layout="dark-sidebar"] {
+    [data-beaver-app-layout="dark-sidebar"] {
         .app-header-menu {
             .menu {
                 // Menu root item
@@ -120,14 +120,14 @@
         }
     }
 
-    [data-beave-app-toolbar-fixed="true"] {
+    [data-beaver-app-toolbar-fixed="true"] {
         .app-header {
             background-color: var(--#{$prefix}app-header-minimize-bg-color);
         }    
     }
 
     // Modal open fix
-    [data-beave-app-header-fixed="true"].modal-open {
+    [data-beaver-app-header-fixed="true"].modal-open {
         .app-header {
             padding-right: $body-scrollbar-width !important;    
         }    
@@ -138,7 +138,7 @@
 @include color-mode(dark) {
     // Desktop mode
 	@include media-breakpoint-up(lg) {
-        [data-beave-app-layout="dark-sidebar"] {
+        [data-beaver-app-layout="dark-sidebar"] {
             .app-header-menu {
                 .menu {
                     // Menu root item

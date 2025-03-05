@@ -11,11 +11,11 @@ var BEAVETimelineWidget2 = function () {
         }
 
         // Checkbox Handler
-        BEAVEUtil.on(card, '[data-beave-element="checkbox"]', 'change', function (e) {
+        BEAVEUtil.on(card, '[data-beaver-element="checkbox"]', 'change', function (e) {
             var check = this.closest('.form-check');
             var tr = this.closest('tr');
-            var bullet = tr.querySelector('[data-beave-element="bullet"]');
-            var status = tr.querySelector('[data-beave-element="status"]');
+            var bullet = tr.querySelector('[data-beaver-element="bullet"]');
+            var status = tr.querySelector('[data-beaver-element="status"]');
 
             if ( this.checked === true ) {
                 check.classList.add('form-check-success');

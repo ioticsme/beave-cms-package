@@ -57,7 +57,7 @@ var BEAVESearch = function(element, options) {
         the.emptyElement = _getElement('empty'); 
 
         // Set initialized
-        the.element.setAttribute('data-beave-search', 'true');
+        the.element.setAttribute('data-beaver-search', 'true');
         
         // Layout
         the.layout = _getOption('layout');
@@ -113,14 +113,14 @@ var BEAVESearch = function(element, options) {
             if ( the.toggleElement ) {
                 the.toggleElement.addEventListener('click', _show);
 
-                the.menuObject.on('beave.menu.dropdown.show', function(item) {
+                the.menuObject.on('beaver.menu.dropdown.show', function(item) {
                     if (BEAVEUtil.visible(the.toggleElement)) {
                         the.toggleElement.classList.add('active');
                         the.toggleElement.classList.add('show');
                     } 
                 });
     
-                the.menuObject.on('beave.menu.dropdown.hide', function(item) {
+                the.menuObject.on('beaver.menu.dropdown.hide', function(item) {
                     if (BEAVEUtil.visible(the.toggleElement)) {
                         the.toggleElement.classList.remove('active');
                         the.toggleElement.classList.remove('show');
@@ -128,7 +128,7 @@ var BEAVESearch = function(element, options) {
                 });
             }            
 
-            the.menuObject.on('beave.menu.dropdown.shown', function() {
+            the.menuObject.on('beaver.menu.dropdown.shown', function() {
                 the.inputElement.focus();
             });
         } 
@@ -201,7 +201,7 @@ var BEAVESearch = function(element, options) {
             the.inputElement.focus();
 
             the.processing = true;
-            BEAVEEventHandler.trigger(the.element, 'beave.search.process', the);
+            BEAVEEventHandler.trigger(the.element, 'beaver.search.process', the);
         }
     }
 
@@ -230,7 +230,7 @@ var BEAVESearch = function(element, options) {
 
     // Clear
     var _clear = function() {
-        if ( BEAVEEventHandler.trigger(the.element, 'beave.search.clear', the) === false )  {
+        if ( BEAVEEventHandler.trigger(the.element, 'beaver.search.clear', the) === false )  {
             return;
         }
 
@@ -253,7 +253,7 @@ var BEAVESearch = function(element, options) {
             _hide();
         }
 
-        BEAVEEventHandler.trigger(the.element, 'beave.search.cleared', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.search.cleared', the);
     }
 
     // Update
@@ -292,8 +292,8 @@ var BEAVESearch = function(element, options) {
 
     // Get option
     var _getOption = function(name) {
-        if ( the.element.hasAttribute('data-beave-search-' + name) === true ) {
-            var attr = the.element.getAttribute('data-beave-search-' + name);
+        if ( the.element.hasAttribute('data-beaver-search-' + name) === true ) {
+            var attr = the.element.getAttribute('data-beaver-search-' + name);
             var value = BEAVEUtil.getResponsiveValue(attr);
 
             if ( value !== null && String(value) === 'true' ) {
@@ -316,7 +316,7 @@ var BEAVESearch = function(element, options) {
 
     // Get element
     var _getElement = function(name) {
-        return the.element.querySelector('[data-beave-search-element="' + name + '"]');
+        return the.element.querySelector('[data-beaver-search-element="' + name + '"]');
     }
 
     // Check if responsive form mode is enabled

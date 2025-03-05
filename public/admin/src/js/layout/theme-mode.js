@@ -33,17 +33,17 @@ var BEAVEThemeMode = function () {
 		}
 
 		// Read active menu mode value
-		var activeMenuItem = menu ? menu.querySelector('[data-beave-element="mode"][data-beave-value="' + menuMode + '"]') : null;
+		var activeMenuItem = menu ? menu.querySelector('[data-beaver-element="mode"][data-beaver-value="' + menuMode + '"]') : null;
 
 		// Enable switching state
-		document.documentElement.setAttribute("data-beave-theme-mode-switching", "true");
+		document.documentElement.setAttribute("data-beaver-theme-mode-switching", "true");
 		
 		// Set mode to the target document.documentElement
 		document.documentElement.setAttribute("data-bs-theme", mode);
 
 		// Disable switching state
 		setTimeout(function() {
-			document.documentElement.removeAttribute("data-beave-theme-mode-switching");
+			document.documentElement.removeAttribute("data-beaver-theme-mode-switching");
 		}, 300);
 		
 		// Store mode value in storage
@@ -56,7 +56,7 @@ var BEAVEThemeMode = function () {
 		}			
 
 		if (mode !== currentMode) {
-			BEAVEEventHandler.trigger(document.documentElement, 'beave.thememode.change', the);
+			BEAVEEventHandler.trigger(document.documentElement, 'beaver.thememode.change', the);
 		}		
     }
 
@@ -65,10 +65,10 @@ var BEAVEThemeMode = function () {
 			return null;
 		}
 
-		var menuItem = menu ? menu.querySelector('.active[data-beave-element="mode"]') : null;
+		var menuItem = menu ? menu.querySelector('.active[data-beaver-element="mode"]') : null;
 
-		if ( menuItem && menuItem.getAttribute('data-beave-value') ) {
-            return menuItem.getAttribute('data-beave-value');
+		if ( menuItem && menuItem.getAttribute('data-beaver-value') ) {
+            return menuItem.getAttribute('data-beaver-value');
         } else if ( document.documentElement.hasAttribute("data-bs-theme-mode") ) {
 			return document.documentElement.getAttribute("data-bs-theme-mode")
 		} else if ( localStorage.getItem("data-bs-theme-mode") !== null ) {
@@ -84,17 +84,17 @@ var BEAVEThemeMode = function () {
 
 	var initMode = function() {
 		setMode(getMode(), getMenuMode());
-		BEAVEEventHandler.trigger(document.documentElement, 'beave.thememode.init', the);
+		BEAVEEventHandler.trigger(document.documentElement, 'beaver.thememode.init', the);
 	}
 
 	var getActiveMenuItem = function() {
-		return menu.querySelector('[data-beave-element="mode"][data-beave-value="' + getMenuMode() + '"]');
+		return menu.querySelector('[data-beaver-element="mode"][data-beaver-value="' + getMenuMode() + '"]');
 	}
 
 	var setActiveMenuItem = function(item) {
-		var menuMode = item.getAttribute("data-beave-value");
+		var menuMode = item.getAttribute("data-beaver-value");
 		
-		var activeItem = menu.querySelector('.active[data-beave-element="mode"]');
+		var activeItem = menu.querySelector('.active[data-beaver-element="mode"]');
 
 		if ( activeItem ) {
 			activeItem.classList.remove("active");
@@ -105,13 +105,13 @@ var BEAVEThemeMode = function () {
 	}
 
 	var handleMenu = function() {
-		var items = [].slice.call(menu.querySelectorAll('[data-beave-element="mode"]'));
+		var items = [].slice.call(menu.querySelectorAll('[data-beaver-element="mode"]'));
 
         items.map(function (item) {
             item.addEventListener("click", function(e) {
 				e.preventDefault();
 
-				var menuMode = item.getAttribute("data-beave-value");
+				var menuMode = item.getAttribute("data-beaver-value");
 				var mode = menuMode;
 
 				if ( menuMode === "system") {
@@ -125,7 +125,7 @@ var BEAVEThemeMode = function () {
 
     return {
         init: function () {
-			menu = document.querySelector('[data-beave-element="theme-mode-menu"]');
+			menu = document.querySelector('[data-beaver-element="theme-mode-menu"]');
 
             initMode();
 

@@ -174,7 +174,7 @@ var BEAVEChartsWidget32 = function () {
             initChart(chart3, '#beave_charts_widget_32_tab_3', '#beave_charts_widget_32_chart_3', chart3Data, false);          
             
             // Update chart on theme mode change
-            BEAVEThemeMode.on("beave.thememode.change", function() {
+            BEAVEThemeMode.on("beaver.thememode.change", function() {
                 if (chart1.rendered) {
                     chart1.self.destroy();
                 }

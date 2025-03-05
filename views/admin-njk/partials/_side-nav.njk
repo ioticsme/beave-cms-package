@@ -6,14 +6,14 @@
 </div>
 <hr/>
 <div class="overflow-y-auto flex-1">
-    <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#beave_app_sidebar_menu" data-beave-menu="true" data-beave-menu-expand="false">
+    <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#beave_app_sidebar_menu" data-beaver-menu="true" data-beaver-menu-expand="false">
         {% if authUser.admin_role == 'super_admin' %}
             <div class="menu-item pt-5">
                 <div class="menu-content">
                     <span class="menu-heading fw-bold text-uppercase fs-7">Configurations</span>
                 </div>
             </div>
-            <div class="menu-item menu-accordion {{ 'here show' if activeNav.includes(`/admin/config/`)}}" data-beave-menu-trigger="click">
+            <div class="menu-item menu-accordion {{ 'here show' if activeNav.includes(`/admin/config/`)}}" data-beaver-menu-trigger="click">
                 <span class="menu-link">
                     <span class="menu-icon">
                         <span class="svg-icon svg-icon-2">
@@ -120,7 +120,7 @@
                 {% for navItem in navSection.items %}
                     {% if navSection.section_slug == 'settings' or allowedURLs.includes(navItem.path) %}
                         {% if navItem.expandable %}
-                            <div class="menu-item menu-accordion {{ 'here show' if activeNav.includes(navItem.path) }}" data-beave-menu-trigger="click">
+                            <div class="menu-item menu-accordion {{ 'here show' if activeNav.includes(navItem.path) }}" data-beaver-menu-trigger="click">
                                 <span class="menu-link">
                                     <span class="menu-icon">
                                         <span class="svg-icon svg-icon-2">{{navItem.icon|safe}}</span>

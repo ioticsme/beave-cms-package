@@ -36,7 +36,7 @@ var BEAVEScrolltop = function(element, options) {
         the.element = element;
 
         // Set initialized
-        the.element.setAttribute('data-beave-scrolltop', 'true');
+        the.element.setAttribute('data-beaver-scrolltop', 'true');
 
         // Event Handlers
         _handlers();
@@ -67,12 +67,12 @@ var BEAVEScrolltop = function(element, options) {
         var pos = BEAVEUtil.getScrollTop(); // current vertical position
 
         if ( pos > offset ) {
-            if ( document.body.hasAttribute('data-beave-scrolltop') === false ) {
-                document.body.setAttribute('data-beave-scrolltop', 'on');
+            if ( document.body.hasAttribute('data-beaver-scrolltop') === false ) {
+                document.body.setAttribute('data-beaver-scrolltop', 'on');
             }
         } else {
-            if ( document.body.hasAttribute('data-beave-scrolltop') === true ) {
-                document.body.removeAttribute('data-beave-scrolltop');
+            if ( document.body.hasAttribute('data-beaver-scrolltop') === true ) {
+                document.body.removeAttribute('data-beaver-scrolltop');
             }
         }
     }
@@ -85,8 +85,8 @@ var BEAVEScrolltop = function(element, options) {
     }
 
     var _getOption = function(name) {
-        if ( the.element.hasAttribute('data-beave-scrolltop-' + name) === true ) {
-            var attr = the.element.getAttribute('data-beave-scrolltop-' + name);
+        if ( the.element.hasAttribute('data-beaver-scrolltop-' + name) === true ) {
+            var attr = the.element.getAttribute('data-beaver-scrolltop-' + name);
             var value = BEAVEUtil.getResponsiveValue(attr);
 
             if ( value !== null && String(value) === 'true' ) {
@@ -142,7 +142,7 @@ BEAVEScrolltop.getInstance = function(element) {
 }
 
 // Create instances
-BEAVEScrolltop.createInstances = function(selector = '[data-beave-scrolltop="true"]') {
+BEAVEScrolltop.createInstances = function(selector = '[data-beaver-scrolltop="true"]') {
     // Initialize Menus
     var elements = document.body.querySelectorAll(selector);
 

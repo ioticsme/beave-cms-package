@@ -31,7 +31,7 @@ var BEAVETablesWidget5 = function () {
 
     // Handle status filter
     const handleStatusFilter = () => {
-        const select = document.querySelector('[data-beave-table-widget-5="filter_status"]');
+        const select = document.querySelector('[data-beaver-table-widget-5="filter_status"]');
 
         $(select).on('select2:select', function (e) {
             const value = $(this).val();

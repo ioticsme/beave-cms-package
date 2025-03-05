@@ -7,7 +7,7 @@ var BEAVEApp = function () {
     var countUpInitialized = false;
 
     var createBootstrapTooltip = function (el, options) {
-        if (el.getAttribute("data-beave-initialized") === "1") {
+        if (el.getAttribute("data-beaver-initialized") === "1") {
             return;
         }
 
@@ -42,7 +42,7 @@ var BEAVEApp = function () {
             });
         }
 
-        el.setAttribute("data-beave-initialized", "1");
+        el.setAttribute("data-beaver-initialized", "1");
 
         return tp;
     }
@@ -56,7 +56,7 @@ var BEAVEApp = function () {
     }
 
     var createBootstrapPopover = function (el, options) {
-        if (el.getAttribute("data-beave-initialized") === "1") {
+        if (el.getAttribute("data-beaver-initialized") === "1") {
             return;
         }
 
@@ -104,7 +104,7 @@ var BEAVEApp = function () {
             });
         }
 
-        el.setAttribute("data-beave-initialized", "1");
+        el.setAttribute("data-beaver-initialized", "1");
 
         return popover;
     }
@@ -120,25 +120,25 @@ var BEAVEApp = function () {
     var createBootstrapToasts = function () {
         var toastElList = [].slice.call(document.querySelectorAll('.toast'));
         var toastList = toastElList.map(function (toastEl) {
-            if (toastEl.getAttribute("data-beave-initialized") === "1") {
+            if (toastEl.getAttribute("data-beaver-initialized") === "1") {
                 return;
             }
 
-            toastEl.setAttribute("data-beave-initialized", "1");
+            toastEl.setAttribute("data-beaver-initialized", "1");
 
             return new bootstrap.Toast(toastEl, {})
         });
     }
 
     var createButtons = function () {
-        var buttonsGroup = [].slice.call(document.querySelectorAll('[data-beave-buttons="true"]'));
+        var buttonsGroup = [].slice.call(document.querySelectorAll('[data-beaver-buttons="true"]'));
 
         buttonsGroup.map(function (group) {
-            if (group.getAttribute("data-beave-initialized") === "1") {
+            if (group.getAttribute("data-beaver-initialized") === "1") {
                 return;
             }
 
-            var selector = group.hasAttribute('data-beave-buttons-target') ? group.getAttribute('data-beave-buttons-target') : '.btn';
+            var selector = group.hasAttribute('data-beaver-buttons-target') ? group.getAttribute('data-beaver-buttons-target') : '.btn';
             var activeButtons = [].slice.call(group.querySelectorAll(selector));
 
             // Toggle Handler
@@ -150,7 +150,7 @@ var BEAVEApp = function () {
                 this.classList.add('active');
             });       
 
-            group.setAttribute("data-beave-initialized", "1");
+            group.setAttribute("data-beaver-initialized", "1");
         });
     }
 
@@ -165,18 +165,18 @@ var BEAVEApp = function () {
             return;
         }
 
-        var elements = [].slice.call(document.querySelectorAll('[data-beave-daterangepicker="true"]'));
+        var elements = [].slice.call(document.querySelectorAll('[data-beaver-daterangepicker="true"]'));
         var start = moment().subtract(29, 'days');
         var end = moment();
         
         elements.map(function (element) {
-            if (element.getAttribute("data-beave-initialized") === "1") {
+            if (element.getAttribute("data-beaver-initialized") === "1") {
                 return;
             }
 
             var display = element.querySelector('div');
-            var attrOpens  = element.hasAttribute('data-beave-daterangepicker-opens') ? element.getAttribute('data-beave-daterangepicker-opens') : 'left';
-            var range = element.getAttribute('data-beave-daterangepicker-range');
+            var attrOpens  = element.hasAttribute('data-beaver-daterangepicker-opens') ? element.getAttribute('data-beaver-daterangepicker-opens') : 'left';
+            var range = element.getAttribute('data-beaver-daterangepicker-range');
 
             var cb = function(start, end) {
                 var current = moment();
@@ -211,7 +211,7 @@ var BEAVEApp = function () {
 
             cb(start, end);
 
-            element.setAttribute("data-beave-initialized", "1");
+            element.setAttribute("data-beaver-initialized", "1");
         });
     }
 
@@ -226,10 +226,10 @@ var BEAVEApp = function () {
             return;
         }
 
-        var elements = [].slice.call(document.querySelectorAll('[data-control="select2"], [data-beave-select2="true"]'));
+        var elements = [].slice.call(document.querySelectorAll('[data-control="select2"], [data-beaver-select2="true"]'));
 
         elements.map(function (element) {
-            if (element.getAttribute("data-beave-initialized") === "1") {
+            if (element.getAttribute("data-beaver-initialized") === "1") {
                 return;
             }
 
@@ -247,7 +247,7 @@ var BEAVEApp = function () {
             if (element.hasAttribute('data-dropdown-parent') && element.hasAttribute('multiple')) {
                 var parentEl = document.querySelector(element.getAttribute('data-dropdown-parent'));
 
-                if (parentEl && parentEl.hasAttribute("data-beave-menu")) {
+                if (parentEl && parentEl.hasAttribute("data-beaver-menu")) {
                     var menu = BEAVEMenu.getInstance(parentEl);
                     
                     if (!menu) {
@@ -259,7 +259,7 @@ var BEAVEApp = function () {
                             element.setAttribute("data-multiple-unselect", "1");
                         });
 
-                        menu.on("beave.menu.dropdown.hide", function(item) {
+                        menu.on("beaver.menu.dropdown.hide", function(item) {
                             if (element.getAttribute("data-multiple-unselect") === "1") {
                                 element.removeAttribute("data-multiple-unselect");
                                 return false;
@@ -269,7 +269,7 @@ var BEAVEApp = function () {
                 }                
             }
 
-            element.setAttribute("data-beave-initialized", "1");
+            element.setAttribute("data-beaver-initialized", "1");
         });
     }
 
@@ -278,16 +278,16 @@ var BEAVEApp = function () {
             return;
         }
 
-        var inputs = [].slice.call(document.querySelectorAll('[data-beave-autosize="true"]'));
+        var inputs = [].slice.call(document.querySelectorAll('[data-beaver-autosize="true"]'));
 
         inputs.map(function (input) {
-            if (input.getAttribute("data-beave-initialized") === "1") {
+            if (input.getAttribute("data-beaver-initialized") === "1") {
                 return;
             }
 
             autosize(input);
 
-            input.setAttribute("data-beave-initialized", "1");
+            input.setAttribute("data-beaver-initialized", "1");
         });
     }
 
@@ -296,41 +296,41 @@ var BEAVEApp = function () {
             return;
         }
 
-        var elements = [].slice.call(document.querySelectorAll('[data-beave-countup="true"]:not(.counted)'));
+        var elements = [].slice.call(document.querySelectorAll('[data-beaver-countup="true"]:not(.counted)'));
 
         elements.map(function (element) {
             if (BEAVEUtil.isInViewport(element) && BEAVEUtil.visible(element)) {
-                if (element.getAttribute("data-beave-initialized") === "1") {
+                if (element.getAttribute("data-beaver-initialized") === "1") {
                     return;
                 }
 
                 var options = {};
 
-                var value = element.getAttribute('data-beave-countup-value');
+                var value = element.getAttribute('data-beaver-countup-value');
                 value = parseFloat(value.replace(/,/g, ""));
 
-                if (element.hasAttribute('data-beave-countup-start-val')) {
-                    options.startVal = parseFloat(element.getAttribute('data-beave-countup-start-val'));
+                if (element.hasAttribute('data-beaver-countup-start-val')) {
+                    options.startVal = parseFloat(element.getAttribute('data-beaver-countup-start-val'));
                 }
 
-                if (element.hasAttribute('data-beave-countup-duration')) {
-                    options.duration = parseInt(element.getAttribute('data-beave-countup-duration'));
+                if (element.hasAttribute('data-beaver-countup-duration')) {
+                    options.duration = parseInt(element.getAttribute('data-beaver-countup-duration'));
                 }
 
-                if (element.hasAttribute('data-beave-countup-decimal-places')) {
-                    options.decimalPlaces = parseInt(element.getAttribute('data-beave-countup-decimal-places'));
+                if (element.hasAttribute('data-beaver-countup-decimal-places')) {
+                    options.decimalPlaces = parseInt(element.getAttribute('data-beaver-countup-decimal-places'));
                 }
 
-                if (element.hasAttribute('data-beave-countup-prefix')) {
-                    options.prefix = element.getAttribute('data-beave-countup-prefix');
+                if (element.hasAttribute('data-beaver-countup-prefix')) {
+                    options.prefix = element.getAttribute('data-beaver-countup-prefix');
                 }
 
-                if (element.hasAttribute('data-beave-countup-separator')) {
-                    options.separator = element.getAttribute('data-beave-countup-separator');
+                if (element.hasAttribute('data-beaver-countup-separator')) {
+                    options.separator = element.getAttribute('data-beaver-countup-separator');
                 }
 
-                if (element.hasAttribute('data-beave-countup-suffix')) {
-                    options.suffix = element.getAttribute('data-beave-countup-suffix');
+                if (element.hasAttribute('data-beaver-countup-suffix')) {
+                    options.suffix = element.getAttribute('data-beaver-countup-suffix');
                 }
 
                 var count = new countUp.CountUp(element, value, options);
@@ -339,7 +339,7 @@ var BEAVEApp = function () {
 
                 element.classList.add('counted');
 
-                element.setAttribute("data-beave-initialized", "1");
+                element.setAttribute("data-beaver-initialized", "1");
             }
         });
     }
@@ -358,15 +358,15 @@ var BEAVEApp = function () {
         }      
 
         // Tabs shown event handler
-        var tabs = [].slice.call(document.querySelectorAll('[data-beave-countup-tabs="true"][data-bs-toggle="tab"]'));
+        var tabs = [].slice.call(document.querySelectorAll('[data-beaver-countup-tabs="true"][data-bs-toggle="tab"]'));
         tabs.map(function (tab) {
-            if (tab.getAttribute("data-beave-initialized") === "1") {
+            if (tab.getAttribute("data-beaver-initialized") === "1") {
                 return;
             }
 
             tab.addEventListener('shown.bs.tab', createCountUp);
 
-            tab.setAttribute("data-beave-initialized", "1");
+            tab.setAttribute("data-beaver-initialized", "1");
         });
 
         countUpInitialized = true;
@@ -385,14 +385,14 @@ var BEAVEApp = function () {
         }
 
         elements.forEach(function (el) {
-            if (el.getAttribute("data-beave-initialized") === "1") {
+            if (el.getAttribute("data-beaver-initialized") === "1") {
                 return;
             }
 
             const obj = initTinySlider(el);
             BEAVEUtil.data(el).set('tns', tns);
 
-            el.setAttribute("data-beave-initialized", "1");
+            el.setAttribute("data-beaver-initialized", "1");
         });
     }
 
@@ -464,7 +464,7 @@ var BEAVEApp = function () {
             return;
         }
 
-        new SmoothScroll('a[data-beave-scroll-toggle][href*="#"]', {
+        new SmoothScroll('a[data-beaver-scroll-toggle][href*="#"]', {
             speed: 1000,
             speedAsDuration: true,
             offset: function (anchor, toggle) {
@@ -472,8 +472,8 @@ var BEAVEApp = function () {
                 // This example is a function, but you could do something as simple as `offset: 25`
 
                 // An example returning different values based on whether the clicked link was in the header nav or not
-                if (anchor.hasAttribute('data-beave-scroll-offset')) {
-                    var val = BEAVEUtil.getResponsiveValue(anchor.getAttribute('data-beave-scroll-offset'));
+                if (anchor.hasAttribute('data-beaver-scroll-offset')) {
+                    var val = BEAVEUtil.getResponsiveValue(anchor.getAttribute('data-beaver-scroll-offset'));
                     
                     return val;
                 } else {
@@ -485,7 +485,7 @@ var BEAVEApp = function () {
 
     var initCard = function() {
         // Toggle Handler
-        BEAVEUtil.on(document.body, '[data-beave-card-action="remove"]', 'click', function (e) {
+        BEAVEUtil.on(document.body, '[data-beaver-card-action="remove"]', 'click', function (e) {
             e.preventDefault();
             
             const card = this.closest('.card');
@@ -494,8 +494,8 @@ var BEAVEApp = function () {
                 return;
             }
 
-            const confirmMessage = this.getAttribute("data-beave-card-confirm-message");
-            const confirm = this.getAttribute("data-beave-card-confirm") === "true";
+            const confirmMessage = this.getAttribute("data-beaver-card-confirm-message");
+            const confirm = this.getAttribute("data-beaver-card-confirm") === "true";
 
             if (confirm) {
                 // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
@@ -525,11 +525,11 @@ var BEAVEApp = function () {
 
         if (elements && elements.length > 0) {
             elements.forEach((element) => {
-                if (element.getAttribute("data-beave-initialized") === "1") {
+                if (element.getAttribute("data-beaver-initialized") === "1") {
                     return;
                 }
     
-                element.setAttribute("data-beave-initialized", "1");
+                element.setAttribute("data-beaver-initialized", "1");
     
                 element.addEventListener("click", function(e) {
                     e.preventDefault();
@@ -551,9 +551,9 @@ var BEAVEApp = function () {
         }
 
         // Toggle Handler
-        BEAVEUtil.on(document.body, '[data-beave-check="true"]', 'change', function (e) {
+        BEAVEUtil.on(document.body, '[data-beaver-check="true"]', 'change', function (e) {
             var check = this;
-            var targets = document.querySelectorAll(check.getAttribute('data-beave-check-target'));
+            var targets = document.querySelectorAll(check.getAttribute('data-beaver-check-target'));
 
             BEAVEUtil.each(targets, function (target) {
                 if (target.type == 'checkbox') {
@@ -578,12 +578,12 @@ var BEAVEApp = function () {
                 this.classList.add('active');
             }
 
-            if (this.hasAttribute('data-beave-toggle-text')) {
-                var text = this.getAttribute('data-beave-toggle-text');
-                var target = this.querySelector('[data-beave-toggle-text-target="true"]');
+            if (this.hasAttribute('data-beaver-toggle-text')) {
+                var text = this.getAttribute('data-beaver-toggle-text');
+                var target = this.querySelector('[data-beaver-toggle-text-target="true"]');
                 var target = target ? target : this;
 
-                this.setAttribute('data-beave-toggle-text', target.innerText);
+                this.setAttribute('data-beaver-toggle-text', target.innerText);
                 target.innerText = text;
             }
         });
@@ -594,7 +594,7 @@ var BEAVEApp = function () {
             return;
         }
         
-        BEAVEUtil.on(document.body,  '[data-beave-rotate="true"]', 'click', function(e) {
+        BEAVEUtil.on(document.body,  '[data-beaver-rotate="true"]', 'click', function(e) {
             if (this.classList.contains('active')) {
                 this.classList.remove('active');
                 this.blur();
@@ -616,13 +616,13 @@ var BEAVEApp = function () {
 
     var showPageLoading = function() {
         document.body.classList.add('page-loading');
-        document.body.setAttribute('data-beave-app-page-loading', "on");
+        document.body.setAttribute('data-beaver-app-page-loading', "on");
     }
 
     var hidePageLoading = function() {
         // CSS3 Transitions only after page load(.page-loading or .app-page-loading class added to body tag and remove with JS on page load)
         document.body.classList.remove('page-loading');
-        document.body.removeAttribute('data-beave-app-page-loading');
+        document.body.removeAttribute('data-beaver-app-page-loading');
     }
 
     return {

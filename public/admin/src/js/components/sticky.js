@@ -38,15 +38,15 @@ var BEAVESticky = function(element, options) {
         the.element = element;
         the.options = BEAVEUtil.deepExtend({}, defaultOptions, options);
         the.uid = BEAVEUtil.getUniqueId('sticky');
-        the.name = the.element.getAttribute('data-beave-sticky-name');
-        the.attributeName = 'data-beave-sticky-' + the.name;
-        the.attributeName2 = 'data-beave-' + the.name;
+        the.name = the.element.getAttribute('data-beaver-sticky-name');
+        the.attributeName = 'data-beaver-sticky-' + the.name;
+        the.attributeName2 = 'data-beaver-' + the.name;
         the.eventTriggerState = true;
         the.lastScrollTop = 0;
         the.scrollHandler;
 
         // Set initialized
-        the.element.setAttribute('data-beave-sticky', 'true');
+        the.element.setAttribute('data-beaver-sticky', 'true');
 
         // Event Handlers
         window.addEventListener('scroll', _scroll);
@@ -90,12 +90,12 @@ var BEAVESticky = function(element, options) {
 
                     document.body.setAttribute(the.attributeName, 'on');
                     document.body.setAttribute(the.attributeName2, 'on');
-                    the.element.setAttribute("data-beave-sticky-enabled", "true");
+                    the.element.setAttribute("data-beaver-sticky-enabled", "true");
                 }
 
                 if ( the.eventTriggerState === true ) {
-                    BEAVEEventHandler.trigger(the.element, 'beave.sticky.on', the);
-                    BEAVEEventHandler.trigger(the.element, 'beave.sticky.change', the);
+                    BEAVEEventHandler.trigger(the.element, 'beaver.sticky.on', the);
+                    BEAVEEventHandler.trigger(the.element, 'beaver.sticky.change', the);
 
                     the.eventTriggerState = false;
                 }
@@ -104,12 +104,12 @@ var BEAVESticky = function(element, options) {
                     _disable();
                     document.body.removeAttribute(the.attributeName);
                     document.body.removeAttribute(the.attributeName2);
-                    the.element.removeAttribute("data-beave-sticky-enabled");
+                    the.element.removeAttribute("data-beaver-sticky-enabled");
                 }
 
                 if ( the.eventTriggerState === false ) {
-                    BEAVEEventHandler.trigger(the.element, 'beave.sticky.off', the);
-                    BEAVEEventHandler.trigger(the.element, 'beave.sticky.change', the);
+                    BEAVEEventHandler.trigger(the.element, 'beaver.sticky.off', the);
+                    BEAVEEventHandler.trigger(the.element, 'beaver.sticky.change', the);
                     the.eventTriggerState = true;
                 }
             }
@@ -125,12 +125,12 @@ var BEAVESticky = function(element, options) {
                     
                     document.body.setAttribute(the.attributeName, 'on');
                     document.body.setAttribute(the.attributeName2, 'on');
-                    the.element.setAttribute("data-beave-sticky-enabled", "true");
+                    the.element.setAttribute("data-beaver-sticky-enabled", "true");
                 }
 
                 if ( the.eventTriggerState === true ) {
-                    BEAVEEventHandler.trigger(the.element, 'beave.sticky.on', the);
-                    BEAVEEventHandler.trigger(the.element, 'beave.sticky.change', the);
+                    BEAVEEventHandler.trigger(the.element, 'beaver.sticky.on', the);
+                    BEAVEEventHandler.trigger(the.element, 'beaver.sticky.change', the);
                     the.eventTriggerState = false;
                 }
             } else { // back scroll mode
@@ -138,12 +138,12 @@ var BEAVESticky = function(element, options) {
                     _disable();
                     document.body.removeAttribute(the.attributeName);
                     document.body.removeAttribute(the.attributeName2);
-                    the.element.removeAttribute("data-beave-sticky-enabled");
+                    the.element.removeAttribute("data-beaver-sticky-enabled");
                 }
 
                 if ( the.eventTriggerState === false ) {
-                    BEAVEEventHandler.trigger(the.element, 'beave.sticky.off', the);
-                    BEAVEEventHandler.trigger(the.element, 'beave.sticky.change', the);
+                    BEAVEEventHandler.trigger(the.element, 'beaver.sticky.off', the);
+                    BEAVEEventHandler.trigger(the.element, 'beaver.sticky.change', the);
                     the.eventTriggerState = true;
                 }
             }
@@ -151,9 +151,9 @@ var BEAVESticky = function(element, options) {
 
         if (release) {
             if ( release.offsetTop - release.clientHeight > st ) {
-                the.element.setAttribute('data-beave-sticky-released', 'true');
+                the.element.setAttribute('data-beaver-sticky-released', 'true');
             } else {
-                the.element.removeAttribute('data-beave-sticky-released');
+                the.element.removeAttribute('data-beaver-sticky-released');
             }
         } 
     }
@@ -283,8 +283,8 @@ var BEAVESticky = function(element, options) {
     }
 
     var _getOption = function(name) {
-        if ( the.element.hasAttribute('data-beave-sticky-' + name) === true ) {
-            var attr = the.element.getAttribute('data-beave-sticky-' + name);
+        if ( the.element.hasAttribute('data-beaver-sticky-' + name) === true ) {
+            var attr = the.element.getAttribute('data-beaver-sticky-' + name);
             var value = BEAVEUtil.getResponsiveValue(attr);
 
             if ( value !== null && String(value) === 'true' ) {
@@ -361,7 +361,7 @@ BEAVESticky.getInstance = function(element) {
 }
 
 // Create instances
-BEAVESticky.createInstances = function(selector = '[data-beave-sticky="true"]') {
+BEAVESticky.createInstances = function(selector = '[data-beaver-sticky="true"]') {
     // Initialize Menus
     var elements = document.body.querySelectorAll(selector);
     var sticky;
@@ -380,7 +380,7 @@ BEAVESticky.handleResize = function() {
     
         BEAVEUtil.throttle(timer, function() {
             // Locate and update Offcanvas instances on window resize
-            var elements = document.body.querySelectorAll('[data-beave-sticky="true"]');
+            var elements = document.body.querySelectorAll('[data-beaver-sticky="true"]');
     
             if ( elements && elements.length > 0 ) {
                 for (var i = 0, len = elements.length; i < len; i++) {

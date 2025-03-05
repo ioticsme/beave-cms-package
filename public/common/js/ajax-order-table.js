@@ -132,7 +132,7 @@ try {
                         className: 'text-end',
                         render: function (data, type, row) {
                             return `
-                            <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-beave-menu-trigger="click" data-beave-menu-placement="bottom-end" data-beave-menu-flip="top-end">
+                            <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-beaver-menu-trigger="click" data-beaver-menu-placement="bottom-end" data-beaver-menu-flip="top-end">
                                 Actions
                                 <span class="svg-icon svg-icon-5 m-0">
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -144,7 +144,7 @@ try {
                                 </span>
                             </a>
                             <!--begin::Menu-->
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-beave-menu="true">
+                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-beaver-menu="true">
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
                                     <a href="/admin/ecommerce/orders/detail/${row._id}" class="menu-link px-3" >
@@ -198,7 +198,7 @@ try {
             // });
 
             let select = document.querySelector(
-                '[data-beave-docs-table-filter="status"]'
+                '[data-beaver-docs-table-filter="status"]'
             )
             $(select).on('change', (e) => {
                 let n = e.target.value.toLowerCase()
@@ -217,8 +217,8 @@ try {
         // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
         var handleSearchDatatable = function () {
             const filterSearch = document.querySelector(
-                '[data-beave-docs-table-filter="search"]'
-                // '[data-beave-docs-table-filter="search"]'
+                '[data-beaver-docs-table-filter="search"]'
+                // '[data-beaver-docs-table-filter="search"]'
             )
             filterSearch.addEventListener('keyup', function (e) {
                 dt.search(e.target.value).draw()
@@ -229,10 +229,10 @@ try {
         // var handleFilterDatatable = () => {
         //     // Select filter options
         //     filterPayment = document.querySelectorAll(
-        //         '[data-beave-docs-table-filter="payment_type"] [name="payment_type"]'
+        //         '[data-beaver-docs-table-filter="payment_type"] [name="payment_type"]'
         //     )
         //     const filterButton = document.querySelector(
-        //         '[data-beave-docs-table-filter="filter"]'
+        //         '[data-beaver-docs-table-filter="filter"]'
         //     )
 
         //     // Filter datatable on submit
@@ -261,7 +261,7 @@ try {
         // var handleDeleteRows = () => {
         //     // Select all delete buttons
         //     const deleteButtons = document.querySelectorAll(
-        //         '[data-beave-docs-table-filter="delete_row"]'
+        //         '[data-beaver-docs-table-filter="delete_row"]'
         //     )
 
         //     deleteButtons.forEach((d) => {
@@ -339,7 +339,7 @@ try {
         // var handleResetForm = () => {
         //     // Select reset button
         //     const resetButton = document.querySelector(
-        //         '[data-beave-docs-table-filter="reset"]'
+        //         '[data-beaver-docs-table-filter="reset"]'
         //     )
 
         //     // Reset datatable
@@ -361,7 +361,7 @@ try {
 
         //     // Select elements
         //     const deleteSelected = document.querySelector(
-        //         '[data-beave-docs-table-select="delete_selected"]'
+        //         '[data-beaver-docs-table-select="delete_selected"]'
         //     )
 
         //     // Toggle delete selected toolbar
@@ -436,13 +436,13 @@ try {
         //     // Define variables
         //     const container = document.querySelector('#beave_datatable_example_1')
         //     const toolbarBase = document.querySelector(
-        //         '[data-beave-docs-table-toolbar="base"]'
+        //         '[data-beaver-docs-table-toolbar="base"]'
         //     )
         //     const toolbarSelected = document.querySelector(
-        //         '[data-beave-docs-table-toolbar="selected"]'
+        //         '[data-beaver-docs-table-toolbar="selected"]'
         //     )
         //     const selectedCount = document.querySelector(
-        //         '[data-beave-docs-table-select="selected_count"]'
+        //         '[data-beaver-docs-table-select="selected_count"]'
         //     )
 
         //     // Select refreshed checkbox DOM elements

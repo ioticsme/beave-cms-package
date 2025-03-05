@@ -44,11 +44,11 @@ var BEAVEPasswordMeter = function(element, options) {
         // Elements
         the.element = element;
         the.inputElement = the.element.querySelector('input[type]');
-        the.visibilityElement = the.element.querySelector('[data-beave-password-meter-control="visibility"]');
-        the.highlightElement = the.element.querySelector('[data-beave-password-meter-control="highlight"]'); 
+        the.visibilityElement = the.element.querySelector('[data-beaver-password-meter-control="visibility"]');
+        the.highlightElement = the.element.querySelector('[data-beaver-password-meter-control="highlight"]'); 
 
         // Set initialized
-        the.element.setAttribute('data-beave-password-meter', 'true');
+        the.element.setAttribute('data-beaver-password-meter', 'true');
         
         // Event Handlers
         _handlers();
@@ -230,7 +230,7 @@ BEAVEPasswordMeter.getInstance = function(element) {
 }
 
 // Create instances
-BEAVEPasswordMeter.createInstances = function(selector = '[data-beave-password-meter]') {
+BEAVEPasswordMeter.createInstances = function(selector = '[data-beaver-password-meter]') {
     // Get instances
     var elements = document.body.querySelectorAll(selector);
 

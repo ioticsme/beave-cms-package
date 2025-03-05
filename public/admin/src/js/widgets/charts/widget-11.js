@@ -190,7 +190,7 @@ var BEAVEChartsWidget11 = function () {
             initChart(chart3, '#beave_charts_widget_11_tab_3', '#beave_charts_widget_11_chart_3', chart3Data, true);
            
             // Update chart on theme mode change
-            BEAVEThemeMode.on("beave.thememode.change", function() {
+            BEAVEThemeMode.on("beaver.thememode.change", function() {
                 if (chart1.rendered) {
                     chart1.self.destroy();
                 }

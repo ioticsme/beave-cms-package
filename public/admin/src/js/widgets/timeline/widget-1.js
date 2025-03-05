@@ -17,7 +17,7 @@ var BEAVETimelineWidget1 = function () {
 
         // Set variables
         var now = Date.now();
-        var rootImagePath = element.getAttribute('data-beave-timeline-widget-1-image-root');
+        var rootImagePath = element.getAttribute('data-beaver-timeline-widget-1-image-root');
 
         // Build vis-timeline datasets
         var groups = new vis.DataSet([
@@ -121,7 +121,7 @@ var BEAVETimelineWidget1 = function () {
                 filterOptions: {
                     whiteList: {
                         div: ['class', 'style'],
-                        img: ['data-beave-timeline-avatar-src', 'alt'],
+                        img: ['data-beaver-timeline-avatar-src', 'alt'],
                         a: ['href', 'class']
                     },
                 },
@@ -132,7 +132,7 @@ var BEAVETimelineWidget1 = function () {
                 const users = item.users;
                 let userTemplate = '';
                 users.forEach(user => {
-                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-beave-timeline-avatar-src="${rootImagePath + user}" alt="" /></div>`;
+                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-beaver-timeline-avatar-src="${rootImagePath + user}" alt="" /></div>`;
                 });
 
                 return `<div class="rounded-pill bg-light-${item.color} d-flex align-items-center position-relative h-40px w-100 p-2 overflow-hidden">
@@ -157,7 +157,7 @@ var BEAVETimelineWidget1 = function () {
             onInitialDrawComplete: function () {
                 handleAvatarPath();
 
-                const target = element.closest('[data-beave-timeline-widget-1-blockui="true"]');
+                const target = element.closest('[data-beaver-timeline-widget-1-blockui="true"]');
                 const blockUI = BEAVEBlockUI.getInstance(target);
 
                 if (blockUI.isBlocked()) {
@@ -192,7 +192,7 @@ var BEAVETimelineWidget1 = function () {
 
         // Set variables
         var now = Date.now();
-        var rootImagePath = element.getAttribute('data-beave-timeline-widget-1-image-root');
+        var rootImagePath = element.getAttribute('data-beaver-timeline-widget-1-image-root');
 
         // Build vis-timeline datasets
         var groups = new vis.DataSet([
@@ -297,7 +297,7 @@ var BEAVETimelineWidget1 = function () {
                 filterOptions: {
                     whiteList: {
                         div: ['class', 'style'],
-                        img: ['data-beave-timeline-avatar-src', 'alt'],
+                        img: ['data-beaver-timeline-avatar-src', 'alt'],
                         a: ['href', 'class']
                     },
                 },
@@ -308,7 +308,7 @@ var BEAVETimelineWidget1 = function () {
                 const users = item.users;
                 let userTemplate = '';
                 users.forEach(user => {
-                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-beave-timeline-avatar-src="${rootImagePath + user}" alt="" /></div>`;
+                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-beaver-timeline-avatar-src="${rootImagePath + user}" alt="" /></div>`;
                 });
 
                 return `<div class="rounded-pill bg-light-${item.color} d-flex align-items-center position-relative h-40px w-100 p-2 overflow-hidden">
@@ -333,7 +333,7 @@ var BEAVETimelineWidget1 = function () {
             onInitialDrawComplete: function () {
                 handleAvatarPath();
 
-                const target = element.closest('[data-beave-timeline-widget-1-blockui="true"]');
+                const target = element.closest('[data-beaver-timeline-widget-1-blockui="true"]');
                 const blockUI = BEAVEBlockUI.getInstance(target);
 
                 if (blockUI.isBlocked()) {
@@ -368,7 +368,7 @@ var BEAVETimelineWidget1 = function () {
 
         // Set variables
         var now = Date.now();
-        var rootImagePath = element.getAttribute('data-beave-timeline-widget-1-image-root');
+        var rootImagePath = element.getAttribute('data-beaver-timeline-widget-1-image-root');
 
         // Build vis-timeline datasets
         var groups = new vis.DataSet([
@@ -473,7 +473,7 @@ var BEAVETimelineWidget1 = function () {
                 filterOptions: {
                     whiteList: {
                         div: ['class', 'style'],
-                        img: ['data-beave-timeline-avatar-src', 'alt'],
+                        img: ['data-beaver-timeline-avatar-src', 'alt'],
                         a: ['href', 'class']
                     },
                 },
@@ -484,7 +484,7 @@ var BEAVETimelineWidget1 = function () {
                 const users = item.users;
                 let userTemplate = '';
                 users.forEach(user => {
-                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-beave-timeline-avatar-src="${rootImagePath + user}" alt="" /></div>`;
+                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-beaver-timeline-avatar-src="${rootImagePath + user}" alt="" /></div>`;
                 });
 
                 return `<div class="rounded-pill bg-light-${item.color} d-flex align-items-center position-relative h-40px w-100 p-2 overflow-hidden">
@@ -509,7 +509,7 @@ var BEAVETimelineWidget1 = function () {
             onInitialDrawComplete: function () {
                 handleAvatarPath();
                 
-                const target = element.closest('[data-beave-timeline-widget-1-blockui="true"]');
+                const target = element.closest('[data-beaver-timeline-widget-1-blockui="true"]');
                 const blockUI = BEAVEBlockUI.getInstance(target);
 
                 if (blockUI.isBlocked()) {
@@ -533,7 +533,7 @@ var BEAVETimelineWidget1 = function () {
     // Handle BlockUI
     const handleBlockUI = () => {
         // Select block ui elements
-        const elements = document.querySelectorAll('[data-beave-timeline-widget-1-blockui="true"]');
+        const elements = document.querySelectorAll('[data-beaver-timeline-widget-1-blockui="true"]');
 
         // Init block ui
         elements.forEach(element => {
@@ -547,7 +547,7 @@ var BEAVETimelineWidget1 = function () {
 
     // Handle tabs visibility
     const tabsVisibility = () => {
-        const tabs = document.querySelectorAll('[data-beave-timeline-widget-1="tab"]');
+        const tabs = document.querySelectorAll('[data-beaver-timeline-widget-1="tab"]');
 
         tabs.forEach(tab => {
             tab.addEventListener('shown.bs.tab', e => {
@@ -566,15 +566,15 @@ var BEAVETimelineWidget1 = function () {
 
     // Handle avatar path conflict
     const handleAvatarPath = () => {
-        const avatars = document.querySelectorAll('[data-beave-timeline-avatar-src]');
+        const avatars = document.querySelectorAll('[data-beaver-timeline-avatar-src]');
 
         if(!avatars){
             return;
         }
 
         avatars.forEach(avatar => {
-            avatar.setAttribute('src', avatar.getAttribute('data-beave-timeline-avatar-src'));
-            avatar.removeAttribute('data-beave-timeline-avatar-src');
+            avatar.setAttribute('src', avatar.getAttribute('data-beaver-timeline-avatar-src'));
+            avatar.removeAttribute('data-beaver-timeline-avatar-src');
         });
     }
 

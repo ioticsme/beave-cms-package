@@ -21,7 +21,7 @@ var BEAVEAppSidebar = function () {
 		}
 
 	   	// Add a class to prevent sidebar hover effect after toggle click
-	   	toggleObj.on('beave.toggle.change', function() {
+	   	toggleObj.on('beaver.toggle.change', function() {
 			// Set animation state
 			sidebar.classList.add('animating');
 			
@@ -43,9 +43,9 @@ var BEAVEAppSidebar = function () {
 	   	});
 
 		// Store sidebar minimize state in cookie
-		toggleObj.on('beave.toggle.changed', function() {
+		toggleObj.on('beaver.toggle.changed', function() {
 			// In server side check sidebar_minimize_state cookie 
-			// value and add data-beave-app-sidebar-minimize="on" 
+			// value and add data-beaver-app-sidebar-minimize="on" 
 			// attribute to Body tag and "active" class to the toggle button
 			var date = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days from now
 

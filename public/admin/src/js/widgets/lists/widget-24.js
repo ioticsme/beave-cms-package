@@ -11,7 +11,7 @@ var BEAVETimelineWidget24 = function () {
         }
 
         // Checkbox Handler
-        BEAVEUtil.on(card, '[data-beave-element="follow"]', 'click', function (e) {
+        BEAVEUtil.on(card, '[data-beaver-element="follow"]', 'click', function (e) {
             if ( this.innerText === 'Following' ) {
                 this.innerText = 'Follow';
                 this.classList.add('btn-light-primary');

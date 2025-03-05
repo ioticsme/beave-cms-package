@@ -31,14 +31,14 @@ var BEAVEAppLayoutBuilder = function() {
 	}
 
 	var handleEngagePrebuiltsViewMenu = function() {
-		const selected = engagePrebuiltsModal.querySelector('[data-beave-element="selected"]');
-		const selectedTitle = engagePrebuiltsModal.querySelector('[data-beave-element="title"]');
-		const menu = engagePrebuiltsModal.querySelector('[data-beave-menu="true"]');
+		const selected = engagePrebuiltsModal.querySelector('[data-beaver-element="selected"]');
+		const selectedTitle = engagePrebuiltsModal.querySelector('[data-beaver-element="title"]');
+		const menu = engagePrebuiltsModal.querySelector('[data-beaver-menu="true"]');
 
 		// Toggle Handler
-		BEAVEUtil.on(engagePrebuiltsModal, '[data-beave-mode]', 'click', function (e) {
+		BEAVEUtil.on(engagePrebuiltsModal, '[data-beaver-mode]', 'click', function (e) {
 			const title = this.innerText;	
-			const mode = this.getAttribute("data-beave-mode");
+			const mode = this.getAttribute("data-beaver-mode");
 			const selectedLink = menu.querySelector('.menu-link.active');
 			const viewImage = document.querySelector('#beave_app_engage_prebuilts_view_image');
 			const viewText = document.querySelector('#beave_app_engage_prebuilts_view_text');
@@ -89,7 +89,7 @@ var BEAVEAppLayoutBuilder = function() {
 			actionInput.value = "preview";
 
 			// Show progress
-			previewButton.setAttribute("data-beave-indicator", "on");
+			previewButton.setAttribute("data-beaver-indicator", "on");
 
 			// Prepare form data
 			var data = $(form).serialize();
@@ -125,7 +125,7 @@ var BEAVEAppLayoutBuilder = function() {
 					);
 				},
 				complete: function() {
-					previewButton.removeAttribute("data-beave-indicator");
+					previewButton.removeAttribute("data-beaver-indicator");
 				}
 			});
 		});
@@ -142,7 +142,7 @@ var BEAVEAppLayoutBuilder = function() {
 			);
 
 			// Show progress
-			exportButton.setAttribute("data-beave-indicator", "on");
+			exportButton.setAttribute("data-beaver-indicator", "on");
 
 			// Set form action value
 			actionInput.value = "export";
@@ -164,7 +164,7 @@ var BEAVEAppLayoutBuilder = function() {
 							// Stop the timer
 							clearInterval(timer);
 
-							exportButton.removeAttribute("data-beave-indicator");
+							exportButton.removeAttribute("data-beaver-indicator");
 						}).appendTo("body");
 					}, 3000);
 				},
@@ -175,7 +175,7 @@ var BEAVEAppLayoutBuilder = function() {
 						{timeOut: 0, extendedTimeOut: 0, closeButton: true, closeDuration: 0}
 					);
 
-					exportButton.removeAttribute("data-beave-indicator");
+					exportButton.removeAttribute("data-beaver-indicator");
 				},
 			});
 		});
@@ -186,7 +186,7 @@ var BEAVEAppLayoutBuilder = function() {
 			e.preventDefault();
 
 			// Show progress
-			resetButton.setAttribute("data-beave-indicator", "on");
+			resetButton.setAttribute("data-beaver-indicator", "on");
 
 			// Set form action value
 			actionInput.value = "reset";
@@ -225,7 +225,7 @@ var BEAVEAppLayoutBuilder = function() {
 					);
 				},
 				complete: function() {
-					resetButton.removeAttribute("data-beave-indicator");
+					resetButton.removeAttribute("data-beaver-indicator");
 				},
 			});
 		});
@@ -239,7 +239,7 @@ var BEAVEAppLayoutBuilder = function() {
 		if (checkLight) {
 			checkLight.addEventListener("click", function() {
 				this.checked = true;
-				this.closest('[data-beave-buttons="true"]').querySelector('.form-check-image.active').classList.remove('active');
+				this.closest('[data-beaver-buttons="true"]').querySelector('.form-check-image.active').classList.remove('active');
 				this.closest('.form-check-image').classList.add('active');
 				BEAVEThemeMode.setMode('light');
 			});
@@ -248,7 +248,7 @@ var BEAVEAppLayoutBuilder = function() {
 		if (checkDark) {
 			checkDark.addEventListener("click", function() {
 				this.checked = true;
-				this.closest('[data-beave-buttons="true"]').querySelector('.form-check-image.active').classList.remove('active');
+				this.closest('[data-beaver-buttons="true"]').querySelector('.form-check-image.active').classList.remove('active');
 				this.closest('.form-check-image').classList.add('active');
 				BEAVEThemeMode.setMode('dark');
 			});

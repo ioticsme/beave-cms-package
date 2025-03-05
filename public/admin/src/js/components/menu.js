@@ -46,7 +46,7 @@ var BEAVEMenu = function(element, options) {
         the.disabled = false;
 
         // Set initialized
-        the.element.setAttribute('data-beave-menu', 'true');
+        the.element.setAttribute('data-beaver-menu', 'true');
 
         _setTriggerElement();
         _update();
@@ -90,14 +90,14 @@ var BEAVEMenu = function(element, options) {
             return;
         }
         
-        if ( BEAVEEventHandler.trigger(the.element, 'beave.menu.link.click', element) === false )  {
+        if ( BEAVEEventHandler.trigger(the.element, 'beaver.menu.link.click', element) === false )  {
             return;
         }
 
         // Dismiss all shown dropdowns
         BEAVEMenu.hideDropdowns();
 
-        BEAVEEventHandler.trigger(the.element, 'beave.menu.link.clicked', element);
+        BEAVEEventHandler.trigger(the.element, 'beaver.menu.link.clicked', element);
     }
 
     // Dismiss handler
@@ -238,7 +238,7 @@ var BEAVEMenu = function(element, options) {
 
     // Update all item state classes if item sub type changed
     var _update = function() {
-        var items = the.element.querySelectorAll('.menu-item[data-beave-menu-trigger]');
+        var items = the.element.querySelectorAll('.menu-item[data-beaver-menu-trigger]');
 
         if ( items && items.length > 0 ) {
             for (var i = 0, len = items.length; i < len; i++) {
@@ -249,14 +249,14 @@ var BEAVEMenu = function(element, options) {
 
     // Set external trigger element
     var _setTriggerElement = function() {
-        var target = document.querySelector('[data-beave-menu-target="#' + the.element.getAttribute('id')  + '"]');
+        var target = document.querySelector('[data-beaver-menu-target="#' + the.element.getAttribute('id')  + '"]');
 
         if ( target !== null ) {
             the.triggerElement = target;
-        } else if ( the.element.closest('[data-beave-menu-trigger]') ) {
-            the.triggerElement = the.element.closest('[data-beave-menu-trigger]');
-        } else if ( the.element.parentNode && BEAVEUtil.child(the.element.parentNode, '[data-beave-menu-trigger]')) {
-            the.triggerElement = BEAVEUtil.child(the.element.parentNode, '[data-beave-menu-trigger]');
+        } else if ( the.element.closest('[data-beaver-menu-trigger]') ) {
+            the.triggerElement = the.element.closest('[data-beaver-menu-trigger]');
+        } else if ( the.element.parentNode && BEAVEUtil.child(the.element.parentNode, '[data-beaver-menu-trigger]')) {
+            the.triggerElement = BEAVEUtil.child(the.element.parentNode, '[data-beaver-menu-trigger]');
         }
 
         if ( the.triggerElement ) {
@@ -305,7 +305,7 @@ var BEAVEMenu = function(element, options) {
 
     // Test if item has sub
     var _hasItemSub = function(item) {
-        return (BEAVEUtil.hasClass(item, 'menu-item') && item.hasAttribute('data-beave-menu-trigger'));
+        return (BEAVEUtil.hasClass(item, 'menu-item') && item.hasAttribute('data-beaver-menu-trigger'));
     }
 
     // Get link element
@@ -356,7 +356,7 @@ var BEAVEMenu = function(element, options) {
         }   
 
         // Element has item toggler attribute
-        if ( element.hasAttribute('data-beave-menu-trigger') ) {
+        if ( element.hasAttribute('data-beaver-menu-trigger') ) {
             return element;
         }
 
@@ -387,7 +387,7 @@ var BEAVEMenu = function(element, options) {
             return BEAVEUtil.data(sub).get('item');
         }
 
-        if ( sub && (parentItem = sub.closest('.menu-item[data-beave-menu-trigger]')) ) {
+        if ( sub && (parentItem = sub.closest('.menu-item[data-beaver-menu-trigger]')) ) {
             return parentItem;
         }
 
@@ -428,8 +428,8 @@ var BEAVEMenu = function(element, options) {
         }
 
         if ( selector !== null ) {
-            //element = selector.querySelector('.show.menu-item[data-beave-menu-trigger]');
-            element = selector.querySelector('.menu-item[data-beave-menu-trigger]');
+            //element = selector.querySelector('.show.menu-item[data-beaver-menu-trigger]');
+            element = selector.querySelector('.menu-item[data-beaver-menu-trigger]');
 
             if ( element ) {
                 return element;
@@ -464,7 +464,7 @@ var BEAVEMenu = function(element, options) {
     // Show item dropdown
     var _showDropdown = function(item) {
         // Handle dropdown show event
-        if ( BEAVEEventHandler.trigger(the.element, 'beave.menu.dropdown.show', item) === false )  {
+        if ( BEAVEEventHandler.trigger(the.element, 'beaver.menu.dropdown.show', item) === false )  {
             return;
         }
 
@@ -518,13 +518,13 @@ var BEAVEMenu = function(element, options) {
         }
 
         // Handle dropdown shown event
-        BEAVEEventHandler.trigger(the.element, 'beave.menu.dropdown.shown', item);
+        BEAVEEventHandler.trigger(the.element, 'beaver.menu.dropdown.shown', item);
     }
 
     // Hide item dropdown
     var _hideDropdown = function(item) {
         // Handle dropdown hide event
-        if ( BEAVEEventHandler.trigger(the.element, 'beave.menu.dropdown.hide', item) === false )  {
+        if ( BEAVEEventHandler.trigger(the.element, 'beaver.menu.dropdown.hide', item) === false )  {
             return;
         }
 
@@ -555,7 +555,7 @@ var BEAVEMenu = function(element, options) {
         _destroyDropdownPopper(item);
         
         // Handle dropdown hidden event 
-        BEAVEEventHandler.trigger(the.element, 'beave.menu.dropdown.hidden', item);
+        BEAVEEventHandler.trigger(the.element, 'beaver.menu.dropdown.hidden', item);
     }
 
     // Init dropdown popper(new)
@@ -634,7 +634,7 @@ var BEAVEMenu = function(element, options) {
 
     // Show item accordion
     var _showAccordion = function(item) {
-        if ( BEAVEEventHandler.trigger(the.element, 'beave.menu.accordion.show', item) === false )  {
+        if ( BEAVEEventHandler.trigger(the.element, 'beaver.menu.accordion.show', item) === false )  {
             return;
         }
 
@@ -666,13 +666,13 @@ var BEAVEMenu = function(element, options) {
             BEAVEUtil.addClass(item, 'show');
             BEAVEUtil.addClass(sub, 'show');
 
-            BEAVEEventHandler.trigger(the.element, 'beave.menu.accordion.shown', item);
+            BEAVEEventHandler.trigger(the.element, 'beaver.menu.accordion.shown', item);
         });        
     }
 
     // Hide item accordion
     var _hideAccordion = function(item) {
-        if ( BEAVEEventHandler.trigger(the.element, 'beave.menu.accordion.hide', item) === false )  {
+        if ( BEAVEEventHandler.trigger(the.element, 'beaver.menu.accordion.hide', item) === false )  {
             return;
         }
         
@@ -687,7 +687,7 @@ var BEAVEMenu = function(element, options) {
 
             BEAVEUtil.removeClass(item, 'hover'); // update
 
-            BEAVEEventHandler.trigger(the.element, 'beave.menu.accordion.hidden', item);
+            BEAVEEventHandler.trigger(the.element, 'beaver.menu.accordion.hidden', item);
         });
     }
 
@@ -758,7 +758,7 @@ var BEAVEMenu = function(element, options) {
 
     // Hide all shown accordions of item
     var _hideAccordions = function(item) {
-        var itemsToHide = BEAVEUtil.findAll(the.element, '.show[data-beave-menu-trigger]');
+        var itemsToHide = BEAVEUtil.findAll(the.element, '.show[data-beaver-menu-trigger]');
         var itemToHide;
 
         if (itemsToHide && itemsToHide.length > 0) {
@@ -777,8 +777,8 @@ var BEAVEMenu = function(element, options) {
         var attr;
         var value = null;
 
-        if ( item && item.hasAttribute('data-beave-menu-' + name) ) {
-            attr = item.getAttribute('data-beave-menu-' + name);
+        if ( item && item.hasAttribute('data-beaver-menu-' + name) ) {
+            attr = item.getAttribute('data-beaver-menu-' + name);
             value = BEAVEUtil.getResponsiveValue(attr);
 
             if ( value !== null && String(value) === 'true' ) {
@@ -962,7 +962,7 @@ BEAVEMenu.getInstance = function(element) {
 
 // Hide all dropdowns and skip one if provided
 BEAVEMenu.hideDropdowns = function(skip) {
-    var items = document.querySelectorAll('.show.menu-dropdown[data-beave-menu-trigger]');
+    var items = document.querySelectorAll('.show.menu-dropdown[data-beaver-menu-trigger]');
 
     if (items && items.length > 0) {
         for (var i = 0, len = items.length; i < len; i++) {
@@ -984,7 +984,7 @@ BEAVEMenu.hideDropdowns = function(skip) {
 
 // Update all dropdowns popover instances
 BEAVEMenu.updateDropdowns = function() {
-    var items = document.querySelectorAll('.show.menu-dropdown[data-beave-menu-trigger]');
+    var items = document.querySelectorAll('.show.menu-dropdown[data-beaver-menu-trigger]');
 
     if (items && items.length > 0) {
         for (var i = 0, len = items.length; i < len; i++) {
@@ -1001,7 +1001,7 @@ BEAVEMenu.updateDropdowns = function() {
 BEAVEMenu.initHandlers = function() {
     // Dropdown handler
     document.addEventListener("click", function(e) {
-        var items = document.querySelectorAll('.show.menu-dropdown[data-beave-menu-trigger]:not([data-beave-menu-static="true"])');
+        var items = document.querySelectorAll('.show.menu-dropdown[data-beaver-menu-trigger]:not([data-beaver-menu-static="true"])');
         var menu;
         var item;
         var sub;
@@ -1031,7 +1031,7 @@ BEAVEMenu.initHandlers = function() {
     });
 
     // Sub toggle handler(updated)
-    BEAVEUtil.on(document.body,  '.menu-item[data-beave-menu-trigger] > .menu-link, [data-beave-menu-trigger]:not(.menu-item):not([data-beave-menu-trigger="auto"])', 'click', function(e) {
+    BEAVEUtil.on(document.body,  '.menu-item[data-beaver-menu-trigger] > .menu-link, [data-beaver-menu-trigger]:not(.menu-item):not([data-beaver-menu-trigger="auto"])', 'click', function(e) {
         var menu = BEAVEMenu.getInstance(this);
 
         if ( menu !== null ) {
@@ -1040,7 +1040,7 @@ BEAVEMenu.initHandlers = function() {
     });
 
     // Link handler
-    BEAVEUtil.on(document.body,  '.menu-item:not([data-beave-menu-trigger]) > .menu-link', 'click', function(e) {
+    BEAVEUtil.on(document.body,  '.menu-item:not([data-beaver-menu-trigger]) > .menu-link', 'click', function(e) {
         var menu = BEAVEMenu.getInstance(this);
 
         if ( menu !== null ) {
@@ -1049,7 +1049,7 @@ BEAVEMenu.initHandlers = function() {
     });
 
     // Dismiss handler
-    BEAVEUtil.on(document.body,  '[data-beave-menu-dismiss="true"]', 'click', function(e) {
+    BEAVEUtil.on(document.body,  '[data-beaver-menu-dismiss="true"]', 'click', function(e) {
         var menu = BEAVEMenu.getInstance(this);
 
         if ( menu !== null ) {
@@ -1058,7 +1058,7 @@ BEAVEMenu.initHandlers = function() {
     });
 
     // Mouseover handler
-    BEAVEUtil.on(document.body,  '[data-beave-menu-trigger], .menu-sub', 'mouseover', function(e) {
+    BEAVEUtil.on(document.body,  '[data-beaver-menu-trigger], .menu-sub', 'mouseover', function(e) {
         var menu = BEAVEMenu.getInstance(this);
 
         if ( menu !== null && menu.getItemSubType(this) === 'dropdown' ) {
@@ -1067,7 +1067,7 @@ BEAVEMenu.initHandlers = function() {
     });
 
     // Mouseout handler
-    BEAVEUtil.on(document.body,  '[data-beave-menu-trigger], .menu-sub', 'mouseout', function(e) {
+    BEAVEUtil.on(document.body,  '[data-beaver-menu-trigger], .menu-sub', 'mouseout', function(e) {
         var menu = BEAVEMenu.getInstance(this);
 
         if ( menu !== null && menu.getItemSubType(this) === 'dropdown' ) {
@@ -1082,7 +1082,7 @@ BEAVEMenu.initHandlers = function() {
 
         BEAVEUtil.throttle(timer, function() {
             // Locate and update Offcanvas instances on window resize
-            var elements = document.querySelectorAll('[data-beave-menu="true"]');
+            var elements = document.querySelectorAll('[data-beaver-menu="true"]');
 
             if ( elements && elements.length > 0 ) {
                 for (var i = 0, len = elements.length; i < len; i++) {
@@ -1099,7 +1099,7 @@ BEAVEMenu.initHandlers = function() {
 // Render menus by url
 BEAVEMenu.updateByLinkAttribute = function(value, name = "href") {
     // Set menu link active state by attribute value
-    var elements = document.querySelectorAll('[data-beave-menu="true"]');
+    var elements = document.querySelectorAll('[data-beaver-menu="true"]');
 
     if ( elements && elements.length > 0 ) {
         for (var i = 0, len = elements.length; i < len; i++) {
@@ -1116,7 +1116,7 @@ BEAVEMenu.updateByLinkAttribute = function(value, name = "href") {
 }
 
 // Global instances
-BEAVEMenu.createInstances = function(selector = '[data-beave-menu="true"]') {
+BEAVEMenu.createInstances = function(selector = '[data-beaver-menu="true"]') {
     // Initialize menus
     var elements = document.querySelectorAll(selector);
     if ( elements && elements.length > 0 ) {

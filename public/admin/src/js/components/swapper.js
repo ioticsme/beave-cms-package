@@ -35,7 +35,7 @@ var BEAVESwapper = function(element, options) {
         the.options = BEAVEUtil.deepExtend({}, defaultOptions, options);
 
         // Set initialized
-        the.element.setAttribute('data-beave-swapper', 'true');
+        the.element.setAttribute('data-beaver-swapper', 'true');
 
         // Initial update
         _update();
@@ -61,8 +61,8 @@ var BEAVESwapper = function(element, options) {
     }
 
     var _getOption = function(name) {
-        if ( the.element.hasAttribute('data-beave-swapper-' + name) === true ) {
-            var attr = the.element.getAttribute('data-beave-swapper-' + name);
+        if ( the.element.hasAttribute('data-beaver-swapper-' + name) === true ) {
+            var attr = the.element.getAttribute('data-beaver-swapper-' + name);
             var value = BEAVEUtil.getResponsiveValue(attr);
 
             if ( value !== null && String(value) === 'true' ) {
@@ -131,7 +131,7 @@ BEAVESwapper.getInstance = function(element) {
 }
 
 // Create instances
-BEAVESwapper.createInstances = function(selector = '[data-beave-swapper="true"]') {
+BEAVESwapper.createInstances = function(selector = '[data-beaver-swapper="true"]') {
     // Initialize Menus
     var elements = document.querySelectorAll(selector);
     var swapper;
@@ -150,7 +150,7 @@ BEAVESwapper.handleResize = function() {
     
         BEAVEUtil.throttle(timer, function() {
             // Locate and update Offcanvas instances on window resize
-            var elements = document.querySelectorAll('[data-beave-swapper="true"]');
+            var elements = document.querySelectorAll('[data-beaver-swapper="true"]');
     
             if ( elements && elements.length > 0 ) {
                 for (var i = 0, len = elements.length; i < len; i++) {

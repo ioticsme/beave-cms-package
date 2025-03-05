@@ -153,7 +153,7 @@ function cloneChild(event) {
         .querySelectorAll(
             `#form_repeater_child_${parentLang}-${
                 childIndex * 10000
-            } .beave-cms-form-field`
+            } .beaver-cms-form-field`
         )
         .forEach(function (element) {
             element.value = null
@@ -184,7 +184,7 @@ function cloneChild(event) {
             .querySelector(`#${newElement.getAttribute('id')}`)
             .querySelectorAll('.media-uploader-field')
             .forEach((mediaField) => {
-                newMediaButtonId = `beave-media-field-${Math.floor(
+                newMediaButtonId = `beaver-media-field-${Math.floor(
                     Math.random() * 1000000000
                 )}`
                 mediaField

@@ -941,7 +941,7 @@ var BEAVEUtil = function() {
                 return;
             }
 
-            if (!el.getAttribute('beave-hidden-' + prop) || cache === false) {
+            if (!el.getAttribute('beaver-hidden-' + prop) || cache === false) {
                 var value;
 
                 // the element is hidden so:
@@ -958,12 +958,12 @@ var BEAVEUtil = function() {
                 el.style.cssText = css;
 
                 // store it in cache
-                el.setAttribute('beave-hidden-' + prop, value);
+                el.setAttribute('beaver-hidden-' + prop, value);
 
                 return parseFloat(value);
             } else {
                 // store it in cache
-                return parseFloat(el.getAttribute('beave-hidden-' + prop));
+                return parseFloat(el.getAttribute('beaver-hidden-' + prop));
             }
         },
 

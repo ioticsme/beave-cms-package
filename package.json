@@ -1,7 +1,10 @@
 {
-    "name": "beave-cms",
-    "version": "1.0.3",
-    "description": "BeaveCMS - NPM Package",
+    "name": "beaver-cms",
+    "version": "1.0.1",
+    "description": "BeaverCMS - NPM Package",
+    "publishConfig": {
+        "access": "public"
+    },
     "main": "index.js",
     "scripts": {
         "dev": "nodemon app.js",
@@ -14,6 +17,7 @@
         "@mongoosejs/double": "^0.3.0",
         "agenda": "^5.0.0",
         "apollo-server": "^3.13.0",
+        "apollo-server-express": "^3.13.0",
         "axios": "^1.7.7",
         "bcryptjs": "^2.4.3",
         "chalk": "^4.1.2",

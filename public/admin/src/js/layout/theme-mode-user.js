@@ -5,7 +5,7 @@ var BEAVEThemeModeUser = function () {
     
     var handleSubmit = function() {
 		// Update chart on theme mode change
-        BEAVEThemeMode.on("beave.thememode.change", function() {                
+        BEAVEThemeMode.on("beaver.thememode.change", function() {                
             var menuMode = BEAVEThemeMode.getMenuMode();
             var mode = BEAVEThemeMode.getMode();
             console.log("user selected theme mode:" + menuMode);

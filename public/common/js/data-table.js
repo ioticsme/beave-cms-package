@@ -7,7 +7,7 @@ var BEAVESubscriptionsList = (function () {
         c,
         r = function () {
             t.querySelectorAll(
-                '[data-beave-subscriptions-table-filter="delete_row"]'
+                '[data-beaver-subscriptions-table-filter="delete_row"]'
             ).forEach((t) => {
                 t.addEventListener('click', function (t) {
                     t.preventDefault()
@@ -58,16 +58,16 @@ var BEAVESubscriptionsList = (function () {
         l = () => {
             const r = t.querySelectorAll('[type="checkbox"]')
             ;(n = document.querySelector(
-                '[data-beave-subscription-table-toolbar="base"]'
+                '[data-beaver-subscription-table-toolbar="base"]'
             )),
                 (o = document.querySelector(
-                    '[data-beave-subscription-table-toolbar="selected"]'
+                    '[data-beaver-subscription-table-toolbar="selected"]'
                 )),
                 (c = document.querySelector(
-                    '[data-beave-subscription-table-select="selected_count"]'
+                    '[data-beaver-subscription-table-select="selected_count"]'
                 ))
             const a = document.querySelector(
-                '[data-beave-subscription-table-select="delete_selected"]'
+                '[data-beaver-subscription-table-select="delete_selected"]'
             )
             r.forEach((t) => {
                 t.addEventListener('click', function () {
@@ -101,7 +101,7 @@ var BEAVESubscriptionsList = (function () {
                 l(),
                 document
                     .querySelector(
-                        '[data-beave-subscription-table-filter="search"]'
+                        '[data-beaver-subscription-table-filter="search"]'
                     )
                     .addEventListener('keyup', function (t) {
                         e.search(t.target.value).draw()
@@ -109,13 +109,13 @@ var BEAVESubscriptionsList = (function () {
                 r(),
                 (function () {
                     const t = document.querySelector(
-                            '[data-beave-subscription-table-filter="form"]'
+                            '[data-beaver-subscription-table-filter="form"]'
                         ),
                         n = t.querySelector(
-                            '[data-beave-subscription-table-filter="filter"]'
+                            '[data-beaver-subscription-table-filter="filter"]'
                         ),
                         o = t.querySelector(
-                            '[data-beave-subscription-table-filter="reset"]'
+                            '[data-beaver-subscription-table-filter="reset"]'
                         ),
                         c = t.querySelectorAll('select')
                     n.addEventListener('click', function () {

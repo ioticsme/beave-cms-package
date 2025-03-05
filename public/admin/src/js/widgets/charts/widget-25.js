@@ -306,7 +306,7 @@ var BEAVEChartsWidget25 = (function () {
 		}); 
 
 		// Update chart on theme mode change
-		BEAVEThemeMode.on("beave.thememode.change", function() {     
+		BEAVEThemeMode.on("beaver.thememode.change", function() {     
 			// Destroy chart
 			root.dispose();
 
@@ -617,7 +617,7 @@ var BEAVEChartsWidget25 = (function () {
 		}); // end am5.ready()
 
 		// Update chart on theme mode change
-		BEAVEThemeMode.on("beave.thememode.change", function() {     
+		BEAVEThemeMode.on("beaver.thememode.change", function() {     
 			// Destroy chart
 			root.dispose();
 

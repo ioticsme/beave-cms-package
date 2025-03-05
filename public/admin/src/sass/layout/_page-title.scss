@@ -4,7 +4,7 @@
 
 // Desktop mode
 @include media-breakpoint-up(lg) {
-    [data-beave-app-layout="dark-header"] {
+    [data-beaver-app-layout="dark-header"] {
         .app-header {
             .page-heading {
                 color: $white !important;

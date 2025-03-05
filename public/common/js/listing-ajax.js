@@ -24,13 +24,13 @@ var BEAVEAppEcommerceSalesListing = (function () {
         },
         c = () => {
             e.querySelectorAll(
-                '[data-beave-ecommerce-order-filter="delete_row"]'
+                '[data-beaver-ecommerce-order-filter="delete_row"]'
             ).forEach((e) => {
                 e.addEventListener('click', function (e) {
                     e.preventDefault()
                     const n = e.target.closest('tr'),
                         r = n.querySelector(
-                            '[data-beave-ecommerce-order-filter="order_id"]'
+                            '[data-beaver-ecommerce-order-filter="order_id"]'
                         ).innerText
                     Swal.fire({
                         text:
@@ -102,13 +102,13 @@ var BEAVEAppEcommerceSalesListing = (function () {
                     })
                 })(),
                 document
-                    .querySelector('[data-beave-ecommerce-order-filter="search"]')
+                    .querySelector('[data-beaver-ecommerce-order-filter="search"]')
                     .addEventListener('keyup', function (e) {
                         t.search(e.target.value).draw()
                     }),
                 (() => {
                     const e = document.querySelector(
-                        '[data-beave-ecommerce-order-filter="status"]'
+                        '[data-beaver-ecommerce-order-filter="status"]'
                     )
                     $(e).on('change', (e) => {
                         let n = e.target.value

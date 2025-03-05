@@ -8,9 +8,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:locale" content="en_US">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Beave CMS - Admin Panel">
+  <meta property="og:title" content="Beaverr CMS - Admin Panel">
   <meta property="og:url" content="#">
-  <meta property="og:site_name" content="Beave CMS">
+  <meta property="og:site_name" content="Beaverr CMS">
   <link rel="canonical" href="#">
   <link rel="shortcut icon" href="undefined">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
@@ -23,7 +23,7 @@
     const defaultThemeMode = "system";
     const name = document
       .body
-      .getAttribute("data-beave-name");
+      .getAttribute("data-beaver-name");
     let themeMode = localStorage.getItem("beave_" + (
       name !== null
       ? name + "_"
@@ -62,7 +62,7 @@
     <div class="d-flex flex-center w-lg-50 p-10">
       <div class="card rounded-3 w-md-550px">
         <div class="card-body p-10 p-lg-20">
-          <form class="form w-100 es-form" id="beave_sign_up_form" novalidate="novalidate" data-beave-redirect-url="/cms-static/admin/../demo1/authentication/layouts/creative/sign-in.html" action="/admin/auth/signup">
+          <form class="form w-100 es-form" id="beave_sign_up_form" novalidate="novalidate" data-beaver-redirect-url="/cms-static/admin/../demo1/authentication/layouts/creative/sign-in.html" action="/admin/auth/signup">
             <div class="text-center mb-11">
               <h1 class="text-dark fw-bolder mb-3">Sign Up</h1>
               {# <div class="text-gray-500 fw-semibold fs-6">Your Social Campaigns</div> #}
@@ -85,16 +85,16 @@
               <input class="form-control bg-transparent" type="text" placeholder="Email" name="email" autocomplete="off">
               <span class="fv-plugins-message-container invalid-feedback" id="field-error-email"></span>
             </div>
-            <div class="fv-row mb-8" data-beave-password-meter="true">
+            <div class="fv-row mb-8" data-beaver-password-meter="true">
               <div class="mb-1">
                 <div class="position-relative mb-3">
                   <input class="form-control bg-transparent" type="password" placeholder="Password" name="password" autocomplete="off">
-                  <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-beave-password-meter-control="visibility">
+                  <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-beaver-password-meter-control="visibility">
                     <i class="bi bi-eye-slash fs-2"></i>
                     <i class="bi bi-eye fs-2 d-none"></i>
                   </span>
                 </div>
-                <div class="d-flex align-items-center mb-3" data-beave-password-meter-control="highlight">
+                <div class="d-flex align-items-center mb-3" data-beaver-password-meter-control="highlight">
                   <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
                   <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
                   <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>

@@ -188,7 +188,7 @@ var BEAVEChartsWidget8 = function () {
             initChart(chart2, '#beave_chart_widget_8_month_toggle', '#beave_chart_widget_8_month_chart', data2, true);    
 
             // Update chart on theme mode change
-            var handlerId = BEAVEThemeMode.on("beave.thememode.change", function() {
+            var handlerId = BEAVEThemeMode.on("beaver.thememode.change", function() {
                 if (chart1.rendered) {
                     chart1.self.destroy();
                 }

@@ -6,13 +6,13 @@
 // Desktop mode
 @include media-breakpoint-up(lg) {
 	.app-main {	
-		:not([data-beave-app-footer-fixed="true"]) & {        
+		:not([data-beaver-app-footer-fixed="true"]) & {        
 			.app-content {			
 				padding-bottom: 0 !important;					
 			}
 		} 	
 		
-		[data-beave-app-footer-fixed="true"] & {        
+		[data-beaver-app-footer-fixed="true"] & {        
 			.app-content {			
 				padding-bottom: $app-content-padding-y !important;					
 			}

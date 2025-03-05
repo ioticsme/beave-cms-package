@@ -11,10 +11,10 @@ var BEAVECardsWidget4 = function () {
         }
 
         var options = {
-            size: el.getAttribute('data-beave-size') ? parseInt(el.getAttribute('data-beave-size')) : 70,
-            lineWidth: el.getAttribute('data-beave-line') ? parseInt(el.getAttribute('data-beave-line')) : 11,
-            rotate: el.getAttribute('data-beave-rotate') ? parseInt(el.getAttribute('data-beave-rotate')) : 145,            
-            //percent:  el.getAttribute('data-beave-percent') ,
+            size: el.getAttribute('data-beaver-size') ? parseInt(el.getAttribute('data-beaver-size')) : 70,
+            lineWidth: el.getAttribute('data-beaver-line') ? parseInt(el.getAttribute('data-beaver-line')) : 11,
+            rotate: el.getAttribute('data-beaver-rotate') ? parseInt(el.getAttribute('data-beaver-rotate')) : 145,            
+            //percent:  el.getAttribute('data-beaver-percent') ,
         }
 
         var canvas = document.createElement('canvas');

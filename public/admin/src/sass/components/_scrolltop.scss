@@ -38,7 +38,7 @@
         }
     }
 
-    [data-beave-scrolltop="on"] & {
+    [data-beaver-scrolltop="on"] & {
         opacity: var(--#{$prefix}scrolltop-opacity-on);
         animation: animation-scrolltop .4s ease-out 1;
         display: flex;

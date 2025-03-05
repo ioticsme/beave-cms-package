@@ -5,13 +5,13 @@
 .indicator-progress {
     display: none;
 
-    [data-beave-indicator="on"] > & {
+    [data-beaver-indicator="on"] > & {
         display: inline-block;
     }
 }
 
 .indicator-label {
-    [data-beave-indicator="on"] > & {
+    [data-beaver-indicator="on"] > & {
         display: none;
     }
 }

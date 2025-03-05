@@ -3,7 +3,7 @@
 //
 
 // Form controls
-:is([data-beave-app-layout="light-sidebar"], [data-beave-app-layout="light-header"], [data-beave-app-layout="dark-header"]) {
+:is([data-beaver-app-layout="light-sidebar"], [data-beaver-app-layout="light-header"], [data-beaver-app-layout="dark-header"]) {
     .app-toolbar {
         .form-select {
             background-color: var(--#{$prefix}body-bg) !important;    
@@ -14,11 +14,11 @@
 // Desktop mode
 @include media-breakpoint-up(lg) {
     .app-toolbar {
-        [data-beave-app-layout="light-sidebar"] & {
+        [data-beaver-app-layout="light-sidebar"] & {
             border-top: 1px solid var(--#{$prefix}border-color);
         }
 
-        body:not([data-beave-app-toolbar-fixed="true"]) & {
+        body:not([data-beaver-app-toolbar-fixed="true"]) & {
             height: auto;
             background-color: transparent;
             border-top: 0;
@@ -31,7 +31,7 @@
 // Tablet & mobile modes
 @include media-breakpoint-down(lg) {
     .app-toolbar {
-        body:not([data-beave-app-toolbar-fixed-mobile="true"]) & {
+        body:not([data-beaver-app-toolbar-fixed-mobile="true"]) & {
             height: auto;
             background-color: transparent;
             border-top: 0;

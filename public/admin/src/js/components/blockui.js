@@ -45,7 +45,7 @@ var BEAVEBlockUI = function(element, options) {
     }
 
     var _block = function() {
-        if ( BEAVEEventHandler.trigger(the.element, 'beave.blockui.block', the) === false ) {
+        if ( BEAVEEventHandler.trigger(the.element, 'beaver.blockui.block', the) === false ) {
             return;
         }
 
@@ -85,11 +85,11 @@ var BEAVEBlockUI = function(element, options) {
         the.element.append(the.overlayElement);
         the.blocked = true;
 
-        BEAVEEventHandler.trigger(the.element, 'beave.blockui.after.blocked', the)
+        BEAVEEventHandler.trigger(the.element, 'beaver.blockui.after.blocked', the)
     }
 
     var _release = function() {
-        if ( BEAVEEventHandler.trigger(the.element, 'beave.blockui.release', the) === false ) {
+        if ( BEAVEEventHandler.trigger(the.element, 'beaver.blockui.release', the) === false ) {
             return;
         }
 
@@ -109,7 +109,7 @@ var BEAVEBlockUI = function(element, options) {
 
         the.blocked = false;
 
-        BEAVEEventHandler.trigger(the.element, 'beave.blockui.released', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.blockui.released', the);
     }
 
     var _isBlocked = function() {

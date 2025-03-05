@@ -9,7 +9,7 @@ var BEAVETablesWidget4 = function () {
     // Private methods
     const initDatatable = () => {
         // Get subtable template
-        const subtable = document.querySelector('[data-beave-table-widget-4="subtable_template"]');
+        const subtable = document.querySelector('[data-beaver-table-widget-4="subtable_template"]');
         template = subtable.cloneNode(true);
         template.classList.remove('d-none');
 
@@ -39,7 +39,7 @@ var BEAVETablesWidget4 = function () {
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-beave-table-widget-4="search"]');
+        const filterSearch = document.querySelector('[data-beaver-table-widget-4="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
@@ -47,7 +47,7 @@ var BEAVETablesWidget4 = function () {
 
     // Handle status filter
     const handleStatusFilter = () => {
-        const select = document.querySelector('[data-beave-table-widget-4="filter_status"]');
+        const select = document.querySelector('[data-beaver-table-widget-4="filter_status"]');
 
         $(select).on('select2:select', function (e) {
             const value = $(this).val();
@@ -110,7 +110,7 @@ var BEAVETablesWidget4 = function () {
 
     // Handle action button
     const handleActionButton = () => {
-        const buttons = document.querySelectorAll('[data-beave-table-widget-4="expand_row"]');
+        const buttons = document.querySelectorAll('[data-beaver-table-widget-4="expand_row"]');
 
         // Sample row items counter --- for demo purpose only, remove this variable in your project
         const rowItems = [3, 1, 3, 1, 2, 1];
@@ -133,7 +133,7 @@ var BEAVETablesWidget4 = function () {
                 // Handle subtable expanded state
                 if (row.classList.contains('isOpen')) {
                     // Remove all subtables from current order row
-                    while (row.nextSibling && row.nextSibling.getAttribute('data-beave-table-widget-4') === 'subtable_template') {
+                    while (row.nextSibling && row.nextSibling.getAttribute('data-beaver-table-widget-4') === 'subtable_template') {
                         row.nextSibling.parentNode.removeChild(row.nextSibling);
                     }
                     row.classList.remove(...rowClasses);
@@ -158,16 +158,16 @@ var BEAVETablesWidget4 = function () {
             const inStock = `<div class="badge badge-light-success">In Stock</div>`;
 
             // Select data elements
-            const image = newTemplate.querySelector('[data-beave-table-widget-4="template_image"]');
-            const name = newTemplate.querySelector('[data-beave-table-widget-4="template_name"]');
-            const description = newTemplate.querySelector('[data-beave-table-widget-4="template_description"]');
-            const cost = newTemplate.querySelector('[data-beave-table-widget-4="template_cost"]');
-            const qty = newTemplate.querySelector('[data-beave-table-widget-4="template_qty"]');
-            const total = newTemplate.querySelector('[data-beave-table-widget-4="template_total"]');
-            const stock = newTemplate.querySelector('[data-beave-table-widget-4="template_stock"]');
+            const image = newTemplate.querySelector('[data-beaver-table-widget-4="template_image"]');
+            const name = newTemplate.querySelector('[data-beaver-table-widget-4="template_name"]');
+            const description = newTemplate.querySelector('[data-beaver-table-widget-4="template_description"]');
+            const cost = newTemplate.querySelector('[data-beaver-table-widget-4="template_cost"]');
+            const qty = newTemplate.querySelector('[data-beaver-table-widget-4="template_qty"]');
+            const total = newTemplate.querySelector('[data-beaver-table-widget-4="template_total"]');
+            const stock = newTemplate.querySelector('[data-beaver-table-widget-4="template_stock"]');
 
             // Populate elements with data
-            const imageSrc = image.getAttribute('data-beave-src-path');
+            const imageSrc = image.getAttribute('data-beaver-src-path');
             image.setAttribute('src', imageSrc + d.image + '.png');
             name.innerText = d.name;
             description.innerText = d.description;
@@ -217,7 +217,7 @@ var BEAVETablesWidget4 = function () {
 
     // Reset subtable
     const resetSubtable = () => {
-        const subtables = document.querySelectorAll('[data-beave-table-widget-4="subtable_template"]');
+        const subtables = document.querySelectorAll('[data-beaver-table-widget-4="subtable_template"]');
         subtables.forEach(st => {
             st.parentNode.removeChild(st);
         });
@@ -225,8 +225,8 @@ var BEAVETablesWidget4 = function () {
         const rows = table.querySelectorAll('tbody tr');
         rows.forEach(r => {
             r.classList.remove('isOpen');
-            if (r.querySelector('[data-beave-table-widget-4="expand_row"]')) {
-                r.querySelector('[data-beave-table-widget-4="expand_row"]').classList.remove('active');
+            if (r.querySelector('[data-beaver-table-widget-4="expand_row"]')) {
+                r.querySelector('[data-beaver-table-widget-4="expand_row"]').classList.remove('active');
             }
         });
     }

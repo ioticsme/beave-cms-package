@@ -10,7 +10,7 @@ var BEAVECardsWidget1 = function () {
             return;
         }
 
-        var color = element.getAttribute('data-beave-chart-color');
+        var color = element.getAttribute('data-beaver-chart-color');
         
         var height = parseInt(BEAVEUtil.css(element, 'height'));
         var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');         

@@ -131,32 +131,32 @@ var BEAVELayoutSearch = function() {
                 return;
             }
 
-            wrapperElement = element.querySelector('[data-beave-search-element="wrapper"]');
-            formElement = element.querySelector('[data-beave-search-element="form"]');
-            mainElement = element.querySelector('[data-beave-search-element="main"]');
-            resultsElement = element.querySelector('[data-beave-search-element="results"]');
-            emptyElement = element.querySelector('[data-beave-search-element="empty"]');
+            wrapperElement = element.querySelector('[data-beaver-search-element="wrapper"]');
+            formElement = element.querySelector('[data-beaver-search-element="form"]');
+            mainElement = element.querySelector('[data-beaver-search-element="main"]');
+            resultsElement = element.querySelector('[data-beaver-search-element="results"]');
+            emptyElement = element.querySelector('[data-beaver-search-element="empty"]');
 
-            preferencesElement = element.querySelector('[data-beave-search-element="preferences"]');
-            preferencesShowElement = element.querySelector('[data-beave-search-element="preferences-show"]');
-            preferencesDismissElement = element.querySelector('[data-beave-search-element="preferences-dismiss"]');
+            preferencesElement = element.querySelector('[data-beaver-search-element="preferences"]');
+            preferencesShowElement = element.querySelector('[data-beaver-search-element="preferences-show"]');
+            preferencesDismissElement = element.querySelector('[data-beaver-search-element="preferences-dismiss"]');
 
-            advancedOptionsFormElement = element.querySelector('[data-beave-search-element="advanced-options-form"]');
-            advancedOptionsFormShowElement = element.querySelector('[data-beave-search-element="advanced-options-form-show"]');
-            advancedOptionsFormCancelElement = element.querySelector('[data-beave-search-element="advanced-options-form-cancel"]');
-            advancedOptionsFormSearchElement = element.querySelector('[data-beave-search-element="advanced-options-form-search"]');
+            advancedOptionsFormElement = element.querySelector('[data-beaver-search-element="advanced-options-form"]');
+            advancedOptionsFormShowElement = element.querySelector('[data-beaver-search-element="advanced-options-form-show"]');
+            advancedOptionsFormCancelElement = element.querySelector('[data-beaver-search-element="advanced-options-form-cancel"]');
+            advancedOptionsFormSearchElement = element.querySelector('[data-beaver-search-element="advanced-options-form-search"]');
             
             // Initialize search handler
             searchObject = new BEAVESearch(element);
 
             // Demo search handler
-            searchObject.on('beave.search.process', processs);
+            searchObject.on('beaver.search.process', processs);
 
             // Ajax search handler
-            //searchObject.on('beave.search.process', processsAjax);
+            //searchObject.on('beaver.search.process', processsAjax);
 
             // Clear handler
-            searchObject.on('beave.search.clear', clear);
+            searchObject.on('beaver.search.clear', clear);
 
             // Custom handlers
             if (preferencesElement) {

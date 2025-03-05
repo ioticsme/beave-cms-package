@@ -39,14 +39,14 @@ var BEAVEDrawer = function(element, options) {
         the.uid = BEAVEUtil.getUniqueId('drawer');
         the.element = element;
         the.overlayElement = null;
-        the.name = the.element.getAttribute('data-beave-drawer-name');
+        the.name = the.element.getAttribute('data-beaver-drawer-name');
         the.shown = false;
         the.lastWidth;
         the.lastHeight;
         the.toggleElement = null;
 
         // Set initialized
-        the.element.setAttribute('data-beave-drawer', 'true');
+        the.element.setAttribute('data-beaver-drawer', 'true');
 
         // Event Handlers
         _handlers();
@@ -82,7 +82,7 @@ var BEAVEDrawer = function(element, options) {
     }
 
     var _toggle = function() {
-        if ( BEAVEEventHandler.trigger(the.element, 'beave.drawer.toggle', the) === false ) {
+        if ( BEAVEEventHandler.trigger(the.element, 'beaver.drawer.toggle', the) === false ) {
             return;
         }
 
@@ -92,11 +92,11 @@ var BEAVEDrawer = function(element, options) {
             _show();
         }
 
-        BEAVEEventHandler.trigger(the.element, 'beave.drawer.toggled', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.drawer.toggled', the);
     }
 
     var _hide = function() {
-        if ( BEAVEEventHandler.trigger(the.element, 'beave.drawer.hide', the) === false ) {
+        if ( BEAVEEventHandler.trigger(the.element, 'beaver.drawer.hide', the) === false ) {
             return;
         }
 
@@ -104,8 +104,8 @@ var BEAVEDrawer = function(element, options) {
 
         _deleteOverlay();
 
-        document.body.removeAttribute('data-beave-drawer-' + the.name, 'on');
-        document.body.removeAttribute('data-beave-drawer');
+        document.body.removeAttribute('data-beaver-drawer-' + the.name, 'on');
+        document.body.removeAttribute('data-beaver-drawer');
 
         BEAVEUtil.removeClass(the.element, the.options.baseClass + '-on');
 
@@ -113,19 +113,19 @@ var BEAVEDrawer = function(element, options) {
             BEAVEUtil.removeClass(the.toggleElement, 'active');
         }
 
-        BEAVEEventHandler.trigger(the.element, 'beave.drawer.after.hidden', the) === false
+        BEAVEEventHandler.trigger(the.element, 'beaver.drawer.after.hidden', the) === false
     }
 
     var _show = function() {
-        if ( BEAVEEventHandler.trigger(the.element, 'beave.drawer.show', the) === false ) {
+        if ( BEAVEEventHandler.trigger(the.element, 'beaver.drawer.show', the) === false ) {
             return;
         }
 
         the.shown = true;
 
         _createOverlay();
-        document.body.setAttribute('data-beave-drawer-' + the.name, 'on');
-        document.body.setAttribute('data-beave-drawer', 'on');
+        document.body.setAttribute('data-beaver-drawer-' + the.name, 'on');
+        document.body.setAttribute('data-beaver-drawer', 'on');
 
         BEAVEUtil.addClass(the.element, the.options.baseClass + '-on');
 
@@ -133,7 +133,7 @@ var BEAVEDrawer = function(element, options) {
             BEAVEUtil.addClass(the.toggleElement, 'active');
         }
 
-        BEAVEEventHandler.trigger(the.element, 'beave.drawer.shown', the);
+        BEAVEEventHandler.trigger(the.element, 'beaver.drawer.shown', the);
     }
 
     var _update = function() {
@@ -147,7 +147,7 @@ var BEAVEDrawer = function(element, options) {
         var end = _getOption('end');
 
         // Reset state
-        if ( BEAVEUtil.hasClass(the.element, the.options.baseClass + '-on') === true && String(document.body.getAttribute('data-beave-drawer-' + the.name + '-')) === 'on' ) {
+        if ( BEAVEUtil.hasClass(the.element, the.options.baseClass + '-on') === true && String(document.body.getAttribute('data-beaver-drawer-' + the.name + '-')) === 'on' ) {
             the.shown = true;
         } else {
             the.shown = false;
@@ -253,8 +253,8 @@ var BEAVEDrawer = function(element, options) {
     }
 
     var _getOption = function(name) {
-        if ( the.element.hasAttribute('data-beave-drawer-' + name) === true ) {
-            var attr = the.element.getAttribute('data-beave-drawer-' + name);
+        if ( the.element.hasAttribute('data-beaver-drawer-' + name) === true ) {
+            var attr = the.element.getAttribute('data-beaver-drawer-' + name);
             var value = BEAVEUtil.getResponsiveValue(attr);
 
             if ( value !== null && String(value) === 'true' ) {
@@ -363,7 +363,7 @@ BEAVEDrawer.getInstance = function(element) {
 }
 
 // Hide all drawers and skip one if provided
-BEAVEDrawer.hideAll = function(skip = null, selector = '[data-beave-drawer="true"]') {
+BEAVEDrawer.hideAll = function(skip = null, selector = '[data-beaver-drawer="true"]') {
     var items = document.querySelectorAll(selector);
 
     if (items && items.length > 0) {
@@ -387,7 +387,7 @@ BEAVEDrawer.hideAll = function(skip = null, selector = '[data-beave-drawer="true
 }
 
 // Update all drawers
-BEAVEDrawer.updateAll = function(selector = '[data-beave-drawer="true"]') {
+BEAVEDrawer.updateAll = function(selector = '[data-beaver-drawer="true"]') {
     var items = document.querySelectorAll(selector);
 
     if (items && items.length > 0) {
@@ -402,7 +402,7 @@ BEAVEDrawer.updateAll = function(selector = '[data-beave-drawer="true"]') {
 }
 
 // Create instances
-BEAVEDrawer.createInstances = function(selector = '[data-beave-drawer="true"]') {
+BEAVEDrawer.createInstances = function(selector = '[data-beaver-drawer="true"]') {
     // Initialize Menus
     var elements = document.querySelectorAll(selector);
 
@@ -416,10 +416,10 @@ BEAVEDrawer.createInstances = function(selector = '[data-beave-drawer="true"]') 
 // Toggle instances
 BEAVEDrawer.handleShow = function() {
     // External drawer toggle handler
-    BEAVEUtil.on(document.body,  '[data-beave-drawer-show="true"][data-beave-drawer-target]', 'click', function(e) {
+    BEAVEUtil.on(document.body,  '[data-beaver-drawer-show="true"][data-beaver-drawer-target]', 'click', function(e) {
         e.preventDefault();
         
-        var element = document.querySelector(this.getAttribute('data-beave-drawer-target'));
+        var element = document.querySelector(this.getAttribute('data-beaver-drawer-target'));
 
         if (element) {
             BEAVEDrawer.getInstance(element).show();
@@ -434,7 +434,7 @@ BEAVEDrawer.handleEscapeKey = function() {
             //if esc key was not pressed in combination with ctrl or alt or shift
             const isNotCombinedKey = !(event.ctrlKey || event.altKey || event.shiftKey);
             if (isNotCombinedKey) {
-                var elements = document.querySelectorAll('.drawer-on[data-beave-drawer="true"]:not([data-beave-drawer-escape="false"])');
+                var elements = document.querySelectorAll('.drawer-on[data-beaver-drawer="true"]:not([data-beaver-drawer-escape="false"])');
                 var drawer;
 
                 if ( elements && elements.length > 0 ) {
@@ -453,8 +453,8 @@ BEAVEDrawer.handleEscapeKey = function() {
 // Dismiss instances
 BEAVEDrawer.handleDismiss = function() {
     // External drawer toggle handler
-    BEAVEUtil.on(document.body,  '[data-beave-drawer-dismiss="true"]', 'click', function(e) {
-        var element = this.closest('[data-beave-drawer="true"]');
+    BEAVEUtil.on(document.body,  '[data-beaver-drawer-dismiss="true"]', 'click', function(e) {
+        var element = this.closest('[data-beaver-drawer="true"]');
 
         if (element) {
             var drawer = BEAVEDrawer.getInstance(element);
@@ -473,7 +473,7 @@ BEAVEDrawer.handleResize = function() {
 
         BEAVEUtil.throttle(timer, function() {
             // Locate and update drawer instances on window resize
-            var elements = document.querySelectorAll('[data-beave-drawer="true"]');
+            var elements = document.querySelectorAll('[data-beaver-drawer="true"]');
 
             if ( elements && elements.length > 0 ) {
                 for (var i = 0, len = elements.length; i < len; i++) {

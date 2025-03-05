@@ -60,7 +60,7 @@
 }
 
 // Initial state
-[data-beave-drawer="true"] {
+[data-beaver-drawer="true"] {
 	display: none;
 }
 
@@ -72,7 +72,7 @@
 
 // Tablet & Mobile Modes
 @include media-breakpoint-down(lg) {
-	body[data-beave-drawer="on"] {
+	body[data-beaver-drawer="on"] {
 		overflow: hidden;
 	}
 }

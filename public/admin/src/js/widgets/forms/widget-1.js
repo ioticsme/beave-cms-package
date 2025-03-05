@@ -18,7 +18,7 @@ var BEAVEFormsWidget1 = (function () {
             var span = document.createElement('span');
             var template = '';
 
-            template += '<img src="' + item.element.getAttribute('data-beave-select2-icon') + '" class="rounded-circle h-20px me-2" alt="image"/>';
+            template += '<img src="' + item.element.getAttribute('data-beaver-select2-icon') + '" class="rounded-circle h-20px me-2" alt="image"/>';
             template += item.text;
 
             span.innerHTML = template;
@@ -50,7 +50,7 @@ var BEAVEFormsWidget1 = (function () {
             var span = document.createElement('span');
             var template = '';
 
-            template += '<img src="' + item.element.getAttribute('data-beave-select2-icon') + '" class="rounded-circle h-20px me-2" alt="image"/>';
+            template += '<img src="' + item.element.getAttribute('data-beaver-select2-icon') + '" class="rounded-circle h-20px me-2" alt="image"/>';
             template += item.text;
 
             span.innerHTML = template;

@@ -20,7 +20,7 @@ var BEAVEChartsWidget26 = function () {
         var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
         var baseColor = BEAVEUtil.getCssVariableValue('--bs-primary');
         var lightColor = BEAVEUtil.getCssVariableValue('--bs-primary');
-        var chartInfo = element.getAttribute('data-beave-chart-info');
+        var chartInfo = element.getAttribute('data-beaver-chart-info');
 
         var options = {
             series: [{
@@ -169,7 +169,7 @@ var BEAVEChartsWidget26 = function () {
             initChart();
 
             // Update chart on theme mode change
-            BEAVEThemeMode.on("beave.thememode.change", function() {                
+            BEAVEThemeMode.on("beaver.thememode.change", function() {                
                 if (chart.rendered) {
                     chart.self.destroy();
                 }
