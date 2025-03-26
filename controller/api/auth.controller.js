@@ -58,7 +58,6 @@ const loginSubmit = async (req, res) => {
         let user = await User.findOne({
             email: req.body.email,
             active: true,
-            isDeleted: false,
         })
 
         if (!user) {
@@ -218,7 +217,6 @@ const socialLoginSubmit = async (req, res) => {
             // email: { $regex: req.body.email, $options: 'i' },
             email: profile.email,
             active: true,
-            // isDeleted: false,
         })
 
         const ip = await getRequestIp(req)
@@ -495,7 +493,6 @@ const updateMobileNo = async (req, res) => {
         let user = await User.findOne({
             email: profile.email,
             active: true,
-            // isDeleted: false,
         })
 
         if (!user) {
@@ -744,7 +741,6 @@ const otpVerification = async (req, res) => {
         const user = await User.findOne({
             mobile: req.body.mobile,
             active: true,
-            isDeleted: false,
         })
 
         if (!user) {
@@ -878,7 +874,6 @@ const resendOTP = async (req, res) => {
         const user = await User.findOne({
             mobile: req.body.mobile,
             active: true,
-            isDeleted: false,
         })
 
         if (!user) {

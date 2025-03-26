@@ -13,7 +13,7 @@ const homePage = async (req, res) => {
         })
             .sort('position')
             .select(
-                '-brand -attached_type -in_home -author -country -custom_fields -__v -created_at -updated_at -published -isDeleted -deletedAt -meta -type_slug'
+                '-brand -attached_type -in_home -author -country -custom_fields -__v -created_at -updated_at -published -deleted -meta -type_slug'
             )
             .populate('type_id', '-_id slug')
         const collection = collect(contents)
@@ -24,7 +24,7 @@ const homePage = async (req, res) => {
             // _id: { $ne: req.brand._id },
             active: true,
         }).select(
-            ' -languages -domains -created_at -updated_at -published -isDeleted -deletedAt -__v'
+            ' -languages -domains -created_at -updated_at -published -deleted -__v'
         )
         const globalMeta = req.brand?.domains?.meta
         // Restructuring the global meta

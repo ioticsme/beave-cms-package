@@ -88,7 +88,6 @@ const edit = async (req, res) => {
             _id: req.params.id,
             brand: session.brand._id,
             country: session.brand.country,
-            isDeleted: false,
         })
         const contentTypes = await ContentType.find()
         const config = await Config.findOne()
@@ -116,7 +115,6 @@ const viewAPI = async (req, res) => {
             _id: req.params.id,
             brand: session.brand._id,
             country: session.brand.country,
-            isDeleted: false,
         })
             .populate('brand')
             .populate('country')
@@ -337,7 +335,6 @@ const save = async (req, res) => {
         if (!isEdit) {
             const isExist = await CustomForm.findOne({
                 type: slugify(body.form_name.en.toLowerCase()),
-                isDeleted: false,
             })
             if (isExist) {
                 return res
@@ -432,19 +429,11 @@ const deleteForm = async (req, res) => {
             return res.status(404).json({ error: 'Id not found' })
         }
 
-        await CustomForm.updateOne(
-            {
-                _id: id,
-                brand: req.authUser.brand._id,
-                country: req.authUser.brand.country,
-            },
-            {
-                $set: {
-                    isDeleted: true,
-                    deletedAt: Date.now(),
-                },
-            }
-        )
+        await CustomForm.delete({
+            _id: id,
+            brand: req.authUser.brand._id,
+            country: req.authUser.brand.country,
+        })
         return res.status(200).json({
             message: 'Custom form deleted',
         })

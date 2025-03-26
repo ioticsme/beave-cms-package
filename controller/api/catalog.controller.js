@@ -20,7 +20,6 @@ const getProductWithInCategory = async (req, res) => {
                             category: category[i]._id,
                             product_type: 'regular',
                             published: true,
-                            isDeleted: false,
                         },
                     },
                     {
@@ -78,7 +77,6 @@ const productList = async (req, res) => {
                 product_type: 'regular',
                 brand: req.brand._id,
                 country: req.country._id,
-                isDeleted: false,
             })
                 .sort('position')
                 .populate('category')
@@ -95,11 +93,9 @@ const productDetail = async (req, res) => {
         const product = await Product.findOne({
             _id: req.params.id,
             free_product: false,
-            deletedAt: null,
             published: true,
             brand: req.brand._id,
             country: req.country._id,
-            isDeleted: false,
         })
             .populate('category')
             .populate('country')

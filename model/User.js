@@ -1,6 +1,6 @@
 const { formatInTimeZone } = require('date-fns-tz')
 const { mongoose, Schema } = require('mongoose')
-// const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
+const mongooseDelete = require('mongoose-delete')
 const mongoosePaginate = require('mongoose-paginate-v2')
 
 const UserSchema = new Schema(
@@ -98,7 +98,7 @@ const UserSchema = new Schema(
     }
 )
 
-// UserSchema.plugin(softDeletePlugin)
+UserSchema.plugin(mongooseDelete, { overrideMethods: true })
 UserSchema.plugin(mongoosePaginate)
 
 UserSchema.virtual('full_name').get(function () {

@@ -26,7 +26,6 @@ const list = async (req, res) => {
             type_id: req.contentType._id,
             brand: session.brand._id,
             country: session.brand.country,
-            isDeleted: false,
         }).sort('position')
 
         if (req.contentType.single_type) {
@@ -410,7 +409,7 @@ const deleteContent = async (req, res) => {
             return res.status(404).json({ error: 'Id not found' })
         }
 
-        await Content.softDelete({
+        await Content.delete({
             _id: id,
             brand: req.authUser.brand._id,
             country: req.authUser.brand.country,
@@ -534,7 +533,7 @@ const savePageBuilderContent = async (req, res) => {
                 start: req.body.cms_publish_start,
                 end: req.body.cms_publish_end,
             },
-            position: body.position || 0,
+            position: Number(body.position) > 0 ? Number(body.position) : 100,
             'content.name': req.body.name,
             meta: req.body.meta,
             // in_home: body.in_home || false,
@@ -920,7 +919,7 @@ const saveDefaultContent = async (req, res) => {
                 start: req.body.cms_publish_start,
                 end: req.body.cms_publish_end,
             },
-            position: body.position || 0,
+            position: Number(body.position) > 0 ? Number(body.position) : 100,
             // template_name: type.template_name,
             content: content_to_insert,
             meta: body.meta,

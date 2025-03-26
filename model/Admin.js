@@ -1,5 +1,5 @@
 const { mongoose, Schema } = require('mongoose')
-// const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
+const mongooseDelete = require('mongoose-delete')
 const uniqueValidator = require('mongoose-unique-validator')
 const Brand = require('./Brand')
 const Country = require('./Country')
@@ -49,7 +49,7 @@ const AdminSchema = new mongoose.Schema(
     }
 )
 
-// AdminSchema.plugin(softDeletePlugin)
+AdminSchema.plugin(mongooseDelete, { overrideMethods: true })
 AdminSchema.plugin(uniqueValidator)
 
 module.exports = mongoose.model('Admin', AdminSchema)

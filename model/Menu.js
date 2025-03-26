@@ -1,7 +1,7 @@
 const { mongoose, Schema } = require('mongoose')
+const mongooseDelete = require('mongoose-delete')
 const Brand = require('./Brand')
 const Country = require('./Country')
-// const { softDeletePlugin } = require('soft-delete-plugin-mongoose')
 
 const MenuSchema = new mongoose.Schema(
     {
@@ -98,6 +98,6 @@ const MenuSchema = new mongoose.Schema(
     }
 )
 
-// MenuSchema.plugin(softDeletePlugin)
+MenuSchema.plugin(mongooseDelete, { overrideMethods: true })
 
 module.exports = mongoose.model('Menu', MenuSchema)
