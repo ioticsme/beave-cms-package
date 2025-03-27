@@ -30,6 +30,7 @@ const sendMailGunEmail = async (
             from: `${mg_settings.from}`,
             to: `${to}`,
             subject: `${subject}`,
+            template: `${template}`,
         }
 
         // let attachment
@@ -45,12 +46,12 @@ const sendMailGunEmail = async (
 
         // console.log(mailgunData.template)
         if (!mailgunData.template && !html) {
-            mailgunData.text = JSON.stringify(payloads.field_values)
+            mailgunData.text = JSON.stringify(payloads)
         } else if (!mailgunData.template || html) {
             mailgunData.html = html
         } else {
             mailgunData.template = `${template}`
-            mailgunData['h:X-Mailgun-Variables'] = JSON.stringify(payloads.field_values)
+            mailgunData['h:X-Mailgun-Variables'] = JSON.stringify(payloads)
         }
 
         // console.log(mailgunData)

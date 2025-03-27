@@ -20,6 +20,7 @@ class FormResource extends Resource {
             _id: this.id,
             type: this.type,
             form_name: this.form_name,
+            form_title: this.form_title,
             description: this.description,
             cta_label: this.cta_label,
             form_load_mode: this.form_load_mode,

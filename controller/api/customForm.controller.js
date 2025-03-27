@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const slugify = require('slugify')
 const axios = require('axios')
 const collect = require('collect.js')
 const { verifyCaptcha } = require('../../helper/Captcha.helper')
@@ -106,20 +107,32 @@ const customFormSubmit = async (req, res) => {
             }
         }
 
-        let field_map_for_email = {}
+        let emailFields = {}
         customForm.fields.forEach((field) => {
             // TODO: .en should be replaced with middleware language
-            field_map_for_email[field.field_label.en] =
-                data.field_values[field.field_name]
+            emailFields[
+                slugify(field.field_label.en, { replacement: '_', lower: true })
+            ] = data.field_values[field.field_name]
         })
+
+        if (customForm.auto_reply_email_template && emailFields.email) {
+            sendEmail(
+                emailFields.email,
+                `${customForm.auto_reply_email_subject}` ||
+                    'Custom form submitted',
+                customForm.auto_reply_email_template,
+                emailFields
+            )
+        }
 
         if (customForm.recipient_emails) {
             // BEGIN:: Sending Email to admin
             sendEmail(
                 customForm.recipient_emails?.split(','),
-                `${customForm.form_name} Form Submission`,
+                `${customForm.recipient_email_subject}` ||
+                    'Custom form submission',
                 customForm.recipient_email_template,
-                data
+                emailFields
             )
         }
         // BEGIN::Calling webhook
