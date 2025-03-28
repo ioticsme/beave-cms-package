@@ -1,14 +1,11 @@
 // import * as dotenv from 'dotenv'
 // dotenv.config({ path: '../../../../.env' })
 // const mongoose = require("mongoose");
-const path = require('path')
-const express = require('express')
 const Joi = require('joi')
 const bcrypt = require('bcryptjs')
 
 const Admin = require('../../model/Admin')
-const { object } = require('joi')
-const { privileges } = require('../../config/userPrivilege.config')
+const { getPrivileges } = require('../../middleware/cmsAuth.middleware')
 
 const list = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
@@ -20,7 +17,7 @@ const list = async (req, res) => {
 
 const add = async (req, res) => {
     try {
-        const config_privilege_routes = await privileges(req)
+        const config_privilege_routes = await getPrivileges(req)
         return res.render('admin-njk/config/admin/form', {
             isEdit: false,
             admin: {},
@@ -33,7 +30,7 @@ const add = async (req, res) => {
 }
 
 const edit = async (req, res) => {
-    const config_privilege_routes = await privileges(req)
+    const config_privilege_routes = await getPrivileges(req)
     const admin = await Admin.findOne({
         _id: req.params.id,
     })

@@ -9,6 +9,20 @@ const { default: collect } = require('collect.js')
 const { navConfig } = require('../config/admin.config')
 const { convertToSingular } = require('../helper/General.helper')
 const { privileges } = require('../config/userPrivilege.config')
+const { getCache, setCache } = require('../helper/Redis.helper')
+
+let customPrivilegeConfig = []
+let customSections = []
+try {
+    let customConfigs = require(`${path.dirname(
+        require.main.filename
+    )}/config/userPrivilege.config.js`)
+    customPrivilegeConfig = customConfigs.customPrivileges
+    customSections = customConfigs.customSections
+} catch (error) {
+    customPrivilegeConfig = []
+    customSections = []
+}
 
 const authCheck = async (req, res, next) => {
     if (!req.session || !req.session.admin_id) {
@@ -66,7 +80,14 @@ function hasAccessInChildren(children, accessIds) {
 
 function extractSections(items, accessIds = [], role = 'admin') {
     if (role == 'super_admin' || role == 'admin') {
-        return ['dashboard', 'content', 'assets', 'custom-forms', 'settings']
+        let preBuildSections = [
+            'dashboard',
+            'content',
+            'assets',
+            'custom-forms',
+            'settings',
+        ]
+        return [...preBuildSections, ...customSections]
     }
 
     let sections = []
@@ -102,11 +123,39 @@ function isAllowedRoute(req, allowedRoutes) {
     })
 }
 
+const getPrivileges = async (req) => {
+    const mixedPrivileges = await getCache(
+        `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-privileges`
+    ).then(async (data) => {
+        if (!data) {
+            const preBuildPrivileges = await privileges(req)
+            const customPrivileges = customPrivilegeConfig
+
+            // Merge two arrays
+            const mergedPrivilegeConfig = [
+                ...preBuildPrivileges,
+                ...customPrivileges,
+            ]
+
+            await setCache(
+                `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-privileges`,
+                JSON.stringify(mergedPrivilegeConfig),
+                60 * 60 * 24 * 30
+            )
+
+            return mergedPrivilegeConfig
+        }
+        return JSON.parse(data)
+    })
+
+    return mixedPrivileges
+}
+
 const checkRouteAccess = async (req, res, next) => {
     const access_ids = new Set(req.authUser.admin_privileges?.split(',') ?? [])
     access_ids.add('dashboard.page')
     // console.log(access_ids)
-    const config_privilege_routes = await privileges(req)
+    const config_privilege_routes = await getPrivileges(req)
 
     const urls_array = extractUrls(
         config_privilege_routes,
@@ -140,4 +189,5 @@ module.exports = {
     authCheck,
     checkSuperAdmin,
     checkRouteAccess,
+    getPrivileges,
 }

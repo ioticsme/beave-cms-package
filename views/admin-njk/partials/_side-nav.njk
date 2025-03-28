@@ -118,8 +118,9 @@
                     </div>
                 </div>
                 {% for navItem in navSection.items %}
-                    {% if navSection.section_slug == 'settings' or allowedURLs.includes(navItem.path) %}
-                        {% if navItem.expandable %}
+                    {# {% if navSection.section_slug == 'settings' or allowedURLs.includes(navItem.path) %} #}
+                    {# {% if navSection.section_slug == 'settings' or allowedURLs.includes(navItem.path) %} #}
+                        {% if navItem.expandable and checkAnyChildPathAllowed(allowedURLs, navItem.child) %}
                             <div class="menu-item menu-accordion {{ 'here show' if activeNav.includes(navItem.path) }}" data-beaver-menu-trigger="click">
                                 <span class="menu-link">
                                     <span class="menu-icon">
@@ -143,7 +144,7 @@
                                     {% endfor %}
                                 </div>
                             </div>
-                        {% else %}
+                        {% elif allowedURLs.includes(navItem.path) %}
                             <div class="menu-item">
                                 <a class="menu-link {{ 'active' if activeNav.includes(navItem.path) }}" href="{{navItem.path}}">
                                     <span class="menu-icon">
@@ -153,7 +154,7 @@
                                 </a>
                             </div>
                         {% endif %}
-                    {% endif %}
+                    {# {% endif %} #}
                 {% endfor %}
             {% endif %}
         {% endfor %}

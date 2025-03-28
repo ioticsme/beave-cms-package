@@ -1,6 +1,6 @@
 {
     "name": "beaver-cms",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "BeaverCMS - NPM Package",
     "publishConfig": {
         "access": "public"

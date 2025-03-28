@@ -64,6 +64,12 @@ const nunjucksFilter = async (req, res, next) => {
         return Math.floor(Math.random() * 1000 + 1)
     }
 
+    res.locals.checkAnyChildPathAllowed = (allowedURLs, child) => {
+        return child.some((item) => {
+            return allowedURLs.includes(item.path)
+        })
+    }
+
     next()
 }
 
