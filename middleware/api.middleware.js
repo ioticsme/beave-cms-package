@@ -187,7 +187,7 @@ const UserAuthCheck = async (req, res, next) => {
 
 const getNav = async (req, res, next) => {
     try {
-        const cache_key = `app-nav-${req.brand?.name?.en}-${req.country?.name?.en}`
+        const cache_key = `${envConfig.cache.CACHE_KEY_PREFIX}-app-nav-${req.brand?.name?.en}-${req.country?.name?.en}`
 
         const navigation = await getCache(cache_key)
             .then(async (data) => {

@@ -73,7 +73,7 @@ const clearCacheAll = async () => {
         // const client = await redisConnect()
         const keys_to_remove = []
         const iterator = await redis.scanStream({
-            match: 'data-*',
+            match: `${envConfig.cache.CACHE_KEY_PREFIX}-*`,
         })
         // console.log(iterator)
         for await (const key of iterator) {

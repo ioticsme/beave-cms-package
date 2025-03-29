@@ -124,9 +124,8 @@ function isAllowedRoute(req, allowedRoutes) {
 }
 
 const getPrivileges = async (req) => {
-    const mixedPrivileges = await getCache(
-        `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-privileges`
-    ).then(async (data) => {
+    const cacheKey = `${envConfig.cache.CACHE_KEY_PREFIX}-mixed-privileges-${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}`
+    const mixedPrivileges = await getCache(cacheKey).then(async (data) => {
         if (!data) {
             const preBuildPrivileges = await privileges(req)
             const customPrivileges = customPrivilegeConfig
@@ -138,7 +137,7 @@ const getPrivileges = async (req) => {
             ]
 
             await setCache(
-                `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-privileges`,
+                cacheKey,
                 JSON.stringify(mergedPrivilegeConfig),
                 60 * 60 * 24 * 30
             )

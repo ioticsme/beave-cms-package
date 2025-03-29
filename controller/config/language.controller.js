@@ -2,6 +2,7 @@ const Joi = require('joi')
 
 const Language = require('../../model/Language')
 const { removeCache } = require('../../helper/Redis.helper')
+const envConfig = require('../../config/env.config')
 
 const list = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
@@ -79,7 +80,7 @@ const save = async (req, res) => {
         await Language.create(data)
     }
 
-    await removeCache(['allBrands'])
+    await removeCache([`${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`])
 
     return res.status(200).json('done')
 }
@@ -94,7 +95,7 @@ const deleteItem = async (req, res) => {
 
         //soft delete item
         await Language.deleteOne({ _id: id })
-        await removeCache(['allBrands'])
+        await removeCache([`${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`])
         return res.status(200).json({
             message: `Language Deleted`,
         })

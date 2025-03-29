@@ -285,7 +285,7 @@ const { filteringScheduledCMSItems } = require('../../helper/Operations.helper')
 
 const list = async (req, res) => {
     try {
-        const cache_key = `data-content-${req.brand.code}-${req.brand.country_code}-${req.params.contentType}`
+        const cache_key = `${envConfig.cache.CACHE_KEY_PREFIX}-content-${req.brand.code}-${req.brand.country_code}-${req.params.contentType}`
 
         const contentType = await ContentType.findOne({
             active: true,
@@ -484,7 +484,7 @@ const list = async (req, res) => {
 
 const detail = async (req, res) => {
     try {
-        const cache_key = `data-content-${req.brand.code}-${req.brand.country_code}-${req.params.contentType}-${req.params.slug}`
+        const cache_key = `${envConfig.cache.CACHE_KEY_PREFIX}-content-${req.brand.code}-${req.brand.country_code}-${req.params.contentType}-${req.params.slug}`
         const contentType = await ContentType.findOne({
             active: true,
             slug: req.params.contentType,

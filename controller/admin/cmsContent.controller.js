@@ -417,7 +417,7 @@ const deleteContent = async (req, res) => {
 
         // :TODO: Remove cache
         const countryCode = req.authUser.brand?.country_code
-        const collection_cache_key = `data-content-${req.authUser.brand.code}-${countryCode}-${slug}`
+        const collection_cache_key = `${envConfig.cache.CACHE_KEY_PREFIX}-content-${req.authUser.brand.code}-${countryCode}-${slug}`
         // const single_item_cache_key = `data-content-${req.authUser.brand.code}-${countryCode}-${slug}-${update.slug || update._id}`
         Redis.removeCache([collection_cache_key])
 
@@ -461,10 +461,12 @@ const changeStatus = async (req, res) => {
 
         // :TODO: @Ebrahim, commented this because of error with countryCode
         const countryCode = req.authUser.brand?.country_code
-        const collection_cache_key = `data-content-${req.authUser.brand.code}-${countryCode}-${slug}`
-        const single_item_cache_key = `data-content-${
-            req.authUser.brand.code
-        }-${countryCode}-${slug}-${update.slug || update._id}`
+        const collection_cache_key = `${envConfig.cache.CACHE_KEY_PREFIX}-content-${req.authUser.brand.code}-${countryCode}-${slug}`
+        const single_item_cache_key = `${
+            envConfig.cache.CACHE_KEY_PREFIX
+        }-content-${req.authUser.brand.code}-${countryCode}-${slug}-${
+            update.slug || update._id
+        }`
         Redis.removeCache([collection_cache_key, single_item_cache_key])
 
         return res.status(200).json({
@@ -578,8 +580,8 @@ const savePageBuilderContent = async (req, res) => {
             const existingContent = await Content.findOne({
                 _id: req.body._id,
             })
-            const collection_cache_key = `data-content-${req.authUser.brand.code}-${countryCode}-${type.slug}`
-            const single_item_cache_key = `data-content-${req.authUser.brand.code}-${countryCode}-${type.slug}-${existingContent.slug}`
+            const collection_cache_key = `${envConfig.cache.CACHE_KEY_PREFIX}-content-${req.authUser.brand.code}-${countryCode}-${type.slug}`
+            const single_item_cache_key = `${envConfig.cache.CACHE_KEY_PREFIX}-content-${req.authUser.brand.code}-${countryCode}-${type.slug}-${existingContent.slug}`
             // Update content
             await Content.updateOne({ _id: req.body._id }, data)
             Redis.removeCache([collection_cache_key, single_item_cache_key])
@@ -594,7 +596,7 @@ const savePageBuilderContent = async (req, res) => {
             if (!save?._id) {
                 return res.status(400).json({ error: 'Something went wrong' })
             }
-            const collection_cache_key = `data-content-${req.authUser.brand.code}-${countryCode}-${type.slug}`
+            const collection_cache_key = `${envConfig.cache.CACHE_KEY_PREFIX}-content-${req.authUser.brand.code}-${countryCode}-${type.slug}`
             Redis.removeCache([collection_cache_key])
             return res.status(200).json({
                 message: 'Content added successfully',
@@ -967,8 +969,8 @@ const saveDefaultContent = async (req, res) => {
             const existingContent = await Content.findOne({
                 _id: req.body._id,
             })
-            const collection_cache_key = `data-content-${req.authUser.brand.code}-${countryCode}-${type.slug}`
-            const single_item_cache_key = `data-content-${req.authUser.brand.code}-${countryCode}-${type.slug}-${existingContent.slug}`
+            const collection_cache_key = `${envConfig.cache.CACHE_KEY_PREFIX}-content-${req.authUser.brand.code}-${countryCode}-${type.slug}`
+            const single_item_cache_key = `${envConfig.cache.CACHE_KEY_PREFIX}-content-${req.authUser.brand.code}-${countryCode}-${type.slug}-${existingContent.slug}`
             // Update content
             await Content.updateOne({ _id: req.body._id }, data)
             Redis.removeCache([collection_cache_key, single_item_cache_key])
@@ -983,7 +985,7 @@ const saveDefaultContent = async (req, res) => {
             if (!save?._id) {
                 return res.status(400).json({ error: 'Something went wrong' })
             }
-            const collection_cache_key = `data-content-${req.authUser.brand.code}-${countryCode}-${type.slug}`
+            const collection_cache_key = `${envConfig.cache.CACHE_KEY_PREFIX}-content-${req.authUser.brand.code}-${countryCode}-${type.slug}`
             Redis.removeCache([collection_cache_key])
             return res.status(200).json({
                 message: 'Content added successfully',

@@ -231,16 +231,11 @@ const getNavigation = async (req) => {
 
 // Generating the navigation for the cms
 const mainNavGenerator = async (req, res, next) => {
-    const mixedNav = await getCache(
-        `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-nav`
-    ).then(async (data) => {
+    const cacheKey = `${envConfig.cache.CACHE_KEY_PREFIX}-mixed-nav-${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}`
+    const mixedNav = await getCache(cacheKey).then(async (data) => {
         if (!data) {
             const nav = await getNavigation(req)
-            await setCache(
-                `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-nav`,
-                JSON.stringify(nav),
-                60 * 60 * 24 * 30
-            )
+            await setCache(cacheKey, JSON.stringify(nav), 60 * 60 * 24 * 30)
             return nav
         }
         return JSON.parse(data)
@@ -255,7 +250,8 @@ const mainNavGenerator = async (req, res, next) => {
 }
 
 const allBrands = async (req, res, next) => {
-    const allBrands = await getCache('allBrands').then(async (data) => {
+    const cacheKey = `${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`
+    const allBrands = await getCache(cacheKey).then(async (data) => {
         if (!data) {
             const liveBrands = await Brand.find({
                 active: true,
@@ -263,7 +259,7 @@ const allBrands = async (req, res, next) => {
                 .populate('languages')
                 .populate('domains.country')
             await setCache(
-                'allBrands',
+                cacheKey,
                 JSON.stringify(liveBrands),
                 60 * 60 * 24 * 30
             )
@@ -308,6 +304,7 @@ const authUser = async (req, res, next) => {
                 }
             }
         }
+        req.authUser = req.session
         res.locals.authUser = req.session
         // console.log(req.session)
         next()

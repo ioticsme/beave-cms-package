@@ -8,6 +8,7 @@ const slugify = require('slugify')
 const { loadSVGIcons } = require('../../helper/Operations.helper')
 const Brand = require('../../model/Brand')
 const { removeCache } = require('../../helper/Redis.helper')
+const envConfig = require('../../config/env.config')
 
 const list = async (req, res) => {
     try {
@@ -184,8 +185,8 @@ const save = async (req, res) => {
         }
 
         await removeCache([
-            `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-privileges`,
-            `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-nav`,
+            `${envConfig.cache.CACHE_KEY_PREFIX}-mixed-privileges-${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}`,
+            `${envConfig.cache.CACHE_KEY_PREFIX}-mixed-nav-${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}`,
         ])
 
         return res.status(200).json({
@@ -214,8 +215,8 @@ const deleteItem = async (req, res) => {
         //soft delete item
         await ContentType.deleteOne({ _id: id })
         await removeCache([
-            `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-privileges`,
-            `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-nav`,
+            `${envConfig.cache.CACHE_KEY_PREFIX}-mixed-privileges-${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}`,
+            `${envConfig.cache.CACHE_KEY_PREFIX}-mixed-nav-${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}`,
         ])
         return res.status(200).json({
             message: `Content Type Deleted`,
@@ -346,8 +347,8 @@ const saveFields = async (req, res) => {
         )
 
         await removeCache([
-            `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-privileges`,
-            `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-nav`,
+            `${envConfig.cache.CACHE_KEY_PREFIX}-mixed-privileges-${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}`,
+            `${envConfig.cache.CACHE_KEY_PREFIX}-mixed-nav-${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}`,
         ])
 
         return res.status(200).json({ message: 'Content Type added' })
