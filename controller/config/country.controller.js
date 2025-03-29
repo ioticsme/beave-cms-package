@@ -4,6 +4,7 @@ const Joi = require('joi')
 const bcrypt = require('bcryptjs')
 
 const Country = require('../../model/Country')
+const { removeCache } = require('../../helper/Redis.helper')
 
 const list = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
@@ -33,7 +34,7 @@ const edit = async (req, res) => {
     return res.render('admin-njk/config/country/form', {
         country,
         isEdit: true,
-        timezones
+        timezones,
     })
 }
 
@@ -80,6 +81,8 @@ const save = async (req, res) => {
         await Country.create(data)
     }
 
+    await removeCache(['allBrands'])
+
     return res.status(200).json('done')
 }
 
@@ -93,6 +96,7 @@ const deleteItem = async (req, res) => {
 
         //soft delete item
         await Country.deleteOne({ _id: id })
+        await removeCache(['allBrands'])
         return res.status(200).json({
             message: `Country Deleted`,
         })

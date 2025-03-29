@@ -152,13 +152,13 @@
 																						<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}} ({{brandLanguage.prefix}})</span>
 																					</label>
 																					{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
-																						<input disabled class="form-control form-control-solid beaver-cms-form-field" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
+																						<input disabled class="form-control  beaver-cms-form-field" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
 																					{% elif cf.field_type === 'richtext' %}
 																						<textarea disabled class="content_wysiwyg beaver-cms-form-field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ mathRandom() }}"></textarea>
 																					{% elif cf.field_type === 'textarea' %}
-																						<textarea disabled class="form-control form-control-solid beaver-cms-form-field" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
+																						<textarea disabled class="form-control  beaver-cms-form-field" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																					{% elif cf.field_type === 'article_editor' %}
-																						<textarea class="form-control form-control-solid article_editor_field beaver-cms-form-field" rows="30" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
+																						<textarea class="form-control  article_editor_field beaver-cms-form-field" rows="30" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																					{% elif cf.field_type === 'media' %}
 																						<span class='media-uploader-field'>
 																							<span class="media_preview">
@@ -177,7 +177,7 @@
 																						</span>
 																					{% elif cf.field_type == "date" %}
 																						<div class="beave_daterangepicker">
-																							<input disabled type="text" class="form-control form-control-solid beaver-cms-form-field" data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}">
+																							<input disabled type="text" class="form-control  beaver-cms-form-field" data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}">
 																						</div>
 																					{% elif cf.field_type == "dropdown" %}
 																						<select disabled class="form-select beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
@@ -205,13 +205,13 @@
 																						<span class={{"required" if cf.validation.required else ""}}>{{cf.field_label}} ({{brandLanguage.prefix}})</span>
 																					</label>
 																					{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' or cf.field_type == 'time' or cf.field_type == 'color' or cf.field_type == 'url' %}
-																						<input class="form-control form-control-solid" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
+																						<input class="form-control " type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
 																					{% elif cf.field_type === 'richtext' %}
 																						<textarea class="content_wysiwyg beaver-cms-form-field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ mathRandom() }}"></textarea>
 																					{% elif cf.field_type === 'textarea' %}
-																						<textarea class="form-control form-control-solid" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
+																						<textarea class="form-control " rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																					{% elif cf.field_type === 'article_editor' %}
-																						<textarea class="form-control form-control-solid article_editor_field" rows="30" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
+																						<textarea class="form-control  article_editor_field" rows="30" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																					{% elif cf.field_type === 'media' %}
 																						<span class='media-uploader-field'>
 																							<span class="media_preview">
@@ -230,7 +230,7 @@
 																						</span>
 																					{% elif cf.field_type == "date" %}
 																						<div class="beave_daterangepicker">
-																							<input type="text" class="form-control form-control-solid" data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}">
+																							<input type="text" class="form-control " data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}">
 																						</div>
 																					{% elif cf.field_type == "dropdown" %}
 																						<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
@@ -268,13 +268,13 @@
 
 																			{# // end::Label #}
 																			{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' or cf.field_type == 'time' or cf.field_type == 'color' or cf.field_type == 'url' %}
-																				<input class="{% if cf.field_type != 'color' %} form-control form-control-solid {% endif %}" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]">
+																				<input class="{% if cf.field_type != 'color' %} form-control {% endif %}" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]">
 																			{% elif cf.field_type == 'richtext' %}
 																				<textarea class="content_wysiwyg beaver-cms-form-field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ mathRandom() }}"></textarea>
 																			{% elif cf.field_type == 'textarea' %}
-																				<textarea class="form-control form-control-solid" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
+																				<textarea class="form-control" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
 																			{% elif cf.field_type == 'article_editor' %}
-																				<textarea class="form-control form-control-solid article_editor_field" rows="30" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
+																				<textarea class="form-control  article_editor_field" rows="30" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
 																			{% elif cf.field_type === 'media' %}
 																				<span class='media-uploader-field'>
 																					<span class="media_preview">
@@ -293,8 +293,8 @@
 																				</span>
 																			{% elif cf.field_type === 'date' %}
 																				<div class="beave_daterangepicker">
-																					{# <input class="form-control form-control-solid" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]"> #}
-																					<input class="form-control form-control-solid" id="beave_daterangepicker_{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ loop.index }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="{{ cf.placeholder }}">
+																					{# <input class="form-control " type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]"> #}
+																					<input class="form-control " id="beave_daterangepicker_{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ loop.index }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="{{ cf.placeholder }}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
 																				<select class="form-select" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
@@ -335,13 +335,13 @@
 																				{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beaver-initialized="1"></i> #}
 																			</label>
 																			{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' or cf.field_type == 'time' or cf.field_type == 'color' or cf.field_type == 'url' %}
-																				<input disabled class="{% if cf.field_type != 'color' %} form-control form-control-solid {% endif %} beaver-cms-form-field" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
+																				<input disabled class="{% if cf.field_type != 'color' %} form-control  {% endif %} beaver-cms-form-field" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
 																			{% elif cf.field_type == 'richtext' %}
 																				<textarea disabled class="content_wysiwyg beaver-cms-form-field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ mathRandom() }}"></textarea>
 																			{% elif cf.field_type == 'textarea' %}
-																				<textarea disabled class="form-control form-control-solid beaver-cms-form-field" rows="6" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
+																				<textarea disabled class="form-control  beaver-cms-form-field" rows="6" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																			{% elif cf.field_type == 'article_editor' %}
-																				<textarea disabled class="form-control form-control-solid beaver-cms-form-field article_editor_field" rows="30" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
+																				<textarea disabled class="form-control  beaver-cms-form-field article_editor_field" rows="30" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																			{% elif cf.field_type === 'media' %}
 																				<span class='media-uploader-field'>
 																					<span class="media_preview">
@@ -360,7 +360,7 @@
 																				</span>
 																			{% elif cf.field_type === 'date' %}
 																				<div class="beave_daterangepicker">
-																					<input disabled class="form-control form-control-solid beaver-cms-form-field" id="beave_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="{{ cf.placeholder }}">
+																					<input disabled class="form-control  beaver-cms-form-field" id="beave_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="{{ cf.placeholder }}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
 																				<select disabled class="form-select beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
@@ -391,13 +391,13 @@
 																				{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beaver-initialized="1"></i> #}
 																			</label>
 																			{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' or cf.field_type == 'time' or cf.field_type == 'color' or cf.field_type == 'url' %}
-																				<input class="{% if cf.field_type != 'color' %} form-control form-control-solid {% endif %}" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
+																				<input class="{% if cf.field_type != 'color' %} form-control  {% endif %}" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
 																			{% elif cf.field_type == 'richtext' %}
 																				<textarea class="content_wysiwyg beaver-cms-form-field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ mathRandom() }}"></textarea>
 																			{% elif cf.field_type == 'textarea' %}
-																				<textarea class="form-control form-control-solid" rows="6" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
+																				<textarea class="form-control " rows="6" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																			{% elif cf.field_type == 'article_editor' %}
-																				<textarea class="form-control form-control-solid article_editor_field" rows="30" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
+																				<textarea class="form-control  article_editor_field" rows="30" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																			{% elif cf.field_type === 'media' %}
 																				<span class='media-uploader-field'>
 																					<span class="media_preview">
@@ -416,7 +416,7 @@
 																				</span>
 																			{% elif cf.field_type === 'date' %}
 																				<div class="beave_daterangepicker">
-																					<input class="form-control form-control-solid" id="beave_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="{{ cf.placeholder }}">
+																					<input class="form-control " id="beave_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="{{ cf.placeholder }}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
 																				<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
@@ -452,13 +452,13 @@
 																			{# <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" aria-label="Specify a target name for future usage and reference" data-beaver-initialized="1"></i> #}
 																		</label>
 																		{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
-																			<input type="{{ cf.field_type }}" class="form-control form-control-solid" placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]">
+																			<input type="{{ cf.field_type }}" class="form-control " placeholder="Enter {{ cf.field_label }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]">
 																		{% elif cf.field_type === 'richtext' %}
 																			<textarea class="content_wysiwyg beaver-cms-form-field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" id="wysiwyg-cf-{{ mathRandom() }}"></textarea>
 																		{% elif cf.field_type === 'textarea' %}
-																			<textarea class="form-control form-control-solid" rows="6" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
+																			<textarea class="form-control " rows="6" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
 																		{% elif cf.field_type === 'article_editor' %}
-																			<textarea class="form-control form-control-solid article_editor_field" rows="30" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
+																			<textarea class="form-control  article_editor_field" rows="30" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
 																		{% elif cf.field_type == "media" %}
 																			<span class='media-uploader-field'>
 																				<span class="media_preview">
@@ -476,7 +476,7 @@
 
 																		{% elif cf.field_type === "date" %}
 																			<div class="beave_daterangepicker">
-																				<input type="text" class="form-control form-control-solid" id="beave_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="{{ cf.placeholder }}">
+																				<input type="text" class="form-control " id="beave_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="{{ cf.placeholder }}">
 																			</div>
 																		{% elif cf.field_type === 'radio' %}
 																			<div class="row row-cols-1 row-cols-md-3 row-cols-lg-1 row-cols-xl-3 g-9" data-beaver-buttons="true" data-beaver-buttons-target="[data-beaver-button='true']">

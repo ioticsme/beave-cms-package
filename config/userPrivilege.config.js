@@ -214,6 +214,44 @@ let privileges = async (req) => [
             },
         ],
     },
+    {
+        id: '5',
+        text: 'Settings',
+        section: 'settings',
+        children: [
+            {
+                id: 'settings.general',
+                text: 'General',
+                urls: [
+                    '/admin/settings/general',
+                    '/admin/settings/general/clear-cache',
+                    '/admin/settings/general/brand/change-status',
+                    '/admin/settings/general/brand/change-logo',
+                    '/admin/settings/general/brand/change-logo/:id',
+                    '/admin/settings/general/switch-brand',
+                    '/admin/settings/general/save-fbcm-token',
+                ],
+            },
+            {
+                id: 'settings.seo',
+                text: 'SEO',
+                urls: [
+                    '/admin/settings/seo',
+                    '/admin/settings/seo/edit',
+                    '/admin/settings/seo/save',
+                ],
+            },
+            {
+                id: 'settings.ecommerce',
+                text: 'Ecommerce',
+                urls: [
+                    '/admin/settings/ecommerce',
+                    '/admin/settings/ecommerce/invoice/edit',
+                    '/admin/settings/ecommerce/invoice/save',
+                ],
+            },
+        ],
+    },
 ]
 
 module.exports = { privileges }

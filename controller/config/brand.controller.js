@@ -1,14 +1,11 @@
-const path = require('path')
-const express = require('express')
 const Joi = require('joi')
-const bcrypt = require('bcryptjs')
 
-const Admin = require('../../model/Admin')
 const Brand = require('../../model/Brand')
 const Language = require('../../model/Language')
 const Country = require('../../model/Country')
+const { removeCache } = require('../../helper/Redis.helper')
 
-const list = async (req, res)  => {
+const list = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
     const brands = await Brand.find()
     return res.render('admin-njk/config/brand/listing', {
@@ -16,7 +13,7 @@ const list = async (req, res)  => {
     })
 }
 
-const add = async (req, res)  => {
+const add = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
     const languages = await Language.find()
     const countries = await Country.find()
@@ -27,7 +24,7 @@ const add = async (req, res)  => {
     })
 }
 
-const edit = async (req, res)  => {
+const edit = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
     const languages = await Language.find()
     const countries = await Country.find()
@@ -43,7 +40,7 @@ const edit = async (req, res)  => {
     })
 }
 
-const save = async (req, res)  => {
+const save = async (req, res) => {
     const schema = Joi.object({
         name: Joi.string().required().min(3).max(60),
         code: Joi.string().required().min(2).max(10),
@@ -64,7 +61,7 @@ const save = async (req, res)  => {
 
     let data = {
         name: {
-            en: req.body.name
+            en: req.body.name,
         },
         code: req.body.code,
         languages: req.body.languages,
@@ -82,6 +79,7 @@ const save = async (req, res)  => {
     } else {
         await Brand.create(data)
     }
+    await removeCache(['allBrands'])
 
     return res.status(200).json('done')
 }
@@ -107,6 +105,7 @@ const changeStatus = async (req, res) => {
         if (!update?._id) {
             return res.status(404).json({ error: 'Activation error' })
         }
+        await removeCache(['allBrands'])
         return res.status(200).json({
             message: `Brand status changed`,
         })
@@ -125,6 +124,7 @@ const deleteItem = async (req, res) => {
 
         //soft delete item
         await Brand.deleteOne({ _id: id })
+        await removeCache(['allBrands'])
         return res.status(200).json({
             message: `Brand Deleted`,
         })

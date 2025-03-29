@@ -7,6 +7,7 @@ const metaFields = require('../../config/meta-fields.config')
 const slugify = require('slugify')
 const { loadSVGIcons } = require('../../helper/Operations.helper')
 const Brand = require('../../model/Brand')
+const { removeCache } = require('../../helper/Redis.helper')
 
 const list = async (req, res) => {
     try {
@@ -182,6 +183,10 @@ const save = async (req, res) => {
             c_type_id = new_c_type.id
         }
 
+        await removeCache([
+            `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-privileges`,
+        ])
+
         return res.status(200).json({
             message: 'Content Type added',
             redirect_to: `/admin/config/content-type/view/${c_type_id}`,
@@ -207,6 +212,9 @@ const deleteItem = async (req, res) => {
 
         //soft delete item
         await ContentType.deleteOne({ _id: id })
+        await removeCache([
+            `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-privileges`,
+        ])
         return res.status(200).json({
             message: `Content Type Deleted`,
         })
@@ -334,6 +342,10 @@ const saveFields = async (req, res) => {
                 },
             }
         )
+
+        await removeCache([
+            `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-privileges`,
+        ])
 
         return res.status(200).json({ message: 'Content Type added' })
     } catch (e) {

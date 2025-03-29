@@ -1,9 +1,7 @@
-const path = require('path')
-const express = require('express')
 const Joi = require('joi')
-const bcrypt = require('bcryptjs')
 
 const Language = require('../../model/Language')
+const { removeCache } = require('../../helper/Redis.helper')
 
 const list = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
@@ -81,6 +79,8 @@ const save = async (req, res) => {
         await Language.create(data)
     }
 
+    await removeCache(['allBrands'])
+
     return res.status(200).json('done')
 }
 
@@ -94,6 +94,7 @@ const deleteItem = async (req, res) => {
 
         //soft delete item
         await Language.deleteOne({ _id: id })
+        await removeCache(['allBrands'])
         return res.status(200).json({
             message: `Language Deleted`,
         })

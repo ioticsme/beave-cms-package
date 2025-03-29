@@ -1,5 +1,4 @@
 const envConfig = require('../config/env.config')
-const fs = require('fs')
 const _ = require('lodash')
 const path = require('path')
 const Brand = require('../model/Brand')
@@ -10,6 +9,7 @@ const { navConfig } = require('../config/admin.config')
 const { convertToSingular } = require('../helper/General.helper')
 const { privileges } = require('../config/userPrivilege.config')
 const { default: slugify } = require('slugify')
+const { getCache, setCache } = require('../helper/Redis.helper')
 
 // Getting custom navigation from cms-wrapper config
 let customNavConfig
@@ -92,8 +92,7 @@ const contentTypeCheck = async (req, res, next) => {
     }
 }
 
-// Generating the navigation for the cms
-const mainNavGenerator = async (req, res, next) => {
+const getNavigation = async (req) => {
     // preBuildNav is the navigation declared in the config folder of cms-package
     let preBuildNav = _.cloneDeep(navConfig)
 
@@ -227,6 +226,29 @@ const mainNavGenerator = async (req, res, next) => {
         'position'
     )
 
+    return mixedNav
+}
+
+// Generating the navigation for the cms
+const mainNavGenerator = async (req, res, next) => {
+    console.time('mainNavGenerator')
+    const mixedNav = await getCache(
+        `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-nav`
+    ).then(async (data) => {
+        console.log(data ? 'DATA EXIST IN CACHE' : 'DATA NOT EXIST IN CACHE')
+        if (!data) {
+            const nav = await getNavigation(req)
+            await setCache(
+                `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-nav`,
+                JSON.stringify(nav),
+                60 * 60 * 24 * 30
+            )
+            return nav
+        }
+        return JSON.parse(data)
+    })
+    console.timeEnd('mainNavGenerator')
+
     res.locals.mainNav = mixedNav
     res.locals.activeNav = req.originalUrl
     res.locals.allowedURLs = []
@@ -235,9 +257,25 @@ const mainNavGenerator = async (req, res, next) => {
 }
 
 const allBrands = async (req, res, next) => {
-    const allBrands = await Brand.find()
-        .populate('languages')
-        .populate('domains.country')
+    console.time('allBrands')
+    const allBrands = await getCache('allBrands').then(async (data) => {
+        if (!data) {
+            const liveBrands = await Brand.find({
+                active: true,
+            })
+                .populate('languages')
+                .populate('domains.country')
+            await setCache(
+                'allBrands',
+                JSON.stringify(liveBrands),
+                60 * 60 * 24 * 30
+            )
+            return liveBrands
+        }
+        return JSON.parse(data)
+    })
+    console.timeEnd('allBrands')
+
     res.locals.allBrands = allBrands
     next()
 }

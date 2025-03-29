@@ -124,7 +124,7 @@ const changeStatus = async (req, res) => {
             return res.status(404).json({ error: 'Invalid data' })
         }
 
-        // Upadte status field
+        // Update status field
         const update = await Admin.findOneAndUpdate(
             { _id: id, role: { $ne: 'super_admin' } },
             {

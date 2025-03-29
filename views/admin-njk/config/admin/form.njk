@@ -26,12 +26,12 @@
 		const admin = JSON.parse(document.getElementById('admin_details_field').value)
 		const config_privilege_routes = JSON.parse(document.getElementById('config_privilege_routes').value)
 		const current_privileges = JSON.parse(document.getElementById('current_privileges').value)
-		console.log("AD",admin)
+		{# console.log("AD",admin) #}
 		//- console.log("config_privilege_routes",config_privilege_routes)
 		//- console.log("current_privileges",current_privileges)
 		{# let data = `${JSON.stringify(config_privilege_routes)}` #}
 		let data = config_privilege_routes
-		console.log(data)
+		{# console.log(data) #}
 		let tree = new Tree('.user-privileges-tree-container', {
 			data: [
 				{
@@ -44,8 +44,12 @@
 			loaded: function () {
 				let adminRole = admin?.role || ''
 				if ((!adminRole || typeof adminRole != 'undefined') && (adminRole == 'super_admin' || adminRole == 'admin')) {
-					this.values = ['0', '1', '2', '3', '4']
-					this.disables = ['0', '1', '2', '3', '4']
+					let ids = []
+					data.map(item => {
+						ids.push(item.id)
+					})
+					this.values = ids
+					this.disables = ids
 				} else {
 					this.values = ['dashboard.page']
 					this.disables = ['dashboard.page']
