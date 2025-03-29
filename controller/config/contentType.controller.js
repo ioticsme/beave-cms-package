@@ -185,6 +185,7 @@ const save = async (req, res) => {
 
         await removeCache([
             `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-privileges`,
+            `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-nav`,
         ])
 
         return res.status(200).json({
@@ -214,6 +215,7 @@ const deleteItem = async (req, res) => {
         await ContentType.deleteOne({ _id: id })
         await removeCache([
             `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-privileges`,
+            `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-nav`,
         ])
         return res.status(200).json({
             message: `Content Type Deleted`,
@@ -345,6 +347,7 @@ const saveFields = async (req, res) => {
 
         await removeCache([
             `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-privileges`,
+            `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-nav`,
         ])
 
         return res.status(200).json({ message: 'Content Type added' })

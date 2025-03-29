@@ -231,11 +231,9 @@ const getNavigation = async (req) => {
 
 // Generating the navigation for the cms
 const mainNavGenerator = async (req, res, next) => {
-    console.time('mainNavGenerator')
     const mixedNav = await getCache(
         `${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}-mixed-nav`
     ).then(async (data) => {
-        console.log(data ? 'DATA EXIST IN CACHE' : 'DATA NOT EXIST IN CACHE')
         if (!data) {
             const nav = await getNavigation(req)
             await setCache(
@@ -247,9 +245,9 @@ const mainNavGenerator = async (req, res, next) => {
         }
         return JSON.parse(data)
     })
-    console.timeEnd('mainNavGenerator')
 
     res.locals.mainNav = mixedNav
+    console.log('🚀 ~ mainNavGenerator ~ mixedNav:', mixedNav)
     res.locals.activeNav = req.originalUrl
     res.locals.allowedURLs = []
     res.locals.allowedSections = []
@@ -257,7 +255,6 @@ const mainNavGenerator = async (req, res, next) => {
 }
 
 const allBrands = async (req, res, next) => {
-    console.time('allBrands')
     const allBrands = await getCache('allBrands').then(async (data) => {
         if (!data) {
             const liveBrands = await Brand.find({
@@ -274,7 +271,6 @@ const allBrands = async (req, res, next) => {
         }
         return JSON.parse(data)
     })
-    console.timeEnd('allBrands')
 
     res.locals.allBrands = allBrands
     next()
