@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs')
 
 const Admin = require('../../model/Admin')
 const { privileges } = require('../../config/userPrivilege.config')
+const envConfig = require('../../config/env.config')
 
 // List all admins excluding the super admin
 const list = async (req, res) => {
@@ -25,6 +26,8 @@ const add = async (req, res) => {
         current_privileges: [],
         config_privilege_routes,
         isEdit: false, // Specify that it's not an edit operation
+        landing_url_privilege_id:
+            envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID,
     })
 }
 
@@ -39,6 +42,8 @@ const edit = async (req, res) => {
         current_privileges: admin.privileges?.split(',') ?? [],
         config_privilege_routes,
         isEdit: true, // Specify that it's an edit operation
+        landing_url_privilege_id:
+            envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID,
     })
 }
 
@@ -82,13 +87,22 @@ const save = async (req, res) => {
             })
         }
 
+        let privileges = req.body.privileges.split(',')
+        if (
+            !privileges.includes(
+                envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID
+            )
+        ) {
+            privileges.push(envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID)
+        }
+
         // Prepare admin data for creation or update
         let data = {
             name: req.body.name,
             email: req.body.email,
             role: req.body.role,
             active: req.body.status || false, // Default to false if no status provided
-            privileges: req.body.privileges,
+            privileges: privileges.join(','),
         }
 
         // Update existing admin if ID is provided, else create a new admin

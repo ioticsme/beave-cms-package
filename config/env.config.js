@@ -16,6 +16,8 @@ const envConfig = {
             process.env.CMS_LOGO_SMALL ||
             '/cms-static/admin/assets/media/logo/beave-logo.png',
         ADMIN_LANDING_URL: process.env.ADMIN_LANDING_URL || '/admin/dashboard',
+        ADMIN_LANDING_URL_PRIVILEGE_ID:
+            process.env.ADMIN_LANDING_URL_PRIVILEGE_ID || 'dashboard.page',
         SESSION_STORAGE: process.env.SESSION_STORAGE || 'file',
         CAPTCHA_ENABLED: process.env.CAPTCHA_ENABLED || false,
         HAS_PDF_UPLOAD: process.env.HAS_PDF_UPLOAD || false,

@@ -84,6 +84,10 @@ const BrandSchema = new mongoose.Schema(
                 },
             },
         ],
+        position: {
+            type: Number,
+            default: 10,
+        },
     },
     {
         timestamps: {

@@ -35,7 +35,7 @@ const {
 // BEGIN:: Routes
 router.use('/auth', authRoutes)
 router.get('/', (req, res) => {
-    res.redirect('/admin/dashboard')
+    res.redirect(envConfig.general.ADMIN_LANDING_URL)
 })
 
 router.use([authCheck, checkRouteAccess])

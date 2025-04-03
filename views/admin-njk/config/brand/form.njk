@@ -25,7 +25,7 @@
                 </h1>
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <li class="breadcrumb-item text-muted">
-                            <a href="/admin/dashboard" class="text-muted text-hover-primary">Dashboard</a>
+                            <a href="{{LANDING_URL}}" class="text-muted text-hover-primary">Dashboard</a>
                         </li>
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-400 w-5px h-2px"></span>
@@ -87,6 +87,13 @@
                                                 <span>{{ country.name.en }}</span>
                                             </label>
                                         {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Position</label>
+                                    <div class="col-lg-8 fv-row">
+                                        <input type="number" name="position" class="form-control form-control-lg form-control-solid" placeholder="Position" value="{{ brand.position or 1 }}">
+                                        <div class="fv-plugins-message-container invalid-feedback" id="field-error-position"></div>
                                     </div>
                                 </div>
                                 <div class="row mb-6">

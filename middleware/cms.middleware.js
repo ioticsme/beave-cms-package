@@ -26,6 +26,7 @@ const baseConfig = async (req, res, next) => {
     res.locals.cmsLogoLarge = `${envConfig.general.CMS_LOGO_LARGE}`
     res.locals.cmsLogoSmall = `${envConfig.general.CMS_LOGO_SMALL}`
     res.locals.globalModuleConfig = globalModuleConfig
+    res.locals.LANDING_URL = envConfig.general.ADMIN_LANDING_URL
     next()
 }
 
@@ -242,7 +243,6 @@ const mainNavGenerator = async (req, res, next) => {
     })
 
     res.locals.mainNav = mixedNav
-    console.log('🚀 ~ mainNavGenerator ~ mixedNav:', mixedNav)
     res.locals.activeNav = req.originalUrl
     res.locals.allowedURLs = []
     res.locals.allowedSections = []
@@ -256,6 +256,7 @@ const allBrands = async (req, res, next) => {
             const liveBrands = await Brand.find({
                 active: true,
             })
+                .sort({ position: 1 })
                 .populate('languages')
                 .populate('domains.country')
             await setCache(

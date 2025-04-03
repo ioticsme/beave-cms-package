@@ -23,9 +23,11 @@ const homePage = async (req, res) => {
         const brands = await Brand.find({
             // _id: { $ne: req.brand._id },
             active: true,
-        }).select(
-            ' -languages -domains -created_at -updated_at -published -deleted -__v'
-        )
+        })
+            .select(
+                ' -languages -domains -created_at -updated_at -published -deleted -__v'
+            )
+            .sort({ position: 1 })
         const globalMeta = req.brand?.domains?.meta
         // Restructuring the global meta
         const newGlobalMeta = {

@@ -28,7 +28,7 @@ const add = async (req, res) => {
     try {
         const icons = await loadSVGIcons()
         const contentTypes = await ContentType.find()
-        const brands = await Brand.find()
+        const brands = await Brand.find().sort({ position: 1 })
         return res.render('admin-njk/config/content-type/form', {
             isEdit: false,
             contentTypes,
@@ -48,7 +48,7 @@ const edit = async (req, res) => {
         })
         // console.log('contentType :>> ', contentType)
         const contentTypes = await ContentType.find()
-        const brands = await Brand.find()
+        const brands = await Brand.find().sort({ position: 1 })
         return res.render('admin-njk/config/content-type/form', {
             contentType,
             isEdit: true,

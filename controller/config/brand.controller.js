@@ -8,7 +8,7 @@ const envConfig = require('../../config/env.config')
 
 const list = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
-    const brands = await Brand.find()
+    const brands = await Brand.find().sort({ position: 1 })
     return res.render('admin-njk/config/brand/listing', {
         brands,
     })
@@ -48,6 +48,7 @@ const save = async (req, res) => {
         languages: Joi.array().required().min(1),
         domains: Joi.array().required().min(1),
         active: Joi.boolean().optional(),
+        position: Joi.string().required(),
         id: Joi.optional(),
     })
 
@@ -68,6 +69,7 @@ const save = async (req, res) => {
         languages: req.body.languages,
         domains: req.body.domains,
         active: req.body.active || false,
+        position: req.body.position,
     }
 
     if (req.body.id) {

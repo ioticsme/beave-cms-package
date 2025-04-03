@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs')
 
 const Admin = require('../../model/Admin')
 const { getPrivileges } = require('../../middleware/cmsAuth.middleware')
+const envConfig = require('../../config/env.config')
 
 const list = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
@@ -23,6 +24,8 @@ const add = async (req, res) => {
             admin: {},
             current_privileges: [],
             config_privilege_routes,
+            landing_url_privilege_id:
+                envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID,
         })
     } catch (error) {
         console.log(error)
@@ -40,12 +43,21 @@ const edit = async (req, res) => {
         current_privileges: admin.privileges?.split(',') ?? [],
         config_privilege_routes,
         isEdit: true,
+        landing_url_privilege_id:
+            envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID,
     })
 }
 
 const save = async (req, res) => {
     const saltRounds = 10
     const salt = bcrypt.genSaltSync(saltRounds)
+
+    let privileges = req.body.privileges.split(',')
+    if (
+        !privileges.includes(envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID)
+    ) {
+        privileges.push(envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID)
+    }
 
     const schema = Joi.object({
         name: Joi.string().required().min(3).max(60),
@@ -95,7 +107,7 @@ const save = async (req, res) => {
         email: req.body.email,
         role: req.body.role,
         active: req.body.status || false,
-        privileges: req.body.privileges,
+        privileges: privileges.join(','),
     }
 
     if (req.body.id) {
