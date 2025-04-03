@@ -1,438 +1,469 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVESearch = function(element, options) {
+var BEAVERSearch = function (element, options) {
     ////////////////////////////
     // ** Private variables  ** //
     ////////////////////////////
-    var the = this;
+    var the = this
 
     if (!element) {
-        return;
+        return
     }
 
     // Default Options
     var defaultOptions = {
-        minLength: 2,  // Miniam text lenght to query search
-        keypress: true,  // Enable search on keypress 
-        enter: true,  // Enable search on enter key press
-        layout: 'menu',  // Use 'menu' or 'inline' layout options to display search results
+        minLength: 2, // Miniam text lenght to query search
+        keypress: true, // Enable search on keypress
+        enter: true, // Enable search on enter key press
+        layout: 'menu', // Use 'menu' or 'inline' layout options to display search results
         responsive: null, // Pass integer value or bootstrap compatible breakpoint key(sm,md,lg,xl,xxl) to enable reponsive form mode for device width below the breakpoint value
-        showOnFocus: true // Always show menu on input focus
-    };
+        showOnFocus: true, // Always show menu on input focus
+    }
 
     ////////////////////////////
     // ** Private methods  ** //
     ////////////////////////////
 
     // Construct
-    var _construct = function() {
-        if ( BEAVEUtil.data(element).has('search') === true ) {
-            the = BEAVEUtil.data(element).get('search');
+    var _construct = function () {
+        if (BEAVERUtil.data(element).has('search') === true) {
+            the = BEAVERUtil.data(element).get('search')
         } else {
-            _init();
+            _init()
         }
     }
 
     // Init
-    var _init = function() {
+    var _init = function () {
         // Variables
-        the.options = BEAVEUtil.deepExtend({}, defaultOptions, options);
-        the.processing = false;
+        the.options = BEAVERUtil.deepExtend({}, defaultOptions, options)
+        the.processing = false
 
         // Elements
-        the.element = element;               
-        the.contentElement = _getElement('content');     
-        the.formElement = _getElement('form');         
-        the.inputElement = _getElement('input');
-        the.spinnerElement = _getElement('spinner');
-        the.clearElement = _getElement('clear');
-        the.toggleElement = _getElement('toggle');   
-        the.submitElement = _getElement('submit');
-        the.toolbarElement = _getElement('toolbar');   
-        the.minLength = parseInt(_getOption('min-length'));
+        the.element = element
+        the.contentElement = _getElement('content')
+        the.formElement = _getElement('form')
+        the.inputElement = _getElement('input')
+        the.spinnerElement = _getElement('spinner')
+        the.clearElement = _getElement('clear')
+        the.toggleElement = _getElement('toggle')
+        the.submitElement = _getElement('submit')
+        the.toolbarElement = _getElement('toolbar')
+        the.minLength = parseInt(_getOption('min-length'))
 
-        the.resultsElement = _getElement('results');
-        the.suggestionElement = _getElement('suggestion'); 
-        the.emptyElement = _getElement('empty'); 
+        the.resultsElement = _getElement('results')
+        the.suggestionElement = _getElement('suggestion')
+        the.emptyElement = _getElement('empty')
 
         // Set initialized
-        the.element.setAttribute('data-beaver-search', 'true');
-        
+        the.element.setAttribute('data-beaver-search', 'true')
+
         // Layout
-        the.layout = _getOption('layout');
-        
+        the.layout = _getOption('layout')
+
         // Menu
-        if ( the.layout === 'menu' ) {
-            the.menuObject = new BEAVEMenu(the.contentElement);
+        if (the.layout === 'menu') {
+            the.menuObject = new BEAVERMenu(the.contentElement)
         } else {
-            the.menuObject = null;
+            the.menuObject = null
         }
 
         // Update
-        _update();
+        _update()
 
         // Event Handlers
-        _handlers();
+        _handlers()
 
         // Bind Instance
-        BEAVEUtil.data(the.element).set('search', the);
+        BEAVERUtil.data(the.element).set('search', the)
     }
 
     // Handlera
-    var _handlers = function() {
+    var _handlers = function () {
         // Focus
-        the.inputElement.addEventListener('focus', _focus);
+        the.inputElement.addEventListener('focus', _focus)
 
         // Blur
-        the.inputElement.addEventListener('blur', _blur);
+        the.inputElement.addEventListener('blur', _blur)
 
         // Keypress
-        if ( _getOption('keypress') === true ) {
-            the.inputElement.addEventListener('input', _input);
+        if (_getOption('keypress') === true) {
+            the.inputElement.addEventListener('input', _input)
         }
 
         // Submit
-        if ( the.submitElement ) {
-            the.submitElement.addEventListener('click', _search);
+        if (the.submitElement) {
+            the.submitElement.addEventListener('click', _search)
         }
 
         // Enter
-        if ( _getOption('enter') === true ) {
-            the.inputElement.addEventListener('keypress', _enter);
+        if (_getOption('enter') === true) {
+            the.inputElement.addEventListener('keypress', _enter)
         }
 
-        // Clear 
-        if ( the.clearElement ) {
-            the.clearElement.addEventListener('click', _clear);
+        // Clear
+        if (the.clearElement) {
+            the.clearElement.addEventListener('click', _clear)
         }
 
         // Menu
-        if ( the.menuObject ) {
+        if (the.menuObject) {
             // Toggle menu
-            if ( the.toggleElement ) {
-                the.toggleElement.addEventListener('click', _show);
+            if (the.toggleElement) {
+                the.toggleElement.addEventListener('click', _show)
 
-                the.menuObject.on('beaver.menu.dropdown.show', function(item) {
-                    if (BEAVEUtil.visible(the.toggleElement)) {
-                        the.toggleElement.classList.add('active');
-                        the.toggleElement.classList.add('show');
-                    } 
-                });
-    
-                the.menuObject.on('beaver.menu.dropdown.hide', function(item) {
-                    if (BEAVEUtil.visible(the.toggleElement)) {
-                        the.toggleElement.classList.remove('active');
-                        the.toggleElement.classList.remove('show');
+                the.menuObject.on('beaver.menu.dropdown.show', function (item) {
+                    if (BEAVERUtil.visible(the.toggleElement)) {
+                        the.toggleElement.classList.add('active')
+                        the.toggleElement.classList.add('show')
                     }
-                });
-            }            
+                })
 
-            the.menuObject.on('beaver.menu.dropdown.shown', function() {
-                the.inputElement.focus();
-            });
-        } 
+                the.menuObject.on('beaver.menu.dropdown.hide', function (item) {
+                    if (BEAVERUtil.visible(the.toggleElement)) {
+                        the.toggleElement.classList.remove('active')
+                        the.toggleElement.classList.remove('show')
+                    }
+                })
+            }
+
+            the.menuObject.on('beaver.menu.dropdown.shown', function () {
+                the.inputElement.focus()
+            })
+        }
 
         // Window resize handling
-        window.addEventListener('resize', function() {
-            var timer;
+        window.addEventListener('resize', function () {
+            var timer
 
-            BEAVEUtil.throttle(timer, function() {
-                _update();
-            }, 200);
-        });
+            BEAVERUtil.throttle(
+                timer,
+                function () {
+                    _update()
+                },
+                200
+            )
+        })
     }
 
     // Focus
-    var _focus = function() {
-        the.element.classList.add('focus');
+    var _focus = function () {
+        the.element.classList.add('focus')
 
-        if ( _getOption('show-on-focus') === true || the.inputElement.value.length >= the.minLength ) {
-            _show();
-        }        
+        if (
+            _getOption('show-on-focus') === true ||
+            the.inputElement.value.length >= the.minLength
+        ) {
+            _show()
+        }
     }
 
     // Blur
-    var _blur = function() {        
-        the.element.classList.remove('focus');
+    var _blur = function () {
+        the.element.classList.remove('focus')
     }
 
-    // Enter 
-    var _enter = function(e) {
-        var key = e.charCode || e.keyCode || 0;
+    // Enter
+    var _enter = function (e) {
+        var key = e.charCode || e.keyCode || 0
 
         if (key == 13) {
-            e.preventDefault();
+            e.preventDefault()
 
-            _search();
+            _search()
         }
     }
 
     // Input
-    var _input = function() {
-        if ( _getOption('min-length') )  {
-            if ( the.inputElement.value.length >= the.minLength ) {
-                _search();
-            } else if ( the.inputElement.value.length === 0 ) {
-                _clear();
+    var _input = function () {
+        if (_getOption('min-length')) {
+            if (the.inputElement.value.length >= the.minLength) {
+                _search()
+            } else if (the.inputElement.value.length === 0) {
+                _clear()
             }
         }
     }
 
     // Search
-    var _search = function() {
+    var _search = function () {
         if (the.processing === false) {
             // Show search spinner
             if (the.spinnerElement) {
-                the.spinnerElement.classList.remove("d-none");
+                the.spinnerElement.classList.remove('d-none')
             }
-            
+
             // Hide search clear button
             if (the.clearElement) {
-                the.clearElement.classList.add("d-none");
+                the.clearElement.classList.add('d-none')
             }
 
             // Hide search toolbar
-            if (the.toolbarElement && the.formElement.contains(the.toolbarElement)) {
-                the.toolbarElement.classList.add("d-none");
+            if (
+                the.toolbarElement &&
+                the.formElement.contains(the.toolbarElement)
+            ) {
+                the.toolbarElement.classList.add('d-none')
             }
 
             // Focus input
-            the.inputElement.focus();
+            the.inputElement.focus()
 
-            the.processing = true;
-            BEAVEEventHandler.trigger(the.element, 'beaver.search.process', the);
+            the.processing = true
+            BEAVEREventHandler.trigger(
+                the.element,
+                'beaver.search.process',
+                the
+            )
         }
     }
 
     // Complete
-    var _complete = function() {
+    var _complete = function () {
         if (the.spinnerElement) {
-            the.spinnerElement.classList.add("d-none");
+            the.spinnerElement.classList.add('d-none')
         }
 
         // Show search toolbar
         if (the.clearElement) {
-            the.clearElement.classList.remove("d-none");
+            the.clearElement.classList.remove('d-none')
         }
 
-        if ( the.inputElement.value.length === 0 ) {
-            _clear();
+        if (the.inputElement.value.length === 0) {
+            _clear()
         }
 
         // Focus input
-        the.inputElement.focus();
+        the.inputElement.focus()
 
-        _show();
+        _show()
 
-        the.processing = false;
+        the.processing = false
     }
 
     // Clear
-    var _clear = function() {
-        if ( BEAVEEventHandler.trigger(the.element, 'beaver.search.clear', the) === false )  {
-            return;
+    var _clear = function () {
+        if (
+            BEAVEREventHandler.trigger(
+                the.element,
+                'beaver.search.clear',
+                the
+            ) === false
+        ) {
+            return
         }
 
         // Clear and focus input
-        the.inputElement.value = "";
-        the.inputElement.focus();
+        the.inputElement.value = ''
+        the.inputElement.focus()
 
         // Hide clear icon
         if (the.clearElement) {
-            the.clearElement.classList.add("d-none");
+            the.clearElement.classList.add('d-none')
         }
 
         // Show search toolbar
-        if (the.toolbarElement && the.formElement.contains(the.toolbarElement)) {
-            the.toolbarElement.classList.remove("d-none");
+        if (
+            the.toolbarElement &&
+            the.formElement.contains(the.toolbarElement)
+        ) {
+            the.toolbarElement.classList.remove('d-none')
         }
 
         // Hide menu
-        if ( _getOption('show-on-focus') === false ) {
-            _hide();
+        if (_getOption('show-on-focus') === false) {
+            _hide()
         }
 
-        BEAVEEventHandler.trigger(the.element, 'beaver.search.cleared', the);
+        BEAVEREventHandler.trigger(the.element, 'beaver.search.cleared', the)
     }
 
     // Update
-    var _update = function() {
+    var _update = function () {
         // Handle responsive form
         if (the.layout === 'menu') {
-            var responsiveFormMode = _getResponsiveFormMode();
+            var responsiveFormMode = _getResponsiveFormMode()
 
-            if ( responsiveFormMode === 'on' && the.contentElement.contains(the.formElement) === false ) {
-                the.contentElement.prepend(the.formElement);
-                the.formElement.classList.remove('d-none');                
-            } else if ( responsiveFormMode === 'off' && the.contentElement.contains(the.formElement) === true ) {
-                the.element.prepend(the.formElement);
-                the.formElement.classList.add('d-none');
+            if (
+                responsiveFormMode === 'on' &&
+                the.contentElement.contains(the.formElement) === false
+            ) {
+                the.contentElement.prepend(the.formElement)
+                the.formElement.classList.remove('d-none')
+            } else if (
+                responsiveFormMode === 'off' &&
+                the.contentElement.contains(the.formElement) === true
+            ) {
+                the.element.prepend(the.formElement)
+                the.formElement.classList.add('d-none')
             }
         }
     }
 
     // Show menu
-    var _show = function() {
-        if ( the.menuObject ) {
-            _update();
+    var _show = function () {
+        if (the.menuObject) {
+            _update()
 
-            the.menuObject.show(the.element);
+            the.menuObject.show(the.element)
         }
     }
 
     // Hide menu
-    var _hide = function() {
-        if ( the.menuObject ) {
-            _update();
+    var _hide = function () {
+        if (the.menuObject) {
+            _update()
 
-            the.menuObject.hide(the.element);
+            the.menuObject.hide(the.element)
         }
     }
 
     // Get option
-    var _getOption = function(name) {
-        if ( the.element.hasAttribute('data-beaver-search-' + name) === true ) {
-            var attr = the.element.getAttribute('data-beaver-search-' + name);
-            var value = BEAVEUtil.getResponsiveValue(attr);
+    var _getOption = function (name) {
+        if (the.element.hasAttribute('data-beaver-search-' + name) === true) {
+            var attr = the.element.getAttribute('data-beaver-search-' + name)
+            var value = BEAVERUtil.getResponsiveValue(attr)
 
-            if ( value !== null && String(value) === 'true' ) {
-                value = true;
-            } else if ( value !== null && String(value) === 'false' ) {
-                value = false;
+            if (value !== null && String(value) === 'true') {
+                value = true
+            } else if (value !== null && String(value) === 'false') {
+                value = false
             }
 
-            return value;
+            return value
         } else {
-            var optionName = BEAVEUtil.snakeToCamel(name);
+            var optionName = BEAVERUtil.snakeToCamel(name)
 
-            if ( the.options[optionName] ) {
-                return BEAVEUtil.getResponsiveValue(the.options[optionName]);
+            if (the.options[optionName]) {
+                return BEAVERUtil.getResponsiveValue(the.options[optionName])
             } else {
-                return null;
+                return null
             }
         }
     }
 
     // Get element
-    var _getElement = function(name) {
-        return the.element.querySelector('[data-beaver-search-element="' + name + '"]');
+    var _getElement = function (name) {
+        return the.element.querySelector(
+            '[data-beaver-search-element="' + name + '"]'
+        )
     }
 
     // Check if responsive form mode is enabled
-    var _getResponsiveFormMode = function() {
-        var responsive = _getOption('responsive');
-        var width = BEAVEUtil.getViewPort().width;
+    var _getResponsiveFormMode = function () {
+        var responsive = _getOption('responsive')
+        var width = BEAVERUtil.getViewPort().width
 
         if (!responsive) {
-            return null;
+            return null
         }
 
-        var breakpoint = BEAVEUtil.getBreakpoint(responsive);
+        var breakpoint = BEAVERUtil.getBreakpoint(responsive)
 
-        if (!breakpoint ) {
-            breakpoint = parseInt(responsive);
+        if (!breakpoint) {
+            breakpoint = parseInt(responsive)
         }
 
         if (width < breakpoint) {
-            return "on";
+            return 'on'
         } else {
-            return "off";
+            return 'off'
         }
     }
 
-    var _destroy = function() {
-        BEAVEUtil.data(the.element).remove('search');
-    }    
+    var _destroy = function () {
+        BEAVERUtil.data(the.element).remove('search')
+    }
 
     // Construct class
-    _construct();
+    _construct()
 
     ///////////////////////
     // ** Public API  ** //
     ///////////////////////
 
     // Plugin API
-    the.show = function() {
-        return _show();
+    the.show = function () {
+        return _show()
     }
 
-    the.hide = function() {
-        return _hide();
+    the.hide = function () {
+        return _hide()
     }
 
-    the.update = function() {
-        return _update();
+    the.update = function () {
+        return _update()
     }
 
-    the.search = function() {
-        return _search();
+    the.search = function () {
+        return _search()
     }
 
-    the.complete = function() {
-        return _complete();
+    the.complete = function () {
+        return _complete()
     }
 
-    the.clear = function() {
-        return _clear();
+    the.clear = function () {
+        return _clear()
     }
 
-    the.isProcessing = function() {
-        return the.processing;
+    the.isProcessing = function () {
+        return the.processing
     }
 
-    the.getQuery = function() {
-        return the.inputElement.value;
-    }    
-
-    the.getMenu = function() {
-        return the.menuObject;
+    the.getQuery = function () {
+        return the.inputElement.value
     }
 
-    the.getFormElement = function() {
-        return the.formElement;
+    the.getMenu = function () {
+        return the.menuObject
     }
 
-    the.getInputElement = function() {
-        return the.inputElement;
+    the.getFormElement = function () {
+        return the.formElement
     }
 
-    the.getContentElement = function() {
-        return the.contentElement;
+    the.getInputElement = function () {
+        return the.inputElement
     }
 
-    the.getElement = function() {
-        return the.element;
+    the.getContentElement = function () {
+        return the.contentElement
     }
 
-    the.destroy = function() {
-        return _destroy();
+    the.getElement = function () {
+        return the.element
+    }
+
+    the.destroy = function () {
+        return _destroy()
     }
 
     // Event API
-    the.on = function(name, handler) {
-        return BEAVEEventHandler.on(the.element, name, handler);
+    the.on = function (name, handler) {
+        return BEAVEREventHandler.on(the.element, name, handler)
     }
 
-    the.one = function(name, handler) {
-        return BEAVEEventHandler.one(the.element, name, handler);
+    the.one = function (name, handler) {
+        return BEAVEREventHandler.one(the.element, name, handler)
     }
 
-    the.off = function(name, handlerId) {
-        return BEAVEEventHandler.off(the.element, name, handlerId);
+    the.off = function (name, handlerId) {
+        return BEAVEREventHandler.off(the.element, name, handlerId)
     }
-};
+}
 
 // Static methods
-BEAVESearch.getInstance = function(element) {
-    if ( element !== null && BEAVEUtil.data(element).has('search') ) {
-        return BEAVEUtil.data(element).get('search');
+BEAVERSearch.getInstance = function (element) {
+    if (element !== null && BEAVERUtil.data(element).has('search')) {
+        return BEAVERUtil.data(element).get('search')
     } else {
-        return null;
+        return null
     }
 }
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = BEAVESearch;
+    module.exports = BEAVERSearch
 }

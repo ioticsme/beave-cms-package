@@ -1,48 +1,49 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVETimelineWidget4 = function () {
+var BEAVERTimelineWidget4 = (function () {
     // Private methods
     // Day timeline
     const initTimelineDay = () => {
         // Detect element
-        const element = document.querySelector('#beave_timeline_widget_4_1');
+        const element = document.querySelector('#beave_timeline_widget_4_1')
         if (!element) {
-            return;
+            return
         }
 
-        if(element.innerHTML){
-            return;
+        if (element.innerHTML) {
+            return
         }
 
         // Set variables
-        var now = Date.now();
-        var rootImagePath = element.getAttribute('data-beaver-timeline-widget-4-image-root');
+        var now = Date.now()
+        var rootImagePath = element.getAttribute(
+            'data-beaver-timeline-widget-4-image-root'
+        )
 
         // Build vis-timeline datasets
         var groups = new vis.DataSet([
             {
-                id: "research",
-                content: "Research",
-                order: 1
+                id: 'research',
+                content: 'Research',
+                order: 1,
             },
             {
-                id: "qa",
-                content: "Phase 2.6 QA",
-                order: 2
+                id: 'qa',
+                content: 'Phase 2.6 QA',
+                order: 2,
             },
             {
-                id: "ui",
-                content: "UI Design",
-                order: 3
+                id: 'ui',
+                content: 'UI Design',
+                order: 3,
             },
             {
-                id: "dev",
-                content: "Development",
-                order: 4
-            }
-        ]);
-
+                id: 'dev',
+                content: 'Development',
+                order: 4,
+            },
+        ])
 
         var items = new vis.DataSet([
             {
@@ -51,12 +52,9 @@ var BEAVETimelineWidget4 = function () {
                 start: now,
                 end: moment(now).add(1.5, 'hours'),
                 content: 'Meeting',
-                progress: "60%",
+                progress: '60%',
                 color: 'primary',
-                users: [
-                    'avatars/300-6.jpg',
-                    'avatars/300-1.jpg'
-                ]
+                users: ['avatars/300-6.jpg', 'avatars/300-1.jpg'],
             },
             {
                 id: 2,
@@ -64,11 +62,9 @@ var BEAVETimelineWidget4 = function () {
                 start: moment(now).add(1, 'hours'),
                 end: moment(now).add(2, 'hours'),
                 content: 'Testing',
-                progress: "47%",
+                progress: '47%',
                 color: 'success',
-                users: [
-                    'avatars/300-2.jpg'
-                ]
+                users: ['avatars/300-2.jpg'],
             },
             {
                 id: 3,
@@ -76,12 +72,9 @@ var BEAVETimelineWidget4 = function () {
                 start: moment(now).add(30, 'minutes'),
                 end: moment(now).add(2.5, 'hours'),
                 content: 'Landing page',
-                progress: "55%",
+                progress: '55%',
                 color: 'danger',
-                users: [
-                    'avatars/300-5.jpg',
-                    'avatars/300-20.jpg'
-                ]
+                users: ['avatars/300-5.jpg', 'avatars/300-20.jpg'],
             },
             {
                 id: 4,
@@ -89,15 +82,15 @@ var BEAVETimelineWidget4 = function () {
                 start: moment(now).add(1.5, 'hours'),
                 end: moment(now).add(3, 'hours'),
                 content: 'Products module',
-                progress: "75%",
+                progress: '75%',
                 color: 'info',
                 users: [
                     'avatars/300-23.jpg',
                     'avatars/300-12.jpg',
-                    'avatars/300-9.jpg'
-                ]
+                    'avatars/300-9.jpg',
+                ],
             },
-        ]);
+        ])
 
         // Set vis-timeline options
         var options = {
@@ -108,8 +101,8 @@ var BEAVETimelineWidget4 = function () {
             margin: {
                 item: {
                     horizontal: 10,
-                    vertical: 35
-                }
+                    vertical: 35,
+                },
             },
 
             // Remove current time line --- more info: https://visjs.github.io/vis-timeline/docs/timeline/#Configuration_Options
@@ -122,18 +115,20 @@ var BEAVETimelineWidget4 = function () {
                     whiteList: {
                         div: ['class', 'style'],
                         img: ['data-beaver-timeline-avatar-src', 'alt'],
-                        a: ['href', 'class']
+                        a: ['href', 'class'],
                     },
                 },
             },
             // specify a template for the items
             template: function (item) {
                 // Build users group
-                const users = item.users;
-                let userTemplate = '';
-                users.forEach(user => {
-                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-beaver-timeline-avatar-src="${rootImagePath + user}" alt="" /></div>`;
-                });
+                const users = item.users
+                let userTemplate = ''
+                users.forEach((user) => {
+                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-beaver-timeline-avatar-src="${
+                        rootImagePath + user
+                    }" alt="" /></div>`
+                })
 
                 return `<div class="rounded-pill bg-light-${item.color} d-flex align-items-center position-relative h-40px w-100 p-2 overflow-hidden">
                     <div class="position-absolute rounded-pill d-block bg-${item.color} start-0 top-0 h-100 z-index-1" style="width: ${item.progress};"></div>
@@ -150,74 +145,77 @@ var BEAVETimelineWidget4 = function () {
                         ${item.progress}
                     </div>
                 </div>        
-                `;
+                `
             },
 
             // Remove block ui on initial draw
             onInitialDrawComplete: function () {
-                handleAvatarPath();
+                handleAvatarPath()
 
-                const target = element.closest('[data-beaver-timeline-widget-4-blockui="true"]');
-                const blockUI = BEAVEBlockUI.getInstance(target);
+                const target = element.closest(
+                    '[data-beaver-timeline-widget-4-blockui="true"]'
+                )
+                const blockUI = BEAVERBlockUI.getInstance(target)
 
                 if (blockUI.isBlocked()) {
                     setTimeout(() => {
-                        blockUI.release();
-                    }, 1000);      
+                        blockUI.release()
+                    }, 1000)
                 }
-            }
-        };
+            },
+        }
 
         // Init vis-timeline
-        const timeline = new vis.Timeline(element, items, groups, options);
+        const timeline = new vis.Timeline(element, items, groups, options)
 
         // Prevent infinite loop draws
-        timeline.on("currentTimeTick", () => {            
+        timeline.on('currentTimeTick', () => {
             // After fired the first time we un-subscribed
-            timeline.off("currentTimeTick");
-        });
+            timeline.off('currentTimeTick')
+        })
     }
 
     // Week timeline
     const initTimelineWeek = () => {
         // Detect element
-        const element = document.querySelector('#beave_timeline_widget_4_2');
+        const element = document.querySelector('#beave_timeline_widget_4_2')
         if (!element) {
-            return;
+            return
         }
 
-        if(element.innerHTML){
-            return;
+        if (element.innerHTML) {
+            return
         }
 
         // Set variables
-        var now = Date.now();
-        var rootImagePath = element.getAttribute('data-beaver-timeline-widget-4-image-root');
+        var now = Date.now()
+        var rootImagePath = element.getAttribute(
+            'data-beaver-timeline-widget-4-image-root'
+        )
 
         // Build vis-timeline datasets
         var groups = new vis.DataSet([
             {
                 id: 1,
-                content: "Research",
-                order: 1
+                content: 'Research',
+                order: 1,
             },
             {
                 id: 2,
-                content: "Phase 2.6 QA",
-                order: 2
+                content: 'Phase 2.6 QA',
+                order: 2,
             },
             {
                 id: 3,
-                content: "UI Design",
-                order: 3
+                content: 'UI Design',
+                order: 3,
             },
             {
                 id: 4,
-                content: "Development",
-                order: 4
-            }
-        ]);
-
+                content: 'Development',
+                order: 4,
+            },
+        ])
 
         var items = new vis.DataSet([
             {
@@ -226,12 +224,9 @@ var BEAVETimelineWidget4 = function () {
                 start: now,
                 end: moment(now).add(7, 'days'),
                 content: 'Framework',
-                progress: "71%",
+                progress: '71%',
                 color: 'primary',
-                users: [
-                    'avatars/300-6.jpg',
-                    'avatars/300-1.jpg'
-                ]
+                users: ['avatars/300-6.jpg', 'avatars/300-1.jpg'],
             },
             {
                 id: 2,
@@ -239,11 +234,9 @@ var BEAVETimelineWidget4 = function () {
                 start: moment(now).add(7, 'days'),
                 end: moment(now).add(14, 'days'),
                 content: 'Accessibility',
-                progress: "84%",
+                progress: '84%',
                 color: 'success',
-                users: [
-                    'avatars/300-2.jpg'
-                ]
+                users: ['avatars/300-2.jpg'],
             },
             {
                 id: 3,
@@ -251,12 +244,9 @@ var BEAVETimelineWidget4 = function () {
                 start: moment(now).add(3, 'days'),
                 end: moment(now).add(20, 'days'),
                 content: 'Microsites',
-                progress: "69%",
+                progress: '69%',
                 color: 'danger',
-                users: [
-                    'avatars/300-5.jpg',
-                    'avatars/300-20.jpg'
-                ]
+                users: ['avatars/300-5.jpg', 'avatars/300-20.jpg'],
             },
             {
                 id: 4,
@@ -264,15 +254,15 @@ var BEAVETimelineWidget4 = function () {
                 start: moment(now).add(10, 'days'),
                 end: moment(now).add(21, 'days'),
                 content: 'Deployment',
-                progress: "74%",
+                progress: '74%',
                 color: 'info',
                 users: [
                     'avatars/300-23.jpg',
                     'avatars/300-12.jpg',
-                    'avatars/300-9.jpg'
-                ]
+                    'avatars/300-9.jpg',
+                ],
             },
-        ]);
+        ])
 
         // Set vis-timeline options
         var options = {
@@ -284,8 +274,8 @@ var BEAVETimelineWidget4 = function () {
             margin: {
                 item: {
                     horizontal: 10,
-                    vertical: 35
-                }
+                    vertical: 35,
+                },
             },
 
             // Remove current time line --- more info: https://visjs.github.io/vis-timeline/docs/timeline/#Configuration_Options
@@ -298,18 +288,20 @@ var BEAVETimelineWidget4 = function () {
                     whiteList: {
                         div: ['class', 'style'],
                         img: ['data-beaver-timeline-avatar-src', 'alt'],
-                        a: ['href', 'class']
+                        a: ['href', 'class'],
                     },
                 },
             },
             // specify a template for the items
             template: function (item) {
                 // Build users group
-                const users = item.users;
-                let userTemplate = '';
-                users.forEach(user => {
-                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-beaver-timeline-avatar-src="${rootImagePath + user}" alt="" /></div>`;
-                });
+                const users = item.users
+                let userTemplate = ''
+                users.forEach((user) => {
+                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-beaver-timeline-avatar-src="${
+                        rootImagePath + user
+                    }" alt="" /></div>`
+                })
 
                 return `<div class="rounded-pill bg-light-${item.color} d-flex align-items-center position-relative h-40px w-100 p-2 overflow-hidden">
                     <div class="position-absolute rounded-pill d-block bg-${item.color} start-0 top-0 h-100 z-index-1" style="width: ${item.progress};"></div>
@@ -326,74 +318,77 @@ var BEAVETimelineWidget4 = function () {
                         ${item.progress}
                     </div>
                 </div>        
-                `;
+                `
             },
 
             // Remove block ui on initial draw
             onInitialDrawComplete: function () {
-                handleAvatarPath();
+                handleAvatarPath()
 
-                const target = element.closest('[data-beaver-timeline-widget-4-blockui="true"]');
-                const blockUI = BEAVEBlockUI.getInstance(target);
+                const target = element.closest(
+                    '[data-beaver-timeline-widget-4-blockui="true"]'
+                )
+                const blockUI = BEAVERBlockUI.getInstance(target)
 
                 if (blockUI.isBlocked()) {
                     setTimeout(() => {
-                        blockUI.release();
-                    }, 1000);      
+                        blockUI.release()
+                    }, 1000)
                 }
-            }
-        };
+            },
+        }
 
         // Init vis-timeline
-        const timeline = new vis.Timeline(element, items, groups, options);
+        const timeline = new vis.Timeline(element, items, groups, options)
 
         // Prevent infinite loop draws
-        timeline.on("currentTimeTick", () => {            
+        timeline.on('currentTimeTick', () => {
             // After fired the first time we un-subscribed
-            timeline.off("currentTimeTick");
-        });
+            timeline.off('currentTimeTick')
+        })
     }
 
     // Month timeline
     const initTimelineMonth = () => {
         // Detect element
-        const element = document.querySelector('#beave_timeline_widget_4_3');
+        const element = document.querySelector('#beave_timeline_widget_4_3')
         if (!element) {
-            return;
+            return
         }
 
-        if(element.innerHTML){
-            return;
+        if (element.innerHTML) {
+            return
         }
 
         // Set variables
-        var now = Date.now();
-        var rootImagePath = element.getAttribute('data-beaver-timeline-widget-4-image-root');
+        var now = Date.now()
+        var rootImagePath = element.getAttribute(
+            'data-beaver-timeline-widget-4-image-root'
+        )
 
         // Build vis-timeline datasets
         var groups = new vis.DataSet([
             {
-                id: "research",
-                content: "Research",
-                order: 1
+                id: 'research',
+                content: 'Research',
+                order: 1,
             },
             {
-                id: "qa",
-                content: "Phase 2.6 QA",
-                order: 2
+                id: 'qa',
+                content: 'Phase 2.6 QA',
+                order: 2,
             },
             {
-                id: "ui",
-                content: "UI Design",
-                order: 3
+                id: 'ui',
+                content: 'UI Design',
+                order: 3,
             },
             {
-                id: "dev",
-                content: "Development",
-                order: 4
-            }
-        ]);
-
+                id: 'dev',
+                content: 'Development',
+                order: 4,
+            },
+        ])
 
         var items = new vis.DataSet([
             {
@@ -402,12 +397,9 @@ var BEAVETimelineWidget4 = function () {
                 start: now,
                 end: moment(now).add(2, 'months'),
                 content: 'Tags',
-                progress: "79%",
+                progress: '79%',
                 color: 'primary',
-                users: [
-                    'avatars/300-6.jpg',
-                    'avatars/300-1.jpg'
-                ]
+                users: ['avatars/300-6.jpg', 'avatars/300-1.jpg'],
             },
             {
                 id: 2,
@@ -415,11 +407,9 @@ var BEAVETimelineWidget4 = function () {
                 start: moment(now).add(0.5, 'months'),
                 end: moment(now).add(5, 'months'),
                 content: 'Testing',
-                progress: "64%",
+                progress: '64%',
                 color: 'success',
-                users: [
-                    'avatars/300-2.jpg'
-                ]
+                users: ['avatars/300-2.jpg'],
             },
             {
                 id: 3,
@@ -427,12 +417,9 @@ var BEAVETimelineWidget4 = function () {
                 start: moment(now).add(2, 'months'),
                 end: moment(now).add(6.5, 'months'),
                 content: 'Media',
-                progress: "82%",
+                progress: '82%',
                 color: 'danger',
-                users: [
-                    'avatars/300-5.jpg',
-                    'avatars/300-20.jpg'
-                ]
+                users: ['avatars/300-5.jpg', 'avatars/300-20.jpg'],
             },
             {
                 id: 4,
@@ -440,15 +427,15 @@ var BEAVETimelineWidget4 = function () {
                 start: moment(now).add(4, 'months'),
                 end: moment(now).add(7, 'months'),
                 content: 'Plugins',
-                progress: "58%",
+                progress: '58%',
                 color: 'info',
                 users: [
                     'avatars/300-23.jpg',
                     'avatars/300-12.jpg',
-                    'avatars/300-9.jpg'
-                ]
+                    'avatars/300-9.jpg',
+                ],
             },
-        ]);
+        ])
 
         // Set vis-timeline options
         var options = {
@@ -460,8 +447,8 @@ var BEAVETimelineWidget4 = function () {
             margin: {
                 item: {
                     horizontal: 10,
-                    vertical: 35
-                }
+                    vertical: 35,
+                },
             },
 
             // Remove current time line --- more info: https://visjs.github.io/vis-timeline/docs/timeline/#Configuration_Options
@@ -474,18 +461,20 @@ var BEAVETimelineWidget4 = function () {
                     whiteList: {
                         div: ['class', 'style'],
                         img: ['data-beaver-timeline-avatar-src', 'alt'],
-                        a: ['href', 'class']
+                        a: ['href', 'class'],
                     },
                 },
             },
             // specify a template for the items
             template: function (item) {
                 // Build users group
-                const users = item.users;
-                let userTemplate = '';
-                users.forEach(user => {
-                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-beaver-timeline-avatar-src="${rootImagePath + user}" alt="" /></div>`;
-                });
+                const users = item.users
+                let userTemplate = ''
+                users.forEach((user) => {
+                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-beaver-timeline-avatar-src="${
+                        rootImagePath + user
+                    }" alt="" /></div>`
+                })
 
                 return `<div class="rounded-pill bg-light-${item.color} d-flex align-items-center position-relative h-40px w-100 p-2 overflow-hidden">
                     <div class="position-absolute rounded-pill d-block bg-${item.color} start-0 top-0 h-100 z-index-1" style="width: ${item.progress};"></div>
@@ -502,74 +491,77 @@ var BEAVETimelineWidget4 = function () {
                         ${item.progress}
                     </div>
                 </div>        
-                `;
+                `
             },
 
             // Remove block ui on initial draw
             onInitialDrawComplete: function () {
-                handleAvatarPath();
-                
-                const target = element.closest('[data-beaver-timeline-widget-4-blockui="true"]');
-                const blockUI = BEAVEBlockUI.getInstance(target);
+                handleAvatarPath()
+
+                const target = element.closest(
+                    '[data-beaver-timeline-widget-4-blockui="true"]'
+                )
+                const blockUI = BEAVERBlockUI.getInstance(target)
 
                 if (blockUI.isBlocked()) {
                     setTimeout(() => {
-                        blockUI.release();
-                    }, 1000);                    
+                        blockUI.release()
+                    }, 1000)
                 }
-            }
-        };
+            },
+        }
 
         // Init vis-timeline
-        const timeline = new vis.Timeline(element, items, groups, options);
+        const timeline = new vis.Timeline(element, items, groups, options)
 
         // Prevent infinite loop draws
-        timeline.on("currentTimeTick", () => {            
+        timeline.on('currentTimeTick', () => {
             // After fired the first time we un-subscribed
-            timeline.off("currentTimeTick");
-        });
+            timeline.off('currentTimeTick')
+        })
     }
-    
+
     // 2022 timeline
     const initTimeline2022 = () => {
         // Detect element
-        const element = document.querySelector('#beave_timeline_widget_4_4');
+        const element = document.querySelector('#beave_timeline_widget_4_4')
         if (!element) {
-            return;
+            return
         }
 
-        if(element.innerHTML){
-            return;
+        if (element.innerHTML) {
+            return
         }
 
         // Set variables
-        var now = Date.now();
-        var rootImagePath = element.getAttribute('data-beaver-timeline-widget-4-image-root');
+        var now = Date.now()
+        var rootImagePath = element.getAttribute(
+            'data-beaver-timeline-widget-4-image-root'
+        )
 
         // Build vis-timeline datasets
         var groups = new vis.DataSet([
             {
-                id: "research",
-                content: "Research",
-                order: 1
+                id: 'research',
+                content: 'Research',
+                order: 1,
             },
             {
-                id: "qa",
-                content: "Phase 2.6 QA",
-                order: 2
+                id: 'qa',
+                content: 'Phase 2.6 QA',
+                order: 2,
             },
             {
-                id: "ui",
-                content: "UI Design",
-                order: 3
+                id: 'ui',
+                content: 'UI Design',
+                order: 3,
             },
             {
-                id: "dev",
-                content: "Development",
-                order: 4
-            }
-        ]);
-
+                id: 'dev',
+                content: 'Development',
+                order: 4,
+            },
+        ])
 
         var items = new vis.DataSet([
             {
@@ -578,12 +570,9 @@ var BEAVETimelineWidget4 = function () {
                 start: now,
                 end: moment(now).add(2, 'months'),
                 content: 'Tags',
-                progress: "51%",
+                progress: '51%',
                 color: 'primary',
-                users: [
-                    'avatars/300-7.jpg',
-                    'avatars/300-2.jpg'
-                ]
+                users: ['avatars/300-7.jpg', 'avatars/300-2.jpg'],
             },
             {
                 id: 2,
@@ -591,11 +580,9 @@ var BEAVETimelineWidget4 = function () {
                 start: moment(now).add(0.5, 'months'),
                 end: moment(now).add(5, 'months'),
                 content: 'Testing',
-                progress: "64%",
+                progress: '64%',
                 color: 'success',
-                users: [
-                    'avatars/300-2.jpg'
-                ]
+                users: ['avatars/300-2.jpg'],
             },
             {
                 id: 3,
@@ -603,12 +590,9 @@ var BEAVETimelineWidget4 = function () {
                 start: moment(now).add(2, 'months'),
                 end: moment(now).add(6.5, 'months'),
                 content: 'Media',
-                progress: "54%",
+                progress: '54%',
                 color: 'danger',
-                users: [
-                    'avatars/300-5.jpg',
-                    'avatars/300-21.jpg'
-                ]
+                users: ['avatars/300-5.jpg', 'avatars/300-21.jpg'],
             },
             {
                 id: 4,
@@ -616,15 +600,15 @@ var BEAVETimelineWidget4 = function () {
                 start: moment(now).add(4, 'months'),
                 end: moment(now).add(7, 'months'),
                 content: 'Plugins',
-                progress: "348%",
+                progress: '348%',
                 color: 'info',
                 users: [
                     'avatars/300-3.jpg',
                     'avatars/300-11.jpg',
-                    'avatars/300-13.jpg'
-                ]
+                    'avatars/300-13.jpg',
+                ],
             },
-        ]);
+        ])
 
         // Set vis-timeline options
         var options = {
@@ -636,8 +620,8 @@ var BEAVETimelineWidget4 = function () {
             margin: {
                 item: {
                     horizontal: 10,
-                    vertical: 35
-                }
+                    vertical: 35,
+                },
             },
 
             // Remove current time line --- more info: https://visjs.github.io/vis-timeline/docs/timeline/#Configuration_Options
@@ -650,18 +634,20 @@ var BEAVETimelineWidget4 = function () {
                     whiteList: {
                         div: ['class', 'style'],
                         img: ['data-beaver-timeline-avatar-src', 'alt'],
-                        a: ['href', 'class']
+                        a: ['href', 'class'],
                     },
                 },
             },
             // specify a template for the items
             template: function (item) {
                 // Build users group
-                const users = item.users;
-                let userTemplate = '';
-                users.forEach(user => {
-                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-beaver-timeline-avatar-src="${rootImagePath + user}" alt="" /></div>`;
-                });
+                const users = item.users
+                let userTemplate = ''
+                users.forEach((user) => {
+                    userTemplate += `<div class="symbol symbol-circle symbol-25px"><img data-beaver-timeline-avatar-src="${
+                        rootImagePath + user
+                    }" alt="" /></div>`
+                })
 
                 return `<div class="rounded-pill bg-light-${item.color} d-flex align-items-center position-relative h-40px w-100 p-2 overflow-hidden">
                     <div class="position-absolute rounded-pill d-block bg-${item.color} start-0 top-0 h-100 z-index-1" style="width: ${item.progress};"></div>
@@ -678,102 +664,122 @@ var BEAVETimelineWidget4 = function () {
                         ${item.progress}
                     </div>
                 </div>        
-                `;
+                `
             },
 
             // Remove block ui on initial draw
             onInitialDrawComplete: function () {
-                handleAvatarPath();
-                
-                const target = element.closest('[data-beaver-timeline-widget-4-blockui="true"]');
-                const blockUI = BEAVEBlockUI.getInstance(target);
+                handleAvatarPath()
+
+                const target = element.closest(
+                    '[data-beaver-timeline-widget-4-blockui="true"]'
+                )
+                const blockUI = BEAVERBlockUI.getInstance(target)
 
                 if (blockUI.isBlocked()) {
                     setTimeout(() => {
-                        blockUI.release();
-                    }, 1000);                    
+                        blockUI.release()
+                    }, 1000)
                 }
-            }
-        };
+            },
+        }
 
         // Init vis-timeline
-        const timeline = new vis.Timeline(element, items, groups, options);
+        const timeline = new vis.Timeline(element, items, groups, options)
 
         // Prevent infinite loop draws
-        timeline.on("currentTimeTick", () => {            
+        timeline.on('currentTimeTick', () => {
             // After fired the first time we un-subscribed
-            timeline.off("currentTimeTick");
-        });
+            timeline.off('currentTimeTick')
+        })
     }
     // Handle BlockUI
     const handleBlockUI = () => {
         // Select block ui elements
-        const elements = document.querySelectorAll('[data-beaver-timeline-widget-4-blockui="true"]');
+        const elements = document.querySelectorAll(
+            '[data-beaver-timeline-widget-4-blockui="true"]'
+        )
 
         // Init block ui
-        elements.forEach(element => {
-            const blockUI = new BEAVEBlockUI(element, {
-                overlayClass: "bg-body",
-            });
+        elements.forEach((element) => {
+            const blockUI = new BEAVERBlockUI(element, {
+                overlayClass: 'bg-body',
+            })
 
-            blockUI.block();
-        });
+            blockUI.block()
+        })
     }
 
     // Handle tabs visibility
     const tabsVisibility = () => {
-        const tabs = document.querySelectorAll('[data-beaver-timeline-widget-4="tab"]');
+        const tabs = document.querySelectorAll(
+            '[data-beaver-timeline-widget-4="tab"]'
+        )
 
-        tabs.forEach(tab => {
-            tab.addEventListener('shown.bs.tab', e => {
+        tabs.forEach((tab) => {
+            tab.addEventListener('shown.bs.tab', (e) => {
                 // Week tab
-                if(tab.getAttribute('href') === '#beave_timeline_widget_4_tab_week'){
-                    initTimelineWeek();
+                if (
+                    tab.getAttribute('href') ===
+                    '#beave_timeline_widget_4_tab_week'
+                ) {
+                    initTimelineWeek()
                 }
 
                 // Month tab
-                if(tab.getAttribute('href') === '#beave_timeline_widget_4_tab_month'){
-                    initTimelineMonth();
+                if (
+                    tab.getAttribute('href') ===
+                    '#beave_timeline_widget_4_tab_month'
+                ) {
+                    initTimelineMonth()
                 }
 
                 // 2022 tab
-                if(tab.getAttribute('href') === '#beave_timeline_widget_4_tab_2022'){
-                    initTimeline2022();
+                if (
+                    tab.getAttribute('href') ===
+                    '#beave_timeline_widget_4_tab_2022'
+                ) {
+                    initTimeline2022()
                 }
-            });
-        });
+            })
+        })
     }
 
     // Handle avatar path conflict
     const handleAvatarPath = () => {
-        const avatars = document.querySelectorAll('[data-beaver-timeline-avatar-src]');
+        const avatars = document.querySelectorAll(
+            '[data-beaver-timeline-avatar-src]'
+        )
 
-        if(!avatars){
-            return;
+        if (!avatars) {
+            return
         }
 
-        avatars.forEach(avatar => {
-            avatar.setAttribute('src', avatar.getAttribute('data-beaver-timeline-avatar-src'));
-            avatar.removeAttribute('data-beaver-timeline-avatar-src');
-        });
+        avatars.forEach((avatar) => {
+            avatar.setAttribute(
+                'src',
+                avatar.getAttribute('data-beaver-timeline-avatar-src')
+            )
+            avatar.removeAttribute('data-beaver-timeline-avatar-src')
+        })
     }
 
     // Public methods
     return {
         init: function () {
-            initTimelineDay();
-            handleBlockUI();
-            tabsVisibility();
-        }
+            initTimelineDay()
+            handleBlockUI()
+            tabsVisibility()
+        },
     }
-}();
+})()
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = BEAVETimelineWidget4;
+    module.exports = BEAVERTimelineWidget4
 }
 
 // On document ready
-BEAVEUtil.onDOMContentLoaded(function () {
-    BEAVETimelineWidget4.init();
-});
+BEAVERUtil.onDOMContentLoaded(function () {
+    BEAVERTimelineWidget4.init()
+})

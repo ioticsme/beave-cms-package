@@ -1,211 +1,219 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVEChartsWidget40 = (function () {
-	// Private methods
-	var initChart = function () {
-		// Check if amchart library is included
-		if (typeof am5 === "undefined") {
-			return;
-		}
+var BEAVERChartsWidget40 = (function () {
+    // Private methods
+    var initChart = function () {
+        // Check if amchart library is included
+        if (typeof am5 === 'undefined') {
+            return
+        }
 
-		var element = document.querySelector('#beave_charts_widget_40_chart');
+        var element = document.querySelector('#beave_charts_widget_40_chart')
 
-		if ( !element ) {
-			return;
-		}
+        if (!element) {
+            return
+        }
 
-        var root;
+        var root
 
-		var init = function() {
-			// Create root element
-			// https://www.amcharts.com/docs/v5/getting-started/#Root_element
-			root = am5.Root.new(element);
+        var init = function () {
+            // Create root element
+            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+            root = am5.Root.new(element)
 
-			if ( !root ) {
-				return;
-			}
+            if (!root) {
+                return
+            }
 
-			// Set themes
-			// https://www.amcharts.com/docs/v5/concepts/themes/
-			root.setThemes([am5themes_Animated.new(root)]);
+            // Set themes
+            // https://www.amcharts.com/docs/v5/concepts/themes/
+            root.setThemes([am5themes_Animated.new(root)])
 
-			// Create chart
-			// https://www.amcharts.com/docs/v5/charts/radar-chart/
-			var chart = root.container.children.push(
-				am5radar.RadarChart.new(root, {
-					panX: false,
-					panY: false,
-					wheelX: "panX",
-					wheelY: "zoomX",
-				})
-			);
+            // Create chart
+            // https://www.amcharts.com/docs/v5/charts/radar-chart/
+            var chart = root.container.children.push(
+                am5radar.RadarChart.new(root, {
+                    panX: false,
+                    panY: false,
+                    wheelX: 'panX',
+                    wheelY: 'zoomX',
+                })
+            )
 
-			// Create axes and their renderers
-			// https://www.amcharts.com/docs/v5/charts/radar-chart/#Adding_axes
-			var xRenderer = am5radar.AxisRendererCircular.new(root, {});
-			xRenderer.labels.template.setAll({
-				radius: 10
-			});
+            // Create axes and their renderers
+            // https://www.amcharts.com/docs/v5/charts/radar-chart/#Adding_axes
+            var xRenderer = am5radar.AxisRendererCircular.new(root, {})
+            xRenderer.labels.template.setAll({
+                radius: 10,
+            })
 
-			xRenderer.grid.template.setAll({
-				stroke: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-700"))
-			});
+            xRenderer.grid.template.setAll({
+                stroke: am5.color(
+                    BEAVERUtil.getCssVariableValue('--bs-gray-700')
+                ),
+            })
 
-			var yRenderer = am5radar.AxisRendererRadial.new(root, {
-				minGridDistance: 20
-			});	
-			
-			yRenderer.grid.template.setAll({
-				stroke: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-700"))
-			});
+            var yRenderer = am5radar.AxisRendererRadial.new(root, {
+                minGridDistance: 20,
+            })
 
-			var xAxis = chart.xAxes.push(
-				am5xy.CategoryAxis.new(root, {
-					maxDeviation: 0,
-					categoryField: "category",
-					renderer: xRenderer,
-					tooltip: am5.Tooltip.new(root, {}),
-				})
-			);			
+            yRenderer.grid.template.setAll({
+                stroke: am5.color(
+                    BEAVERUtil.getCssVariableValue('--bs-gray-700')
+                ),
+            })
 
-			var yAxis = chart.yAxes.push(
-				am5xy.ValueAxis.new(root, {
-					min: 0,
-					max: 10,
-					renderer: yRenderer
-				})
-			);
+            var xAxis = chart.xAxes.push(
+                am5xy.CategoryAxis.new(root, {
+                    maxDeviation: 0,
+                    categoryField: 'category',
+                    renderer: xRenderer,
+                    tooltip: am5.Tooltip.new(root, {}),
+                })
+            )
 
-			xRenderer.labels.template.setAll({
-				fontSize: 11,
-				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-800")),
-			});
+            var yAxis = chart.yAxes.push(
+                am5xy.ValueAxis.new(root, {
+                    min: 0,
+                    max: 10,
+                    renderer: yRenderer,
+                })
+            )
 
-			yRenderer.labels.template.setAll({
-				fontSize: 11,
-				fill: am5.color(BEAVEUtil.getCssVariableValue("--bs-gray-800")),
-			});
+            xRenderer.labels.template.setAll({
+                fontSize: 11,
+                fill: am5.color(
+                    BEAVERUtil.getCssVariableValue('--bs-gray-800')
+                ),
+            })
 
-			//yAxis.get("renderer").labels.template.set("forceHidden", true);
+            yRenderer.labels.template.setAll({
+                fontSize: 11,
+                fill: am5.color(
+                    BEAVERUtil.getCssVariableValue('--bs-gray-800')
+                ),
+            })
 
-			// Create series
-			// https://www.amcharts.com/docs/v5/charts/radar-chart/#Adding_series
-			var series = chart.series.push(
-				am5radar.RadarColumnSeries.new(root, {
-					xAxis: xAxis,
-					yAxis: yAxis,
-					valueYField: "value",
-					categoryXField: "category",
-				})
-			);
+            //yAxis.get("renderer").labels.template.set("forceHidden", true);
 
-			series.columns.template.setAll({
-				tooltipText: "{categoryX}: {valueY}",
-				templateField: "columnSettings",
-				strokeOpacity: 0,
-				width: am5.p100,
-			});
+            // Create series
+            // https://www.amcharts.com/docs/v5/charts/radar-chart/#Adding_series
+            var series = chart.series.push(
+                am5radar.RadarColumnSeries.new(root, {
+                    xAxis: xAxis,
+                    yAxis: yAxis,
+                    valueYField: 'value',
+                    categoryXField: 'category',
+                })
+            )
 
-			// Set data
-			// https://www.amcharts.com/docs/v5/charts/radar-chart/#Setting_data
-			var data = [
-				{
-					category: "Spain",
-					value: 5,
-					columnSettings: {
-						fill: chart.get("colors").next(),
-					},
-				},
-				{
-					category: "Spain",
-					value: 4,
-					columnSettings: {
-						fill: chart.get("colors").next(),
-					},
-				},
-				{
-					category: "United States",
-					value: 9,
-					columnSettings: {
-						fill: chart.get("colors").next(),
-					},
-				},
-				{
-					category: "Italy",
-					value: 7,
-					columnSettings: {
-						fill: chart.get("colors").next(),
-					},
-				},
-				{
-					category: "France",
-					value: 8,
-					columnSettings: {
-						fill: chart.get("colors").next(),
-					},
-				},
-				{
-					category: "Norway",
-					value: 4,
-					columnSettings: {
-						fill: chart.get("colors").next(),
-					},
-				},
-				{
-					category: "Brasil",
-					value: 7,
-					columnSettings: {
-						fill: chart.get("colors").next(),
-					},
-				},
-				{
-					category: "Canada",
-					value: 5,
-					columnSettings: {
-						fill: chart.get("colors").next(),
-					},
-				},
-			];
+            series.columns.template.setAll({
+                tooltipText: '{categoryX}: {valueY}',
+                templateField: 'columnSettings',
+                strokeOpacity: 0,
+                width: am5.p100,
+            })
 
-			series.data.setAll(data);
-			xAxis.data.setAll(data);
+            // Set data
+            // https://www.amcharts.com/docs/v5/charts/radar-chart/#Setting_data
+            var data = [
+                {
+                    category: 'Spain',
+                    value: 5,
+                    columnSettings: {
+                        fill: chart.get('colors').next(),
+                    },
+                },
+                {
+                    category: 'Spain',
+                    value: 4,
+                    columnSettings: {
+                        fill: chart.get('colors').next(),
+                    },
+                },
+                {
+                    category: 'United States',
+                    value: 9,
+                    columnSettings: {
+                        fill: chart.get('colors').next(),
+                    },
+                },
+                {
+                    category: 'Italy',
+                    value: 7,
+                    columnSettings: {
+                        fill: chart.get('colors').next(),
+                    },
+                },
+                {
+                    category: 'France',
+                    value: 8,
+                    columnSettings: {
+                        fill: chart.get('colors').next(),
+                    },
+                },
+                {
+                    category: 'Norway',
+                    value: 4,
+                    columnSettings: {
+                        fill: chart.get('colors').next(),
+                    },
+                },
+                {
+                    category: 'Brasil',
+                    value: 7,
+                    columnSettings: {
+                        fill: chart.get('colors').next(),
+                    },
+                },
+                {
+                    category: 'Canada',
+                    value: 5,
+                    columnSettings: {
+                        fill: chart.get('colors').next(),
+                    },
+                },
+            ]
 
-			// Animate chart
-			// https://www.amcharts.com/docs/v5/concepts/animations/#Initial_animation
-			series.appear(1000);
-			chart.appear(1000, 100);
-		}
+            series.data.setAll(data)
+            xAxis.data.setAll(data)
 
-		// On amchart ready
-		am5.ready(function () {
-			init();
-		}); // end am5.ready()
+            // Animate chart
+            // https://www.amcharts.com/docs/v5/concepts/animations/#Initial_animation
+            series.appear(1000)
+            chart.appear(1000, 100)
+        }
 
-		// Update chart on theme mode change
-		BEAVEThemeMode.on("beaver.thememode.change", function() {     
-			// Destroy chart
-			root.dispose();
+        // On amchart ready
+        am5.ready(function () {
+            init()
+        }) // end am5.ready()
 
-			// Reinit chart
-			init();
-		});
-	};
+        // Update chart on theme mode change
+        BEAVERThemeMode.on('beaver.thememode.change', function () {
+            // Destroy chart
+            root.dispose()
 
-	// Public methods
-	return {
-		init: function () {
-			initChart();
-		},
-	};
-})();
+            // Reinit chart
+            init()
+        })
+    }
+
+    // Public methods
+    return {
+        init: function () {
+            initChart()
+        },
+    }
+})()
 
 // Webpack support
-if (typeof module !== "undefined") {
-	module.exports = BEAVEChartsWidget40;
+if (typeof module !== 'undefined') {
+    module.exports = BEAVERChartsWidget40
 }
 
 // On document ready
-BEAVEUtil.onDOMContentLoaded(function () {
-	BEAVEChartsWidget40.init();
-});
+BEAVERUtil.onDOMContentLoaded(function () {
+    BEAVERChartsWidget40.init()
+})

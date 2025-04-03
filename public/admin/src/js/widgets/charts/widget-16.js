@@ -1,30 +1,30 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVEChartsWidget16 = (function () {
+var BEAVERChartsWidget16 = (function () {
     // Private methods
     var initChart = function () {
         // Check if amchart library is included
-        if (typeof am5 === "undefined") {
-            return;
+        if (typeof am5 === 'undefined') {
+            return
         }
 
-        var element = document.getElementById("beave_charts_widget_16_chart");
+        var element = document.getElementById('beave_charts_widget_16_chart')
 
         if (!element) {
-            return;
+            return
         }
 
-        var root;
+        var root
 
-        var init = function() {
+        var init = function () {
             // Create root element
             // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-            root = am5.Root.new(element);
+            root = am5.Root.new(element)
 
             // Set themes
             // https://www.amcharts.com/docs/v5/concepts/themes/
-            root.setThemes([am5themes_Animated.new(root)]);
+            root.setThemes([am5themes_Animated.new(root)])
 
             // Create chart
             // https://www.amcharts.com/docs/v5/charts/xy-chart/
@@ -32,80 +32,80 @@ var BEAVEChartsWidget16 = (function () {
                 am5xy.XYChart.new(root, {
                     panX: false,
                     panY: false,
-                    wheelX: "panX",
-                    wheelY: "zoomX",
+                    wheelX: 'panX',
+                    wheelY: 'zoomX',
                     layout: root.verticalLayout,
                 })
-            );
+            )
 
-            var colors = chart.get("colors");
+            var colors = chart.get('colors')
 
             var data = [
                 {
-                    country: "US",
+                    country: 'US',
                     visits: 725,
                 },
                 {
-                    country: "UK",
+                    country: 'UK',
                     visits: 625,
                 },
                 {
-                    country: "China",
+                    country: 'China',
                     visits: 602,
                 },
                 {
-                    country: "Japan",
+                    country: 'Japan',
                     visits: 509,
                 },
                 {
-                    country: "Germany",
+                    country: 'Germany',
                     visits: 322,
                 },
                 {
-                    country: "France",
+                    country: 'France',
                     visits: 214,
                 },
                 {
-                    country: "India",
+                    country: 'India',
                     visits: 204,
                 },
                 {
-                    country: "Spain",
+                    country: 'Spain',
                     visits: 198,
                 },
                 {
-                    country: "Italy",
+                    country: 'Italy',
                     visits: 165,
                 },
                 {
-                    country: "Russia",
+                    country: 'Russia',
                     visits: 130,
                 },
                 {
-                    country: "Norway",
+                    country: 'Norway',
                     visits: 93,
                 },
                 {
-                    country: "Canada",
+                    country: 'Canada',
                     visits: 41,
                 },
-            ];
+            ]
 
-            prepareParetoData();
+            prepareParetoData()
 
             function prepareParetoData() {
-                var total = 0;
+                var total = 0
 
                 for (var i = 0; i < data.length; i++) {
-                    var value = data[i].visits;
-                    total += value;
+                    var value = data[i].visits
+                    total += value
                 }
 
-                var sum = 0;
+                var sum = 0
                 for (var i = 0; i < data.length; i++) {
-                    var value = data[i].visits;
-                    sum += value;
-                    data[i].pareto = (sum / total) * 100;
+                    var value = data[i].visits
+                    sum += value
+                    data[i].pareto = (sum / total) * 100
                 }
             }
 
@@ -113,50 +113,56 @@ var BEAVEChartsWidget16 = (function () {
             // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
             var xAxis = chart.xAxes.push(
                 am5xy.CategoryAxis.new(root, {
-                    categoryField: "country",
+                    categoryField: 'country',
                     renderer: am5xy.AxisRendererX.new(root, {
                         minGridDistance: 30,
                     }),
                 })
-            );
+            )
 
-            xAxis.get("renderer").labels.template.setAll({
+            xAxis.get('renderer').labels.template.setAll({
                 paddingTop: 10,
-                fontWeight: "400",
+                fontWeight: '400',
                 fontSize: 13,
-                fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-gray-500'))
-            });
+                fill: am5.color(
+                    BEAVERUtil.getCssVariableValue('--bs-gray-500')
+                ),
+            })
 
-            xAxis.get("renderer").grid.template.setAll({
+            xAxis.get('renderer').grid.template.setAll({
                 disabled: true,
-                strokeOpacity: 0
-            });
+                strokeOpacity: 0,
+            })
 
-            xAxis.data.setAll(data);
+            xAxis.data.setAll(data)
 
             var yAxis = chart.yAxes.push(
                 am5xy.ValueAxis.new(root, {
                     renderer: am5xy.AxisRendererY.new(root, {}),
                 })
-            );
+            )
 
-            yAxis.get("renderer").labels.template.setAll({
+            yAxis.get('renderer').labels.template.setAll({
                 paddingLeft: 10,
-                fontWeight: "400",
+                fontWeight: '400',
                 fontSize: 13,
-                fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-gray-500'))
-            });
+                fill: am5.color(
+                    BEAVERUtil.getCssVariableValue('--bs-gray-500')
+                ),
+            })
 
-            yAxis.get("renderer").grid.template.setAll({
-                stroke: am5.color(BEAVEUtil.getCssVariableValue('--bs-gray-300')),
+            yAxis.get('renderer').grid.template.setAll({
+                stroke: am5.color(
+                    BEAVERUtil.getCssVariableValue('--bs-gray-300')
+                ),
                 strokeWidth: 1,
                 strokeOpacity: 1,
-                strokeDasharray: [3]
-            });
+                strokeDasharray: [3],
+            })
 
             var paretoAxisRenderer = am5xy.AxisRendererY.new(root, {
                 opposite: true,
-            });
+            })
 
             var paretoAxis = chart.yAxes.push(
                 am5xy.ValueAxis.new(root, {
@@ -165,16 +171,18 @@ var BEAVEChartsWidget16 = (function () {
                     max: 100,
                     strictMinMax: true,
                 })
-            );
-            
-            paretoAxis.get("renderer").labels.template.setAll({
-                fontWeight: "400",
-                fontSize: 13,
-                fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-gray-500'))
-            });
+            )
 
-            paretoAxisRenderer.grid.template.set("forceHidden", true);
-            paretoAxis.set("numberFormat", "#'%");
+            paretoAxis.get('renderer').labels.template.setAll({
+                fontWeight: '400',
+                fontSize: 13,
+                fill: am5.color(
+                    BEAVERUtil.getCssVariableValue('--bs-gray-500')
+                ),
+            })
+
+            paretoAxisRenderer.grid.template.set('forceHidden', true)
+            paretoAxis.set('numberFormat', "#'%")
 
             // Add series
             // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
@@ -182,88 +190,94 @@ var BEAVEChartsWidget16 = (function () {
                 am5xy.ColumnSeries.new(root, {
                     xAxis: xAxis,
                     yAxis: yAxis,
-                    valueYField: "visits",
-                    categoryXField: "country",
+                    valueYField: 'visits',
+                    categoryXField: 'country',
                 })
-            );
+            )
 
             series.columns.template.setAll({
-                tooltipText: "{categoryX}: {valueY}",
+                tooltipText: '{categoryX}: {valueY}',
                 tooltipY: 0,
                 strokeOpacity: 0,
                 cornerRadiusTL: 6,
                 cornerRadiusTR: 6,
-            });
+            })
 
             series.columns.template.adapters.add(
-                "fill",
+                'fill',
                 function (fill, target) {
                     return chart
-                        .get("colors")
-                        .getIndex(series.dataItems.indexOf(target.dataItem));
+                        .get('colors')
+                        .getIndex(series.dataItems.indexOf(target.dataItem))
                 }
-            );
+            )
 
             // pareto series
             var paretoSeries = chart.series.push(
                 am5xy.LineSeries.new(root, {
                     xAxis: xAxis,
                     yAxis: paretoAxis,
-                    valueYField: "pareto",
-                    categoryXField: "country",
-                    stroke: am5.color(BEAVEUtil.getCssVariableValue('--bs-dark')),
+                    valueYField: 'pareto',
+                    categoryXField: 'country',
+                    stroke: am5.color(
+                        BEAVERUtil.getCssVariableValue('--bs-dark')
+                    ),
                     maskBullets: false,
                 })
-            );
+            )
 
             paretoSeries.bullets.push(function () {
                 return am5.Bullet.new(root, {
                     locationY: 1,
                     sprite: am5.Circle.new(root, {
                         radius: 5,
-                        fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-primary')),
-                        stroke: am5.color(BEAVEUtil.getCssVariableValue('--bs-dark'))
+                        fill: am5.color(
+                            BEAVERUtil.getCssVariableValue('--bs-primary')
+                        ),
+                        stroke: am5.color(
+                            BEAVERUtil.getCssVariableValue('--bs-dark')
+                        ),
                     }),
-                });
-            });
+                })
+            })
 
-            series.data.setAll(data);
-            paretoSeries.data.setAll(data);
+            series.data.setAll(data)
+            paretoSeries.data.setAll(data)
 
             // Make stuff animate on load
             // https://www.amcharts.com/docs/v5/concepts/animations/
-            series.appear();
-            chart.appear(1000, 100);
+            series.appear()
+            chart.appear(1000, 100)
         }
 
         am5.ready(function () {
-            init();
-        });
+            init()
+        })
 
         // Update chart on theme mode change
-		BEAVEThemeMode.on("beaver.thememode.change", function() {     
-			// Destroy chart
-			root.dispose();
+        BEAVERThemeMode.on('beaver.thememode.change', function () {
+            // Destroy chart
+            root.dispose()
 
-			// Reinit chart
-			init();
-		});
-    };
+            // Reinit chart
+            init()
+        })
+    }
 
     // Public methods
     return {
         init: function () {
-            initChart();
+            initChart()
         },
-    };
-})();
+    }
+})()
 
 // Webpack support
-if (typeof module !== "undefined") {
-    module.exports = BEAVEChartsWidget16;
+if (typeof module !== 'undefined') {
+    module.exports = BEAVERChartsWidget16
 }
 
 // On document ready
-BEAVEUtil.onDOMContentLoaded(function () {
-    BEAVEChartsWidget16.init();
-});
+BEAVERUtil.onDOMContentLoaded(function () {
+    BEAVERChartsWidget16.init()
+})

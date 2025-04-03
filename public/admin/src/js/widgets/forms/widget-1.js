@@ -1,87 +1,93 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVEFormsWidget1 = (function () {
+var BEAVERFormsWidget1 = (function () {
     // Private methods
     var initForm1 = function () {
-        var element = document.querySelector('#beave_forms_widget_1_select_1');
+        var element = document.querySelector('#beave_forms_widget_1_select_1')
 
-        if ( !element ) {
-            return;
+        if (!element) {
+            return
         }
 
-        var optionFormat = function(item) {
-            if ( !item.id ) {
-                return item.text;
+        var optionFormat = function (item) {
+            if (!item.id) {
+                return item.text
             }
 
-            var span = document.createElement('span');
-            var template = '';
+            var span = document.createElement('span')
+            var template = ''
 
-            template += '<img src="' + item.element.getAttribute('data-beaver-select2-icon') + '" class="rounded-circle h-20px me-2" alt="image"/>';
-            template += item.text;
+            template +=
+                '<img src="' +
+                item.element.getAttribute('data-beaver-select2-icon') +
+                '" class="rounded-circle h-20px me-2" alt="image"/>'
+            template += item.text
 
-            span.innerHTML = template;
+            span.innerHTML = template
 
-            return $(span);
+            return $(span)
         }
 
         // Init Select2 --- more info: https://select2.org/
         $(element).select2({
-            placeholder: "Select coin",
+            placeholder: 'Select coin',
             minimumResultsForSearch: Infinity,
             templateSelection: optionFormat,
-            templateResult: optionFormat
-        });
-    };
+            templateResult: optionFormat,
+        })
+    }
 
     var initForm2 = function () {
-        var element = document.querySelector('#beave_forms_widget_1_select_2');
+        var element = document.querySelector('#beave_forms_widget_1_select_2')
 
-        if ( !element ) {
-            return;
+        if (!element) {
+            return
         }
 
-        var optionFormat = function(item) {
-            if ( !item.id ) {
-                return item.text;
+        var optionFormat = function (item) {
+            if (!item.id) {
+                return item.text
             }
 
-            var span = document.createElement('span');
-            var template = '';
+            var span = document.createElement('span')
+            var template = ''
 
-            template += '<img src="' + item.element.getAttribute('data-beaver-select2-icon') + '" class="rounded-circle h-20px me-2" alt="image"/>';
-            template += item.text;
+            template +=
+                '<img src="' +
+                item.element.getAttribute('data-beaver-select2-icon') +
+                '" class="rounded-circle h-20px me-2" alt="image"/>'
+            template += item.text
 
-            span.innerHTML = template;
+            span.innerHTML = template
 
-            return $(span);
+            return $(span)
         }
 
         // Init Select2 --- more info: https://select2.org/
         $(element).select2({
-            placeholder: "Select coin",
+            placeholder: 'Select coin',
             minimumResultsForSearch: Infinity,
             templateSelection: optionFormat,
-            templateResult: optionFormat
-        });
-    };
+            templateResult: optionFormat,
+        })
+    }
 
     // Public methods
     return {
         init: function () {
-            initForm1();
-            initForm2();
+            initForm1()
+            initForm2()
         },
-    };
-})();
+    }
+})()
 
 // Webpack support
-if (typeof module !== "undefined") {
-    module.exports = BEAVEFormsWidget1;
+if (typeof module !== 'undefined') {
+    module.exports = BEAVERFormsWidget1
 }
 
 // On document ready
-BEAVEUtil.onDOMContentLoaded(function () {
-    BEAVEFormsWidget1.init();
-});
+BEAVERUtil.onDOMContentLoaded(function () {
+    BEAVERFormsWidget1.init()
+})

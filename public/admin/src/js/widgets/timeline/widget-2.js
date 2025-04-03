@@ -1,61 +1,63 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVETimelineWidget2 = function () {
+var BEAVERTimelineWidget2 = (function () {
     // Private methods
-    var handleCheckbox = function() {
-        var card = document.querySelector('#beave_timeline_widget_2_card');        
-        
+    var handleCheckbox = function () {
+        var card = document.querySelector('#beave_timeline_widget_2_card')
+
         if (!card) {
-            return;
+            return
         }
 
         // Checkbox Handler
-        BEAVEUtil.on(card, '[data-beaver-element="checkbox"]', 'change', function (e) {
-            var check = this.closest('.form-check');
-            var tr = this.closest('tr');
-            var bullet = tr.querySelector('[data-beaver-element="bullet"]');
-            var status = tr.querySelector('[data-beaver-element="status"]');
+        BEAVERUtil.on(
+            card,
+            '[data-beaver-element="checkbox"]',
+            'change',
+            function (e) {
+                var check = this.closest('.form-check')
+                var tr = this.closest('tr')
+                var bullet = tr.querySelector('[data-beaver-element="bullet"]')
+                var status = tr.querySelector('[data-beaver-element="status"]')
 
-            if ( this.checked === true ) {
-                check.classList.add('form-check-success');
+                if (this.checked === true) {
+                    check.classList.add('form-check-success')
 
-                bullet.classList.remove('bg-primary');
-                bullet.classList.add('bg-success');
+                    bullet.classList.remove('bg-primary')
+                    bullet.classList.add('bg-success')
 
-                status.innerText = 'Done';
-                status.classList.remove('badge-light-primary');
-                status.classList.add('badge-light-success');
-            } else {
-                check.classList.remove('form-check-success');
+                    status.innerText = 'Done'
+                    status.classList.remove('badge-light-primary')
+                    status.classList.add('badge-light-success')
+                } else {
+                    check.classList.remove('form-check-success')
 
-                bullet.classList.remove('bg-success');
-                bullet.classList.add('bg-primary');
+                    bullet.classList.remove('bg-success')
+                    bullet.classList.add('bg-primary')
 
-                status.innerText = 'In Process';
-                status.classList.remove('badge-light-success');
-                status.classList.add('badge-light-primary');
+                    status.innerText = 'In Process'
+                    status.classList.remove('badge-light-success')
+                    status.classList.add('badge-light-primary')
+                }
             }
-        });
+        )
     }
 
     // Public methods
     return {
-        init: function () {           
-            handleCheckbox();             
-        }   
+        init: function () {
+            handleCheckbox()
+        },
     }
-}();
+})()
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = BEAVETimelineWidget2;
+    module.exports = BEAVERTimelineWidget2
 }
 
 // On document ready
-BEAVEUtil.onDOMContentLoaded(function() {
-    BEAVETimelineWidget2.init();
-});
-
-
- 
+BEAVERUtil.onDOMContentLoaded(function () {
+    BEAVERTimelineWidget2.init()
+})

@@ -1,156 +1,160 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVEChartsWidget47 = function () {
+var BEAVERChartsWidget47 = (function () {
     var chart = {
         self: null,
-        rendered: false
-    };
-
+        rendered: false,
+    }
 
     // Private methods
-    var initChart = function(chart) {
-        var element = document.getElementById("beave_charts_widget_47");
+    var initChart = function (chart) {
+        var element = document.getElementById('beave_charts_widget_47')
 
         if (!element) {
-            return;
+            return
         }
 
-        var height = parseInt(BEAVEUtil.css(element, 'height'));  
-        var baseColor = BEAVEUtil.getCssVariableValue('--bs-white');
-        var lightColor = BEAVEUtil.getCssVariableValue('--bs-white');
+        var height = parseInt(BEAVERUtil.css(element, 'height'))
+        var baseColor = BEAVERUtil.getCssVariableValue('--bs-white')
+        var lightColor = BEAVERUtil.getCssVariableValue('--bs-white')
 
         var options = {
-            series: [{
-                name: 'Sales',
-                data: [5, 5, 15, 15, 19, 16, 27, 24, 34, 25, 40, 30, 19, 17, 22, 10, 14, 14]
-            }],
+            series: [
+                {
+                    name: 'Sales',
+                    data: [
+                        5, 5, 15, 15, 19, 16, 27, 24, 34, 25, 40, 30, 19, 17,
+                        22, 10, 14, 14,
+                    ],
+                },
+            ],
             chart: {
                 fontFamily: 'inherit',
                 type: 'area',
                 height: height,
                 toolbar: {
-                    show: false
-                }
-            },             
+                    show: false,
+                },
+            },
             legend: {
-                show: false
+                show: false,
             },
             dataLabels: {
-                enabled: false
+                enabled: false,
             },
             fill: {
-                type: "gradient",
+                type: 'gradient',
                 gradient: {
                     shadeIntensity: 1,
                     opacityFrom: 0.5,
                     opacityTo: 0,
-                    stops: [0, 80, 100]
-                }
+                    stops: [0, 80, 100],
+                },
             },
             stroke: {
                 curve: 'smooth',
                 show: true,
                 width: 2,
-                colors: [baseColor]
+                colors: [baseColor],
             },
-            xaxis: {                 
+            xaxis: {
                 axisBorder: {
                     show: false,
                 },
                 axisTicks: {
-                    show: false
+                    show: false,
                 },
                 labels: {
-                    show: false
+                    show: false,
                 },
                 crosshairs: {
                     position: 'front',
                     stroke: {
                         color: baseColor,
                         width: 1,
-                        dashArray: 3
-                    }
+                        dashArray: 3,
+                    },
                 },
                 tooltip: {
-                    enabled: false                    
-                }
+                    enabled: false,
+                },
             },
             yaxis: {
                 labels: {
-                    show: false
-                }
+                    show: false,
+                },
             },
             states: {
                 normal: {
                     filter: {
                         type: 'none',
-                        value: 0
-                    }
+                        value: 0,
+                    },
                 },
                 hover: {
                     filter: {
                         type: 'none',
-                        value: 0
-                    }
+                        value: 0,
+                    },
                 },
                 active: {
                     allowMultipleDataPointsSelection: false,
                     filter: {
                         type: 'none',
-                        value: 0
-                    }
-                }
+                        value: 0,
+                    },
+                },
             },
             tooltip: {
-                enabled: false                
+                enabled: false,
             },
             colors: [lightColor],
-            grid: { 
+            grid: {
                 yaxis: {
                     lines: {
-                        show: false
-                    }
-                }
+                        show: false,
+                    },
+                },
             },
             markers: {
                 strokeColor: baseColor,
-                strokeWidth: 2
-            }
-        }; 
+                strokeWidth: 2,
+            },
+        }
 
-        chart.self = new ApexCharts(element, options);
+        chart.self = new ApexCharts(element, options)
 
         // Set timeout to properly get the parent elements width
-        setTimeout(function() {
-            chart.self.render();
-            chart.rendered = true;
-        }, 200);   
+        setTimeout(function () {
+            chart.self.render()
+            chart.rendered = true
+        }, 200)
     }
 
     // Public methods
     return {
         init: function () {
-            initChart(chart);
+            initChart(chart)
 
             // Update chart on theme mode change
-            BEAVEThemeMode.on("beaver.thememode.change", function() {                
+            BEAVERThemeMode.on('beaver.thememode.change', function () {
                 if (chart.rendered) {
-                    chart.self.destroy();
+                    chart.self.destroy()
                 }
 
-                initChart(chart);
-            });
-        }   
+                initChart(chart)
+            })
+        },
     }
-}();
+})()
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = BEAVEChartsWidget47;
+    module.exports = BEAVERChartsWidget47
 }
 
 // On document ready
-BEAVEUtil.onDOMContentLoaded(function() {
-    BEAVEChartsWidget47.init();
-});
+BEAVERUtil.onDOMContentLoaded(function () {
+    BEAVERChartsWidget47.init()
+})

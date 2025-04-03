@@ -1,216 +1,236 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVEToggle = function(element, options) {
+var BEAVERToggle = function (element, options) {
     ////////////////////////////
     // ** Private variables  ** //
     ////////////////////////////
-    var the = this;
+    var the = this
 
     if (!element) {
-        return;
+        return
     }
 
     // Default Options
     var defaultOptions = {
-        saveState: true
-    };
+        saveState: true,
+    }
 
     ////////////////////////////
     // ** Private methods  ** //
     ////////////////////////////
 
-    var _construct = function() {
-        if ( BEAVEUtil.data(element).has('toggle') === true ) {
-            the = BEAVEUtil.data(element).get('toggle');
+    var _construct = function () {
+        if (BEAVERUtil.data(element).has('toggle') === true) {
+            the = BEAVERUtil.data(element).get('toggle')
         } else {
-            _init();
+            _init()
         }
     }
 
-    var _init = function() {
+    var _init = function () {
         // Variables
-        the.options = BEAVEUtil.deepExtend({}, defaultOptions, options);
-        the.uid = BEAVEUtil.getUniqueId('toggle');
+        the.options = BEAVERUtil.deepExtend({}, defaultOptions, options)
+        the.uid = BEAVERUtil.getUniqueId('toggle')
 
         // Elements
-        the.element = element;
+        the.element = element
 
-        the.target = document.querySelector(the.element.getAttribute('data-beaver-toggle-target')) ? document.querySelector(the.element.getAttribute('data-beaver-toggle-target')) : the.element;
-        the.state = the.element.hasAttribute('data-beaver-toggle-state') ? the.element.getAttribute('data-beaver-toggle-state') : '';
-        the.mode = the.element.hasAttribute('data-beaver-toggle-mode') ? the.element.getAttribute('data-beaver-toggle-mode') : '';
-        the.attribute = 'data-beaver-' + the.element.getAttribute('data-beaver-toggle-name');
+        the.target = document.querySelector(
+            the.element.getAttribute('data-beaver-toggle-target')
+        )
+            ? document.querySelector(
+                  the.element.getAttribute('data-beaver-toggle-target')
+              )
+            : the.element
+        the.state = the.element.hasAttribute('data-beaver-toggle-state')
+            ? the.element.getAttribute('data-beaver-toggle-state')
+            : ''
+        the.mode = the.element.hasAttribute('data-beaver-toggle-mode')
+            ? the.element.getAttribute('data-beaver-toggle-mode')
+            : ''
+        the.attribute =
+            'data-beaver-' + the.element.getAttribute('data-beaver-toggle-name')
 
         // Event Handlers
-        _handlers();
+        _handlers()
 
         // Bind Instance
-        BEAVEUtil.data(the.element).set('toggle', the);
+        BEAVERUtil.data(the.element).set('toggle', the)
     }
 
-    var _handlers = function() {
-        BEAVEUtil.addEvent(the.element, 'click', function(e) {
-            e.preventDefault();
+    var _handlers = function () {
+        BEAVERUtil.addEvent(the.element, 'click', function (e) {
+            e.preventDefault()
 
-            if ( the.mode !== '' ) {
-                if ( the.mode === 'off' && _isEnabled() === false ) {
-                    _toggle();
-                } else if ( the.mode === 'on' && _isEnabled() === true ) {
-                    _toggle();
+            if (the.mode !== '') {
+                if (the.mode === 'off' && _isEnabled() === false) {
+                    _toggle()
+                } else if (the.mode === 'on' && _isEnabled() === true) {
+                    _toggle()
                 }
             } else {
-                _toggle();
+                _toggle()
             }
-        });
+        })
     }
 
     // Event handlers
-    var _toggle = function() {
+    var _toggle = function () {
         // Trigger "after.toggle" event
-        BEAVEEventHandler.trigger(the.element, 'beaver.toggle.change', the);
+        BEAVEREventHandler.trigger(the.element, 'beaver.toggle.change', the)
 
-        if ( _isEnabled() ) {
-            _disable();
+        if (_isEnabled()) {
+            _disable()
         } else {
-            _enable();
-        }       
+            _enable()
+        }
 
         // Trigger "before.toggle" event
-        BEAVEEventHandler.trigger(the.element, 'beaver.toggle.changed', the);
+        BEAVEREventHandler.trigger(the.element, 'beaver.toggle.changed', the)
 
-        return the;
+        return the
     }
 
-    var _enable = function() {
-        if ( _isEnabled() === true ) {
-            return;
+    var _enable = function () {
+        if (_isEnabled() === true) {
+            return
         }
 
-        BEAVEEventHandler.trigger(the.element, 'beaver.toggle.enable', the);
+        BEAVEREventHandler.trigger(the.element, 'beaver.toggle.enable', the)
 
-        the.target.setAttribute(the.attribute, 'on');
+        the.target.setAttribute(the.attribute, 'on')
 
         if (the.state.length > 0) {
-            the.element.classList.add(the.state);
-        }        
-
-        if ( typeof BEAVECookie !== 'undefined' && the.options.saveState === true ) {
-            BEAVECookie.set(the.attribute, 'on');
+            the.element.classList.add(the.state)
         }
 
-        BEAVEEventHandler.trigger(the.element, 'beaver.toggle.enabled', the);
+        if (
+            typeof BEAVERCookie !== 'undefined' &&
+            the.options.saveState === true
+        ) {
+            BEAVERCookie.set(the.attribute, 'on')
+        }
 
-        return the;
+        BEAVEREventHandler.trigger(the.element, 'beaver.toggle.enabled', the)
+
+        return the
     }
 
-    var _disable = function() {
-        if ( _isEnabled() === false ) {
-            return;
+    var _disable = function () {
+        if (_isEnabled() === false) {
+            return
         }
 
-        BEAVEEventHandler.trigger(the.element, 'beaver.toggle.disable', the);
+        BEAVEREventHandler.trigger(the.element, 'beaver.toggle.disable', the)
 
-        the.target.removeAttribute(the.attribute);
+        the.target.removeAttribute(the.attribute)
 
         if (the.state.length > 0) {
-            the.element.classList.remove(the.state);
-        } 
-
-        if ( typeof BEAVECookie !== 'undefined' && the.options.saveState === true ) {
-            BEAVECookie.remove(the.attribute);
+            the.element.classList.remove(the.state)
         }
 
-        BEAVEEventHandler.trigger(the.element, 'beaver.toggle.disabled', the);
+        if (
+            typeof BEAVERCookie !== 'undefined' &&
+            the.options.saveState === true
+        ) {
+            BEAVERCookie.remove(the.attribute)
+        }
 
-        return the;
+        BEAVEREventHandler.trigger(the.element, 'beaver.toggle.disabled', the)
+
+        return the
     }
 
-    var _isEnabled = function() {
-        return (String(the.target.getAttribute(the.attribute)).toLowerCase() === 'on');
+    var _isEnabled = function () {
+        return (
+            String(the.target.getAttribute(the.attribute)).toLowerCase() ===
+            'on'
+        )
     }
 
-    var _destroy = function() {
-        BEAVEUtil.data(the.element).remove('toggle');
+    var _destroy = function () {
+        BEAVERUtil.data(the.element).remove('toggle')
     }
 
     // Construct class
-    _construct();
+    _construct()
 
     ///////////////////////
     // ** Public API  ** //
     ///////////////////////
 
     // Plugin API
-    the.toggle = function() {
-        return _toggle();
+    the.toggle = function () {
+        return _toggle()
     }
 
-    the.enable = function() {
-        return _enable();
+    the.enable = function () {
+        return _enable()
     }
 
-    the.disable = function() {
-        return _disable();
+    the.disable = function () {
+        return _disable()
     }
 
-    the.isEnabled = function() {
-        return _isEnabled();
+    the.isEnabled = function () {
+        return _isEnabled()
     }
 
-    the.goElement = function() {
-        return the.element;
+    the.goElement = function () {
+        return the.element
     }
 
-    the.destroy = function() {
-        return _destroy();
+    the.destroy = function () {
+        return _destroy()
     }
 
     // Event API
-    the.on = function(name, handler) {
-        return BEAVEEventHandler.on(the.element, name, handler);
+    the.on = function (name, handler) {
+        return BEAVEREventHandler.on(the.element, name, handler)
     }
 
-    the.one = function(name, handler) {
-        return BEAVEEventHandler.one(the.element, name, handler);
+    the.one = function (name, handler) {
+        return BEAVEREventHandler.one(the.element, name, handler)
     }
 
-    the.off = function(name, handlerId) {
-        return BEAVEEventHandler.off(the.element, name, handlerId);
+    the.off = function (name, handlerId) {
+        return BEAVEREventHandler.off(the.element, name, handlerId)
     }
 
-    the.trigger = function(name, event) {
-        return BEAVEEventHandler.trigger(the.element, name, event, the, event);
+    the.trigger = function (name, event) {
+        return BEAVEREventHandler.trigger(the.element, name, event, the, event)
     }
-};
+}
 
 // Static methods
-BEAVEToggle.getInstance = function(element) {
-    if ( element !== null && BEAVEUtil.data(element).has('toggle') ) {
-        return BEAVEUtil.data(element).get('toggle');
+BEAVERToggle.getInstance = function (element) {
+    if (element !== null && BEAVERUtil.data(element).has('toggle')) {
+        return BEAVERUtil.data(element).get('toggle')
     } else {
-        return null;
+        return null
     }
 }
 
 // Create instances
-BEAVEToggle.createInstances = function(selector = '[data-beaver-toggle]') {
+BEAVERToggle.createInstances = function (selector = '[data-beaver-toggle]') {
     // Get instances
-    var elements = document.body.querySelectorAll(selector);
+    var elements = document.body.querySelectorAll(selector)
 
-    if ( elements && elements.length > 0 ) {
+    if (elements && elements.length > 0) {
         for (var i = 0, len = elements.length; i < len; i++) {
             // Initialize instances
-            new BEAVEToggle(elements[i]);
+            new BEAVERToggle(elements[i])
         }
     }
 }
 
 // Global initialization
-BEAVEToggle.init = function() {
-    BEAVEToggle.createInstances();
-};
+BEAVERToggle.init = function () {
+    BEAVERToggle.createInstances()
+}
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = BEAVEToggle;
+    module.exports = BEAVERToggle
 }

@@ -3,40 +3,40 @@
 //
 
 // Init components
-var BEAVEComponents = function () {
+var BEAVERComponents = (function () {
     // Public methods
     return {
         init: function () {
-            BEAVEApp.init();
-			BEAVEDrawer.init();
-			BEAVEMenu.init();
-			BEAVEScroll.init();
-			BEAVESticky.init();
-			BEAVESwapper.init();
-			BEAVEToggle.init();
-			BEAVEScrolltop.init();
-			BEAVEDialer.init();	
-			BEAVEImageInput.init();
-			BEAVEPasswordMeter.init();	
-        }
-    }	
-}();
+            BEAVERApp.init()
+            BEAVERDrawer.init()
+            BEAVERMenu.init()
+            BEAVERScroll.init()
+            BEAVERSticky.init()
+            BEAVERSwapper.init()
+            BEAVERToggle.init()
+            BEAVERScrolltop.init()
+            BEAVERDialer.init()
+            BEAVERImageInput.init()
+            BEAVERPasswordMeter.init()
+        },
+    }
+})()
 
 // On document ready
-if (document.readyState === "loading") {
-	document.addEventListener("DOMContentLoaded", function() {
-		BEAVEComponents.init();
-	});
- } else {
-	BEAVEComponents.init();
- }
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+        BEAVERComponents.init()
+    })
+} else {
+    BEAVERComponents.init()
+}
 
- // Init page loader
-window.addEventListener("load", function() {
-    BEAVEApp.hidePageLoading();
-});
+// Init page loader
+window.addEventListener('load', function () {
+    BEAVERApp.hidePageLoading()
+})
 
-// Declare BEAVEApp for Webpack support
+// Declare BEAVERApp for Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-	window.BEAVEComponents = module.exports = BEAVEComponents;
+    window.BEAVERComponents = module.exports = BEAVERComponents
 }

@@ -1,312 +1,391 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVEAppLayoutBuilder = function() {
-	var form;
-	var actionInput;
-	var url;
-	var previewButton;
-	var exportButton;
-	var resetButton;
+var BEAVERAppLayoutBuilder = (function () {
+    var form
+    var actionInput
+    var url
+    var previewButton
+    var exportButton
+    var resetButton
 
-	var engage;
-	var engageToggleOff;
-	var engageToggleOn;
-	var engagePrebuiltsModal;
+    var engage
+    var engageToggleOff
+    var engageToggleOn
+    var engagePrebuiltsModal
 
-	var handleEngagePrebuilts = function() {	
-		if (engagePrebuiltsModal === null) {
-			return;
-		}	
+    var handleEngagePrebuilts = function () {
+        if (engagePrebuiltsModal === null) {
+            return
+        }
 
-		if ( BEAVECookie.get("app_engage_prebuilts_modal_displayed") !== "1" ) {
-			setTimeout(function() {
-				const modal = new bootstrap.Modal(engagePrebuiltsModal);
-				modal.show();
-	
-				const date = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days from now
-				BEAVECookie.set("app_engage_prebuilts_modal_displayed", "1", {expires: date});
-			}, 3000);
-		} 
-	}
+        if (BEAVERCookie.get('app_engage_prebuilts_modal_displayed') !== '1') {
+            setTimeout(function () {
+                const modal = new bootstrap.Modal(engagePrebuiltsModal)
+                modal.show()
 
-	var handleEngagePrebuiltsViewMenu = function() {
-		const selected = engagePrebuiltsModal.querySelector('[data-beaver-element="selected"]');
-		const selectedTitle = engagePrebuiltsModal.querySelector('[data-beaver-element="title"]');
-		const menu = engagePrebuiltsModal.querySelector('[data-beaver-menu="true"]');
+                const date = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // 30 days from now
+                BEAVERCookie.set('app_engage_prebuilts_modal_displayed', '1', {
+                    expires: date,
+                })
+            }, 3000)
+        }
+    }
 
-		// Toggle Handler
-		BEAVEUtil.on(engagePrebuiltsModal, '[data-beaver-mode]', 'click', function (e) {
-			const title = this.innerText;	
-			const mode = this.getAttribute("data-beaver-mode");
-			const selectedLink = menu.querySelector('.menu-link.active');
-			const viewImage = document.querySelector('#beave_app_engage_prebuilts_view_image');
-			const viewText = document.querySelector('#beave_app_engage_prebuilts_view_text');
-			selectedTitle.innerText = title;
+    var handleEngagePrebuiltsViewMenu = function () {
+        const selected = engagePrebuiltsModal.querySelector(
+            '[data-beaver-element="selected"]'
+        )
+        const selectedTitle = engagePrebuiltsModal.querySelector(
+            '[data-beaver-element="title"]'
+        )
+        const menu = engagePrebuiltsModal.querySelector(
+            '[data-beaver-menu="true"]'
+        )
 
-			if (selectedLink) {
-				selectedLink.classList.remove('active');
-			}
+        // Toggle Handler
+        BEAVERUtil.on(
+            engagePrebuiltsModal,
+            '[data-beaver-mode]',
+            'click',
+            function (e) {
+                const title = this.innerText
+                const mode = this.getAttribute('data-beaver-mode')
+                const selectedLink = menu.querySelector('.menu-link.active')
+                const viewImage = document.querySelector(
+                    '#beave_app_engage_prebuilts_view_image'
+                )
+                const viewText = document.querySelector(
+                    '#beave_app_engage_prebuilts_view_text'
+                )
+                selectedTitle.innerText = title
 
-			this.classList.add('active');
+                if (selectedLink) {
+                    selectedLink.classList.remove('active')
+                }
 
-			if (mode === "image") {
-				viewImage.classList.remove("d-none");
-				viewImage.classList.add("d-block");
-				viewText.classList.remove("d-block");
-				viewText.classList.add("d-none");
-			} else {
-				viewText.classList.remove("d-none");
-				viewText.classList.add("d-block");
-				viewImage.classList.remove("d-block");
-				viewImage.classList.add("d-none");
-			}
-		});
-	}
+                this.classList.add('active')
 
-	var handleEngageToggle = function() {	
-		engageToggleOff.addEventListener("click", function (e) {
-			e.preventDefault();
+                if (mode === 'image') {
+                    viewImage.classList.remove('d-none')
+                    viewImage.classList.add('d-block')
+                    viewText.classList.remove('d-block')
+                    viewText.classList.add('d-none')
+                } else {
+                    viewText.classList.remove('d-none')
+                    viewText.classList.add('d-block')
+                    viewImage.classList.remove('d-block')
+                    viewImage.classList.add('d-none')
+                }
+            }
+        )
+    }
 
-			const date = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000); // 1 days from now
-			BEAVECookie.set("app_engage_hide", "1", {expires: date});
-			engage.classList.add('app-engage-hide');
-		});
+    var handleEngageToggle = function () {
+        engageToggleOff.addEventListener('click', function (e) {
+            e.preventDefault()
 
-		engageToggleOn.addEventListener("click", function (e) {
-			e.preventDefault();
+            const date = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000) // 1 days from now
+            BEAVERCookie.set('app_engage_hide', '1', { expires: date })
+            engage.classList.add('app-engage-hide')
+        })
 
-			BEAVECookie.remove("app_engage_hide");
-			engage.classList.remove('app-engage-hide');
-		});
-	}
+        engageToggleOn.addEventListener('click', function (e) {
+            e.preventDefault()
 
-	var handlePreview = function() {
-		previewButton.addEventListener("click", function(e) {
-			e.preventDefault();
+            BEAVERCookie.remove('app_engage_hide')
+            engage.classList.remove('app-engage-hide')
+        })
+    }
 
-			// Set form action value
-			actionInput.value = "preview";
+    var handlePreview = function () {
+        previewButton.addEventListener('click', function (e) {
+            e.preventDefault()
 
-			// Show progress
-			previewButton.setAttribute("data-beaver-indicator", "on");
+            // Set form action value
+            actionInput.value = 'preview'
 
-			// Prepare form data
-			var data = $(form).serialize();
+            // Show progress
+            previewButton.setAttribute('data-beaver-indicator', 'on')
 
-			// Submit
-			$.ajax({
-				type: "POST",
-				dataType: "html",
-				url: url,
-				data: data,
-				success: function(response, status, xhr) {
-					if (history.scrollRestoration) {
-						history.scrollRestoration = 'manual';
-					}					
-					location.reload();					
-					return;
+            // Prepare form data
+            var data = $(form).serialize()
 
-					toastr.success(
-						"Preview has been updated with current configured layout.", 
-						"Preview updated!", 
-						{timeOut: 0, extendedTimeOut: 0, closeButton: true, closeDuration: 0}
-					);
+            // Submit
+            $.ajax({
+                type: 'POST',
+                dataType: 'html',
+                url: url,
+                data: data,
+                success: function (response, status, xhr) {
+                    if (history.scrollRestoration) {
+                        history.scrollRestoration = 'manual'
+                    }
+                    location.reload()
+                    return
 
-					setTimeout(function() {
-						location.reload(); // reload page
-					}, 1500);
-				},
-				error: function(response) {
-					toastr.error(
-						"Please try it again later.", 
-						"Something went wrong!", 
-						{timeOut: 0, extendedTimeOut: 0, closeButton: true, closeDuration: 0}
-					);
-				},
-				complete: function() {
-					previewButton.removeAttribute("data-beaver-indicator");
-				}
-			});
-		});
-	};
+                    toastr.success(
+                        'Preview has been updated with current configured layout.',
+                        'Preview updated!',
+                        {
+                            timeOut: 0,
+                            extendedTimeOut: 0,
+                            closeButton: true,
+                            closeDuration: 0,
+                        }
+                    )
 
-	var handleExport = function() {
-		exportButton.addEventListener("click", function(e) {
-			e.preventDefault();
+                    setTimeout(function () {
+                        location.reload() // reload page
+                    }, 1500)
+                },
+                error: function (response) {
+                    toastr.error(
+                        'Please try it again later.',
+                        'Something went wrong!',
+                        {
+                            timeOut: 0,
+                            extendedTimeOut: 0,
+                            closeButton: true,
+                            closeDuration: 0,
+                        }
+                    )
+                },
+                complete: function () {
+                    previewButton.removeAttribute('data-beaver-indicator')
+                },
+            })
+        })
+    }
 
-			toastr.success(
-				"Process has been started and it may take a while.", 
-				"Generating HTML!", 
-				{timeOut: 0, extendedTimeOut: 0, closeButton: true, closeDuration: 0}
-			);
+    var handleExport = function () {
+        exportButton.addEventListener('click', function (e) {
+            e.preventDefault()
 
-			// Show progress
-			exportButton.setAttribute("data-beaver-indicator", "on");
+            toastr.success(
+                'Process has been started and it may take a while.',
+                'Generating HTML!',
+                {
+                    timeOut: 0,
+                    extendedTimeOut: 0,
+                    closeButton: true,
+                    closeDuration: 0,
+                }
+            )
 
-			// Set form action value
-			actionInput.value = "export";
-			
-			// Prepare form data
-			var data = $(form).serialize();
+            // Show progress
+            exportButton.setAttribute('data-beaver-indicator', 'on')
 
-			$.ajax({
-				type: "POST",
-				dataType: "html",
-				url: url,
-				data: data,
-				success: function(response, status, xhr) {
-					var timer = setInterval(function() {
-						$("<iframe/>").attr({
-							src: url + "?layout-builder[action]=export&download=1&output=" + response,
-							style: "visibility:hidden;display:none",
-						}).ready(function() {
-							// Stop the timer
-							clearInterval(timer);
+            // Set form action value
+            actionInput.value = 'export'
 
-							exportButton.removeAttribute("data-beaver-indicator");
-						}).appendTo("body");
-					}, 3000);
-				},
-				error: function(response) {
-					toastr.error(
-						"Please try it again later.", 
-						"Something went wrong!", 
-						{timeOut: 0, extendedTimeOut: 0, closeButton: true, closeDuration: 0}
-					);
+            // Prepare form data
+            var data = $(form).serialize()
 
-					exportButton.removeAttribute("data-beaver-indicator");
-				},
-			});
-		});
-	};
+            $.ajax({
+                type: 'POST',
+                dataType: 'html',
+                url: url,
+                data: data,
+                success: function (response, status, xhr) {
+                    var timer = setInterval(function () {
+                        $('<iframe/>')
+                            .attr({
+                                src:
+                                    url +
+                                    '?layout-builder[action]=export&download=1&output=' +
+                                    response,
+                                style: 'visibility:hidden;display:none',
+                            })
+                            .ready(function () {
+                                // Stop the timer
+                                clearInterval(timer)
 
-	var handleReset = function() {
-		resetButton.addEventListener("click", function(e) {
-			e.preventDefault();
+                                exportButton.removeAttribute(
+                                    'data-beaver-indicator'
+                                )
+                            })
+                            .appendTo('body')
+                    }, 3000)
+                },
+                error: function (response) {
+                    toastr.error(
+                        'Please try it again later.',
+                        'Something went wrong!',
+                        {
+                            timeOut: 0,
+                            extendedTimeOut: 0,
+                            closeButton: true,
+                            closeDuration: 0,
+                        }
+                    )
 
-			// Show progress
-			resetButton.setAttribute("data-beaver-indicator", "on");
+                    exportButton.removeAttribute('data-beaver-indicator')
+                },
+            })
+        })
+    }
 
-			// Set form action value
-			actionInput.value = "reset";
-			
-			// Prepare form data
-			var data = $(form).serialize();
+    var handleReset = function () {
+        resetButton.addEventListener('click', function (e) {
+            e.preventDefault()
 
-			$.ajax({
-				type: "POST",
-				dataType: "html",
-				url: url,
-				data: data,
-				success: function(response, status, xhr) {
-					if (history.scrollRestoration) {
-						history.scrollRestoration = 'manual';
-					}
-					
-					location.reload();					
-					return;
-					
-					toastr.success(
-						"Preview has been successfully reset and the page will be reloaded.", 
-						"Reset Preview!", 
-						{timeOut: 0, extendedTimeOut: 0, closeButton: true, closeDuration: 0}
-					);
+            // Show progress
+            resetButton.setAttribute('data-beaver-indicator', 'on')
 
-					setTimeout(function() {
-						location.reload(); // reload page
-					}, 1500);
-				},
-				error: function(response) {
-					toastr.error(
-						"Please try it again later.", 
-						"Something went wrong!", 
-						{timeOut: 0, extendedTimeOut: 0, closeButton: true, closeDuration: 0}
-					);
-				},
-				complete: function() {
-					resetButton.removeAttribute("data-beaver-indicator");
-				},
-			});
-		});
-	};
+            // Set form action value
+            actionInput.value = 'reset'
 
-	var handleThemeMode = function() {
-		var checkLight = document.querySelector('#beave_layout_builder_theme_mode_light');
-		var checkDark = document.querySelector('#beave_layout_builder_theme_mode_dark');
-		var check = document.querySelector('#beave_layout_builder_theme_mode_' + BEAVEThemeMode.getMode());
+            // Prepare form data
+            var data = $(form).serialize()
 
-		if (checkLight) {
-			checkLight.addEventListener("click", function() {
-				this.checked = true;
-				this.closest('[data-beaver-buttons="true"]').querySelector('.form-check-image.active').classList.remove('active');
-				this.closest('.form-check-image').classList.add('active');
-				BEAVEThemeMode.setMode('light');
-			});
-		}
-		
-		if (checkDark) {
-			checkDark.addEventListener("click", function() {
-				this.checked = true;
-				this.closest('[data-beaver-buttons="true"]').querySelector('.form-check-image.active').classList.remove('active');
-				this.closest('.form-check-image').classList.add('active');
-				BEAVEThemeMode.setMode('dark');
-			});
-		}
+            $.ajax({
+                type: 'POST',
+                dataType: 'html',
+                url: url,
+                data: data,
+                success: function (response, status, xhr) {
+                    if (history.scrollRestoration) {
+                        history.scrollRestoration = 'manual'
+                    }
 
-		if ( check ) {
-			check.closest('.form-check-image').classList.add('active');
-			check.checked = true;
-		}
-	}
+                    location.reload()
+                    return
 
-	return {
-		// Public functions
-		init: function() {
-			engage = document.querySelector('#beave_app_engage');
-			engageToggleOn = document.querySelector('#beave_app_engage_toggle_on');
-			engageToggleOff = document.querySelector('#beave_app_engage_toggle_off');
-			engagePrebuiltsModal = document.querySelector('#beave_app_engage_prebuilts_modal');
+                    toastr.success(
+                        'Preview has been successfully reset and the page will be reloaded.',
+                        'Reset Preview!',
+                        {
+                            timeOut: 0,
+                            extendedTimeOut: 0,
+                            closeButton: true,
+                            closeDuration: 0,
+                        }
+                    )
 
-			if ( engage && engagePrebuiltsModal) {
-				handleEngagePrebuilts();
-				handleEngagePrebuiltsViewMenu();
-			}
+                    setTimeout(function () {
+                        location.reload() // reload page
+                    }, 1500)
+                },
+                error: function (response) {
+                    toastr.error(
+                        'Please try it again later.',
+                        'Something went wrong!',
+                        {
+                            timeOut: 0,
+                            extendedTimeOut: 0,
+                            closeButton: true,
+                            closeDuration: 0,
+                        }
+                    )
+                },
+                complete: function () {
+                    resetButton.removeAttribute('data-beaver-indicator')
+                },
+            })
+        })
+    }
 
-			if ( engage && engageToggleOn && engageToggleOff ) {
-				handleEngageToggle();
-			}
+    var handleThemeMode = function () {
+        var checkLight = document.querySelector(
+            '#beave_layout_builder_theme_mode_light'
+        )
+        var checkDark = document.querySelector(
+            '#beave_layout_builder_theme_mode_dark'
+        )
+        var check = document.querySelector(
+            '#beave_layout_builder_theme_mode_' + BEAVERThemeMode.getMode()
+        )
 
-            form = document.querySelector("#beave_app_layout_builder_form");
+        if (checkLight) {
+            checkLight.addEventListener('click', function () {
+                this.checked = true
+                this.closest('[data-beaver-buttons="true"]')
+                    .querySelector('.form-check-image.active')
+                    .classList.remove('active')
+                this.closest('.form-check-image').classList.add('active')
+                BEAVERThemeMode.setMode('light')
+            })
+        }
 
-            if ( !form ) {
-                return;
+        if (checkDark) {
+            checkDark.addEventListener('click', function () {
+                this.checked = true
+                this.closest('[data-beaver-buttons="true"]')
+                    .querySelector('.form-check-image.active')
+                    .classList.remove('active')
+                this.closest('.form-check-image').classList.add('active')
+                BEAVERThemeMode.setMode('dark')
+            })
+        }
+
+        if (check) {
+            check.closest('.form-check-image').classList.add('active')
+            check.checked = true
+        }
+    }
+
+    return {
+        // Public functions
+        init: function () {
+            engage = document.querySelector('#beave_app_engage')
+            engageToggleOn = document.querySelector(
+                '#beave_app_engage_toggle_on'
+            )
+            engageToggleOff = document.querySelector(
+                '#beave_app_engage_toggle_off'
+            )
+            engagePrebuiltsModal = document.querySelector(
+                '#beave_app_engage_prebuilts_modal'
+            )
+
+            if (engage && engagePrebuiltsModal) {
+                handleEngagePrebuilts()
+                handleEngagePrebuiltsViewMenu()
             }
 
-            url = form.getAttribute("action");
-            actionInput = document.querySelector("#beave_app_layout_builder_action");            
-            previewButton = document.querySelector("#beave_app_layout_builder_preview");
-            exportButton = document.querySelector("#beave_app_layout_builder_export");
-            resetButton = document.querySelector("#beave_app_layout_builder_reset");			
-    
-			if ( previewButton ) {
-				handlePreview();
-			}
+            if (engage && engageToggleOn && engageToggleOff) {
+                handleEngageToggle()
+            }
 
-			if ( exportButton ) {
-				handleExport();
-			}
+            form = document.querySelector('#beave_app_layout_builder_form')
 
-			if ( resetButton ) {
-				handleReset();
-			}
+            if (!form) {
+                return
+            }
 
-			handleThemeMode();
-		}
-	};
-}();
+            url = form.getAttribute('action')
+            actionInput = document.querySelector(
+                '#beave_app_layout_builder_action'
+            )
+            previewButton = document.querySelector(
+                '#beave_app_layout_builder_preview'
+            )
+            exportButton = document.querySelector(
+                '#beave_app_layout_builder_export'
+            )
+            resetButton = document.querySelector(
+                '#beave_app_layout_builder_reset'
+            )
+
+            if (previewButton) {
+                handlePreview()
+            }
+
+            if (exportButton) {
+                handleExport()
+            }
+
+            if (resetButton) {
+                handleReset()
+            }
+
+            handleThemeMode()
+        },
+    }
+})()
 
 // On document ready
-BEAVEUtil.onDOMContentLoaded(function() {
-    BEAVEAppLayoutBuilder.init();
-});
+BEAVERUtil.onDOMContentLoaded(function () {
+    BEAVERAppLayoutBuilder.init()
+})

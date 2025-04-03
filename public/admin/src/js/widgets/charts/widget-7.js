@@ -1,51 +1,56 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVEChartsWidget7 = function () {
+var BEAVERChartsWidget7 = (function () {
     // Private methods
-    var initChart = function(chartSelector) {
-        var element = document.querySelector(chartSelector);
+    var initChart = function (chartSelector) {
+        var element = document.querySelector(chartSelector)
 
         if (!element) {
-            return;
+            return
         }
 
-        var height = parseInt(BEAVEUtil.css(element, 'height'));
-        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
+        var height = parseInt(BEAVERUtil.css(element, 'height'))
+        var borderColor = BEAVERUtil.getCssVariableValue(
+            '--bs-border-dashed-color'
+        )
 
         var options = {
-            series: [{
-                name: 'Net Profit',
-                data: data1
-            }, {
-                name: 'Revenue',
-                data: data2
-            }],
+            series: [
+                {
+                    name: 'Net Profit',
+                    data: data1,
+                },
+                {
+                    name: 'Revenue',
+                    data: data2,
+                },
+            ],
             chart: {
                 fontFamily: 'inherit',
                 type: 'bar',
                 height: height,
                 toolbar: {
-                    show: false
-                }
+                    show: false,
+                },
             },
             plotOptions: {
                 bar: {
                     horizontal: false,
                     columnWidth: ['40%'],
-                    borderRadius: [6]
+                    borderRadius: [6],
                 },
             },
             legend: {
-                show: false
+                show: false,
             },
             dataLabels: {
-                enabled: false
+                enabled: false,
             },
             stroke: {
                 show: true,
                 width: 2,
-                colors: ['transparent']
+                colors: ['transparent'],
             },
             xaxis: {
                 categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
@@ -53,110 +58,134 @@ var BEAVEChartsWidget7 = function () {
                     show: false,
                 },
                 axisTicks: {
-                    show: false
+                    show: false,
                 },
                 labels: {
                     style: {
-                        colors: BEAVEUtil.getCssVariableValue('--bs-gray-700'),
-                        fontSize: '12px'
-                    }
-                }
+                        colors: BEAVERUtil.getCssVariableValue('--bs-gray-700'),
+                        fontSize: '12px',
+                    },
+                },
             },
             yaxis: {
                 labels: {
                     style: {
-                        colors: BEAVEUtil.getCssVariableValue('--bs-gray-700'),
-                        fontSize: '12px'
-                    }
-                }
+                        colors: BEAVERUtil.getCssVariableValue('--bs-gray-700'),
+                        fontSize: '12px',
+                    },
+                },
             },
             fill: {
-                opacity: 1
+                opacity: 1,
             },
             states: {
                 normal: {
                     filter: {
                         type: 'none',
-                        value: 0
-                    }
+                        value: 0,
+                    },
                 },
                 hover: {
                     filter: {
                         type: 'none',
-                        value: 0
-                    }
+                        value: 0,
+                    },
                 },
                 active: {
                     allowMultipleDataPointsSelection: false,
                     filter: {
                         type: 'none',
-                        value: 0
-                    }
-                }
+                        value: 0,
+                    },
+                },
             },
             tooltip: {
                 style: {
-                    fontSize: '12px'
+                    fontSize: '12px',
                 },
                 y: {
                     formatter: function (val) {
-                        return "$" + val + " thousands"
-                    }
-                }
+                        return '$' + val + ' thousands'
+                    },
+                },
             },
-            colors: [BEAVEUtil.getCssVariableValue('--bs-primary'), BEAVEUtil.getCssVariableValue('--bs-primary-light')],
+            colors: [
+                BEAVERUtil.getCssVariableValue('--bs-primary'),
+                BEAVERUtil.getCssVariableValue('--bs-primary-light'),
+            ],
             grid: {
                 borderColor: borderColor,
                 strokeDashArray: 4,
                 yaxis: {
                     lines: {
-                        show: true
-                    }
-                }
-            }
-        };
+                        show: true,
+                    },
+                },
+            },
+        }
 
-        var chart = new ApexCharts(element, options);
+        var chart = new ApexCharts(element, options)
 
-        var init = false;
-        var tab = document.querySelector(tabSelector);
-        
+        var init = false
+        var tab = document.querySelector(tabSelector)
+
         if (initByDefault === true) {
-            chart.render();
-            init = true;
-        }        
+            chart.render()
+            init = true
+        }
 
         tab.addEventListener('shown.bs.tab', function (event) {
             if (init == false) {
-                chart.render();
-                init = true;
+                chart.render()
+                init = true
             }
         })
-          
-        var chart = new ApexCharts(element, options);
-        chart.render();   
+
+        var chart = new ApexCharts(element, options)
+        chart.render()
     }
 
     // Public methods
     return {
-        init: function () {          
-            initChart('#beave_chart_widget_7_tab_1', '#beave_chart_widget_7_chart_1', [44, 55, 57, 56, 61, 58], [76, 85, 101, 98, 87, 105], true);
-            initChart('#beave_chart_widget_7_tab_2', '#beave_chart_widget_7_chart_2', [35, 60, 35, 50, 45, 30], [65, 80, 50, 80, 75, 105], false);
-            initChart('#beave_chart_widget_7_tab_3', '#beave_chart_widget_7_chart_3', [25, 40, 45, 50, 40, 60], [76, 85, 101, 98, 87, 105], false);
-            initChart('#beave_chart_widget_7_tab_4', '#beave_chart_widget_7_chart_4', [50, 35, 45, 55, 30, 40], [76, 85, 101, 98, 87, 105], false);             
-        }   
+        init: function () {
+            initChart(
+                '#beave_chart_widget_7_tab_1',
+                '#beave_chart_widget_7_chart_1',
+                [44, 55, 57, 56, 61, 58],
+                [76, 85, 101, 98, 87, 105],
+                true
+            )
+            initChart(
+                '#beave_chart_widget_7_tab_2',
+                '#beave_chart_widget_7_chart_2',
+                [35, 60, 35, 50, 45, 30],
+                [65, 80, 50, 80, 75, 105],
+                false
+            )
+            initChart(
+                '#beave_chart_widget_7_tab_3',
+                '#beave_chart_widget_7_chart_3',
+                [25, 40, 45, 50, 40, 60],
+                [76, 85, 101, 98, 87, 105],
+                false
+            )
+            initChart(
+                '#beave_chart_widget_7_tab_4',
+                '#beave_chart_widget_7_chart_4',
+                [50, 35, 45, 55, 30, 40],
+                [76, 85, 101, 98, 87, 105],
+                false
+            )
+        },
     }
-}();
+})()
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = BEAVEChartsWidget7;
+    module.exports = BEAVERChartsWidget7
 }
 
 // On document ready
-BEAVEUtil.onDOMContentLoaded(function() {
-    //BEAVEChartsWidget7.init();
-});
-
-
- 
+BEAVERUtil.onDOMContentLoaded(function () {
+    //BEAVERChartsWidget7.init();
+})

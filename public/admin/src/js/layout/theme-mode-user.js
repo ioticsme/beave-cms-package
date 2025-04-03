@@ -1,35 +1,34 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVEThemeModeUser = function () {
-    
-    var handleSubmit = function() {
-		// Update chart on theme mode change
-        BEAVEThemeMode.on("beaver.thememode.change", function() {                
-            var menuMode = BEAVEThemeMode.getMenuMode();
-            var mode = BEAVEThemeMode.getMode();
-            console.log("user selected theme mode:" + menuMode);
-            console.log("theme mode:" + mode);
+var BEAVERThemeModeUser = (function () {
+    var handleSubmit = function () {
+        // Update chart on theme mode change
+        BEAVERThemeMode.on('beaver.thememode.change', function () {
+            var menuMode = BEAVERThemeMode.getMenuMode()
+            var mode = BEAVERThemeMode.getMode()
+            console.log('user selected theme mode:' + menuMode)
+            console.log('theme mode:' + mode)
 
-            // Submit selected theme mode menu option via ajax and 
+            // Submit selected theme mode menu option via ajax and
             // store it in user profile and set the user opted theme mode via HTML attribute
             // <html data-theme-mode="light"> .... </html>
-        });
+        })
     }
 
     return {
         init: function () {
-			handleSubmit();
-        }
-    };
-}();
+            handleSubmit()
+        },
+    }
+})()
 
 // Initialize app on document ready
-BEAVEUtil.onDOMContentLoaded(function () {
-    BEAVEThemeModeUser.init();
-});
+BEAVERUtil.onDOMContentLoaded(function () {
+    BEAVERThemeModeUser.init()
+})
 
-// Declare BEAVEThemeModeUser for Webpack support
+// Declare BEAVERThemeModeUser for Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = BEAVEThemeModeUser;
+    module.exports = BEAVERThemeModeUser
 }

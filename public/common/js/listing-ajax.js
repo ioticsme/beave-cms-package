@@ -1,5 +1,5 @@
 'use strict'
-var BEAVEAppEcommerceSalesListing = (function () {
+var BEAVERAppEcommerceSalesListing = (function () {
     var e,
         t,
         n,
@@ -75,7 +75,6 @@ var BEAVEAppEcommerceSalesListing = (function () {
     return {
         init: function () {
             ;(e = document.querySelector('#beave_datatable_example_1')) &&
-                (
                 //     (t = $(e).DataTable({
                 //     info: !1,
                 //     order: [],
@@ -87,7 +86,7 @@ var BEAVEAppEcommerceSalesListing = (function () {
                 // })).on('draw', function () {
                 //     c()
                 // }),
-                (() => {
+                ((() => {
                     const e = document.querySelector(
                         '#beave_ecommerce_sales_flatpickr'
                     )
@@ -102,7 +101,9 @@ var BEAVEAppEcommerceSalesListing = (function () {
                     })
                 })(),
                 document
-                    .querySelector('[data-beaver-ecommerce-order-filter="search"]')
+                    .querySelector(
+                        '[data-beaver-ecommerce-order-filter="search"]'
+                    )
                     .addEventListener('keyup', function (e) {
                         t.search(e.target.value).draw()
                     }),
@@ -124,6 +125,6 @@ var BEAVEAppEcommerceSalesListing = (function () {
         },
     }
 })()
-BEAVEUtil.onDOMContentLoaded(function () {
-    BEAVEAppEcommerceSalesListing.init()
+BEAVERUtil.onDOMContentLoaded(function () {
+    BEAVERAppEcommerceSalesListing.init()
 })

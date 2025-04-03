@@ -1,78 +1,98 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVESlidersWidget3 = function () {
+var BEAVERSlidersWidget3 = (function () {
     var chart1 = {
         self: null,
-        rendered: false
-    };
+        rendered: false,
+    }
 
     var chart2 = {
         self: null,
-        rendered: false
-    };
+        rendered: false,
+    }
 
     // Private methods
-    var initChart = function(chart, query, color, data) {
-        var element = document.querySelector(query);
+    var initChart = function (chart, query, color, data) {
+        var element = document.querySelector(query)
 
         if (!element) {
-            return;
-        }
-        
-        if ( chart.rendered === true && element.classList.contains("initialized") ) {
-            return;
+            return
         }
 
-        var height = parseInt(BEAVEUtil.css(element, 'height'));
-        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
-        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
-        var baseColor = BEAVEUtil.getCssVariableValue('--bs-' + color);
+        if (
+            chart.rendered === true &&
+            element.classList.contains('initialized')
+        ) {
+            return
+        }
+
+        var height = parseInt(BEAVERUtil.css(element, 'height'))
+        var labelColor = BEAVERUtil.getCssVariableValue('--bs-gray-500')
+        var borderColor = BEAVERUtil.getCssVariableValue(
+            '--bs-border-dashed-color'
+        )
+        var baseColor = BEAVERUtil.getCssVariableValue('--bs-' + color)
 
         var options = {
-            series: [{
-                name: 'Lessons',
-                data: data
-            }],            
+            series: [
+                {
+                    name: 'Lessons',
+                    data: data,
+                },
+            ],
             chart: {
                 fontFamily: 'inherit',
                 type: 'area',
                 height: height,
                 toolbar: {
-                    show: false
-                }
+                    show: false,
+                },
             },
-            plotOptions: {
-
-            },
+            plotOptions: {},
             legend: {
-                show: false
+                show: false,
             },
             dataLabels: {
-                enabled: false
+                enabled: false,
             },
             fill: {
-                type: "gradient",
+                type: 'gradient',
                 gradient: {
                     shadeIntensity: 1,
                     opacityFrom: 0.4,
                     opacityTo: 0,
-                    stops: [0, 80, 100]
-                }
+                    stops: [0, 80, 100],
+                },
             },
             stroke: {
                 curve: 'smooth',
                 show: true,
                 width: 3,
-                colors: [baseColor]
+                colors: [baseColor],
             },
             xaxis: {
-                categories: ['', 'Apr 05', 'Apr 06', 'Apr 07', 'Apr 08', 'Apr 09', 'Apr 11', 'Apr 12', 'Apr 14', 'Apr 15', 'Apr 16', 'Apr 17', 'Apr 18', ''],
+                categories: [
+                    '',
+                    'Apr 05',
+                    'Apr 06',
+                    'Apr 07',
+                    'Apr 08',
+                    'Apr 09',
+                    'Apr 11',
+                    'Apr 12',
+                    'Apr 14',
+                    'Apr 15',
+                    'Apr 16',
+                    'Apr 17',
+                    'Apr 18',
+                    '',
+                ],
                 axisBorder: {
                     show: false,
                 },
                 axisTicks: {
-                    show: false
+                    show: false,
                 },
                 tickAmount: 6,
                 labels: {
@@ -80,25 +100,25 @@ var BEAVESlidersWidget3 = function () {
                     rotateAlways: true,
                     style: {
                         colors: labelColor,
-                        fontSize: '12px'
-                    }
+                        fontSize: '12px',
+                    },
                 },
                 crosshairs: {
                     position: 'front',
                     stroke: {
                         color: baseColor,
                         width: 1,
-                        dashArray: 3
-                    }
+                        dashArray: 3,
+                    },
                 },
                 tooltip: {
                     enabled: true,
                     formatter: undefined,
                     offsetY: 0,
                     style: {
-                        fontSize: '12px'
-                    }
-                }
+                        fontSize: '12px',
+                    },
+                },
             },
             yaxis: {
                 tickAmount: 4,
@@ -107,35 +127,35 @@ var BEAVESlidersWidget3 = function () {
                 labels: {
                     style: {
                         colors: labelColor,
-                        fontSize: '12px'
-                    } 
-                }
+                        fontSize: '12px',
+                    },
+                },
             },
             states: {
                 normal: {
                     filter: {
                         type: 'none',
-                        value: 0
-                    }
+                        value: 0,
+                    },
                 },
                 hover: {
                     filter: {
                         type: 'none',
-                        value: 0
-                    }
+                        value: 0,
+                    },
                 },
                 active: {
                     allowMultipleDataPointsSelection: false,
                     filter: {
                         type: 'none',
-                        value: 0
-                    }
-                }
+                        value: 0,
+                    },
+                },
             },
             tooltip: {
                 style: {
-                    fontSize: '12px'
-                } 
+                    fontSize: '12px',
+                },
             },
             colors: [baseColor],
             grid: {
@@ -143,70 +163,92 @@ var BEAVESlidersWidget3 = function () {
                 strokeDashArray: 4,
                 yaxis: {
                     lines: {
-                        show: true
-                    }
-                }
+                        show: true,
+                    },
+                },
             },
             markers: {
                 strokeColor: baseColor,
-                strokeWidth: 3
-            }
-        };
+                strokeWidth: 3,
+            },
+        }
 
-        chart.self = new ApexCharts(element, options);
-        chart.self.render();
-        chart.rendered = true;
+        chart.self = new ApexCharts(element, options)
+        chart.self.render()
+        chart.rendered = true
 
-        element.classList.add('initialized');   
+        element.classList.add('initialized')
     }
 
     // Public methods
     return {
         init: function () {
-            var data1 = [19, 21, 21, 20, 20, 18, 18, 20, 20, 22, 22, 21, 21, 22];
-            var data2 = [18, 22, 22, 20, 20, 18, 18, 20, 20, 18, 18, 20, 20, 22];
-            
+            var data1 = [19, 21, 21, 20, 20, 18, 18, 20, 20, 22, 22, 21, 21, 22]
+            var data2 = [18, 22, 22, 20, 20, 18, 18, 20, 20, 18, 18, 20, 20, 22]
+
             // Init default chart
-            initChart(chart1, '#beave_sliders_widget_3_chart_1', 'danger', data1);
+            initChart(
+                chart1,
+                '#beave_sliders_widget_3_chart_1',
+                'danger',
+                data1
+            )
 
-            var carousel = document.querySelector('#beave_sliders_widget_3_slider');
+            var carousel = document.querySelector(
+                '#beave_sliders_widget_3_slider'
+            )
 
-            if ( !carousel ){
-                return;
+            if (!carousel) {
+                return
             }
-            
+
             carousel.addEventListener('slid.bs.carousel', function (e) {
                 if (e.to === 1) {
                     // Init second chart
-                    initChart(chart2, '#beave_sliders_widget_3_chart_2', 'primary', data2);
-                }                
-            });
+                    initChart(
+                        chart2,
+                        '#beave_sliders_widget_3_chart_2',
+                        'primary',
+                        data2
+                    )
+                }
+            })
 
             // Update chart on theme mode change
-            BEAVEThemeMode.on("beaver.thememode.change", function() {                
+            BEAVERThemeMode.on('beaver.thememode.change', function () {
                 if (chart1.rendered) {
-                    chart1.self.destroy();
-                    chart1.rendered = false;
+                    chart1.self.destroy()
+                    chart1.rendered = false
                 }
 
                 if (chart2.rendered) {
-                    chart2.self.destroy();
-                    chart2.rendered = false;
+                    chart2.self.destroy()
+                    chart2.rendered = false
                 }
 
-                initChart(chart1, '#beave_sliders_widget_3_chart_1', 'danger', data1);
-                initChart(chart2, '#beave_sliders_widget_3_chart_2', 'primary', data2);
-            });
-        }   
+                initChart(
+                    chart1,
+                    '#beave_sliders_widget_3_chart_1',
+                    'danger',
+                    data1
+                )
+                initChart(
+                    chart2,
+                    '#beave_sliders_widget_3_chart_2',
+                    'primary',
+                    data2
+                )
+            })
+        },
     }
-}();
+})()
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = BEAVESlidersWidget3;
+    module.exports = BEAVERSlidersWidget3
 }
 
 // On document ready
-BEAVEUtil.onDOMContentLoaded(function() {
-    BEAVESlidersWidget3.init();
-});
+BEAVERUtil.onDOMContentLoaded(function () {
+    BEAVERSlidersWidget3.init()
+})

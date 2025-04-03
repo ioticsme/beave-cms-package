@@ -1,67 +1,71 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVEChartsWidget45 = function () {
+var BEAVERChartsWidget45 = (function () {
     var chart = {
         self: null,
-        rendered: false
-    };
+        rendered: false,
+    }
 
     // Private methods
-    var initChart = function() {
-        var element = document.getElementById("beave_charts_widget_45");
+    var initChart = function () {
+        var element = document.getElementById('beave_charts_widget_45')
 
         if (!element) {
-            return;
+            return
         }
 
-        var color = element.getAttribute('data-beaver-chart-color');
-        var height = parseInt(BEAVEUtil.css(element, 'height'));
-        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-800');
-        var strokeColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
-        var baseColor = BEAVEUtil.getCssVariableValue('--bs-' + color);
-        var lightColor = BEAVEUtil.getCssVariableValue('--bs-' + color);
+        var color = element.getAttribute('data-beaver-chart-color')
+        var height = parseInt(BEAVERUtil.css(element, 'height'))
+        var labelColor = BEAVERUtil.getCssVariableValue('--bs-gray-800')
+        var strokeColor = BEAVERUtil.getCssVariableValue(
+            '--bs-border-dashed-color'
+        )
+        var baseColor = BEAVERUtil.getCssVariableValue('--bs-' + color)
+        var lightColor = BEAVERUtil.getCssVariableValue('--bs-' + color)
 
         var options = {
-            series: [{
-                name: 'Overview',
-                data: [15, 15, 42, 42, 13, 13, 35]
-            }],
+            series: [
+                {
+                    name: 'Overview',
+                    data: [15, 15, 42, 42, 13, 13, 35],
+                },
+            ],
             chart: {
                 fontFamily: 'inherit',
                 type: 'area',
                 height: height,
                 toolbar: {
-                    show: false
+                    show: false,
                 },
                 zoom: {
-                    enabled: false
+                    enabled: false,
                 },
                 sparkline: {
-                    enabled: true
-                }
+                    enabled: true,
+                },
             },
             plotOptions: {},
             legend: {
-                show: false
+                show: false,
             },
             dataLabels: {
-                enabled: false
+                enabled: false,
             },
             fill: {
-                type: "gradient",
+                type: 'gradient',
                 gradient: {
                     shadeIntensity: 1,
                     opacityFrom: 0.3,
                     opacityTo: 0.2,
-                    stops: [15, 120, 100]
-                }
+                    stops: [15, 120, 100],
+                },
             },
             stroke: {
                 curve: 'smooth',
                 show: true,
                 width: 3,
-                colors: [baseColor]
+                colors: [baseColor],
             },
             xaxis: {
                 categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
@@ -69,14 +73,14 @@ var BEAVEChartsWidget45 = function () {
                     show: false,
                 },
                 axisTicks: {
-                    show: false
+                    show: false,
                 },
                 labels: {
                     show: false,
                     style: {
                         colors: labelColor,
-                        fontSize: '12px'
-                    }
+                        fontSize: '12px',
+                    },
                 },
                 crosshairs: {
                     show: false,
@@ -84,17 +88,17 @@ var BEAVEChartsWidget45 = function () {
                     stroke: {
                         color: strokeColor,
                         width: 1,
-                        dashArray: 3
-                    }
+                        dashArray: 3,
+                    },
                 },
                 tooltip: {
                     enabled: true,
                     formatter: undefined,
                     offsetY: 0,
                     style: {
-                        fontSize: '12px'
-                    }
-                }
+                        fontSize: '12px',
+                    },
+                },
             },
             yaxis: {
                 min: 0,
@@ -103,81 +107,81 @@ var BEAVEChartsWidget45 = function () {
                     show: false,
                     style: {
                         colors: labelColor,
-                        fontSize: '12px'
-                    }
-                }
+                        fontSize: '12px',
+                    },
+                },
             },
             states: {
                 normal: {
                     filter: {
                         type: 'none',
-                        value: 0
-                    }
+                        value: 0,
+                    },
                 },
                 hover: {
                     filter: {
                         type: 'none',
-                        value: 0
-                    }
+                        value: 0,
+                    },
                 },
                 active: {
                     allowMultipleDataPointsSelection: false,
                     filter: {
                         type: 'none',
-                        value: 0
-                    }
-                }
+                        value: 0,
+                    },
+                },
             },
             tooltip: {
                 style: {
-                    fontSize: '12px'
+                    fontSize: '12px',
                 },
                 y: {
                     formatter: function (val) {
                         return val
-                    }
-                }
+                    },
+                },
             },
             colors: [lightColor],
             markers: {
                 colors: lightColor,
                 strokeColor: baseColor,
-                strokeWidth: 3
-            }
-        }; 
+                strokeWidth: 3,
+            },
+        }
 
-        chart.self = new ApexCharts(element, options);
+        chart.self = new ApexCharts(element, options)
 
         // Set timeout to properly get the parent elements width
-        setTimeout(function() {
-            chart.self.render();
-            chart.rendered = true;
-        }, 200); 
+        setTimeout(function () {
+            chart.self.render()
+            chart.rendered = true
+        }, 200)
     }
 
     // Public methods
     return {
         init: function () {
-            initChart();
+            initChart()
 
             // Update chart on theme mode change
-            BEAVEThemeMode.on("beaver.thememode.change", function() {                
+            BEAVERThemeMode.on('beaver.thememode.change', function () {
                 if (chart.rendered) {
-                    chart.self.destroy();
+                    chart.self.destroy()
                 }
 
-                initChart();
-            });
-        }   
+                initChart()
+            })
+        },
     }
-}();
+})()
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = BEAVEChartsWidget45;
+    module.exports = BEAVERChartsWidget45
 }
 
 // On document ready
-BEAVEUtil.onDOMContentLoaded(function() {
-    BEAVEChartsWidget45.init();
-});
+BEAVERUtil.onDOMContentLoaded(function () {
+    BEAVERChartsWidget45.init()
+})

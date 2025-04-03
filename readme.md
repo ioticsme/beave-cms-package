@@ -1,6 +1,6 @@
 # BeaverCMS - Open Source Headless CMS
 
-![BeaverCMS Logo](./public/common/media/beave-logo.jpg)
+![BeaverCMS Logo](./public/common/media/beaver-logo.jpg)
 
 BeaverCMS is a powerful, flexible, and open-source headless CMS built with Node.js, MongoDB, Redis, and Docker. It provides developers with a customizable API-driven content management system while allowing full control over the front-end development.
 
@@ -13,7 +13,7 @@ BeaverCMS is a powerful, flexible, and open-source headless CMS built with Node.
 ✅ Role-based access control (RBAC)  
 ✅ Webhooks & event-driven architecture  
 ✅ Multi-language support  
-✅ Docker support for easy deployment  
+✅ Docker support for easy deployment
 
 ## Installation
 
@@ -40,6 +40,7 @@ Modify the `.env` file to configure database connections, storage options, and o
 ## Contributing
 
 We welcome contributions! Please follow these steps:
+
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature-name`)
 3. Commit your changes (`git commit -m 'Add new feature'`)
@@ -61,7 +62,8 @@ For details, see the [LICENSE](./LICENSE.md) file.
 📌 [GitHub Issues](https://github.com/ioticsme/beaver-cms/issues) - Report bugs and request features.  
 📌 [Discussions](https://github.com/ioticsme/beaver-cms/discussions) - Ask questions and engage with the community.  
 📌 [Website](https://beavecms.com) - Official Website.  
-📌 [Documentation](https://cms-documentation-eight.vercel.app/) - Official documentation and updates.  
+📌 [Documentation](https://cms-documentation-eight.vercel.app/) - Official documentation and updates.
 
 ---
+
 🚀 **BeaverCMS – Empowering developers to build better content experiences!**

@@ -2,7 +2,7 @@ try {
     ;('use strict')
 
     // Class definition
-    var BEAVEDatatablesServerSide = (function () {
+    var BEAVERDatatablesServerSide = (function () {
         // Shared variables
         var table
         var dt
@@ -210,7 +210,7 @@ try {
                 // initToggleToolbar()
                 // toggleToolbars()
                 // handleDeleteRows();
-                BEAVEMenu.createInstances()
+                BEAVERMenu.createInstances()
             })
         }
 
@@ -487,8 +487,8 @@ try {
     })()
 
     // On document ready
-    BEAVEUtil.onDOMContentLoaded(function () {
-        BEAVEDatatablesServerSide.init()
+    BEAVERUtil.onDOMContentLoaded(function () {
+        BEAVERDatatablesServerSide.init()
     })
 } catch (error) {
     console.log('ERR', error)

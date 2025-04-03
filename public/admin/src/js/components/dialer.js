@@ -1,14 +1,14 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVEDialer = function(element, options) {
+var BEAVERDialer = function (element, options) {
     ////////////////////////////
     // ** Private variables  ** //
     ////////////////////////////
-    var the = this;
+    var the = this
 
     if (!element) {
-        return;
+        return
     }
 
     // Default options
@@ -18,283 +18,289 @@ var BEAVEDialer = function(element, options) {
         step: 1,
         currency: false,
         decimals: 0,
-        prefix: "",
-        suffix: ""
-    };
+        prefix: '',
+        suffix: '',
+    }
 
     ////////////////////////////
     // ** Private methods  ** //
     ////////////////////////////
 
     // Constructor
-    var _construct = function() {
-        if ( BEAVEUtil.data(element).has('dialer') === true ) {
-            the = BEAVEUtil.data(element).get('dialer');
+    var _construct = function () {
+        if (BEAVERUtil.data(element).has('dialer') === true) {
+            the = BEAVERUtil.data(element).get('dialer')
         } else {
-            _init();
+            _init()
         }
     }
 
     // Initialize
-    var _init = function() {
+    var _init = function () {
         // Variables
-        the.options = BEAVEUtil.deepExtend({}, defaultOptions, options);
+        the.options = BEAVERUtil.deepExtend({}, defaultOptions, options)
 
         // Elements
-        the.element = element;
-        the.incElement = the.element.querySelector('[data-beaver-dialer-control="increase"]');
-        the.decElement = the.element.querySelector('[data-beaver-dialer-control="decrease"]');
-        the.inputElement = the.element.querySelector('input[type]'); 
-        
+        the.element = element
+        the.incElement = the.element.querySelector(
+            '[data-beaver-dialer-control="increase"]'
+        )
+        the.decElement = the.element.querySelector(
+            '[data-beaver-dialer-control="decrease"]'
+        )
+        the.inputElement = the.element.querySelector('input[type]')
+
         // Set Values
         if (_getOption('currency') === 'true') {
-            the.options.currency = true;
+            the.options.currency = true
         }
 
         if (_getOption('decimals')) {
-            the.options.decimals = parseInt(_getOption('decimals'));
+            the.options.decimals = parseInt(_getOption('decimals'))
         }
-        
+
         if (_getOption('prefix')) {
-            the.options.prefix = _getOption('prefix');
+            the.options.prefix = _getOption('prefix')
         }
-        
+
         if (_getOption('suffix')) {
-            the.options.suffix = _getOption('suffix');
+            the.options.suffix = _getOption('suffix')
         }
-        
+
         if (_getOption('step')) {
-            the.options.step = parseFloat(_getOption('step'));
+            the.options.step = parseFloat(_getOption('step'))
         }
 
         if (_getOption('min')) {
-            the.options.min = parseFloat(_getOption('min'));
+            the.options.min = parseFloat(_getOption('min'))
         }
 
         if (_getOption('max')) {
-            the.options.max = parseFloat(_getOption('max'));
+            the.options.max = parseFloat(_getOption('max'))
         }
 
-        the.value = parseFloat(the.inputElement.value.replace(/[^\d.]/g, ''));  
+        the.value = parseFloat(the.inputElement.value.replace(/[^\d.]/g, ''))
 
-        _setValue();
+        _setValue()
 
         // Event Handlers
-        _handlers();
+        _handlers()
 
         // Bind Instance
-        BEAVEUtil.data(the.element).set('dialer', the);
+        BEAVERUtil.data(the.element).set('dialer', the)
     }
 
     // Handlers
-    var _handlers = function() {
-        BEAVEUtil.addEvent(the.incElement, 'click', function(e) {
-            e.preventDefault();
-        
-            _increase();
-        });
+    var _handlers = function () {
+        BEAVERUtil.addEvent(the.incElement, 'click', function (e) {
+            e.preventDefault()
 
-        BEAVEUtil.addEvent(the.decElement, 'click', function(e) {
-            e.preventDefault();
+            _increase()
+        })
 
-            _decrease();
-        });
+        BEAVERUtil.addEvent(the.decElement, 'click', function (e) {
+            e.preventDefault()
 
-        BEAVEUtil.addEvent(the.inputElement, 'input', function(e) {
-            e.preventDefault();
+            _decrease()
+        })
 
-            _setValue();
-        });
+        BEAVERUtil.addEvent(the.inputElement, 'input', function (e) {
+            e.preventDefault()
+
+            _setValue()
+        })
     }
 
     // Event handlers
-    var _increase = function() {
+    var _increase = function () {
         // Trigger "after.dialer" event
-        BEAVEEventHandler.trigger(the.element, 'beaver.dialer.increase', the);
+        BEAVEREventHandler.trigger(the.element, 'beaver.dialer.increase', the)
 
-        the.inputElement.value = the.value + the.options.step;
-        _setValue();
+        the.inputElement.value = the.value + the.options.step
+        _setValue()
 
         // Trigger "before.dialer" event
-        BEAVEEventHandler.trigger(the.element, 'beaver.dialer.increased', the);
+        BEAVEREventHandler.trigger(the.element, 'beaver.dialer.increased', the)
 
-        return the;
+        return the
     }
 
-    var _decrease = function() {
+    var _decrease = function () {
         // Trigger "after.dialer" event
-        BEAVEEventHandler.trigger(the.element, 'beaver.dialer.decrease', the);
+        BEAVEREventHandler.trigger(the.element, 'beaver.dialer.decrease', the)
 
-        the.inputElement.value = the.value - the.options.step;      
+        the.inputElement.value = the.value - the.options.step
 
-        _setValue();
+        _setValue()
 
         // Trigger "before.dialer" event
-        BEAVEEventHandler.trigger(the.element, 'beaver.dialer.decreased', the);
+        BEAVEREventHandler.trigger(the.element, 'beaver.dialer.decreased', the)
 
-        return the;
+        return the
     }
 
     // Set Input Value
-    var _setValue = function(value) {
+    var _setValue = function (value) {
         // Trigger "after.dialer" event
-        BEAVEEventHandler.trigger(the.element, 'beaver.dialer.change', the);
+        BEAVEREventHandler.trigger(the.element, 'beaver.dialer.change', the)
 
         if (value !== undefined) {
-            the.value = value;
+            the.value = value
         } else {
-            the.value = _parse(the.inputElement.value); 
-        }        
-        
+            the.value = _parse(the.inputElement.value)
+        }
+
         if (the.options.min !== null && the.value < the.options.min) {
-            the.value = the.options.min;
+            the.value = the.options.min
         }
 
         if (the.options.max !== null && the.value > the.options.max) {
-            the.value = the.options.max;
+            the.value = the.options.max
         }
 
-        the.inputElement.value = _format(the.value);
+        the.inputElement.value = _format(the.value)
 
         // Trigger input change event
-        the.inputElement.dispatchEvent(new Event('change'));
+        the.inputElement.dispatchEvent(new Event('change'))
 
         // Trigger "after.dialer" event
-        BEAVEEventHandler.trigger(the.element, 'beaver.dialer.changed', the);
+        BEAVEREventHandler.trigger(the.element, 'beaver.dialer.changed', the)
     }
 
-    var _parse = function(val) {
+    var _parse = function (val) {
         val = val
-            .replace(/[^0-9.-]/g, '')       // remove chars except number, hyphen, point. 
-            .replace(/(\..*)\./g, '$1')     // remove multiple points.
-            .replace(/(?!^)-/g, '')         // remove middle hyphen.
-            .replace(/^0+(\d)/gm, '$1');    // remove multiple leading zeros. <-- I added this.
+            .replace(/[^0-9.-]/g, '') // remove chars except number, hyphen, point.
+            .replace(/(\..*)\./g, '$1') // remove multiple points.
+            .replace(/(?!^)-/g, '') // remove middle hyphen.
+            .replace(/^0+(\d)/gm, '$1') // remove multiple leading zeros. <-- I added this.
 
-        val = parseFloat(val);
+        val = parseFloat(val)
 
         if (isNaN(val)) {
-            val = 0;
-        } 
+            val = 0
+        }
 
-        return val;
+        return val
     }
 
     // Format
-    var _format = function(val){
-        val = parseFloat(val).toFixed(the.options.decimals);
+    var _format = function (val) {
+        val = parseFloat(val).toFixed(the.options.decimals)
 
         if (the.options.currency) {
-            val = val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }        
+            val = val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        }
 
-        return the.options.prefix + val + the.options.suffix;              
+        return the.options.prefix + val + the.options.suffix
     }
 
     // Get option
-    var _getOption = function(name) {
-        if ( the.element.hasAttribute('data-beaver-dialer-' + name) === true ) {
-            var attr = the.element.getAttribute('data-beaver-dialer-' + name);
-            var value = attr;            
+    var _getOption = function (name) {
+        if (the.element.hasAttribute('data-beaver-dialer-' + name) === true) {
+            var attr = the.element.getAttribute('data-beaver-dialer-' + name)
+            var value = attr
 
-            return value;
+            return value
         } else {
-            return null;
+            return null
         }
     }
 
-    var _destroy = function() {
-        BEAVEUtil.data(the.element).remove('dialer');
+    var _destroy = function () {
+        BEAVERUtil.data(the.element).remove('dialer')
     }
 
     // Construct class
-    _construct();
+    _construct()
 
     ///////////////////////
     // ** Public API  ** //
     ///////////////////////
 
     // Plugin API
-    the.setMinValue = function(value) {
-        the.options.min = value;
+    the.setMinValue = function (value) {
+        the.options.min = value
     }
 
-    the.setMaxValue = function(value) {
-        the.options.max = value;
+    the.setMaxValue = function (value) {
+        the.options.max = value
     }
 
-    the.setValue = function(value) {
-        _setValue(value);
+    the.setValue = function (value) {
+        _setValue(value)
     }
 
-    the.getValue = function() {
-        return the.inputElement.value;
-    }    
-
-    the.update = function() {
-        _setValue();
+    the.getValue = function () {
+        return the.inputElement.value
     }
 
-    the.increase = function() {
-        return _increase();
+    the.update = function () {
+        _setValue()
     }
 
-    the.decrease = function() {
-        return _decrease();
+    the.increase = function () {
+        return _increase()
     }
 
-    the.getElement = function() {
-        return the.element;
+    the.decrease = function () {
+        return _decrease()
     }
 
-    the.destroy = function() {
-        return _destroy();
+    the.getElement = function () {
+        return the.element
+    }
+
+    the.destroy = function () {
+        return _destroy()
     }
 
     // Event API
-    the.on = function(name, handler) {
-        return BEAVEEventHandler.on(the.element, name, handler);
+    the.on = function (name, handler) {
+        return BEAVEREventHandler.on(the.element, name, handler)
     }
 
-    the.one = function(name, handler) {
-        return BEAVEEventHandler.one(the.element, name, handler);
+    the.one = function (name, handler) {
+        return BEAVEREventHandler.one(the.element, name, handler)
     }
 
-    the.off = function(name, handlerId) {
-        return BEAVEEventHandler.off(the.element, name, handlerId);
+    the.off = function (name, handlerId) {
+        return BEAVEREventHandler.off(the.element, name, handlerId)
     }
 
-    the.trigger = function(name, event) {
-        return BEAVEEventHandler.trigger(the.element, name, event, the, event);
+    the.trigger = function (name, event) {
+        return BEAVEREventHandler.trigger(the.element, name, event, the, event)
     }
-};
+}
 
 // Static methods
-BEAVEDialer.getInstance = function(element) {
-    if ( element !== null && BEAVEUtil.data(element).has('dialer') ) {
-        return BEAVEUtil.data(element).get('dialer');
+BEAVERDialer.getInstance = function (element) {
+    if (element !== null && BEAVERUtil.data(element).has('dialer')) {
+        return BEAVERUtil.data(element).get('dialer')
     } else {
-        return null;
+        return null
     }
 }
 
 // Create instances
-BEAVEDialer.createInstances = function(selector = '[data-beaver-dialer="true"]') {
+BEAVERDialer.createInstances = function (
+    selector = '[data-beaver-dialer="true"]'
+) {
     // Get instances
-    var elements = document.querySelectorAll(selector);
+    var elements = document.querySelectorAll(selector)
 
-    if ( elements && elements.length > 0 ) {
+    if (elements && elements.length > 0) {
         for (var i = 0, len = elements.length; i < len; i++) {
-            new BEAVEDialer(elements[i]);
+            new BEAVERDialer(elements[i])
         }
     }
 }
 
 // Global initialization
-BEAVEDialer.init = function() {
-    BEAVEDialer.createInstances();
-};
+BEAVERDialer.init = function () {
+    BEAVERDialer.createInstances()
+}
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = BEAVEDialer;
+    module.exports = BEAVERDialer
 }

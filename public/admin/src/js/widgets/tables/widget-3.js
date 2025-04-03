@@ -1,84 +1,92 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVETablesWidget3 = function () {
-    var table;
-    var datatable;
+var BEAVERTablesWidget3 = (function () {
+    var table
+    var datatable
 
     // Private methods
     const initDatatable = () => {
         // Init datatable --- more info on datatables: https://datatables.net/manual/
         datatable = $(table).DataTable({
-            "info": false,
-            'order': [],
-            'paging': false,
-            'pageLength': false,
-        });
+            info: false,
+            order: [],
+            paging: false,
+            pageLength: false,
+        })
     }
 
     const handleTabStates = () => {
-        const tabs = document.querySelector('[data-beaver-table-widget-3="tabs_nav"]');
-        const tabButtons = tabs.querySelectorAll('[data-beaver-table-widget-3="tab"]');
-        const tabClasses = ['border-bottom', 'border-3', 'border-primary'];
+        const tabs = document.querySelector(
+            '[data-beaver-table-widget-3="tabs_nav"]'
+        )
+        const tabButtons = tabs.querySelectorAll(
+            '[data-beaver-table-widget-3="tab"]'
+        )
+        const tabClasses = ['border-bottom', 'border-3', 'border-primary']
 
-        tabButtons.forEach(tab => {
-            tab.addEventListener('click', e => {
+        tabButtons.forEach((tab) => {
+            tab.addEventListener('click', (e) => {
                 // Get datatable filter value
-                const value = tab.getAttribute('data-beaver-table-widget-3-value');
-                tabButtons.forEach(t => {
-                    t.classList.remove(...tabClasses);
-                    t.classList.add('text-muted');
-                });
+                const value = tab.getAttribute(
+                    'data-beaver-table-widget-3-value'
+                )
+                tabButtons.forEach((t) => {
+                    t.classList.remove(...tabClasses)
+                    t.classList.add('text-muted')
+                })
 
-                tab.classList.remove('text-muted');
-                tab.classList.add(...tabClasses);
+                tab.classList.remove('text-muted')
+                tab.classList.add(...tabClasses)
 
                 // Filter datatable
                 if (value === 'Show All') {
-                    datatable.search('').draw();
+                    datatable.search('').draw()
                 } else {
-                    datatable.search(value).draw();
+                    datatable.search(value).draw()
                 }
-            });
-        });
+            })
+        })
     }
 
     // Handle status filter dropdown
     const handleStatusFilter = () => {
-        const select = document.querySelector('[data-beaver-table-widget-3="filter_status"]');
+        const select = document.querySelector(
+            '[data-beaver-table-widget-3="filter_status"]'
+        )
 
         $(select).on('select2:select', function (e) {
-            const value = $(this).val();
+            const value = $(this).val()
             if (value === 'Show All') {
-                datatable.search('').draw();
+                datatable.search('').draw()
             } else {
-                datatable.search(value).draw();
+                datatable.search(value).draw()
             }
-        });
+        })
     }
 
     // Public methods
     return {
         init: function () {
-            table = document.querySelector('#beave_widget_table_3');
+            table = document.querySelector('#beave_widget_table_3')
 
             if (!table) {
-                return;
+                return
             }
 
-            initDatatable();
-            handleTabStates();
-            handleStatusFilter();
-        }
+            initDatatable()
+            handleTabStates()
+            handleStatusFilter()
+        },
     }
-}();
+})()
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = BEAVETablesWidget3;
+    module.exports = BEAVERTablesWidget3
 }
 
 // On document ready
-BEAVEUtil.onDOMContentLoaded(function () {
-    BEAVETablesWidget3.init();
-});
+BEAVERUtil.onDOMContentLoaded(function () {
+    BEAVERTablesWidget3.init()
+})

@@ -1,165 +1,164 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVECardsWidget6 = function () {
+var BEAVERCardsWidget6 = (function () {
     // Private methods
-    var initChart = function() {
-        var element = document.getElementById("beave_card_widget_6_chart");
+    var initChart = function () {
+        var element = document.getElementById('beave_card_widget_6_chart')
 
         if (!element) {
-            return;
+            return
         }
 
-        var height = parseInt(BEAVEUtil.css(element, 'height'));
-        var labelColor = BEAVEUtil.getCssVariableValue('--bs-gray-500');
-        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');
-        var baseColor = BEAVEUtil.getCssVariableValue('--bs-primary');
-        var secondaryColor = BEAVEUtil.getCssVariableValue('--bs-gray-300');
+        var height = parseInt(BEAVERUtil.css(element, 'height'))
+        var labelColor = BEAVERUtil.getCssVariableValue('--bs-gray-500')
+        var borderColor = BEAVERUtil.getCssVariableValue(
+            '--bs-border-dashed-color'
+        )
+        var baseColor = BEAVERUtil.getCssVariableValue('--bs-primary')
+        var secondaryColor = BEAVERUtil.getCssVariableValue('--bs-gray-300')
 
         var options = {
-            series: [{
-                name: 'Sales',
-                data: [30, 60, 53, 45, 60, 75, 53]
-            }, ],
+            series: [
+                {
+                    name: 'Sales',
+                    data: [30, 60, 53, 45, 60, 75, 53],
+                },
+            ],
             chart: {
                 fontFamily: 'inherit',
                 type: 'bar',
                 height: height,
                 toolbar: {
-                    show: false
+                    show: false,
                 },
                 sparkline: {
-                    enabled: true
-                }
+                    enabled: true,
+                },
             },
             plotOptions: {
                 bar: {
                     horizontal: false,
                     columnWidth: ['55%'],
-                    borderRadius: 6
-                }
+                    borderRadius: 6,
+                },
             },
             legend: {
                 show: false,
             },
             dataLabels: {
-                enabled: false
+                enabled: false,
             },
             stroke: {
                 show: true,
                 width: 9,
-                colors: ['transparent']
+                colors: ['transparent'],
             },
-            xaxis: {                
+            xaxis: {
                 axisBorder: {
                     show: false,
                 },
                 axisTicks: {
                     show: false,
-                    tickPlacement: 'between'
+                    tickPlacement: 'between',
                 },
                 labels: {
                     show: false,
                     style: {
                         colors: labelColor,
-                        fontSize: '12px'
-                    }
+                        fontSize: '12px',
+                    },
                 },
                 crosshairs: {
-                    show: false
-                }
+                    show: false,
+                },
             },
             yaxis: {
                 labels: {
                     show: false,
                     style: {
                         colors: labelColor,
-                        fontSize: '12px'
-                    }
-                }
+                        fontSize: '12px',
+                    },
+                },
             },
             fill: {
-                type: 'solid'
+                type: 'solid',
             },
             states: {
                 normal: {
                     filter: {
                         type: 'none',
-                        value: 0
-                    }
+                        value: 0,
+                    },
                 },
                 hover: {
                     filter: {
                         type: 'none',
-                        value: 0
-                    }
+                        value: 0,
+                    },
                 },
                 active: {
                     allowMultipleDataPointsSelection: false,
                     filter: {
                         type: 'none',
-                        value: 0
-                    }
-                }
+                        value: 0,
+                    },
+                },
             },
             tooltip: {
                 style: {
-                    fontSize: '12px'
+                    fontSize: '12px',
                 },
                 x: {
                     formatter: function (val) {
-                        return 'Feb: ' + val;
-                    }
+                        return 'Feb: ' + val
+                    },
                 },
                 y: {
                     formatter: function (val) {
-                        return val + "%" 
-                    }
-                }
+                        return val + '%'
+                    },
+                },
             },
             colors: [baseColor, secondaryColor],
             grid: {
                 padding: {
                     left: 10,
-                    right: 10
+                    right: 10,
                 },
                 borderColor: borderColor,
                 strokeDashArray: 4,
                 yaxis: {
                     lines: {
-                        show: true
-                    }
-                }             
-            }
-        }; 
+                        show: true,
+                    },
+                },
+            },
+        }
 
-        var chart = new ApexCharts(element, options);
-        
+        var chart = new ApexCharts(element, options)
+
         // Set timeout to properly get the parent elements width
-        setTimeout(function() {
-            chart.render();   
-        }, 300);     
+        setTimeout(function () {
+            chart.render()
+        }, 300)
     }
 
     // Public methods
     return {
         init: function () {
-            initChart();
-        }   
+            initChart()
+        },
     }
-}();
+})()
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = BEAVECardsWidget6;
+    module.exports = BEAVERCardsWidget6
 }
 
 // On document ready
-BEAVEUtil.onDOMContentLoaded(function() {
-    BEAVECardsWidget6.init();
-});
-   
-        
-        
-        
-           
+BEAVERUtil.onDOMContentLoaded(function () {
+    BEAVERCardsWidget6.init()
+})

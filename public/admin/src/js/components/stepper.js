@@ -1,14 +1,14 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVEStepper = function(element, options) {
+var BEAVERStepper = function (element, options) {
     //////////////////////////////
     // ** Private variables  ** //
     //////////////////////////////
-    var the = this;
+    var the = this
 
-    if ( typeof element === "undefined" || element === null ) {
-        return;
+    if (typeof element === 'undefined' || element === null) {
+        return
     }
 
     // Default Options
@@ -16,332 +16,381 @@ var BEAVEStepper = function(element, options) {
         startIndex: 1,
         animation: false,
         animationSpeed: '0.3s',
-        animationNextClass: 'animate__animated animate__slideInRight animate__fast',
-        animationPreviousClass: 'animate__animated animate__slideInLeft animate__fast'
-    };
+        animationNextClass:
+            'animate__animated animate__slideInRight animate__fast',
+        animationPreviousClass:
+            'animate__animated animate__slideInLeft animate__fast',
+    }
 
     ////////////////////////////
     // ** Private methods  ** //
     ////////////////////////////
 
-    var _construct = function() {
-        if ( BEAVEUtil.data(element).has('stepper') === true ) {
-            the = BEAVEUtil.data(element).get('stepper');
+    var _construct = function () {
+        if (BEAVERUtil.data(element).has('stepper') === true) {
+            the = BEAVERUtil.data(element).get('stepper')
         } else {
-            _init();
+            _init()
         }
     }
 
-    var _init = function() {
-        the.options = BEAVEUtil.deepExtend({}, defaultOptions, options);
-        the.uid = BEAVEUtil.getUniqueId('stepper');
+    var _init = function () {
+        the.options = BEAVERUtil.deepExtend({}, defaultOptions, options)
+        the.uid = BEAVERUtil.getUniqueId('stepper')
 
-        the.element = element;
+        the.element = element
 
         // Set initialized
-        the.element.setAttribute('data-beaver-stepper', 'true');
+        the.element.setAttribute('data-beaver-stepper', 'true')
 
         // Elements
-        the.steps = BEAVEUtil.findAll(the.element, '[data-beaver-stepper-element="nav"]');
-        the.btnNext = BEAVEUtil.find(the.element, '[data-beaver-stepper-action="next"]');
-        the.btnPrevious = BEAVEUtil.find(the.element, '[data-beaver-stepper-action="previous"]');
-        the.btnSubmit = BEAVEUtil.find(the.element, '[data-beaver-stepper-action="submit"]');
+        the.steps = BEAVERUtil.findAll(
+            the.element,
+            '[data-beaver-stepper-element="nav"]'
+        )
+        the.btnNext = BEAVERUtil.find(
+            the.element,
+            '[data-beaver-stepper-action="next"]'
+        )
+        the.btnPrevious = BEAVERUtil.find(
+            the.element,
+            '[data-beaver-stepper-action="previous"]'
+        )
+        the.btnSubmit = BEAVERUtil.find(
+            the.element,
+            '[data-beaver-stepper-action="submit"]'
+        )
 
         // Variables
-        the.totalStepsNumber = the.steps.length;
-        the.passedStepIndex = 0;
-        the.currentStepIndex = 1;
-        the.clickedStepIndex = 0;
+        the.totalStepsNumber = the.steps.length
+        the.passedStepIndex = 0
+        the.currentStepIndex = 1
+        the.clickedStepIndex = 0
 
         // Set Current Step
-        if ( the.options.startIndex > 1 ) {
-            _goTo(the.options.startIndex);
+        if (the.options.startIndex > 1) {
+            _goTo(the.options.startIndex)
         }
 
         // Event listeners
-        the.nextListener = function(e) {
-            e.preventDefault();
+        the.nextListener = function (e) {
+            e.preventDefault()
 
-            BEAVEEventHandler.trigger(the.element, 'beaver.stepper.next', the);
-        };
+            BEAVEREventHandler.trigger(the.element, 'beaver.stepper.next', the)
+        }
 
-        the.previousListener = function(e) {
-            e.preventDefault();
+        the.previousListener = function (e) {
+            e.preventDefault()
 
-            BEAVEEventHandler.trigger(the.element, 'beaver.stepper.previous', the);
-        };
+            BEAVEREventHandler.trigger(
+                the.element,
+                'beaver.stepper.previous',
+                the
+            )
+        }
 
-        the.stepListener = function(e) {
-            e.preventDefault();
+        the.stepListener = function (e) {
+            e.preventDefault()
 
-            if ( the.steps && the.steps.length > 0 ) {
+            if (the.steps && the.steps.length > 0) {
                 for (var i = 0, len = the.steps.length; i < len; i++) {
-                    if ( the.steps[i] === this ) {
-                        the.clickedStepIndex = i + 1;
+                    if (the.steps[i] === this) {
+                        the.clickedStepIndex = i + 1
 
-                        BEAVEEventHandler.trigger(the.element, 'beaver.stepper.click', the);
+                        BEAVEREventHandler.trigger(
+                            the.element,
+                            'beaver.stepper.click',
+                            the
+                        )
 
-                        return;
+                        return
                     }
                 }
             }
-        };
+        }
 
         // Event Handlers
-        BEAVEUtil.addEvent(the.btnNext, 'click', the.nextListener);
+        BEAVERUtil.addEvent(the.btnNext, 'click', the.nextListener)
 
-        BEAVEUtil.addEvent(the.btnPrevious, 'click', the.previousListener);
+        BEAVERUtil.addEvent(the.btnPrevious, 'click', the.previousListener)
 
-        the.stepListenerId = BEAVEUtil.on(the.element, '[data-beaver-stepper-action="step"]', 'click', the.stepListener);
+        the.stepListenerId = BEAVERUtil.on(
+            the.element,
+            '[data-beaver-stepper-action="step"]',
+            'click',
+            the.stepListener
+        )
 
         // Bind Instance
-        BEAVEUtil.data(the.element).set('stepper', the);
+        BEAVERUtil.data(the.element).set('stepper', the)
     }
 
-    var _goTo = function(index) {
+    var _goTo = function (index) {
         // Trigger "change" event
-        BEAVEEventHandler.trigger(the.element, 'beaver.stepper.change', the);
+        BEAVEREventHandler.trigger(the.element, 'beaver.stepper.change', the)
 
         // Skip if this step is already shown
-        if ( index === the.currentStepIndex || index > the.totalStepsNumber || index < 0 ) {
-            return;
+        if (
+            index === the.currentStepIndex ||
+            index > the.totalStepsNumber ||
+            index < 0
+        ) {
+            return
         }
 
         // Validate step number
-        index = parseInt(index);
+        index = parseInt(index)
 
         // Set current step
-        the.passedStepIndex = the.currentStepIndex;
-        the.currentStepIndex = index;
+        the.passedStepIndex = the.currentStepIndex
+        the.currentStepIndex = index
 
         // Refresh elements
-        _refreshUI();
+        _refreshUI()
 
         // Trigger "changed" event
-        BEAVEEventHandler.trigger(the.element, 'beaver.stepper.changed', the);
+        BEAVEREventHandler.trigger(the.element, 'beaver.stepper.changed', the)
 
-        return the;
+        return the
     }
 
-    var _goNext = function() {
-        return _goTo( _getNextStepIndex() );
+    var _goNext = function () {
+        return _goTo(_getNextStepIndex())
     }
 
-    var _goPrevious = function() {
-        return _goTo( _getPreviousStepIndex() );
+    var _goPrevious = function () {
+        return _goTo(_getPreviousStepIndex())
     }
 
-    var _goLast = function() {
-        return _goTo( _getLastStepIndex() );
+    var _goLast = function () {
+        return _goTo(_getLastStepIndex())
     }
 
-    var _goFirst = function() {
-        return _goTo( _getFirstStepIndex() );
+    var _goFirst = function () {
+        return _goTo(_getFirstStepIndex())
     }
 
-    var _refreshUI = function() {
-        var state = '';
+    var _refreshUI = function () {
+        var state = ''
 
-        if ( _isLastStep() ) {
-            state = 'last';
-        } else if ( _isFirstStep() ) {
-            state = 'first';
+        if (_isLastStep()) {
+            state = 'last'
+        } else if (_isFirstStep()) {
+            state = 'first'
         } else {
-            state = 'between';
+            state = 'between'
         }
 
         // Set state class
-        BEAVEUtil.removeClass(the.element, 'last');
-        BEAVEUtil.removeClass(the.element, 'first');
-        BEAVEUtil.removeClass(the.element, 'between');
+        BEAVERUtil.removeClass(the.element, 'last')
+        BEAVERUtil.removeClass(the.element, 'first')
+        BEAVERUtil.removeClass(the.element, 'between')
 
-        BEAVEUtil.addClass(the.element, state);
+        BEAVERUtil.addClass(the.element, state)
 
         // Step Items
-        var elements = BEAVEUtil.findAll(the.element, '[data-beaver-stepper-element="nav"], [data-beaver-stepper-element="content"], [data-beaver-stepper-element="info"]');
+        var elements = BEAVERUtil.findAll(
+            the.element,
+            '[data-beaver-stepper-element="nav"], [data-beaver-stepper-element="content"], [data-beaver-stepper-element="info"]'
+        )
 
-        if ( elements && elements.length > 0 ) {
+        if (elements && elements.length > 0) {
             for (var i = 0, len = elements.length; i < len; i++) {
-                var element = elements[i];
-                var index = BEAVEUtil.index(element) + 1;
+                var element = elements[i]
+                var index = BEAVERUtil.index(element) + 1
 
-                BEAVEUtil.removeClass(element, 'current');
-                BEAVEUtil.removeClass(element, 'completed');
-                BEAVEUtil.removeClass(element, 'pending');
+                BEAVERUtil.removeClass(element, 'current')
+                BEAVERUtil.removeClass(element, 'completed')
+                BEAVERUtil.removeClass(element, 'pending')
 
-                if ( index == the.currentStepIndex ) {
-                    BEAVEUtil.addClass(element, 'current');
+                if (index == the.currentStepIndex) {
+                    BEAVERUtil.addClass(element, 'current')
 
-                    if ( the.options.animation !== false && element.getAttribute('data-beaver-stepper-element') == 'content' ) {
-                        BEAVEUtil.css(element, 'animationDuration', the.options.animationSpeed);
+                    if (
+                        the.options.animation !== false &&
+                        element.getAttribute('data-beaver-stepper-element') ==
+                            'content'
+                    ) {
+                        BEAVERUtil.css(
+                            element,
+                            'animationDuration',
+                            the.options.animationSpeed
+                        )
 
-                        var animation = _getStepDirection(the.passedStepIndex) === 'previous' ?  the.options.animationPreviousClass : the.options.animationNextClass;
-                        BEAVEUtil.animateClass(element, animation);
+                        var animation =
+                            _getStepDirection(the.passedStepIndex) ===
+                            'previous'
+                                ? the.options.animationPreviousClass
+                                : the.options.animationNextClass
+                        BEAVERUtil.animateClass(element, animation)
                     }
                 } else {
-                    if ( index < the.currentStepIndex ) {
-                        BEAVEUtil.addClass(element, 'completed');
+                    if (index < the.currentStepIndex) {
+                        BEAVERUtil.addClass(element, 'completed')
                     } else {
-                        BEAVEUtil.addClass(element, 'pending');
+                        BEAVERUtil.addClass(element, 'pending')
                     }
                 }
             }
         }
     }
 
-    var _isLastStep = function() {
-        return the.currentStepIndex === the.totalStepsNumber;
+    var _isLastStep = function () {
+        return the.currentStepIndex === the.totalStepsNumber
     }
 
-    var _isFirstStep = function() {
-        return the.currentStepIndex === 1;
+    var _isFirstStep = function () {
+        return the.currentStepIndex === 1
     }
 
-    var _isBetweenStep = function() {
-        return _isLastStep() === false && _isFirstStep() === false;
+    var _isBetweenStep = function () {
+        return _isLastStep() === false && _isFirstStep() === false
     }
 
-    var _getNextStepIndex = function() {
-        if ( the.totalStepsNumber >= ( the.currentStepIndex + 1 ) ) {
-            return the.currentStepIndex + 1;
+    var _getNextStepIndex = function () {
+        if (the.totalStepsNumber >= the.currentStepIndex + 1) {
+            return the.currentStepIndex + 1
         } else {
-            return the.totalStepsNumber;
+            return the.totalStepsNumber
         }
     }
 
-    var _getPreviousStepIndex = function() {
-        if ( ( the.currentStepIndex - 1 ) > 1 ) {
-            return the.currentStepIndex - 1;
+    var _getPreviousStepIndex = function () {
+        if (the.currentStepIndex - 1 > 1) {
+            return the.currentStepIndex - 1
         } else {
-            return 1;
+            return 1
         }
     }
 
-    var _getFirstStepIndex = function(){
-        return 1;
+    var _getFirstStepIndex = function () {
+        return 1
     }
 
-    var _getLastStepIndex = function() {
-        return the.totalStepsNumber;
+    var _getLastStepIndex = function () {
+        return the.totalStepsNumber
     }
 
-    var _getTotalStepsNumber = function() {
-        return the.totalStepsNumber;
+    var _getTotalStepsNumber = function () {
+        return the.totalStepsNumber
     }
 
-    var _getStepDirection = function(index) {
-        if ( index > the.currentStepIndex ) {
-            return 'next';
+    var _getStepDirection = function (index) {
+        if (index > the.currentStepIndex) {
+            return 'next'
         } else {
-            return 'previous';
+            return 'previous'
         }
     }
 
-    var _getStepContent = function(index) {
-        var content = BEAVEUtil.findAll(the.element, '[data-beaver-stepper-element="content"]');
+    var _getStepContent = function (index) {
+        var content = BEAVERUtil.findAll(
+            the.element,
+            '[data-beaver-stepper-element="content"]'
+        )
 
-        if ( content[index-1] ) {
-            return content[index-1];
+        if (content[index - 1]) {
+            return content[index - 1]
         } else {
-            return false;
+            return false
         }
     }
 
-    var _destroy = function() {
+    var _destroy = function () {
         // Event Handlers
-        BEAVEUtil.removeEvent(the.btnNext, 'click', the.nextListener);
+        BEAVERUtil.removeEvent(the.btnNext, 'click', the.nextListener)
 
-        BEAVEUtil.removeEvent(the.btnPrevious, 'click', the.previousListener);
+        BEAVERUtil.removeEvent(the.btnPrevious, 'click', the.previousListener)
 
-        BEAVEUtil.off(the.element, 'click', the.stepListenerId);
+        BEAVERUtil.off(the.element, 'click', the.stepListenerId)
 
-        BEAVEUtil.data(the.element).remove('stepper');
+        BEAVERUtil.data(the.element).remove('stepper')
     }
 
     // Construct Class
-    _construct();
+    _construct()
 
     ///////////////////////
     // ** Public API  ** //
     ///////////////////////
 
     // Plugin API
-    the.getElement = function(index) {
-        return the.element;
+    the.getElement = function (index) {
+        return the.element
     }
 
-    the.goTo = function(index) {
-        return _goTo(index);
+    the.goTo = function (index) {
+        return _goTo(index)
     }
 
-    the.goPrevious = function() {
-        return _goPrevious();
+    the.goPrevious = function () {
+        return _goPrevious()
     }
 
-    the.goNext = function() {
-        return _goNext();
+    the.goNext = function () {
+        return _goNext()
     }
 
-    the.goFirst = function() {
-        return _goFirst();
+    the.goFirst = function () {
+        return _goFirst()
     }
 
-    the.goLast = function() {
-        return _goLast();
+    the.goLast = function () {
+        return _goLast()
     }
 
-    the.getCurrentStepIndex = function() {
-        return the.currentStepIndex;
+    the.getCurrentStepIndex = function () {
+        return the.currentStepIndex
     }
 
-    the.getNextStepIndex = function() {
-        return _getNextStepIndex();
+    the.getNextStepIndex = function () {
+        return _getNextStepIndex()
     }
 
-    the.getPassedStepIndex = function() {
-        return the.passedStepIndex;
+    the.getPassedStepIndex = function () {
+        return the.passedStepIndex
     }
 
-    the.getClickedStepIndex = function() {
-        return the.clickedStepIndex;
+    the.getClickedStepIndex = function () {
+        return the.clickedStepIndex
     }
 
-    the.getPreviousStepIndex = function() {
-        return _getPreviousStepIndex();
+    the.getPreviousStepIndex = function () {
+        return _getPreviousStepIndex()
     }
 
-    the.destroy = function() {
-        return _destroy();
+    the.destroy = function () {
+        return _destroy()
     }
 
     // Event API
-    the.on = function(name, handler) {
-        return BEAVEEventHandler.on(the.element, name, handler);
+    the.on = function (name, handler) {
+        return BEAVEREventHandler.on(the.element, name, handler)
     }
 
-    the.one = function(name, handler) {
-        return BEAVEEventHandler.one(the.element, name, handler);
+    the.one = function (name, handler) {
+        return BEAVEREventHandler.one(the.element, name, handler)
     }
 
-    the.off = function(name, handlerId) {
-        return BEAVEEventHandler.off(the.element, name, handlerId);
+    the.off = function (name, handlerId) {
+        return BEAVEREventHandler.off(the.element, name, handlerId)
     }
 
-    the.trigger = function(name, event) {
-        return BEAVEEventHandler.trigger(the.element, name, event, the, event);
+    the.trigger = function (name, event) {
+        return BEAVEREventHandler.trigger(the.element, name, event, the, event)
     }
-};
+}
 
 // Static methods
-BEAVEStepper.getInstance = function(element) {
-    if ( element !== null && BEAVEUtil.data(element).has('stepper') ) {
-        return BEAVEUtil.data(element).get('stepper');
+BEAVERStepper.getInstance = function (element) {
+    if (element !== null && BEAVERUtil.data(element).has('stepper')) {
+        return BEAVERUtil.data(element).get('stepper')
     } else {
-        return null;
+        return null
     }
 }
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = BEAVEStepper;
+    module.exports = BEAVERStepper
 }

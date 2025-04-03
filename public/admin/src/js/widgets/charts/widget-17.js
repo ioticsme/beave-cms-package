@@ -1,30 +1,30 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVEChartsWidget17 = (function () {
+var BEAVERChartsWidget17 = (function () {
     // Private methods
     var initChart = function () {
         // Check if amchart library is included
-        if (typeof am5 === "undefined") {
-            return;
+        if (typeof am5 === 'undefined') {
+            return
         }
 
-        var element = document.getElementById("beave_charts_widget_17_chart");
+        var element = document.getElementById('beave_charts_widget_17_chart')
 
         if (!element) {
-            return;
+            return
         }
 
-        var root;
+        var root
 
-        var init = function() {
+        var init = function () {
             // Create root element
             // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-            root = am5.Root.new(element);
+            root = am5.Root.new(element)
 
             // Set themes
             // https://www.amcharts.com/docs/v5/concepts/themes/
-            root.setThemes([am5themes_Animated.new(root)]);
+            root.setThemes([am5themes_Animated.new(root)])
 
             // Create chart
             // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
@@ -36,7 +36,7 @@ var BEAVEChartsWidget17 = (function () {
                     layout: root.verticalLayout,
                     innerRadius: am5.percent(50),
                 })
-            );
+            )
 
             // Create series
             // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
@@ -45,73 +45,111 @@ var BEAVEChartsWidget17 = (function () {
                 am5percent.PieSeries.new(root, {
                     startAngle: 180,
                     endAngle: 360,
-                    valueField: "value",
-                    categoryField: "category",
+                    valueField: 'value',
+                    categoryField: 'category',
                     alignLabels: false,
                 })
-            );
+            )
 
             series.labels.template.setAll({
-                fontWeight: "400",
+                fontWeight: '400',
                 fontSize: 13,
-                fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-gray-500'))
-            });
+                fill: am5.color(
+                    BEAVERUtil.getCssVariableValue('--bs-gray-500')
+                ),
+            })
 
-            series.states.create("hidden", {
+            series.states.create('hidden', {
                 startAngle: 180,
                 endAngle: 180,
-            });
+            })
 
             series.slices.template.setAll({
                 cornerRadius: 5,
-            });
+            })
 
             series.ticks.template.setAll({
                 forceHidden: true,
-            });
+            })
 
             // Set data
             // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Setting_data
             series.data.setAll([
-                { value: 10, category: "One", fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-primary')) },
-                { value: 9, category: "Two", fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-success')) },
-                { value: 6, category: "Three", fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-danger')) },
-                { value: 5, category: "Four", fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-warning')) },
-                { value: 4, category: "Five", fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-info')) },
-                { value: 3, category: "Six", fill: am5.color(BEAVEUtil.getCssVariableValue('--bs-secondary')) }
-            ]);
+                {
+                    value: 10,
+                    category: 'One',
+                    fill: am5.color(
+                        BEAVERUtil.getCssVariableValue('--bs-primary')
+                    ),
+                },
+                {
+                    value: 9,
+                    category: 'Two',
+                    fill: am5.color(
+                        BEAVERUtil.getCssVariableValue('--bs-success')
+                    ),
+                },
+                {
+                    value: 6,
+                    category: 'Three',
+                    fill: am5.color(
+                        BEAVERUtil.getCssVariableValue('--bs-danger')
+                    ),
+                },
+                {
+                    value: 5,
+                    category: 'Four',
+                    fill: am5.color(
+                        BEAVERUtil.getCssVariableValue('--bs-warning')
+                    ),
+                },
+                {
+                    value: 4,
+                    category: 'Five',
+                    fill: am5.color(
+                        BEAVERUtil.getCssVariableValue('--bs-info')
+                    ),
+                },
+                {
+                    value: 3,
+                    category: 'Six',
+                    fill: am5.color(
+                        BEAVERUtil.getCssVariableValue('--bs-secondary')
+                    ),
+                },
+            ])
 
-            series.appear(1000, 100);
+            series.appear(1000, 100)
         }
 
         am5.ready(function () {
-            init();
-        });
+            init()
+        })
 
         // Update chart on theme mode change
-		BEAVEThemeMode.on("beaver.thememode.change", function() {     
-			// Destroy chart
-			root.dispose();
+        BEAVERThemeMode.on('beaver.thememode.change', function () {
+            // Destroy chart
+            root.dispose()
 
-			// Reinit chart
-			init();
-		});
-    };
+            // Reinit chart
+            init()
+        })
+    }
 
     // Public methods
     return {
         init: function () {
-            initChart();
+            initChart()
         },
-    };
-})();
+    }
+})()
 
 // Webpack support
-if (typeof module !== "undefined") {
-    module.exports = BEAVEChartsWidget17;
+if (typeof module !== 'undefined') {
+    module.exports = BEAVERChartsWidget17
 }
 
 // On document ready
-BEAVEUtil.onDOMContentLoaded(function () {
-    BEAVEChartsWidget17.init();
-});
+BEAVERUtil.onDOMContentLoaded(function () {
+    BEAVERChartsWidget17.init()
+})

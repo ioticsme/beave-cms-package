@@ -1,74 +1,80 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVEChartsWidget8 = function () {
+var BEAVERChartsWidget8 = (function () {
     var chart1 = {
         self: null,
-        rendered: false
-    };
+        rendered: false,
+    }
 
     var chart2 = {
         self: null,
-        rendered: false
-    };
+        rendered: false,
+    }
 
     // Private methods
-    var initChart = function(chart, toggle, selector, data, initByDefault) {
-        var element = document.querySelector(selector);
+    var initChart = function (chart, toggle, selector, data, initByDefault) {
+        var element = document.querySelector(selector)
 
         if (!element) {
-            return;
+            return
         }
 
-        var height = parseInt(BEAVEUtil.css(element, 'height'));    
-        var borderColor = BEAVEUtil.getCssVariableValue('--bs-border-dashed-color');    
+        var height = parseInt(BEAVERUtil.css(element, 'height'))
+        var borderColor = BEAVERUtil.getCssVariableValue(
+            '--bs-border-dashed-color'
+        )
 
         var options = {
             series: [
                 {
                     name: 'Social Campaigns',
-                    data: data[0]  // array value is of the format [x, y, z] where x (timestamp) and y are the two axes coordinates,
-                }, {
+                    data: data[0], // array value is of the format [x, y, z] where x (timestamp) and y are the two axes coordinates,
+                },
+                {
                     name: 'Email Newsletter',
-                    data: data[1]
-                }, {
+                    data: data[1],
+                },
+                {
                     name: 'TV Campaign',
-                    data: data[2]
-                }, {
+                    data: data[2],
+                },
+                {
                     name: 'Google Ads',
-                    data: data[3]
-                }, {
+                    data: data[3],
+                },
+                {
                     name: 'Courses',
-                    data: data[4]
-                }, {
+                    data: data[4],
+                },
+                {
                     name: 'Radio',
-                    data: data[5]
-                }                
+                    data: data[5],
+                },
             ],
             chart: {
                 fontFamily: 'inherit',
-                type: 'bubble',    
+                type: 'bubble',
                 height: height,
                 toolbar: {
-                    show: false
-                }                         
-            },                                 
+                    show: false,
+                },
+            },
             plotOptions: {
-                bubble: {
-                }
+                bubble: {},
             },
             stroke: {
                 show: false,
-                width: 0
+                width: 0,
             },
             legend: {
-                show: false
+                show: false,
             },
             dataLabels: {
-                enabled: false
+                enabled: false,
             },
             xaxis: {
-                type: 'numeric',             
+                type: 'numeric',
                 tickAmount: 7,
                 min: 0,
                 max: 700,
@@ -83,10 +89,10 @@ var BEAVEChartsWidget8 = function () {
                     show: true,
                     trim: true,
                     style: {
-                        colors: BEAVEUtil.getCssVariableValue('--bs-gray-500'),
-                        fontSize: '13px'
-                    }
-                }
+                        colors: BEAVERUtil.getCssVariableValue('--bs-gray-500'),
+                        fontSize: '13px',
+                    },
+                },
             },
             yaxis: {
                 tickAmount: 7,
@@ -94,125 +100,161 @@ var BEAVEChartsWidget8 = function () {
                 max: 700,
                 labels: {
                     style: {
-                        colors: BEAVEUtil.getCssVariableValue('--bs-gray-500'),
-                        fontSize: '13px'
-                    }
-                }               
+                        colors: BEAVERUtil.getCssVariableValue('--bs-gray-500'),
+                        fontSize: '13px',
+                    },
+                },
             },
             tooltip: {
                 style: {
-                    fontSize: '12px'
+                    fontSize: '12px',
                 },
                 x: {
                     formatter: function (val) {
-                        return "Clicks: " + val;
-                    }
+                        return 'Clicks: ' + val
+                    },
                 },
                 y: {
                     formatter: function (val) {
-                        return "$" + val + "K"
-                    }
+                        return '$' + val + 'K'
+                    },
                 },
                 z: {
-                    title: 'Impression: '
-                }
+                    title: 'Impression: ',
+                },
             },
             crosshairs: {
                 show: true,
                 position: 'front',
                 stroke: {
-                    color: BEAVEUtil.getCssVariableValue('--bs-border-dashed-color'),
+                    color: BEAVERUtil.getCssVariableValue(
+                        '--bs-border-dashed-color'
+                    ),
                     width: 1,
                     dashArray: 0,
-                }
-            },           
+                },
+            },
             colors: [
-                BEAVEUtil.getCssVariableValue('--bs-primary'),
-                BEAVEUtil.getCssVariableValue('--bs-success'),   
-                BEAVEUtil.getCssVariableValue('--bs-warning'),
-                BEAVEUtil.getCssVariableValue('--bs-danger'),
-                BEAVEUtil.getCssVariableValue('--bs-info'),
-                '#43CED7'
+                BEAVERUtil.getCssVariableValue('--bs-primary'),
+                BEAVERUtil.getCssVariableValue('--bs-success'),
+                BEAVERUtil.getCssVariableValue('--bs-warning'),
+                BEAVERUtil.getCssVariableValue('--bs-danger'),
+                BEAVERUtil.getCssVariableValue('--bs-info'),
+                '#43CED7',
             ],
             fill: {
-                opacity: 1,                
+                opacity: 1,
             },
             markers: {
-                strokeWidth: 0
+                strokeWidth: 0,
             },
             grid: {
                 borderColor: borderColor,
                 strokeDashArray: 4,
                 padding: {
-                    right: 20
+                    right: 20,
                 },
                 yaxis: {
                     lines: {
-                        show: true
-                    }
-                }
-            }
-        };
+                        show: true,
+                    },
+                },
+            },
+        }
 
-        chart.self = new ApexCharts(element, options);        
-        var tab = document.querySelector(toggle);
-        
+        chart.self = new ApexCharts(element, options)
+        var tab = document.querySelector(toggle)
+
         if (initByDefault === true) {
             // Set timeout to properly get the parent elements width
-            setTimeout(function() {
-                chart.self.render();  
-                chart.rendered = true;
-            }, 200);
-        }        
+            setTimeout(function () {
+                chart.self.render()
+                chart.rendered = true
+            }, 200)
+        }
 
         tab.addEventListener('shown.bs.tab', function (event) {
             if (chart.rendered === false) {
-                chart.self.render();  
-                chart.rendered = true;
+                chart.self.render()
+                chart.rendered = true
             }
-        });
+        })
     }
 
     // Public methods
     return {
-        init: function () {    
+        init: function () {
             var data1 = [
-                [[100, 250, 30]], [[225, 300, 35]], [[300, 350, 25]], [[350, 350, 20]], [[450, 400, 25]], [[550, 350, 35]]
-            ];
+                [[100, 250, 30]],
+                [[225, 300, 35]],
+                [[300, 350, 25]],
+                [[350, 350, 20]],
+                [[450, 400, 25]],
+                [[550, 350, 35]],
+            ]
 
             var data2 = [
-                [[125, 300, 40]], [[250, 350, 35]], [[350, 450, 30]], [[450, 250, 25]], [[500, 500, 30]], [[600, 250, 28]]
-            ];
+                [[125, 300, 40]],
+                [[250, 350, 35]],
+                [[350, 450, 30]],
+                [[450, 250, 25]],
+                [[500, 500, 30]],
+                [[600, 250, 28]],
+            ]
 
-            initChart(chart1, '#beave_chart_widget_8_week_toggle', '#beave_chart_widget_8_week_chart', data1, false);
-            initChart(chart2, '#beave_chart_widget_8_month_toggle', '#beave_chart_widget_8_month_chart', data2, true);    
+            initChart(
+                chart1,
+                '#beave_chart_widget_8_week_toggle',
+                '#beave_chart_widget_8_week_chart',
+                data1,
+                false
+            )
+            initChart(
+                chart2,
+                '#beave_chart_widget_8_month_toggle',
+                '#beave_chart_widget_8_month_chart',
+                data2,
+                true
+            )
 
             // Update chart on theme mode change
-            var handlerId = BEAVEThemeMode.on("beaver.thememode.change", function() {
-                if (chart1.rendered) {
-                    chart1.self.destroy();
-                }
+            var handlerId = BEAVERThemeMode.on(
+                'beaver.thememode.change',
+                function () {
+                    if (chart1.rendered) {
+                        chart1.self.destroy()
+                    }
 
-                if (chart2.rendered) {
-                    chart2.self.destroy();
-                }
+                    if (chart2.rendered) {
+                        chart2.self.destroy()
+                    }
 
-                initChart(chart1, '#beave_chart_widget_8_week_toggle', '#beave_chart_widget_8_week_chart', data1, chart1.rendered);
-                initChart(chart2, '#beave_chart_widget_8_month_toggle', '#beave_chart_widget_8_month_chart', data2, chart2.rendered);  
-            });
-        }   
+                    initChart(
+                        chart1,
+                        '#beave_chart_widget_8_week_toggle',
+                        '#beave_chart_widget_8_week_chart',
+                        data1,
+                        chart1.rendered
+                    )
+                    initChart(
+                        chart2,
+                        '#beave_chart_widget_8_month_toggle',
+                        '#beave_chart_widget_8_month_chart',
+                        data2,
+                        chart2.rendered
+                    )
+                }
+            )
+        },
     }
-}();
+})()
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = BEAVEChartsWidget8;
+    module.exports = BEAVERChartsWidget8
 }
 
 // On document ready
-BEAVEUtil.onDOMContentLoaded(function() {
-    BEAVEChartsWidget8.init();
-});
-
-
- 
+BEAVERUtil.onDOMContentLoaded(function () {
+    BEAVERChartsWidget8.init()
+})

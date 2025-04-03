@@ -1,253 +1,266 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVEPasswordMeter = function(element, options) {
+var BEAVERPasswordMeter = function (element, options) {
     ////////////////////////////
     // ** Private variables  ** //
     ////////////////////////////
-    var the = this;
+    var the = this
 
     if (!element) {
-        return;
+        return
     }
 
     // Default Options
     var defaultOptions = {
         minLength: 8,
-        checkUppercase: true,        
+        checkUppercase: true,
         checkLowercase: true,
         checkDigit: true,
         checkChar: true,
-        scoreHighlightClass: 'active'
-    };
+        scoreHighlightClass: 'active',
+    }
 
     ////////////////////////////
     // ** Private methods  ** //
     ////////////////////////////
 
     // Constructor
-    var _construct = function() {
-        if ( BEAVEUtil.data(element).has('password-meter') === true ) {
-            the = BEAVEUtil.data(element).get('password-meter');
+    var _construct = function () {
+        if (BEAVERUtil.data(element).has('password-meter') === true) {
+            the = BEAVERUtil.data(element).get('password-meter')
         } else {
-            _init();
+            _init()
         }
     }
 
     // Initialize
-    var _init = function() {
+    var _init = function () {
         // Variables
-        the.options = BEAVEUtil.deepExtend({}, defaultOptions, options);
-        the.score = 0;
-        the.checkSteps = 5;
+        the.options = BEAVERUtil.deepExtend({}, defaultOptions, options)
+        the.score = 0
+        the.checkSteps = 5
 
         // Elements
-        the.element = element;
-        the.inputElement = the.element.querySelector('input[type]');
-        the.visibilityElement = the.element.querySelector('[data-beaver-password-meter-control="visibility"]');
-        the.highlightElement = the.element.querySelector('[data-beaver-password-meter-control="highlight"]'); 
+        the.element = element
+        the.inputElement = the.element.querySelector('input[type]')
+        the.visibilityElement = the.element.querySelector(
+            '[data-beaver-password-meter-control="visibility"]'
+        )
+        the.highlightElement = the.element.querySelector(
+            '[data-beaver-password-meter-control="highlight"]'
+        )
 
         // Set initialized
-        the.element.setAttribute('data-beaver-password-meter', 'true');
-        
+        the.element.setAttribute('data-beaver-password-meter', 'true')
+
         // Event Handlers
-        _handlers();
+        _handlers()
 
         // Bind Instance
-        BEAVEUtil.data(the.element).set('password-meter', the);
+        BEAVERUtil.data(the.element).set('password-meter', the)
     }
 
     // Handlers
-    var _handlers = function() {
+    var _handlers = function () {
         if (the.highlightElement) {
-            the.inputElement.addEventListener('input', function() {
-                _check();
-            });
+            the.inputElement.addEventListener('input', function () {
+                _check()
+            })
         }
 
         if (the.visibilityElement) {
-            the.visibilityElement.addEventListener('click', function() {
-                _visibility();
-            });
+            the.visibilityElement.addEventListener('click', function () {
+                _visibility()
+            })
         }
-    }   
+    }
 
     // Event handlers
-    var _check = function() {
-        var score = 0;
-        var checkScore = _getCheckScore();
-        
+    var _check = function () {
+        var score = 0
+        var checkScore = _getCheckScore()
+
         if (_checkLength() === true) {
-            score = score + checkScore;
+            score = score + checkScore
         }
 
         if (the.options.checkUppercase === true && _checkLowercase() === true) {
-            score = score + checkScore;
+            score = score + checkScore
         }
 
-        if (the.options.checkLowercase === true && _checkUppercase() === true ) {
-            score = score + checkScore;
+        if (the.options.checkLowercase === true && _checkUppercase() === true) {
+            score = score + checkScore
         }
 
-        if (the.options.checkDigit === true && _checkDigit() === true ) {
-            score = score + checkScore;
+        if (the.options.checkDigit === true && _checkDigit() === true) {
+            score = score + checkScore
         }
 
-        if (the.options.checkChar === true && _checkChar() === true ) {
-            score = score + checkScore;
+        if (the.options.checkChar === true && _checkChar() === true) {
+            score = score + checkScore
         }
 
-        the.score = score;
+        the.score = score
 
-        _highlight();
+        _highlight()
     }
 
-    var _checkLength = function() {
-        return the.inputElement.value.length >= the.options.minLength;  // 20 score
+    var _checkLength = function () {
+        return the.inputElement.value.length >= the.options.minLength // 20 score
     }
 
-    var _checkLowercase = function() {
-        return /[a-z]/.test(the.inputElement.value);  // 20 score
+    var _checkLowercase = function () {
+        return /[a-z]/.test(the.inputElement.value) // 20 score
     }
 
-    var _checkUppercase = function() {
-        return /[A-Z]/.test(the.inputElement.value);  // 20 score
+    var _checkUppercase = function () {
+        return /[A-Z]/.test(the.inputElement.value) // 20 score
     }
 
-    var _checkDigit = function() {
-        return /[0-9]/.test(the.inputElement.value);  // 20 score
+    var _checkDigit = function () {
+        return /[0-9]/.test(the.inputElement.value) // 20 score
     }
 
-    var _checkChar = function() {
-        return /[~`!#@$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(the.inputElement.value);  // 20 score
-    }    
+    var _checkChar = function () {
+        return /[~`!#@$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(
+            the.inputElement.value
+        ) // 20 score
+    }
 
-    var _getCheckScore = function() {
-        var count = 1;
-        
+    var _getCheckScore = function () {
+        var count = 1
+
         if (the.options.checkUppercase === true) {
-            count++;
+            count++
         }
 
         if (the.options.checkLowercase === true) {
-            count++;
+            count++
         }
 
         if (the.options.checkDigit === true) {
-            count++;
+            count++
         }
 
         if (the.options.checkChar === true) {
-            count++;
+            count++
         }
 
-        the.checkSteps = count;
+        the.checkSteps = count
 
-        return 100 / the.checkSteps;
+        return 100 / the.checkSteps
     }
-    
-    var _highlight = function() {
-        var items = [].slice.call(the.highlightElement.querySelectorAll('div'));
-        var total = items.length;
-        var index = 0;
-        var checkScore = _getCheckScore();
-        var score = _getScore();
+
+    var _highlight = function () {
+        var items = [].slice.call(the.highlightElement.querySelectorAll('div'))
+        var total = items.length
+        var index = 0
+        var checkScore = _getCheckScore()
+        var score = _getScore()
 
         items.map(function (item) {
-            index++;
+            index++
 
-            if ( (checkScore * index * (the.checkSteps / total)) <= score ) {
-                item.classList.add('active');
+            if (checkScore * index * (the.checkSteps / total) <= score) {
+                item.classList.add('active')
             } else {
-                item.classList.remove('active');
-            }            
-        });
+                item.classList.remove('active')
+            }
+        })
     }
 
-    var _visibility = function() {
-        var visibleIcon = the.visibilityElement.querySelector(':scope > i:not(.d-none)');
-        var hiddenIcon = the.visibilityElement.querySelector(':scope > i.d-none');
-        
-        if (the.inputElement.getAttribute('type').toLowerCase() === 'password' ) {
-            the.inputElement.setAttribute('type', 'text');
-        }  else {
-            the.inputElement.setAttribute('type', 'password');
-        }        
+    var _visibility = function () {
+        var visibleIcon = the.visibilityElement.querySelector(
+            ':scope > i:not(.d-none)'
+        )
+        var hiddenIcon =
+            the.visibilityElement.querySelector(':scope > i.d-none')
 
-        visibleIcon.classList.add('d-none');
-        hiddenIcon.classList.remove('d-none');
+        if (
+            the.inputElement.getAttribute('type').toLowerCase() === 'password'
+        ) {
+            the.inputElement.setAttribute('type', 'text')
+        } else {
+            the.inputElement.setAttribute('type', 'password')
+        }
 
-        the.inputElement.focus();
+        visibleIcon.classList.add('d-none')
+        hiddenIcon.classList.remove('d-none')
+
+        the.inputElement.focus()
     }
 
-    var _reset = function() {
-        the.score = 0;
+    var _reset = function () {
+        the.score = 0
 
-        _highlight();
+        _highlight()
     }
 
     // Gets current password score
-    var _getScore = function() {
-       return the.score;
+    var _getScore = function () {
+        return the.score
     }
 
-    var _destroy = function() {
-        BEAVEUtil.data(the.element).remove('password-meter');
+    var _destroy = function () {
+        BEAVERUtil.data(the.element).remove('password-meter')
     }
 
     // Construct class
-    _construct();
+    _construct()
 
     ///////////////////////
     // ** Public API  ** //
     ///////////////////////
 
     // Plugin API
-    the.check = function() {
-        return _check();
+    the.check = function () {
+        return _check()
     }
 
-    the.getScore = function() {
-        return _getScore();
+    the.getScore = function () {
+        return _getScore()
     }
 
-    the.reset = function() {
-        return _reset();
+    the.reset = function () {
+        return _reset()
     }
 
-    the.destroy = function() {
-        return _destroy();
+    the.destroy = function () {
+        return _destroy()
     }
-};
+}
 
 // Static methods
-BEAVEPasswordMeter.getInstance = function(element) {
-    if ( element !== null && BEAVEUtil.data(element).has('password-meter') ) {
-        return BEAVEUtil.data(element).get('password-meter');
+BEAVERPasswordMeter.getInstance = function (element) {
+    if (element !== null && BEAVERUtil.data(element).has('password-meter')) {
+        return BEAVERUtil.data(element).get('password-meter')
     } else {
-        return null;
+        return null
     }
 }
 
 // Create instances
-BEAVEPasswordMeter.createInstances = function(selector = '[data-beaver-password-meter]') {
+BEAVERPasswordMeter.createInstances = function (
+    selector = '[data-beaver-password-meter]'
+) {
     // Get instances
-    var elements = document.body.querySelectorAll(selector);
+    var elements = document.body.querySelectorAll(selector)
 
-    if ( elements && elements.length > 0 ) {
+    if (elements && elements.length > 0) {
         for (var i = 0, len = elements.length; i < len; i++) {
             // Initialize instances
-            new BEAVEPasswordMeter(elements[i]);
+            new BEAVERPasswordMeter(elements[i])
         }
     }
 }
 
 // Global initialization
-BEAVEPasswordMeter.init = function() {
-    BEAVEPasswordMeter.createInstances();
-};
+BEAVERPasswordMeter.init = function () {
+    BEAVERPasswordMeter.createInstances()
+}
 
 // Webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = BEAVEPasswordMeter;
+    module.exports = BEAVERPasswordMeter
 }

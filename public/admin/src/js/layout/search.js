@@ -1,176 +1,207 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVELayoutSearch = function() {
+var BEAVERLayoutSearch = (function () {
     // Private variables
-    var element;
-    var formElement;
-    var mainElement;
-    var resultsElement;
-    var wrapperElement;
-    var emptyElement;
+    var element
+    var formElement
+    var mainElement
+    var resultsElement
+    var wrapperElement
+    var emptyElement
 
-    var preferencesElement;
-    var preferencesShowElement;
-    var preferencesDismissElement;
-    
-    var advancedOptionsFormElement;
-    var advancedOptionsFormShowElement;
-    var advancedOptionsFormCancelElement;
-    var advancedOptionsFormSearchElement;
-    
-    var searchObject;
+    var preferencesElement
+    var preferencesShowElement
+    var preferencesDismissElement
+
+    var advancedOptionsFormElement
+    var advancedOptionsFormShowElement
+    var advancedOptionsFormCancelElement
+    var advancedOptionsFormSearchElement
+
+    var searchObject
 
     // Private functions
-    var processs = function(search) {
-        var timeout = setTimeout(function() {
-            var number = BEAVEUtil.getRandomInt(1, 3);
+    var processs = function (search) {
+        var timeout = setTimeout(function () {
+            var number = BEAVERUtil.getRandomInt(1, 3)
 
             // Hide recently viewed
-            mainElement.classList.add('d-none');
+            mainElement.classList.add('d-none')
 
             if (number === 3) {
                 // Hide results
-                resultsElement.classList.add('d-none');
-                // Show empty message 
-                emptyElement.classList.remove('d-none');
+                resultsElement.classList.add('d-none')
+                // Show empty message
+                emptyElement.classList.remove('d-none')
             } else {
                 // Show results
-                resultsElement.classList.remove('d-none');
-                // Hide empty message 
-                emptyElement.classList.add('d-none');
-            }                  
+                resultsElement.classList.remove('d-none')
+                // Hide empty message
+                emptyElement.classList.add('d-none')
+            }
 
             // Complete search
-            search.complete();
-        }, 1500);
+            search.complete()
+        }, 1500)
     }
 
-    var processsAjax = function(search) {
+    var processsAjax = function (search) {
         // Hide recently viewed
-        mainElement.classList.add('d-none');
+        mainElement.classList.add('d-none')
 
         // Learn more: https://axios-http.com/docs/intro
-        axios.post('/search.php', {
-            query: searchObject.getQuery()
-        })
-        .then(function (response) {
-            // Populate results
-            resultsElement.innerHTML = response;
-            // Show results
-            resultsElement.classList.remove('d-none');
-            // Hide empty message 
-            emptyElement.classList.add('d-none');
+        axios
+            .post('/search.php', {
+                query: searchObject.getQuery(),
+            })
+            .then(function (response) {
+                // Populate results
+                resultsElement.innerHTML = response
+                // Show results
+                resultsElement.classList.remove('d-none')
+                // Hide empty message
+                emptyElement.classList.add('d-none')
 
-            // Complete search
-            search.complete();
-        })
-        .catch(function (error) {
-            // Hide results
-            resultsElement.classList.add('d-none');
-            // Show empty message 
-            emptyElement.classList.remove('d-none');
+                // Complete search
+                search.complete()
+            })
+            .catch(function (error) {
+                // Hide results
+                resultsElement.classList.add('d-none')
+                // Show empty message
+                emptyElement.classList.remove('d-none')
 
-            // Complete search
-            search.complete();
-        });
+                // Complete search
+                search.complete()
+            })
     }
 
-    var clear = function(search) {
+    var clear = function (search) {
         // Show recently viewed
-        mainElement.classList.remove('d-none');
+        mainElement.classList.remove('d-none')
         // Hide results
-        resultsElement.classList.add('d-none');
-        // Hide empty message 
-        emptyElement.classList.add('d-none');
-    }    
+        resultsElement.classList.add('d-none')
+        // Hide empty message
+        emptyElement.classList.add('d-none')
+    }
 
-    var handlePreferences = function() {
+    var handlePreferences = function () {
         // Preference show handler
-        if (preferencesShowElement) { 
-            preferencesShowElement.addEventListener('click', function() {
-                wrapperElement.classList.add('d-none');
-                preferencesElement.classList.remove('d-none');
-            });
+        if (preferencesShowElement) {
+            preferencesShowElement.addEventListener('click', function () {
+                wrapperElement.classList.add('d-none')
+                preferencesElement.classList.remove('d-none')
+            })
         }
 
         // Preference dismiss handler
-        if (preferencesDismissElement) { 
-            preferencesDismissElement.addEventListener('click', function() {
-                wrapperElement.classList.remove('d-none');
-                preferencesElement.classList.add('d-none');
-            });
+        if (preferencesDismissElement) {
+            preferencesDismissElement.addEventListener('click', function () {
+                wrapperElement.classList.remove('d-none')
+                preferencesElement.classList.add('d-none')
+            })
         }
     }
 
-    var handleAdvancedOptionsForm = function() {
+    var handleAdvancedOptionsForm = function () {
         // Show
-        if (advancedOptionsFormShowElement) {            
-            advancedOptionsFormShowElement.addEventListener('click', function() {
-                wrapperElement.classList.add('d-none');
-                advancedOptionsFormElement.classList.remove('d-none');
-            });
-        }        
+        if (advancedOptionsFormShowElement) {
+            advancedOptionsFormShowElement.addEventListener(
+                'click',
+                function () {
+                    wrapperElement.classList.add('d-none')
+                    advancedOptionsFormElement.classList.remove('d-none')
+                }
+            )
+        }
 
         // Cancel
-        if (advancedOptionsFormCancelElement) {           
-            advancedOptionsFormCancelElement.addEventListener('click', function() {
-                wrapperElement.classList.remove('d-none');
-                advancedOptionsFormElement.classList.add('d-none');
-            });
+        if (advancedOptionsFormCancelElement) {
+            advancedOptionsFormCancelElement.addEventListener(
+                'click',
+                function () {
+                    wrapperElement.classList.remove('d-none')
+                    advancedOptionsFormElement.classList.add('d-none')
+                }
+            )
         }
     }
 
     // Public methods
-	return {
-		init: function() {
+    return {
+        init: function () {
             // Elements
-            element = document.querySelector('#beave_header_search');
+            element = document.querySelector('#beave_header_search')
 
             if (!element) {
-                return;
+                return
             }
 
-            wrapperElement = element.querySelector('[data-beaver-search-element="wrapper"]');
-            formElement = element.querySelector('[data-beaver-search-element="form"]');
-            mainElement = element.querySelector('[data-beaver-search-element="main"]');
-            resultsElement = element.querySelector('[data-beaver-search-element="results"]');
-            emptyElement = element.querySelector('[data-beaver-search-element="empty"]');
+            wrapperElement = element.querySelector(
+                '[data-beaver-search-element="wrapper"]'
+            )
+            formElement = element.querySelector(
+                '[data-beaver-search-element="form"]'
+            )
+            mainElement = element.querySelector(
+                '[data-beaver-search-element="main"]'
+            )
+            resultsElement = element.querySelector(
+                '[data-beaver-search-element="results"]'
+            )
+            emptyElement = element.querySelector(
+                '[data-beaver-search-element="empty"]'
+            )
 
-            preferencesElement = element.querySelector('[data-beaver-search-element="preferences"]');
-            preferencesShowElement = element.querySelector('[data-beaver-search-element="preferences-show"]');
-            preferencesDismissElement = element.querySelector('[data-beaver-search-element="preferences-dismiss"]');
+            preferencesElement = element.querySelector(
+                '[data-beaver-search-element="preferences"]'
+            )
+            preferencesShowElement = element.querySelector(
+                '[data-beaver-search-element="preferences-show"]'
+            )
+            preferencesDismissElement = element.querySelector(
+                '[data-beaver-search-element="preferences-dismiss"]'
+            )
 
-            advancedOptionsFormElement = element.querySelector('[data-beaver-search-element="advanced-options-form"]');
-            advancedOptionsFormShowElement = element.querySelector('[data-beaver-search-element="advanced-options-form-show"]');
-            advancedOptionsFormCancelElement = element.querySelector('[data-beaver-search-element="advanced-options-form-cancel"]');
-            advancedOptionsFormSearchElement = element.querySelector('[data-beaver-search-element="advanced-options-form-search"]');
-            
+            advancedOptionsFormElement = element.querySelector(
+                '[data-beaver-search-element="advanced-options-form"]'
+            )
+            advancedOptionsFormShowElement = element.querySelector(
+                '[data-beaver-search-element="advanced-options-form-show"]'
+            )
+            advancedOptionsFormCancelElement = element.querySelector(
+                '[data-beaver-search-element="advanced-options-form-cancel"]'
+            )
+            advancedOptionsFormSearchElement = element.querySelector(
+                '[data-beaver-search-element="advanced-options-form-search"]'
+            )
+
             // Initialize search handler
-            searchObject = new BEAVESearch(element);
+            searchObject = new BEAVERSearch(element)
 
             // Demo search handler
-            searchObject.on('beaver.search.process', processs);
+            searchObject.on('beaver.search.process', processs)
 
             // Ajax search handler
             //searchObject.on('beaver.search.process', processsAjax);
 
             // Clear handler
-            searchObject.on('beaver.search.clear', clear);
+            searchObject.on('beaver.search.clear', clear)
 
             // Custom handlers
             if (preferencesElement) {
-                handlePreferences();
-            }            
+                handlePreferences()
+            }
 
             if (advancedOptionsFormElement) {
-                handleAdvancedOptionsForm();
-            }                        
-		}
-	};
-}();
+                handleAdvancedOptionsForm()
+            }
+        },
+    }
+})()
 
 // On document ready
-BEAVEUtil.onDOMContentLoaded(function() {
-    BEAVELayoutSearch.init();
-});
+BEAVERUtil.onDOMContentLoaded(function () {
+    BEAVERLayoutSearch.init()
+})

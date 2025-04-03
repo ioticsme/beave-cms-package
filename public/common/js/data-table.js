@@ -1,5 +1,5 @@
 'use strict'
-var BEAVESubscriptionsList = (function () {
+var BEAVERSubscriptionsList = (function () {
     var t,
         e,
         n,
@@ -137,6 +137,6 @@ var BEAVESubscriptionsList = (function () {
         },
     }
 })()
-BEAVEUtil.onDOMContentLoaded(function () {
-    BEAVESubscriptionsList.init()
+BEAVERUtil.onDOMContentLoaded(function () {
+    BEAVERSubscriptionsList.init()
 })

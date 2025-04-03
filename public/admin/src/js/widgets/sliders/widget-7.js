@@ -1,37 +1,40 @@
-"use strict";
+'use strict'
 
 // Class definition
-var BEAVESlidersWidget7 = function() {
+var BEAVERSlidersWidget7 = (function () {
     var chart1 = {
         self: null,
-        rendered: false
-    };
+        rendered: false,
+    }
 
     var chart2 = {
         self: null,
-        rendered: false
-    };
+        rendered: false,
+    }
 
     var chart3 = {
         self: null,
-        rendered: false
-    };
+        rendered: false,
+    }
 
     // Private methods
-    var initChart = function(chart, query, data) {
-        var element = document.querySelector(query);
+    var initChart = function (chart, query, data) {
+        var element = document.querySelector(query)
 
-        if ( !element) {
-            return;
-        }              
-        
-        if ( chart.rendered === true && element.classList.contains("initialized") ) {
-            return;
+        if (!element) {
+            return
         }
 
-        var height = parseInt(BEAVEUtil.css(element, 'height'));
-        var baseColor = BEAVEUtil.getCssVariableValue('--bs-' + 'danger');
-        var lightColor = BEAVEUtil.getCssVariableValue('--bs-' + 'white' );         
+        if (
+            chart.rendered === true &&
+            element.classList.contains('initialized')
+        ) {
+            return
+        }
+
+        var height = parseInt(BEAVERUtil.css(element, 'height'))
+        var baseColor = BEAVERUtil.getCssVariableValue('--bs-' + 'danger')
+        var lightColor = BEAVERUtil.getCssVariableValue('--bs-' + 'white')
 
         var options = {
             series: [data],
@@ -41,105 +44,101 @@ var BEAVESlidersWidget7 = function() {
                 type: 'radialBar',
                 sparkline: {
                     enabled: true,
-                }
+                },
             },
             plotOptions: {
                 radialBar: {
                     hollow: {
                         margin: 0,
-                        size: "45%"
+                        size: '45%',
                     },
                     dataLabels: {
-                        showOn: "always",
+                        showOn: 'always',
                         name: {
-                            show: false                                 
+                            show: false,
                         },
-                        value: {                                 
-                            show: false                              
-                        }
+                        value: {
+                            show: false,
+                        },
                     },
                     track: {
                         background: lightColor,
-                        strokeWidth: '100%'
-                    }
-                }
+                        strokeWidth: '100%',
+                    },
+                },
             },
             colors: [baseColor],
             stroke: {
-                lineCap: "round",
+                lineCap: 'round',
             },
-            labels: ["Progress"]
-        };
+            labels: ['Progress'],
+        }
 
-        chart.self = new ApexCharts(element, options);
-        chart.self.render();
-        chart.rendered = true;
+        chart.self = new ApexCharts(element, options)
+        chart.self.render()
+        chart.rendered = true
 
-        element.classList.add('initialized');
+        element.classList.add('initialized')
     }
 
     // Public methods
     return {
         init: function () {
             // Init default chart
-            initChart(chart1, '#beave_slider_widget_7_chart_1', 76);
+            initChart(chart1, '#beave_slider_widget_7_chart_1', 76)
 
-            var carousel = document.querySelector('#beave_sliders_widget_7_slider');
-            
-            if ( !carousel ) {
-                return;
+            var carousel = document.querySelector(
+                '#beave_sliders_widget_7_slider'
+            )
+
+            if (!carousel) {
+                return
             }
 
             // Init slide charts
             carousel.addEventListener('slid.bs.carousel', function (e) {
                 if (e.to === 1) {
                     // Init second chart
-                    initChart(chart2, '#beave_slider_widget_7_chart_2', 55);
+                    initChart(chart2, '#beave_slider_widget_7_chart_2', 55)
                 }
 
                 if (e.to === 2) {
                     // Init third chart
-                    initChart(chart3, '#beave_slider_widget_7_chart_3', 25);
+                    initChart(chart3, '#beave_slider_widget_7_chart_3', 25)
                 }
-            });
+            })
 
             // Update chart on theme mode change
-            BEAVEThemeMode.on("beaver.thememode.change", function() {                
+            BEAVERThemeMode.on('beaver.thememode.change', function () {
                 if (chart1.rendered) {
-                    chart1.self.destroy();
-                    chart1.rendered = false;
+                    chart1.self.destroy()
+                    chart1.rendered = false
                 }
 
                 if (chart2.rendered) {
-                    chart2.self.destroy();
-                    chart2.rendered = false;
+                    chart2.self.destroy()
+                    chart2.rendered = false
                 }
 
                 if (chart3.rendered) {
-                    chart3.self.destroy();
-                    chart3.rendered = false;
+                    chart3.self.destroy()
+                    chart3.rendered = false
                 }
 
-                initChart(chart1, '#beave_slider_widget_7_chart_1', 76);
-                initChart(chart2, '#beave_slider_widget_7_chart_2', 55);
-                initChart(chart3, '#beave_slider_widget_7_chart_3', 25);
-            });
-        }   
-    }        
-}();
-
+                initChart(chart1, '#beave_slider_widget_7_chart_1', 76)
+                initChart(chart2, '#beave_slider_widget_7_chart_2', 55)
+                initChart(chart3, '#beave_slider_widget_7_chart_3', 25)
+            })
+        },
+    }
+})()
 
 // Webpack support
 if (typeof module !== 'undefined') {
-    module.exports = BEAVESlidersWidget7;
+    module.exports = BEAVERSlidersWidget7
 }
 
 // On document ready
-BEAVEUtil.onDOMContentLoaded(function() {
-    BEAVESlidersWidget7.init();
-});
-   
-        
-        
-        
-           
+BEAVERUtil.onDOMContentLoaded(function () {
+    BEAVERSlidersWidget7.init()
+})
