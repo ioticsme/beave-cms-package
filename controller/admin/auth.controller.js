@@ -190,6 +190,8 @@ const loginSubmit = async (req, res) => {
                 country_code: domain.country.code,
                 country_currency: domain.country.currency,
                 country_currency_symbol: domain.country.currency_symbol,
+                currency_decimal_points: domain.country.currency_decimal_points,
+                country_object: domain.country,
                 settings: settings ? settings : {},
             }
 

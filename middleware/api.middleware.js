@@ -72,6 +72,7 @@ const BrandWithCountryCheck = async (req, res, next) => {
             currency: country.currency,
             currency_symbol: country.currency_symbol,
             currency_decimal_points: country.currency_decimal_points,
+            country_object: country,
         }
         req.country = country
         req.language = lang
@@ -173,6 +174,7 @@ const UserAuthCheck = async (req, res, next) => {
                     currency_symbol: req.country.currency_symbol,
                     currency_decimal_points:
                         req.country.currency_decimal_points,
+                    country_object: req.country,
                     settings: brandSettings.data,
                 },
             }

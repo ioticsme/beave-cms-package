@@ -33,6 +33,8 @@ const switchBrand = async (req, res) => {
                 country_code: req.query?.d,
                 country_currency: country?.currency,
                 country_currency_symbol: country?.currency_symbol,
+                currency_decimal_points: country?.currency_decimal_points,
+                country_object: country,
                 settings: settings ? settings : {},
             }
 
