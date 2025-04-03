@@ -9,7 +9,7 @@ const envConfig = require('../../config/env.config')
 
 const list = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
-    const countries = await Country.find()
+    const countries = await Country.find().sort({ position: 1 })
     return res.render('admin-njk/config/country/listing', {
         countries,
     })
@@ -48,6 +48,7 @@ const save = async (req, res) => {
         currency_symbol: Joi.string().optional().allow(null, ''),
         currency_decimal_points: Joi.number().optional().allow(null, ''),
         timezone: Joi.string().optional().allow(null, ''),
+        position: Joi.string().required(),
         id: Joi.optional(),
     })
 
@@ -69,6 +70,7 @@ const save = async (req, res) => {
         currency_symbol: req.body.currency_symbol,
         currency_decimal_points: req.body.currency_decimal_points,
         timezone: req.body.timezone,
+        position: req.body.position,
     }
 
     if (req.body.id) {

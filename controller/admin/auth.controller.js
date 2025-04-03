@@ -7,6 +7,7 @@ var session = require('express-session') // Import express-session for session m
 const Settings = require('../../model/Settings') // Import Settings model
 const Country = require('../../model/Country')
 const Language = require('../../model/Language')
+const { default: collect } = require('collect.js')
 
 // Handles the signup page rendering
 const signup = async (req, res) => {
@@ -153,11 +154,17 @@ const loginSubmit = async (req, res) => {
         if (bcrypt.compareSync(req.body.password, admin.password)) {
             // Fetch the brand details and populate related fields
             const brand = await Brand.findOne()
+                .sort({ position: 1 })
                 .populate({
                     path: 'languages',
                     options: { sort: { is_default: -1 } }, // Sort by default language
                 })
                 .populate('domains.country')
+
+            const domains = collect(brand.domains)
+                .sortBy('country.position')
+                .all()
+            const domain = domains?.[0] || {}
 
             // Store admin details in the session
             session = req.session
@@ -169,7 +176,7 @@ const loginSubmit = async (req, res) => {
             // Fetch settings based on the brand and country details
             const settings = await Settings.findOne({
                 brand: brand,
-                country: brand?.domains[0]?.country._id,
+                country: domain.country._id,
             }).select('-brand -country -__v -created_at -updated_at -author')
 
             // Set brand details in session
@@ -178,12 +185,11 @@ const loginSubmit = async (req, res) => {
                 name: brand?.name,
                 code: brand?.code,
                 languages: brand?.languages,
-                country: brand?.domains[0].country._id,
-                country_name: brand?.domains[0].country.name.en,
-                country_code: brand?.domains[0].country.code,
-                country_currency: brand?.domains[0].country.currency,
-                country_currency_symbol:
-                    brand?.domains[0].country.currency_symbol,
+                country: domain.country._id,
+                country_name: domain.country.name.en,
+                country_code: domain.country.code,
+                country_currency: domain.country.currency,
+                country_currency_symbol: domain.country.currency_symbol,
                 settings: settings ? settings : {},
             }
 

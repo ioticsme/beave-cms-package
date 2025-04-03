@@ -16,6 +16,7 @@ var cors = require('cors')
 const app = express()
 const rateLimit = require('express-rate-limit')
 const { format } = require('date-fns')
+const { default: collect } = require('collect.js')
 
 // BEGIN::Initiating Swagger APi Documentation
 const setupSwagger = require('./swagger')
@@ -193,14 +194,20 @@ if (envConfig.general.NODE_ENV == 'development') {
     const devAuth = async (req, res, next) => {
         if (!req.session?.brand?._id) {
             const admin = await Admin.findOne()
-            const brand = await Brand.findOne({ code: 'fc' })
+            const brand = await Brand.findOne()
+                .sort({ position: 1 })
                 .populate({
                     path: 'languages',
                     options: { sort: { is_default: -1 } },
                 })
                 .populate('domains.country')
 
-            if (brand) {
+            let domains = collect(brand.domains)
+                .sortBy('country.position')
+                .all()
+            let domain = domains?.[0] || {}
+
+            if (brand && domain?.country) {
                 session = req.session
                 session.admin_id = admin._id
                 session.admin_name = admin.name
@@ -208,7 +215,7 @@ if (envConfig.general.NODE_ENV == 'development') {
                 session.admin_privileges = admin.privileges
                 const settings = await Settings.findOne({
                     brand: brand,
-                    country: brand.domains[0].country._id,
+                    country: domain.country._id,
                 }).select(
                     '-brand -country -__v -created_at -updated_at -author'
                 )
@@ -218,12 +225,11 @@ if (envConfig.general.NODE_ENV == 'development') {
                     name: brand.name,
                     code: brand.code,
                     languages: brand.languages,
-                    country: brand.domains[0].country._id,
-                    country_name: brand.domains[0].country.name.en,
-                    country_code: brand.domains[0].country.code,
-                    country_currency: brand.domains[0].country.currency,
-                    country_currency_symbol:
-                        brand.domains[0].country.currency_symbol,
+                    country: domain.country._id,
+                    country_name: domain.country.name.en,
+                    country_code: domain.country.code,
+                    country_currency: domain.country.currency,
+                    country_currency_symbol: domain.country.currency_symbol,
                     settings: settings ? settings : {},
                 }
             }
@@ -232,7 +238,7 @@ if (envConfig.general.NODE_ENV == 'development') {
     }
     app.use(devAuth)
 }
-// END::Admin aautomatic auth for development purpose
+// END::Admin automatic auth for development purpose
 
 // Create an Apollo server instance
 const { typeDefs, resolvers } = require('./graphql/graphQLschema')

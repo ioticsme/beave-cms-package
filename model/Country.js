@@ -24,6 +24,10 @@ const CountrySchema = new mongoose.Schema(
             type: String,
             default: 'UTC',
         },
+        position: {
+            type: Number,
+            default: 10,
+        },
     },
     {
         timestamps: {

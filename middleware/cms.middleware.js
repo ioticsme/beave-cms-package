@@ -259,6 +259,14 @@ const allBrands = async (req, res, next) => {
                 .sort({ position: 1 })
                 .populate('languages')
                 .populate('domains.country')
+                .lean()
+
+            liveBrands.forEach((brand) => {
+                brand.domains = collect(brand.domains)
+                    .sortBy('country.position')
+                    .all()
+            })
+
             await setCache(
                 cacheKey,
                 JSON.stringify(liveBrands),
@@ -277,15 +285,22 @@ const authUser = async (req, res, next) => {
     try {
         if (!req.session.brand) {
             const brand = await Brand.findOne()
+                .sort({ position: 1 })
                 .populate({
                     path: 'languages',
                     options: { sort: { is_default: -1 } },
                 })
                 .populate('domains.country')
-            if (brand) {
+
+            let domains = collect(brand.domains)
+                .sortBy('country.position')
+                .all()
+            let domain = domains?.[0] || {}
+
+            if (brand && domain?.country) {
                 const settings = await Settings.findOne({
                     brand: brand,
-                    country: brand.domains[0].country._id,
+                    country: domain.country._id,
                 }).select(
                     '-brand -country -__v -created_at -updated_at -author'
                 )
@@ -295,12 +310,11 @@ const authUser = async (req, res, next) => {
                     name: brand.name,
                     code: brand.code,
                     languages: brand.languages,
-                    country: brand.domains[0].country._id,
-                    country_name: brand.domains[0].country.name.en,
-                    country_code: brand.domains[0].country.code,
-                    country_currency: brand.domains[0].country.currency,
-                    country_currency_symbol:
-                        brand.domains[0].country.currency_symbol,
+                    country: domain.country._id,
+                    country_name: domain.country.name.en,
+                    country_code: domain.country.code,
+                    country_currency: domain.country.currency,
+                    country_currency_symbol: domain.country.currency_symbol,
                     settings: settings ? settings : {},
                 }
             }

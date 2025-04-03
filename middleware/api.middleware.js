@@ -26,7 +26,7 @@ const BrandWithCountryCheck = async (req, res, next) => {
         // TODO: Cache countries
         const country = countryCode
             ? await Country.findOne({ code: countryCode })
-            : await Country.findOne()
+            : await Country.findOne().sort({ position: 1 })
 
         // TODO: Cache brands
         const brand = await Brand.aggregate([
