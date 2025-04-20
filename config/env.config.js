@@ -11,10 +11,10 @@ const envConfig = {
         CLIENT_NAME: process.env.CLIENT_NAME,
         CMS_LOGO_LARGE:
             process.env.CMS_LOGO_LARGE ||
-            '/cms-static/admin/assets/media/logo/beaver-logo.png',
+            '/cms-static/common/media/beaver-logo.png',
         CMS_LOGO_SMALL:
             process.env.CMS_LOGO_SMALL ||
-            '/cms-static/admin/assets/media/logo/beaver-logo.png',
+            '/cms-static/common/media/beaver-logo.png',
         ADMIN_LANDING_URL: process.env.ADMIN_LANDING_URL || '/admin/dashboard',
         ADMIN_LANDING_URL_PRIVILEGE_ID:
             process.env.ADMIN_LANDING_URL_PRIVILEGE_ID || 'dashboard.page',
