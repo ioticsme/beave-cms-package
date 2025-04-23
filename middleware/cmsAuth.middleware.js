@@ -128,13 +128,34 @@ const getPrivileges = async (req) => {
     const mixedPrivileges = await getCache(cacheKey).then(async (data) => {
         if (!data) {
             const preBuildPrivileges = await privileges(req)
+
             const customPrivileges = customPrivilegeConfig
 
             // Merge two arrays
-            const mergedPrivilegeConfig = [
-                ...preBuildPrivileges,
-                ...customPrivileges,
-            ]
+            const mergedPrivilegeConfig = [...preBuildPrivileges]
+
+            const sectionIndexMap = new Map()
+
+            // Create index map of pre-built sections
+            preBuildPrivileges.forEach((item, index) => {
+                sectionIndexMap.set(item.section, index)
+            })
+
+            // Merge custom privileges
+            customPrivileges.forEach((customItem) => {
+                const existingIndex = sectionIndexMap.get(customItem.section)
+                if (existingIndex !== undefined) {
+                    // Merge children
+                    mergedPrivilegeConfig[existingIndex].children = [
+                        ...(mergedPrivilegeConfig[existingIndex].children ||
+                            []),
+                        ...(customItem.children || []),
+                    ]
+                } else {
+                    // Add new section
+                    mergedPrivilegeConfig.push({ ...customItem })
+                }
+            })
 
             await setCache(
                 cacheKey,

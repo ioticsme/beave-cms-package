@@ -110,7 +110,10 @@ const webAPIRoutes = require('./routes/api/web-api.routes')
 // END:: API Route Groups
 
 // BEGIN::Admin automatic auth on each server restart for development purpose
-if (envConfig.general.NODE_ENV == 'development') {
+if (
+    envConfig.general.NODE_ENV == 'development' &&
+    envConfig.general.HAS_DEV_AUTH
+) {
     app.use(devAuth)
 }
 // END::Admin automatic auth for development purpose

@@ -63,7 +63,9 @@ const save = async (req, res) => {
         name: Joi.string().required().min(3).max(60),
         email: Joi.string().required().min(3).max(60),
         password: Joi.string().allow('', null),
-        role: Joi.string().required().valid('super_admin', 'admin', 'editor'),
+        role: Joi.string()
+            .required()
+            .valid('super_admin', 'admin', 'editor', 'user', 'finance'),
         status: Joi.boolean().required(),
         privileges: Joi.string().required(),
         id: Joi.optional(),

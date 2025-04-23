@@ -65,10 +65,44 @@ const nunjucksFilter = async (req, res, next) => {
         return Math.floor(Math.random() * 1000 + 1)
     }
 
-    res.locals.checkAnyChildPathAllowed = (allowedURLs, child) => {
+    res.locals.checkAnyChildPathAllowed = (
+        allowedURLs = [],
+        child = [],
+        authUser = {}
+    ) => {
+        if (
+            authUser?.admin_role === 'super_admin' ||
+            authUser?.admin_role === 'admin'
+        ) {
+            return true
+        }
         return child.some((item) => {
             return allowedURLs.includes(item.path)
         })
+    }
+
+    res.locals.checkPathAllowed = (allowedURLs = [], path, authUser) => {
+        if (
+            authUser?.admin_role === 'super_admin' ||
+            authUser?.admin_role === 'admin'
+        ) {
+            return true
+        }
+        return allowedURLs.includes(path)
+    }
+
+    res.locals.checkSectionAllowed = (
+        allowedSections = [],
+        section,
+        authUser
+    ) => {
+        if (
+            authUser?.admin_role === 'super_admin' ||
+            authUser?.admin_role === 'admin'
+        ) {
+            return true
+        }
+        return allowedSections.includes(section)
     }
 
     next()
@@ -153,7 +187,6 @@ const getNavigation = async (req) => {
             // Section is not exist in custom build nav
             customBuildNav.push(preBuildSection)
         }
-        // console.log(preBuildSection)
     })
 
     // Finding all content types to list in the contents section
@@ -165,8 +198,6 @@ const getNavigation = async (req) => {
             '-_id title slug admin_icon admin_nav_section position active single_type has_access'
         )
         .sort([['position', 'ascending']])
-
-    // console.log('contentTypes :>> ', contentTypes)
 
     // Looping through all content types and creating navigation
     const listTypeItems = collect(contentTypes)

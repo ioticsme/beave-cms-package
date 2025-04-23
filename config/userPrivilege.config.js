@@ -241,15 +241,15 @@ let privileges = async (req) => [
                     '/admin/settings/seo/save',
                 ],
             },
-            {
-                id: 'settings.ecommerce',
-                text: 'Ecommerce',
-                urls: [
-                    '/admin/settings/ecommerce',
-                    '/admin/settings/ecommerce/invoice/edit',
-                    '/admin/settings/ecommerce/invoice/save',
-                ],
-            },
+            // {
+            //     id: 'settings.ecommerce',
+            //     text: 'Ecommerce',
+            //     urls: [
+            //         '/admin/settings/ecommerce',
+            //         '/admin/settings/ecommerce/invoice/edit',
+            //         '/admin/settings/ecommerce/invoice/save',
+            //     ],
+            // },
         ],
     },
 ]

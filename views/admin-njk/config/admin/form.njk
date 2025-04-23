@@ -124,6 +124,7 @@
 											<select name="role" data-placeholder="Select a role" class="form-select mb-2">
 												<option value="super_admin" {{ 'selected' if admin.role == 'super_admin'}}>Super Admin</option>
 												<option value="admin" {{ 'selected' if admin.role == 'admin'}}>Admin</option>
+												<option value="user" {{ 'selected' if admin.role == 'user'}}>User</option>
 												<option value="editor" {{ 'selected' if admin.role == 'editor' }}>Editor</option>
 												<option value="finance" {{ 'selected' if admin.role == 'finance'}}>Finance</option>
 											</select>

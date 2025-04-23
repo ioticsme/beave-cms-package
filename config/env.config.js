@@ -22,6 +22,7 @@ const envConfig = {
         CAPTCHA_ENABLED: process.env.CAPTCHA_ENABLED || false,
         HAS_PDF_UPLOAD: process.env.HAS_PDF_UPLOAD || false,
         SEND_SIGNUP_MAIL: process.env.SEND_SIGNUP_MAIL || false,
+        HAS_DEV_AUTH: process.env.HAS_DEV_AUTH == 'true',
     },
     db: {
         URL: process.env.DB_CONNECTION,
@@ -53,7 +54,7 @@ const envConfig = {
         SECRET_KEY: process.env.CAPTCHA_SECRET_KEY,
     },
     cache: {
-        ACTIVE: process.env.CACHE_LOCAL_DATA || false,
+        ACTIVE: process.env.CACHE_LOCAL_DATA != 'false',
         // WEB_TOKEN_EXPIRY: process.env.WEB_USER_TOKEN_EXPIRY || '24h',
         // MOBILE_TOKEN_EXPIRY: process.env.MOBILE_USER_TOKEN_EXPIRY || '30days',
         REDIS_URL: process.env.REDIS_URL || 'redis://localhost:6379',
