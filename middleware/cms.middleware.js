@@ -6,7 +6,10 @@ const Settings = require('../model/Settings')
 const ContentType = require('../model/ContentType')
 const { default: collect } = require('collect.js')
 const { navConfig } = require('../config/admin.config')
-const { convertToSingular } = require('../helper/General.helper')
+const {
+    convertToSingular,
+    getBrandsFromCache,
+} = require('../helper/General.helper')
 const { privileges } = require('../config/userPrivilege.config')
 const { default: slugify } = require('slugify')
 const { getCache, setCache } = require('../helper/Redis.helper')
@@ -281,34 +284,8 @@ const mainNavGenerator = async (req, res, next) => {
 }
 
 const allBrands = async (req, res, next) => {
-    const cacheKey = `${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`
-    const allBrands = await getCache(cacheKey).then(async (data) => {
-        if (!data) {
-            const liveBrands = await Brand.find({
-                active: true,
-            })
-                .sort({ position: 1 })
-                .populate('languages')
-                .populate('domains.country')
-                .lean()
-
-            liveBrands.forEach((brand) => {
-                brand.domains = collect(brand.domains)
-                    .sortBy('country.position')
-                    .all()
-            })
-
-            await setCache(
-                cacheKey,
-                JSON.stringify(liveBrands),
-                60 * 60 * 24 * 30
-            )
-            return liveBrands
-        }
-        return JSON.parse(data)
-    })
-
-    res.locals.allBrands = allBrands
+    const brands = await getBrandsFromCache()
+    res.locals.allBrands = brands
     next()
 }
 

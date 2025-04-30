@@ -80,7 +80,10 @@ const save = async (req, res) => {
         await Language.create(data)
     }
 
-    await removeCache([`${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`])
+    await removeCache([
+        `${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`,
+        `${envConfig.cache.CACHE_KEY_PREFIX}-all-countries`,
+    ])
 
     return res.status(200).json('done')
 }
@@ -95,7 +98,10 @@ const deleteItem = async (req, res) => {
 
         //soft delete item
         await Language.deleteOne({ _id: id })
-        await removeCache([`${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`])
+        await removeCache([
+            `${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`,
+            `${envConfig.cache.CACHE_KEY_PREFIX}-all-countries`,
+        ])
         return res.status(200).json({
             message: `Language Deleted`,
         })

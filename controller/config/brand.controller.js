@@ -82,7 +82,10 @@ const save = async (req, res) => {
     } else {
         await Brand.create(data)
     }
-    await removeCache([`${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`])
+    await removeCache([
+        `${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`,
+        `${envConfig.cache.CACHE_KEY_PREFIX}-all-countries`,
+    ])
 
     return res.status(200).json('done')
 }
@@ -108,7 +111,10 @@ const changeStatus = async (req, res) => {
         if (!update?._id) {
             return res.status(404).json({ error: 'Activation error' })
         }
-        await removeCache([`${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`])
+        await removeCache([
+            `${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`,
+            `${envConfig.cache.CACHE_KEY_PREFIX}-all-countries`,
+        ])
         return res.status(200).json({
             message: `Brand status changed`,
         })
@@ -127,7 +133,10 @@ const deleteItem = async (req, res) => {
 
         //soft delete item
         await Brand.deleteOne({ _id: id })
-        await removeCache([`${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`])
+        await removeCache([
+            `${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`,
+            `${envConfig.cache.CACHE_KEY_PREFIX}-all-countries`,
+        ])
         return res.status(200).json({
             message: `Brand Deleted`,
         })

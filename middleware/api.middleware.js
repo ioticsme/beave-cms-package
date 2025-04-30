@@ -9,38 +9,25 @@ const Settings = require('../model/Settings')
 const User = require('../model/User')
 const Menu = require('../model/Menu')
 const Language = require('../model/Language')
+const {
+    getCountriesFromCache,
+    getBrandsFromCache,
+} = require('../helper/General.helper')
 
 const BrandWithCountryCheck = async (req, res, next) => {
-    // req.headers.brand = 'FC'
-    // req.headers.locale = 'en-ae'
     try {
         const apiSourceList = ['app', 'web']
         const apiSource = apiSourceList.includes(req.headers?.source)
             ? req.headers?.source
             : 'web'
 
-        const countryCode =
-            req.query.country?.toLowerCase() ||
-            req.headers.country?.toLowerCase()
+        const country = await getCountry(req)
+        if (!country) {
+            return res.status(400).json({ error: 'Invalid Country' })
+        }
 
-        // TODO: Cache countries
-        const country = countryCode
-            ? await Country.findOne({ code: countryCode })
-            : await Country.findOne().sort({ position: 1 })
-
-        // TODO: Cache brands
-        const brand = await Brand.aggregate([
-            {
-                $unwind: '$domains',
-            },
-            {
-                $match: {
-                    'domains.country': country._id,
-                },
-            },
-        ])
-
-        if (!brand?.length) {
+        const brand = await getBrand(req, country)
+        if (!brand?.domain) {
             return res.status(400).json({ error: 'Invalid Brand' })
         }
 
@@ -54,18 +41,19 @@ const BrandWithCountryCheck = async (req, res, next) => {
             lang = language.prefix
         }
 
-        if (brand[0]?.domains?.maintenance_mode) {
+        if (brand?.domain?.maintenance_mode) {
             return res
                 .status(503)
                 .json({ error: 'Application on Maintenance Mode' })
         }
+
         const brandSettings = await Settings.findOne({
-            brand: brand[0]?._id,
+            brand: brand?._id,
             country: country._id,
         }).select('-brand -country -__v -created_at -updated_at -author')
 
         req.brand = {
-            ...brand[0],
+            ...brand,
             settings: brandSettings,
             country_name: country.name.en,
             country_code: country.code,
@@ -78,7 +66,6 @@ const BrandWithCountryCheck = async (req, res, next) => {
         req.language = lang
         req.source = apiSource
     } catch (err) {
-        // console.log(err)
         return res.status(400).json({ error: 'Invalid Header' })
     }
 
@@ -93,6 +80,52 @@ const webDefaultHeader = async (req, res, next) => {
 const mobileDefaultHeader = async (req, res, next) => {
     req.source = 'app'
     next()
+}
+
+const getCountry = async (req) => {
+    try {
+        let countryCode = null
+        if (req.query.country) {
+            countryCode = req.query.country?.toLowerCase()
+        } else if (req.headers.country) {
+            countryCode = req.headers.country?.toLowerCase()
+        }
+
+        let country = null
+        if (countryCode) {
+            const allCountries = await getCountriesFromCache()
+            country = allCountries.find(
+                (country) => country.code === countryCode
+            )
+        } else {
+            country = await Country.findOne().sort({ position: 1 })
+        }
+        return country
+    } catch (error) {
+        return null
+    }
+}
+
+const getBrand = async (req, country) => {
+    try {
+        let brandCode = null
+        if (req.query.brand) {
+            brandCode = req.query.brand?.toLowerCase()
+        } else if (req.headers.brand) {
+            brandCode = req.headers.brand?.toLowerCase()
+        }
+        const allBrands = await getBrandsFromCache()
+        const brand = allBrands.find((brand) => brand.code === brandCode)
+        const domain = brand?.domains.find(
+            (domain) =>
+                domain.country?._id?.toString() === country._id?.toString()
+        )
+
+        brand.domain = domain
+        return brand
+    } catch (error) {
+        return null
+    }
 }
 
 const UserAuthCheck = async (req, res, next) => {
@@ -242,7 +275,7 @@ const getNav = async (req, res, next) => {
                 // TODO:: Send slack notification for redis connection fail on product pull
             })
         // Adding global meta to navigation
-        const globalMeta = req.brand?.domains?.meta || {}
+        const globalMeta = req.brand?.domain?.meta || {}
         // Restructuring the global meta
         const newGlobalMeta = {
             en: {

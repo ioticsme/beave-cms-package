@@ -13,8 +13,9 @@ const {
     webDefaultHeader,
     UserAuthCheck,
     userAgent,
+    getNav,
 } = require('../../middleware/api.middleware')
-const { getNav } = require('../../middleware/api.middleware')
+
 // const { app } = require('firebase-admin')
 
 // BEGIN::Route Files

@@ -3,9 +3,9 @@ const Redis = require('ioredis')
 
 const redis = new Redis(envConfig.cache.REDIS_URL)
 
-const getCache = async (key) => {
+const getCache = async (key, checkActive = true) => {
     try {
-        if (!envConfig.cache.ACTIVE) {
+        if (checkActive && !envConfig.cache.ACTIVE) {
             return null
         }
         return await redis.get(key)
@@ -15,9 +15,9 @@ const getCache = async (key) => {
     }
 }
 
-const setCache = async (key, data, expiry = 300) => {
+const setCache = async (key, data, expiry = 300, checkActive = true) => {
     try {
-        if (!envConfig.cache.ACTIVE) {
+        if (checkActive && !envConfig.cache.ACTIVE) {
             return 'OK'
         }
 

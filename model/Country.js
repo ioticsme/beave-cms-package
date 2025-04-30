@@ -28,6 +28,10 @@ const CountrySchema = new mongoose.Schema(
             type: Number,
             default: 10,
         },
+        active: {
+            type: Boolean,
+            default: true,
+        },
     },
     {
         timestamps: {
