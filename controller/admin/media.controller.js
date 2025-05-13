@@ -5,11 +5,12 @@ const {
 } = require('../../helper/FileUpload.helper')
 const fs = require('fs')
 const Media = require('../../model/Media')
+const { getCache, setCache } = require('../../helper/Redis.helper')
 
 // List all media files, sorted by creation date (newest first)
 const list = async (req, res) => {
     try {
-        const media = await Media.find().sort({ created_at: -1 }) // Fetch media and sort
+        const media = await Media.find().sort({ _id: -1 }) // Fetch media and sort
         // TODO: PDF upload config on app settings
         let hasPdfUpload = envConfig.general.HAS_PDF_UPLOAD // Check if PDF upload is enabled
         return res.render('admin-njk/cms/media/listing', {
@@ -25,9 +26,22 @@ const list = async (req, res) => {
 // Return media list in JSON format excluding PDFs
 const jsonList = async (req, res) => {
     try {
-        const media = await Media.find({ file_type: { $ne: 'pdf' } }).sort({
-            created_at: -1,
+        let cacheKey = `${envConfig.cache.CACHE_KEY_PREFIX}-media-json-list`
+        let media = await getCache(cacheKey).then(async (data) => {
+            if (data) {
+                return JSON.parse(data)
+            } else {
+                let liveData = await Media.find({
+                    file_type: { $ne: 'pdf' },
+                }).sort({ _id: -1 })
+                // Set cache for 1 hour
+                await setCache(cacheKey, JSON.stringify(liveData), 3600)
+
+                // Return live data
+                return liveData
+            }
         })
+
         return res.status(200).json(media) // Send media as JSON response
     } catch (error) {
         return res.render(`admin-njk/app-error-500`) // Render error page

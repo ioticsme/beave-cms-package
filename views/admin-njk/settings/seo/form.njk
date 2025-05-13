@@ -10,10 +10,6 @@
 	{# // begin::Vendors Javascript(used by this page) #}
 	<script src='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.js'></script>
 	<script src='/cms-static/admin/assets/plugins/custom/formrepeater/formrepeater.bundle.js'></script>
-	{# // end::Vendors Javascript #}
-	{# // begin::Custom Javascript(used by this page) #}
-	{# <script src='/cms-static/admin/assets/js/custom/apps/ecommerce/catalog/save-category.js'></script> #}
-	{# // Form Submission Script #}
 	<script src='/cms-static/common/js/form-data-json.min.js'></script>
 	<script src='/cms-static/common/js/es-form.js'></script>
 {% endblock %}
@@ -91,55 +87,39 @@
 												<textarea type="text" placeholder="Enter Meta Keywords (comma(,) seperated)" name="keywords[{{ brandLanguage.prefix }}]" class="form-control">{{ data.meta.keywords[brandLanguage.prefix] }}</textarea>
 												<div class="fv-plugins-message-container invalid-feedback" id="field-error-keywords_{{ brandLanguage.prefix }}"></div>
 											</div>
-											<style>
-												.image-input-placeholder {
-													background-image: url("/cms-static/admin/assets/media/svg/files/blank-image.svg");
-												}
-												[data-theme="dark"] .image-input-placeholder {
-													background-image: url("/cms-static/admin/assets/media/svg/files/blank-image-dark.svg");
-												}
-											</style>
 											<div class="mt-2">
 												<label class="d-flex align-items-center fs-6 fw-semibold mb-5">
-													<span class="required">Og Image ({{ brandLanguage.prefix }})</span>
+													<span class="required">Image ({{ brandLanguage.prefix }})</span>
 												</label>
-												<div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3" data-beaver-image-input="true">
-													{% if data and data
-														.meta and data
-														.meta
-														.og_image and data
-														.meta
-														.og_image[brandLanguage.prefix] and data
-														.meta
-														.og_image[brandLanguage.prefix]
-														.media_url %}
-														<div class="image-input-wrapper w-150px h-150px" id="img-preview" name="image-preview.{{ brandLanguage.prefix }}" style="background-image:url({{ data.meta.og_image[brandLanguage.prefix].media_url }})">
-														{% else %}
-															<div class="image-input-wrapper w-150px h-150px"></div>
-														{% endif %}
-														<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-beaver-image-input-action="change" data-bs-toggle="tooltip" title="Change image">
-															<i class="bi bi-pencil-fill fs-7"></i>
-															<input type="file" name="image.{{ brandLanguage.prefix }}" accept=".png, .jpg, .jpeg">
-														</label>
-														<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-beaver-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel image">
-															<i class="bi bi-x fs-2"></i>
+												<span class='media-uploader-field'>
+													<span class="media_preview">
+														<span class="preview-holder">
+															{% if data.meta.og_image[brandLanguage.prefix].media_url %}
+																<img src="{{data.meta.og_image[brandLanguage.prefix].media_url}}" style="max-width: 200px;"/>
+															{% endif %}
 														</span>
-														<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-beaver-image-input-action="remove" data-bs-toggle="tooltip" title="Remove image">
-															<i class="bi bi-x fs-2"></i>
-														</span>
-													</div>
-												</div>
-
-												<div class="fv-plugins-message-container invalid-feedback" id="field-error-image_{{ brandLanguage.prefix }}"></div>
+														<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {{'d-none'  if not data.meta.og_image[brandLanguage.prefix].media_url}}">
+															<i class="fa fa-trash" tabindex="-1"></i>
+														</a>
+													</span>
+													<input type="hidden" class="media_url_field" name="image[{{ brandLanguage.prefix }}[media_url]]" value="{{data.meta.og_image[brandLanguage.prefix].media_url}}">
+													<input type="hidden" class="media_title_field" name="image[{{ brandLanguage.prefix }}[title]]" value="{{data.meta.og_image[brandLanguage.prefix].title}}">
+													<input type="hidden" class="media_alt_text_field" name="image[{{ brandLanguage.prefix }}[alt_text]]" value="{{data.meta.og_image[brandLanguage.prefix].alt_text}}">
+													<input type="hidden" class="media_link_url_field" name="image[{{ brandLanguage.prefix }}[link_url]]" value="">
+													<input type="hidden" class="media_open_link_in_new_tab_field" name="image[{{ brandLanguage.prefix }}[open_link_in_new_tab]]" value="">
+													<input type="hidden" class="media_local_drive_field" name="image[{{ brandLanguage.prefix }}[drive]]" value="imagekit">
+													<a class="btn btn-success media-uploader-modal-btn" id="beaver-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
+												</span>
 											</div>
-										{% endfor %}
-									</div>
+											<div class="fv-plugins-message-container invalid-feedback" id="field-error-image_{{ brandLanguage.prefix }}_media_url"></div>
+										</div>
+									{% endfor %}
 								</div>
 							</div>
 						</div>
-					</form>
-				</div>
+					</div>
+				</form>
 			</div>
 		</div>
-
-	{% endblock %}
+	</div>
+{% endblock %}

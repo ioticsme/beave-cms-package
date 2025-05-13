@@ -29,7 +29,7 @@ router.group('/', (router) => {
     router.group('/seo', (router) => {
         router.get('/', settingsController.seoList)
         router.get('/edit', settingsController.seoEdit)
-        router.post('/save', upload.any(), settingsController.seoSave)
+        router.post('/save', settingsController.seoSave)
     })
     // router.group('/integrations', (router) => {
     //     // Marketing

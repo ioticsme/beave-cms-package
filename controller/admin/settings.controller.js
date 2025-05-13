@@ -293,37 +293,34 @@ const seoEdit = async (req, res) => {
 const seoSave = async (req, res) => {
     try {
         session = req.authUser
-        let titleValidationObj = {}
-        let descValidationObj = {}
-        let imageValidationObj = {}
-        let keyValidationObj = {}
-        req?.authUser?.brand?.languages.forEach((lang) => {
-            _.assign(titleValidationObj, {
-                [lang.prefix]: eval(`Joi.string().required()`),
-            })
-            _.assign(descValidationObj, {
-                [lang.prefix]: eval(`Joi.string().required()`),
-            })
-            _.assign(keyValidationObj, {
-                [lang.prefix]: eval(` Joi.string().required()`),
-            })
-            _.assign(imageValidationObj, {
-                [lang.prefix]: eval(`Joi.string().required()`),
+
+        let bilingualFields = ['title', 'description', 'keywords', 'image']
+        let bilingualValidationObj = {}
+        req.authUser?.brand?.languages.forEach((lang) => {
+            bilingualFields.forEach((field) => {
+                if (field === 'image') {
+                    bilingualValidationObj[field] = {
+                        ...bilingualValidationObj[field],
+                        [lang.prefix]: Joi.object({
+                            media_url: Joi.string().required(),
+                            title: Joi.optional(),
+                            alt_text: Joi.optional(),
+                        }).unknown(true),
+                    }
+                } else {
+                    bilingualValidationObj[field] = {
+                        ...bilingualValidationObj[field],
+                        [lang.prefix]: Joi.string().required(),
+                    }
+                }
             })
         })
+
         const schema = Joi.object({
-            title: Joi.object({
-                ...titleValidationObj,
-            }),
-            description: Joi.object({
-                ...descValidationObj,
-            }),
-            keywords: Joi.object({
-                ...keyValidationObj,
-            }),
-            image: Joi.object({
-                ...imageValidationObj,
-            }),
+            title: bilingualValidationObj.title,
+            description: bilingualValidationObj.description,
+            keywords: bilingualValidationObj.keywords,
+            image: bilingualValidationObj.image,
         })
 
         const validationResult = schema.validate(req.body, {
@@ -331,63 +328,25 @@ const seoSave = async (req, res) => {
         })
 
         if (validationResult.error) {
-            if (req.files && req.files.length) {
-                for (i = 0; i < req.files.length; i++) {
-                    let file = req.files[i]
-                    // Deleting the image saved to uploads/
-                    fs.unlinkSync(`uploads/${file.filename}`)
-                }
-            }
             return res.status(422).json(validationResult.error)
         }
 
         let body = req.body
-        const brand = session.brand._id
-        const country = session.brand.country
-        const author = session.admin_id
-
-        //BEGIN:: Media upload
-        let images = {}
-        if (req.files && req.files.length) {
-            for (i = 0; i < req.files.length; i++) {
-                let file = req.files[i]
-                // Creating base64 from file
-                const base64 = Buffer.from(fs.readFileSync(file.path)).toString(
-                    'base64'
-                )
-                let fieldLang = req.files[i].fieldname.split('.')[1]
-                const media = await uploadMedia(base64, 'SEO', file) //file.originalname
-                // Deleting the image saved to uploads/
-                fs.unlinkSync(`uploads/${file.filename}`)
-                if (media && media._id) {
-                    images = {
-                        ...images,
-                        [fieldLang]: {
-                            media_url: media.url,
-                            media_id: media._id,
-                        },
-                    }
-                } else {
-                    return res.status(503).json({
-                        error: 'Some error occured while uploading the image',
-                    })
-                }
-            }
-        }
-        //END:: Media upload
 
         // Getting multi language data dynamically
-        let keywords = {}
-        req.authUser.brand.languages.forEach((lang) => {
-            _.assign(keywords, {
-                [lang.prefix]: body.keywords?.[lang.prefix],
+        let bilingualData = {}
+        bilingualFields.forEach((field) => {
+            bilingualData[field] = {}
+            req.authUser.brand.languages.forEach((lang) => {
+                bilingualData[field][lang.prefix] = body[field]?.[lang.prefix]
             })
         })
+
         const obj = {
-            title: body.title,
-            description: body.description,
-            keywords,
-            og_image: images,
+            title: bilingualData.title,
+            description: bilingualData.description,
+            keywords: bilingualData.keywords,
+            og_image: bilingualData.image,
         }
 
         const update = await Brand.findOneAndUpdate(
@@ -407,6 +366,7 @@ const seoSave = async (req, res) => {
         }
         return res.status(200).json({ message: 'Settings updated' })
     } catch (error) {
+        console.log('error :>> ', error)
         return res.status(400).json({ error: 'Something went wrong' })
     }
 }

@@ -55,27 +55,12 @@
                                                 <h5 class="mb-5">Meta Keywords</h5>
                                                 <p class="text-gray-500 fw-semibold fs-5 mb-5">{{ data.meta.keywords[brandLanguage.prefix] }}</p>
                                                 <h5 class="mb-5">Og Image</h5>
-                                                <style>
-                                                    .image-input-placeholder {
-                                                        background-image: url("/cms-static/admin/assets/media/svg/files/blank-image.svg");
-                                                    }
-                                                    [data-theme="dark"] .image-input-placeholder {
-                                                        background-image: url("/cms-static/admin/assets/media/svg/files/blank-image-dark.svg");
-                                                    }
-                                                </style>
                                                 <div class="image-input image-input-empty image-input-outline image-input-placeholder" data-beaver-image-input="true">
-                                                    {% if data and data
-                                                        .meta and data
-                                                        .meta
-                                                        .og_image and data
-                                                        .meta
-                                                        .og_image[brandLanguage.prefix] and data
-                                                        .meta
-                                                        .og_image[brandLanguage.prefix]
-                                                        .media_url %}
-                                                        <div id="img-preview" class="image-input-wrapper w-150px h-150px" style="background-image:url({{ data.meta.og_image[brandLanguage.prefix].media_url }})"></div>
+                                                    {% if data and data.meta and data.meta.og_image and data.meta.og_image[brandLanguage.prefix] and data.meta.og_image[brandLanguage.prefix].media_url %}
+                                                        {# <div id="img-preview" class="image-input-wrapper w-150px h-150px" style="background-image:url({{ data.meta.og_image[brandLanguage.prefix].media_url }})"></div> #}
+                                                        <img src="{{ data.meta.og_image[brandLanguage.prefix].media_url }}" style="max-width: 200px;">
                                                     {% else %}
-                                                        <div class="image-input-wrapper w-125px h-125px"></div>
+                                                        Nil
                                                     {% endif %}
                                                 </div>
                                             </form>
