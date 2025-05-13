@@ -2,6 +2,7 @@ const envConfig = require('../../config/env.config')
 const Joi = require('joi')
 const fs = require('fs')
 const _ = require('lodash')
+const collect = require('collect.js')
 const Brand = require('../../model/Brand')
 const Country = require('../../model/Country')
 var session = require('express-session')
@@ -70,9 +71,11 @@ const generalList = async (req, res) => {
                 (dom) => dom.country?._id.toString() == country
             )
         }
+        const domains = collect(brand.domains).sortBy('country.position').all()
         return res.render('admin-njk/settings/general/listing', {
             domain,
             brand,
+            domains,
         })
     } catch (error) {
         return res.render(`admin-njk/app-error-500`)
@@ -115,23 +118,30 @@ const editLogo = async (req, res) => {
 const changeLogo = async (req, res) => {
     try {
         const session = req.authUser
-        let nameValidationObj = {}
-        let imageValidationObj = {}
-        req.authUser.brand.languages.forEach((lang) => {
-            _.assign(nameValidationObj, {
-                [lang.prefix]: eval(`Joi.string().required().min(3).max(60)`),
-            })
-            _.assign(imageValidationObj, {
-                [lang.prefix]: eval(`Joi.string().required()`),
+        let bilingualFields = ['name', 'image']
+        let bilingualValidationObj = {}
+        req.authUser?.brand?.languages.forEach((lang) => {
+            bilingualFields.forEach((field) => {
+                if (field === 'image') {
+                    bilingualValidationObj[field] = {
+                        ...bilingualValidationObj[field],
+                        [lang.prefix]: Joi.object({
+                            media_url: Joi.string().required(),
+                            title: Joi.optional(),
+                            alt_text: Joi.optional(),
+                        }).unknown(true),
+                    }
+                } else {
+                    bilingualValidationObj[field] = {
+                        ...bilingualValidationObj[field],
+                        [lang.prefix]: Joi.string().required(),
+                    }
+                }
             })
         })
         const schema = Joi.object({
-            name: Joi.object({
-                ...nameValidationObj,
-            }),
-            image: Joi.object({
-                ...imageValidationObj,
-            }),
+            name: bilingualValidationObj.name,
+            image: bilingualValidationObj.image,
             id: Joi.optional(),
             is_brand: Joi.optional(),
         })
@@ -141,45 +151,9 @@ const changeLogo = async (req, res) => {
         })
 
         if (validationResult.error) {
-            if (req.files && req.files.length) {
-                for (i = 0; i < req.files.length; i++) {
-                    let file = req.files[i]
-                    // Deleting the image saved to uploads/
-                    fs.unlinkSync(`uploads/${file.filename}`)
-                }
-            }
             return res.status(422).json(validationResult.error)
         }
 
-        // Media upload starts
-        let images = {}
-        if (req.files && req.files.length) {
-            for (i = 0; i < req.files.length; i++) {
-                let file = req.files[i]
-                // Creating base64 from file
-                const base64 = Buffer.from(fs.readFileSync(file.path)).toString(
-                    'base64'
-                )
-                let fieldLang = req.files[i].fieldname.split('.')[1]
-                const media = await uploadMedia(base64, 'Logos', file) //file.originalname
-                // Deleting the image saved to uploads/
-                fs.unlinkSync(`uploads/${file.filename}`)
-                if (media && media._id) {
-                    images = {
-                        ...images,
-                        [fieldLang]: {
-                            media_url: media.url,
-                            media_id: media._id,
-                        },
-                    }
-                } else {
-                    return res.status(503).json({
-                        error: 'Some error occured while uploading the image',
-                    })
-                }
-            }
-        }
-        // Media upload ends
         let update
         if (req.body.is_brand == 'true') {
             update = await Brand.findOneAndUpdate(
@@ -188,7 +162,7 @@ const changeLogo = async (req, res) => {
                 },
                 {
                     $set: {
-                        logo: images,
+                        logo: req.body.image,
                     },
                 }
             )
@@ -200,7 +174,7 @@ const changeLogo = async (req, res) => {
                 },
                 {
                     $set: {
-                        [`domains.$.logo`]: images,
+                        [`domains.$.logo`]: req.body.image,
                     },
                 }
             )

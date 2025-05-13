@@ -29,6 +29,7 @@ const baseConfig = async (req, res, next) => {
     res.locals.cmsLogoLarge = `${envConfig.general.CMS_LOGO_LARGE}`
     res.locals.cmsLogoSmall = `${envConfig.general.CMS_LOGO_SMALL}`
     res.locals.globalModuleConfig = globalModuleConfig
+    res.locals.hasEcommerce = envConfig.general.HAS_ECOMMERCE
     res.locals.LANDING_URL = envConfig.general.ADMIN_LANDING_URL
     next()
 }

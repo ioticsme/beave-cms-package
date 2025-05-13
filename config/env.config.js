@@ -23,6 +23,7 @@ const envConfig = {
         HAS_PDF_UPLOAD: process.env.HAS_PDF_UPLOAD || false,
         SEND_SIGNUP_MAIL: process.env.SEND_SIGNUP_MAIL || false,
         HAS_DEV_AUTH: process.env.HAS_DEV_AUTH == 'true',
+        HAS_ECOMMERCE: process.env.HAS_ECOMMERCE == 'true',
     },
     db: {
         URL: process.env.DB_CONNECTION,
