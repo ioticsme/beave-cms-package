@@ -8,21 +8,29 @@ const Country = require('../../model/Country')
 var session = require('express-session')
 const Settings = require('../../model/Settings')
 const Redis = require('../../helper/Redis.helper')
-const { uploadMedia } = require('../../helper/FileUpload.helper')
 const Admin = require('../../model/Admin')
+const { getBrandSettings } = require('../../helper/Cache.helper')
+const { getCountry, getBrand } = require('../../helper/Cache.helper')
 
 const switchBrand = async (req, res) => {
     try {
         if (req.query.b && req.query.d) {
             session = req.authUser
-            const brand = await Brand.findOne({ _id: req.query.b }).populate(
-                'languages'
+
+            const country = await getCountry({
+                query: {
+                    country: req.query.d,
+                },
+            })
+            const brand = await getBrand(
+                {
+                    query: {
+                        brand: req.query.b,
+                    },
+                },
+                country
             )
-            const country = await Country.findOne({ code: req.query.d })
-            const settings = await Settings.findOne({
-                brand: brand?._id,
-                country: country?._id,
-            }).select('-brand -country -__v -created_at -updated_at -author')
+            const settings = await getBrandSettings(brand, country)
 
             session.brand = {
                 _id: brand?._id,
@@ -52,6 +60,7 @@ const switchBrand = async (req, res) => {
             return res.redirect('back')
         }
     } catch (error) {
+        console.log(error)
         return res.render(`admin-njk/app-error-500`)
     }
 }
@@ -512,6 +521,10 @@ const invoiceSave = async (req, res) => {
                 upsert: true,
             }
         )
+
+        await removeCache(
+            `${envConfig.cache.CACHE_KEY_PREFIX}-brand-settings-${session.brand.code}-${session.brand.country?.code}`
+        )
         session.brand.settings = update
         return res.status(200).json({ message: 'Settings updated' })
     } catch (error) {
@@ -613,6 +626,9 @@ const saveNoticationSettings = async (req, res) => {
                 new: true,
                 upsert: true,
             }
+        )
+        await removeCache(
+            `${envConfig.cache.CACHE_KEY_PREFIX}-brand-settings-${session.brand.code}-${session.brand.country?.code}`
         )
         session.brand.settings = update
         return res.status(200).json({ message: 'Settings updated' })

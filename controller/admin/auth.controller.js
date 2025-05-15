@@ -8,6 +8,7 @@ const Settings = require('../../model/Settings') // Import Settings model
 const Country = require('../../model/Country')
 const Language = require('../../model/Language')
 const { default: collect } = require('collect.js')
+const { getBrandSettings } = require('../../helper/Cache.helper')
 
 // Handles the signup page rendering
 const signup = async (req, res) => {
@@ -174,10 +175,7 @@ const loginSubmit = async (req, res) => {
             session.admin_privileges = admin.privileges
 
             // Fetch settings based on the brand and country details
-            const settings = await Settings.findOne({
-                brand: brand,
-                country: domain.country._id,
-            }).select('-brand -country -__v -created_at -updated_at -author')
+            const settings = await getBrandSettings(brand, domain.country)
 
             // Set brand details in session
             session.brand = {

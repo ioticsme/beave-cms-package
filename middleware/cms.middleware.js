@@ -6,13 +6,14 @@ const Settings = require('../model/Settings')
 const ContentType = require('../model/ContentType')
 const { default: collect } = require('collect.js')
 const { navConfig } = require('../config/admin.config')
-const {
-    convertToSingular,
-    getBrandsFromCache,
-} = require('../helper/General.helper')
+const { convertToSingular } = require('../helper/General.helper')
 const { privileges } = require('../config/userPrivilege.config')
 const { default: slugify } = require('slugify')
 const { getCache, setCache } = require('../helper/Redis.helper')
+const {
+    getBrandSettings,
+    getBrandsFromCache,
+} = require('../helper/Cache.helper')
 
 // Getting custom navigation from cms-wrapper config
 let customNavConfig
@@ -307,12 +308,7 @@ const authUser = async (req, res, next) => {
             let domain = domains?.[0] || {}
 
             if (brand && domain?.country) {
-                const settings = await Settings.findOne({
-                    brand: brand,
-                    country: domain.country._id,
-                }).select(
-                    '-brand -country -__v -created_at -updated_at -author'
-                )
+                const settings = await getBrandSettings(brand, domain.country)
 
                 req.session.brand = {
                     _id: brand._id,

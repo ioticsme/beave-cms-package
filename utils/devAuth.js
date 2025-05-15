@@ -1,8 +1,8 @@
-const Settings = require('../model/Settings')
 const Admin = require('../model/Admin')
 const Brand = require('../model/Brand')
 
 const collect = require('collect.js')
+const { getBrandSettings } = require('../helper/Cache.helper')
 
 const devAuth = async (req, res, next) => {
     if (!req.session?.brand?._id) {
@@ -23,13 +23,10 @@ const devAuth = async (req, res, next) => {
             req.session.admin_name = admin.name
             req.session.admin_role = admin.role
             req.session.admin_privileges = admin.privileges
-            const settings = await Settings.findOne({
-                brand: brand,
-                country: domain.country._id,
-            }).select('-brand -country -__v -created_at -updated_at -author')
+            const settings = await getBrandSettings(brand, domain.country)
 
             req.session.brand = {
-                _id: brand._id, //TODO: id should be _id for the consistency
+                _id: brand._id,
                 name: brand.name,
                 code: brand.code,
                 languages: brand.languages,

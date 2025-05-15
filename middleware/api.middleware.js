@@ -9,10 +9,12 @@ const Settings = require('../model/Settings')
 const User = require('../model/User')
 const Menu = require('../model/Menu')
 const Language = require('../model/Language')
+
 const {
-    getCountriesFromCache,
-    getBrandsFromCache,
-} = require('../helper/General.helper')
+    getCountry,
+    getBrand,
+    getBrandSettings,
+} = require('../helper/Cache.helper')
 
 const BrandWithCountryCheck = async (req, res, next) => {
     try {
@@ -47,10 +49,10 @@ const BrandWithCountryCheck = async (req, res, next) => {
                 .json({ error: 'Application on Maintenance Mode' })
         }
 
-        const brandSettings = await Settings.findOne({
-            brand: brand?._id,
-            country: country._id,
-        }).select('-brand -country -__v -created_at -updated_at -author')
+        const brandSettings = await getBrandSettings(brand, country)
+        if (!brandSettings) {
+            return res.status(400).json({ error: 'Invalid Brand Settings' })
+        }
 
         req.brand = {
             ...brand,
@@ -80,52 +82,6 @@ const webDefaultHeader = async (req, res, next) => {
 const mobileDefaultHeader = async (req, res, next) => {
     req.source = 'app'
     next()
-}
-
-const getCountry = async (req) => {
-    try {
-        let countryCode = null
-        if (req.query.country) {
-            countryCode = req.query.country?.toLowerCase()
-        } else if (req.headers.country) {
-            countryCode = req.headers.country?.toLowerCase()
-        }
-
-        let country = null
-        if (countryCode) {
-            const allCountries = await getCountriesFromCache()
-            country = allCountries.find(
-                (country) => country.code === countryCode
-            )
-        } else {
-            country = await Country.findOne().sort({ position: 1 })
-        }
-        return country
-    } catch (error) {
-        return null
-    }
-}
-
-const getBrand = async (req, country) => {
-    try {
-        let brandCode = null
-        if (req.query.brand) {
-            brandCode = req.query.brand?.toLowerCase()
-        } else if (req.headers.brand) {
-            brandCode = req.headers.brand?.toLowerCase()
-        }
-        const allBrands = await getBrandsFromCache()
-        const brand = allBrands.find((brand) => brand.code === brandCode)
-        const domain = brand?.domains.find(
-            (domain) =>
-                domain.country?._id?.toString() === country._id?.toString()
-        )
-
-        brand.domain = domain
-        return brand
-    } catch (error) {
-        return null
-    }
 }
 
 const UserAuthCheck = async (req, res, next) => {
@@ -160,43 +116,7 @@ const UserAuthCheck = async (req, res, next) => {
                 }
             }
 
-            // TODO: User token data verification
-            // find user
-            const cache_key = `user-brand-${req.brand.name.en}-${req.country.name.en}`
-
-            const brandSettings = await getCache(cache_key)
-                .then(async (data) => {
-                    if (envConfig.cache.ACTIVE && data) {
-                        // console.log(JSON.parse(data))
-                        return {
-                            data: JSON.parse(data),
-                            is_redis: true,
-                        }
-                    } else {
-                        const liveData = await Settings.findOne({
-                            brand: req.brand._id,
-                            country: req.country._id,
-                        }).select(
-                            '-brand -country -__v -created_at -updated_at -author'
-                        )
-                        if (liveData?.length) {
-                            setCache(
-                                cache_key,
-                                JSON.stringify(liveData),
-                                parseInt(3600)
-                            )
-                        }
-
-                        return {
-                            data: liveData,
-                            is_redis: false,
-                        }
-                    }
-                })
-                .catch((err) => {
-                    // console.log(err)
-                    // TODO:: Send slack notification for redis connection fail on product pull
-                })
+            const brandSettings = await getBrandSettings(req.brand, req.country)
             req.authPublicUser = {
                 ...decodedUser.data?.user,
                 brand: {
@@ -208,7 +128,7 @@ const UserAuthCheck = async (req, res, next) => {
                     currency_decimal_points:
                         req.country.currency_decimal_points,
                     country_object: req.country,
-                    settings: brandSettings.data,
+                    settings: brandSettings,
                 },
             }
         } catch (err) {
