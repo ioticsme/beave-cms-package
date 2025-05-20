@@ -69,7 +69,11 @@ app.use(cookieParser())
 templateEngineConfig(app, path.join(__dirname, './views'))
 
 // DB Connection
-dbConnection()
+let dbSuccess = 'Fail'
+let connectDB = async () => {
+    dbSuccess = await dbConnection()
+}
+connectDB()
 
 app.get('/health', async (req, res) => {
     const appKey =

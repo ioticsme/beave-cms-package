@@ -4,11 +4,11 @@ const envConfig = require('../config/env.config')
 const mongoose = require('mongoose')
 const chalk = require('chalk')
 
-module.exports = () => {
+module.exports = async () => {
     global.globalModuleConfig = {}
     let dbSuccess = 'Fail'
     mongoose.set('strictQuery', false)
-    mongoose
+    await mongoose
         .connect(envConfig.db.URL, {
             dbName: `${envConfig.db.NAME}`,
             useNewUrlParser: true,
@@ -45,4 +45,6 @@ module.exports = () => {
 
     var db = mongoose.connection
     db.on('error', console.error.bind(console, 'MongoDB connection error:')) //TODO::Send slack notification
+
+    return dbSuccess
 }
