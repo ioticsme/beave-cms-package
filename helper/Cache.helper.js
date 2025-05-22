@@ -51,6 +51,8 @@ const getCountriesFromCache = async () => {
                 let countries = await Country.find({
                     // active: true,
                 })
+                    .sort({ position: 1 })
+                    .lean()
                 if (countries.length) {
                     await setCache(
                         cacheKey,
@@ -86,7 +88,8 @@ const getCountry = async (req) => {
                 (country) => country.code === countryCode
             )
         } else {
-            country = await Country.findOne().sort({ position: 1 })
+            const allCountries = await getCountriesFromCache()
+            country = allCountries?.[0]
         }
         return country
     } catch (error) {

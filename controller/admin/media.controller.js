@@ -5,7 +5,7 @@ const {
 } = require('../../helper/FileUpload.helper')
 const fs = require('fs')
 const Media = require('../../model/Media')
-const { getCache, setCache } = require('../../helper/Redis.helper')
+const { getCache, setCache, removeCache } = require('../../helper/Redis.helper')
 
 // List all media files, sorted by creation date (newest first)
 const list = async (req, res) => {
@@ -90,6 +90,7 @@ const fileUpload = async (req, res) => {
             }
         }
     }
+    await removeCache([`${envConfig.cache.CACHE_KEY_PREFIX}-media-json-list`])
     return res.status(200).json('uploaded') // Respond with success message
 }
 
@@ -183,6 +184,10 @@ const deleteMedia = async (req, res) => {
             }) // Remove media from database
         }
 
+        await removeCache([
+            `${envConfig.cache.CACHE_KEY_PREFIX}-media-json-list`,
+        ])
+
         return res.status(200).json({
             message: 'Media deleted',
             url: `/cms/media`,
@@ -220,6 +225,10 @@ const addMetaInfo = async (req, res) => {
                 },
             }
         )
+
+        await removeCache([
+            `${envConfig.cache.CACHE_KEY_PREFIX}-media-json-list`,
+        ])
 
         return res.status(200).json({
             message: 'Media updated',

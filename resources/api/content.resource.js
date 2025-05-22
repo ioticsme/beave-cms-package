@@ -14,24 +14,26 @@ class ContentResource extends Resource {
             type: this.type_slug,
             // type_id: this.type_id,
             author: {
-                _id: this.author._id,
-                name: this.author.name,
-                email: this.author.email,
+                _id: this.author?._id,
+                name: this.author?.name,
+                email: this.author?.email,
             },
             position: this.position,
             // template_name: this.template_name,
             status: this.status,
-            scheduled: this.scheduled_at ? {
-                start: this.scheduled_at.start,
-                end: this.scheduled_at.end,
-            } : undefined,
+            scheduled: this.scheduled_at
+                ? {
+                      start: this.scheduled_at?.start,
+                      end: this.scheduled_at?.end,
+                  }
+                : undefined,
             // brand: this.brand,
             country: {
-                _id: this.country._id,
-                name: this.country.name,
-                code: this.country.code,
-                currency: this.country.currency,
-                timezone: this.country.timezone,
+                _id: this.country?._id,
+                name: this.country?.name,
+                code: this.country?.code,
+                currency: this.country?.currency,
+                timezone: this.country?.timezone,
             },
             content: this.content,
             // forms: this.form,
