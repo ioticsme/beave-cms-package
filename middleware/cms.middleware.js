@@ -13,6 +13,7 @@ const { getCache, setCache } = require('../helper/Redis.helper')
 const {
     getBrandSettings,
     getBrandsFromCache,
+    getBrand,
 } = require('../helper/Cache.helper')
 
 // Getting custom navigation from cms-wrapper config
@@ -294,22 +295,11 @@ const allBrands = async (req, res, next) => {
 const authUser = async (req, res, next) => {
     try {
         if (!req.session.brand) {
-            const brand = await Brand.findOne()
-                .sort({ position: 1 })
-                .populate({
-                    path: 'languages',
-                    options: { sort: { is_default: -1 } },
-                })
-                .populate('domains.country')
-
-            let domains = collect(brand.domains)
-                .sortBy('country.position')
-                .all()
-            let domain = domains?.[0] || {}
+            const brand = await getBrand(req, null)
+            const domain = brand.domain
 
             if (brand && domain?.country) {
                 const settings = await getBrandSettings(brand, domain.country)
-
                 req.session.brand = {
                     _id: brand._id,
                     name: brand.name,
@@ -329,7 +319,6 @@ const authUser = async (req, res, next) => {
         }
         req.authUser = req.session
         res.locals.authUser = req.session
-        // console.log(req.session)
         next()
     } catch (e) {
         return res.redirect('/admin/auth/login')

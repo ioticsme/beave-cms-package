@@ -103,11 +103,21 @@ const getBrand = async (req, country) => {
             brandCode = req.headers.brand?.toLowerCase()
         }
         const allBrands = await getBrandsFromCache()
-        const brand = allBrands.find((brand) => brand.code === brandCode)
-        const domain = brand?.domains.find(
-            (domain) =>
-                domain.country?._id?.toString() === country._id?.toString()
-        )
+        let brand = null
+        if (brandCode) {
+            brand = allBrands.find((brand) => brand.code === brandCode)
+        } else {
+            brand = allBrands?.[0]
+        }
+        let domain = null
+        if (country) {
+            domain = brand?.domains.find(
+                (domain) =>
+                    domain.country?._id?.toString() === country._id?.toString()
+            )
+        } else {
+            domain = brand?.domains?.[0]
+        }
 
         brand.domain = domain
         return brand
