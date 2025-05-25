@@ -345,7 +345,6 @@ const edit = async (req, res) => {
         if (!contentDetail) {
             return res.render(`admin-njk/app-error-404`)
         }
-        // return res.send(findalContentFieldsGroup)
 
         if (req.contentType?.allowed_type?.length) {
             const data = await Content.find({
@@ -368,8 +367,6 @@ const edit = async (req, res) => {
             })
         }
 
-        // console.log(req.contentType.has_form)
-
         const has_common_field_groups = collect(req.contentType.field_groups)
             .where('localisation', false)
             .count()
@@ -382,7 +379,7 @@ const edit = async (req, res) => {
         if (req.contentType?.page_builder) {
             template = `admin-njk/cms/content/html-builder/form`
         }
-        // return res.json(contentDetail)
+
         return res.render(template, {
             reqContentType: req.contentType,
             has_common_field_groups: has_common_field_groups ? true : false,

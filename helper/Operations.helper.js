@@ -7,14 +7,9 @@ const _ = require('lodash')
 // BEGIN:FOR PDF Generation
 const fs = require('fs').promises
 const path = require('path')
-// const puppeteer = require('puppeteer')
-// const hb = require('handlebars')
-// END:FOR PDF Generation
-
-const projectRootDir = require('path').resolve('./')
 
 // Generate and store this securely, e.g., in an environment variable
-const ENCRYPTION_KEY = envConfig.general.APP_KEY // 32 bytes key
+const ENCRYPTION_KEY = envConfig.general.ENCRYPTION_KEY // 32 bytes key
 const IV_LENGTH = 16 // Initialization vector length
 
 const getRequestIp = async (req) => {
@@ -62,46 +57,6 @@ const fileLogger = async (message, service, type, level = 'info') => {
         message: message,
     })
 }
-
-// const createFcmSwJS = async (credentials) => {
-//     const wrapper_public_dir = `${projectRootDir}/public`
-//     if (!fs.existsSync(wrapper_public_dir)) {
-//         fs.mkdirSync(wrapper_public_dir)
-//     }
-//     var writeStream = fs.createWriteStream(
-//         `${wrapper_public_dir}/firebase-messaging-sw.js`
-//     )
-//     writeStream.write(
-//         `importScripts('https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js')
-//         importScripts('https://www.gstatic.com/firebasejs/8.2.0/firebase-messaging.js')
-
-//         const firebaseConfig = {
-//             apiKey: '${credentials.apiKey}',
-//             authDomain: '${credentials.authDomain}',
-//             projectId: '${credentials.projectId}',
-//             storageBucket: '${credentials.storageBucket}',
-//             messagingSenderId: '${credentials.messagingSenderId}',
-//             appId: '${credentials.appId}',
-//         }
-
-//         firebase.initializeApp(firebaseConfig)
-//         const messaging = firebase.messaging()
-//         messaging.onBackgroundMessage(function (payload) {
-//             console.log(
-//                 '[firebase-messaging-sw.js] Received background message ',
-//                 payload
-//             )
-//             // Customize notification here
-//             const notificationTitle = 'Title'
-//             const notificationOptions = {
-//                 body: payload,
-//                 icon: '/firebase-logo.png',
-//             }
-//             self.registration.showNotification(notificationTitle, notificationOptions)
-//         });`
-//     )
-//     writeStream.end()
-// }
 
 const loadSVGIcons = async () => {
     const dirPath = path.join(
@@ -186,15 +141,19 @@ const filteringScheduledCMSItems = async (items) => {
  * @returns {string} The encrypted text in base64 format.
  */
 const encryptData = (text) => {
-    const iv = crypto.randomBytes(IV_LENGTH) // Generate a random IV
-    const cipher = crypto.createCipheriv(
-        'aes-256-cbc',
-        Buffer.from(ENCRYPTION_KEY, 'hex'),
-        iv
-    )
-    let encrypted = cipher.update(text, 'utf8', 'base64')
-    encrypted += cipher.final('base64')
-    return `${iv.toString('hex')}:${encrypted}` // Combine IV and encrypted data
+    try {
+        const iv = crypto.randomBytes(IV_LENGTH) // Generate a random IV
+        const cipher = crypto.createCipheriv(
+            'aes-256-cbc',
+            Buffer.from(ENCRYPTION_KEY, 'hex'),
+            iv
+        )
+        let encrypted = cipher.update(text, 'utf8', 'base64')
+        encrypted += cipher.final('base64')
+        return `${iv.toString('hex')}:${encrypted}` // Combine IV and encrypted data
+    } catch (error) {
+        return text
+    }
 }
 
 /**
@@ -203,21 +162,24 @@ const encryptData = (text) => {
  * @returns {string} The decrypted plaintext.
  */
 const decryptData = (encryptedText) => {
-    const [iv, encrypted] = encryptedText.split(':') // Split IV and encrypted data
-    const decipher = crypto.createDecipheriv(
-        'aes-256-cbc',
-        Buffer.from(ENCRYPTION_KEY, 'hex'),
-        Buffer.from(iv, 'hex')
-    )
-    let decrypted = decipher.update(encrypted, 'base64', 'utf8')
-    decrypted += decipher.final('utf8')
-    return decrypted
+    try {
+        const [iv, encrypted] = encryptedText.split(':') // Split IV and encrypted data
+        const decipher = crypto.createDecipheriv(
+            'aes-256-cbc',
+            Buffer.from(ENCRYPTION_KEY, 'hex'),
+            Buffer.from(iv, 'hex')
+        )
+        let decrypted = decipher.update(encrypted, 'base64', 'utf8')
+        decrypted += decipher.final('utf8')
+        return decrypted
+    } catch (error) {
+        return null
+    }
 }
 
 module.exports = {
     getRequestIp,
     fileLogger,
-    // createFcmSwJS,
     loadSVGIcons,
     filteringScheduledCMSItems,
     encryptData,

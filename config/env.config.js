@@ -1,10 +1,15 @@
 require('dotenv').config()
+const crypto = require('crypto')
 
 const envConfig = {
     general: {
         NODE_ENV: process.env.NODE_ENV || 'development',
         PORT: process.env.PORT || 8080,
-        APP_KEY: process.env.APP_KEY,
+        APP_KEY: process.env.APP_KEY || crypto.randomBytes(32).toString('hex'),
+        ENCRYPTION_KEY:
+            process.env.APP_KEY?.length == 64
+                ? process.env.APP_KEY
+                : crypto.randomBytes(32).toString('hex'),
         SESSION_MAX_AGE: Number(process.env.SESSION_MAX_AGE) || 720, // Value must be in minutes
         DOMAIN: process.env.DOMAIN,
         FRONTEND_URL: process.env.FRONTEND_URL,

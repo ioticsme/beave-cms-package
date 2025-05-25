@@ -17,8 +17,12 @@ const ContentTypeSchema = new mongoose.Schema(
         },
         slug: {
             type: String,
-            required: true,
-            unique: true,
+            required: function () {
+                return this.has_slug
+            },
+            unique: function () {
+                return this.has_slug
+            },
         },
         admin_icon: {
             type: String,

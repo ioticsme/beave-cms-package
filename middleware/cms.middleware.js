@@ -111,6 +111,21 @@ const nunjucksFilter = async (req, res, next) => {
         return allowedSections.includes(section)
     }
 
+    res.locals.findAttachedContent = (contentDetail, attachedItem, content) => {
+        return contentDetail.attached_type.find((type) => {
+            let itemFound =
+                type.content_type == attachedItem &&
+                type.items?.length &&
+                type.items.find(
+                    (at) => at?.toString() == content._id?.toString()
+                )
+
+            if (itemFound) {
+                return true
+            }
+        })
+    }
+
     next()
 }
 

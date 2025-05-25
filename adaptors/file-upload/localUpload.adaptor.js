@@ -1,6 +1,6 @@
 const path = require('path')
 const fs = require('fs')
-const crypto = require('crypto');
+const crypto = require('crypto')
 var envConfig = require('../../config/env.config.js')
 var Media = require('../../model/Media.js')
 
