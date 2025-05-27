@@ -15,33 +15,33 @@
 
 {% block customScript %}
 	<script>
-		$('#beave_modal_nav_item_form').on('show.bs.modal', function (e) {
+		$('#beaver_modal_nav_item_form').on('show.bs.modal', function (e) {
 			var dataValue = $(e.relatedTarget).data('section');
-			$('#beave_modal_nav_item_form input[name="section"]').val(dataValue);
+			$('#beaver_modal_nav_item_form input[name="section"]').val(dataValue);
 		});
-		$('#beave_modal_nav_child_form').on('show.bs.modal', function (e) {
+		$('#beaver_modal_nav_child_form').on('show.bs.modal', function (e) {
 			var dataSection = $(e.relatedTarget).data('section');
 			var dataItem = $(e.relatedTarget).data('item');
-			$('#beave_modal_nav_child_form input[name="section"]').val(dataSection);
-			$('#beave_modal_nav_child_form input[name="item"]').val(dataItem);
+			$('#beaver_modal_nav_child_form input[name="section"]').val(dataSection);
+			$('#beaver_modal_nav_child_form input[name="item"]').val(dataItem);
 		});
 	</script>
 {% endblock %}
 
 {% block content %}
 	<div class="d-flex flex-column flex-column-fluid">
-		<div class="app-toolbar py-3 py-lg-6" id="beave_app_toolbar">
-			<div class="app-container container-xxl d-flex flex-stack" id="beave_app_toolbar_container">
+		<div class="app-toolbar py-3 py-lg-6" id="beaver_app_toolbar">
+			<div class="app-container container-xxl d-flex flex-stack" id="beaver_app_toolbar_container">
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Admin Nav List</h1>
 				</div>
 				<div class="d-flex align-items-center gap-2 gap-lg-3">
-					<a class="btn btn-sm fw-bold btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#beave_modal_nav_section_form">Add Nav Section</a>
+					<a class="btn btn-sm fw-bold btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#beaver_modal_nav_section_form">Add Nav Section</a>
 				</div>
 			</div>
 		</div>
-		<div id="beave_app_content" class="app-content flex-column-fluid">
-			<div id="beave_app_content_container" class="app-container container-xxl">
+		<div id="beaver_app_content" class="app-content flex-column-fluid">
+			<div id="beaver_app_content_container" class="app-container container-xxl">
 				<div class="card">
 					<div class="card-header border-0 pt-6">
 						<div class="card-title">
@@ -54,7 +54,7 @@
 							{% for admin_nav in admin_navs %}
 								<li class="my-10">
 									<h1>{{ admin_nav.section }} | 
-										<a href="#" class="btn btn-success btn-sm" data-bs-toggle='modal' data-bs-target='#beave_modal_nav_item_form' data-section={{admin_nav.section}}>
+										<a href="#" class="btn btn-success btn-sm" data-bs-toggle='modal' data-bs-target='#beaver_modal_nav_item_form' data-section={{admin_nav.section}}>
 											<i class="fa fa-plus"></i>
 										</a>
 										<a href="/admin/config/admin-nav/section/delete/{{ admin_nav._id }}" class="btn btn-danger btn-sm">
@@ -66,7 +66,7 @@
 											<li class="border-gray-300 border-dotted my-5">
 												<div class="px-10">
 													<h2>Label : {{ item.label }} | 
-														<a href="#" class="btn btn-info btn-sm" data-bs-toggle='modal' data-bs-target='#beave_modal_nav_child_form' data-section={{admin_nav._id}} data-item={{item._id}}>
+														<a href="#" class="btn btn-info btn-sm" data-bs-toggle='modal' data-bs-target='#beaver_modal_nav_child_form' data-section={{admin_nav._id}} data-item={{item._id}}>
 															<i class="fa fa-plus"></i>
 														</a>
 														<a href="/admin/config/admin-nav/item/delete/{{ admin_nav.section }}/{{ item._id }}" class="btn btn-danger btn-sm">
@@ -108,7 +108,7 @@
 
 
 {% block widgets %}
-	<div id="beave_modal_nav_section_form" class="modal fade" tabindex="-1" aria-hidden="true">
+	<div id="beaver_modal_nav_section_form" class="modal fade" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered mw-400px">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -118,7 +118,7 @@
 					</div>
 				</div>
 				<div class="modal-body py-lg-5 px-lg-5">
-					<form id="beave_modal_create_app_form" class="form es-form" action="/admin/config/admin-nav/section/save" data-redirect-url="/admin/config/admin-nav/section/save" method="post">
+					<form id="beaver_modal_create_app_form" class="form es-form" action="/admin/config/admin-nav/section/save" data-redirect-url="/admin/config/admin-nav/section/save" method="post">
 						<div class="card card-flush">
 							<div class="card-body pt-0">
 								<div class="col-md-12">
@@ -143,7 +143,7 @@
 		</div>
 	</div>
 
-	<div id="beave_modal_nav_item_form" class="modal fade" tabindex="-1" aria-hidden="true">
+	<div id="beaver_modal_nav_item_form" class="modal fade" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-center mw-400px">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -153,7 +153,7 @@
 					</button>
 				</div>
 				<div class="modal-body py-lg-5 px-lg-5">
-					<form id="beave_modal_create_item_form" action="/admin/config/admin-nav/item/save" data-redirect-url="/admin/config/admin-nav/item/save" method="post" class="form es-form">
+					<form id="beaver_modal_create_item_form" action="/admin/config/admin-nav/item/save" data-redirect-url="/admin/config/admin-nav/item/save" method="post" class="form es-form">
 						<input type="hidden" name="section">
 						<div class="card card-flush">
 							<div class="card-body pt-0">
@@ -190,7 +190,7 @@
 		</div>
 	</div>
 
-	<div class="modal fade" id="beave_modal_nav_child_form" tabindex="-1" aria-hidden="true">
+	<div class="modal fade" id="beaver_modal_nav_child_form" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered mw-400px">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -200,7 +200,7 @@
 					</div>
 				</div>
 				<div class="modal-body py-lg-5 px-lg-5">
-					<form class="form es-form" id="beave_modal_create_child_form" action="/admin/config/admin-nav/child/save" data-redirect-url="/admin/config/admin-nav/child/save" method="post">
+					<form class="form es-form" id="beaver_modal_create_child_form" action="/admin/config/admin-nav/child/save" data-redirect-url="/admin/config/admin-nav/child/save" method="post">
 						<input type="hidden" name="section"/>
 						<input type="hidden" name="item"/>
 						<div class="card card-flush">

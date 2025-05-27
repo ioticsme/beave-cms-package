@@ -132,7 +132,7 @@ var BEAVERLayoutSearch = (function () {
     return {
         init: function () {
             // Elements
-            element = document.querySelector('#beave_header_search')
+            element = document.querySelector('#beaver_header_search')
 
             if (!element) {
                 return

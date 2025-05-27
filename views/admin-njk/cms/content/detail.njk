@@ -12,8 +12,8 @@
 
 {% block content %}
 	<div class="d-flex flex-column flex-column-fluid">
-		<div id="beave_app_toolbar" class="app-toolbar py-3 py-lg-6">
-			<div id="beave_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+		<div id="beaver_app_toolbar" class="app-toolbar py-3 py-lg-6">
+			<div id="beaver_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">{{ pluralToSingular(reqContentType.title) }} Detail</h1>
 					<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -45,8 +45,8 @@
 			</div>
 		</div>
 
-		<div class="app-content flex-column-fluid" id="beave_app_content">
-			<div class="app-container container-xxl" id="beave_app_content_container">
+		<div class="app-content flex-column-fluid" id="beaver_app_content">
+			<div class="app-container container-xxl" id="beaver_app_content_container">
 				<div class="row">
 					<div class="col-12 col-sm-7 col-md-8 col-lg-9">
 						<div class="d-flex flex-column flex-lg-row">
@@ -57,27 +57,27 @@
 											{% if has_bilingual_field_groups %}
 												{% for brandLanguage in authUser.brand.languages %}
 													<li class="nav-item">
-														<a class="nav-link {{ 'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#beave_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
+														<a class="nav-link {{ 'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#beaver_tab_pane_{{ brandLanguage.prefix }}">{{ brandLanguage.name }}</a>
 													</li>
 												{% endfor %}
 											{% endif %}
 
 											{% if has_common_field_groups %}
 												<li class="nav-item">
-													<a class="nav-link" data-bs-toggle="tab" href="#beave_tab_pane_common">General</a>
+													<a class="nav-link" data-bs-toggle="tab" href="#beaver_tab_pane_common">General</a>
 												</li>
 											{% endif %}
 
 											{% if reqContentType.has_meta %}
 												<li class="nav-item">
-													<a class="nav-link" data-bs-toggle="tab" href="#beave_tab_pane_meta">Meta</a>
+													<a class="nav-link" data-bs-toggle="tab" href="#beaver_tab_pane_meta">Meta</a>
 												</li>
 											{% endif %}
 										</ul>
 										<div class="tab-content tab-content-fields" id="content-detail-tab">
 											{% if has_bilingual_field_groups %}
 												{% for brandLanguage in authUser.brand.languages %}
-													<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" dir="{{brandLanguage.dir}}" id="beave_tab_pane_{{ brandLanguage.prefix }}">
+													<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" dir="{{brandLanguage.dir}}" id="beaver_tab_pane_{{ brandLanguage.prefix }}">
 														<div class="row">
 															<div class="col-12">
 																{% for cfg in reqContentType.field_groups %}
@@ -122,7 +122,7 @@
 											{% endif %}
 
 											{% if has_common_field_groups %}
-												<div class="tab-pane fade" role="tabpanel" id="beave_tab_pane_common">
+												<div class="tab-pane fade" role="tabpanel" id="beaver_tab_pane_common">
 													<div class="row">
 														<div class="col-12">
 															{% for cfg in reqContentType.field_groups %}
@@ -169,7 +169,7 @@
 											{% endif %}
 
 											{% if reqContentType.has_meta %}
-												<div class="tab-pane fade" role="tabpanel" id="beave_tab_pane_meta">
+												<div class="tab-pane fade" role="tabpanel" id="beaver_tab_pane_meta">
 													<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 														{% for brandLanguage in authUser.brand.languages %}
 															<li class="nav-item">

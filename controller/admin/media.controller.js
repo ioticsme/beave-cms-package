@@ -7,10 +7,24 @@ const fs = require('fs')
 const Media = require('../../model/Media')
 const { getCache, setCache, removeCache } = require('../../helper/Redis.helper')
 
+let cacheKey = `${envConfig.cache.CACHE_KEY_PREFIX}-media-json-list`
+
 // List all media files, sorted by creation date (newest first)
 const list = async (req, res) => {
     try {
-        const media = await Media.find().sort({ _id: -1 }) // Fetch media and sort
+        let media = await getCache(cacheKey).then(async (data) => {
+            if (data) {
+                return JSON.parse(data)
+            } else {
+                let liveData = await Media.find({}).sort({ _id: -1 })
+                // Set cache for 1 hour
+                await setCache(cacheKey, JSON.stringify(liveData), 3600)
+
+                // Return live data
+                return liveData
+            }
+        })
+
         // TODO: PDF upload config on app settings
         let hasPdfUpload = envConfig.general.HAS_PDF_UPLOAD // Check if PDF upload is enabled
         return res.render('admin-njk/cms/media/listing', {
@@ -26,7 +40,6 @@ const list = async (req, res) => {
 // Return media list in JSON format excluding PDFs
 const jsonList = async (req, res) => {
     try {
-        let cacheKey = `${envConfig.cache.CACHE_KEY_PREFIX}-media-json-list`
         let media = await getCache(cacheKey).then(async (data) => {
             if (data) {
                 return JSON.parse(data)
@@ -90,7 +103,7 @@ const fileUpload = async (req, res) => {
             }
         }
     }
-    await removeCache([`${envConfig.cache.CACHE_KEY_PREFIX}-media-json-list`])
+    await removeCache([cacheKey])
     return res.status(200).json('uploaded') // Respond with success message
 }
 
@@ -117,6 +130,8 @@ const articleImageUpload = async (req, res) => {
         if (media.drive == 'local') {
             baseUrl = `${req.protocol}://${req.headers.host}/`
         }
+
+        await removeCache([cacheKey])
 
         return res.status(200).json({
             file: {
@@ -152,6 +167,7 @@ const ckEditorFileUpload = async (req, res) => {
     if (media.drive == 'local') {
         baseUrl = `${req.protocol}://${req.headers.host}/`
     }
+    await removeCache([cacheKey])
     return res.status(200).json({
         urls: {
             default: `${baseUrl}${media.url}`,
@@ -184,9 +200,7 @@ const deleteMedia = async (req, res) => {
             }) // Remove media from database
         }
 
-        await removeCache([
-            `${envConfig.cache.CACHE_KEY_PREFIX}-media-json-list`,
-        ])
+        await removeCache([cacheKey])
 
         return res.status(200).json({
             message: 'Media deleted',
@@ -226,9 +240,7 @@ const addMetaInfo = async (req, res) => {
             }
         )
 
-        await removeCache([
-            `${envConfig.cache.CACHE_KEY_PREFIX}-media-json-list`,
-        ])
+        await removeCache([cacheKey])
 
         return res.status(200).json({
             message: 'Media updated',

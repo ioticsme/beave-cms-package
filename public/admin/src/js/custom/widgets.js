@@ -305,7 +305,7 @@ var BEAVERWidgets = (function () {
 
     // Charts widgets
     var initChartsWidget1 = function () {
-        var element = document.getElementById('beave_charts_widget_1_chart')
+        var element = document.getElementById('beaver_charts_widget_1_chart')
 
         if (!element) {
             return
@@ -448,7 +448,7 @@ var BEAVERWidgets = (function () {
     }
 
     var initChartsWidget2 = function () {
-        var element = document.getElementById('beave_charts_widget_2_chart')
+        var element = document.getElementById('beaver_charts_widget_2_chart')
 
         if (!element) {
             return
@@ -591,7 +591,7 @@ var BEAVERWidgets = (function () {
     }
 
     var initChartsWidget3 = function () {
-        var element = document.getElementById('beave_charts_widget_3_chart')
+        var element = document.getElementById('beaver_charts_widget_3_chart')
 
         if (!element) {
             return
@@ -754,7 +754,7 @@ var BEAVERWidgets = (function () {
     }
 
     var initChartsWidget4 = function () {
-        var element = document.getElementById('beave_charts_widget_4_chart')
+        var element = document.getElementById('beaver_charts_widget_4_chart')
 
         if (!element) {
             return
@@ -916,7 +916,7 @@ var BEAVERWidgets = (function () {
     }
 
     var initChartsWidget5 = function () {
-        var element = document.getElementById('beave_charts_widget_5_chart')
+        var element = document.getElementById('beaver_charts_widget_5_chart')
 
         if (!element) {
             return
@@ -1063,7 +1063,7 @@ var BEAVERWidgets = (function () {
     }
 
     var initChartsWidget6 = function () {
-        var element = document.getElementById('beave_charts_widget_6_chart')
+        var element = document.getElementById('beaver_charts_widget_6_chart')
 
         if (!element) {
             return
@@ -1227,7 +1227,7 @@ var BEAVERWidgets = (function () {
     }
 
     var initChartsWidget7 = function () {
-        var element = document.getElementById('beave_charts_widget_7_chart')
+        var element = document.getElementById('beaver_charts_widget_7_chart')
 
         if (!element) {
             return
@@ -1412,7 +1412,7 @@ var BEAVERWidgets = (function () {
     }
 
     var initChartsWidget8 = function () {
-        var element = document.getElementById('beave_charts_widget_8_chart')
+        var element = document.getElementById('beaver_charts_widget_8_chart')
 
         if (!element) {
             return
@@ -1623,7 +1623,6 @@ var BEAVERWidgets = (function () {
         var borderColor = BEAVERUtil.getCssVariableValue('--bs-gray-200')
         var options
         var chart
-
         ;[].slice.call(charts).map(function (element) {
             height = parseInt(BEAVERUtil.css(element, 'height'))
             color = BEAVERUtil.getCssVariableValue(
@@ -2477,7 +2476,6 @@ var BEAVERWidgets = (function () {
         var baseColor
         var options
         var chart
-
         ;[].slice.call(charts).map(function (element) {
             color = element.getAttribute('data-beaver-color')
             height = parseInt(BEAVERUtil.css(element, 'height'))
@@ -2619,7 +2617,6 @@ var BEAVERWidgets = (function () {
         var borderColor = BEAVERUtil.getCssVariableValue('--bs-gray-200')
         var options
         var chart
-
         ;[].slice.call(charts).map(function (element) {
             height = parseInt(BEAVERUtil.css(element, 'height'))
 
@@ -2909,7 +2906,6 @@ var BEAVERWidgets = (function () {
         var options
         var chart
         var height
-
         ;[].slice.call(charts).map(function (element) {
             height = parseInt(BEAVERUtil.css(element, 'height'))
             var labelColor = BEAVERUtil.getCssVariableValue('--bs-gray-800')
@@ -3022,7 +3018,7 @@ var BEAVERWidgets = (function () {
 
     var initMixedWidget16 = function () {
         var element = document.getElementById(
-            'beave_charts_mixed_widget_16_chart'
+            'beaver_charts_mixed_widget_16_chart'
         )
         var height = parseInt(BEAVERUtil.css(element, 'height'))
 
@@ -3161,7 +3157,7 @@ var BEAVERWidgets = (function () {
 
     var initMixedWidget18 = function () {
         var element = document.getElementById(
-            'beave_charts_mixed_widget_18_chart'
+            'beaver_charts_mixed_widget_18_chart'
         )
         var height = parseInt(BEAVERUtil.css(element, 'height'))
 
@@ -3309,7 +3305,7 @@ var BEAVERWidgets = (function () {
 
         function initChart() {
             var element = document.getElementById(
-                'beave_charts_mixed_widget_19_chart'
+                'beaver_charts_mixed_widget_19_chart'
             )
             var height = parseInt(BEAVERUtil.css(element, 'height'))
 
@@ -3467,8 +3463,8 @@ var BEAVERWidgets = (function () {
 
     // Feeds Widgets
     var initFeedWidget1 = function () {
-        var formEl = document.querySelector('#beave_forms_widget_1_form')
-        var editorId = 'beave_forms_widget_1_editor'
+        var formEl = document.querySelector('#beaver_forms_widget_1_form')
+        var editorId = 'beaver_forms_widget_1_editor'
 
         if (!formEl) {
             return
@@ -3478,7 +3474,7 @@ var BEAVERWidgets = (function () {
         var options = {
             modules: {
                 toolbar: {
-                    container: '#beave_forms_widget_1_editor_toolbar',
+                    container: '#beaver_forms_widget_1_editor_toolbar',
                 },
             },
             placeholder: 'What is on your mind ?',
@@ -3494,8 +3490,8 @@ var BEAVERWidgets = (function () {
     }
 
     var initFeedsWidget4 = function () {
-        var btn = document.querySelector('#beave_widget_5_load_more_btn')
-        var widget5 = document.querySelector('#beave_widget_5')
+        var btn = document.querySelector('#beaver_widget_5_load_more_btn')
+        var widget5 = document.querySelector('#beaver_widget_5')
 
         if (btn) {
             btn.addEventListener('click', function (e) {
@@ -3517,7 +3513,7 @@ var BEAVERWidgets = (function () {
     var initCalendarWidget1 = function () {
         if (
             typeof FullCalendar === 'undefined' ||
-            !document.querySelector('#beave_calendar_widget_1')
+            !document.querySelector('#beaver_calendar_widget_1')
         ) {
             return
         }
@@ -3531,7 +3527,7 @@ var BEAVERWidgets = (function () {
         var TODAY = todayDate.format('YYYY-MM-DD')
         var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD')
 
-        var calendarEl = document.getElementById('beave_calendar_widget_1')
+        var calendarEl = document.getElementById('beaver_calendar_widget_1')
         var calendar = new FullCalendar.Calendar(calendarEl, {
             headerToolbar: {
                 left: 'prev,next today',
@@ -3663,11 +3659,11 @@ var BEAVERWidgets = (function () {
 
     // Daterangepicker
     var initDaterangepicker = function () {
-        if (!document.querySelector('#beave_dashboard_daterangepicker')) {
+        if (!document.querySelector('#beaver_dashboard_daterangepicker')) {
             return
         }
 
-        var picker = $('#beave_dashboard_daterangepicker')
+        var picker = $('#beaver_dashboard_daterangepicker')
         var start = moment()
         var end = moment()
 
@@ -3685,8 +3681,8 @@ var BEAVERWidgets = (function () {
                 range = start.format('MMM D') + ' - ' + end.format('MMM D')
             }
 
-            $('#beave_dashboard_daterangepicker_date').html(range)
-            $('#beave_dashboard_daterangepicker_title').html(title)
+            $('#beaver_dashboard_daterangepicker_date').html(range)
+            $('#beaver_dashboard_daterangepicker_title').html(title)
         }
 
         picker.daterangepicker(
@@ -3723,7 +3719,9 @@ var BEAVERWidgets = (function () {
 
     // Dark mode toggler
     var initDarkModeToggle = function () {
-        var toggle = document.querySelector('#beave_user_menu_dark_mode_toggle')
+        var toggle = document.querySelector(
+            '#beaver_user_menu_dark_mode_toggle'
+        )
 
         if (toggle) {
             toggle.addEventListener('click', function () {

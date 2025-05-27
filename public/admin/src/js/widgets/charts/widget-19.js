@@ -9,7 +9,7 @@ var BEAVERChartsWidget19 = (function () {
             return
         }
 
-        var element = document.getElementById('beave_charts_widget_19_chart_1')
+        var element = document.getElementById('beaver_charts_widget_19_chart_1')
 
         if (!element) {
             return
@@ -228,7 +228,7 @@ var BEAVERChartsWidget19 = (function () {
             return
         }
 
-        var element = document.getElementById('beave_charts_widget_19_chart_2')
+        var element = document.getElementById('beaver_charts_widget_19_chart_2')
 
         var root
 

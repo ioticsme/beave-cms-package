@@ -9,7 +9,7 @@ var BEAVERChartsWidget16 = (function () {
             return
         }
 
-        var element = document.getElementById('beave_charts_widget_16_chart')
+        var element = document.getElementById('beaver_charts_widget_16_chart')
 
         if (!element) {
             return

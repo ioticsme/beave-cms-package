@@ -9,7 +9,7 @@ var BEAVERMapsWidget1 = (function () {
             return
         }
 
-        var element = document.getElementById('beave_maps_widget_1_map')
+        var element = document.getElementById('beaver_maps_widget_1_map')
 
         if (!element) {
             return

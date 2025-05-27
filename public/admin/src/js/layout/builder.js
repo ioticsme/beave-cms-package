@@ -53,10 +53,10 @@ var BEAVERAppLayoutBuilder = (function () {
                 const mode = this.getAttribute('data-beaver-mode')
                 const selectedLink = menu.querySelector('.menu-link.active')
                 const viewImage = document.querySelector(
-                    '#beave_app_engage_prebuilts_view_image'
+                    '#beaver_app_engage_prebuilts_view_image'
                 )
                 const viewText = document.querySelector(
-                    '#beave_app_engage_prebuilts_view_text'
+                    '#beaver_app_engage_prebuilts_view_text'
                 )
                 selectedTitle.innerText = title
 
@@ -288,13 +288,13 @@ var BEAVERAppLayoutBuilder = (function () {
 
     var handleThemeMode = function () {
         var checkLight = document.querySelector(
-            '#beave_layout_builder_theme_mode_light'
+            '#beaver_layout_builder_theme_mode_light'
         )
         var checkDark = document.querySelector(
-            '#beave_layout_builder_theme_mode_dark'
+            '#beaver_layout_builder_theme_mode_dark'
         )
         var check = document.querySelector(
-            '#beave_layout_builder_theme_mode_' + BEAVERThemeMode.getMode()
+            '#beaver_layout_builder_theme_mode_' + BEAVERThemeMode.getMode()
         )
 
         if (checkLight) {
@@ -328,15 +328,15 @@ var BEAVERAppLayoutBuilder = (function () {
     return {
         // Public functions
         init: function () {
-            engage = document.querySelector('#beave_app_engage')
+            engage = document.querySelector('#beaver_app_engage')
             engageToggleOn = document.querySelector(
-                '#beave_app_engage_toggle_on'
+                '#beaver_app_engage_toggle_on'
             )
             engageToggleOff = document.querySelector(
-                '#beave_app_engage_toggle_off'
+                '#beaver_app_engage_toggle_off'
             )
             engagePrebuiltsModal = document.querySelector(
-                '#beave_app_engage_prebuilts_modal'
+                '#beaver_app_engage_prebuilts_modal'
             )
 
             if (engage && engagePrebuiltsModal) {
@@ -348,7 +348,7 @@ var BEAVERAppLayoutBuilder = (function () {
                 handleEngageToggle()
             }
 
-            form = document.querySelector('#beave_app_layout_builder_form')
+            form = document.querySelector('#beaver_app_layout_builder_form')
 
             if (!form) {
                 return
@@ -356,16 +356,16 @@ var BEAVERAppLayoutBuilder = (function () {
 
             url = form.getAttribute('action')
             actionInput = document.querySelector(
-                '#beave_app_layout_builder_action'
+                '#beaver_app_layout_builder_action'
             )
             previewButton = document.querySelector(
-                '#beave_app_layout_builder_preview'
+                '#beaver_app_layout_builder_preview'
             )
             exportButton = document.querySelector(
-                '#beave_app_layout_builder_export'
+                '#beaver_app_layout_builder_export'
             )
             resetButton = document.querySelector(
-                '#beave_app_layout_builder_reset'
+                '#beaver_app_layout_builder_reset'
             )
 
             if (previewButton) {

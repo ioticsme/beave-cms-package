@@ -224,8 +224,8 @@ var BEAVERChartsWidget35 = (function () {
 
             initChart(
                 chart1,
-                '#beave_charts_widget_35_tab_1',
-                '#beave_charts_widget_35_chart_1',
+                '#beaver_charts_widget_35_tab_1',
+                '#beaver_charts_widget_35_chart_1',
                 chart1Data,
                 chart1Labels,
                 true
@@ -255,8 +255,8 @@ var BEAVERChartsWidget35 = (function () {
 
             initChart(
                 chart2,
-                '#beave_charts_widget_35_tab_2',
-                '#beave_charts_widget_35_chart_2',
+                '#beaver_charts_widget_35_tab_2',
+                '#beaver_charts_widget_35_chart_2',
                 chart2Data,
                 chart2Labels,
                 false
@@ -286,8 +286,8 @@ var BEAVERChartsWidget35 = (function () {
 
             initChart(
                 chart3,
-                '#beave_charts_widget_35_tab_3',
-                '#beave_charts_widget_35_chart_3',
+                '#beaver_charts_widget_35_tab_3',
+                '#beaver_charts_widget_35_chart_3',
                 chart3Data,
                 chart3Labels,
                 false
@@ -317,8 +317,8 @@ var BEAVERChartsWidget35 = (function () {
 
             initChart(
                 chart4,
-                '#beave_charts_widget_35_tab_4',
-                '#beave_charts_widget_35_chart_4',
+                '#beaver_charts_widget_35_tab_4',
+                '#beaver_charts_widget_35_chart_4',
                 chart4Data,
                 chart4Labels,
                 false
@@ -348,8 +348,8 @@ var BEAVERChartsWidget35 = (function () {
 
             initChart(
                 chart5,
-                '#beave_charts_widget_35_tab_5',
-                '#beave_charts_widget_35_chart_5',
+                '#beaver_charts_widget_35_tab_5',
+                '#beaver_charts_widget_35_chart_5',
                 chart5Data,
                 chart5Labels,
                 false
@@ -379,40 +379,40 @@ var BEAVERChartsWidget35 = (function () {
 
                 initChart(
                     chart1,
-                    '#beave_charts_widget_35_tab_1',
-                    '#beave_charts_widget_35_chart_1',
+                    '#beaver_charts_widget_35_tab_1',
+                    '#beaver_charts_widget_35_chart_1',
                     chart1Data,
                     chart1Labels,
                     chart1.rendered
                 )
                 initChart(
                     chart2,
-                    '#beave_charts_widget_35_tab_2',
-                    '#beave_charts_widget_35_chart_2',
+                    '#beaver_charts_widget_35_tab_2',
+                    '#beaver_charts_widget_35_chart_2',
                     chart2Data,
                     chart2Labels,
                     chart2.rendered
                 )
                 initChart(
                     chart3,
-                    '#beave_charts_widget_35_tab_3',
-                    '#beave_charts_widget_35_chart_3',
+                    '#beaver_charts_widget_35_tab_3',
+                    '#beaver_charts_widget_35_chart_3',
                     chart3Data,
                     chart3Labels,
                     chart3.rendered
                 )
                 initChart(
                     chart4,
-                    '#beave_charts_widget_35_tab_4',
-                    '#beave_charts_widget_35_chart_4',
+                    '#beaver_charts_widget_35_tab_4',
+                    '#beaver_charts_widget_35_chart_4',
                     chart4Data,
                     chart4Labels,
                     chart4.rendered
                 )
                 initChart(
                     chart5,
-                    '#beave_charts_widget_35_tab_5',
-                    '#beave_charts_widget_35_chart_5',
+                    '#beaver_charts_widget_35_tab_5',
+                    '#beaver_charts_widget_35_chart_5',
                     chart5Data,
                     chart5Labels,
                     chart5.rendered

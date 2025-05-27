@@ -7,7 +7,7 @@ var BEAVERChartsWidget24 = (function () {
             return
         }
 
-        var element = document.getElementById('beave_charts_widget_24')
+        var element = document.getElementById('beaver_charts_widget_24')
 
         if (!element) {
             return

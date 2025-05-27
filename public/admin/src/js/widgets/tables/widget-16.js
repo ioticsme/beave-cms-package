@@ -245,8 +245,8 @@ var BEAVERTablesWidget16 = (function () {
             ]
             initChart(
                 chart1,
-                '#beave_stats_widget_16_tab_link_1',
-                '#beave_table_widget_16_chart_1_1',
+                '#beaver_stats_widget_16_tab_link_1',
+                '#beaver_table_widget_16_chart_1_1',
                 chart1Data,
                 true
             )
@@ -254,8 +254,8 @@ var BEAVERTablesWidget16 = (function () {
             var chart2Data = [8, 5, 16, 3, 23, 16, 11, 15, 3, 11, 15, 7, 17, 9]
             initChart(
                 chart2,
-                '#beave_stats_widget_16_tab_link_1',
-                '#beave_table_widget_16_chart_1_2',
+                '#beaver_stats_widget_16_tab_link_1',
+                '#beaver_table_widget_16_chart_1_2',
                 chart2Data,
                 true
             )
@@ -263,8 +263,8 @@ var BEAVERTablesWidget16 = (function () {
             var chart3Data = [8, 6, 16, 3, 23, 16, 11, 14, 3, 11, 15, 8, 17, 9]
             initChart(
                 chart3,
-                '#beave_stats_widget_16_tab_link_1',
-                '#beave_table_widget_16_chart_1_3',
+                '#beaver_stats_widget_16_tab_link_1',
+                '#beaver_table_widget_16_chart_1_3',
                 chart3Data,
                 true
             )
@@ -272,8 +272,8 @@ var BEAVERTablesWidget16 = (function () {
             var chart4Data = [12, 5, 23, 12, 21, 9, 17, 20, 4, 24, 9, 13, 18, 9]
             initChart(
                 chart4,
-                '#beave_stats_widget_16_tab_link_1',
-                '#beave_table_widget_16_chart_1_4',
+                '#beaver_stats_widget_16_tab_link_1',
+                '#beaver_table_widget_16_chart_1_4',
                 chart4Data,
                 true
             )
@@ -283,8 +283,8 @@ var BEAVERTablesWidget16 = (function () {
             ]
             initChart(
                 chart5,
-                '#beave_stats_widget_16_tab_link_2',
-                '#beave_table_widget_16_chart_2_1',
+                '#beaver_stats_widget_16_tab_link_2',
+                '#beaver_table_widget_16_chart_2_1',
                 chart5Data,
                 false
             )
@@ -292,8 +292,8 @@ var BEAVERTablesWidget16 = (function () {
             var chart6Data = [13, 5, 21, 12, 21, 9, 17, 20, 4, 23, 9, 17, 21, 7]
             initChart(
                 chart6,
-                '#beave_stats_widget_16_tab_link_2',
-                '#beave_table_widget_16_chart_2_2',
+                '#beaver_stats_widget_16_tab_link_2',
+                '#beaver_table_widget_16_chart_2_2',
                 chart6Data,
                 false
             )
@@ -301,8 +301,8 @@ var BEAVERTablesWidget16 = (function () {
             var chart7Data = [8, 10, 14, 21, 6, 31, 5, 21, 5, 11, 15, 7, 23, 13]
             initChart(
                 chart7,
-                '#beave_stats_widget_16_tab_link_2',
-                '#beave_table_widget_16_chart_2_3',
+                '#beaver_stats_widget_16_tab_link_2',
+                '#beaver_table_widget_16_chart_2_3',
                 chart7Data,
                 false
             )
@@ -310,8 +310,8 @@ var BEAVERTablesWidget16 = (function () {
             var chart8Data = [6, 10, 12, 21, 6, 11, 7, 23, 5, 12, 18, 7, 21, 15]
             initChart(
                 chart8,
-                '#beave_stats_widget_16_tab_link_2',
-                '#beave_table_widget_16_chart_2_4',
+                '#beaver_stats_widget_16_tab_link_2',
+                '#beaver_table_widget_16_chart_2_4',
                 chart8Data,
                 false
             )
@@ -319,8 +319,8 @@ var BEAVERTablesWidget16 = (function () {
             var chart9Data = [7, 10, 5, 21, 6, 11, 5, 23, 5, 11, 18, 7, 21, 13]
             initChart(
                 chart9,
-                '#beave_stats_widget_16_tab_link_3',
-                '#beave_table_widget_16_chart_3_1',
+                '#beaver_stats_widget_16_tab_link_3',
+                '#beaver_table_widget_16_chart_3_1',
                 chart9Data,
                 false
             )
@@ -328,8 +328,8 @@ var BEAVERTablesWidget16 = (function () {
             var chart10Data = [8, 5, 16, 2, 19, 9, 17, 21, 4, 24, 4, 13, 21, 5]
             initChart(
                 chart10,
-                '#beave_stats_widget_16_tab_link_3',
-                '#beave_table_widget_16_chart_3_2',
+                '#beaver_stats_widget_16_tab_link_3',
+                '#beaver_table_widget_16_chart_3_2',
                 chart10Data,
                 false
             )
@@ -339,8 +339,8 @@ var BEAVERTablesWidget16 = (function () {
             ]
             initChart(
                 chart11,
-                '#beave_stats_widget_16_tab_link_3',
-                '#beave_table_widget_16_chart_3_3',
+                '#beaver_stats_widget_16_tab_link_3',
+                '#beaver_table_widget_16_chart_3_3',
                 chart11Data,
                 false
             )
@@ -348,8 +348,8 @@ var BEAVERTablesWidget16 = (function () {
             var chart12Data = [3, 9, 12, 23, 6, 11, 7, 23, 5, 12, 14, 7, 21, 8]
             initChart(
                 chart12,
-                '#beave_stats_widget_16_tab_link_3',
-                '#beave_table_widget_16_chart_3_4',
+                '#beaver_stats_widget_16_tab_link_3',
+                '#beaver_table_widget_16_chart_3_4',
                 chart12Data,
                 false
             )
@@ -357,8 +357,8 @@ var BEAVERTablesWidget16 = (function () {
             var chart13Data = [9, 14, 15, 21, 8, 11, 5, 23, 5, 11, 18, 5, 23, 8]
             initChart(
                 chart13,
-                '#beave_stats_widget_16_tab_link_4',
-                '#beave_table_widget_16_chart_4_1',
+                '#beaver_stats_widget_16_tab_link_4',
+                '#beaver_table_widget_16_chart_4_1',
                 chart13Data,
                 false
             )
@@ -366,8 +366,8 @@ var BEAVERTablesWidget16 = (function () {
             var chart14Data = [7, 5, 23, 12, 21, 9, 17, 15, 4, 24, 9, 17, 21, 7]
             initChart(
                 chart14,
-                '#beave_stats_widget_16_tab_link_4',
-                '#beave_table_widget_16_chart_4_2',
+                '#beaver_stats_widget_16_tab_link_4',
+                '#beaver_table_widget_16_chart_4_2',
                 chart14Data,
                 false
             )
@@ -375,8 +375,8 @@ var BEAVERTablesWidget16 = (function () {
             var chart15Data = [8, 10, 14, 21, 6, 31, 8, 23, 5, 3, 14, 7, 21, 12]
             initChart(
                 chart15,
-                '#beave_stats_widget_16_tab_link_4',
-                '#beave_table_widget_16_chart_4_3',
+                '#beaver_stats_widget_16_tab_link_4',
+                '#beaver_table_widget_16_chart_4_3',
                 chart15Data,
                 false
             )
@@ -386,8 +386,8 @@ var BEAVERTablesWidget16 = (function () {
             ]
             initChart(
                 chart16,
-                '#beave_stats_widget_16_tab_link_4',
-                '#beave_table_widget_16_chart_4_4',
+                '#beaver_stats_widget_16_tab_link_4',
+                '#beaver_table_widget_16_chart_4_4',
                 chart16Data,
                 false
             )
@@ -397,8 +397,8 @@ var BEAVERTablesWidget16 = (function () {
             ]
             initChart(
                 chart17,
-                '#beave_stats_widget_16_tab_link_5',
-                '#beave_table_widget_16_chart_5_1',
+                '#beaver_stats_widget_16_tab_link_5',
+                '#beaver_table_widget_16_chart_5_1',
                 chart17Data,
                 false
             )
@@ -406,8 +406,8 @@ var BEAVERTablesWidget16 = (function () {
             var chart18Data = [4, 5, 23, 12, 21, 9, 17, 15, 4, 24, 9, 17, 21, 7]
             initChart(
                 chart18,
-                '#beave_stats_widget_16_tab_link_5',
-                '#beave_table_widget_16_chart_5_2',
+                '#beaver_stats_widget_16_tab_link_5',
+                '#beaver_table_widget_16_chart_5_2',
                 chart18Data,
                 false
             )
@@ -417,8 +417,8 @@ var BEAVERTablesWidget16 = (function () {
             ]
             initChart(
                 chart19,
-                '#beave_stats_widget_16_tab_link_5',
-                '#beave_table_widget_16_chart_5_3',
+                '#beaver_stats_widget_16_tab_link_5',
+                '#beaver_table_widget_16_chart_5_3',
                 chart19Data,
                 false
             )
@@ -428,8 +428,8 @@ var BEAVERTablesWidget16 = (function () {
             ]
             initChart(
                 chart20,
-                '#beave_stats_widget_16_tab_link_5',
-                '#beave_table_widget_16_chart_5_4',
+                '#beaver_stats_widget_16_tab_link_5',
+                '#beaver_table_widget_16_chart_5_4',
                 chart20Data,
                 false
             )
@@ -518,145 +518,145 @@ var BEAVERTablesWidget16 = (function () {
 
                 initChart(
                     chart1,
-                    '#beave_stats_widget_16_tab_link_1',
-                    '#beave_table_widget_16_chart_1_1',
+                    '#beaver_stats_widget_16_tab_link_1',
+                    '#beaver_table_widget_16_chart_1_1',
                     chart1Data,
                     chart1.rendered
                 )
                 initChart(
                     chart2,
-                    '#beave_stats_widget_16_tab_link_1',
-                    '#beave_table_widget_16_chart_1_2',
+                    '#beaver_stats_widget_16_tab_link_1',
+                    '#beaver_table_widget_16_chart_1_2',
                     chart2Data,
                     chart2.rendered
                 )
                 initChart(
                     chart3,
-                    '#beave_stats_widget_16_tab_link_1',
-                    '#beave_table_widget_16_chart_1_3',
+                    '#beaver_stats_widget_16_tab_link_1',
+                    '#beaver_table_widget_16_chart_1_3',
                     chart3Data,
                     chart3.rendered
                 )
                 initChart(
                     chart4,
-                    '#beave_stats_widget_16_tab_link_1',
-                    '#beave_table_widget_16_chart_1_4',
+                    '#beaver_stats_widget_16_tab_link_1',
+                    '#beaver_table_widget_16_chart_1_4',
                     chart4Data,
                     chart4.rendered
                 )
 
                 initChart(
                     chart5,
-                    '#beave_stats_widget_16_tab_link_2',
-                    '#beave_table_widget_16_chart_2_1',
+                    '#beaver_stats_widget_16_tab_link_2',
+                    '#beaver_table_widget_16_chart_2_1',
                     chart5Data,
                     chart5.rendered
                 )
                 initChart(
                     chart6,
-                    '#beave_stats_widget_16_tab_link_2',
-                    '#beave_table_widget_16_chart_2_2',
+                    '#beaver_stats_widget_16_tab_link_2',
+                    '#beaver_table_widget_16_chart_2_2',
                     chart6Data,
                     chart6.rendered
                 )
                 initChart(
                     chart7,
-                    '#beave_stats_widget_16_tab_link_2',
-                    '#beave_table_widget_16_chart_2_3',
+                    '#beaver_stats_widget_16_tab_link_2',
+                    '#beaver_table_widget_16_chart_2_3',
                     chart7Data,
                     chart7.rendered
                 )
                 initChart(
                     chart8,
-                    '#beave_stats_widget_16_tab_link_2',
-                    '#beave_table_widget_16_chart_2_4',
+                    '#beaver_stats_widget_16_tab_link_2',
+                    '#beaver_table_widget_16_chart_2_4',
                     chart8Data,
                     chart8.rendered
                 )
 
                 initChart(
                     chart9,
-                    '#beave_stats_widget_16_tab_link_3',
-                    '#beave_table_widget_16_chart_3_1',
+                    '#beaver_stats_widget_16_tab_link_3',
+                    '#beaver_table_widget_16_chart_3_1',
                     chart9Data,
                     chart9.rendered
                 )
                 initChart(
                     chart10,
-                    '#beave_stats_widget_16_tab_link_3',
-                    '#beave_table_widget_16_chart_3_2',
+                    '#beaver_stats_widget_16_tab_link_3',
+                    '#beaver_table_widget_16_chart_3_2',
                     chart10Data,
                     chart10.rendered
                 )
                 initChart(
                     chart11,
-                    '#beave_stats_widget_16_tab_link_3',
-                    '#beave_table_widget_16_chart_3_3',
+                    '#beaver_stats_widget_16_tab_link_3',
+                    '#beaver_table_widget_16_chart_3_3',
                     chart11Data,
                     chart11.rendered
                 )
                 initChart(
                     chart12,
-                    '#beave_stats_widget_16_tab_link_3',
-                    '#beave_table_widget_16_chart_3_4',
+                    '#beaver_stats_widget_16_tab_link_3',
+                    '#beaver_table_widget_16_chart_3_4',
                     chart12Data,
                     chart12.rendered
                 )
 
                 initChart(
                     chart13,
-                    '#beave_stats_widget_16_tab_link_4',
-                    '#beave_table_widget_16_chart_4_1',
+                    '#beaver_stats_widget_16_tab_link_4',
+                    '#beaver_table_widget_16_chart_4_1',
                     chart13Data,
                     chart13.rendered
                 )
                 initChart(
                     chart14,
-                    '#beave_stats_widget_16_tab_link_4',
-                    '#beave_table_widget_16_chart_4_2',
+                    '#beaver_stats_widget_16_tab_link_4',
+                    '#beaver_table_widget_16_chart_4_2',
                     chart14Data,
                     chart14.rendered
                 )
                 initChart(
                     chart15,
-                    '#beave_stats_widget_16_tab_link_4',
-                    '#beave_table_widget_16_chart_4_3',
+                    '#beaver_stats_widget_16_tab_link_4',
+                    '#beaver_table_widget_16_chart_4_3',
                     chart15Data,
                     chart15.rendered
                 )
                 initChart(
                     chart16,
-                    '#beave_stats_widget_16_tab_link_4',
-                    '#beave_table_widget_16_chart_4_4',
+                    '#beaver_stats_widget_16_tab_link_4',
+                    '#beaver_table_widget_16_chart_4_4',
                     chart16Data,
                     chart16.rendered
                 )
 
                 initChart(
                     chart17,
-                    '#beave_stats_widget_16_tab_link_5',
-                    '#beave_table_widget_16_chart_5_1',
+                    '#beaver_stats_widget_16_tab_link_5',
+                    '#beaver_table_widget_16_chart_5_1',
                     chart17Data,
                     chart17.rendered
                 )
                 initChart(
                     chart18,
-                    '#beave_stats_widget_16_tab_link_5',
-                    '#beave_table_widget_16_chart_5_2',
+                    '#beaver_stats_widget_16_tab_link_5',
+                    '#beaver_table_widget_16_chart_5_2',
                     chart18Data,
                     chart18.rendered
                 )
                 initChart(
                     chart19,
-                    '#beave_stats_widget_16_tab_link_5',
-                    '#beave_table_widget_16_chart_5_3',
+                    '#beaver_stats_widget_16_tab_link_5',
+                    '#beaver_table_widget_16_chart_5_3',
                     chart19Data,
                     chart19.rendered
                 )
                 initChart(
                     chart20,
-                    '#beave_stats_widget_16_tab_link_5',
-                    '#beave_table_widget_16_chart_5_4',
+                    '#beaver_stats_widget_16_tab_link_5',
+                    '#beaver_table_widget_16_chart_5_4',
                     chart20Data,
                     chart20.rendered
                 )

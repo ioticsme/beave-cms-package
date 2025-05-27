@@ -22,7 +22,7 @@
         const name = document
             .body
             .getAttribute("data-beaver-name");
-        let themeMode = localStorage.getItem("beave_" + (
+        let themeMode = localStorage.getItem("beaver_" + (
             name !== null
             ? name + "_"
             : "") + "theme_mode_value");
@@ -42,7 +42,7 @@
             .setAttribute("data-theme", themeMode);
     }
 </script>
-<div class="d-flex flex-column flex-root" id="beave_app_root">
+<div class="d-flex flex-column flex-root" id="beaver_app_root">
     <style>
         body {
             background-image: url("/cms-static/admin/assets/media/auth/bg1.jpg");

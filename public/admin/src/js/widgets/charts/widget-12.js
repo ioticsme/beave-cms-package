@@ -177,20 +177,20 @@ var BEAVERChartsWidget12 = (function () {
     return {
         init: function () {
             initChart(
-                '#beave_charts_widget_12_tab_1',
-                '#beave_charts_widget_12_chart_1',
+                '#beaver_charts_widget_12_tab_1',
+                '#beaver_charts_widget_12_chart_1',
                 [54, 42, 75, 110, 23, 87, 50],
                 true
             )
             initChart(
-                '#beave_charts_widget_12_tab_2',
-                '#beave_charts_widget_12_chart_2',
+                '#beaver_charts_widget_12_tab_2',
+                '#beaver_charts_widget_12_chart_2',
                 [25, 55, 35, 50, 45, 20, 31],
                 false
             )
             initChart(
-                '#beave_charts_widget_12_tab_3',
-                '#beave_charts_widget_12_chart_3',
+                '#beaver_charts_widget_12_tab_3',
+                '#beaver_charts_widget_12_chart_3',
                 [45, 15, 35, 70, 45, 50, 21],
                 false
             )

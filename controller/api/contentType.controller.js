@@ -64,7 +64,7 @@ const { filteringScheduledCMSItems } = require('../../helper/Operations.helper')
 //                         },
 //                         {
 //                             $lookup: {
-//                                 from: 'beave_medias',
+//                                 from: 'beaver_medias',
 //                                 localField: 'content.value',
 //                                 foreignField: '_id',
 //                                 as: 'content.related_model',
@@ -152,7 +152,7 @@ const { filteringScheduledCMSItems } = require('../../helper/Operations.helper')
 //                         },
 //                         {
 //                             $lookup: {
-//                                 from: 'beave_medias',
+//                                 from: 'beaver_medias',
 //                                 localField: 'content.value',
 //                                 foreignField: '_id',
 //                                 as: 'content.related_model',

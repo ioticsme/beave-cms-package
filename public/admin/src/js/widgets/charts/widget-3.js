@@ -9,7 +9,7 @@ var BEAVERChartsWidget3 = (function () {
 
     // Private methods
     var initChart = function (chart) {
-        var element = document.getElementById('beave_charts_widget_3')
+        var element = document.getElementById('beaver_charts_widget_3')
 
         if (!element) {
             return

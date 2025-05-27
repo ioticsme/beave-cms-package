@@ -6,7 +6,7 @@ var BEAVERTimelineWidget4 = (function () {
     // Day timeline
     const initTimelineDay = () => {
         // Detect element
-        const element = document.querySelector('#beave_timeline_widget_4_1')
+        const element = document.querySelector('#beaver_timeline_widget_4_1')
         if (!element) {
             return
         }
@@ -178,7 +178,7 @@ var BEAVERTimelineWidget4 = (function () {
     // Week timeline
     const initTimelineWeek = () => {
         // Detect element
-        const element = document.querySelector('#beave_timeline_widget_4_2')
+        const element = document.querySelector('#beaver_timeline_widget_4_2')
         if (!element) {
             return
         }
@@ -351,7 +351,7 @@ var BEAVERTimelineWidget4 = (function () {
     // Month timeline
     const initTimelineMonth = () => {
         // Detect element
-        const element = document.querySelector('#beave_timeline_widget_4_3')
+        const element = document.querySelector('#beaver_timeline_widget_4_3')
         if (!element) {
             return
         }
@@ -524,7 +524,7 @@ var BEAVERTimelineWidget4 = (function () {
     // 2022 timeline
     const initTimeline2022 = () => {
         // Detect element
-        const element = document.querySelector('#beave_timeline_widget_4_4')
+        const element = document.querySelector('#beaver_timeline_widget_4_4')
         if (!element) {
             return
         }
@@ -721,7 +721,7 @@ var BEAVERTimelineWidget4 = (function () {
                 // Week tab
                 if (
                     tab.getAttribute('href') ===
-                    '#beave_timeline_widget_4_tab_week'
+                    '#beaver_timeline_widget_4_tab_week'
                 ) {
                     initTimelineWeek()
                 }
@@ -729,7 +729,7 @@ var BEAVERTimelineWidget4 = (function () {
                 // Month tab
                 if (
                     tab.getAttribute('href') ===
-                    '#beave_timeline_widget_4_tab_month'
+                    '#beaver_timeline_widget_4_tab_month'
                 ) {
                     initTimelineMonth()
                 }
@@ -737,7 +737,7 @@ var BEAVERTimelineWidget4 = (function () {
                 // 2022 tab
                 if (
                     tab.getAttribute('href') ===
-                    '#beave_timeline_widget_4_tab_2022'
+                    '#beaver_timeline_widget_4_tab_2022'
                 ) {
                     initTimeline2022()
                 }

@@ -189,13 +189,13 @@ var BEAVERSlidersWidget3 = (function () {
             // Init default chart
             initChart(
                 chart1,
-                '#beave_sliders_widget_3_chart_1',
+                '#beaver_sliders_widget_3_chart_1',
                 'danger',
                 data1
             )
 
             var carousel = document.querySelector(
-                '#beave_sliders_widget_3_slider'
+                '#beaver_sliders_widget_3_slider'
             )
 
             if (!carousel) {
@@ -207,7 +207,7 @@ var BEAVERSlidersWidget3 = (function () {
                     // Init second chart
                     initChart(
                         chart2,
-                        '#beave_sliders_widget_3_chart_2',
+                        '#beaver_sliders_widget_3_chart_2',
                         'primary',
                         data2
                     )
@@ -228,13 +228,13 @@ var BEAVERSlidersWidget3 = (function () {
 
                 initChart(
                     chart1,
-                    '#beave_sliders_widget_3_chart_1',
+                    '#beaver_sliders_widget_3_chart_1',
                     'danger',
                     data1
                 )
                 initChart(
                     chart2,
-                    '#beave_sliders_widget_3_chart_2',
+                    '#beaver_sliders_widget_3_chart_2',
                     'primary',
                     data2
                 )

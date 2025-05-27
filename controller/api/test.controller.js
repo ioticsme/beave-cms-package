@@ -71,7 +71,7 @@ const populateTest = async (req, res) => {
         },
         {
             $lookup: {
-                from: 'beave_medias',
+                from: 'beaver_medias',
                 localField: 'content.value',
                 foreignField: '_id',
                 as: 'content.related_model',

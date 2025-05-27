@@ -105,7 +105,7 @@ document.querySelectorAll('.content_wysiwyg').forEach(function (e) {
 
 function initDatePicker() {
     document
-        .querySelectorAll('.beave_daterangepicker input')
+        .querySelectorAll('.beaver_daterangepicker input')
         .forEach((picker) => {
             const options = {
                 altFormat: 'd F, Y',

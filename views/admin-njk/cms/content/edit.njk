@@ -70,8 +70,8 @@
 
 {% block content %}
 	<div class="d-flex flex-column flex-column-fluid">
-		<div class="app-toolbar py-3 py-lg-6" id="beave_app_toolbar">
-			<div class="app-container container-xxl d-flex flex-stack" id="beave_app_toolbar_container">
+		<div class="app-toolbar py-3 py-lg-6" id="beaver_app_toolbar">
+			<div class="app-container container-xxl d-flex flex-stack" id="beaver_app_toolbar_container">
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Edit {{pluralToSingular(reqContentType.title)}}</h1>
 					<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -91,9 +91,9 @@
 				</div>
 			</div>
 		</div>
-		<div id="beave_app_content" class="app-content flex-column-fluid">
-			<div class="app-container container-xxl" id="beave_app_content_container">
-				<form class="form es-form d-flex flex-column flex-lg-row" id="beave_subscriptions_create_new" action="/admin/cms/{{reqContentType.slug}}/save" data-redirect-url="/admin/cms/{{reqContentType.slug}}" enctype="multipart/form-data" method="post">
+		<div id="beaver_app_content" class="app-content flex-column-fluid">
+			<div class="app-container container-xxl" id="beaver_app_content_container">
+				<form class="form es-form d-flex flex-column flex-lg-row" id="beaver_subscriptions_create_new" action="/admin/cms/{{reqContentType.slug}}/save" data-redirect-url="/admin/cms/{{reqContentType.slug}}" enctype="multipart/form-data" method="post">
 					<input type="hidden" name="_id" value="{{ contentDetail._id }}">
 					<div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
 						<div class="card card-flush py-4">
@@ -113,7 +113,7 @@
 									{% if has_bilingual_field_groups %}
 										{% for brandLanguage in authUser.brand.languages %}
 											<li class="nav-item">
-												<a class="nav-link {{'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#beave_tab_pane_{{ brandLanguage.prefix }}">
+												<a class="nav-link {{'active' if loop.index == 1 }}" data-bs-toggle="tab" href="#beaver_tab_pane_{{ brandLanguage.prefix }}">
 													{{ brandLanguage.name }}
 													<span class="fa-solid fa-circle-exclamation d-none tab-invalid-icon"></span>
 												</a>
@@ -123,7 +123,7 @@
 									{% if has_common_field_groups %}
 
 										<li class="nav-item">
-											<a class="nav-link" data-bs-toggle="tab" href="#beave_tab_pane_common">
+											<a class="nav-link" data-bs-toggle="tab" href="#beaver_tab_pane_common">
 												General
 												<span class="fa-solid fa-circle-exclamation d-none tab-invalid-icon"></span>
 											</a>
@@ -132,7 +132,7 @@
 									{% if reqContentType.has_meta %}
 
 										<li class="nav-item">
-											<a class="nav-link" data-bs-toggle="tab" href="#beave_tab_pane_meta">
+											<a class="nav-link" data-bs-toggle="tab" href="#beaver_tab_pane_meta">
 												Meta
 												<span class="fa-solid fa-circle-exclamation d-none tab-invalid-icon"></span>
 											</a>
@@ -144,13 +144,13 @@
 									<!--Custom fields with localisation starting-->
 									{% if has_bilingual_field_groups %}
 										{% for brandLanguage in authUser.brand.languages %}
-											<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" dir="{{brandLanguage.dir}}" id="beave_tab_pane_{{ brandLanguage.prefix }}">
+											<div class="tab-pane fade {{ 'active show' if loop.index == 1 }}" role="tabpanel" dir="{{brandLanguage.dir}}" id="beaver_tab_pane_{{ brandLanguage.prefix }}">
 												{# //- BEGIN::Fields with localisation #}
 												{% for cfg in reqContentType.field_groups %}
 													{% if cfg.repeater_group == true and cfg.localisation %}
 														<h4 class="badge bg-slate-600 text-white mb-4">{{cfg.row_label | upper()}}</h4>
 														<div class="non-repeat-field-group-section">
-															<div class="group_repeater" id="beave_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
+															<div class="group_repeater" id="beaver_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
 
 																{# This section only for editing. This will be hidden and when click add this section will be cloned #}
 																<div class="form-repeater-group-item form-repeater-group-{{cfg._id}}-{{brandLanguage.prefix}} {{ 'inline-row' if cfg.inline_fields }} d-none" id="form_repeater_child_{{brandLanguage.prefix}}_{{cfg._id}}-1">
@@ -186,11 +186,11 @@
 																					<input disabled type="hidden" class="media_link_url_field beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[link_url][]]]" value="{{fieldValue.link_url}}">
 																					<input disabled type="hidden" class="media_open_link_in_new_tab_field beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[open_link_in_new_tab][]]]" value="{{fieldValue.open_link_in_new_tab}}">
 																					<input disabled type="hidden" class="media_local_drive_field beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[local_drive][]]]" value="{{fieldValue.local_drive}}">
-																					<a class="btn btn-success media-uploader-modal-btn" id="beaver-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
+																					<a class="btn btn-success media-uploader-modal-btn" id="beaver-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beaver_modal_media_list'>Attach Media</a>
 																				</span>
 																			{% elif cf.field_type === 'date' %}
-																				<div class="beave_daterangepicker">
-																					<input disabled class="form-control  beaver-cms-form-field" data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																				<div class="beaver_daterangepicker">
+																					<input disabled class="form-control  beaver-cms-form-field" data-hastime="false" data-daterange="false" id="beaver_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
 																				<select disabled class="form-select beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
@@ -206,7 +206,7 @@
 																		</div>
 																	{% endfor %}
 																	<div class="repeater-delete-btn text-center my-3">
-																		<a class="btn btn-sm btn-light-danger mt-5" onClick="deleteChild(event)" child-id="form-repeater-child-{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}" target-id="beave_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
+																		<a class="btn btn-sm btn-light-danger mt-5" onClick="deleteChild(event)" child-id="form-repeater-child-{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}" target-id="beaver_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
 																			<i class="la la-trash-o"></i>Delete</a>
 																	</div>
 																</div>
@@ -251,11 +251,11 @@
 																						<input type="hidden" class="media_link_url_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[link_url][]]]" value="{{fieldValue.link_url}}">
 																						<input type="hidden" class="media_open_link_in_new_tab_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[open_link_in_new_tab][]]]" value="{{fieldValue.open_link_in_new_tab}}">
 																						<input type="hidden" class="media_local_drive_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[local_drive][]]]" value="{{fieldValue.local_drive}}">
-																						<a class="btn btn-success media-uploader-modal-btn" id="beaver-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
+																						<a class="btn btn-success media-uploader-modal-btn" id="beaver-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beaver_modal_media_list'>Attach Media</a>
 																					</span>
 																				{% elif cf.field_type === 'date' %}
-																					<div class="beave_daterangepicker">
-																						<input class="form-control " data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																					<div class="beaver_daterangepicker">
+																						<input class="form-control " data-hastime="false" data-daterange="false" id="beaver_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																					</div>
 																				{% elif cf.field_type === 'dropdown' %}
 																					<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
@@ -271,7 +271,7 @@
 																			</div>
 																		{% endfor %}
 																		<div class="repeater-delete-btn text-center my-3">
-																			<a class="btn btn-sm btn-light-danger mt-5" onClick="deleteChild(event)" child-id="form-repeater-child-{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}" target-id="beave_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
+																			<a class="btn btn-sm btn-light-danger mt-5" onClick="deleteChild(event)" child-id="form-repeater-child-{{brandLanguage.prefix}}_{{cfg._id}}-{{loop.index}}" target-id="beaver_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}">
 																				<i class="la la-trash-o"></i>Delete</a>
 																		</div>
 																	</div>
@@ -279,7 +279,7 @@
 															</div>
 
 															<div class="form-group my-3 text-center">
-																<a class="btn btn-light-primary" onClick="cloneChild(event)" target-lang="{{cfg._id}}" target-lang-prefix="{{brandLanguage.prefix}}" target-id="beave_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}" data-repeater-create="">
+																<a class="btn btn-light-primary" onClick="cloneChild(event)" target-lang="{{cfg._id}}" target-lang-prefix="{{brandLanguage.prefix}}" target-id="beaver_docs_repeater_{{brandLanguage.prefix}}_{{cfg._id}}_{{loop.index}}" data-repeater-create="">
 																	<i class="la la-plus"></i>Add</a>
 															</div>
 														</div>
@@ -324,11 +324,11 @@
 																					<input type="hidden" class="media_link_url_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[link_url]]]" value="{{fieldValue.link_url}}">
 																					<input type="hidden" class="media_open_link_in_new_tab_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[open_link_in_new_tab]]]" value="{{fieldValue.open_link_in_new_tab}}">
 																					<input type="hidden" class="media_local_drive_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[local_drive]]]" value="{{fieldValue.local_drive}}">
-																					<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" id="beaver-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
+																					<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" id="beaver-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beaver_modal_media_list'>Attach Media</a>
 																				</span>
 																			{% elif cf.field_type === 'date' %}
-																				<div class="beave_daterangepicker">
-																					<input class="form-control " data-hastime="false" data-daterange="false" id="beave_daterangepicker_{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ loop.index }}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																				<div class="beaver_daterangepicker">
+																					<input class="form-control " data-hastime="false" data-daterange="false" id="beaver_daterangepicker_{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ loop.index }}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
 																				<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
@@ -354,7 +354,7 @@
 
 									{# //- BEGIN::Custom Fields without localisation #}
 									{% if has_common_field_groups %}
-										<div class="tab-pane fade" role="tabpanel" id="beave_tab_pane_common">
+										<div class="tab-pane fade" role="tabpanel" id="beaver_tab_pane_common">
 											<div class="row mt-5">
 												<div class="col-12">
 													{% for cfg in reqContentType.field_groups %}
@@ -363,7 +363,7 @@
 															<div class="non-repeat-field-group-section">
 																{% if cfg.repeater_group == true %}
 																	{# <h4>{{cfg.row_label}}</h4> #}
-																	<div class="group_repeater" id="beave_docs_repeater_{{cfg._id}}_{{loop.index}}">
+																	<div class="group_repeater" id="beaver_docs_repeater_{{cfg._id}}_{{loop.index}}">
 
 																		{# This section only for editing this will be hidden #}
 																		<div class="form-group form-repeater-group-item form-repeater-group-{{cfg._id}}-en {{ 'inline-row' if cfg.inline_fields }} d-none" id="form_repeater_child_{{cfg._id}}-1">
@@ -399,11 +399,11 @@
 																							<input disabled type="hidden" class="media_link_url_field beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[link_url][]]]" value="{{fieldValue.link_url}}">
 																							<input disabled type="hidden" class="media_open_link_in_new_tab_field beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[open_link_in_new_tab][]]]" value="{{fieldValue.open_link_in_new_tab}}">
 																							<input disabled type="hidden" class="media_local_drive_field beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[local_drive][]]]" value="{{fieldValue.local_drive}}">
-																							<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beaver-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
+																							<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beaver-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beaver_modal_media_list'>Attach Media</a>
 																						</span>
 																					{% elif cf.field_type === 'date' %}
-																						<div class="beave_daterangepicker">
-																							<input disabled class="form-control  beaver-cms-form-field" id="beave_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																						<div class="beaver_daterangepicker">
+																							<input disabled class="form-control  beaver-cms-form-field" id="beaver_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																						</div>
 																					{% elif cf.field_type === 'dropdown' %}
 																						<select disabled class="form-select beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
@@ -418,7 +418,7 @@
 																				</div>
 																			{% endfor %}
 																			<div class="repeater-delete-btn text-center my-3">
-																				<a class="btn btn-sm btn-light-danger mt-5" onClick="deleteChild(event)" child-id="form-repeater-child-{{cfg._id}}-{{loop.index}}" target-id="beave_docs_repeater_{{cfg._id}}_{{loop.index}}">
+																				<a class="btn btn-sm btn-light-danger mt-5" onClick="deleteChild(event)" child-id="form-repeater-child-{{cfg._id}}-{{loop.index}}" target-id="beaver_docs_repeater_{{cfg._id}}_{{loop.index}}">
 																					<i class="la la-trash-o"></i>Delete</a>
 																			</div>
 																		</div>
@@ -462,11 +462,11 @@
 																								<input type="hidden" class="media_link_url_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[link_url][]]]" value="{{fieldValue.link_url}}">
 																								<input type="hidden" class="media_open_link_in_new_tab_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[open_link_in_new_tab][]]]" value="{{fieldValue.open_link_in_new_tab}}">
 																								<input type="hidden" class="media_local_drive_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[local_drive][]]]" value="{{fieldValue.local_drive}}">
-																								<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beaver-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
+																								<a class="btn btn-success media-uploader-modal-btn" data-field="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" id="beaver-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beaver_modal_media_list'>Attach Media</a>
 																							</span>
 																						{% elif cf.field_type === 'date' %}
-																							<div class="beave_daterangepicker">
-																								<input class="form-control " id="beave_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																							<div class="beaver_daterangepicker">
+																								<input class="form-control " id="beaver_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																							</div>
 																						{% elif cf.field_type === 'dropdown' %}
 																							<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
@@ -481,14 +481,14 @@
 																					</div>
 																				{% endfor %}
 																				<div class="repeater-delete-btn text-center my-3">
-																					<a class="btn btn-sm btn-light-danger mt-5" onClick="deleteChild(event)" child-id="form-repeater-child-{{cfg._id}}-{{loop.index}}" target-id="beave_docs_repeater_{{cfg._id}}_{{loop.index}}">
+																					<a class="btn btn-sm btn-light-danger mt-5" onClick="deleteChild(event)" child-id="form-repeater-child-{{cfg._id}}-{{loop.index}}" target-id="beaver_docs_repeater_{{cfg._id}}_{{loop.index}}">
 																						<i class="la la-trash-o"></i>Delete</a>
 																				</div>
 																			</div>
 																		{% endfor %}
 																	</div>
 																	<div class="form-group my-3 text-center">
-																		<a class="btn btn-light-primary" onClick="cloneChild(event)" target-lang="{{cfg._id}}" target-lang-prefix="en" target-id="beave_docs_repeater_{{cfg._id}}_{{loop.index}}">
+																		<a class="btn btn-light-primary" onClick="cloneChild(event)" target-lang="{{cfg._id}}" target-lang-prefix="en" target-id="beaver_docs_repeater_{{cfg._id}}_{{loop.index}}">
 																			<i class="la la-plus"></i>Add
 																	</a>
 																	</div>
@@ -531,11 +531,11 @@
 																						<input type="hidden" class="media_link_url_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[link_url]]]" value="{{fieldValue.link_url}}">
 																						<input type="hidden" class="media_open_link_in_new_tab_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[open_link_in_new_tab]]]" value="{{fieldValue.open_link_in_new_tab}}">
 																						<input type="hidden" class="media_local_drive_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[local_drive]]]" value="{{fieldValue.local_drive}}">
-																						<a class="btn btn-success media-uploader-modal-btn" data-field="{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" id="beaver-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
+																						<a class="btn btn-success media-uploader-modal-btn" data-field="{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" id="beaver-media-field-{{ loop.index }}-{{ range(100,10000)|random }}" data-bs-toggle='modal' data-bs-target='#beaver_modal_media_list'>Attach Media</a>
 																					</span>
 																				{% elif cf.field_type === 'date' %}
-																					<div class="beave_daterangepicker">
-																						<input id="beave_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" class="form-control mb-2" type="text" name="common[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
+																					<div class="beaver_daterangepicker">
+																						<input id="beaver_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" class="form-control mb-2" type="text" name="common[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																					</div>
 																				{% elif cf.field_type === 'dropdown' %}
 																					<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
@@ -562,7 +562,7 @@
 
 									{# Meta section starting #}
 									{% if reqContentType.has_meta %}
-										<div class="tab-pane fade" role="tabpanel" id="beave_tab_pane_meta">
+										<div class="tab-pane fade" role="tabpanel" id="beaver_tab_pane_meta">
 											<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 												{% for brandLanguage in authUser.brand.languages %}
 													<li class="nav-item">
@@ -607,7 +607,7 @@
 																							<input type="hidden" class="media_title_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][title]" value="{{ metaFieldValue[title] }}">
 																							<input type="hidden" class="media_alt_text_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][alt_text]" value="{{ metaFieldValue[alt_text] }}">
 																							<input type="hidden" class="media_local_drive_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][local_drive]" value="{{ metaFieldValue[local_drive] }}">
-																							<a class="btn btn-success media-uploader-modal-btn" id="beaver-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beave_modal_media_list'>Attach Media</a>
+																							<a class="btn btn-success media-uploader-modal-btn" id="beaver-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beaver_modal_media_list'>Attach Media</a>
 																						</span>
 																					{% else %}
 																						<input type="text" class="form-control" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}]" placeholder="{{ meta_field.label }}" value="{{ metaFieldValue }}">

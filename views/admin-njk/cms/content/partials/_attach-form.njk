@@ -5,7 +5,7 @@
 		</div>
 	</div>
 	<div class="card-body pt-0">
-		<select id="beave_ecommerce_add_gallery_status_select" class="form-select mb-2" name="form">
+		<select id="beaver_ecommerce_add_gallery_status_select" class="form-select mb-2" name="form">
 			<option value="">- SELECT A FORM -</option>
 			{% for item in forms %}
 				<option value="{{ item._id }}" {% if item.id == contentDetail.form[0] %} selected {% endif %}>{{ item.form_name.en }}</option>

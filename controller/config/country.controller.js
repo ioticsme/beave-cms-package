@@ -1,14 +1,10 @@
-const path = require('path')
-const express = require('express')
 const Joi = require('joi')
-const bcrypt = require('bcryptjs')
 
 const Country = require('../../model/Country')
 const { removeCache } = require('../../helper/Redis.helper')
 const envConfig = require('../../config/env.config')
 
 const list = async (req, res) => {
-    // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
     const countries = await Country.find().sort({ position: 1 })
     return res.render('admin-njk/config/country/listing', {
         countries,
@@ -16,8 +12,6 @@ const list = async (req, res) => {
 }
 
 const add = async (req, res) => {
-    // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
-    // const contentTypes = await ContentType.find()
     const timezones = ['Asia/Dubai', 'Asia/Riyadh']
     return res.render('admin-njk/config/country/form', {
         isEdit: false,
@@ -26,12 +20,10 @@ const add = async (req, res) => {
 }
 
 const edit = async (req, res) => {
-    // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
     const country = await Country.findOne({
         _id: req.params.id,
     })
     const timezones = ['Asia/Dubai', 'Asia/Riyadh']
-    // res.send(contentType)
     return res.render('admin-njk/config/country/form', {
         country,
         isEdit: true,
@@ -40,7 +32,6 @@ const edit = async (req, res) => {
 }
 
 const save = async (req, res) => {
-    // console.log(req.body)
     const schema = Joi.object({
         name: Joi.string().required().min(3).max(60),
         code: Joi.string().required().min(2).max(5),

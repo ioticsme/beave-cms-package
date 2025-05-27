@@ -6,7 +6,7 @@ var BEAVERTimelineWidget1 = (function () {
     // Day timeline
     const initTimelineDay = () => {
         // Detect element
-        const element = document.querySelector('#beave_timeline_widget_1_1')
+        const element = document.querySelector('#beaver_timeline_widget_1_1')
         if (!element) {
             return
         }
@@ -178,7 +178,7 @@ var BEAVERTimelineWidget1 = (function () {
     // Week timeline
     const initTimelineWeek = () => {
         // Detect element
-        const element = document.querySelector('#beave_timeline_widget_1_2')
+        const element = document.querySelector('#beaver_timeline_widget_1_2')
         if (!element) {
             return
         }
@@ -351,7 +351,7 @@ var BEAVERTimelineWidget1 = (function () {
     // Month timeline
     const initTimelineMonth = () => {
         // Detect element
-        const element = document.querySelector('#beave_timeline_widget_1_3')
+        const element = document.querySelector('#beaver_timeline_widget_1_3')
         if (!element) {
             return
         }
@@ -549,7 +549,7 @@ var BEAVERTimelineWidget1 = (function () {
                 // Week tab
                 if (
                     tab.getAttribute('href') ===
-                    '#beave_timeline_widget_1_tab_week'
+                    '#beaver_timeline_widget_1_tab_week'
                 ) {
                     initTimelineWeek()
                 }
@@ -557,7 +557,7 @@ var BEAVERTimelineWidget1 = (function () {
                 // Month tab
                 if (
                     tab.getAttribute('href') ===
-                    '#beave_timeline_widget_1_tab_month'
+                    '#beaver_timeline_widget_1_tab_month'
                 ) {
                     initTimelineMonth()
                 }

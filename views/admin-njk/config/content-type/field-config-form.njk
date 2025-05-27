@@ -17,7 +17,7 @@
 
 {% block customScript %}
 	<script>
-		$('#beave_docs_repeater_nested').repeater({
+		$('#beaver_docs_repeater_nested').repeater({
 			repeaters: [
 				{
 					selector: '.inner-repeater',
@@ -52,8 +52,8 @@
 
 {% block content %}
 	<div class="d-flex flex-column flex-column-fluid">
-		<div id="beave_app_toolbar" class="app-toolbar py-3 py-lg-6">
-			<div id="beave_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+		<div id="beaver_app_toolbar" class="app-toolbar py-3 py-lg-6">
+			<div id="beaver_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
 						Content Type Field Customization
@@ -79,23 +79,23 @@
 				</div>
 			</div>
 		</div>
-		<div class="app-content flex-column-fluid" id="beave_app_content">
-			<div class="app-container container-xxl" id="beave_app_content_container">
+		<div class="app-content flex-column-fluid" id="beaver_app_content">
+			<div class="app-container container-xxl" id="beaver_app_content_container">
 				.card.mb-5.mb-xl-10
-					<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#beave_account_profile_details" aria-expanded="true" aria-controls="beave_account_profile_details">
+					<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#beaver_account_profile_details" aria-expanded="true" aria-controls="beaver_account_profile_details">
 					<div class="card-title m-0">
 						<h3 class="fw-bold m-0">Fields</h3>
 					</div>
 				</div>
 
-				<form id="beave_account_profile_details_form" class="form es-form" action="/admin/config/content-type/save-fields" data-redirect-url="/admin/config/content-type" method="post" autocomplete="off">
+				<form id="beaver_account_profile_details_form" class="form es-form" action="/admin/config/content-type/save-fields" data-redirect-url="/admin/config/content-type" method="post" autocomplete="off">
 					<input type="hidden" name="id" value="{{ contentType._id }}">
-					<div id="beave_account_settings_profile_details">
+					<div id="beaver_account_settings_profile_details">
 						<div class="card-body border-top">
-							<div class="row" id="beave_docs_repeater_nested">
+							<div class="row" id="beaver_docs_repeater_nested">
 								{% if contentType and contentType.custom_field_groups and contentType.custom_field_groups.length %}
 									<div class="form-group mt-10">
-										<div data-repeater-list="beave_docs_repeater_nested_outer">
+										<div data-repeater-list="beaver_docs_repeater_nested_outer">
 											{% for cfg, i in contentType.custom_field_groups %}
 												<div class="border rounded p-6 pt-12 mb-4 position-relative" data-repeater-item="" style="background-color: #ebebeb">
 													<div class="position-absolute" style="top:10px; right:10px;">
@@ -134,7 +134,7 @@
 													<div>
 														<h5 class="badge badge-success"></h5>
 														<div class="inner-repeater">
-															<div class="mb-5" data-repeater-list="beave_docs_repeater_nested_inner">
+															<div class="mb-5" data-repeater-list="beaver_docs_repeater_nested_inner">
 																{% for cf, j in cfg.fields %}
 																	<div class="position-relative border rounded p-6 pt-10 bg-white mt-4" data-repeater-item="">
 																		<div class="position-absolute" style="top:10px; right:10px;">
@@ -243,7 +243,7 @@
 									</div>
 								{% else %}
 									<div class="form-group mt-10">
-										<div data-repeater-list="beave_docs_repeater_nested_outer">
+										<div data-repeater-list="beaver_docs_repeater_nested_outer">
 											<div class="border rounded p-6 pt-12 mb-4 position-relative" data-repeater-item="" style="background-color: #ebebeb">
 												<div class="position-absolute" style="top:10px; right:10px;">
 													<a class="btn btn-sm btn-light-danger border border-danger py-2 px-3" href="javascript:;" data-repeater-delete="">
@@ -299,7 +299,7 @@
 												<div>
 													<h5 class="badge badge-success">Fields</h5>
 													<div class="inner-repeater">
-														<div class="mb-5" data-repeater-list="beave_docs_repeater_nested_inner">
+														<div class="mb-5" data-repeater-list="beaver_docs_repeater_nested_inner">
 															<div class="position-relative border rounded p-6 pt-10 bg-white mt-4" data-repeater-item="">
 																<div class="position-absolute" style="top:10px; right:10px;">
 																	<button class="btn-sm btn btn-light-danger border border-danger py-2 px-3" data-repeater-delete="" type="button">
@@ -364,7 +364,7 @@
 									</div>
 								{% endif %}
 							</div>
-							<button class="btn btn-primary form-submit-btn" id="beave_account_profile_details_submit" type="submit">
+							<button class="btn btn-primary form-submit-btn" id="beaver_account_profile_details_submit" type="submit">
 								<span class="preloader d-none">Saving...</span>
 								<span class="label">Save</span>
 							</button>

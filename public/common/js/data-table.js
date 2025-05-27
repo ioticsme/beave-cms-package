@@ -79,7 +79,7 @@ var BEAVERSubscriptionsList = (function () {
         }
     return {
         init: function () {
-            ;(t = document.getElementById('beave_subscriptions_table')) &&
+            ;(t = document.getElementById('beaver_subscriptions_table')) &&
                 (t.querySelectorAll('tbody tr').forEach((t) => {
                     const e = t.querySelectorAll('td'),
                         n = moment(e[5].innerHTML, 'DD MMM YYYY, LT').format()

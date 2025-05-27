@@ -72,14 +72,14 @@ var BEAVERChartsWidget22 = (function () {
     return {
         init: function () {
             initChart(
-                '#beave_chart_widgets_22_tab_1',
-                '#beave_chart_widgets_22_chart_1',
+                '#beaver_chart_widgets_22_tab_1',
+                '#beaver_chart_widgets_22_chart_1',
                 [20, 100, 15, 25],
                 true
             )
             initChart(
-                '#beave_chart_widgets_22_tab_2',
-                '#beave_chart_widgets_22_chart_2',
+                '#beaver_chart_widgets_22_tab_2',
+                '#beaver_chart_widgets_22_chart_2',
                 [70, 13, 11, 2],
                 false
             )

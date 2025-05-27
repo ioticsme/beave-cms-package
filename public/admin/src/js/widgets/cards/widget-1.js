@@ -4,7 +4,7 @@
 var BEAVERCardsWidget1 = (function () {
     // Private methods
     var initChart = function () {
-        var element = document.getElementById('beave_card_widget_1_chart')
+        var element = document.getElementById('beaver_card_widget_1_chart')
 
         if (!element) {
             return

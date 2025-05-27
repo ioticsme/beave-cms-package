@@ -74,7 +74,7 @@ var BEAVERAppEcommerceSalesListing = (function () {
         }
     return {
         init: function () {
-            ;(e = document.querySelector('#beave_datatable_example_1')) &&
+            ;(e = document.querySelector('#beaver_datatable_example_1')) &&
                 //     (t = $(e).DataTable({
                 //     info: !1,
                 //     order: [],
@@ -88,7 +88,7 @@ var BEAVERAppEcommerceSalesListing = (function () {
                 // }),
                 ((() => {
                     const e = document.querySelector(
-                        '#beave_ecommerce_sales_flatpickr'
+                        '#beaver_ecommerce_sales_flatpickr'
                     )
                     n = $(e).flatpickr({
                         altInput: !0,
@@ -118,7 +118,7 @@ var BEAVERAppEcommerceSalesListing = (function () {
                 })(),
                 c(),
                 document
-                    .querySelector('#beave_ecommerce_sales_flatpickr_clear')
+                    .querySelector('#beaver_ecommerce_sales_flatpickr_clear')
                     .addEventListener('click', (e) => {
                         n.clear()
                     }))

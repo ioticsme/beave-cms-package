@@ -5,7 +5,7 @@ var BEAVERPlayersWidget2 = (function () {
     // Private methods
     var initPlayer = function () {
         // https://www.w3schools.com/jsref/dom_obj_audio.asp
-        var element = document.getElementById('beave_player_widget_2')
+        var element = document.getElementById('beaver_player_widget_2')
 
         if (!element) {
             return

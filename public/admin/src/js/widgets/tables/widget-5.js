@@ -51,7 +51,7 @@ var BEAVERTablesWidget5 = (function () {
     // Public methods
     return {
         init: function () {
-            table = document.querySelector('#beave_table_widget_5_table')
+            table = document.querySelector('#beaver_table_widget_5_table')
 
             if (!table) {
                 return

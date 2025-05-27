@@ -7,9 +7,9 @@ var BEAVERLayoutToolbar = (function () {
 
     // Private functions
     var initForm = function () {
-        var rangeSlider = document.querySelector('#beave_app_toolbar_slider')
+        var rangeSlider = document.querySelector('#beaver_app_toolbar_slider')
         var rangeSliderValueElement = document.querySelector(
-            '#beave_app_toolbar_slider_value'
+            '#beaver_app_toolbar_slider_value'
         )
 
         if (!rangeSlider) {
@@ -59,7 +59,7 @@ var BEAVERLayoutToolbar = (function () {
     return {
         init: function () {
             // Elements
-            toolbar = document.querySelector('#beave_app_toolbar')
+            toolbar = document.querySelector('#beaver_app_toolbar')
 
             if (!toolbar) {
                 return

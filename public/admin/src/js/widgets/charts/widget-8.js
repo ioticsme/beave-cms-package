@@ -204,15 +204,15 @@ var BEAVERChartsWidget8 = (function () {
 
             initChart(
                 chart1,
-                '#beave_chart_widget_8_week_toggle',
-                '#beave_chart_widget_8_week_chart',
+                '#beaver_chart_widget_8_week_toggle',
+                '#beaver_chart_widget_8_week_chart',
                 data1,
                 false
             )
             initChart(
                 chart2,
-                '#beave_chart_widget_8_month_toggle',
-                '#beave_chart_widget_8_month_chart',
+                '#beaver_chart_widget_8_month_toggle',
+                '#beaver_chart_widget_8_month_chart',
                 data2,
                 true
             )
@@ -231,15 +231,15 @@ var BEAVERChartsWidget8 = (function () {
 
                     initChart(
                         chart1,
-                        '#beave_chart_widget_8_week_toggle',
-                        '#beave_chart_widget_8_week_chart',
+                        '#beaver_chart_widget_8_week_toggle',
+                        '#beaver_chart_widget_8_week_chart',
                         data1,
                         chart1.rendered
                     )
                     initChart(
                         chart2,
-                        '#beave_chart_widget_8_month_toggle',
-                        '#beave_chart_widget_8_month_chart',
+                        '#beaver_chart_widget_8_month_toggle',
+                        '#beaver_chart_widget_8_month_chart',
                         data2,
                         chart2.rendered
                     )

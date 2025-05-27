@@ -225,8 +225,8 @@ var BEAVERChartsWidget11 = (function () {
             ]
             initChart(
                 chart1,
-                '#beave_charts_widget_11_tab_1',
-                '#beave_charts_widget_11_chart_1',
+                '#beaver_charts_widget_11_tab_1',
+                '#beaver_charts_widget_11_chart_1',
                 chart1Data,
                 false
             )
@@ -237,8 +237,8 @@ var BEAVERChartsWidget11 = (function () {
             ]
             initChart(
                 chart2,
-                '#beave_charts_widget_11_tab_2',
-                '#beave_charts_widget_11_chart_2',
+                '#beaver_charts_widget_11_tab_2',
+                '#beaver_charts_widget_11_chart_2',
                 chart2Data,
                 false
             )
@@ -249,8 +249,8 @@ var BEAVERChartsWidget11 = (function () {
             ]
             initChart(
                 chart3,
-                '#beave_charts_widget_11_tab_3',
-                '#beave_charts_widget_11_chart_3',
+                '#beaver_charts_widget_11_tab_3',
+                '#beaver_charts_widget_11_chart_3',
                 chart3Data,
                 true
             )
@@ -271,22 +271,22 @@ var BEAVERChartsWidget11 = (function () {
 
                 initChart(
                     chart1,
-                    '#beave_charts_widget_11_tab_1',
-                    '#beave_charts_widget_11_chart_1',
+                    '#beaver_charts_widget_11_tab_1',
+                    '#beaver_charts_widget_11_chart_1',
                     chart1Data,
                     chart1.rendered
                 )
                 initChart(
                     chart2,
-                    '#beave_charts_widget_11_tab_2',
-                    '#beave_charts_widget_11_chart_2',
+                    '#beaver_charts_widget_11_tab_2',
+                    '#beaver_charts_widget_11_chart_2',
                     chart2Data,
                     chart2.rendered
                 )
                 initChart(
                     chart3,
-                    '#beave_charts_widget_11_tab_3',
-                    '#beave_charts_widget_11_chart_3',
+                    '#beaver_charts_widget_11_tab_3',
+                    '#beaver_charts_widget_11_chart_3',
                     chart3Data,
                     chart3.rendered
                 )

@@ -4,7 +4,7 @@
 var BEAVERTimelineWidget24 = (function () {
     // Private methods
     var handleActions = function () {
-        var card = document.querySelector('#beave_list_widget_24')
+        var card = document.querySelector('#beaver_list_widget_24')
 
         if (!card) {
             return
