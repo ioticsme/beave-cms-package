@@ -71,18 +71,18 @@ router.group('/', (router) => {
 })
 
 // user
-router.group('/user', (router) => {
-    router.get('/logout', [UserAuthCheck], authController.logout)
-    // Account
-    router.group('/account', (router) => {
-        router.get('/', [UserAuthCheck], userController.detail)
-        router.post('/edit', [UserAuthCheck], userController.editUser)
-        router.post(
-            '/change-password',
-            [UserAuthCheck],
-            userController.changePassword
-        )
-    })
-})
+// router.group('/user', (router) => {
+//     router.get('/logout', [UserAuthCheck], authController.logout)
+//     // Account
+//     router.group('/account', (router) => {
+//         router.get('/', [UserAuthCheck], userController.detail)
+//         router.post('/edit', [UserAuthCheck], userController.editUser)
+//         router.post(
+//             '/change-password',
+//             [UserAuthCheck],
+//             userController.changePassword
+//         )
+//     })
+// })
 
 module.exports = router
