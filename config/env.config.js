@@ -29,6 +29,10 @@ const envConfig = {
         SEND_SIGNUP_MAIL: process.env.SEND_SIGNUP_MAIL || false,
         HAS_DEV_AUTH: process.env.HAS_DEV_AUTH == 'true',
         HAS_ECOMMERCE: process.env.HAS_ECOMMERCE == 'true',
+        HAS_CUSTOM_AUTH_API_ROUTES:
+            process.env.HAS_CUSTOM_AUTH_API_ROUTES == 'true', // Set to true if you have custom auth API routes
+        HAS_CUSTOM_USER_API_ROUTES:
+            process.env.HAS_CUSTOM_USER_API_ROUTES == 'true', // Set to true if you have custom auth API routes
     },
     db: {
         URL: process.env.DB_CONNECTION,

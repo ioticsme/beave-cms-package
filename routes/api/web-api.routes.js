@@ -20,6 +20,7 @@ const {
 
 // BEGIN::Route Files
 const cmsRoutes = require('./_cms.routes')
+const envConfig = require('../../config/env.config')
 // END::Route Files
 
 router.use(BrandWithCountryCheck)
@@ -49,40 +50,44 @@ router.group('/', (router) => {
         router.get('/navigation', generalController.navList)
     })
 
-    // Auth
-    router.group('/auth', (router) => {
-        router.group('/login', (router) => {
-            router.post('/', authController.loginSubmit)
-            router.post('/social', authController.socialLoginSubmit)
-            router.post('/update-mobile', authController.updateMobileNo)
-        })
-        router.post('/signup', authController.signupSubmit)
-        router.post('/verify', authController.otpVerification)
-        router.post('/resend-otp', authController.resendOTP)
+    if (!envConfig.general.HAS_CUSTOM_AUTH_API_ROUTES) {
+        // Auth
+        router.group('/auth', (router) => {
+            router.group('/login', (router) => {
+                router.post('/', authController.loginSubmit)
+                router.post('/social', authController.socialLoginSubmit)
+                router.post('/update-mobile', authController.updateMobileNo)
+            })
+            router.post('/signup', authController.signupSubmit)
+            router.post('/verify', authController.otpVerification)
+            router.post('/resend-otp', authController.resendOTP)
 
-        // Forgot password
-        router.group('/forgot', (router) => {
-            router.post('/', authController.forgotCredentials)
-            router.post('/verify', authController.verifyForgotOTP)
+            // Forgot password
+            router.group('/forgot', (router) => {
+                router.post('/', authController.forgotCredentials)
+                router.post('/verify', authController.verifyForgotOTP)
+            })
         })
-    })
+    }
     // custom forms
     router.post('/custom-forms/submit', customFormController.customFormSubmit)
 })
 
-// user
-// router.group('/user', (router) => {
-//     router.get('/logout', [UserAuthCheck], authController.logout)
-//     // Account
-//     router.group('/account', (router) => {
-//         router.get('/', [UserAuthCheck], userController.detail)
-//         router.post('/edit', [UserAuthCheck], userController.editUser)
-//         router.post(
-//             '/change-password',
-//             [UserAuthCheck],
-//             userController.changePassword
-//         )
-//     })
-// })
+if (!envConfig.general.HAS_CUSTOM_USER_API_ROUTES) {
+    // user
+    router.group('/user', (router) => {
+        router.get('/logout', [UserAuthCheck], authController.logout)
+        // Account
+        router.group('/account', (router) => {
+            router.get('/', [UserAuthCheck], userController.detail)
+            router.post('/edit', [UserAuthCheck], userController.editUser)
+            router.post(
+                '/change-password',
+                [UserAuthCheck],
+                userController.changePassword
+            )
+        })
+    })
+}
 
 module.exports = router
