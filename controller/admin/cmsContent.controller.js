@@ -15,6 +15,7 @@ const { ObjectId } = require('mongodb')
 const { group } = require('console')
 const metaFields = require('../../config/meta-fields.config')
 const ContentType = require('../../model/ContentType')
+const { getRevisionObject } = require('../../helper/Revision.helper')
 
 let session
 
@@ -66,7 +67,9 @@ const detail = async (req, res) => {
             type_id: req.contentType._id,
             brand: session.brand._id,
             country: session.brand.country,
-        }).populate('author')
+        })
+            .populate('author revisions.editor last_edited_user')
+            .lean()
 
         if (!contentDetail) {
             return res.render(`admin-njk/page-error-404`)
@@ -448,6 +451,7 @@ const changeStatus = async (req, res) => {
             {
                 $set: {
                     status: newStatus,
+                    last_edited_user: req.authUser?.admin_id,
                 },
             }
         )
@@ -646,6 +650,7 @@ const saveDefaultContent = async (req, res) => {
             time: 'string()',
             color: 'string()',
             url: 'string()',
+            optional: 'optional()',
         }
 
         const language_prefixes = _.map(req.authUser.brand.languages, 'prefix')
@@ -699,7 +704,9 @@ const saveDefaultContent = async (req, res) => {
                             _.assign(fieldsValidationObject, {
                                 [field.field_name]: eval(
                                     ` Joi.${
-                                        validTypes[field.field_type]
+                                        validTypes[
+                                            field.field_type || 'optional'
+                                        ]
                                     }${min}${max}${required}.label('${
                                         field.field_label
                                     }')`
@@ -959,13 +966,17 @@ const saveDefaultContent = async (req, res) => {
             data.slug = req.body.slug
                 ? slugify(req.body.slug).toLowerCase()
                 : undefined
-            // console.log(data)
-            // data.slug = body.slug?.en
-            //     ? slugify(body.slug?.en?.toLowerCase())
-            //     : slugify(body.title?.en?.toLowerCase())
+
             const existingContent = await Content.findOne({
                 _id: req.body._id,
             })
+
+            data.last_edited_user = req.authUser.admin_id
+            data.author = existingContent.author
+                ? existingContent.author
+                : req.authUser.admin_id
+            data.revisions = getRevisionObject(existingContent, req.authUser)
+
             const collection_cache_key = `${envConfig.cache.CACHE_KEY_PREFIX}-content-${req.authUser.brand.code}-${countryCode}-${type.slug}`
             const single_item_cache_key = `${envConfig.cache.CACHE_KEY_PREFIX}-content-${req.authUser.brand.code}-${countryCode}-${type.slug}-${existingContent.slug}`
             // Update content

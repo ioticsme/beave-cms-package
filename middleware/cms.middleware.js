@@ -15,6 +15,7 @@ const {
     getBrandsFromCache,
     getBrand,
 } = require('../helper/Cache.helper')
+const { format } = require('date-fns')
 
 // Getting custom navigation from cms-wrapper config
 let customNavConfig
@@ -41,6 +42,14 @@ const nunjucksFilter = async (req, res, next) => {
     res.locals.convertDateToDMY = (date) => {
         if (date) {
             return format(date, 'dd-MM-yyyy')
+        } else {
+            return null
+        }
+    }
+
+    res.locals.convertDateCustom = (date, dateFormat = 'dd-MM-yyyy') => {
+        if (date) {
+            return format(new Date(date), dateFormat)
         } else {
             return null
         }
@@ -112,7 +121,7 @@ const nunjucksFilter = async (req, res, next) => {
     }
 
     res.locals.findAttachedContent = (contentDetail, attachedItem, content) => {
-        return contentDetail.attached_type.find((type) => {
+        return contentDetail?.attached_type?.find((type) => {
             let itemFound =
                 type.content_type == attachedItem &&
                 type.items?.length &&

@@ -1,9 +1,6 @@
 const { mongoose, Schema } = require('mongoose')
 const { formatInTimeZone } = require('date-fns-tz')
 const mongooseDelete = require('mongoose-delete')
-const ContentType = require('./ContentType')
-const Admin = require('./Admin')
-const Country = require('./Country')
 
 const ContentSchema = new mongoose.Schema(
     {
@@ -14,7 +11,7 @@ const ContentSchema = new mongoose.Schema(
         },
         country: {
             type: Schema.ObjectId,
-            ref: Country,
+            ref: 'Country',
             required: true,
         },
         slug: {
@@ -23,7 +20,7 @@ const ContentSchema = new mongoose.Schema(
         },
         type_id: {
             type: Schema.ObjectId,
-            ref: ContentType,
+            ref: 'ContentType',
             required: true,
         },
         type_slug: {
@@ -32,7 +29,7 @@ const ContentSchema = new mongoose.Schema(
         },
         author: {
             type: Schema.ObjectId,
-            ref: Admin,
+            ref: 'Admin',
             required: true,
         },
         form: [
@@ -71,6 +68,23 @@ const ContentSchema = new mongoose.Schema(
         //     default: false,
         // },
         content: Object,
+        last_edited_user: {
+            type: Schema.ObjectId,
+            ref: 'Admin',
+        },
+        revisions: [
+            {
+                content: Object,
+                editor: {
+                    type: Schema.ObjectId,
+                    ref: 'Admin',
+                },
+                revision_number: {
+                    type: String,
+                    default: '0.0.1',
+                },
+            },
+        ],
         meta: {},
     },
     {
