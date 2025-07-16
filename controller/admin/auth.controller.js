@@ -13,7 +13,7 @@ const { getBrandSettings } = require('../../helper/Cache.helper')
 // Handles the signup page rendering
 const signup = async (req, res) => {
     try {
-        const admin = await Admin.findOne() // Check if any admin user already exists
+        const admin = await Admin.findOne({ isDeleted: false }) // Check if any admin user already exists
         if (admin) {
             // If an admin exists, redirect to the login page
             return res.redirect('/admin/auth/login')
@@ -99,7 +99,7 @@ const signupSubmit = async (req, res) => {
 // Handles the login page rendering
 const login = async (req, res) => {
     try {
-        const admin = await Admin.findOne() // Check if an admin exists
+        const admin = await Admin.findOne({ isDeleted: false }) // Check if an admin exists
         if (!admin) {
             // If no admin exists, redirect to the signup page
             res.redirect('/admin/auth/signup')
@@ -137,6 +137,7 @@ const loginSubmit = async (req, res) => {
         // Find the admin based on the submitted email
         const admin = await Admin.findOne({
             email: req.body.email,
+            isDeleted: false,
         })
 
         if (!admin) {

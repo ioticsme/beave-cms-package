@@ -10,7 +10,7 @@ const envConfig = require('../../config/env.config')
 
 const list = async (req, res) => {
     // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
-    const admins = await Admin.find()
+    const admins = await Admin.find({ isDeleted: false })
     return res.render('admin-njk/config/admin/listing', {
         admins,
     })
@@ -36,6 +36,7 @@ const edit = async (req, res) => {
     const config_privilege_routes = await getPrivileges(req)
     const admin = await Admin.findOne({
         _id: req.params.id,
+        isDeleted: false,
     })
 
     return res.render('admin-njk/config/admin/form', {
@@ -82,6 +83,7 @@ const save = async (req, res) => {
 
     let options = {
         email: req.body.email,
+        isDeleted: false,
     }
     if (req.body.id) {
         options._id = { $ne: req.body.id }
@@ -140,7 +142,7 @@ const changeStatus = async (req, res) => {
 
         // Update status field
         const update = await Admin.findOneAndUpdate(
-            { _id: id, role: { $ne: 'super_admin' } },
+            { _id: id, role: { $ne: 'super_admin' }, isDeleted: false },
             {
                 $set: {
                     active: !status,
@@ -168,7 +170,10 @@ const deleteItem = async (req, res) => {
         }
 
         //soft delete item
-        await Admin.deleteOne({ _id: id, role: { $ne: 'super_admin' } })
+        await Admin.updateOne(
+            { _id: id, role: { $ne: 'super_admin' }, isDeleted: false },
+            { $set: { isDeleted: true, deletedAt: new Date() } }
+        )
         return res.status(200).json({
             message: `Admin Deleted`,
         })

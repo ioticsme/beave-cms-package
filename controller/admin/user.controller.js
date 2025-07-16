@@ -50,6 +50,7 @@ const changeStatus = async (req, res) => {
 const userDetail = async (req, res) => {
     const userDetails = await Admin.findOne({
         _id: req.authUser.admin_id,
+        isDeleted: false,
     })
 
     if (!userDetail) {
@@ -62,6 +63,7 @@ const userDetail = async (req, res) => {
 const profileUpdate = async (req, res) => {
     const userDetails = await Admin.findOne({
         _id: req.authUser.admin_id,
+        isDeleted: false,
     })
 
     if (!userDetail) {
@@ -89,6 +91,7 @@ const profileUpdateSave = async (req, res) => {
     try {
         const admin = await Admin.findOne({
             _id: req.authUser.admin_id,
+            isDeleted: false,
         })
 
         if (bcrypt.compareSync(req.body.password, admin.password)) {
@@ -110,6 +113,7 @@ const profileUpdateSave = async (req, res) => {
 const changePassword = async (req, res) => {
     const userDetails = await Admin.findOne({
         _id: req.authUser.admin_id,
+        isDeleted: false,
     })
 
     if (!userDetail) {
@@ -151,6 +155,7 @@ const changePasswordSave = async (req, res) => {
     try {
         const admin = await Admin.findOne({
             _id: req.authUser.admin_id,
+            isDeleted: false,
         })
 
         if (bcrypt.compareSync(req.body.password, admin.password)) {
