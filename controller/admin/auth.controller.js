@@ -163,20 +163,20 @@ const loginSubmit = async (req, res) => {
                 })
                 .populate('domains.country')
 
-            const domains = collect(brand.domains)
+            const domains = collect(brand?.domains)
                 .sortBy('country.position')
                 .all()
             const domain = domains?.[0] || {}
 
             // Store admin details in the session
             session = req.session
-            session.admin_id = admin._id
-            session.admin_name = admin.name
-            session.admin_role = admin.role
-            session.admin_privileges = admin.privileges
+            session.admin_id = admin?._id
+            session.admin_name = admin?.name
+            session.admin_role = admin?.role
+            session.admin_privileges = admin?.privileges
 
             // Fetch settings based on the brand and country details
-            const settings = await getBrandSettings(brand, domain.country)
+            const settings = await getBrandSettings(brand, domain?.country)
 
             // Set brand details in session
             session.brand = {
@@ -184,13 +184,14 @@ const loginSubmit = async (req, res) => {
                 name: brand?.name,
                 code: brand?.code,
                 languages: brand?.languages,
-                country: domain.country._id,
-                country_name: domain.country.name.en,
-                country_code: domain.country.code,
-                country_currency: domain.country.currency,
-                country_currency_symbol: domain.country.currency_symbol,
-                currency_decimal_points: domain.country.currency_decimal_points,
-                country_object: domain.country,
+                country: domain?.country?._id,
+                country_name: domain?.country?.name?.en,
+                country_code: domain?.country?.code,
+                country_currency: domain?.country?.currency,
+                country_currency_symbol: domain?.country?.currency_symbol,
+                currency_decimal_points:
+                    domain?.country?.currency_decimal_points,
+                country_object: domain?.country,
                 settings: settings ? settings : {},
             }
 

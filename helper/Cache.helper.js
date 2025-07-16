@@ -129,15 +129,15 @@ const getBrand = async (req, country) => {
     }
 }
 
-const getBrandSettings = async (brand, country) => {
+const getBrandSettings = async (brand = {}, country = {}) => {
     const cacheKey = `${envConfig.cache.CACHE_KEY_PREFIX}-brand-settings-${brand?.code}-${country?.code}`
     const brandSettings = await getCache(cacheKey).then(async (data) => {
         if (data) {
             return JSON.parse(data)
         } else {
             const liveData = await Settings.findOne({
-                brand: brand._id,
-                country: country._id,
+                brand: brand?._id,
+                country: country?._id,
             }).select('-brand -country -__v -created_at -updated_at -author')
             if (liveData) {
                 setCache(cacheKey, JSON.stringify(liveData), 60 * 60 * 24 * 1)
