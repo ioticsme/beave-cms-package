@@ -4,6 +4,7 @@ const joiPassword = Joi.extend(joiPasswordExtendCore)
 const bcrypt = require('bcryptjs')
 const Admin = require('../../model/Admin')
 const User = require('../../model/User')
+const { logError } = require('../../helper/Logger.helper')
 
 const list = async (req, res) => {
     const userList = await User.find().sort({ _id: -1 })
@@ -43,6 +44,7 @@ const changeStatus = async (req, res) => {
             url: `/users/${id}`,
         })
     } catch (error) {
+        logError(error)
         return res.status(404).json({ error: 'Something went wrong' })
     }
 }

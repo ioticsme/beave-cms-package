@@ -5,89 +5,113 @@ const Language = require('../../model/Language')
 const Country = require('../../model/Country')
 const { removeCache } = require('../../helper/Redis.helper')
 const envConfig = require('../../config/env.config')
+const { logError } = require('../../helper/Logger.helper')
 
 const list = async (req, res) => {
-    // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
-    const brands = await Brand.find().sort({ position: 1 })
-    return res.render('admin-njk/config/brand/listing', {
-        brands,
-    })
+    try {
+        const brands = await Brand.find().sort({ position: 1 })
+        return res.render('admin-njk/config/brand/listing', {
+            brands,
+        })
+    } catch (e) {
+        logError(e)
+        return res.status(500).json({ error: 'Something went wrong' })
+    }
 }
 
 const add = async (req, res) => {
-    // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
-    const languages = await Language.find()
-    const countries = await Country.find().sort({ position: 1 })
-    return res.render('admin-njk/config/brand/form', {
-        languages,
-        countries,
-        isEdit: false,
-    })
+    try {
+        const languages = await Language.find({ active: true })
+        const countries = await Country.find({ active: true }).sort({
+            position: 1,
+        })
+        return res.render('admin-njk/config/brand/form', {
+            languages,
+            countries,
+            isEdit: false,
+        })
+    } catch (e) {
+        logError(e)
+        return res.status(500).json({ error: 'Something went wrong' })
+    }
 }
 
 const edit = async (req, res) => {
-    // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
-    const languages = await Language.find()
-    const countries = await Country.find().sort({ position: 1 })
-    const brand = await Brand.findOne({
-        _id: req.params.id,
-    })
-    // res.send(contentType)
-    return res.render('admin-njk/config/brand/form', {
-        languages,
-        countries,
-        brand,
-        isEdit: true,
-    })
+    try {
+        const languages = await Language.find({ active: true })
+        const countries = await Country.find({ active: true }).sort({
+            position: 1,
+        })
+        const brand = await Brand.findOne({
+            _id: req.params.id,
+        })
+        return res.render('admin-njk/config/brand/form', {
+            languages,
+            countries,
+            brand,
+            isEdit: true,
+        })
+    } catch (e) {
+        logError(e)
+        return res.status(500).json({ error: 'Something went wrong' })
+    }
 }
 
 const save = async (req, res) => {
-    const schema = Joi.object({
-        name: Joi.string().required().min(3).max(60),
-        code: Joi.string().required().min(2).max(10),
-        languages: Joi.array().required().min(1),
-        domains: Joi.array().required().min(1),
-        active: Joi.boolean().optional(),
-        position: Joi.string().required(),
-        id: Joi.optional(),
-    })
+    try {
+        const schema = Joi.object({
+            name: Joi.string().required().min(3).max(60),
+            code: Joi.string().required().min(2).max(10),
+            languages: Joi.array().required().min(1),
+            domains: Joi.array().required().min(1),
+            active: Joi.boolean().optional(),
+            position: Joi.string().required(),
+            id: Joi.optional(),
+        })
 
-    const validationResult = schema.validate(req.body, {
-        abortEarly: false,
-    })
+        const validationResult = schema.validate(req.body, {
+            abortEarly: false,
+        })
 
-    if (validationResult.error) {
-        res.status(422).json(validationResult.error)
-        return
-    }
+        if (validationResult.error) {
+            res.status(422).json(validationResult.error)
+            return
+        }
 
-    let data = {
-        name: {
-            en: req.body.name,
-        },
-        code: req.body.code,
-        languages: req.body.languages,
-        domains: req.body.domains,
-        active: req.body.active || false,
-        position: req.body.position,
-    }
-
-    if (req.body.id) {
-        await Brand.updateOne(
-            {
-                _id: req.body.id,
+        let data = {
+            name: {
+                en: req.body.name,
             },
-            data
-        )
-    } else {
-        await Brand.create(data)
-    }
-    await removeCache([
-        `${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`,
-        `${envConfig.cache.CACHE_KEY_PREFIX}-all-countries`,
-    ])
+            code: req.body.code,
+            languages: req.body.languages,
+            domains: req.body.domains,
+            active: req.body.active || false,
+            position: req.body.position,
+        }
 
-    return res.status(200).json('done')
+        if (req.body.id) {
+            await Brand.updateOne(
+                {
+                    _id: req.body.id,
+                },
+                data
+            )
+        } else {
+            await Brand.create(data)
+        }
+        await removeCache([
+            `${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`,
+            `${envConfig.cache.CACHE_KEY_PREFIX}-all-countries`,
+        ])
+
+        return res.status(200).json({
+            message: 'Brand saved successfully',
+            redirect_to: '/admin/config/brand',
+        })
+    } catch (e) {
+        logError(e)
+        return res.status(500).json({ error: 'Something went wrong' })
+    }
 }
 
 const changeStatus = async (req, res) => {
@@ -119,6 +143,7 @@ const changeStatus = async (req, res) => {
             message: `Brand status changed`,
         })
     } catch (error) {
+        logError(error)
         return res.status(404).json({ error: 'Something went wrong' })
     }
 }
@@ -141,6 +166,7 @@ const deleteItem = async (req, res) => {
             message: `Brand Deleted`,
         })
     } catch (error) {
+        logError(error)
         return res.status(404).json({ error: 'Something went wrong' })
     }
 }

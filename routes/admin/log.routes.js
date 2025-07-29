@@ -4,7 +4,8 @@ const router = express.Router()
 const logController = require('../../controller/admin/log.controller')
 
 router.group('/', (router) => {
-    router.get('/files', logController.fileLogs)
+    router.get('/server', logController.serverLogList)
+    // router.get('/queue', logController.queueList)
 })
 // router.post('/', userController.verifyOtp)
 

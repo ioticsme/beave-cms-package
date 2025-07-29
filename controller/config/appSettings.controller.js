@@ -1,186 +1,191 @@
 const Joi = require('joi')
-
 const Config = require('../../model/Config')
 const { encryptData, decryptData } = require('../../helper/Operations.helper')
+const { logError } = require('../../helper/Logger.helper')
 
 const list = async (req, res) => {
-    const configs = await Config.findOne().select(
-        '-_id -__v -created_at -updated_at'
-    )
-    // console.log(configs.schema.path('general')?.instance || 'Mixed')
-    // console.log(await decryptData(configs.media_drive.imagekit.public_key))
-    // return false
-    // console.log(configs.schema.path('order_no').options.Comment)
-    // configs.schema.path(`${key}.${mixkey}`)?.instance || 'Mixed'
-    // console.log(configs.schema.path('imagekit.public_key').instance)
-    // const sd = await Config.schema.obj
-    // for(const p in sd) {
-    //     console.log(configs.schema.path(p)?.instance || 'Mixed')
-    // }
-    configs.media_drive.imagekit = {
-        ...configs.media_drive.imagekit,
-        public_key: configs.media_drive.imagekit.public_key
-            ? await decryptData(configs.media_drive.imagekit.public_key)
-            : '',
-        private_key: configs.media_drive.imagekit.private_key
-            ? await decryptData(configs.media_drive.imagekit.private_key)
-            : '',
+    try {
+        const configs = await Config.findOne().select(
+            '-_id -__v -created_at -updated_at'
+        )
+        // console.log(configs.schema.path('general')?.instance || 'Mixed')
+        // console.log(await decryptData(configs.media_drive.imagekit.public_key))
+        // return false
+        // console.log(configs.schema.path('order_no').options.Comment)
+        // configs.schema.path(`${key}.${mixkey}`)?.instance || 'Mixed'
+        // console.log(configs.schema.path('imagekit.public_key').instance)
+        // const sd = await Config.schema.obj
+        // for(const p in sd) {
+        //     console.log(configs.schema.path(p)?.instance || 'Mixed')
+        // }
+        configs.media_drive.imagekit = {
+            ...configs.media_drive.imagekit,
+            public_key: configs.media_drive.imagekit.public_key
+                ? await decryptData(configs.media_drive.imagekit.public_key)
+                : '',
+            private_key: configs.media_drive.imagekit.private_key
+                ? await decryptData(configs.media_drive.imagekit.private_key)
+                : '',
+        }
+        configs.media_drive.cloudinary = {
+            ...configs.media_drive.cloudinary,
+            api_key: configs.media_drive.cloudinary.api_key
+                ? await decryptData(configs.media_drive.cloudinary.api_key)
+                : '',
+            api_secret: configs.media_drive.cloudinary.api_secret
+                ? await decryptData(configs.media_drive.cloudinary.api_secret)
+                : '',
+        }
+        configs.email_settings.local = {
+            ...configs.email_settings.local,
+            auth_password: configs.email_settings.local.auth_password
+                ? await decryptData(configs.email_settings.local.auth_password)
+                : '',
+        }
+        configs.email_settings.mailgun = {
+            ...configs.email_settings.mailgun,
+            api_key: configs.email_settings.mailgun.api_key
+                ? await decryptData(configs.email_settings.mailgun.api_key)
+                : '',
+        }
+        configs.email_settings.sendgrid = {
+            ...configs.email_settings.sendgrid,
+            api_key: configs.email_settings.sendgrid.api_key
+                ? await decryptData(configs.email_settings.sendgrid.api_key)
+                : '',
+        }
+        return res.render('admin-njk/config/app-settings/listing', {
+            // schema_fields: Config.schema,
+            configs,
+        })
+    } catch (error) {
+        logError(error)
+        return res.status(500).json({ error: 'Something went wrong' })
     }
-    configs.media_drive.cloudinary = {
-        ...configs.media_drive.cloudinary,
-        api_key: configs.media_drive.cloudinary.api_key
-            ? await decryptData(configs.media_drive.cloudinary.api_key)
-            : '',
-        api_secret: configs.media_drive.cloudinary.api_secret
-            ? await decryptData(configs.media_drive.cloudinary.api_secret)
-            : '',
-    }
-    configs.email_settings.local = {
-        ...configs.email_settings.local,
-        auth_password: configs.email_settings.local.auth_password
-            ? await decryptData(configs.email_settings.local.auth_password)
-            : '',
-    }
-    configs.email_settings.mailgun = {
-        ...configs.email_settings.mailgun,
-        api_key: configs.email_settings.mailgun.api_key
-            ? await decryptData(configs.email_settings.mailgun.api_key)
-            : '',
-    }
-    configs.email_settings.sendgrid = {
-        ...configs.email_settings.sendgrid,
-        api_key: configs.email_settings.sendgrid.api_key
-            ? await decryptData(configs.email_settings.sendgrid.api_key)
-            : '',
-    }
-    return res.render('admin-njk/config/app-settings/listing', {
-        // schema_fields: Config.schema,
-        configs,
-    })
 }
 
 const save = async (req, res) => {
-    const schema = Joi.object({
-        client_name: Joi.string().required(),
-        frontend_url: Joi.string().optional().allow(null, ''),
-        user_email_verification: Joi.boolean().optional().allow(null, ''),
-        media_drive: Joi.string()
-            .required()
-            .valid('local', 'imagekit', 'cloudinary'),
-        ik_public_key: Joi.string().when('media_drive', {
-            is: 'imagekit',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        ik_private_key: Joi.string().when('media_drive', {
-            is: 'imagekit',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        ik_url: Joi.string().when('media_drive', {
-            is: 'imagekit',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        ik_folder: Joi.string().when('media_drive', {
-            is: 'imagekit',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        cdry_api_key: Joi.string().when('media_drive', {
-            is: 'cloudinary',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        cdry_api_secret: Joi.string().when('media_drive', {
-            is: 'cloudinary',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        cdry_cloud_name: Joi.string().when('media_drive', {
-            is: 'cloudinary',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        cdry_folder: Joi.string().when('media_drive', {
-            is: 'cloudinary',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        email_channel: Joi.string()
-            .required()
-            .valid('none', 'local', 'mailgun', 'sendgrid'),
-        local_from: Joi.string().when('email_channel', {
-            is: 'local',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        local_host: Joi.string().when('email_channel', {
-            is: 'local',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        local_port: Joi.number().when('email_channel', {
-            is: 'local',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        local_secure: Joi.string().when('email_channel', {
-            is: 'local',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        local_auth_user: Joi.string().when('email_channel', {
-            is: 'local',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        local_auth_password: Joi.string().when('email_channel', {
-            is: 'local',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        mg_from: Joi.string().when('email_channel', {
-            is: 'mailgun',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        mg_domain: Joi.string().when('email_channel', {
-            is: 'mailgun',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        mg_api_key: Joi.string().when('email_channel', {
-            is: 'mailgun',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        sg_from: Joi.string().when('email_channel', {
-            is: 'sendgrid',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        sg_domain: Joi.string().when('email_channel', {
-            is: 'sendgrid',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-        sg_api_key: Joi.string().when('email_channel', {
-            is: 'sendgrid',
-            then: Joi.required(),
-            otherwise: Joi.optional().allow(null, ''),
-        }),
-    })
-
-    const validationResult = schema.validate(req.body, {
-        abortEarly: false,
-    })
-
-    if (validationResult.error) {
-        return res.status(422).json(validationResult.error)
-    }
-
     try {
+        const schema = Joi.object({
+            client_name: Joi.string().required(),
+            frontend_url: Joi.string().optional().allow(null, ''),
+            user_email_verification: Joi.boolean().optional().allow(null, ''),
+            media_drive: Joi.string()
+                .required()
+                .valid('local', 'imagekit', 'cloudinary'),
+            ik_public_key: Joi.string().when('media_drive', {
+                is: 'imagekit',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            ik_private_key: Joi.string().when('media_drive', {
+                is: 'imagekit',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            ik_url: Joi.string().when('media_drive', {
+                is: 'imagekit',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            ik_folder: Joi.string().when('media_drive', {
+                is: 'imagekit',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            cdry_api_key: Joi.string().when('media_drive', {
+                is: 'cloudinary',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            cdry_api_secret: Joi.string().when('media_drive', {
+                is: 'cloudinary',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            cdry_cloud_name: Joi.string().when('media_drive', {
+                is: 'cloudinary',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            cdry_folder: Joi.string().when('media_drive', {
+                is: 'cloudinary',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            email_channel: Joi.string()
+                .required()
+                .valid('none', 'local', 'mailgun', 'sendgrid'),
+            local_from: Joi.string().when('email_channel', {
+                is: 'local',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            local_host: Joi.string().when('email_channel', {
+                is: 'local',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            local_port: Joi.number().when('email_channel', {
+                is: 'local',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            local_secure: Joi.string().when('email_channel', {
+                is: 'local',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            local_auth_user: Joi.string().when('email_channel', {
+                is: 'local',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            local_auth_password: Joi.string().when('email_channel', {
+                is: 'local',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            mg_from: Joi.string().when('email_channel', {
+                is: 'mailgun',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            mg_domain: Joi.string().when('email_channel', {
+                is: 'mailgun',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            mg_api_key: Joi.string().when('email_channel', {
+                is: 'mailgun',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            sg_from: Joi.string().when('email_channel', {
+                is: 'sendgrid',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            sg_domain: Joi.string().when('email_channel', {
+                is: 'sendgrid',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            sg_api_key: Joi.string().when('email_channel', {
+                is: 'sendgrid',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+        })
+
+        const validationResult = schema.validate(req.body, {
+            abortEarly: false,
+        })
+
+        if (validationResult.error) {
+            return res.status(422).json(validationResult.error)
+        }
+
         await Config.deleteMany()
         let imkit_config = {}
         let cldnry_config = {}
@@ -258,7 +263,7 @@ const save = async (req, res) => {
             // url: `/config/app-settingss`,
         })
     } catch (e) {
-        console.log(e)
+        logError(e)
         if (e.errors) {
             return res.status(422).json({
                 details: e.errors,

@@ -8,6 +8,7 @@ const ContentPathResource = require('../../resources/api/contentPath.resource')
 const { default: collect } = require('collect.js')
 const { default: mongoose } = require('mongoose')
 const { filteringScheduledCMSItems } = require('../../helper/Operations.helper')
+const { logError } = require('../../helper/Logger.helper')
 
 const list = async (req, res) => {
     try {
@@ -204,6 +205,7 @@ const list = async (req, res) => {
                 : undefined,
         })
     } catch (error) {
+        logError(error)
         return res.status(500).json({ error: `Something went wrong` })
     }
 }
@@ -317,7 +319,7 @@ const detail = async (req, res) => {
                 : undefined,
         })
     } catch (error) {
-        // console.log(error)
+        logError(error)
         return res.status(500).json({ error: `Something went wrong` })
     }
 }
@@ -345,6 +347,7 @@ const generateStaticPath = async (req, res) => {
         // res.status(200).json(contents)
         res.status(200).json(ContentPathResource.collection(contents))
     } catch (error) {
+        logError(error)
         return res.status(500).json({ error: `Something went wrong` })
     }
 }

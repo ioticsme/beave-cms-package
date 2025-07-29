@@ -50,7 +50,7 @@ router.use('/users', userRoutes)
 
 router.use('/settings', settingsRoutes)
 router.use('/custom-forms', customFormsRoutes)
-router.use('/log', logRoutes)
+router.use('/logs', logRoutes)
 router.use('/admin-user', adminUserRoutes)
 
 // Configuration routes --> Only for super admins

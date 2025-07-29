@@ -3,89 +3,107 @@ const Joi = require('joi')
 const Language = require('../../model/Language')
 const { removeCache } = require('../../helper/Redis.helper')
 const envConfig = require('../../config/env.config')
+const { logError } = require('../../helper/Logger.helper')
 
 const list = async (req, res) => {
-    // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
-    const languages = await Language.find()
-    return res.render('admin-njk/config/language/listing', {
-        languages,
-    })
+    try {
+        const languages = await Language.find()
+        return res.render('admin-njk/config/language/listing', {
+            languages,
+        })
+    } catch (e) {
+        logError(e)
+        return res.render(`admin-njk/app-error-500`)
+    }
 }
 
 const add = async (req, res) => {
-    // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
-    // const contentTypes = await ContentType.find()
-    return res.render('admin-njk/config/language/form', {
-        isEdit: false,
-    })
+    try {
+        return res.render('admin-njk/config/language/form', {
+            isEdit: false,
+        })
+    } catch (e) {
+        logError(e)
+        return res.render(`admin-njk/app-error-500`)
+    }
 }
 
 const edit = async (req, res) => {
-    // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
-    const language = await Language.findOne({
-        _id: req.params.id,
-    })
-    // res.send(contentType)
-    return res.render('admin-njk/config/language/form', {
-        language,
-        isEdit: true,
-    })
+    try {
+        const language = await Language.findOne({
+            _id: req.params.id,
+        })
+        return res.render('admin-njk/config/language/form', {
+            language,
+            isEdit: true,
+        })
+    } catch (e) {
+        logError(e)
+        return res.render(`admin-njk/app-error-500`)
+    }
 }
 
 const save = async (req, res) => {
-    // console.log(req.body)
-    const schema = Joi.object({
-        name: Joi.string().required().min(3).max(60),
-        prefix: Joi.string().required().min(2).max(5),
-        dir: Joi.string().required().valid('ltr', 'rtl'),
-        is_default: Joi.boolean().optional(),
-        id: Joi.optional(),
-    })
+    try {
+        const schema = Joi.object({
+            name: Joi.string().required().min(3).max(60),
+            prefix: Joi.string().required().min(2).max(5),
+            dir: Joi.string().required().valid('ltr', 'rtl'),
+            is_default: Joi.boolean().optional(),
+            id: Joi.optional(),
+        })
 
-    const validationResult = schema.validate(req.body, {
-        abortEarly: false,
-    })
+        const validationResult = schema.validate(req.body, {
+            abortEarly: false,
+        })
 
-    if (validationResult.error) {
-        res.status(422).json(validationResult.error)
-        return
+        if (validationResult.error) {
+            res.status(422).json(validationResult.error)
+            return
+        }
+
+        let data = {
+            name: req.body.name,
+            prefix: req.body.prefix,
+            dir: req.body.dir,
+            is_default: req.body.is_default || false,
+        }
+
+        if (data.is_default) {
+            await Language.updateMany(
+                {
+                    is_default: true,
+                },
+                {
+                    is_default: false,
+                }
+            )
+        }
+
+        if (req.body.id) {
+            await Language.updateOne(
+                {
+                    _id: req.body.id,
+                },
+                data
+            )
+        } else {
+            await Language.create(data)
+        }
+
+        await removeCache([
+            `${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`,
+            `${envConfig.cache.CACHE_KEY_PREFIX}-all-countries`,
+        ])
+
+        return res.status(200).json({
+            message: 'Language saved successfully',
+            redirect_to: '/admin/config/language',
+        })
+    } catch (e) {
+        logError(e)
+        return res.status(500).json({ error: 'Something went wrong' })
     }
-
-    let data = {
-        name: req.body.name,
-        prefix: req.body.prefix,
-        dir: req.body.dir,
-        is_default: req.body.is_default || false,
-    }
-
-    if (data.is_default) {
-        await Language.updateMany(
-            {
-                is_default: true,
-            },
-            {
-                is_default: false,
-            }
-        )
-    }
-
-    if (req.body.id) {
-        await Language.updateOne(
-            {
-                _id: req.body.id,
-            },
-            data
-        )
-    } else {
-        await Language.create(data)
-    }
-
-    await removeCache([
-        `${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`,
-        `${envConfig.cache.CACHE_KEY_PREFIX}-all-countries`,
-    ])
-
-    return res.status(200).json('done')
 }
 
 const deleteItem = async (req, res) => {
@@ -106,6 +124,7 @@ const deleteItem = async (req, res) => {
             message: `Language Deleted`,
         })
     } catch (error) {
+        logError(error)
         return res.status(404).json({ error: 'Something went wrong' })
     }
 }

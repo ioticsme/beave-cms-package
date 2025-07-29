@@ -1,3 +1,5 @@
+const { logError } = require('./Logger.helper')
+
 const incrementVersion = (version = '') => {
     if (!version.length) return ''
 
@@ -39,6 +41,7 @@ const getRevisionObject = (content = {}, authUser = {}) => {
 
         return updatedRevisions || []
     } catch (error) {
+        logError(error)
         return {}
     }
 }

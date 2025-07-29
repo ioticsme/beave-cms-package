@@ -16,6 +16,7 @@ const { group } = require('console')
 const metaFields = require('../../config/meta-fields.config')
 const ContentType = require('../../model/ContentType')
 const { getRevisionObject } = require('../../helper/Revision.helper')
+const { logError } = require('../../helper/Logger.helper')
 
 let session
 
@@ -54,7 +55,7 @@ const list = async (req, res) => {
             data: contentList,
         })
     } catch (error) {
-        console.log(error)
+        logError(error)
         return res.render(`admin-njk/app-error-500`)
     }
 }
@@ -112,6 +113,7 @@ const detail = async (req, res) => {
             // findalContentFieldsGroup,
         })
     } catch (error) {
+        logError(error)
         return res.render(`admin-njk/app-error-500`)
     }
 }
@@ -149,7 +151,7 @@ const duplicateContent = async (req, res) => {
 
         return res.redirect('back')
     } catch (error) {
-        console.log('error :>> ', error)
+        logError(error)
         return res.render(`admin-njk/app-error-500`)
     }
 }
@@ -208,7 +210,7 @@ const duplicateSingleTypeContent = async (req, res) => {
 
         return res.redirect(`/admin/cms/${newContentType.slug}`)
     } catch (error) {
-        console.log('error :>> ', error)
+        logError(error)
         return res.render(`admin-njk/app-error-500`)
     }
 }
@@ -329,7 +331,7 @@ const add = async (req, res) => {
             forms,
         })
     } catch (error) {
-        // console.log(error)
+        logError(error)
         return res.render(`admin-njk/app-error-500`)
     }
 }
@@ -395,7 +397,7 @@ const edit = async (req, res) => {
             metaFields,
         })
     } catch (error) {
-        console.log(error)
+        logError(error)
         return res.render(`admin-njk/app-error-500`)
     }
 }
@@ -426,7 +428,7 @@ const deleteContent = async (req, res) => {
             url: `/cms/${slug}`,
         })
     } catch (error) {
-        // console.log(error)
+        logError(error)
         return res.status(404).json({ error: 'Something went wrong' })
     }
 }
@@ -475,6 +477,7 @@ const changeStatus = async (req, res) => {
             url: `/cms/${slug}`,
         })
     } catch (error) {
+        logError(error)
         return res.status(404).json({ error: 'Something went wrong' })
     }
 }
@@ -605,7 +608,7 @@ const savePageBuilderContent = async (req, res) => {
             })
         }
     } catch (error) {
-        console.log(error)
+        logError(error)
         return res.status(400).json({ error: 'Something went wrong' })
     }
 }
@@ -1001,7 +1004,7 @@ const saveDefaultContent = async (req, res) => {
             })
         }
     } catch (error) {
-        console.log(error)
+        logError(error)
         return res.status(400).json({ error: 'Something went wrong' })
     }
 }
@@ -1020,7 +1023,7 @@ const loadEditorData = async (req, res) => {
         const lang_content = contentDetail.content[req.query.lang]
         return res.status(200).json(lang_content)
     } catch (error) {
-        console.log(error)
+        logError(error)
         return res.status(500).json(`Something went wrong`)
     }
 }
@@ -1040,6 +1043,7 @@ const pageBuildEditor = async (req, res) => {
             lang: req.query.lang,
         })
     } catch (error) {
+        logError(error)
         return res.render(`admin-njk/app-error-500`)
     }
 }
@@ -1091,6 +1095,7 @@ const savePageBuilderData = async (req, res) => {
 
         return res.status(200).json('Saved')
     } catch (error) {
+        logError(error)
         return res.status(500).json(`Something went wrong`)
     }
 }
@@ -1104,6 +1109,7 @@ const previewPageBuildData = async (req, res) => {
             html_data: html_data.content[req.query.lang],
         })
     } catch (error) {
+        logError(error)
         return res.render(`admin-njk/app-error-500`)
     }
 }

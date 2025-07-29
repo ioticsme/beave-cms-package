@@ -16,6 +16,7 @@ const {
     getBrand,
 } = require('../helper/Cache.helper')
 const { format } = require('date-fns')
+const { formatInTimeZone } = require('date-fns-tz')
 
 // Getting custom navigation from cms-wrapper config
 let customNavConfig
@@ -133,6 +134,20 @@ const nunjucksFilter = async (req, res, next) => {
                 return true
             }
         })
+    }
+
+    res.locals.formatDateTimeInTimezone = (
+        date,
+        timezone = 'Asia/Kolkata',
+        dateFormat = 'dd-MM-yyyy HH:ii:ss'
+    ) => {
+        try {
+            if (date) return formatInTimeZone(date, timezone, dateFormat)
+            return null
+        } catch (error) {
+            logError(error)
+            return null
+        }
     }
 
     next()

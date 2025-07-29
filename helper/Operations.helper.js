@@ -2,6 +2,7 @@ const envConfig = require('../config/env.config')
 const winston = require('winston')
 const { format } = require('date-fns')
 const crypto = require('crypto')
+const { logError } = require('./Logger.helper')
 
 const _ = require('lodash')
 // BEGIN:FOR PDF Generation
@@ -28,34 +29,6 @@ const getRequestIp = async (req) => {
     }
 
     return ip
-}
-
-const fileLogger = async (message, service, type, level = 'info') => {
-    const logger = winston.createLogger({
-        level: level,
-        format: winston.format.json(),
-        defaultMeta: {
-            service: service,
-            time: format(new Date(), 'dd-MM-yyyy HH:mm:ss'),
-        },
-        transports: [
-            new winston.transports.File({
-                filename: `./log/${type}-${format(
-                    new Date(),
-                    'dd-MM-yyyy'
-                )}.log`,
-                json: false,
-                level: level,
-                // stringify: (obj) => JSON.stringify(obj),
-            }),
-            // new winston.transports.File({ filename: 'combined.log' }),
-        ],
-    })
-
-    logger.info({
-        level: level,
-        message: message,
-    })
 }
 
 const loadSVGIcons = async () => {
@@ -110,7 +83,7 @@ const loadSVGIcons = async () => {
 
         return output
     } catch (e) {
-        console.log(e)
+        logError(e)
         return output
     }
 }
@@ -152,6 +125,7 @@ const encryptData = (text) => {
         encrypted += cipher.final('base64')
         return `${iv.toString('hex')}:${encrypted}` // Combine IV and encrypted data
     } catch (error) {
+        logError(error)
         return text
     }
 }
@@ -173,13 +147,13 @@ const decryptData = (encryptedText) => {
         decrypted += decipher.final('utf8')
         return decrypted
     } catch (error) {
+        logError(error)
         return null
     }
 }
 
 module.exports = {
     getRequestIp,
-    fileLogger,
     loadSVGIcons,
     filteringScheduledCMSItems,
     encryptData,

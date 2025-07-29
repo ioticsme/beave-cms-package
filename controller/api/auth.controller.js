@@ -25,6 +25,7 @@ const {
     isPast,
     isFuture,
 } = require('date-fns')
+const { logError } = require('../../helper/Logger.helper')
 
 const loginSubmit = async (req, res) => {
     const schema = Joi.object({
@@ -175,6 +176,7 @@ const loginSubmit = async (req, res) => {
             })
         }
     } catch (error) {
+        logError(error)
         return res.status(500).json({
             error: 'Something went wrong',
         })
@@ -346,7 +348,7 @@ const socialLoginSubmit = async (req, res) => {
             token: token ? `Bearer ${token}` : undefined,
         })
     } catch (error) {
-        console.log(error)
+        logError(error)
         return res.status(500).json({
             error: 'Something went wrong',
         })
@@ -381,6 +383,7 @@ const getGoogleProfile = async (accessToken) => {
         }
         return false
     } catch (error) {
+        logError(error)
         return false
     }
 }
@@ -402,6 +405,7 @@ const getFacebookProfile = async (accessToken) => {
         }
         return false
     } catch (error) {
+        logError(error)
         return false
     }
 }
@@ -535,7 +539,7 @@ const updateMobileNo = async (req, res) => {
             message: 'OTP sent to mobile ',
         })
     } catch (error) {
-        console.log(error)
+        logError(error)
         return res.status(500).json({ error: 'Something went wrong' })
     }
 }
@@ -701,7 +705,7 @@ const signupSubmit = async (req, res) => {
             message: 'Registration successful',
         })
     } catch (error) {
-        console.log(error)
+        logError(error)
         return res.status(500).json({ error: 'Something went wrong' })
     }
 }
@@ -836,7 +840,7 @@ const otpVerification = async (req, res) => {
             })
         }
     } catch (error) {
-        console.log(error)
+        logError(error)
         return res.status(500).json({ error: 'Something went wrong' })
     }
 }
@@ -933,6 +937,7 @@ const resendOTP = async (req, res) => {
             message: 'OTP sent to mobile ',
         })
     } catch (error) {
+        logError(error)
         return res.status(500).json({ error: 'Something went wrong' })
     }
 }
@@ -1093,6 +1098,7 @@ const forgotCredentials = async (req, res) => {
             } if its registered with us.`,
         })
     } catch (error) {
+        logError(error)
         return res.status(500).json({ error: 'Something went wrong' })
     }
 }
@@ -1269,6 +1275,7 @@ const verifyForgotOTP = async (req, res) => {
             })
         }
     } catch (error) {
+        logError(error)
         return res.status(500).json({ error: 'Something went wrong' })
     }
 }

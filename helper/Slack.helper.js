@@ -1,6 +1,7 @@
 // "https://smsapi.aptivadigi.com/api/?username=iotic&password=Iotics@324&cmd=sendSMS&message=Dear+customer%2C+your+one+time+password+%28OTP%29+for+ordering+from+Akawi+Oven+is+513391&sender=EATROOT&uniCode=0&to=971566994313"
 const envConfig = require('../config/env.config')
 const axios = require('axios')
+const { logError } = require('./Logger.helper')
 
 const sendAdminNotification = async (message) => {
     if (

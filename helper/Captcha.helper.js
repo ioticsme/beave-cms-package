@@ -1,5 +1,6 @@
 const envConfig = require('../config/env.config')
 const axios = require('axios')
+const { logError } = require('./Logger.helper')
 
 // TODO: env parameteres should come from DB (Super admin config)
 const verifyCaptcha = async (token) => {
@@ -18,6 +19,7 @@ const verifyCaptcha = async (token) => {
             })
         return response
     } catch (error) {
+        logError(error)
         return false
     }
 }

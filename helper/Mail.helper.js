@@ -7,6 +7,7 @@ const fs = require('fs')
 const Config = require('../model/Config')
 const { sendMailGunEmail } = require('../adaptors/email/mailgun.adaptor')
 const { sendLocalMail } = require('../adaptors/email/nodemailer.adaptor')
+const { logError } = require('./Logger.helper')
 
 const sendEmail = async (
     to,
@@ -44,7 +45,7 @@ const sendEmail = async (
         // console.log(mailgunData)
         return 'Done'
     } catch (error) {
-        console.log(error)
+        logError(error)
         return false
     }
 }

@@ -4,6 +4,7 @@ const axios = require('axios')
 const User = require('../model/User')
 const senderID = `Fun City`
 const baseURL = `${envConfig.sms_url}`
+const { logError } = require('./Logger.helper')
 
 const sendSMS = async (mobile, senderID, message) => {
     console.log(mobile, senderID, message)
@@ -70,10 +71,7 @@ async function sendOrderSms(payload) {
             _id: payload.order.user._id,
         })
         // console.log('SENDING SMS TO: ', user.mobile)
-        sendTransactionOTP(
-            user.mobile,
-            payload.generic_details.brand.name.en
-        )
+        sendTransactionOTP(user.mobile, payload.generic_details.brand.name.en)
     }
 }
 

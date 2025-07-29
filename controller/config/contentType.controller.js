@@ -9,6 +9,7 @@ const { loadSVGIcons } = require('../../helper/Operations.helper')
 const Brand = require('../../model/Brand')
 const { removeCache } = require('../../helper/Redis.helper')
 const envConfig = require('../../config/env.config')
+const { logError } = require('../../helper/Logger.helper')
 
 const list = async (req, res) => {
     try {
@@ -20,6 +21,7 @@ const list = async (req, res) => {
             contentTypes,
         })
     } catch (e) {
+        logError(e)
         return res.render(`admin-njk/app-error-500`)
     }
 }
@@ -36,6 +38,7 @@ const add = async (req, res) => {
             brands,
         })
     } catch (e) {
+        logError(e)
         return res.render(`admin-njk/app-error-500`)
     }
 }
@@ -57,6 +60,7 @@ const edit = async (req, res) => {
             brands,
         })
     } catch (e) {
+        logError(e)
         return res.render(`admin-njk/app-error-500`)
     }
 }
@@ -109,6 +113,7 @@ const view = async (req, res) => {
             // contentTypes,
         })
     } catch (e) {
+        logError(e)
         return res.render(`admin-njk/app-error-500`)
     }
 }
@@ -194,7 +199,7 @@ const save = async (req, res) => {
             redirect_to: `/admin/config/content-type/view/${c_type_id}`,
         })
     } catch (e) {
-        console.log(e)
+        logError(e)
         if (e.errors) {
             return res.status(422).json({
                 details: e.errors,
@@ -222,6 +227,7 @@ const deleteItem = async (req, res) => {
             message: `Content Type Deleted`,
         })
     } catch (error) {
+        logError(error)
         return res.status(500).json({ error: 'Something went wrong' })
     }
 }
@@ -235,6 +241,7 @@ const addFields = async (req, res) => {
             contentType,
         })
     } catch (e) {
+        logError(e)
         return res.render(`admin-njk/app-error-500`)
     }
 }
@@ -353,7 +360,7 @@ const saveFields = async (req, res) => {
 
         return res.status(200).json({ message: 'Content Type added' })
     } catch (e) {
-        console.log(e)
+        logError(e)
         if (e.errors) {
             return res.status(422).json({
                 details: e.errors,
@@ -391,7 +398,7 @@ const saveMeta = async (req, res) => {
 
         return res.status(200).json({ message: 'Content Type Meta updated' })
     } catch (e) {
-        console.log(e)
+        logError(e)
         if (e.errors) {
             return res.status(422).json({
                 details: e.errors,

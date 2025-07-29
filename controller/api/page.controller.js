@@ -1,6 +1,7 @@
 const collect = require('collect.js')
 const Content = require('../../model/Content')
 const Brand = require('../../model/Brand')
+const { logError } = require('../../helper/Logger.helper')
 
 // Home
 const homePage = async (req, res) => {
@@ -54,7 +55,7 @@ const homePage = async (req, res) => {
 
         return res.status(200).json(home)
     } catch (error) {
-        console.log(error)
+        logError(error)
         return res.status(500).json({ error: `Something went wrong` })
     }
 }

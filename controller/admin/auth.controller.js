@@ -9,6 +9,7 @@ const Country = require('../../model/Country')
 const Language = require('../../model/Language')
 const { default: collect } = require('collect.js')
 const { getBrandSettings } = require('../../helper/Cache.helper')
+const { logError } = require('../../helper/Logger.helper')
 
 // Handles the signup page rendering
 const signup = async (req, res) => {
@@ -21,6 +22,7 @@ const signup = async (req, res) => {
         // If no admin exists, render the signup form
         res.render(`admin-njk/authentication/sign-up`)
     } catch (error) {
+        logError(error)
         // Render the 500 error page in case of an exception
         res.render(`admin-njk/app-error-500`)
     }
@@ -85,6 +87,7 @@ const signupSubmit = async (req, res) => {
             return res.status(500).json({ error: 'Something went wrong' }) // Return 500 if signup fails
         }
     } catch (e) {
+        logError(e)
         // Handle validation errors specifically
         if (e.errors) {
             return res.status(422).json({
@@ -108,7 +111,7 @@ const login = async (req, res) => {
         // Render the login page
         return res.render(`admin-njk/authentication/sign-in`)
     } catch (error) {
-        console.log(error)
+        logError(error)
         // Render 500 error page in case of an exception
         return res.render(`admin-njk/app-error-500`)
     }
@@ -204,7 +207,7 @@ const loginSubmit = async (req, res) => {
             return res.status(401).json({ error: 'Invalid email or password' })
         }
     } catch (error) {
-        console.log(error)
+        logError(error)
         // Return a generic error message in case of exception
         return res.status(404).json({ error: 'Something went wrong' })
     }
@@ -225,6 +228,7 @@ const logout = async (req, res) => {
         // Redirect to login page after logout
         res.redirect('/admin/auth/login')
     } catch (error) {
+        logError(error)
         // Render 500 error page in case of an exception
         res.render(`admin-njk/app-error-500`)
     }

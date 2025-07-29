@@ -1,86 +1,113 @@
 const Joi = require('joi')
+const timezoneList = require('timezones-list')
 
 const Country = require('../../model/Country')
 const { removeCache } = require('../../helper/Redis.helper')
 const envConfig = require('../../config/env.config')
+const { logError } = require('../../helper/Logger.helper')
+
+const timezones = timezoneList.default
 
 const list = async (req, res) => {
-    const countries = await Country.find().sort({ position: 1 })
-    return res.render('admin-njk/config/country/listing', {
-        countries,
-    })
+    try {
+        const countries = await Country.find({ active: true }).sort({
+            position: 1,
+        })
+        return res.render('admin-njk/config/country/listing', {
+            countries,
+        })
+    } catch (e) {
+        logError(e)
+        return res.render(`admin-njk/app-error-500`)
+    }
 }
 
 const add = async (req, res) => {
-    const timezones = ['Asia/Dubai', 'Asia/Riyadh']
-    return res.render('admin-njk/config/country/form', {
-        isEdit: false,
-        timezones,
-    })
+    try {
+        return res.render('admin-njk/config/country/form', {
+            isEdit: false,
+            timezones,
+        })
+    } catch (e) {
+        logError(e)
+        return res.render(`admin-njk/app-error-500`)
+    }
 }
 
 const edit = async (req, res) => {
-    const country = await Country.findOne({
-        _id: req.params.id,
-    })
-    const timezones = ['Asia/Dubai', 'Asia/Riyadh']
-    return res.render('admin-njk/config/country/form', {
-        country,
-        isEdit: true,
-        timezones,
-    })
+    try {
+        const country = await Country.findOne({
+            _id: req.params.id,
+        })
+        return res.render('admin-njk/config/country/form', {
+            country,
+            isEdit: true,
+            timezones,
+        })
+    } catch (e) {
+        logError(e)
+        return res.render(`admin-njk/app-error-500`)
+    }
 }
 
 const save = async (req, res) => {
-    const schema = Joi.object({
-        name: Joi.string().required().min(3).max(60),
-        code: Joi.string().required().min(2).max(5),
-        currency: Joi.string().optional().allow(null, ''),
-        currency_symbol: Joi.string().optional().allow(null, ''),
-        currency_decimal_points: Joi.number().optional().allow(null, ''),
-        timezone: Joi.string().optional().allow(null, ''),
-        position: Joi.string().required(),
-        id: Joi.optional(),
-    })
+    try {
+        const schema = Joi.object({
+            name: Joi.string().required().min(3).max(60),
+            code: Joi.string().required().min(2).max(5),
+            currency: Joi.string().optional().allow(null, ''),
+            currency_symbol: Joi.string().optional().allow(null, ''),
+            currency_decimal_points: Joi.number().optional().allow(null, ''),
+            timezone: Joi.string().optional().allow(null, ''),
+            position: Joi.string().required(),
+            id: Joi.optional(),
+        })
 
-    const validationResult = schema.validate(req.body, {
-        abortEarly: false,
-    })
+        const validationResult = schema.validate(req.body, {
+            abortEarly: false,
+        })
 
-    if (validationResult.error) {
-        res.status(422).json(validationResult.error)
-        return
-    }
+        if (validationResult.error) {
+            res.status(422).json(validationResult.error)
+            return
+        }
 
-    let data = {
-        name: {
-            en: req.body.name,
-        },
-        code: req.body.code,
-        currency: req.body.currency,
-        currency_symbol: req.body.currency_symbol,
-        currency_decimal_points: req.body.currency_decimal_points,
-        timezone: req.body.timezone,
-        position: req.body.position,
-    }
-
-    if (req.body.id) {
-        await Country.updateOne(
-            {
-                _id: req.body.id,
+        let data = {
+            name: {
+                en: req.body.name,
             },
-            data
-        )
-    } else {
-        await Country.create(data)
+            code: req.body.code,
+            currency: req.body.currency,
+            currency_symbol: req.body.currency_symbol,
+            currency_decimal_points: req.body.currency_decimal_points,
+            timezone: req.body.timezone,
+            position: req.body.position,
+        }
+
+        if (req.body.id) {
+            await Country.updateOne(
+                {
+                    _id: req.body.id,
+                },
+                data
+            )
+        } else {
+            await Country.create(data)
+        }
+
+        await removeCache([
+            `${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`,
+            `${envConfig.cache.CACHE_KEY_PREFIX}-all-countries`,
+        ])
+
+        return res.status(200).json({
+            message: 'Country saved successfully',
+            redirect_to: '/admin/config/country',
+        })
+    } catch (e) {
+        logError(e)
+        return res.status(500).json({ error: 'Something went wrong' })
     }
-
-    await removeCache([
-        `${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`,
-        `${envConfig.cache.CACHE_KEY_PREFIX}-all-countries`,
-    ])
-
-    return res.status(200).json('done')
 }
 
 const deleteItem = async (req, res) => {
@@ -101,6 +128,7 @@ const deleteItem = async (req, res) => {
             message: `Country Deleted`,
         })
     } catch (error) {
+        logError(error)
         return res.status(404).json({ error: 'Something went wrong' })
     }
 }

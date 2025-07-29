@@ -6,6 +6,7 @@ const {
 const fs = require('fs')
 const Media = require('../../model/Media')
 const { getCache, setCache, removeCache } = require('../../helper/Redis.helper')
+const { logError, logWarn } = require('../../helper/Logger.helper')
 
 let cacheKey = `${envConfig.cache.CACHE_KEY_PREFIX}-media-json-list`
 
@@ -32,7 +33,7 @@ const list = async (req, res) => {
             hasPdfUpload,
         })
     } catch (error) {
-        console.log('error :>> ', error)
+        logError(error)
         return res.render(`admin-njk/app-error-500`) // Render error page
     }
 }
@@ -57,6 +58,7 @@ const jsonList = async (req, res) => {
 
         return res.status(200).json(media) // Send media as JSON response
     } catch (error) {
+        logError(error)
         return res.render(`admin-njk/app-error-500`) // Render error page
     }
 }
@@ -69,42 +71,49 @@ const jsonDetail = async (req, res) => {
         })
         return res.status(200).json(media) // Send media details as JSON response
     } catch (error) {
+        logError(error)
         return res.render(`admin-njk/app-error-500`) // Render error page
     }
 }
 
 // Handle media file uploads
 const fileUpload = async (req, res) => {
-    let images = {}
-    if (req.files && req.files.length) {
-        for (i = 0; i < req.files.length; i++) {
-            let file = req.files[i]
-            // Creating base64 from file
-            const base64 = Buffer.from(fs.readFileSync(file.path)).toString(
-                'base64'
-            )
-            let fieldName = req.files[i].fieldname.split('.')[0]
-            let fieldLang = req.files[i].fieldname.split('.')[1]
-            const media = await uploadMedia(base64, 'media', file) // Upload media
-            // Deleting the image saved to temp/ folder after upload
-            fs.unlinkSync(`temp/${file.filename}`)
-            if (media && media._id) {
-                images[fieldName] = {
-                    ...images[fieldName],
-                    [fieldLang]: {
-                        media_url: media.url,
-                        media_id: media._id,
-                    },
+    try {
+        let images = {}
+        if (req.files && req.files.length) {
+            for (i = 0; i < req.files.length; i++) {
+                let file = req.files[i]
+                // Creating base64 from file
+                const base64 = Buffer.from(fs.readFileSync(file.path)).toString(
+                    'base64'
+                )
+                let fieldName = req.files[i].fieldname.split('.')[0]
+                let fieldLang = req.files[i].fieldname.split('.')[1]
+                const media = await uploadMedia(base64, 'media', file) // Upload media
+                // Deleting the image saved to temp/ folder after upload
+                fs.unlinkSync(`temp/${file.filename}`)
+                if (media && media._id) {
+                    images[fieldName] = {
+                        ...images[fieldName],
+                        [fieldLang]: {
+                            media_url: media.url,
+                            media_id: media._id,
+                        },
+                    }
+                } else {
+                    logWarn('Some error occurred while uploading the image')
+                    return res.status(503).json({
+                        error: 'Some error occurred while uploading the image',
+                    })
                 }
-            } else {
-                return res.status(503).json({
-                    error: 'Some error occurred while uploading the image',
-                })
             }
         }
+        await removeCache([cacheKey])
+        return res.status(200).json('uploaded') // Respond with success message
+    } catch (error) {
+        logError(error)
+        return res.status(500).json({ error: 'Something went wrong' })
     }
-    await removeCache([cacheKey])
-    return res.status(200).json('uploaded') // Respond with success message
 }
 
 // Handle article image uploads (specific to articles)

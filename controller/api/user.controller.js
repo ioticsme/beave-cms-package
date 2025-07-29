@@ -7,6 +7,7 @@ const UserResource = require('../../resources/api/user.resource')
 const collect = require('collect.js')
 const bcrypt = require('bcryptjs')
 const { setCache, getCache, removeCache } = require('../../helper/Redis.helper')
+const { logError } = require('../../helper/Logger.helper')
 
 // user detail
 const detail = async (req, res) => {
@@ -19,6 +20,7 @@ const detail = async (req, res) => {
             user: new UserResource(user).exec(),
         })
     } catch (error) {
+        logError(error)
         return res.status(500).json({ error: 'Something went wrong' })
     }
 }
@@ -113,6 +115,7 @@ const editUser = async (req, res) => {
             user: new UserResource(update).exec(),
         })
     } catch (error) {
+        logError(error)
         return res.status(500).json({ error: 'Something went wrong' })
     }
 }
@@ -194,6 +197,7 @@ const changePassword = async (req, res) => {
             })
         }
     } catch (error) {
+        logError(error)
         return res.status(500).json({ error: 'Something went wrong' })
     }
 }

@@ -7,6 +7,7 @@ const { sendEmail } = require('../../helper/Mail.helper')
 // const Content = require('../../node_modules/@ioticsme/cms/model/Content')
 const CustomForm = require('../../model/CustomForm')
 const CustomFormData = require('../../model/CustomFormData')
+const { logError } = require('../../helper/Logger.helper')
 
 const customFormSubmit = async (req, res) => {
     try {
@@ -155,7 +156,7 @@ const customFormSubmit = async (req, res) => {
             data: save,
         })
     } catch (error) {
-        console.log(error)
+        logError(error)
         return res
             .status(500)
             .json({ error: error ? error : 'Something went wrong' })

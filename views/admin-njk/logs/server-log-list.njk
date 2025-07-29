@@ -1,0 +1,156 @@
+{% extends "../layouts/master.njk" %}
+
+{% block content %}
+    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+        <!--begin::Content wrapper-->
+        <div class="d-flex flex-column flex-column-fluid">
+            <!--begin::Toolbar-->
+            <div id="kt_app_toolbar" class="app-toolbar pt-2 pt-lg-10">
+                <!--begin::Toolbar container-->
+                <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                    <!--begin::Toolbar wrapper-->
+                    <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                        <!--begin::Page title-->
+                        <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
+                            <!--begin::Title-->
+                            <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">Server Logs</h1>
+                            <!--end::Title-->
+                            <!--begin::Breadcrumb-->
+                            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
+                                <!--begin::Item-->
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/dashboard" class="text-muted text-hover-primary">Home</a>
+                                </li>
+                                <!--end::Item-->
+                                <!--begin::Item-->
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <!--end::Item-->
+                                <!--begin::Item-->
+                                <li class="breadcrumb-item text-muted">Server Logs</li>
+                                <!--end::Item-->
+                            </ul>
+                            <!--end::Breadcrumb-->
+                        </div>
+                        <!--end::Page title-->
+                    </div>
+                    <!--end::Toolbar wrapper-->
+                </div>
+                <!--end::Toolbar container-->
+            </div>
+            <!--end::Toolbar-->
+            <!--begin::Content-->
+            <div id="kt_app_content" class="app-content flex-column-fluid">
+                <!--begin::Content container-->
+                <div id="kt_app_content_container" class="app-container container-fluid">
+                    <!--begin::customer-->
+                    <div class="card card-flush">
+                        <!--begin::Card header-->
+                        <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                            <!--begin::Card title-->
+                            <div class="card-title">
+                                <!--begin::Search-->
+                                <div class=" d-flex align-items-center position-relative my-1">
+                                    {# <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
+                                    <input type="text" data-kt-customer-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search customer"/> #}
+                                    {% for type in validTypes %}
+                                        <a href="/admin/logs/server?type={{ type }}" class="btn btn-sm {% if type == activeType %} btn-primary {% else %} btn-light-primary {% endif %} ms-2 text-capitalize">{{ type }}</a>
+                                    {% endfor %}
+                                </div>
+                                <!--end::Search-->
+                            </div>
+                            <!--end::Card title-->
+                            <!--begin::Card toolbar-->
+                            {# <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                                <!--begin::Add customer-->
+                                <a href="/admin/customer/add" class="btn btn-primary">Add customer</a>
+                                <!--end::Add customer-->
+                            </div> #}
+                            <!--end::Card toolbar-->
+                        </div>
+                        <!--end::Card header-->
+                        <!--begin::Card body-->
+                        <div class="card-body pt-0">
+                            <!--begin::Table-->
+                            <table class="table align-middle table-row-dashed fs-6 gy-5" id="kayfi_customers_datatable">
+                                {# <span class="badge badge-dark mb-2">
+                                    Total Number of Customers: {{ users | length }}
+                                </span> #}
+                                <thead>
+                                    <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                        <th class="min-w-150px">Date</th>
+                                        <th class="min-w-100px">Message</th>
+                                        <th class="">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="fw-semibold text-gray-600">
+                                    {% for log in logs %}
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    {{ formatDateTimeInTimezone(log.timestamp,'Asia/Kolkata','dd-MM-yyyy HH:ii:ss') }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <code>{{ log.message }}</code>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-light-primary"  data-bs-toggle="modal" data-value="{{log.stack}}" data-bs-target="#view_value_modal">View</button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <!--end::Table-->
+                        </div>
+                        <!--end::Card body-->
+                    </div>
+                    <!--end::customer-->
+                </div>
+                <!--end::Content container-->
+            </div>
+            <!--end::Content-->
+            <div class="modal fade" tabindex="-1" id="view_value_modal">
+                <div class="modal-dialog mw-1000px">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">View Details</h5>
+            
+                            <!--begin::Close-->
+                            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal">
+                                <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+            
+                        <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15" >
+                            <div class="p-10">
+                                <p id="space_for_show_value"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end::Content wrapper-->
+        <!--begin::Footer-->
+        {# {% include 'admin-njk/partials/_footer-panel.njk' %} #}
+        <!--end::Footer-->
+    </div>
+{% endblock %}
+
+{% block customScript %}
+    <script src="/admin/custom/customer-list.js"></script>
+    <script>
+		$("#view_value_modal").on('show.bs.modal', function (e) {
+            const button = e.relatedTarget
+            let value = button.getAttribute('data-value')
+            document.getElementById('space_for_show_value').innerHTML =`<pre><code>${value}</code></pre>`
+        });
+
+        $("#view_value_modal").on('hide.bs.modal', function (e) {
+            document.getElementById('space_for_show_value').innerHTML =''
+        });
+	</script>
+{% endblock %}

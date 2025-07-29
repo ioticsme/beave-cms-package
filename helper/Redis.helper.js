@@ -1,5 +1,6 @@
 const envConfig = require('../config/env.config')
 const Redis = require('ioredis')
+const { logError } = require('./Logger.helper')
 
 const redis = new Redis(envConfig.cache.REDIS_URL)
 
@@ -10,7 +11,7 @@ const getCache = async (key, checkActive = true) => {
         }
         return await redis.get(key)
     } catch (error) {
-        console.log('Redis Client Error', error)
+        logError(error)
         return error
     }
 }
@@ -25,7 +26,7 @@ const setCache = async (key, data, expiry = 300, checkActive = true) => {
 
         return 'OK'
     } catch (error) {
-        console.log('Redis Client Error', error)
+        logError(error)
         return error
     }
 }
@@ -34,7 +35,7 @@ const removeCache = async (keys) => {
     try {
         return await redis.del(...keys)
     } catch (error) {
-        console.log('Redis Client Error', error)
+        logError(error)
         return error
     }
 }
@@ -51,7 +52,7 @@ const clearCacheAll = async () => {
         }
         return await redis.del(...keys_to_remove)
     } catch (error) {
-        console.log('Redis Client Error', error)
+        logError(error)
         return error
     }
 }
@@ -60,7 +61,7 @@ const flushCache = async () => {
     try {
         return await redis.flushdb()
     } catch (error) {
-        console.log('Redis Client Error', error)
+        logError(error)
         return error
     }
 }

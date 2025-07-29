@@ -5,6 +5,7 @@ const axios = require('axios')
 const Mailgun = require('mailgun.js')
 const formData = require('form-data')
 const fs = require('fs')
+const { logError } = require('./Logger.helper')
 
 const mailGunTemplates = async () => {
     try {
@@ -32,7 +33,7 @@ const mailGunTemplates = async () => {
 
         return domainTemplates
     } catch (e) {
-        console.log(e)
+        logError(e)
         return []
     }
 }

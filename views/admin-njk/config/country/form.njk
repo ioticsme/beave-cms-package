@@ -63,34 +63,27 @@
 									</div>
 								</div>
 								<div class="row mb-6">
-									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Position</label>
-									<div class="col-lg-8 fv-row">
-										<input type="number" name="position" class="form-control form-control-lg form-control-solid" placeholder="Position" value="{{ country.position or 1 }}">
-										<div class="fv-plugins-message-container invalid-feedback" id="field-error-position"></div>
-									</div>
-								</div>
-								{# <div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Currency</label>
 									<div class="col-lg-8 fv-row">
-										<input type="text" name="currency" class="form-control form-control-lg form-control-solid" placeholder="Currency Name" value="{{ country.currency }}">
+										<input type="text" name="currency" class="form-control form-control-lg form-control-solid" placeholder="Currency Name" value="{{ country.currency or 'USD' }}">
 										<div class="fv-plugins-message-container invalid-feedback" id="field-error-currency"></div>
 									</div>
-								</div> #}
-								{# <div class="row mb-6">
+								</div>
+								<div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Currency Symbol</label>
 									<div class="col-lg-8 fv-row">
-										<input type="text" name="currency_symbol" placeholder="Currency Symbol" class="form-control form-control-lg form-control-solid" value="{{ country.currency_symbol }}">
+										<input type="text" name="currency_symbol" placeholder="Currency Symbol" class="form-control form-control-lg form-control-solid" value="{{ country.currency_symbol or '$' }}">
 										<div id="field-error-currency_symbol" class="fv-plugins-message-container invalid-feedback"></div>
 									</div>
-								</div> #}
+								</div>
 
-								{# <div class="row mb-6">
+								<div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Currency Decimal Points</label>
 									<div class="col-lg-8 fv-row">
-										<input type="text" name="currency_decimal_points" placeholder="Currency Percision" class="form-control form-control-lg form-control-solid" value="{{ country.currency_decimal_points }}">
+										<input type="text" name="currency_decimal_points" placeholder="Currency Percision" class="form-control form-control-lg form-control-solid" value="{{ country.currency_decimal_points or 2 }}">
 										<div id="field-error-currency_decimal_points" class="fv-plugins-message-container invalid-feedback"></div>
 									</div>
-								</div> #}
+								</div>
 
 								{# <div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Timezone</label>
@@ -100,18 +93,26 @@
 									</div>
 								</div> #}
 
-								{# <div class="row mb-6">
+								<div class="row mb-6">
 									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Timezone</label>
 									<div class="col-lg-8 fv-row">
-										<select class="form-control form-control-lg form-control-solid" name="timezone">
+										<select class="form-control form-control-lg form-control-solid" data-control="select2" name="timezone">
 											<option>-Select Timezone-</option>
 											{% for timezone in timezones %}
-												<option value="{{timezone}}" {% if country.timezone == timezone %} selected {% endif %}>{{timezone}}</option>
+												<option value="{{timezone.tzCode}}" {% if country.timezone == timezone.tzCode %} selected {% endif %}>{{timezone.label}}</option>
 											{% endfor %}
 										</select>
 										<div id="field-error-timezone" class="fv-plugins-message-container invalid-feedback"></div>
 									</div>
-								</div> #}
+								</div>
+
+								<div class="row mb-6">
+									<label class="col-lg-4 col-form-label required fw-semibold fs-6">Position</label>
+									<div class="col-lg-8 fv-row">
+										<input type="number" name="position" class="form-control form-control-lg form-control-solid" placeholder="Position" value="{{ country.position or 1 }}">
+										<div class="fv-plugins-message-container invalid-feedback" id="field-error-position"></div>
+									</div>
+								</div>
 
 							</div>
 

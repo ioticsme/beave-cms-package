@@ -7,13 +7,18 @@ const bcrypt = require('bcryptjs')
 const Admin = require('../../model/Admin')
 const { getPrivileges } = require('../../middleware/cmsAuth.middleware')
 const envConfig = require('../../config/env.config')
+const { logError } = require('../../helper/Logger.helper')
 
 const list = async (req, res) => {
-    // return res.sendFile('./views/index.html', {root: './node_modules/cms-installer'});
-    const admins = await Admin.find({ isDeleted: false })
-    return res.render('admin-njk/config/admin/listing', {
-        admins,
-    })
+    try {
+        const admins = await Admin.find({ isDeleted: false })
+        return res.render('admin-njk/config/admin/listing', {
+            admins,
+        })
+    } catch (error) {
+        logError(error)
+        return res.render(`admin-njk/app-error-500`)
+    }
 }
 
 const add = async (req, res) => {
@@ -28,108 +33,123 @@ const add = async (req, res) => {
                 envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID,
         })
     } catch (error) {
-        console.log(error)
+        logError(error)
+        return res.render(`admin-njk/app-error-500`)
     }
 }
 
 const edit = async (req, res) => {
-    const config_privilege_routes = await getPrivileges(req)
-    const admin = await Admin.findOne({
-        _id: req.params.id,
-        isDeleted: false,
-    })
+    try {
+        const config_privilege_routes = await getPrivileges(req)
+        const admin = await Admin.findOne({
+            _id: req.params.id,
+            isDeleted: false,
+        })
 
-    return res.render('admin-njk/config/admin/form', {
-        admin,
-        current_privileges: admin.privileges?.split(',') ?? [],
-        config_privilege_routes,
-        isEdit: true,
-        landing_url_privilege_id:
-            envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID,
-    })
+        return res.render('admin-njk/config/admin/form', {
+            admin,
+            current_privileges: admin.privileges?.split(',') ?? [],
+            config_privilege_routes,
+            isEdit: true,
+            landing_url_privilege_id:
+                envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID,
+        })
+    } catch (error) {
+        logError(error)
+        return res.render(`admin-njk/app-error-500`)
+    }
 }
 
 const save = async (req, res) => {
-    const saltRounds = 10
-    const salt = bcrypt.genSaltSync(saltRounds)
+    try {
+        const saltRounds = 10
+        const salt = bcrypt.genSaltSync(saltRounds)
 
-    let privileges = req.body.privileges.split(',')
-    if (
-        !privileges.includes(envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID)
-    ) {
-        privileges.push(envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID)
-    }
-
-    const schema = Joi.object({
-        name: Joi.string().required().min(3).max(60),
-        email: Joi.string().required().min(3).max(60),
-        password: Joi.string().allow('', null),
-        role: Joi.string()
-            .required()
-            .valid('super_admin', 'admin', 'editor', 'user', 'finance'),
-        status: Joi.boolean().required(),
-        privileges: Joi.string().required(),
-        id: Joi.optional(),
-    })
-
-    const validationResult = schema.validate(req.body, {
-        abortEarly: false,
-    })
-
-    if (validationResult.error) {
-        res.status(422).json(validationResult.error)
-        return
-    }
-
-    let options = {
-        email: req.body.email,
-        isDeleted: false,
-    }
-    if (req.body.id) {
-        options._id = { $ne: req.body.id }
-    }
-    const adminExist = await Admin.findOne(options)
-    if (adminExist) {
-        return res.status(422).json({
-            details: [
-                {
-                    message: '"email" is already taken',
-                    path: ['email'],
-                    type: 'string.duplicate',
-                    context: {
-                        label: 'email',
-                        value: req.body.email,
-                        key: 'email',
-                    },
-                },
-            ],
-        })
-    }
-
-    let data = {
-        name: req.body.name,
-        email: req.body.email,
-        role: req.body.role,
-        active: req.body.status || false,
-        privileges: privileges.join(','),
-    }
-
-    if (req.body.id) {
-        if (req.body.password) {
-            data['password'] = bcrypt.hashSync(req.body.password, salt)
+        let privileges = req.body.privileges.split(',')
+        if (
+            !privileges.includes(
+                envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID
+            )
+        ) {
+            privileges.push(envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID)
         }
-        await Admin.updateOne(
-            {
-                _id: req.body.id,
-            },
-            data
-        )
-    } else {
-        data['password'] = bcrypt.hashSync(req.body.password, salt)
-        await Admin.create(data)
-    }
 
-    return res.status(200).json('done')
+        const schema = Joi.object({
+            name: Joi.string().required().min(3).max(60),
+            email: Joi.string().required().min(3).max(60),
+            password: Joi.string().allow('', null),
+            role: Joi.string()
+                .required()
+                .valid('super_admin', 'admin', 'editor', 'user', 'finance'),
+            status: Joi.boolean().required(),
+            privileges: Joi.string().required(),
+            id: Joi.optional(),
+        })
+
+        const validationResult = schema.validate(req.body, {
+            abortEarly: false,
+        })
+
+        if (validationResult.error) {
+            res.status(422).json(validationResult.error)
+            return
+        }
+
+        let options = {
+            email: req.body.email,
+            isDeleted: false,
+        }
+        if (req.body.id) {
+            options._id = { $ne: req.body.id }
+        }
+        const adminExist = await Admin.findOne(options)
+        if (adminExist) {
+            return res.status(422).json({
+                details: [
+                    {
+                        message: '"email" is already taken',
+                        path: ['email'],
+                        type: 'string.duplicate',
+                        context: {
+                            label: 'email',
+                            value: req.body.email,
+                            key: 'email',
+                        },
+                    },
+                ],
+            })
+        }
+
+        let data = {
+            name: req.body.name,
+            email: req.body.email,
+            role: req.body.role,
+            active: req.body.status || false,
+            privileges: privileges.join(','),
+        }
+
+        if (req.body.id) {
+            if (req.body.password) {
+                data['password'] = bcrypt.hashSync(req.body.password, salt)
+            }
+            await Admin.updateOne(
+                {
+                    _id: req.body.id,
+                },
+                data
+            )
+        } else {
+            data['password'] = bcrypt.hashSync(req.body.password, salt)
+            await Admin.create(data)
+        }
+
+        return res.status(200).json({
+            message: 'Admin saved successfully',
+        })
+    } catch (error) {
+        logError(error)
+        return res.status(500).json({ error: 'Something went wrong' })
+    }
 }
 
 const changeStatus = async (req, res) => {
@@ -157,6 +177,7 @@ const changeStatus = async (req, res) => {
             message: `Admin status changed`,
         })
     } catch (error) {
+        logError(error)
         return res.status(404).json({ error: 'Something went wrong' })
     }
 }
@@ -178,6 +199,7 @@ const deleteItem = async (req, res) => {
             message: `Admin Deleted`,
         })
     } catch (error) {
+        logError(error)
         return res.status(404).json({ error: 'Something went wrong' })
     }
 }

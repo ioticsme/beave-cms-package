@@ -1,6 +1,6 @@
 {
     "name": "beaver-cms",
-    "version": "1.2.7",
+    "version": "1.2.8",
     "description": "BeaverCMS - NPM Package",
     "publishConfig": {
         "access": "public"
@@ -68,7 +68,9 @@
         "sortablejs": "^1.15.0",
         "swagger-jsdoc": "^6.2.8",
         "swagger-ui-express": "^4.6.2",
-        "winston": "^3.8.2"
+        "timezones-list": "^3.1.0",
+        "winston": "^3.8.2",
+        "winston-daily-rotate-file": "^5.0.0"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.13",

@@ -3,6 +3,7 @@ const { joiPasswordExtendCore } = require('joi-password') // Import joiPassword 
 const joiPassword = Joi.extend(joiPasswordExtendCore) // Extend Joi with the joiPassword extension
 const bcrypt = require('bcryptjs') // Import bcrypt for hashing and comparing passwords
 const Admin = require('../../model/Admin') // Import the Admin model
+const { logError } = require('../../helper/Logger.helper')
 
 // Fetches and renders the profile details of the currently authenticated admin user
 const userDetail = async (req, res) => {
@@ -79,6 +80,7 @@ const profileUpdateSave = async (req, res) => {
             return res.status(401).json({ error: 'Invalid email or password' })
         }
     } catch (error) {
+        logError(error)
         // Catch any errors that occur and return a 404 error
         return res.status(404).json({ error: 'Something went wrong' })
     }
@@ -161,7 +163,7 @@ const changePasswordSave = async (req, res) => {
             return res.status(401).json({ error: 'Invalid password' })
         }
     } catch (error) {
-        console.log(error) // Log any errors that occur
+        logError(error) // Log any errors that occur
         // Catch any errors and return a 404 error
         return res.status(404).json({ error: 'Something went wrong' })
     }

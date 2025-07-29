@@ -4,6 +4,7 @@ const Brand = require('../model/Brand')
 const Country = require('../model/Country')
 const { getCache, setCache } = require('./Redis.helper')
 const Settings = require('../model/Settings')
+const { logError } = require('./Logger.helper')
 
 const getBrandsFromCache = async () => {
     const cacheKey = `${envConfig.cache.CACHE_KEY_PREFIX}-all-brands`
@@ -93,6 +94,7 @@ const getCountry = async (req) => {
         }
         return country
     } catch (error) {
+        logError(error)
         return null
     }
 }
@@ -125,6 +127,7 @@ const getBrand = async (req, country) => {
         brand.domain = domain
         return brand
     } catch (error) {
+        logError(error)
         return null
     }
 }
