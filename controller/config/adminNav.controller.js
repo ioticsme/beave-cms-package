@@ -69,7 +69,7 @@ const saveItem = async (req, res) => {
         }
 
         await AdminNav.updateOne(
-            { section: req.body.section },
+            { section: req.body.section, isDeleted: false },
             {
                 $push: {
                     items: {
@@ -118,7 +118,11 @@ const saveChild = async (req, res) => {
         }
 
         await AdminNav.updateOne(
-            { _id: req.body.section, 'items._id': req.body.item },
+            {
+                _id: req.body.section,
+                'items._id': req.body.item,
+                isDeleted: false,
+            },
             { $push: { 'items.$.child': newItem } }
         )
 
@@ -134,9 +138,12 @@ const saveChild = async (req, res) => {
 
 const deleteSection = async (req, res) => {
     try {
-        await AdminNav.deleteOne({
-            _id: req.params.id,
-        })
+        await AdminNav.updateOne(
+            {
+                _id: req.params.id,
+            },
+            { isDeleted: true, deletedAt: new Date() }
+        )
         return res.redirect('/admin/config/admin-nav')
     } catch (error) {
         logError(error)
@@ -147,7 +154,11 @@ const deleteSection = async (req, res) => {
 const deleteItem = async (req, res) => {
     try {
         await AdminNav.updateOne(
-            { section: req.params.section },
+            {
+                _id: req.params.section,
+                'items._id': req.params.id,
+                isDeleted: false,
+            },
             { $pull: { items: { _id: req.params.id } } }
         )
         return res.redirect('/admin/config/admin-nav')
@@ -161,7 +172,11 @@ const deleteChild = async (req, res) => {
     try {
         const itemToRemove = { _id: req.params.id }
         await AdminNav.updateOne(
-            { _id: req.params.section },
+            {
+                _id: req.params.section,
+                'items._id': req.params.item,
+                isDeleted: false,
+            },
             { $pull: { 'items.0.child': itemToRemove } }
         )
         return res.redirect('/admin/config/admin-nav')

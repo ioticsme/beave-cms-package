@@ -1,3 +1,4 @@
+const { logError } = require('../../helper/Logger.helper')
 const User = require('../../model/User') // Import the User model for database operations
 const AjaxPaginationCustomerResource = require('../../resources/api/ajaxPaginationCustomer.resource') // Import the resource for handling AJAX pagination
 
@@ -9,6 +10,7 @@ const list = async (req, res) => {
         // Render the customer listing page using AJAX for dynamic data loading
         res.render(`admin-njk/ecommerce/customers/listing-ajax`)
     } catch (error) {
+        logError(error)
         // If an error occurs, render a generic error page
         return res.render(`admin-njk/app-error-500`)
     }
@@ -40,7 +42,9 @@ const customers = async (req, res) => {
         }
 
         // Initialize the query object for filtering results
-        let query = {}
+        let query = {
+            isDeleted: false,
+        }
         // If a search term is provided, modify the query to search by first name
         if (req.query?.search?.value) {
             query = {
@@ -66,7 +70,7 @@ const customers = async (req, res) => {
             .status(200)
             .json(new AjaxPaginationCustomerResource(customers).exec())
     } catch (error) {
-        console.log(error) // Log the error for debugging
+        logError(error)
         // Return a generic error response
         return res.status(500).json({ error: 'Something went wrong' })
     }
@@ -76,12 +80,14 @@ const customers = async (req, res) => {
 const detail = async (req, res) => {
     try {
         // Find the user by ID and populate their associated cards
-        const user = await User.findOne({ _id: req.params.id }).populate(
-            'cards'
-        )
+        const user = await User.findOne({
+            _id: req.params.id,
+            isDeleted: false,
+        }).populate('cards')
         // Render the user detail page
         res.render(`admin-njk/ecommerce/customers/details`, { user })
     } catch (error) {
+        logError(error)
         // If an error occurs, render a generic error page
         return res.render(`admin-njk/app-error-500`)
     }
@@ -91,12 +97,16 @@ const detail = async (req, res) => {
 const activateUser = async (req, res) => {
     try {
         // Find the user by ID
-        const user = await User.findOne({ _id: req.params.id })
+        const user = await User.findOne({
+            _id: req.params.id,
+            isDeleted: false,
+        })
         user.active = !user.active // Toggle the active status
         await user.save() // Save the updated user status
         // Redirect back to the customer listing page
         res.redirect(`/admin/ecommerce/customers`)
     } catch (error) {
+        logError(error)
         // If an error occurs, render a generic error page
         return res.render(`admin-njk/app-error-500`)
     }

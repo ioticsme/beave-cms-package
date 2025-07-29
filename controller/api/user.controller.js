@@ -12,7 +12,10 @@ const { logError } = require('../../helper/Logger.helper')
 // user detail
 const detail = async (req, res) => {
     try {
-        const user = await User.findOne({ _id: req.authPublicUser._id })
+        const user = await User.findOne({
+            _id: req.authPublicUser._id,
+            isDeleted: false,
+        })
         if (!user) {
             return res.status(404).json({ error: 'User not found' })
         }
@@ -62,7 +65,7 @@ const editUser = async (req, res) => {
         }
         // Finding user
         let mobile = req.body.mobile.replace(/\D/g, '').replace(/^0+/, '')
-        const user = await User.findOne({ mobile })
+        const user = await User.findOne({ mobile, isDeleted: false })
         if (!user) {
             return res.status(404).json({ error: 'User not found' })
         }
@@ -71,6 +74,7 @@ const editUser = async (req, res) => {
         const isEmailExist = await User.findOne({
             _id: { $ne: user._id },
             email: req.body.email,
+            isDeleted: false,
         })
         if (isEmailExist) {
             return res.status(422).json({
@@ -91,6 +95,7 @@ const editUser = async (req, res) => {
         const update = await User.findOneAndUpdate(
             {
                 _id: user._id,
+                isDeleted: false,
             },
             {
                 $set: {
@@ -153,7 +158,10 @@ const changePassword = async (req, res) => {
             })
         }
         // Finding user
-        const user = await User.findOne({ _id: req.authPublicUser._id })
+        const user = await User.findOne({
+            _id: req.authPublicUser._id,
+            isDeleted: false,
+        })
 
         if (!user) {
             return res.status(404).json({ error: 'User not found' })
@@ -164,7 +172,7 @@ const changePassword = async (req, res) => {
             const salt = bcrypt.genSaltSync(saltRounds)
             // updating password
             const update = await User.findOneAndUpdate(
-                { _id: user._id },
+                { _id: user._id, isDeleted: false },
                 {
                     $set: {
                         password: bcrypt.hashSync(req.body.new_password, salt),

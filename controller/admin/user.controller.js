@@ -7,11 +7,16 @@ const User = require('../../model/User')
 const { logError } = require('../../helper/Logger.helper')
 
 const list = async (req, res) => {
-    const userList = await User.find().sort({ _id: -1 })
-    if (!userList) {
-        return res.status(404).json('Not Found')
+    try {
+        const userList = await User.find({ isDeleted: false }).sort({ _id: -1 })
+        if (!userList) {
+            return res.status(404).json('Not Found')
+        }
+        return res.render(`admin-njk/user/listing`, { userList })
+    } catch (error) {
+        logError(error)
+        return res.status(404).json({ error: 'Something went wrong' })
     }
-    return res.render(`admin-njk/user/listing`, { userList })
 }
 
 const changeStatus = async (req, res) => {
@@ -26,6 +31,7 @@ const changeStatus = async (req, res) => {
         const update = await User.findOneAndUpdate(
             {
                 _id: id,
+                isDeleted: false,
                 // brand: req.authUser.brand._id,
                 // country: req.authUser.brand.country,
             },
@@ -50,29 +56,38 @@ const changeStatus = async (req, res) => {
 }
 
 const userDetail = async (req, res) => {
-    const userDetails = await Admin.findOne({
-        _id: req.authUser.admin_id,
-        isDeleted: false,
-    })
+    try {
+        const userDetails = await Admin.findOne({
+            _id: req.authUser.admin_id,
+            isDeleted: false,
+        })
 
-    if (!userDetail) {
-        res.status(404).json('Not Found')
-        return
+        if (!userDetail) {
+            return res.status(404).json('Not Found')
+        }
+        return res.render(`admin-njk/user/profile`, { userDetails })
+    } catch (error) {
+        logError(error)
+        return res.status(404).json({ error: 'Something went wrong' })
     }
-    res.render(`admin-njk/user/profile`, { userDetails })
 }
 
 const profileUpdate = async (req, res) => {
-    const userDetails = await Admin.findOne({
-        _id: req.authUser.admin_id,
-        isDeleted: false,
-    })
+    try {
+        const userDetails = await Admin.findOne({
+            _id: req.authUser.admin_id,
+            isDeleted: false,
+        })
 
-    if (!userDetail) {
-        res.status(404).json('Not Found')
-        return
+        if (!userDetail) {
+            res.status(404).json('Not Found')
+            return
+        }
+        res.render(`admin-njk/user/update-profile`, { userDetails })
+    } catch (error) {
+        logError(error)
+        return res.status(404).json({ error: 'Something went wrong' })
     }
-    res.render(`admin-njk/user/update-profile`, { userDetails })
 }
 
 const profileUpdateSave = async (req, res) => {

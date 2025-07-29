@@ -1,5 +1,4 @@
 const { mongoose, Schema } = require('mongoose')
-const mongooseDelete = require('mongoose-delete')
 const uniqueValidator = require('mongoose-unique-validator')
 
 const AdminNavSchema = new mongoose.Schema(
@@ -32,6 +31,14 @@ const AdminNavSchema = new mongoose.Schema(
                 ],
             },
         ],
+        isDeleted: {
+            type: Boolean,
+            default: false,
+        },
+        deletedAt: {
+            type: Date,
+            default: null,
+        },
     },
     {
         timestamps: {
@@ -41,7 +48,6 @@ const AdminNavSchema = new mongoose.Schema(
     }
 )
 
-AdminNavSchema.plugin(mongooseDelete, { overrideMethods: true })
 AdminNavSchema.plugin(uniqueValidator)
 
 module.exports = mongoose.model('AdminNav', AdminNavSchema)

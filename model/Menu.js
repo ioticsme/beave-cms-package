@@ -1,5 +1,4 @@
 const { mongoose, Schema } = require('mongoose')
-const mongooseDelete = require('mongoose-delete')
 const Brand = require('./Brand')
 const Country = require('./Country')
 
@@ -89,6 +88,14 @@ const MenuSchema = new mongoose.Schema(
                 ],
             }),
         ],
+        isDeleted: {
+            type: Boolean,
+            default: false,
+        },
+        deletedAt: {
+            type: Date,
+            default: null,
+        },
     },
     {
         timestamps: {
@@ -97,7 +104,5 @@ const MenuSchema = new mongoose.Schema(
         },
     }
 )
-
-MenuSchema.plugin(mongooseDelete, { overrideMethods: true })
 
 module.exports = mongoose.model('Menu', MenuSchema)

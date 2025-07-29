@@ -72,6 +72,7 @@ const list = async (req, res) => {
         const forms = await CustomForm.find({
             brand: session.brand._id,
             country: session.brand.country,
+            isDeleted: false,
         })
         return res.render(`admin-njk/custom-forms/listing`, {
             data: forms,
@@ -88,6 +89,7 @@ const edit = async (req, res) => {
             _id: req.params.id,
             brand: session.brand._id,
             country: session.brand.country,
+            isDeleted: false,
         })
         const contentTypes = await ContentType.find()
         const config = await Config.findOne()
@@ -115,6 +117,7 @@ const viewAPI = async (req, res) => {
             _id: req.params.id,
             brand: session.brand._id,
             country: session.brand.country,
+            isDeleted: false,
         })
             .populate('brand')
             .populate('country')
@@ -335,6 +338,7 @@ const save = async (req, res) => {
         if (!isEdit) {
             const isExist = await CustomForm.findOne({
                 type: slugify(body.form_name.en.toLowerCase()),
+                isDeleted: false,
             })
             if (isExist) {
                 return res
@@ -369,7 +373,10 @@ const save = async (req, res) => {
 
         if (isEdit) {
             // Update banner
-            const update = await CustomForm.updateOne({ _id: body.id }, data)
+            const update = await CustomForm.updateOne(
+                { _id: body.id, isDeleted: false },
+                data
+            )
             return res
                 .status(201)
                 .json({ message: 'Custom Form updated successfully' })
@@ -402,6 +409,7 @@ const changeStatus = async (req, res) => {
                 _id: id,
                 brand: req.authUser.brand._id,
                 country: req.authUser.brand.country,
+                isDeleted: false,
             },
             {
                 $set: {
@@ -429,11 +437,19 @@ const deleteForm = async (req, res) => {
             return res.status(404).json({ error: 'Id not found' })
         }
 
-        await CustomForm.delete({
-            _id: id,
-            brand: req.authUser.brand._id,
-            country: req.authUser.brand.country,
-        })
+        await CustomForm.updateOne(
+            {
+                _id: id,
+                brand: req.authUser.brand._id,
+                country: req.authUser.brand.country,
+            },
+            {
+                $set: {
+                    isDeleted: true,
+                    deletedAt: new Date(),
+                },
+            }
+        )
         return res.status(200).json({
             message: 'Custom form deleted',
         })
@@ -455,6 +471,7 @@ const viewSubmissions = async (req, res) => {
             form_id: req.params.id,
             brand: session.brand._id,
             country: session.brand.country,
+            isDeleted: false,
         }).sort({ _id: -1 })
 
         // const fields = form.fields
@@ -479,6 +496,7 @@ const viewSubmission = async (req, res) => {
 
         const customForm = await CustomForm.findOne({
             _id: req.params.formId,
+            isDeleted: false,
         })
 
         if (!customForm) {
@@ -542,6 +560,7 @@ const exportSubmissions = async (req, res) => {
     try {
         const form = await CustomForm.findOne({
             _id: req.params.id,
+            isDeleted: false,
         })
         if (!form) {
             return workbook.xlsx.write(res).then(function () {

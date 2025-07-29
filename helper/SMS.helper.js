@@ -69,6 +69,7 @@ async function sendOrderSms(payload) {
     if (payload && payload.has_otp) {
         const user = await User.findOne({
             _id: payload.order.user._id,
+            isDeleted: false,
         })
         // console.log('SENDING SMS TO: ', user.mobile)
         sendTransactionOTP(user.mobile, payload.generic_details.brand.name.en)

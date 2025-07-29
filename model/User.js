@@ -1,6 +1,5 @@
 const { formatInTimeZone } = require('date-fns-tz')
 const { mongoose, Schema } = require('mongoose')
-const mongooseDelete = require('mongoose-delete')
 const mongoosePaginate = require('mongoose-paginate-v2')
 
 const UserSchema = new Schema(
@@ -89,6 +88,14 @@ const UserSchema = new Schema(
             type: Boolean,
             default: true,
         },
+        isDeleted: {
+            type: Boolean,
+            default: false,
+        },
+        deletedAt: {
+            type: Date,
+            default: null,
+        },
     },
     {
         timestamps: {
@@ -98,7 +105,6 @@ const UserSchema = new Schema(
     }
 )
 
-UserSchema.plugin(mongooseDelete, { overrideMethods: true })
 UserSchema.plugin(mongoosePaginate)
 
 UserSchema.virtual('full_name').get(function () {

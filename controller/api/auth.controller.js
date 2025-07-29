@@ -59,6 +59,7 @@ const loginSubmit = async (req, res) => {
         let user = await User.findOne({
             email: req.body.email,
             active: true,
+            isDeleted: false,
         })
 
         if (!user) {
@@ -219,6 +220,7 @@ const socialLoginSubmit = async (req, res) => {
             // email: { $regex: req.body.email, $options: 'i' },
             email: profile.email,
             active: true,
+            isDeleted: false,
         })
 
         const ip = await getRequestIp(req)
@@ -270,6 +272,7 @@ const socialLoginSubmit = async (req, res) => {
 
             const promotions = await Content.find({
                 type_slug: 'promotion',
+                isDeleted: false,
             })
                 .limit(4)
                 .select('content')
@@ -497,6 +500,7 @@ const updateMobileNo = async (req, res) => {
         let user = await User.findOne({
             email: profile.email,
             active: true,
+            isDeleted: false,
         })
 
         if (!user) {
@@ -504,7 +508,7 @@ const updateMobileNo = async (req, res) => {
         }
 
         let mobile = req.body.mobile.replace(/\D/g, '').replace(/^0+/, '')
-        const isMobileExist = await User.findOne({ mobile })
+        const isMobileExist = await User.findOne({ mobile, isDeleted: false })
 
         if (isMobileExist) {
             return res.status(422).json({
@@ -610,8 +614,11 @@ const signupSubmit = async (req, res) => {
 
     try {
         let mobile = req.body.mobile.replace(/\D/g, '').replace(/^0+/, '')
-        const isMobileExist = await User.findOne({ mobile })
-        const isEmailExist = await User.findOne({ email: req.body.email })
+        const isMobileExist = await User.findOne({ mobile, isDeleted: false })
+        const isEmailExist = await User.findOne({
+            email: req.body.email,
+            isDeleted: false,
+        })
 
         if (isMobileExist) {
             return res.status(422).json({
@@ -745,6 +752,7 @@ const otpVerification = async (req, res) => {
         const user = await User.findOne({
             mobile: req.body.mobile,
             active: true,
+            isDeleted: false,
         })
 
         if (!user) {
@@ -767,11 +775,12 @@ const otpVerification = async (req, res) => {
         const isValid = await authenticator.check(otp, mobile)
         // If otp verified
         if (isValid) {
-            const user = await User.findOne({ mobile })
+            const user = await User.findOne({ mobile, isDeleted: false })
             //updating user
             const update = await User.findOneAndUpdate(
                 {
                     mobile,
+                    isDeleted: false,
                 },
                 {
                     $set: {
@@ -878,6 +887,7 @@ const resendOTP = async (req, res) => {
         const user = await User.findOne({
             mobile: req.body.mobile,
             active: true,
+            isDeleted: false,
         })
 
         if (!user) {
@@ -923,6 +933,7 @@ const resendOTP = async (req, res) => {
         await User.findOneAndUpdate(
             {
                 mobile: req.body.mobile,
+                isDeleted: false,
             },
             {
                 $set: {
@@ -1013,10 +1024,15 @@ const forgotCredentials = async (req, res) => {
             user = await User.findOne({
                 email: req.body.auth_key,
                 active: true,
+                isDeleted: false,
             })
         } else if (isMobile) {
             let value = req.body.auth_key.replace(/\D/g, '').replace(/^0+/, '')
-            user = await User.findOne({ mobile: value, active: true })
+            user = await User.findOne({
+                mobile: value,
+                active: true,
+                isDeleted: false,
+            })
         }
         if (!user) {
             return res.status(200).json({
@@ -1196,7 +1212,7 @@ const verifyForgotOTP = async (req, res) => {
                 let value = req.body.auth_key
                     .replace(/\D/g, '')
                     .replace(/^0+/, '')
-                user = await User.findOne({ mobile: value })
+                user = await User.findOne({ mobile: value, isDeleted: false })
             }
             if (!user) {
                 return res.status(404).json({ error: 'User not found' })
@@ -1250,6 +1266,7 @@ const verifyForgotOTP = async (req, res) => {
                         { mobile: req.body.auth_key },
                         { email: req.body.auth_key },
                     ],
+                    isDeleted: false,
                 },
                 {
                     $inc: {

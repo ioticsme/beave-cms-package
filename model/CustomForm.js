@@ -1,6 +1,5 @@
 const { formatInTimeZone } = require('date-fns-tz')
 const { mongoose, Schema } = require('mongoose')
-const mongooseDelete = require('mongoose-delete')
 
 const CustomFormSchema = new mongoose.Schema(
     {
@@ -116,6 +115,14 @@ const CustomFormSchema = new mongoose.Schema(
             ref: 'Country',
             required: true,
         },
+        isDeleted: {
+            type: Boolean,
+            default: false,
+        },
+        deletedAt: {
+            type: Date,
+            default: null,
+        },
     },
     {
         timestamps: {
@@ -124,8 +131,6 @@ const CustomFormSchema = new mongoose.Schema(
         },
     }
 )
-
-CustomFormSchema.plugin(mongooseDelete, { overrideMethods: true })
 
 CustomFormSchema.virtual('date_booked').get(function () {
     return formatInTimeZone(

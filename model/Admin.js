@@ -1,5 +1,4 @@
 const { mongoose, Schema } = require('mongoose')
-// const mongooseDelete = require('mongoose-delete')
 const uniqueValidator = require('mongoose-unique-validator')
 const Brand = require('./Brand')
 const Country = require('./Country')
@@ -40,14 +39,6 @@ const AdminSchema = new mongoose.Schema(
             type: Boolean,
             default: true,
         },
-        isDeleted: {
-            type: Boolean,
-            default: false,
-        },
-        deletedAt: {
-            type: Date,
-            default: null,
-        },
     },
     {
         timestamps: {
@@ -57,7 +48,6 @@ const AdminSchema = new mongoose.Schema(
     }
 )
 
-// AdminSchema.plugin(mongooseDelete, { overrideMethods: true })
 AdminSchema.plugin(uniqueValidator)
 
 module.exports = mongoose.model('Admin', AdminSchema)

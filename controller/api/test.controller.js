@@ -44,7 +44,7 @@ const populateTest = async (req, res) => {
     // await testData.save()
     // return res.json(testData)
     let cf = await Content.aggregate([
-        { $match: { type_slug: 'post', published: true } },
+        { $match: { type_slug: 'post', published: true, isDeleted: false } },
         {
             $lookup: {
                 from: 'countries',

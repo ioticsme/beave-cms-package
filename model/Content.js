@@ -1,6 +1,5 @@
 const { mongoose, Schema } = require('mongoose')
 const { formatInTimeZone } = require('date-fns-tz')
-const mongooseDelete = require('mongoose-delete')
 
 const ContentSchema = new mongoose.Schema(
     {
@@ -86,6 +85,14 @@ const ContentSchema = new mongoose.Schema(
             },
         ],
         meta: {},
+        isDeleted: {
+            type: Boolean,
+            default: false,
+        },
+        deletedAt: {
+            type: Date,
+            default: null,
+        },
     },
     {
         timestamps: {
@@ -96,8 +103,6 @@ const ContentSchema = new mongoose.Schema(
         // toJSON: { virtuals: true },
     }
 )
-
-ContentSchema.plugin(mongooseDelete, { overrideMethods: true })
 
 ContentSchema.virtual('date_created').get(function () {
     return formatInTimeZone(
