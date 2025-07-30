@@ -18,7 +18,7 @@ const customFormSubmit = async (req, res) => {
             brand: req.brand,
             country: req.country,
             published: true,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
         if (!customForm?._id) {
             return res.status(422).json({ error: 'Invalid custom form' })

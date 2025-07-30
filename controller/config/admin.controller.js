@@ -11,7 +11,7 @@ const { logError } = require('../../helper/Logger.helper')
 
 const list = async (req, res) => {
     try {
-        const admins = await Admin.find({ isDeleted: false })
+        const admins = await Admin.find({ deleted: { $ne: true } })
         return res.render('admin-njk/config/admin/listing', {
             admins,
         })
@@ -43,7 +43,7 @@ const edit = async (req, res) => {
         const config_privilege_routes = await getPrivileges(req)
         const admin = await Admin.findOne({
             _id: req.params.id,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
 
         return res.render('admin-njk/config/admin/form', {
@@ -97,7 +97,7 @@ const save = async (req, res) => {
 
         let options = {
             email: req.body.email,
-            isDeleted: false,
+            deleted: { $ne: true },
         }
         if (req.body.id) {
             options._id = { $ne: req.body.id }
@@ -162,7 +162,7 @@ const changeStatus = async (req, res) => {
 
         // Update status field
         const update = await Admin.findOneAndUpdate(
-            { _id: id, role: { $ne: 'super_admin' }, isDeleted: false },
+            { _id: id, role: { $ne: 'super_admin' }, deleted: { $ne: true } },
             {
                 $set: {
                     active: !status,
@@ -192,8 +192,8 @@ const deleteItem = async (req, res) => {
 
         //soft delete item
         await Admin.updateOne(
-            { _id: id, role: { $ne: 'super_admin' }, isDeleted: false },
-            { $set: { isDeleted: true, deletedAt: new Date() } }
+            { _id: id, role: { $ne: 'super_admin' }, deleted: { $ne: true } },
+            { $set: { deleted: true, deleted_at: new Date() } }
         )
         return res.status(200).json({
             message: `Admin Deleted`,

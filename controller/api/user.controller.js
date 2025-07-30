@@ -14,7 +14,7 @@ const detail = async (req, res) => {
     try {
         const user = await User.findOne({
             _id: req.authPublicUser._id,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
         if (!user) {
             return res.status(404).json({ error: 'User not found' })
@@ -65,7 +65,7 @@ const editUser = async (req, res) => {
         }
         // Finding user
         let mobile = req.body.mobile.replace(/\D/g, '').replace(/^0+/, '')
-        const user = await User.findOne({ mobile, isDeleted: false })
+        const user = await User.findOne({ mobile, deleted: { $ne: true } })
         if (!user) {
             return res.status(404).json({ error: 'User not found' })
         }
@@ -74,7 +74,7 @@ const editUser = async (req, res) => {
         const isEmailExist = await User.findOne({
             _id: { $ne: user._id },
             email: req.body.email,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
         if (isEmailExist) {
             return res.status(422).json({
@@ -95,7 +95,7 @@ const editUser = async (req, res) => {
         const update = await User.findOneAndUpdate(
             {
                 _id: user._id,
-                isDeleted: false,
+                deleted: { $ne: true },
             },
             {
                 $set: {
@@ -160,7 +160,7 @@ const changePassword = async (req, res) => {
         // Finding user
         const user = await User.findOne({
             _id: req.authPublicUser._id,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
 
         if (!user) {
@@ -172,7 +172,7 @@ const changePassword = async (req, res) => {
             const salt = bcrypt.genSaltSync(saltRounds)
             // updating password
             const update = await User.findOneAndUpdate(
-                { _id: user._id, isDeleted: false },
+                { _id: user._id, deleted: { $ne: true } },
                 {
                     $set: {
                         password: bcrypt.hashSync(req.body.new_password, salt),

@@ -38,7 +38,7 @@ const list = async (req, res) => {
                         },
                         country: mongoose.Types.ObjectId(req.country._id),
                         $or: [{ status: 'published' }, { status: 'scheduled' }],
-                        isDeleted: false,
+                        deleted: { $ne: true },
                     })
                         .sort('position')
                         .populate('author')
@@ -99,7 +99,7 @@ const list = async (req, res) => {
                                 // ],
                             },
                         ],
-                        isDeleted: false,
+                        deleted: { $ne: true },
                     })
                         .sort('position')
                         .populate('author')
@@ -236,7 +236,7 @@ const detail = async (req, res) => {
                         brand: mongoose.Types.ObjectId(req.brand._id),
                         slug: req.params.slug,
                         $or: [{ status: 'published' }, { status: 'scheduled' }],
-                        isDeleted: false,
+                        deleted: { $ne: true },
                     })
                         .populate('author')
                         .populate('country')
@@ -265,7 +265,7 @@ const detail = async (req, res) => {
                         const attached_contents_db_data = await Content.find({
                             _id: { $in: attach_content_ids },
                             brand: req.brand._id,
-                            isDeleted: false,
+                            deleted: { $ne: true },
                         }).select('-meta')
                         const mapped_attached_data = ContentResource.collection(
                             attached_contents_db_data
@@ -344,7 +344,7 @@ const generateStaticPath = async (req, res) => {
             type_id: contentType._id,
             //brand: req.brand._id,
             // country: req.country._id,
-            isDeleted: false,
+            deleted: { $ne: true },
             published: true,
         })
             .select('country slug')

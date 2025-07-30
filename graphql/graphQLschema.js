@@ -60,7 +60,7 @@ const resolvers = {
 
         // Fetching all admins
         admins: async () => {
-            return await Admin.find({ isDeleted: false })
+            return await Admin.find({ deleted: { $ne: true } })
         },
     },
 }

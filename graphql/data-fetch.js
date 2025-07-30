@@ -17,7 +17,7 @@ const getContentSingleFromDB = async (id) => {
     try {
         const content = await Content.findOne({
             _id: id,
-            isDeleted: false,
+            deleted: { $ne: true },
         }) // Fetch all contents from the database
         return content
     } catch (error) {

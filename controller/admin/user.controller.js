@@ -8,7 +8,9 @@ const { logError } = require('../../helper/Logger.helper')
 
 const list = async (req, res) => {
     try {
-        const userList = await User.find({ isDeleted: false }).sort({ _id: -1 })
+        const userList = await User.find({ deleted: { $ne: true } }).sort({
+            _id: -1,
+        })
         if (!userList) {
             return res.status(404).json('Not Found')
         }
@@ -31,7 +33,7 @@ const changeStatus = async (req, res) => {
         const update = await User.findOneAndUpdate(
             {
                 _id: id,
-                isDeleted: false,
+                deleted: { $ne: true },
                 // brand: req.authUser.brand._id,
                 // country: req.authUser.brand.country,
             },
@@ -59,7 +61,7 @@ const userDetail = async (req, res) => {
     try {
         const userDetails = await Admin.findOne({
             _id: req.authUser.admin_id,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
 
         if (!userDetail) {
@@ -76,7 +78,7 @@ const profileUpdate = async (req, res) => {
     try {
         const userDetails = await Admin.findOne({
             _id: req.authUser.admin_id,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
 
         if (!userDetail) {
@@ -108,7 +110,7 @@ const profileUpdateSave = async (req, res) => {
     try {
         const admin = await Admin.findOne({
             _id: req.authUser.admin_id,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
 
         if (bcrypt.compareSync(req.body.password, admin.password)) {
@@ -130,7 +132,7 @@ const profileUpdateSave = async (req, res) => {
 const changePassword = async (req, res) => {
     const userDetails = await Admin.findOne({
         _id: req.authUser.admin_id,
-        isDeleted: false,
+        deleted: { $ne: true },
     })
 
     if (!userDetail) {
@@ -172,7 +174,7 @@ const changePasswordSave = async (req, res) => {
     try {
         const admin = await Admin.findOne({
             _id: req.authUser.admin_id,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
 
         if (bcrypt.compareSync(req.body.password, admin.password)) {

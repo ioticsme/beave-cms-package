@@ -72,7 +72,7 @@ const list = async (req, res) => {
         const forms = await CustomForm.find({
             brand: session.brand._id,
             country: session.brand.country,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
         return res.render(`admin-njk/custom-forms/listing`, {
             data: forms,
@@ -89,7 +89,7 @@ const edit = async (req, res) => {
             _id: req.params.id,
             brand: session.brand._id,
             country: session.brand.country,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
         const contentTypes = await ContentType.find()
         const config = await Config.findOne()
@@ -117,7 +117,7 @@ const viewAPI = async (req, res) => {
             _id: req.params.id,
             brand: session.brand._id,
             country: session.brand.country,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
             .populate('brand')
             .populate('country')
@@ -338,7 +338,7 @@ const save = async (req, res) => {
         if (!isEdit) {
             const isExist = await CustomForm.findOne({
                 type: slugify(body.form_name.en.toLowerCase()),
-                isDeleted: false,
+                deleted: { $ne: true },
             })
             if (isExist) {
                 return res
@@ -374,7 +374,7 @@ const save = async (req, res) => {
         if (isEdit) {
             // Update banner
             const update = await CustomForm.updateOne(
-                { _id: body.id, isDeleted: false },
+                { _id: body.id, deleted: { $ne: true } },
                 data
             )
             return res
@@ -409,7 +409,7 @@ const changeStatus = async (req, res) => {
                 _id: id,
                 brand: req.authUser.brand._id,
                 country: req.authUser.brand.country,
-                isDeleted: false,
+                deleted: { $ne: true },
             },
             {
                 $set: {
@@ -445,8 +445,8 @@ const deleteForm = async (req, res) => {
             },
             {
                 $set: {
-                    isDeleted: true,
-                    deletedAt: new Date(),
+                    deleted: true,
+                    deleted_at: new Date(),
                 },
             }
         )
@@ -471,7 +471,7 @@ const viewSubmissions = async (req, res) => {
             form_id: req.params.id,
             brand: session.brand._id,
             country: session.brand.country,
-            isDeleted: false,
+            deleted: { $ne: true },
         }).sort({ _id: -1 })
 
         // const fields = form.fields
@@ -496,7 +496,7 @@ const viewSubmission = async (req, res) => {
 
         const customForm = await CustomForm.findOne({
             _id: req.params.formId,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
 
         if (!customForm) {
@@ -560,7 +560,7 @@ const exportSubmissions = async (req, res) => {
     try {
         const form = await CustomForm.findOne({
             _id: req.params.id,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
         if (!form) {
             return workbook.xlsx.write(res).then(function () {

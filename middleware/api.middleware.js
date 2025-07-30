@@ -156,7 +156,7 @@ const getNav = async (req, res, next) => {
                         brand: req.brand,
                         country: req.country,
                         'nav_items.active': true,
-                        isDeleted: false,
+                        deleted: { $ne: true },
                     }).select('-country -brand -created_at -updated_at -__v')
 
                     let liveData = []

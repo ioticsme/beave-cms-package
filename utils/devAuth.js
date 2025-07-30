@@ -6,7 +6,7 @@ const { getBrandSettings } = require('../helper/Cache.helper')
 
 const devAuth = async (req, res, next) => {
     if (!req.session?.brand?._id) {
-        const admin = await Admin.findOne({ isDeleted: false })
+        const admin = await Admin.findOne({ deleted: { $ne: true } })
         const brand = await Brand.findOne()
             .sort({ position: 1 })
             .populate({

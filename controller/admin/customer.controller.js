@@ -43,7 +43,7 @@ const customers = async (req, res) => {
 
         // Initialize the query object for filtering results
         let query = {
-            isDeleted: false,
+            deleted: { $ne: true },
         }
         // If a search term is provided, modify the query to search by first name
         if (req.query?.search?.value) {
@@ -82,7 +82,7 @@ const detail = async (req, res) => {
         // Find the user by ID and populate their associated cards
         const user = await User.findOne({
             _id: req.params.id,
-            isDeleted: false,
+            deleted: { $ne: true },
         }).populate('cards')
         // Render the user detail page
         res.render(`admin-njk/ecommerce/customers/details`, { user })
@@ -99,7 +99,7 @@ const activateUser = async (req, res) => {
         // Find the user by ID
         const user = await User.findOne({
             _id: req.params.id,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
         user.active = !user.active // Toggle the active status
         await user.save() // Save the updated user status

@@ -10,7 +10,7 @@ const menuList = async (req, res) => {
             brand: req.brand,
             country: req.country,
             nav_position: req.query?.type,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
         res.status(200).json(MenuResource.collection(menus))
     } catch (error) {

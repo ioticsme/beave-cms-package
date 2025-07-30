@@ -10,7 +10,7 @@ const homePage = async (req, res) => {
             country: req.country._id,
             published: true,
             in_home: true,
-            isDeleted: false,
+            deleted: { $ne: true },
             // [`content.${req.language || 'en'}.in_home`]: true,
         })
             .sort('position')

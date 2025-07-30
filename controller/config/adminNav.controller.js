@@ -69,7 +69,7 @@ const saveItem = async (req, res) => {
         }
 
         await AdminNav.updateOne(
-            { section: req.body.section, isDeleted: false },
+            { section: req.body.section, deleted: { $ne: true } },
             {
                 $push: {
                     items: {
@@ -121,7 +121,7 @@ const saveChild = async (req, res) => {
             {
                 _id: req.body.section,
                 'items._id': req.body.item,
-                isDeleted: false,
+                deleted: { $ne: true },
             },
             { $push: { 'items.$.child': newItem } }
         )
@@ -142,7 +142,7 @@ const deleteSection = async (req, res) => {
             {
                 _id: req.params.id,
             },
-            { isDeleted: true, deletedAt: new Date() }
+            { deleted: true, deleted_at: new Date() }
         )
         return res.redirect('/admin/config/admin-nav')
     } catch (error) {
@@ -157,7 +157,7 @@ const deleteItem = async (req, res) => {
             {
                 _id: req.params.section,
                 'items._id': req.params.id,
-                isDeleted: false,
+                deleted: { $ne: true },
             },
             { $pull: { items: { _id: req.params.id } } }
         )
@@ -175,7 +175,7 @@ const deleteChild = async (req, res) => {
             {
                 _id: req.params.section,
                 'items._id': req.params.item,
-                isDeleted: false,
+                deleted: { $ne: true },
             },
             { $pull: { 'items.0.child': itemToRemove } }
         )

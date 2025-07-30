@@ -28,7 +28,7 @@ const list = async (req, res) => {
             type_id: req.contentType._id,
             brand: session.brand._id,
             country: session.brand.country,
-            isDeleted: false,
+            deleted: { $ne: true },
         }).sort('position')
 
         if (req.contentType.single_type) {
@@ -69,7 +69,7 @@ const detail = async (req, res) => {
             type_id: req.contentType._id,
             brand: session.brand._id,
             country: session.brand.country,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
             .populate('author revisions.editor last_edited_user')
             .lean()
@@ -132,7 +132,7 @@ const duplicateContent = async (req, res) => {
             type_id: req.contentType._id,
             brand: session.brand._id,
             country: session.brand.country,
-            isDeleted: false,
+            deleted: { $ne: true },
         }).lean()
 
         if (!contentDetail) {
@@ -167,7 +167,7 @@ const duplicateSingleTypeContent = async (req, res) => {
             type_id: req.contentType._id,
             brand: session.brand._id,
             country: session.brand.country,
-            isDeleted: false,
+            deleted: { $ne: true },
         }).lean()
 
         if (!contentDetail) {
@@ -272,7 +272,7 @@ const generateSlugForContent = async (
         slug: newSlug,
         brand: authUser.brand._id,
         country: authUser.brand.country,
-        isDeleted: false,
+        deleted: { $ne: true },
     })
 
     if (isDBExist) {
@@ -297,7 +297,7 @@ const add = async (req, res) => {
                 country: session?.brand?.country,
                 status: 'published',
                 type_slug: { $in: req.contentType.allowed_type },
-                isDeleted: false,
+                deleted: { $ne: true },
             })
             const collection = collect(data)
             const grouped = collection.groupBy('type_slug')
@@ -318,7 +318,7 @@ const add = async (req, res) => {
                 brand: session?.brand?._id,
                 country: session?.brand?.country,
                 published: true,
-                isDeleted: false,
+                deleted: { $ne: true },
             })
         }
 
@@ -352,7 +352,7 @@ const edit = async (req, res) => {
             type_id: req.contentType._id,
             brand: session.brand._id,
             country: session.brand.country,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
 
         if (!contentDetail) {
@@ -365,7 +365,7 @@ const edit = async (req, res) => {
                 country: session?.brand?.country,
                 status: 'published',
                 type_slug: { $in: req.contentType.allowed_type },
-                isDeleted: false,
+                deleted: { $ne: true },
             })
             const collection = collect(data)
             const grouped = collection.groupBy('type_slug')
@@ -378,7 +378,7 @@ const edit = async (req, res) => {
                 brand: session?.brand?._id,
                 country: session?.brand?.country,
                 published: true,
-                isDeleted: false,
+                deleted: { $ne: true },
             })
         }
 
@@ -427,7 +427,7 @@ const deleteContent = async (req, res) => {
                 brand: req.authUser.brand._id,
                 country: req.authUser.brand.country,
             },
-            { isDeleted: true, deletedAt: new Date() }
+            { deleted: true, deleted_at: new Date() }
         )
 
         // :TODO: Remove cache
@@ -462,7 +462,7 @@ const changeStatus = async (req, res) => {
                 _id: id,
                 brand: req.authUser.brand._id,
                 country: req.authUser.brand.country,
-                isDeleted: false,
+                deleted: { $ne: true },
             },
             {
                 $set: {
@@ -597,13 +597,13 @@ const savePageBuilderContent = async (req, res) => {
             //     : slugify(body.title?.en?.toLowerCase())
             const existingContent = await Content.findOne({
                 _id: req.body._id,
-                isDeleted: false,
+                deleted: { $ne: true },
             })
             const collection_cache_key = `${envConfig.cache.CACHE_KEY_PREFIX}-content-${req.authUser.brand.code}-${countryCode}-${type.slug}`
             const single_item_cache_key = `${envConfig.cache.CACHE_KEY_PREFIX}-content-${req.authUser.brand.code}-${countryCode}-${type.slug}-${existingContent.slug}`
             // Update content
             await Content.updateOne(
-                { _id: req.body._id, isDeleted: false },
+                { _id: req.body._id, deleted: { $ne: true } },
                 data
             )
             Redis.removeCache([collection_cache_key, single_item_cache_key])
@@ -990,7 +990,7 @@ const saveDefaultContent = async (req, res) => {
 
             const existingContent = await Content.findOne({
                 _id: req.body._id,
-                isDeleted: false,
+                deleted: { $ne: true },
             })
 
             data.last_edited_user = req.authUser.admin_id
@@ -1003,7 +1003,7 @@ const saveDefaultContent = async (req, res) => {
             const single_item_cache_key = `${envConfig.cache.CACHE_KEY_PREFIX}-content-${req.authUser.brand.code}-${countryCode}-${type.slug}-${existingContent.slug}`
             // Update content
             await Content.updateOne(
-                { _id: req.body._id, isDeleted: false },
+                { _id: req.body._id, deleted: { $ne: true } },
                 data
             )
             Redis.removeCache([collection_cache_key, single_item_cache_key])
@@ -1038,7 +1038,7 @@ const loadEditorData = async (req, res) => {
             type_id: req.contentType._id,
             // brand: session.brand._id,
             country: req.authUser.brand.country,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
         // const html_data = await HtmlBuilder.findOne({
         //     _id: req.params.id,
@@ -1095,7 +1095,7 @@ const savePageBuilderData = async (req, res) => {
 
         const page = await Content.findOne({
             _id: req.body.id,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
         if (!page) {
             return res.status(404).json({
@@ -1105,7 +1105,7 @@ const savePageBuilderData = async (req, res) => {
         await Content.updateOne(
             {
                 _id: req.body.id,
-                isDeleted: false,
+                deleted: { $ne: true },
             },
             {
                 $set: {
@@ -1129,7 +1129,7 @@ const previewPageBuildData = async (req, res) => {
     try {
         const html_data = await Content.findOne({
             _id: req.params.id,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
         return res.render('admin-njk/cms/content/html-builder/view', {
             html_data: html_data.content[req.query.lang],

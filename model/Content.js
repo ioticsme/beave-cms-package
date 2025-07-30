@@ -85,11 +85,11 @@ const ContentSchema = new mongoose.Schema(
             },
         ],
         meta: {},
-        isDeleted: {
+        deleted: {
             type: Boolean,
             default: false,
         },
-        deletedAt: {
+        deleted_at: {
             type: Date,
             default: null,
         },

@@ -115,11 +115,11 @@ const CustomFormSchema = new mongoose.Schema(
             ref: 'Country',
             required: true,
         },
-        isDeleted: {
+        deleted: {
             type: Boolean,
             default: false,
         },
-        deletedAt: {
+        deleted_at: {
             type: Date,
             default: null,
         },

@@ -12,7 +12,7 @@ const listMenu = async (req, res) => {
         const menus = await Menu.find({
             brand: req.authUser?.brand?._id,
             country: req.authUser?.brand?.country,
-            isDeleted: false,
+            deleted: { $ne: true },
         }).sort({ position: 1 })
 
         // Render the menu listing page and pass the found menus
@@ -45,7 +45,7 @@ const addSection = async (req, res) => {
             brand: req.authUser?.brand?._id,
             country: req.authUser?.brand?.country,
             nav_position: body.menu_position,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
 
         if (isExist) {
@@ -136,7 +136,7 @@ const addMenu = async (req, res) => {
         // Find the corresponding menu position to add the new menu item
         const nav = await Menu.findOne({
             _id: body.menu_position,
-            isDeleted: false,
+            deleted: { $ne: true },
         })
 
         if (!nav) {
@@ -147,7 +147,7 @@ const addMenu = async (req, res) => {
         const update = await Menu.findOneAndUpdate(
             {
                 _id: body.menu_position,
-                isDeleted: false,
+                deleted: { $ne: true },
             },
             {
                 $push: {
@@ -185,7 +185,7 @@ const editMenu = async (req, res) => {
         const menus = await Menu.find({
             brand: req.authUser?.brand?._id,
             country: req.authUser?.brand?.country,
-            isDeleted: false,
+            deleted: { $ne: true },
         }).sort({ position: 1 })
 
         // Find the specific menu based on position
@@ -289,7 +289,7 @@ const saveEditMenu = async (req, res) => {
                 brand: req.authUser?.brand?._id,
                 country: req.authUser?.brand?.country,
                 nav_position: position,
-                isDeleted: false,
+                deleted: { $ne: true },
             })
             let menuItem = {}
             let menuIndex = 0
@@ -310,7 +310,7 @@ const saveEditMenu = async (req, res) => {
                     nav_position: position,
                     brand: req.authUser?.brand?._id,
                     country: req.authUser?.brand?.country,
-                    isDeleted: false,
+                    deleted: { $ne: true },
                 },
                 { $set: { [`nav_items.${menuIndex}`]: obj } },
                 {
@@ -322,7 +322,7 @@ const saveEditMenu = async (req, res) => {
                 nav_position: position,
                 brand: req.authUser?.brand?._id,
                 country: req.authUser?.brand?.country,
-                isDeleted: false,
+                deleted: { $ne: true },
             })
             let menuItem = {}
             let menuIndex
@@ -344,7 +344,7 @@ const saveEditMenu = async (req, res) => {
                     nav_position: position,
                     brand: req.authUser?.brand?._id,
                     country: req.authUser?.brand?.country,
-                    isDeleted: false,
+                    deleted: { $ne: true },
                 },
                 {
                     $set: {
@@ -361,7 +361,7 @@ const saveEditMenu = async (req, res) => {
                 nav_position: position,
                 brand: req.authUser?.brand?._id,
                 country: req.authUser?.brand?.country,
-                isDeleted: false,
+                deleted: { $ne: true },
             })
             let menuItem = {}
             let menuIndex
@@ -386,7 +386,7 @@ const saveEditMenu = async (req, res) => {
                     nav_position: position,
                     brand: req.authUser?.brand?._id,
                     country: req.authUser?.brand?.country,
-                    isDeleted: false,
+                    deleted: { $ne: true },
                 },
                 {
                     $set: {
@@ -433,11 +433,11 @@ const deletePosition = async (req, res) => {
         await Menu.updateOne(
             {
                 _id: id,
-                isDeleted: false,
+                deleted: { $ne: true },
             },
             {
-                isDeleted: true,
-                deletedAt: new Date(),
+                deleted: true,
+                deleted_at: new Date(),
             }
         )
 
@@ -476,7 +476,7 @@ const deleteMenu = async (req, res) => {
                     nav_position,
                     brand: req.authUser?.brand?._id,
                     country: req.authUser?.brand?.country,
-                    isDeleted: false,
+                    deleted: { $ne: true },
                 },
                 {
                     $pull: {
@@ -492,7 +492,7 @@ const deleteMenu = async (req, res) => {
                     nav_position,
                     brand: req.authUser?.brand?._id,
                     country: req.authUser?.brand?.country,
-                    isDeleted: false,
+                    deleted: { $ne: true },
                 },
                 {
                     $pull: {
@@ -508,7 +508,7 @@ const deleteMenu = async (req, res) => {
                     nav_position,
                     brand: req.authUser?.brand?._id,
                     country: req.authUser?.brand?.country,
-                    isDeleted: false,
+                    deleted: { $ne: true },
                 },
                 {
                     $pull: {
@@ -602,7 +602,7 @@ const saveMenu = async (req, res) => {
                 nav_position: navName,
                 // brand: req.authUser?.brand?._id,
                 // country: req.authUser?.brand?.country,
-                isDeleted: false,
+                deleted: { $ne: true },
             },
             {
                 $set: {

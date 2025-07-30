@@ -9,7 +9,7 @@ const { logError } = require('../../helper/Logger.helper')
 const userDetail = async (req, res) => {
     const userDetails = await Admin.findOne({
         _id: req.authUser.admin_id, // Get the admin ID from the request
-        isDeleted: false,
+        deleted: { $ne: true },
     })
 
     if (!userDetails) {
@@ -26,7 +26,7 @@ const userDetail = async (req, res) => {
 const profileUpdate = async (req, res) => {
     const userDetails = await Admin.findOne({
         _id: req.authUser.admin_id, // Get the admin ID from the request
-        isDeleted: false,
+        deleted: { $ne: true },
     })
 
     if (!userDetails) {
@@ -61,7 +61,7 @@ const profileUpdateSave = async (req, res) => {
     try {
         const admin = await Admin.findOne({
             _id: req.authUser.admin_id, // Find the current authenticated admin user by ID
-            isDeleted: false,
+            deleted: { $ne: true },
         })
 
         // Check if the provided password matches the admin's stored hashed password
@@ -139,7 +139,7 @@ const changePasswordSave = async (req, res) => {
     try {
         const admin = await Admin.findOne({
             _id: req.authUser.admin_id, // Find the current authenticated admin user by ID
-            isDeleted: false,
+            deleted: { $ne: true },
         })
 
         // Check if the provided current password matches the admin's stored hashed password

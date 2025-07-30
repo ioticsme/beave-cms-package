@@ -11,7 +11,9 @@ const list = async (req, res) => {
         role: {
             $ne: 'super_admin', // Exclude 'super_admin' from the results
         },
-        isDeleted: false,
+        deleted: {
+            $ne: true,
+        },
     })
 
     return res.render('admin-njk/access-control/users/listing', {
@@ -36,7 +38,9 @@ const add = async (req, res) => {
 const edit = async (req, res) => {
     const admin = await Admin.findOne({
         _id: req.params.id, // Find the admin by ID from the URL
-        isDeleted: false,
+        deleted: {
+            $ne: true,
+        },
     })
     const config_privilege_routes = await privileges(req)
     return res.render('admin-njk/access-control/users/form', {
@@ -78,7 +82,9 @@ const save = async (req, res) => {
         // Check if the email is already taken, excluding the current admin (if updating)
         let options = {
             email: req.body.email,
-            isDeleted: false,
+            deleted: {
+                $ne: true,
+            },
         }
         if (req.body.id) {
             options._id = { $ne: req.body.id } // Ensure we're not checking the same user during update
@@ -176,7 +182,7 @@ const deleteItem = async (req, res) => {
         // Soft delete the admin (ensure 'super_admin' cannot be deleted)
         await Admin.updateOne(
             { _id: id, role: { $ne: 'super_admin' } },
-            { isDeleted: true, deletedAt: new Date() }
+            { deleted: true, deleted_at: new Date() }
         )
         return res.status(200).json({
             message: `User Deleted`, // Success message for deletion
