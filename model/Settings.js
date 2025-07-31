@@ -1,19 +1,15 @@
 const { formatInTimeZone } = require('date-fns-tz')
 const { mongoose, Schema } = require('mongoose')
-const Double = require('@mongoosejs/double');
-const Brand = require('./Brand')
-const Country = require('./Country')
-const Admin = require('./Admin')
 
 const SettingsSchema = new mongoose.Schema(
     {
         brand: {
             type: Schema.ObjectId,
-            ref: Brand,
+            ref: 'Brand',
         },
         country: {
             type: Schema.ObjectId,
-            ref: Country,
+            ref: 'Country',
         },
         notification_settings: {
             mailgun: {

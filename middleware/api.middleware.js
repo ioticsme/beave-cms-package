@@ -3,10 +3,6 @@ const jwt = require('jsonwebtoken')
 const collect = require('collect.js')
 const useragent = require('express-useragent')
 const { getCache, setCache } = require('../helper/Redis.helper')
-const Brand = require('../model/Brand')
-const Country = require('../model/Country')
-const Settings = require('../model/Settings')
-const User = require('../model/User')
 const Menu = require('../model/Menu')
 const Language = require('../model/Language')
 
@@ -51,7 +47,11 @@ const BrandWithCountryCheck = async (req, res, next) => {
 
         const brandSettings = await getBrandSettings(brand, country)
         if (!brandSettings) {
-            return res.status(400).json({ error: 'Invalid Brand Settings' })
+            // return res.status(400).json({ error: 'Invalid Brand Settings' })
+            brandSettings = {}
+            logWarn(
+                `Invalid Brand Settings for brand: ${brand.name} country: ${country.name.en}`
+            )
         }
 
         req.brand = {
