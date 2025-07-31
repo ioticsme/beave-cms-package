@@ -11,6 +11,7 @@ const {
     getBrand,
     getBrandSettings,
 } = require('../helper/Cache.helper')
+const { logError, logWarn } = require('../helper/Logger.helper')
 
 const BrandWithCountryCheck = async (req, res, next) => {
     try {
@@ -45,12 +46,11 @@ const BrandWithCountryCheck = async (req, res, next) => {
                 .json({ error: 'Application on Maintenance Mode' })
         }
 
-        const brandSettings = await getBrandSettings(brand, country)
+        let brandSettings = await getBrandSettings(brand, country)
         if (!brandSettings) {
-            // return res.status(400).json({ error: 'Invalid Brand Settings' })
             brandSettings = {}
             logWarn(
-                `Invalid Brand Settings for brand: ${brand.name} country: ${country.name.en}`
+                `Invalid Brand Settings for brand: ${brand.name} country: ${country.name?.en}`
             )
         }
 
@@ -68,6 +68,7 @@ const BrandWithCountryCheck = async (req, res, next) => {
         req.language = lang
         req.source = apiSource
     } catch (err) {
+        logError(err)
         return res.status(400).json({ error: 'Invalid Header' })
     }
 
