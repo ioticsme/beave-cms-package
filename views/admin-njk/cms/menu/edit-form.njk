@@ -11,6 +11,10 @@
 {% endblock %}
 
 {% block content %}
+	{% block title %}
+		<title>Edit Menu - {{browserTitle | upper()}} CMS</title>
+	{% endblock %}
+	
 	<div class="d-flex flex-column flex-column-fluid">
 		<div class="app-toolbar py-3 py-lg-6" id="beaver_app_toolbar">
 			<div class="app-container container-xxl d-flex flex-stack" id="beaver_app_toolbar_container">

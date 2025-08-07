@@ -1,6 +1,10 @@
 {% extends "../layouts/master.njk" %}
 
 {% block content %}
+    {% block title %}
+		<title>Server Logs | {{browserTitle | upper()}} CMS</title>
+	{% endblock %}
+    
     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
         <!--begin::Content wrapper-->
         <div class="d-flex flex-column flex-column-fluid">

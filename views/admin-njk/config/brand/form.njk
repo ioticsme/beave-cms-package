@@ -16,6 +16,10 @@
 {% endblock %}
 
 {% block content %}
+    {% block title %}
+        <title>{{ 'Edit' if brand else 'Add' }} Brand - {{browserTitle | upper()}} CMS</title>
+    {% endblock %}
+    
     <div class="d-flex flex-column flex-column-fluid">
         <div id="beaver_app_toolbar" class="app-toolbar py-3 py-lg-6">
             <div id="beaver_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">

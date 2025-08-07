@@ -24,13 +24,22 @@
 var fieldSchemaJson
 var bkupDataJson
 
+const getSectionName = (section) => {
+    return `${section.section}-${
+        section.localisation ? 'localisation' : 'non-localisation'
+    }-${section.repeater_group ? 'repeater' : 'non-repeater'}-${
+        section.inline_fields ? 'inline' : 'non-inline'
+    }`
+        ?.toLowerCase()
+        ?.trim()
+}
+
 const generateField = async () => {
     let htmlData = ``
     await _.forEach(fieldSchemaJson, function (group) {
+        let sectionName = getSectionName(group)
         const currGroup = `
-        <div class="card section-card mb-2 droppable" data-section="${
-            group.section
-        }">
+        <div class="card section-card mb-2 droppable" data-section="${sectionName}">
             <div class="card-header col-12 mb-3">
                 <div class="card-title">
                     <h3 class="mb-1">${group.section.toUpperCase()}</h3>
@@ -55,12 +64,8 @@ const generateField = async () => {
                     </p>
                 </div>
                 <div class="card-toolbar">
-                    <a class="btn btn-light btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#field_form_modal" data-entry-type="new" data-section="${
-                        group.section
-                    }"><i class="fa-solid fa-plus"></i> Add Field</a>
-                    <a class="btn btn-light-danger btn-sm field-section-dlt-btn" data-section="${
-                        group.section
-                    }"><i class="fa-solid fa-trash-can"></i> Delete Section</a>
+                    <a class="btn btn-light btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#field_form_modal" data-entry-type="new" data-section="${sectionName}"><i class="fa-solid fa-plus"></i> Add Field</a>
+                    <a class="btn btn-light-danger btn-sm field-section-dlt-btn" data-section="${sectionName}"><i class="fa-solid fa-trash-can"></i> Delete Section</a>
                 </div>
             </div>
             <div class="card-body section-card-body col-12">
@@ -112,14 +117,14 @@ const generateField = async () => {
                     </small>
                 </td>
                 <td>
-                    <a class="btn btn-light-dark btn-xs field-edit-btn" data-section="${
-                        group.section
-                    }" data-field="${field.label}">
+                    <a class="btn btn-light-dark btn-xs field-edit-btn" data-section="${sectionName}" data-field="${
+                field.label
+            }">
                         <i class="fa-solid fa-pencil"></i>
                     </a>
-                    <a class="btn btn-light-danger btn-xs field-dlt-btn" data-section="${
-                        group.section
-                    }" data-field="${field.label}">
+                    <a class="btn btn-light-danger btn-xs field-dlt-btn" data-section="${sectionName}" data-field="${
+                field.label
+            }">
                         <i class="fa-solid fa-trash-can"></i>
                     </a>
                 </td>
@@ -203,22 +208,58 @@ document
     .querySelector('.form-field-holder')
     .addEventListener('click', (event) => {
         if (event.target.classList.contains('field-section-dlt-btn')) {
-            const sectionName = event.target.getAttribute('data-section')
-            _.remove(fieldSchemaJson, (item) => item.section == sectionName)
-            generateField()
+            const dataSectionName = event.target.getAttribute('data-section')
+            Swal.fire({
+                text: 'Are you sure you want to delete ?',
+                icon: 'warning',
+                showCancelButton: !0,
+                buttonsStyling: !1,
+                confirmButtonText: 'Yes, delete!',
+                cancelButtonText: 'No, cancel',
+                customClass: {
+                    confirmButton: 'btn fw-bold btn-danger',
+                    cancelButton: 'btn fw-bold btn-active-light-primary',
+                },
+            }).then((e) => {
+                if (e.value) {
+                    _.remove(
+                        fieldSchemaJson,
+                        (item) => getSectionName(item) == dataSectionName
+                    )
+                    generateField()
+                }
+            })
         } else if (event.target.classList.contains('field-dlt-btn')) {
-            const sectionName = event.target.getAttribute('data-section')
+            const dataSectionName = event.target.getAttribute('data-section')
             const fieldName = event.target.getAttribute('data-field')
 
-            const index = _.findIndex(fieldSchemaJson, { section: sectionName })
-            _.remove(
-                fieldSchemaJson[index].fields,
-                (field) => field.label == fieldName
-            )
-            _.set(fieldSchemaJson, [index, 'section'], sectionName)
-            generateField()
+            Swal.fire({
+                text: 'Are you sure you want to delete ?',
+                icon: 'warning',
+                showCancelButton: !0,
+                buttonsStyling: !1,
+                confirmButtonText: 'Yes, delete!',
+                cancelButtonText: 'No, cancel',
+                customClass: {
+                    confirmButton: 'btn fw-bold btn-danger',
+                    cancelButton: 'btn fw-bold btn-active-light-primary',
+                },
+            }).then((e) => {
+                if (e.value) {
+                    const index = _.findIndex(
+                        fieldSchemaJson,
+                        (item) => getSectionName(item) == dataSectionName
+                    )
+                    _.remove(
+                        fieldSchemaJson[index].fields,
+                        (field) => field.label == fieldName
+                    )
+                    _.set(fieldSchemaJson, [index, 'section'], dataSectionName)
+                    generateField()
+                }
+            })
         } else if (event.target.classList.contains('field-edit-btn')) {
-            const sectionName = event.target.getAttribute('data-section')
+            const dataSectionName = event.target.getAttribute('data-section')
             const fieldName = event.target.getAttribute('data-field')
 
             // const selectFieldType = fieldBtn.getAttribute('data-value')
@@ -230,7 +271,10 @@ document
             // document
             //     .querySelector(`#${selectFieldType}-field-section`)
             //     .classList.remove('d-none')
-            const index = _.findIndex(fieldSchemaJson, { section: sectionName })
+            const index = _.findIndex(
+                fieldSchemaJson,
+                (item) => getSectionName(item) == dataSectionName
+            )
             // console.log(fieldSchemaJson[index].fields)
             const foundField = _.find(
                 fieldSchemaJson[index].fields,
@@ -248,7 +292,7 @@ document
                 .classList.remove('d-none')
             fieldFormModal.querySelector(
                 `#${foundField.type}-field-section .section_name_field`
-            ).value = sectionName
+            ).value = dataSectionName
             var name_field = fieldFormModal.querySelector(
                 `#${foundField.type}-field-section #field_name`
             )
@@ -387,11 +431,8 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
                 })
             })
 
-        // console.log(options)
         const requestedSection = _.find(fieldSchemaJson, (field) => {
-            return (
-                field.section.toLowerCase() === selected_section.toLowerCase()
-            )
+            return getSectionName(field) === selected_section.toLowerCase()
         })
 
         const existingField = _.find(requestedSection.fields, function (field) {
@@ -399,7 +440,6 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
                 field.label.toLowerCase() === selected_field_name.toLowerCase()
             )
         })
-        // console.log(existingField)
 
         if (existingField && selected_entry_type == 'add') {
             alert(
