@@ -48,65 +48,67 @@ router.group('/', (router) => {
     // })
 
     // Content Management Routes
-    // if (!envConfig.general.HAS_CUSTOM_CONTENT_MANAGEMENT) {
-    router.get('/:contentType', contentTypeCheck, cmsContentController.list)
-    router.get(
-        '/:contentType/detail/:id',
-        contentTypeCheck,
-        cmsContentController.detail
-    )
-    router.get(
-        '/:contentType/duplicate/:id',
-        contentTypeCheck,
-        cmsContentController.duplicateContent
-    )
-    router.get(
-        '/:contentType/edit/:id',
-        contentTypeCheck,
-        cmsContentController.edit
-    )
-    router.get('/:contentType/add', contentTypeCheck, cmsContentController.add)
-    router.post(
-        '/:contentType/save',
-        contentTypeCheck,
-        upload.any(),
-        cmsContentController.save
-    )
-    router.post(
-        '/:contentType/delete',
-        contentTypeCheck,
-        cmsContentController.deleteContent
-    )
-    router.post(
-        '/:contentType/change-status',
-        contentTypeCheck,
-        cmsContentController.changeStatus
-    )
+    if (!envConfig.general.HAS_CUSTOM_CONTENT_MANAGEMENT) {
+        router.get('/:contentType', contentTypeCheck, cmsContentController.list)
+        router.get(
+            '/:contentType/detail/:id',
+            contentTypeCheck,
+            cmsContentController.detail
+        )
+        router.get(
+            '/:contentType/duplicate/:id',
+            contentTypeCheck,
+            cmsContentController.duplicateContent
+        )
+        router.get(
+            '/:contentType/edit/:id',
+            contentTypeCheck,
+            cmsContentController.edit
+        )
+        router.get(
+            '/:contentType/add',
+            contentTypeCheck,
+            cmsContentController.add
+        )
+        router.post(
+            '/:contentType/save',
+            contentTypeCheck,
+            upload.any(),
+            cmsContentController.save
+        )
+        router.post(
+            '/:contentType/delete',
+            contentTypeCheck,
+            cmsContentController.deleteContent
+        )
+        router.post(
+            '/:contentType/change-status',
+            contentTypeCheck,
+            cmsContentController.changeStatus
+        )
 
-    // Below routes are  for page builder (GrapeJs) editor
-    router.get(
-        '/:contentType/editor/preview/:id',
-        contentTypeCheck,
-        cmsContentController.previewPageBuildData
-    )
-    router.get(
-        '/:contentType/editor/load-data/:id',
-        contentTypeCheck,
-        cmsContentController.loadEditorData
-    )
-    router.get(
-        '/:contentType/editor/:id',
-        contentTypeCheck,
-        cmsContentController.pageBuildEditor
-    )
-    router.post(
-        '/:contentType/editor/save',
-        contentTypeCheck,
-        cmsContentController.savePageBuilderData
-    )
-    // } else {
-    //     console.log('has custom content management')
-    // }
+        // Below routes are  for page builder (GrapeJs) editor
+        router.get(
+            '/:contentType/editor/preview/:id',
+            contentTypeCheck,
+            cmsContentController.previewPageBuildData
+        )
+        router.get(
+            '/:contentType/editor/load-data/:id',
+            contentTypeCheck,
+            cmsContentController.loadEditorData
+        )
+        router.get(
+            '/:contentType/editor/:id',
+            contentTypeCheck,
+            cmsContentController.pageBuildEditor
+        )
+        router.post(
+            '/:contentType/editor/save',
+            contentTypeCheck,
+            cmsContentController.savePageBuilderData
+        )
+    }
 })
 
 module.exports = router

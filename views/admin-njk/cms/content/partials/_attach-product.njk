@@ -1,18 +1,20 @@
 <div class="card card-flush py-4">
 	<div class="card-header">
 		<div class="card-title">
-			<h3>Select Products</h3>
+			<h3>Attach Products</h3>
 		</div>
 	</div>
 	<div class="card-body pt-0">
-		<select id="beaver_ecommerce_add_gallery_status_select" class="form-select mb-2" name="products">
-			<option value="">- SELECT PRODUCTS -</option>
+		<select id="beaver_content_attach_products_select" class="form-select mb-2" name="products" data-control="select2" data-allow-clear="true" data-close-on-select="false" data-clear="true" data-placeholder="Select Products" multiple="multiple">
 			{% for item in products %}
-				{# <option value="{{ item._id }}" {% if findAttachedProduct(contentDetail, item._id) %} selected {% endif %}>{{ item.name.en }}</option> #}
-				<option value="{{ item._id }}" {% if contentDetail.products.includes(item._id) %} selected {% endif %}>{{ item.name.en }}</option>
+				{% if contentDetail.products and contentDetail.products.length > 0 %}
+					<option value="{{ item._id }}" {% if arrayIncludes(contentDetail.products, item._id) %} selected {% endif %}>{{ item.name.en }}</option>
+				{% else %}
+					<option value="{{ item._id }}">{{ item.name.en }}</option>
+				{% endif %}
 			{% endfor %}
 		</select>
-		<div class="text-muted fs-7">Select the products</div>
+		<div class="text-muted fs-7">Attach the products</div>
 		<div class="fv-plugins-message-container invalid-feedback" id="field-error-products"></div>
 	</div>
 </div>

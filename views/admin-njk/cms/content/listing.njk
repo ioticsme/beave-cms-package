@@ -102,7 +102,7 @@
 															{% endif %}
 															<td>
 																<a class="text-gray-800 text-hover-primary mb-1" href="/admin/cms/{{reqContentType.slug}}/detail/{{item._id}}">
-																	{{defaultFieldValue | safe | htmlSlice(0,80)}}
+																	{{htmlSlice(defaultFieldValue, 0, 80)}}
 																</a>
 															</td>
 														{% endif %}
@@ -112,7 +112,7 @@
 										{% else %}
 											<td>
 												<a class="text-gray-800 text-hover-primary mb-1" href="/admin/cms/{{reqContentType.slug}}/detail/{{item._id}}">
-													{{item.content.name | htmlSlice(0,80) }}
+													{{htmlSlice(item.content.name, 0, 80) }}
 												</a>
 											</td>
 										{% endif %}

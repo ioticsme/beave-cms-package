@@ -136,7 +136,7 @@ const apiLimiter = rateLimit({
 app.use('/api', apiLimiter)
 
 app.get('/', (req, res) => {
-    return res.status(404).json('Not Found')
+    return res.redirect('/admin')
 })
 app.use('/api', webAPIRoutes)
 app.use(

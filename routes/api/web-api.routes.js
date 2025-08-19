@@ -41,7 +41,9 @@ router.group('/', (router) => {
     // })
 
     // CMS Related Routes
-    router.use('/cms', cmsRoutes)
+    if (!envConfig.general.HAS_CUSTOM_CMS_API_ROUTES) {
+        router.use('/cms', cmsRoutes)
+    }
 
     // General
     router.group('/general', (router) => {

@@ -198,7 +198,7 @@ const deleteMedia = async (req, res) => {
         })
 
         if (!media) {
-            return res.status(404).json({ error: 'Not Found' }) // Return error if media not found
+            return res.status(404).json({ error: 'Media Not Found' }) // Return error if media not found
         }
 
         const deleteFile = await deleteMediaFile('media', media) // Delete media file

@@ -321,7 +321,6 @@ const add = async (req, res) => {
         if (req.contentType?.page_builder) {
             template = `admin-njk/cms/content/html-builder/form`
         }
-        // console.log('test')
         return res.render(template, {
             reqContentType: req.contentType,
             has_common_field_groups: has_common_field_groups ? true : false,
@@ -627,8 +626,6 @@ const savePageBuilderContent = async (req, res) => {
 }
 
 const saveDefaultContent = async (req, res) => {
-    // console.log(req.body.common)
-    // return false
     try {
         // Data object to insert
         let type = req.contentType
@@ -1094,7 +1091,7 @@ const savePageBuilderData = async (req, res) => {
         })
         if (!page) {
             return res.status(404).json({
-                error: 'Not Found',
+                error: 'Content Not Found',
             })
         }
         await Content.updateOne(

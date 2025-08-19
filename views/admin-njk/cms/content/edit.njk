@@ -635,9 +635,9 @@
 
 					{# Right side #}
 					<div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 ms-lg-10 mt-5 mt-lg-0">
-						{% if reqContentType.has_slug %}
+						{# {% if reqContentType.has_slug %} #}
 							{% include "./partials/_content-slug-field.njk" %}
-						{% endif %}
+						{# {% endif %} #}
 
 						{% include "./partials/_publish.njk" %}
 
@@ -649,7 +649,9 @@
 							{% include "./partials/_attach-form.njk" %}
 						{% endif %}
 
-						{# {% include "./partials/_add-to-home.njk" %} #}
+						{% if hasEcommerce and products and products.length %}
+							{% include "./partials/_attach-product.njk" %}
+						{% endif %}
 
 						{% if reqContentType.single_type == false %}
 							{% include "./partials/_position.njk" %}

@@ -160,12 +160,45 @@ const nunjucksFilter = async (req, res, next) => {
         }
     }
 
+    res.locals.json = (obj) => {
+        return JSON.stringify(obj)
+    }
+
+    res.locals.htmlSlice = (value, start, end) => {
+        const text = value.replace(/<[^>]*>?/gm, '') // Remove HTML tags
+        return text.slice(start, end) // Return sliced text
+    }
+
+    res.locals.in_array = (ar, val) => {
+        return Array.isArray(ar) && ar.includes(val)
+    }
+
+    res.locals.ObjectKeys = (obj) => {
+        return Object.keys(obj)
+    }
+
+    res.locals.keys = (obj) => {
+        return Object.keys(obj)
+    }
+
+    res.locals.log = (value) => {
+        console.log(value)
+        return value // Return the value to ensure it continues rendering
+    }
+
+    res.locals.arrayIncludes = (array, value) => {
+        let stringifiedArray = array.map((item) => item?.toString())
+        return stringifiedArray.includes(value?.toString())
+    }
+
     next()
 }
 
 const contentTypeCheck = async (req, res, next) => {
     if (!req.params.contentType) {
-        return res.json('Not Found')
+        return res.status(404).json({
+            error: 'Content type not found',
+        })
     }
     try {
         const contentType = await ContentType.findOne({
@@ -178,7 +211,10 @@ const contentTypeCheck = async (req, res, next) => {
         req.contentType = contentType
         next()
     } catch (err) {
-        return res.json('Not Found')
+        logError(err)
+        return res.status(404).json({
+            error: 'Content type not found',
+        })
     }
 }
 

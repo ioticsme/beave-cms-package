@@ -1,17 +1,17 @@
 <div class="card card-flush py-4">
 	<div class="card-header">
 		<div class="card-title">
-			<h3>Select Form</h3>
+			<h3>Attach Form</h3>
 		</div>
 	</div>
 	<div class="card-body pt-0">
-		<select id="beaver_ecommerce_add_gallery_status_select" class="form-select mb-2" name="form">
-			<option value="">- SELECT A FORM -</option>
+		<select id="beaver_content_attach_form_select" data-control="select2" data-placeholder="Select a form" data-allow-search="true" data-allow-clear="true" class="form-select mb-2" name="form">
+			<option value="">Select a form</option>
 			{% for item in forms %}
 				<option value="{{ item._id }}" {% if item.id == contentDetail.form[0] %} selected {% endif %}>{{ item.form_name.en }}</option>
 			{% endfor %}
 		</select>
-		<div class="text-muted fs-7">Select the form</div>
-		<div class="fv-plugins-message-container invalid-feedback" id="field-error-gallery"></div>
+		<div class="text-muted fs-7">Attach a form</div>
+		<div class="fv-plugins-message-container invalid-feedback" id="field-error-form"></div>
 	</div>
 </div>

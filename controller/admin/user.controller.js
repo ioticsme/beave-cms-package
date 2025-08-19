@@ -12,7 +12,7 @@ const list = async (req, res) => {
             _id: -1,
         })
         if (!userList) {
-            return res.status(404).json('Not Found')
+            return res.status(404).json({ error: 'User not found' })
         }
         return res.render(`admin-njk/user/listing`, { userList })
     } catch (error) {
@@ -65,7 +65,7 @@ const userDetail = async (req, res) => {
         })
 
         if (!userDetail) {
-            return res.status(404).json('Not Found')
+            return res.status(404).json({ error: 'User not found' })
         }
         return res.render(`admin-njk/user/profile`, { userDetails })
     } catch (error) {
@@ -82,10 +82,9 @@ const profileUpdate = async (req, res) => {
         })
 
         if (!userDetail) {
-            res.status(404).json('Not Found')
-            return
+            return res.status(404).json({ error: 'User not found' })
         }
-        res.render(`admin-njk/user/update-profile`, { userDetails })
+        return res.render(`admin-njk/user/update-profile`, { userDetails })
     } catch (error) {
         logError(error)
         return res.status(404).json({ error: 'Something went wrong' })
@@ -136,10 +135,9 @@ const changePassword = async (req, res) => {
     })
 
     if (!userDetail) {
-        res.status(404).json('Not Found')
-        return
+        return res.status(404).json({ error: 'User not found' })
     }
-    res.render(`admin-njk/user/change-password`, { userDetails })
+    return res.render(`admin-njk/user/change-password`, { userDetails })
 }
 
 const changePasswordSave = async (req, res) => {

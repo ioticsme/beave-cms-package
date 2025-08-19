@@ -188,7 +188,7 @@ const list = async (req, res) => {
             })
 
         if (contentType.single_type && !contents.length) {
-            return res.status(404).json({ error: `Not Found` })
+            return res.status(404).json({ error: `Content Not Found` })
         }
         // BEGIN::Filtering scheduled items
         const filteredData = await filteringScheduledCMSItems(contents)
@@ -314,7 +314,7 @@ const detail = async (req, res) => {
         // END::Filtering scheduled items
 
         if (!content) {
-            return res.status(404).json({ error: `Not Found` })
+            return res.status(404).json({ error: `Content Not Found` })
         }
         res.status(200).json({
             [req.params.contentType]: content,

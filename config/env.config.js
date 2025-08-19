@@ -34,7 +34,9 @@ const envConfig = {
         HAS_CUSTOM_USER_API_ROUTES:
             process.env.HAS_CUSTOM_USER_API_ROUTES == 'true', // Set to true if you have custom auth API routes
         HAS_CUSTOM_CONTENT_MANAGEMENT:
-            process.env.HAS_CUSTOM_CONTENT_MANAGEMENT == 'true', // Set to true if you have custom content management API routes
+            process.env.HAS_CUSTOM_CONTENT_MANAGEMENT == 'true', // Set to true if you have custom content management
+        HAS_CUSTOM_CMS_API_ROUTES:
+            process.env.HAS_CUSTOM_CMS_API_ROUTES == 'true', // Set to true if you have custom CMS API routes
     },
     db: {
         URL: process.env.DB_CONNECTION,
