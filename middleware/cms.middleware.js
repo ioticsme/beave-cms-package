@@ -136,6 +136,16 @@ const nunjucksFilter = async (req, res, next) => {
         })
     }
 
+    res.locals.findAttachedProduct = (contentDetail, productId) => {
+        return contentDetail?.products?.find((product) => {
+            console.log('product', product)
+            let itemFound = product._id?.toString() == productId?.toString()
+            if (itemFound) {
+                return true
+            }
+        })
+    }
+
     res.locals.formatDateTimeInTimezone = (
         date,
         timezone = 'Asia/Kolkata',

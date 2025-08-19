@@ -588,6 +588,10 @@
 							{% include "./partials/_attach-form.njk" %}
 						{% endif %}
 
+						{% if hasEcommerce and products.length %}
+							{% include "./partials/_attach-product.njk" %}
+						{% endif %}
+
 						{% if reqContentType.single_type == false %}
 							{% include './partials/_position.njk' %}
 						{% endif %}

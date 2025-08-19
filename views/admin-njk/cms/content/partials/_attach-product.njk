@@ -1,0 +1,18 @@
+<div class="card card-flush py-4">
+	<div class="card-header">
+		<div class="card-title">
+			<h3>Select Products</h3>
+		</div>
+	</div>
+	<div class="card-body pt-0">
+		<select id="beaver_ecommerce_add_gallery_status_select" class="form-select mb-2" name="products">
+			<option value="">- SELECT PRODUCTS -</option>
+			{% for item in products %}
+				{# <option value="{{ item._id }}" {% if findAttachedProduct(contentDetail, item._id) %} selected {% endif %}>{{ item.name.en }}</option> #}
+				<option value="{{ item._id }}" {% if contentDetail.products.includes(item._id) %} selected {% endif %}>{{ item.name.en }}</option>
+			{% endfor %}
+		</select>
+		<div class="text-muted fs-7">Select the products</div>
+		<div class="fv-plugins-message-container invalid-feedback" id="field-error-products"></div>
+	</div>
+</div>

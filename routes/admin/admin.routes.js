@@ -44,7 +44,9 @@ router.use('/dashboard', dashboardRoutes)
 
 router.use('/access-control', accessControlRoutes)
 
-router.use('/cms', cmsRoutes)
+if (!envConfig.general.HAS_CUSTOM_CONTENT_MANAGEMENT) {
+    router.use('/cms', cmsRoutes)
+}
 
 router.use('/users', userRoutes)
 

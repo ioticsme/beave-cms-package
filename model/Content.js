@@ -46,6 +46,11 @@ const ContentSchema = new mongoose.Schema(
                 items: [{ type: Schema.ObjectId }],
             },
         ],
+        products: [
+            {
+                type: Schema.ObjectId,
+            },
+        ],
         status: {
             type: String,
             enum: ['published', 'unpublished', 'scheduled'],

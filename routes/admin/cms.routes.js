@@ -10,6 +10,7 @@ const mediaController = require('../../controller/admin/media.controller')
 const { contentTypeCheck } = require('../../middleware/cms.middleware')
 
 const multer = require('multer')
+const envConfig = require('../../config/env.config')
 const upload = multer({ dest: 'temp/' })
 
 router.group('/', (router) => {
@@ -47,6 +48,7 @@ router.group('/', (router) => {
     // })
 
     // Content Management Routes
+    // if (!envConfig.general.HAS_CUSTOM_CONTENT_MANAGEMENT) {
     router.get('/:contentType', contentTypeCheck, cmsContentController.list)
     router.get(
         '/:contentType/detail/:id',
@@ -102,6 +104,9 @@ router.group('/', (router) => {
         contentTypeCheck,
         cmsContentController.savePageBuilderData
     )
+    // } else {
+    //     console.log('has custom content management')
+    // }
 })
 
 module.exports = router
