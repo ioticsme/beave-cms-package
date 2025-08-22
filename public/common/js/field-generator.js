@@ -24,7 +24,7 @@
 var fieldSchemaJson
 var bkupDataJson
 
-const getSectionName = (section) => {
+const getSectionId = (section) => {
     return `${section.section}-${
         section.localisation ? 'localisation' : 'non-localisation'
     }-${section.repeater_group ? 'repeater' : 'non-repeater'}-${
@@ -37,9 +37,11 @@ const getSectionName = (section) => {
 const generateField = async () => {
     let htmlData = ``
     await _.forEach(fieldSchemaJson, function (group) {
-        let sectionName = getSectionName(group)
+        let sectionId = getSectionId(group)
         const currGroup = `
-        <div class="card section-card mb-2 droppable" data-section="${sectionName}">
+        <div class="card section-card mb-2 droppable" data-section="${
+            group.section
+        }" data-section-id="${sectionId}">
             <div class="card-header col-12 mb-3">
                 <div class="card-title">
                     <h3 class="mb-1">${group.section.toUpperCase()}</h3>
@@ -64,8 +66,12 @@ const generateField = async () => {
                     </p>
                 </div>
                 <div class="card-toolbar">
-                    <a class="btn btn-light btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#field_form_modal" data-entry-type="new" data-section="${sectionName}"><i class="fa-solid fa-plus"></i> Add Field</a>
-                    <a class="btn btn-light-danger btn-sm field-section-dlt-btn" data-section="${sectionName}"><i class="fa-solid fa-trash-can"></i> Delete Section</a>
+                    <a class="btn btn-light btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#field_form_modal" data-entry-type="new" data-section="${
+                        group.section
+                    }" data-section-id="${sectionId}"><i class="fa-solid fa-plus"></i> Add Field</a>
+                    <a class="btn btn-light-danger btn-sm field-section-dlt-btn" data-section="${
+                        group.section
+                    }" data-section-id="${sectionId}"><i class="fa-solid fa-trash-can"></i> Delete Section</a>
                 </div>
             </div>
             <div class="card-body section-card-body col-12">
@@ -117,12 +123,16 @@ const generateField = async () => {
                     </small>
                 </td>
                 <td>
-                    <a class="btn btn-light-dark btn-xs field-edit-btn" data-section="${sectionName}" data-field="${
+                    <a class="btn btn-light-dark btn-xs field-edit-btn" data-section="${
+                        group.section
+                    }" data-section-id="${sectionId}" data-field="${
                 field.label
             }">
                         <i class="fa-solid fa-pencil"></i>
                     </a>
-                    <a class="btn btn-light-danger btn-xs field-dlt-btn" data-section="${sectionName}" data-field="${
+                    <a class="btn btn-light-danger btn-xs field-dlt-btn" data-section="${
+                        group.section
+                    }" data-section-id="${sectionId}" data-field="${
                 field.label
             }">
                         <i class="fa-solid fa-trash-can"></i>
@@ -162,7 +172,7 @@ document
             `#field-section-form #section_name`
         ).value
         if (section_name.length < 2) {
-            alert('Need atleast 2 charecters')
+            alert('Need at least 2 characters')
             return false
         }
         const repeater_group = document.querySelector(
@@ -207,8 +217,9 @@ function formatOptions(field) {
 document
     .querySelector('.form-field-holder')
     .addEventListener('click', (event) => {
+        const dataSectionName = event.target.getAttribute('data-section')
+        const dataSectionId = event.target.getAttribute('data-section-id')
         if (event.target.classList.contains('field-section-dlt-btn')) {
-            const dataSectionName = event.target.getAttribute('data-section')
             Swal.fire({
                 text: 'Are you sure you want to delete ?',
                 icon: 'warning',
@@ -224,13 +235,12 @@ document
                 if (e.value) {
                     _.remove(
                         fieldSchemaJson,
-                        (item) => getSectionName(item) == dataSectionName
+                        (item) => getSectionId(item) == dataSectionId
                     )
                     generateField()
                 }
             })
         } else if (event.target.classList.contains('field-dlt-btn')) {
-            const dataSectionName = event.target.getAttribute('data-section')
             const fieldName = event.target.getAttribute('data-field')
 
             Swal.fire({
@@ -248,7 +258,7 @@ document
                 if (e.value) {
                     const index = _.findIndex(
                         fieldSchemaJson,
-                        (item) => getSectionName(item) == dataSectionName
+                        (item) => getSectionId(item) == dataSectionId
                     )
                     _.remove(
                         fieldSchemaJson[index].fields,
@@ -259,7 +269,6 @@ document
                 }
             })
         } else if (event.target.classList.contains('field-edit-btn')) {
-            const dataSectionName = event.target.getAttribute('data-section')
             const fieldName = event.target.getAttribute('data-field')
 
             // const selectFieldType = fieldBtn.getAttribute('data-value')
@@ -273,9 +282,8 @@ document
             //     .classList.remove('d-none')
             const index = _.findIndex(
                 fieldSchemaJson,
-                (item) => getSectionName(item) == dataSectionName
+                (item) => getSectionId(item) == dataSectionId
             )
-            // console.log(fieldSchemaJson[index].fields)
             const foundField = _.find(
                 fieldSchemaJson[index].fields,
                 (field) => field.label == fieldName
@@ -293,6 +301,9 @@ document
             fieldFormModal.querySelector(
                 `#${foundField.type}-field-section .section_name_field`
             ).value = dataSectionName
+            fieldFormModal.querySelector(
+                `#${foundField.type}-field-section .section_id_field`
+            ).value = dataSectionId
             var name_field = fieldFormModal.querySelector(
                 `#${foundField.type}-field-section #field_name`
             )
@@ -354,8 +365,10 @@ $('#field_form_modal').on('show.bs.modal', function (e) {
         form.reset()
     })
     var section = $(e.relatedTarget).attr('data-section')
+    var sectionId = $(e.relatedTarget).attr('data-section-id')
     var entryType = $(e.relatedTarget).attr('data-entry-type')
     $('#field_form_modal .section_name_field').val(section)
+    $('#field_form_modal .section_id_field').val(sectionId)
     document
         .querySelectorAll('#field_form_modal .modal-field-sections')
         .forEach((field_section) => {
@@ -393,9 +406,9 @@ document.querySelectorAll('#field-list-section .btn').forEach((fieldBtn) => {
 document.querySelectorAll('.field-form').forEach((fieldForm) => {
     fieldForm.addEventListener('submit', function (e) {
         e.preventDefault()
-        // return false
         const selected_entry_type = e.target.field_entry_type.value.trim()
         const selected_section = e.target.section_name_field.value.trim()
+        const selected_section_id = e.target.section_id_field.value.trim()
         const selected_field_type = e.target.field_type.value.trim()
         const selected_field_label = e.target.field_name.value
         const selected_field_name = e.target.field_name.value
@@ -432,7 +445,7 @@ document.querySelectorAll('.field-form').forEach((fieldForm) => {
             })
 
         const requestedSection = _.find(fieldSchemaJson, (field) => {
-            return getSectionName(field) === selected_section.toLowerCase()
+            return getSectionId(field) === selected_section_id.toLowerCase()
         })
 
         const existingField = _.find(requestedSection.fields, function (field) {
