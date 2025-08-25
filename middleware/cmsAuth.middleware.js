@@ -111,7 +111,7 @@ function extractSections(items, accessIds = [], role = 'admin') {
 function isAllowedRoute(req, allowedRoutes) {
     // console.log('req :>> ', req)
     // const currentRoute = req.path
-    const currentRoute = req.originalUrl
+    const currentRoute = req.originalUrl.split('?')[0]
     // console.log('Current Route:', currentRoute)
     // Check if any allowed route pattern matches the current request path
     return allowedRoutes.some((routePattern) => {
