@@ -115,9 +115,9 @@ function isAllowedRoute(req, allowedRoutes) {
     // console.log('Current Route:', currentRoute)
     // Check if any allowed route pattern matches the current request path
     return allowedRoutes.some((routePattern) => {
-        // Convert the route pattern, replacing :id with a regex that matches any value
+        // Convert the route pattern, replacing :param with a regex that matches any value
         const routeRegex = new RegExp(
-            '^' + routePattern.replace(':id', '[^/]+') + '$'
+            '^' + routePattern.replace(/:[^/]+/g, '[^/]+') + '$'
         )
         return routeRegex.test(currentRoute)
     })
