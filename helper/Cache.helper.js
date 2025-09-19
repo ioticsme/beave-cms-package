@@ -50,7 +50,7 @@ const getCountriesFromCache = async () => {
         let countries = await getCache(cacheKey).then(async (data) => {
             if (!data) {
                 let countries = await Country.find({
-                    // active: true,
+                    active: true,
                 })
                     .sort({ position: 1 })
                     .lean()
@@ -83,13 +83,12 @@ const getCountry = async (req) => {
         }
 
         let country = null
+        const allCountries = await getCountriesFromCache()
         if (countryCode) {
-            const allCountries = await getCountriesFromCache()
             country = allCountries.find(
                 (country) => country.code === countryCode
             )
         } else {
-            const allCountries = await getCountriesFromCache()
             country = allCountries?.[0]
         }
         return country
@@ -110,7 +109,12 @@ const getBrand = async (req, country) => {
         const allBrands = await getBrandsFromCache()
         let brand = null
         if (brandCode) {
-            brand = allBrands.find((brand) => brand.code === brandCode)
+            brand = allBrands.find(
+                (brand) => brand.code?.toLowerCase() === brandCode
+            )
+            if (!brand) {
+                brand = allBrands?.[0]
+            }
         } else {
             brand = allBrands?.[0]
         }
@@ -120,6 +124,9 @@ const getBrand = async (req, country) => {
                 (domain) =>
                     domain.country?._id?.toString() === country._id?.toString()
             )
+            if (!domain) {
+                domain = brand?.domains?.[0]
+            }
         } else {
             domain = brand?.domains?.[0]
         }
