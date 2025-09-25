@@ -56,6 +56,10 @@ const CustomFormSchema = new mongoose.Schema(
                     ref: 'ContentType',
                     default: null,
                 },
+                product: {
+                    type: Schema.ObjectId,
+                    default: null,
+                },
                 field_default_val: {
                     type: Object,
                 },

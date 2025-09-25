@@ -49,6 +49,7 @@ const customFormSubmit = async (req, res) => {
 
         // BEGIN:: Validation rule
         const schema = Joi.object({
+            captcha_token: Joi.optional(),
             type: Joi.string().required(),
             ...cfValidationObj,
         })

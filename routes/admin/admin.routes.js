@@ -49,7 +49,11 @@ router.use('/cms', cmsRoutes)
 router.use('/users', userRoutes)
 
 router.use('/settings', settingsRoutes)
-router.use('/custom-forms', customFormsRoutes)
+
+if (!envConfig.general.HAS_CUSTOM_FORM_MANAGEMENT) {
+    router.use('/custom-forms', customFormsRoutes)
+}
+
 router.use('/logs', logRoutes)
 router.use('/admin-user', adminUserRoutes)
 

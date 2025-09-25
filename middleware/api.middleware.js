@@ -50,7 +50,7 @@ const BrandWithCountryCheck = async (req, res, next) => {
         if (!brandSettings) {
             brandSettings = {}
             logWarn(
-                `Invalid Brand Settings for brand: ${brand.name} country: ${country.name?.en}`
+                `Invalid Brand Settings for brand: ${brand.code} country: ${country.code}`
             )
         }
 
