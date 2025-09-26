@@ -35,10 +35,19 @@ const customFormSubmit = async (req, res) => {
                 validation_eval_string = `Joi.optional()`
             } else {
                 validation_eval_string = `Joi.${element.validation.data_type}().${element.validation.required}()`
-                if (element.validation.min_length > 0) {
+                if (
+                    element.validation.min_length >= 0 &&
+                    element.validation.required == 'required' &&
+                    !['boolean'].includes(element.validation.data_type)
+                ) {
                     validation_eval_string = `${validation_eval_string}.min(${element.validation.min_length})`
                 }
-                if (element.validation.max_length > 0) {
+                if (
+                    element.validation.max_length > 0 &&
+                    !['boolean', 'number'].includes(
+                        element.validation.data_type
+                    )
+                ) {
                     validation_eval_string = `${validation_eval_string}.max(${element.validation.max_length})`
                 }
             }
@@ -159,9 +168,9 @@ const customFormSubmit = async (req, res) => {
         })
     } catch (error) {
         logError(error)
-        return res
-            .status(500)
-            .json({ error: error ? error : 'Something went wrong' })
+        return res.status(500).json({
+            error: error?.message ? error?.message : 'Something went wrong',
+        })
     }
 }
 

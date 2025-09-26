@@ -5,8 +5,8 @@
 				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 					<span class="required">Form Title ({{ brandLanguage.prefix }})</span>
 				</label>
-				<input class="form-control" type="text" placeholder="Enter Form Name" name="form_title[{{ brandLanguage.prefix }}]" value="{{form.form_title[brandLanguage.prefix]}}" required>
-				<div class="fv-plugins-message-container invalid-feedback" id="field-error-form_title"></div>
+				<input class="form-control" type="text" placeholder="Enter Form Name" name="form_title[{{ brandLanguage.prefix }}]" value="{{form.form_title[brandLanguage.prefix]}}">
+				<div class="fv-plugins-message-container invalid-feedback" id="field-error-form_title_{{brandLanguage.prefix}}"></div>
 			</div>
 		{% endfor %}
 		{% for brandLanguage in authUser.brand.languages %}
@@ -14,8 +14,8 @@
 				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 					<span class="required">Form Name ({{ brandLanguage.prefix }})</span>
 				</label>
-				<input class="form-control" type="text" placeholder="Enter Form Name" name="form_name[{{ brandLanguage.prefix }}]" value="{{form.form_name[brandLanguage.prefix]}}" required>
-				<div class="fv-plugins-message-container invalid-feedback" id="field-error-form_name"></div>
+				<input class="form-control" type="text" placeholder="Enter Form Name" name="form_name[{{ brandLanguage.prefix }}]" value="{{form.form_name[brandLanguage.prefix]}}">
+				<div class="fv-plugins-message-container invalid-feedback" id="field-error-form_name_{{brandLanguage.prefix}}"></div>
 			</div>
 		{% endfor %}
 
@@ -119,7 +119,7 @@
 				<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 					<span class="required">CTA Label ({{ brandLanguage.prefix }})</span>
 				</label>
-				<input class="form-control" type="text" placeholder="Enter Button Label" name="cta_label[{{ brandLanguage.prefix }}]" value="{{form.cta_label[brandLanguage.prefix]}}" required>
+				<input class="form-control" type="text" placeholder="Enter Button Label" name="cta_label[{{ brandLanguage.prefix }}]" value="{{form.cta_label[brandLanguage.prefix]}}">
 				<div class="fv-plugins-message-container invalid-feedback" id="field-error-cta_label_{{ brandLanguage.prefix }}"></div>
 			</div>
 		{% endfor %}
