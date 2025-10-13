@@ -30,7 +30,7 @@ const list = async (req, res) => {
             if (contentList.length) {
                 // return res.send(contentList[0]._id)
                 return res.redirect(
-                    `/admin/cms/${req.contentType.slug}/detail/${contentList[0]._id}`
+                    `/admin/cms/${req.contentType.slug}/edit/${contentList[0]._id}`
                 )
             } else {
                 return res.redirect(`/admin/cms/${req.contentType.slug}/add`)
