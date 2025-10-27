@@ -20,11 +20,15 @@ module.exports = (app, viewsPath) => {
             return Object.keys(obj)
         })
         .addFilter('log', (value) => {
-            console.log(value)
+            console.log('value', value)
             return value // Return the value to ensure it continues rendering
         })
 
     njk.addFilter('htmlSlice', function (value, start, end) {
+        // Handle null, undefined, or non-string values
+        if (value == null || typeof value !== 'string') {
+            return ''
+        }
         const text = value.replace(/<[^>]*>?/gm, '') // Remove HTML tags
         return text.slice(start, end) // Return sliced text
     })

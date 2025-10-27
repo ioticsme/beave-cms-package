@@ -1,3 +1,6 @@
+const { default: slugify } = require('slugify')
+const AdminNav = require('../model/AdminNav')
+
 const navConfig = [
     // {
     //     section: 'Dashboard',
@@ -18,7 +21,7 @@ const navConfig = [
     {
         section: 'Content',
         section_slug: 'content',
-        position: 2,
+        position: 5,
         has_access: ['super_admin', 'admin', 'editor'],
         items: [
             // {
@@ -66,7 +69,7 @@ const navConfig = [
     {
         section: 'Assets',
         section_slug: 'assets',
-        position: 3,
+        position: 6,
         has_access: ['super_admin', 'admin', 'editor'],
         items: [
             {
@@ -97,7 +100,7 @@ const navConfig = [
     {
         section: 'Public',
         section_slug: 'public',
-        position: 3,
+        position: 7,
         has_access: ['super_admin', 'admin'],
         items: [
             // {
@@ -119,7 +122,7 @@ const navConfig = [
     {
         section: 'Custom Forms',
         section_slug: 'custom-forms',
-        position: 4,
+        position: 8,
         has_access: ['super_admin', 'admin', 'editor'],
         items: [
             {
@@ -149,7 +152,7 @@ const navConfig = [
     {
         section: 'Settings',
         section_slug: 'settings',
-        position: 5,
+        position: 9,
         has_access: ['super_admin', 'admin'],
         items: [
             {
@@ -204,6 +207,24 @@ const navConfig = [
     },
 ]
 
+const getBaseNavConfig = async () => {
+    const adminNavs = await AdminNav.find({ active: { $ne: false } })
+    const baseNavConfig = navConfig
+
+    adminNavs.forEach((nav) => {
+        baseNavConfig.push({
+            section: nav.section,
+            section_slug: 'content',
+            position: nav.position,
+            has_access: ['super_admin', 'admin', 'editor'],
+            items: [],
+        })
+    })
+
+    return baseNavConfig
+}
+
 module.exports = {
     navConfig,
+    getBaseNavConfig,
 }

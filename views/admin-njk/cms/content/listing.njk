@@ -97,6 +97,7 @@
 													{% for selected_field in fg.fields %}
 														{% if selected_field.show_on_list %}
 															{% set defaultFieldValue = item.content[default_lang.prefix][fg.row_name][selected_field.field_name] %}
+															
 															{% if not defaultFieldValue %}
 																{% set defaultFieldValue = '- No Default Field -' %}
 															{% endif %}

@@ -301,7 +301,7 @@
 																					<input class="form-control " id="beaver_daterangepicker_{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ loop.index }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="{{ cf.placeholder }}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
-																				<select class="form-select" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
+																				<select class="form-select" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																					<option value='' >- Select {{cf.field_label}} -</option>
 																					{% for dropdown in cf.options[brandLanguage.prefix] %}
 																						<option value="{{ dropdown.value }}">{{ dropdown.label }}</option>
@@ -496,7 +496,7 @@
 																				{% endfor %}
 																			</div>
 																		{% elif cf.field_type == 'dropdown' %}
-																			<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
+																			<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}]]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
 																				<option value=''>- Select {{cf.field_label}} -</option>
 																				{% for dropdown in cf.options.en %}
 																					<option value="{{dropdown.value}}">{{dropdown.label}}</option>

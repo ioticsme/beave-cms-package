@@ -1,12 +1,14 @@
 const Joi = require('joi')
 const { logError } = require('../../helper/Logger.helper')
 const AdminNav = require('../../model/AdminNav')
+const { removeCache } = require('../../helper/Redis.helper')
+const envConfig = require('../../config/env.config')
 
 const list = async (req, res) => {
     try {
-        const admin_navs = await AdminNav.find()
-        return res.render('admin-njk/config/admin-nav/listing', {
-            admin_navs,
+        const adminNavs = await AdminNav.find().sort({ position: 1 })
+        return res.render('admin-njk/config/admin-nav/listing-new', {
+            adminNavs,
         })
     } catch (error) {
         logError(error)
@@ -18,6 +20,7 @@ const saveSection = async (req, res) => {
     try {
         // console.log(req.body)
         const schema = Joi.object({
+            _id: Joi.string().optional(),
             section: Joi.string().required().min(3).max(60),
             position: Joi.number().required(),
         })
@@ -36,7 +39,16 @@ const saveSection = async (req, res) => {
             position: req.body.position,
         }
 
-        await AdminNav.create(data)
+        if (req.body._id) {
+            await AdminNav.updateOne({ _id: req.body._id }, data)
+        } else {
+            await AdminNav.create(data)
+        }
+
+        await removeCache([
+            `${envConfig.cache.CACHE_KEY_PREFIX}-mixed-privileges-${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}`,
+            `${envConfig.cache.CACHE_KEY_PREFIX}-mixed-nav-${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}`,
+        ])
 
         return res.status(200).json({
             message: 'Section added successfully',
@@ -138,13 +150,22 @@ const saveChild = async (req, res) => {
 
 const deleteSection = async (req, res) => {
     try {
-        await AdminNav.updateOne(
-            {
-                _id: req.params.id,
-            },
-            { deleted: true, deleted_at: new Date() }
-        )
-        return res.redirect('/admin/config/admin-nav')
+        const { id } = req.body
+        // If id not found
+        if (!id) {
+            return res.status(404).json({ error: 'Id not found' })
+        }
+
+        await AdminNav.deleteOne({ _id: id })
+
+        await removeCache([
+            `${envConfig.cache.CACHE_KEY_PREFIX}-mixed-privileges-${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}`,
+            `${envConfig.cache.CACHE_KEY_PREFIX}-mixed-nav-${req.authUser?.brand?.code}-${req.authUser?.brand?.country_code}`,
+        ])
+
+        return res.status(200).json({
+            message: 'Section deleted successfully',
+        })
     } catch (error) {
         logError(error)
         return res.status(500).json({ error: 'Something went wrong' })

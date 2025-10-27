@@ -10,6 +10,8 @@ const Brand = require('../../model/Brand')
 const { removeCache } = require('../../helper/Redis.helper')
 const envConfig = require('../../config/env.config')
 const { logError } = require('../../helper/Logger.helper')
+const AdminNav = require('../../model/AdminNav')
+const { getNavigation } = require('../../middleware/cms.middleware')
 
 const list = async (req, res) => {
     try {
@@ -52,12 +54,25 @@ const edit = async (req, res) => {
         // console.log('contentType :>> ', contentType)
         const contentTypes = await ContentType.find()
         const brands = await Brand.find().sort({ position: 1 })
+        const currentNavigation = await getNavigation(req)
+        const currentNavSections = currentNavigation.map((eachSection) => {
+            return eachSection.section
+        })
+        const adminNavs = await AdminNav.find({ active: { $ne: false } })
+        const adminNavSections = adminNavs.map((eachSection) => {
+            return eachSection.section
+        })
+
+        const mixedNavSections = [
+            ...new Set([...currentNavSections, ...adminNavSections]),
+        ]
         return res.render('admin-njk/config/content-type/form', {
             contentType,
             isEdit: true,
             contentTypes,
             icons,
             brands,
+            mixedNavSections,
         })
     } catch (e) {
         logError(e)

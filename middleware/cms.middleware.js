@@ -5,7 +5,7 @@ const Brand = require('../model/Brand')
 const Settings = require('../model/Settings')
 const ContentType = require('../model/ContentType')
 const { default: collect } = require('collect.js')
-const { navConfig } = require('../config/admin.config')
+const { navConfig, getBaseNavConfig } = require('../config/admin.config')
 const { convertToSingular } = require('../helper/General.helper')
 const { privileges } = require('../config/userPrivilege.config')
 const { default: slugify } = require('slugify')
@@ -165,6 +165,10 @@ const nunjucksFilter = async (req, res, next) => {
     }
 
     res.locals.htmlSlice = (value, start, end) => {
+        // Handle null, undefined, or non-string values
+        if (value == null || typeof value !== 'string') {
+            return ''
+        }
         const text = value.replace(/<[^>]*>?/gm, '') // Remove HTML tags
         return text.slice(start, end) // Return sliced text
     }
@@ -220,6 +224,8 @@ const contentTypeCheck = async (req, res, next) => {
 
 const getNavigation = async (req) => {
     // preBuildNav is the navigation declared in the config folder of cms-package
+
+    const navConfig = await getBaseNavConfig()
     let preBuildNav = _.cloneDeep(navConfig)
 
     // customBuildNav is the navigation declared in the config folder of cms-wrapper
@@ -417,4 +423,5 @@ module.exports = {
     allBrands,
     nunjucksFilter,
     authUser,
+    getNavigation,
 }

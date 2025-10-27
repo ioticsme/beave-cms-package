@@ -55,11 +55,11 @@ router.group('/', (router) => {
     router.group('/admin-nav', (router) => {
         router.get('/', adminNavController.list)
         router.post('/section/save', adminNavController.saveSection)
-        router.get('/section/delete/:id', adminNavController.deleteSection)
-        router.post('/item/save', adminNavController.saveItem)
-        router.get('/item/delete/:section/:id', adminNavController.deleteItem)
-        router.post('/child/save', adminNavController.saveChild)
-        router.get('/child/delete/:section/:item/:id', adminNavController.deleteChild)
+        router.post('/delete', adminNavController.deleteSection)
+        // router.post('/item/save', adminNavController.saveItem)
+        // router.get('/item/delete/:section/:id', adminNavController.deleteItem)
+        // router.post('/child/save', adminNavController.saveChild)
+        // router.get('/child/delete/:section/:item/:id', adminNavController.deleteChild)
         // router.post('/delete', adminNavController.deleteItem)
     })
 

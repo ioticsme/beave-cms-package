@@ -31,13 +31,9 @@ const AdminNavSchema = new mongoose.Schema(
                 ],
             },
         ],
-        deleted: {
+        active: {
             type: Boolean,
-            default: false,
-        },
-        deleted_at: {
-            type: Date,
-            default: null,
+            default: true,
         },
     },
     {

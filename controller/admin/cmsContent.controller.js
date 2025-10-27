@@ -616,7 +616,8 @@ const savePageBuilderContent = async (req, res) => {
             Redis.removeCache([collection_cache_key])
             return res.status(200).json({
                 message: 'Content added successfully',
-                redirect_to: `/admin/cms/${type.slug}/detail/${save._id}`,
+                // redirect_to: `/admin/cms/${type.slug}/detail/${save._id}`,
+                redirect_to: `/admin/cms/${type.slug}`,
             })
         }
     } catch (error) {
@@ -656,7 +657,8 @@ const saveDefaultContent = async (req, res) => {
             article_editor: 'string()',
             richtext: 'string()',
             media: 'object()',
-            dropdown: 'array()',
+            dropdown_single: 'string()',
+            dropdown_multi: 'array()',
             email: 'string()',
             number: 'number()',
             date: 'date()',
@@ -714,16 +716,15 @@ const saveDefaultContent = async (req, res) => {
                                 ),
                             })
                         } else {
+                            let fieldType = field.field_type || 'optional'
+                            if (field.field_type == 'dropdown') {
+                                fieldType = `dropdown_${
+                                    field.multi_select ? 'multi' : 'single'
+                                }`
+                            }
+                            let rule = `Joi.${validTypes[fieldType]}${min}${max}${required}.label('${field.field_label}')`
                             _.assign(fieldsValidationObject, {
-                                [field.field_name]: eval(
-                                    ` Joi.${
-                                        validTypes[
-                                            field.field_type || 'optional'
-                                        ]
-                                    }${min}${max}${required}.label('${
-                                        field.field_label
-                                    }')`
-                                ),
+                                [field.field_name]: eval(rule),
                             })
                         }
                     })
@@ -1001,7 +1002,7 @@ const saveDefaultContent = async (req, res) => {
             Redis.removeCache([collection_cache_key, single_item_cache_key])
             return res.status(201).json({
                 message: 'Content updated successfully',
-                redirect_to: `/admin/cms/${type.slug}/detail/${req.body._id}`,
+                redirect_to: `/admin/cms/${type.slug}`,
             })
         } else {
             data.slug = req.body.slug ? slugify(req.body.slug) : undefined
@@ -1014,7 +1015,8 @@ const saveDefaultContent = async (req, res) => {
             Redis.removeCache([collection_cache_key])
             return res.status(200).json({
                 message: 'Content added successfully',
-                redirect_to: `/admin/cms/${type.slug}/detail/${save._id}`,
+                // redirect_to: `/admin/cms/${type.slug}/detail/${save._id}`,
+                redirect_to: `/admin/cms/${type.slug}`,
             })
         }
     } catch (error) {
