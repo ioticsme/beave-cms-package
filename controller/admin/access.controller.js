@@ -4,53 +4,75 @@ const bcrypt = require('bcryptjs')
 const Admin = require('../../model/Admin')
 const { privileges } = require('../../config/userPrivilege.config')
 const envConfig = require('../../config/env.config')
+const { logError } = require('../../helper/Logger.helper')
 
 // List all admins excluding the super admin
 const list = async (req, res) => {
-    const admins = await Admin.find({
-        role: {
-            $ne: 'super_admin', // Exclude 'super_admin' from the results
-        },
-        deleted: {
-            $ne: true,
-        },
-    })
+    try {
+        const admins = await Admin.find({
+            role: {
+                $ne: 'super_admin', // Exclude 'super_admin' from the results
+            },
+            deleted: {
+                $ne: true,
+            },
+        })
 
-    return res.render('admin-njk/access-control/users/listing', {
-        admins, // Pass the list of admins to the view
-    })
+        return res.render('admin-njk/access-control/users/listing', {
+            admins, // Pass the list of admins to the view
+        })
+    } catch (error) {
+        logError(error)
+        return res.render('admin-njk/app-error-500', {
+            error: 'Internal Server Error',
+        })
+    }
 }
 
 // Render the form to add a new admin
 const add = async (req, res) => {
-    const config_privilege_routes = await privileges(req)
-    return res.render('admin-njk/access-control/users/form', {
-        admin: {},
-        current_privileges: [],
-        config_privilege_routes,
-        isEdit: false, // Specify that it's not an edit operation
-        landing_url_privilege_id:
-            envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID,
-    })
+    try {
+        const config_privilege_routes = await privileges(req)
+        return res.render('admin-njk/access-control/users/form', {
+            admin: {},
+            current_privileges: [],
+            config_privilege_routes,
+            isEdit: false, // Specify that it's not an edit operation
+            landing_url_privilege_id:
+                envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID,
+        })
+    } catch (error) {
+        logError(error)
+        return res.render('admin-njk/app-error-500', {
+            error: 'Internal Server Error',
+        })
+    }
 }
 
 // Render the form to edit an existing admin
 const edit = async (req, res) => {
-    const admin = await Admin.findOne({
-        _id: req.params.id, // Find the admin by ID from the URL
-        deleted: {
-            $ne: true,
-        },
-    })
-    const config_privilege_routes = await privileges(req)
-    return res.render('admin-njk/access-control/users/form', {
-        admin, // Pass the admin data to the form for editing
-        current_privileges: admin.privileges?.split(',') ?? [],
-        config_privilege_routes,
-        isEdit: true, // Specify that it's an edit operation
-        landing_url_privilege_id:
-            envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID,
-    })
+    try {
+        const admin = await Admin.findOne({
+            _id: req.params.id, // Find the admin by ID from the URL
+            deleted: {
+                $ne: true,
+            },
+        })
+        const config_privilege_routes = await privileges(req)
+        return res.render('admin-njk/access-control/users/form', {
+            admin, // Pass the admin data to the form for editing
+            current_privileges: admin.privileges?.split(',') ?? [],
+            config_privilege_routes,
+            isEdit: true, // Specify that it's an edit operation
+            landing_url_privilege_id:
+                envConfig.general.ADMIN_LANDING_URL_PRIVILEGE_ID,
+        })
+    } catch (error) {
+        logError(error)
+        return res.render('admin-njk/app-error-500', {
+            error: 'Internal Server Error',
+        })
+    }
 }
 
 // Save a new admin or update an existing admin

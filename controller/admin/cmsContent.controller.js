@@ -21,8 +21,8 @@ const list = async (req, res) => {
         // return res.send(req.contentType._id)
         const contentList = await Content.find({
             type_id: req.contentType._id,
-            brand: session.brand._id,
-            country: session.brand.country,
+            // brand: session.brand._id,
+            // country: session.brand.country,
             deleted: { $ne: true },
         }).sort('position')
 
@@ -62,8 +62,8 @@ const detail = async (req, res) => {
         const contentDetail = await Content.findOne({
             _id: req.params.id,
             type_id: req.contentType._id,
-            brand: session.brand._id,
-            country: session.brand.country,
+            // brand: session.brand._id,
+            // country: session.brand.country,
             deleted: { $ne: true },
         })
             .populate('author revisions.editor last_edited_user')
@@ -288,8 +288,8 @@ const add = async (req, res) => {
         let allowed_content = {}
         if (req.contentType?.allowed_type?.length) {
             const data = await Content.find({
-                brand: session?.brand?._id,
-                country: session?.brand?.country,
+                // brand: session?.brand?._id,
+                // country: session?.brand?.country,
                 status: 'published',
                 type_slug: { $in: req.contentType.allowed_type },
                 deleted: { $ne: true },
@@ -344,8 +344,8 @@ const edit = async (req, res) => {
         const contentDetail = await Content.findOne({
             _id: req.params.id,
             type_id: req.contentType._id,
-            brand: session.brand._id,
-            country: session.brand.country,
+            // brand: session.brand._id,
+            // country: session.brand.country,
             deleted: { $ne: true },
         })
 
@@ -454,8 +454,8 @@ const changeStatus = async (req, res) => {
         const update = await Content.findOneAndUpdate(
             {
                 _id: id,
-                brand: req.authUser.brand._id,
-                country: req.authUser.brand.country,
+                // brand: req.authUser.brand._id,
+                // country: req.authUser.brand.country,
                 deleted: { $ne: true },
             },
             {

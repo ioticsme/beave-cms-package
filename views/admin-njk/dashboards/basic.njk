@@ -15,7 +15,7 @@
 
 {% block customScript %}
   <script>
-    console.log("{{ analyticsData.user.value }}");
+    {# console.log("{{ analyticsData.user.value }}"); #}
   </script>
 {% endblock %}
 
@@ -28,14 +28,14 @@
     <div class="app-toolbar py-3 py-lg-6" id="beaver_app_toolbar">
       <div class="app-container container-xxl d-flex flex-stack" id="beaver_app_toolbar_container">
         <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-          <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Basic Dashboard
+          <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Dashboard
           <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
               <li class="breadcrumb-item text-muted">
                 <a class="text-muted text-hover-primary" href="{{LANDING_URL}}">Home</a>
               </li>
               <li class="breadcrumb-item">
                 <span class="bullet bg-gray-400 w-5px h-2px"></span></li>
-              <li class="breadcrumb-item text-muted">Dashboards</li>
+              <li class="breadcrumb-item text-muted">Dashboard</li>
             </ul>
           </h1>
         </div>
@@ -47,20 +47,38 @@
     </div>
     <div class="app-content flex-column-fluid" id="beaver_app_content">
       <div class="app-container container-xxl" id="beaver_app_content_container">
-        <div class="p-6 shadow-lg rounded-lg bg-gray-100 text-gray-700">
-          <h2 class="font-semibold text-4xl mb-5">Welcome 👋</h2>
-          <p>
-            <This>is a simple hero unit, a simple jumbotron-style component for calling extra attention</This>
-            <to>featured content or information.</to>
-          </p>
-          <hr class="my-6 border-gray-300"/>
-          <p>
-            <It>uses utility classes for typography and spacing to space content out within the larger</It>
-            <container></container>
-          </p>
-          {# <button type="button" class="inline-block px-6 py-2.5 mt-4 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light">
-            <Learn>more</Learn>
-          </button> #}
+        <div class="p-6 shadow-lg rounded-lg bg-white">
+          <h2 class="font-semibold text-4xl mb-5">Welcome {{authUser.admin_name}} 👋</h2>
+          <p class="text-gray-600 mb-6">You're logged in as: <span class="badge badge-success font-medium">{{authUser.admin_role | replace('_', ' ') | capitalize}}<span></p>
+          
+          <!-- Quick Actions Section -->
+          {% if authUser.admin_role == 'super_admin' or authUser.admin_role == 'admin' %}
+            <div class="mb-8">
+              <h3 class="text-xl font-semibold mb-4">Quick Actions</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {# <a href="/admin/content/create" class="p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                  <div class="text-blue-600 mb-2">📝</div>
+                  <h4 class="font-medium">Create New Content</h4>
+                </a> #}
+                
+                <a href="/admin/users" class="p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                  <div class="text-green-600 mb-2">👥</div>
+                  <h4 class="font-medium">Manage Users</h4>
+                </a>
+              </div>
+            </div>
+          {% endif %}
+
+          <!-- Recent Activity Section -->
+          <div>
+            <h3 class="text-xl font-semibold mb-4">Recent Activity</h3>
+            <div class="space-y-4">
+              <!-- Activity items would be populated by the server -->
+              <div class="p-4 border rounded-lg">
+                <p class="text-sm text-gray-500">No recent activity to show</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

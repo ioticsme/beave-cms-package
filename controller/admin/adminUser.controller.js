@@ -7,36 +7,55 @@ const { logError } = require('../../helper/Logger.helper')
 
 // Fetches and renders the profile details of the currently authenticated admin user
 const userDetail = async (req, res) => {
-    const userDetails = await Admin.findOne({
-        _id: req.authUser.admin_id, // Get the admin ID from the request
-        deleted: { $ne: true },
-    })
+    try {
+        console.log('req.authUser', req.authUser)
+        const userDetails = await Admin.findOne({
+            _id: req.authUser.admin_id, // Get the admin ID from the request
+            deleted: { $ne: true },
+        })
 
-    if (!userDetails) {
-        // If the user is not found, return a 404 error
-        res.status(404).json('Not Found')
-        return
+        if (!userDetails) {
+            // If the user is not found, return a 404 error
+            return res.render('admin-njk/app-error-404', {
+                error: 'Not Found',
+            })
+        }
+
+        // Render the profile page with the fetched user details
+        return res.render('admin-njk/admin-user/profile', { userDetails })
+    } catch (error) {
+        logError(error)
+        return res.render('admin-njk/app-error-500', {
+            error: 'Internal Server Error',
+        })
     }
-
-    // Render the profile page with the fetched user details
-    res.render('admin-njk/admin-user/profile', { userDetails })
 }
 
 // Fetches and renders the form for updating the profile details of the authenticated admin user
 const profileUpdate = async (req, res) => {
-    const userDetails = await Admin.findOne({
-        _id: req.authUser.admin_id, // Get the admin ID from the request
-        deleted: { $ne: true },
-    })
+    try {
+        const userDetails = await Admin.findOne({
+            _id: req.authUser.admin_id, // Get the admin ID from the request
+            deleted: { $ne: true },
+        })
 
-    if (!userDetails) {
-        // If the user is not found, return a 404 error
-        res.status(404).json('Not Found')
-        return
+        if (!userDetails) {
+            // If the user is not found, return a 404 error
+            return res.render('admin-njk/app-error-404', {
+                error: 'Not Found',
+            })
+        }
+
+        // Render the update profile form with the fetched user details
+        return res.render('admin-njk/admin-user/update-profile', {
+            userDetails,
+        })
+    } catch (error) {
+        logError(error)
+        return res.render('admin-njk/app-error-500', {
+            error: 'Internal Server Error',
+        })
     }
-
-    // Render the update profile form with the fetched user details
-    res.render('admin-njk/admin-user/update-profile', { userDetails })
 }
 
 // Saves the updated profile information for the authenticated admin user
@@ -88,18 +107,28 @@ const profileUpdateSave = async (req, res) => {
 
 // Fetches and renders the change password form for the authenticated admin user
 const changePassword = async (req, res) => {
-    const userDetails = await Admin.findOne({
-        _id: req.authUser.admin_id, // Get the admin ID from the request
-    })
+    try {
+        const userDetails = await Admin.findOne({
+            _id: req.authUser.admin_id, // Get the admin ID from the request
+        })
 
-    if (!userDetails) {
-        // If the user is not found, return a 404 error
-        res.status(404).json('Not Found')
-        return
+        if (!userDetails) {
+            // If the user is not found, return a 404 error
+            return res.render('admin-njk/app-error-404', {
+                error: 'Not Found',
+            })
+        }
+
+        // Render the change password form with the fetched user details
+        return res.render('admin-njk/admin-user/change-password', {
+            userDetails,
+        })
+    } catch (error) {
+        logError(error)
+        return res.render('admin-njk/app-error-500', {
+            error: 'Internal Server Error',
+        })
     }
-
-    // Render the change password form with the fetched user details
-    res.render('admin-njk/admin-user/change-password', { userDetails })
 }
 
 // Handles the password change functionality for the authenticated admin user
