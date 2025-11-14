@@ -11,7 +11,7 @@ const getBrandsFromCache = async () => {
     const brands = await getCache(cacheKey).then(async (data) => {
         if (!data) {
             const liveBrands = await Brand.find({
-                active: true,
+                active: { $ne: false },
             })
                 .sort({ position: 1 })
                 .populate([
@@ -50,7 +50,7 @@ const getCountriesFromCache = async () => {
         let countries = await getCache(cacheKey).then(async (data) => {
             if (!data) {
                 let countries = await Country.find({
-                    active: true,
+                    active: { $ne: false },
                 })
                     .sort({ position: 1 })
                     .lean()
@@ -131,7 +131,10 @@ const getBrand = async (req, country) => {
             domain = brand?.domains?.[0]
         }
 
-        brand.domain = domain
+        if (brand) {
+            brand.domain = domain
+        }
+
         return brand
     } catch (error) {
         logError(error)
