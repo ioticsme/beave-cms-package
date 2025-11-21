@@ -43,6 +43,7 @@
 	<script src='/cms-static/common/js/es-form.js'></script>
 
 	<script src="/cms-static/admin/article-editor/article-editor.min.js"></script>
+	<script src="/cms-static/admin/article-editor/plugins/textdirection/textdirection.min.js"></script>
 	{# Custom js for cms add page #}
 	<script src='/cms-static/common/js/cms-content-add.js'></script>
 {% endblock %}
@@ -53,6 +54,10 @@
 			css: '/cms-static/admin/article-editor/css/',
 			image: {
 				upload: '/admin/upload-article-image'
+			},
+			plugins: ['textdirection'],
+			textdirection: {
+				context: true
 			}
 		})
 	</script>
@@ -158,11 +163,11 @@
 																					{% if cf.field_type === 'text' or cf.field_type === 'email' or cf.field_type === 'number' %}
 																						<input disabled class="form-control  beaver-cms-form-field" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
 																					{% elif cf.field_type === 'richtext' %}
-																						<textarea disabled class="content_wysiwyg beaver-cms-form-field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ mathRandom() }}"></textarea>
+																						<textarea disabled class="content_wysiwyg beaver-cms-form-field" data-lang="{{brandLanguage.prefix}}" data-dir="{{brandLanguage.dir}}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ mathRandom() }}"></textarea>
 																					{% elif cf.field_type === 'textarea' %}
-																						<textarea disabled class="form-control  beaver-cms-form-field" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
+																						<textarea disabled class="form-control  beaver-cms-form-field" data-lang="{{brandLanguage.prefix}}" data-dir="{{brandLanguage.dir}}" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																					{% elif cf.field_type === 'article_editor' %}
-																						<textarea class="form-control  article_editor_field beaver-cms-form-field" rows="30" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
+																						<textarea class="form-control  article_editor_field beaver-cms-form-field" data-lang="{{brandLanguage.prefix}}" data-dir="{{brandLanguage.dir}}" rows="30" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																					{% elif cf.field_type === 'media' %}
 																						<span class='media-uploader-field'>
 																							<span class="media_preview">
@@ -211,11 +216,11 @@
 																					{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' or cf.field_type == 'time' or cf.field_type == 'color' or cf.field_type == 'url' %}
 																						<input class="form-control " type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]">
 																					{% elif cf.field_type === 'richtext' %}
-																						<textarea class="content_wysiwyg beaver-cms-form-field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ mathRandom() }}"></textarea>
+																						<textarea class="content_wysiwyg beaver-cms-form-field" data-lang="{{brandLanguage.prefix}}" data-dir="{{brandLanguage.dir}}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ mathRandom() }}"></textarea>
 																					{% elif cf.field_type === 'textarea' %}
-																						<textarea class="form-control " rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
+																						<textarea class="form-control " data-lang="{{brandLanguage.prefix}}" data-dir="{{brandLanguage.dir}}" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																					{% elif cf.field_type === 'article_editor' %}
-																						<textarea class="form-control  article_editor_field" rows="30" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
+																						<textarea class="form-control  article_editor_field" data-lang="{{brandLanguage.prefix}}" data-dir="{{brandLanguage.dir}}" rows="30" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}[]]]" placeholder="" spellcheck="false"></textarea>
 																					{% elif cf.field_type === 'media' %}
 																						<span class='media-uploader-field'>
 																							<span class="media_preview">
@@ -274,11 +279,11 @@
 																			{% if cf.field_type == 'text' or cf.field_type == 'email' or cf.field_type == 'number' or cf.field_type == 'time' or cf.field_type == 'color' or cf.field_type == 'url' %}
 																				<input class="{% if cf.field_type != 'color' %} form-control {% endif %}" type="{{ cf.field_type }}" placeholder="Enter {{ cf.field_label }}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]">
 																			{% elif cf.field_type == 'richtext' %}
-																				<textarea class="content_wysiwyg beaver-cms-form-field" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ mathRandom() }}"></textarea>
+																				<textarea class="content_wysiwyg beaver-cms-form-field" data-lang="{{brandLanguage.prefix}}" data-dir="{{brandLanguage.dir}}" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" id="wysiwyg-cf-{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ mathRandom() }}"></textarea>
 																			{% elif cf.field_type == 'textarea' %}
-																				<textarea class="form-control" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
+																				<textarea class="form-control" data-lang="{{brandLanguage.prefix}}" data-dir="{{brandLanguage.dir}}" rows="6" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
 																			{% elif cf.field_type == 'article_editor' %}
-																				<textarea class="form-control  article_editor_field" rows="30" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
+																				<textarea class="form-control  article_editor_field" data-lang="{{brandLanguage.prefix}}" data-dir="{{brandLanguage.dir}}" rows="30" name="{{ brandLanguage.prefix }}[{{ cfg.row_name }}[{{ cf.field_name }}]]" placeholder="" spellcheck="false"></textarea>
 																			{% elif cf.field_type === 'media' %}
 																				<span class='media-uploader-field'>
 																					<span class="media_preview">

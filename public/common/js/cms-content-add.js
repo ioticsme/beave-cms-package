@@ -1,7 +1,13 @@
 document.querySelectorAll('.content_wysiwyg').forEach(function (e) {
+    var lang = e.dataset.lang || 'en'
+    var dir = e.dataset.dir || 'ltr'
     ClassicEditor.create(document.querySelector(`#${e.getAttribute('id')}`), {
         simpleUpload: {
             uploadUrl: '/admin/cms/media/ck-editor/upload',
+        },
+        language: {
+            ui: lang,
+            content: lang,
         },
     })
         .then((editor) => {
