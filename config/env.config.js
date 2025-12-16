@@ -13,7 +13,7 @@ const envConfig = {
         SESSION_MAX_AGE: Number(process.env.SESSION_MAX_AGE) || 720, // Value must be in minutes
         DOMAIN: process.env.DOMAIN,
         FRONTEND_URL: process.env.FRONTEND_URL,
-        CLIENT_NAME: process.env.CLIENT_NAME,
+        CLIENT_NAME: process.env.CLIENT_NAME || 'Beaver',
         CMS_LOGO_LARGE:
             process.env.CMS_LOGO_LARGE ||
             '/cms-static/common/media/beaver-logo.png',

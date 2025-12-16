@@ -822,13 +822,15 @@ const saveDefaultContent = async (req, res) => {
                             })
                             // END:: Restructuring the media field array and validation
                         } else {
+                            let fieldType = field.field_type || 'optional'
+                            if (field.field_type == 'dropdown') {
+                                fieldType = `dropdown_${
+                                    field.multi_select ? 'multi' : 'single'
+                                }`
+                            }
                             _.assign(fieldsValidationObject, {
                                 [field.field_name]: eval(
-                                    ` Joi.array().items(Joi.${
-                                        validTypes[field.field_type]
-                                    }${min}${max}${required}).label('${
-                                        field.field_label
-                                    }')`
+                                    ` Joi.array().items(Joi.${validTypes[fieldType]}${min}${max}${required}).label('${field.field_label}')`
                                 ),
                             })
                         }

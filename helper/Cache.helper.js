@@ -30,12 +30,13 @@ const getBrandsFromCache = async () => {
                     .sortBy('country.position')
                     .all()
             })
-
-            await setCache(
-                cacheKey,
-                JSON.stringify(liveBrands),
-                60 * 60 * 24 * 30
-            )
+            if (liveBrands.length) {
+                await setCache(
+                    cacheKey,
+                    JSON.stringify(liveBrands),
+                    60 * 60 * 24 * 30
+                )
+            }
             return liveBrands
         }
         return JSON.parse(data)

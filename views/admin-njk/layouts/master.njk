@@ -1,268 +1,305 @@
 <html>
-	<head>
-
-		<base href="/">
-		{% block title %} {% endblock %}
-		<meta charset="utf-8">
-		<meta name="description" content="Beaver CMS - Admin">
-		<meta name="keywords" content="">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="shortcut icon" href=`#`>
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
-		{% block csslib %}{% endblock %}
-		<link href="/cms-static/admin/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css">
-		<link href="/cms-static/admin/assets/css/style.bundle.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
-		{% block pageSpecificStyle %}{% endblock %}
-		{# //- <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"> #}
-	</head>
-
-	{# //- body#beaver_app_body.app-default(data-beaver-name="beaver" data-beaver-app-layout="dark-sidebar" data-beaver-app-header-fixed="true" data-beaver-app-sidebar-enabled="true" data-beaver-app-sidebar-fixed="true" data-beaver-app-sidebar-hoverable="true" data-beaver-app-sidebar-push-header="true" data-beaver-app-sidebar-push-toolbar="true" data-beaver-app-sidebar-push-footer="true" data-beaver-app-toolbar-enabled="true") #}
-	<body id="beaver_app_body" class="app-default" data-beaver-name="beaver" data-beaver-app-layout="dark-sidebar" data-beaver-app-header-fixed="true" data-beaver-app-sidebar-enabled="true" data-beaver-app-sidebar-fixed="true" data-beaver-app-sidebar-hoverable="true" data-beaver-app-sidebar-push-header="true" data-beaver-app-sidebar-push-toolbar="true" data-beaver-app-sidebar-push-footer="true" data-beaver-app-toolbar-enabled="true">
-		{# <script type="text/javascript">
-			//- if (document.documentElement) {
-			//- 	const defaultThemeMode = "light";
-			//- 	const name = document.body.getAttribute("data-beaver-name");
-			//- 	let themeMode = localStorage.getItem("beaver_" + ( name !== null ? name + "_" : "" ) + "theme_mode_value");
-			//- 	if ( themeMode === null ) {
-			//- 		if ( defaultThemeMode === "system" ) {
-			//- 			themeMode = window.matchMedia("(prefers-color-scheme: light)").matches ? "dark" : "light";
-			//- 		}
-			//- 		else {
-			//- 			themeMode = defaultThemeMode;
-			//- 		}
-			//- 	}
-			//- 	document.documentElement.setAttribute("data-theme", themeMode);
-		</script> #}
-		{# //- #beaver_app_root.d-flex.flex-column.flex-root.app-root #}
-		{% if not isPublicRoute %}
-			<div id="beaver_app_root" class="flex flex-column flex-root app-root">
-				<div class="app-page flex-column" id="beaver_app_page">
-					<div id="beaver_app_header" class="app-header">
-						<div class="app-container container-fluid d-flex align-items-stretch justify-content-between">
-							<div class="d-flex align-items-center d-lg-none ms-n2 me-2" title="Show sidebar menu">
-								<div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="beaver_app_sidebar_mobile_toggle">
-									<span class="svg-icon svg-icon-1">
-										<svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-											<path d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z" fill="currentColor"></path>
-											<path opacity="0.3" d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z" fill="currentColor"></path>
-										</svg>
-									</span>
-								</div>
-							</div>
-							<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-								<a class="d-lg-none" href="{{LANDING_URL}}"><img class="h-30px" alt="Logo aa" src=`#`></a>
-							</div>
-
-							<div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="beaver_app_header_wrapper">
-								{# //- BEGIN:: Top Navigation #}
-								{% include '../partials/_top-nav.njk' %}
-								{# //- END:: Top Navigation #}
-							</div>
-
-							<div class="app-navbar flex-shrink-0">
-								<div class="app-navbar-item align-items-stretch ms-1 ms-lg-3 me-10">
-
-									{# //- BEGIN:: Top Search Toggle #}
-									{% include '../partials/_selected-brand.njk' %}
-									{# //- END:: Top Search Toggle #}
-								</div>
-
-								<div class="app-navbar-item align-items-stretch ms-1 ms-lg-3">
-									<div class="app-navbar-item ms-1 ms-lg-3" id="beaver_header_user_menu_toggle">
-										<div class="cursor-pointer symbol symbol-35px symbol-md-40px" data-beaver-menu-trigger="click" data-beaver-menu-attach="parent" data-beaver-menu-placement="bottom-end"><img src="/cms-static/admin/assets/media/avatars/blank.png" alt="user"></div>
-										<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-semibold py-4 fs-6 w-275px" data-beaver-menu="true">
-											<div class="menu-item px-3">
-												<div class="menu-content d-flex align-items-center px-3">
-													<div class="symbol symbol-50px me-5">
-														<img alt="Logo" src="/cms-static/admin/assets/media/avatars/blank.png">
-													</div>
-													<div class="d-flex flex-column">
-														<div class="fw-bold d-flex align-items-center fs-5">
-															{{authUser.admin_name}}
-															<span class="badge badge-success ms-2">{{authUser.admin_role}}</span>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="separator my-2"></div>
-											<div class="menu-item px-5">
-												<a class="menu-link px-5" href="/admin/admin-user">My Profile</a>
-											</div>
-											<div class="menu-item px-5">
-												<a class="menu-link px-5" href="/admin/auth/logout">Sign Out</a>
-											</div>
-										</div>
-									</div>
-									<div class="app-navbar-item d-lg-none ms-2 me-n3" title="Show header menu">
-										<div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="beaver_app_header_menu_toggle">
-											<span class="svg-icon svg-icon-1">
-												<svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M13 11H3C2.4 11 2 10.6 2 10V9C2 8.4 2.4 8 3 8H13C13.6 8 14 8.4 14 9V10C14 10.6 13.6 11 13 11ZM22 5V4C22 3.4 21.6 3 21 3H3C2.4 3 2 3.4 2 4V5C2 5.6 2.4 6 3 6H21C21.6 6 22 5.6 22 5Z" fill="currentColor"></path>
-													<path opacity="0.3" d="M21 16H3C2.4 16 2 15.6 2 15V14C2 13.4 2.4 13 3 13H21C21.6 13 22 13.4 22 14V15C22 15.6 21.6 16 21 16ZM14 20V19C14 18.4 13.6 18 13 18H3C2.4 18 2 18.4 2 19V20C2 20.6 2.4 21 3 21H13C13.6 21 14 20.6 14 20Z" fill="currentColor"></path>
-												</svg>
-											</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="flex flex-1 flex-row flex-row-fluid" id="beaver_app_wrapper">
-					<div class="flex flex-column w-[230px] bg-slate-700 overflow-hidden h-screen fixed pb-20" id="main-nav">
-						{# //- BEGIN:: Main Navigation #}
-						{% include '../partials/_side-nav.njk' %}
-						{# //- END:: Main Navigation #}
-					</div>
-
-					<div class="app-main flex-column flex-row-fluid" id="beaver_app_main" style="padding-left: 230px">
-
-						{% if not authUser.brand or not authUser.brand._id %}
-							<div class="container">
-								<div class="alert alert-danger m-5">
-									Brand Configuration is missing. 
-									<a class="btn btn-sm btn-dark" href="/admin/config/brand/add">Configure Brand</a>
-								</div>
-							</div>
-						{% endif %}
-
-						{# //- BEGIN::LOADING MAIN PAGE CONTENT PART #}
-						{% block content %}{% endblock %}
-						{# //- END::LOADING MAIN PAGE CONTENT PART #}
-
-						<div class="app-footer" id="beaver_app_footer">
-							<div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
-								<div class="text-dark order-2 order-md-1">
-									<span class="text-muted fw-semibold me-1">2025 &copy; {{browserTitle}} </span></div>
-							</div>
-						</div>
-					</div>
-
-					<div class="scrolltop" id="beaver_scrolltop" data-beaver-scrolltop="true">
-						<span class="svg-icon">
-							<svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="currentColor"></rect>
-								<path d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z" fill="currentColor"></path>
-							</svg>
-						</span>
-					</div>
-
-					{% block widgets %}{% endblock %}
-				</div>
-			</div>
-		{% else %}
-			{# //- BEGIN::LOADING PUBLIC PAGE CONTENT PART #}
-				{% block publicContent %}{% endblock %}
-			{# //- END::LOADING PUBLIC PAGE CONTENT PART #}
-		{% endif %}
-
-		<div class="modal fade" id="beaver_modal_media_list" tabindex="-1" aria-hidden="true">
-			<input type="hidden" id="field_id"/>
-			<div class="modal-dialog modal-dialog-centered mw-1000px">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h2>Media List</h2>
-						<div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-							<h3>X</h3>
-						</div>
-					</div>
-					<div class="modal-body py-lg-5 px-lg-5">
-						<div class="card card-flush">
-							<div class="card-body pt-0">
-
-								<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
-									<li class="nav-item">
-										<a class="nav-link active" data-bs-toggle="tab" href="#beaver_tab_pane_1">Media List</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" data-bs-toggle="tab" href="#beaver_tab_pane_2">Upload</a>
-									</li>
-								</ul>
-
-								<div class="tab-content" id="media-management-panel">
-									<div class="tab-pane fade show active" id="beaver_tab_pane_1" role="tabpanel">
-										<div class="row">
-											<div class="col-12 col-md-8 my-3">
-												<input class="form-control form-control-sm form-control-solid" id="search-image-input-modal" placeholder="Search images with name"/>
-											</div>
-											<div class="col-12 col-sm-8">
-												<div id="modal-media-holder"></div>
-											</div>
-											<div class="col-12 col-sm-4 bg-light-primary py-2 rounded">
-												<div class="mb-3" id="media-modal-selected-preview-img">
-													{# Preview image thumb will load here when clicking on image list item #}
-												</div>
-												<input type="hidden" id="media-modal-selected-media-drive" readonly="true"/>
-												<div class="mb-3">
-													<label for="exampleFormControlInput1" class="form-label">URL</label>
-													<input type="text" id="media-modal-selected-media-url" class="form-control form-control-solid" placeholder="URL" readonly="true"/>
-												</div>
-												<div class="mb-3">
-													<label for="exampleFormControlInput1" class="form-label">Title</label>
-													<input type="text" id="media-modal-selected-media-title" class="form-control form-control-solid" placeholder="Title"/>
-												</div>
-												<div class="mb-3">
-													<label for="exampleFormControlInput1" class="form-label">Alt Text</label>
-													<input type="text" id="media-modal-selected-media-alt" class="form-control form-control-solid" placeholder="Alt Text"/>
-												</div>
-												<div class="mb-3">
-													<label for="media-modal-selected-media-link" class="form-label">Link</label>
-													<input type="text" name="link_url" id="media-modal-selected-media-link" class="form-control form-control-solid" placeholder="Enter link (optional)"/>
-												</div>
-												<div class="my-3 ms-2 form-check">
-													<input type="checkbox" name="open_link_in_new_tab" class="form-check-input" id="media-modal-selected-media-link-new-tab">
-													<label class="form-check-label" for="media-modal-selected-media-link-new-tab">Open link in new tab</label>
-												</div>
-												<div class="mb-3">
-													<a href="#" class="btn btn-success" id="media-attach-submit-btn">
-														<i class="las la-wallet fs-2 me-2"></i> Attach</a>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="beaver_tab_pane_2" role="tabpanel">
-										{% include '../partials/_media-upload-DZ-form.njk' %}
-									</div>
-								</div>
-
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<script>
-			var hostUrl = "assets/";
-			document
-				.querySelectorAll('.menu-accordion')
-				.forEach((mainAccordion) => {
-					mainAccordion
-						.querySelectorAll('.menu-sub-accordion .menu-item .menu-link')
-						.forEach((subAccordionItem) => {
-							if (subAccordionItem.classList.contains('active')) {
-								mainAccordion
-									.classList
-									.add('here', 'show')
-							}
-						})
-				})
-		</script>
-		<script src='/cms-static/admin/assets/plugins/global/plugins.bundle.js'></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-		<script src='/cms-static/admin/assets/js/scripts.bundle.js'></script>
-		<script src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'></script>
-		<script src='https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js'></script>
-
-		<script src='/cms-static/common/js/inline-script.js'></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-
-		{% block jslib %}{% endblock %}
-		{% block customScript %}{% endblock %}
-	</body>
-</html>
+    <head>
+        <base href="/"> {% block title %}{% endblock %}
+        <meta charset="utf-8">
+        <meta name="description" content="{{ browserTitle | upper() }} CMS - Admin">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="`#`">
+        <meta property="og:title" content="{{ browserTitle | upper() }} CMS - Admin Panel">
+        <meta property="og:url" content="#">
+        <meta property="og:site_name" content="{{ browserTitle | upper() }} CMS">
+        <meta property="og:description" content="{{ browserTitle | upper() }} CMS - Admin Panel">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="`#`">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"> {% block csslib %}{% endblock %}
+        <link href="/cms-static/admin/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css">
+        <link href="/cms-static/admin/assets/css/style.bundle.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"> {% block pageSpecificStyle %}{% endblock %}
+        {# //- <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"> #}
+        </head>
+        {# //- body#beaver_app_body.app-default(data-beaver-name="beaver" data-beaver-app-layout="dark-sidebar" data-beaver-app-header-fixed="true" data-beaver-app-sidebar-enabled="true" data-beaver-app-sidebar-fixed="true" data-beaver-app-sidebar-hoverable="true" data-beaver-app-sidebar-push-header="true" data-beaver-app-sidebar-push-toolbar="true" data-beaver-app-sidebar-push-footer="true" data-beaver-app-toolbar-enabled="true") #}
+        <body
+            id="beaver_app_body"
+            class="app-default"
+            data-beaver-name="beaver"
+            data-beaver-app-layout="dark-sidebar"
+            data-beaver-app-header-fixed="true"
+            data-beaver-app-sidebar-enabled="true"
+            data-beaver-app-sidebar-fixed="true"
+            data-beaver-app-sidebar-hoverable="true"
+            data-beaver-app-sidebar-push-header="true"
+            data-beaver-app-sidebar-push-toolbar="true"
+            data-beaver-app-sidebar-push-footer="true"
+            data-beaver-app-toolbar-enabled="true">
+            {# <script type="text/javascript">
+                                    			//- if (document.documentElement) {
+                                    			//- 	const defaultThemeMode = "light";
+                                    			//- 	const name = document.body.getAttribute("data-beaver-name");
+                                    			//- 	let themeMode = localStorage.getItem("beaver_" + ( name !== null ? name + "_" : "" ) + "theme_mode_value");
+                                    			//- 	if ( themeMode === null ) {
+                                    			//- 		if ( defaultThemeMode === "system" ) {
+                                    			//- 			themeMode = window.matchMedia("(prefers-color-scheme: light)").matches ? "dark" : "light";
+                                    			//- 		}
+                                    			//- 		else {
+                                    			//- 			themeMode = defaultThemeMode;
+                                    			//- 		}
+                                    			//- 	}
+                                    			//- 	document.documentElement.setAttribute("data-theme", themeMode);
+                                    		</script> #}
+            {# //- #beaver_app_root.d-flex.flex-column.flex-root.app-root #}
+                {% if not isPublicRoute %}
+                    <div id="beaver_app_root" class="flex flex-column flex-root app-root"> <div class="app-page flex-column" id="beaver_app_page">
+                        <div id="beaver_app_header" class="app-header">
+                            <div class="app-container container-fluid d-flex align-items-stretch justify-content-between">
+                                <div class="d-flex align-items-center d-lg-none ms-n2 me-2" title="Show sidebar menu">
+                                    <div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="beaver_app_sidebar_mobile_toggle">
+                                        <span class="svg-icon svg-icon-1">
+                                            <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z" fill="currentColor"></path>
+                                                <path
+                                                    opacity="0.3"
+                                                    d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4
+                                                        21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z"
+                                                    fill="currentColor"></path>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
+                                    <a class="d-lg-none" href="{{ LANDING_URL }}"><img class="h-30px" alt="Logo aa" src="`#`">
+                                    </a>
+                                </div>
+                                <div
+                                    class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="beaver_app_header_wrapper">
+                                    {# //- BEGIN:: Top Navigation #}
+                                    {% include '../partials/_top-nav.njk' %}
+                                    {# //- END:: Top Navigation #}
+                                </div>
+                                <div class="app-navbar flex-shrink-0">
+                                    <div
+                                        class="app-navbar-item align-items-stretch ms-1 ms-lg-3 me-10">
+                                        {# //- BEGIN:: Top Search Toggle #}
+                                        {% include '../partials/_selected-brand.njk' %}
+                                        {# //- END:: Top Search Toggle #}
+                                    </div>
+                                    <div class="app-navbar-item align-items-stretch ms-1 ms-lg-3">
+                                        <div class="app-navbar-item ms-1 ms-lg-3" id="beaver_header_user_menu_toggle">
+                                            <div
+                                                class="cursor-pointer symbol symbol-35px symbol-md-40px"
+                                                data-beaver-menu-trigger="click"
+                                                data-beaver-menu-attach="parent"
+                                                data-beaver-menu-placement="bottom-end"><img src="/cms-static/admin/assets/media/avatars/blank.png" alt="user">
+                                            </div>
+                                            <div
+                                                class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary
+                                                    fw-semibold py-4 fs-6 w-275px"
+                                                data-beaver-menu="true">
+                                                <div class="menu-item px-3">
+                                                    <div class="menu-content d-flex align-items-center px-3">
+                                                        <div class="symbol symbol-50px me-5">
+                                                            <img alt="Logo" src="/cms-static/admin/assets/media/avatars/blank.png">
+                                                        </div>
+                                                        <div class="d-flex flex-column">
+                                                            <div class="fw-bold d-flex align-items-center fs-5">
+                                                                {{ authUser.admin_name }}
+                                                                <span class="badge badge-success ms-2">{{ authUser.admin_role }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="separator my-2"></div>
+                                                <div class="menu-item px-5">
+                                                    <a class="menu-link px-5" href="/admin/admin-user">My Profile</a>
+                                                </div>
+                                                <div class="menu-item px-5">
+                                                    <a class="menu-link px-5" href="/admin/auth/logout">Sign Out</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="app-navbar-item d-lg-none ms-2 me-n3" title="Show header menu">
+                                            <div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="beaver_app_header_menu_toggle">
+                                                <span class="svg-icon svg-icon-1">
+                                                    <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M13 11H3C2.4 11 2 10.6 2 10V9C2 8.4 2.4 8 3 8H13C13.6 8 14 8.4 14 9V10C14 10.6 13.6 11 13 11ZM22 5V4C22 3.4 21.6 3 21
+                                                                3H3C2.4 3 2 3.4 2 4V5C2 5.6 2.4 6 3 6H21C21.6 6 22 5.6 22 5Z"
+                                                            fill="currentColor"></path>
+                                                        <path
+                                                            opacity="0.3"
+                                                            d="M21 16H3C2.4 16 2 15.6 2 15V14C2 13.4 2.4 13 3 13H21C21.6 13 22 13.4 22 14V15C22 15.6 21.6 16 21 16ZM14 20V19C14 18.4
+                                                                13.6 18 13 18H3C2.4 18 2 18.4 2 19V20C2 20.6 2.4 21 3 21H13C13.6 21 14 20.6 14 20Z"
+                                                            fill="currentColor"></path>
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-1 flex-row flex-row-fluid" id="beaver_app_wrapper">
+                        <div
+                            class="flex flex-column w-[230px] bg-slate-700 overflow-hidden h-screen fixed pb-20" id="main-nav">
+                            {# //- BEGIN:: Main Navigation #}
+                            {% include '../partials/_side-nav.njk' %}
+                            {# //- END:: Main Navigation #}
+                        </div>
+                        <div class="app-main flex-column flex-row-fluid" id="beaver_app_main" style="padding-left: 230px">
+                            {% if not authUser.brand or not authUser.brand._id %}
+                                <div class="container">
+                                    <div class="alert alert-danger m-5">
+                                        Brand Configuration is missing.
+                                        <a class="btn btn-sm btn-dark" href="/admin/config/brand/add">Configure Brand</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {# //- BEGIN::LOADING MAIN PAGE CONTENT PART #}
+                            {% block content %}{% endblock %}
+                            {# //- END::LOADING MAIN PAGE CONTENT PART #}
+                            <div class="app-footer" id="beaver_app_footer">
+                                <div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
+                                    <div class="text-dark order-2 order-md-1">
+                                        <span class="text-muted fw-semibold me-1">2025 &copy; {{ browserTitle }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="scrolltop" id="beaver_scrolltop" data-beaver-scrolltop="true">
+                            <span class="svg-icon">
+                                <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="currentColor"></rect>
+                                    <path
+                                        d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25
+                                            11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75
+                                            12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
+                                        fill="currentColor"></path>
+                                </svg>
+                            </span>
+                        </div>
+                        {% block widgets %}{% endblock %}
+                    </div>
+                </div>
+            {% else %}
+                {# //- BEGIN::LOADING PUBLIC PAGE CONTENT PART #}
+                {% block publicContent %}{% endblock %}
+                {# //- END::LOADING PUBLIC PAGE CONTENT PART #}
+            {% endif %}
+            <div class="modal fade" id="beaver_modal_media_list" tabindex="-1" aria-hidden="true">
+                <input type="hidden" id="field_id"/>
+                <div class="modal-dialog modal-dialog-centered mw-1000px">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Media List</h2>
+                            <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                <h3>X</h3>
+                            </div>
+                        </div>
+                        <div class="modal-body py-lg-5 px-lg-5">
+                            <div class="card card-flush">
+                                <div class="card-body pt-0">
+                                    <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-bs-toggle="tab" href="#beaver_tab_pane_1">Media List</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#beaver_tab_pane_2">Upload</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content" id="media-management-panel">
+                                        <div class="tab-pane fade show active" id="beaver_tab_pane_1" role="tabpanel">
+                                            <div class="row">
+                                                <div class="col-12 col-md-8 my-3">
+                                                    <input
+                                                        class="form-control form-control-sm form-control-solid"
+                                                        id="search-image-input-modal"
+                                                        placeholder="Search images with name"/>
+                                                </div>
+                                                <div class="col-12 col-sm-8">
+                                                    <div id="modal-media-holder"></div>
+                                                </div>
+                                                <div class="col-12 col-sm-4 bg-light-primary py-2 rounded">
+                                                    <div
+                                                        class="mb-3" id="media-modal-selected-preview-img">{# Preview image thumb will load here when clicking on image list item #}
+                                                    </div>
+                                                    <input type="hidden" id="media-modal-selected-media-drive" readonly="true"/>
+                                                    <div class="mb-3">
+                                                        <label for="exampleFormControlInput1" class="form-label">URL</label>
+                                                        <input
+                                                            type="text"
+                                                            id="media-modal-selected-media-url"
+                                                            class="form-control form-control-solid"
+                                                            placeholder="URL"
+                                                            readonly="true"/>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="exampleFormControlInput1" class="form-label">Title</label>
+                                                        <input type="text" id="media-modal-selected-media-title" class="form-control form-control-solid" placeholder="Title"/>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="exampleFormControlInput1" class="form-label">Alt Text</label>
+                                                        <input type="text" id="media-modal-selected-media-alt" class="form-control form-control-solid" placeholder="Alt Text"/>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="media-modal-selected-media-link" class="form-label">Link</label>
+                                                        <input
+                                                            type="text"
+                                                            name="link_url"
+                                                            id="media-modal-selected-media-link"
+                                                            class="form-control form-control-solid"
+                                                            placeholder="Enter link (optional)"/>
+                                                    </div>
+                                                    <div class="my-3 ms-2 form-check">
+                                                        <input
+                                                            type="checkbox"
+                                                            name="open_link_in_new_tab"
+                                                            class="form-check-input"
+                                                            id="media-modal-selected-media-link-new-tab">
+                                                        <label class="form-check-label" for="media-modal-selected-media-link-new-tab">Open link in new tab</label>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <a href="#" class="btn btn-success" id="media-attach-submit-btn">
+                                                            <i class="las la-wallet fs-2 me-2"></i>
+                                                            Attach</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="beaver_tab_pane_2" role="tabpanel">
+                                            {% include '../partials/_media-upload-DZ-form.njk' %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                var hostUrl = "assets/";
+                document.querySelectorAll('.menu-accordion').forEach((mainAccordion) => {
+                    mainAccordion.querySelectorAll('.menu-sub-accordion .menu-item .menu-link').forEach((subAccordionItem) => {
+                        if (subAccordionItem.classList.contains('active')) {
+                            mainAccordion.classList.add('here', 'show')
+                        }
+                    })
+                })
+            </script>
+            <script src='/cms-static/admin/assets/plugins/global/plugins.bundle.js'></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+            <script src='/cms-static/admin/assets/js/scripts.bundle.js'></script>
+            <script src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'></script>
+            <script src='https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js'></script>
+            <script src='/cms-static/common/js/inline-script.js'></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+            {% block jslib %}{% endblock %}
+            {% block customScript %}{% endblock %}
+        </body>
+    </html>

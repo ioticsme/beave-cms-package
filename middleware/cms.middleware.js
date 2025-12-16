@@ -387,7 +387,7 @@ const authUser = async (req, res, next) => {
     try {
         if (!req.session.brand) {
             const brand = await getBrand(req, null)
-            const domain = brand.domain
+            const domain = brand?.domain
 
             if (brand && domain?.country) {
                 const settings = await getBrandSettings(brand, domain.country)
