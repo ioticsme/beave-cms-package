@@ -15,9 +15,13 @@ const imageKitUploadMedia = async (media, folder, file, imagekitConfig) => {
         })
 
         // let nodeEnv = envConfig.general.NODE_ENV
-        let baseFolder =
-            `${envConfig.imagekit?.FOLDER?.toLowerCase()}/${envConfig.general?.NODE_ENV?.toLowerCase()}` ||
-            'Sample'
+        let baseFolder = `${imagekitConfig?.folder?.toLowerCase() || 'sample'}`
+        if (
+            envConfig.general.NODE_ENV == 'development' ||
+            envConfig.general.NODE_ENV == 'staging'
+        ) {
+            baseFolder = `${baseFolder}/${envConfig.general.NODE_ENV.toLowerCase()}`
+        }
         const uploaded = await imagekit
             .upload({
                 folder: `${baseFolder}/${folder}`,

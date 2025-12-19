@@ -38,6 +38,16 @@ if (mediaManagementPanel) {
             })
         },
         accept: function (file, done) {
+            if (!file.type.startsWith('image/')) {
+                done()
+                if (fileQueue.length === 0 && !isCropping) {
+                    setTimeout(() => {
+                        myDropzone.processQueue()
+                    }, 10)
+                }
+                return
+            }
+
             if (file.isCropped) {
                 // If the file is already cropped, allow upload
                 done()
@@ -521,7 +531,7 @@ document.querySelectorAll('.media-list-item').forEach((eachMediaItem) => {
         })
         e.target.parentNode.classList.add('active')
 
-        let pdfThumbnailURL = `/cms-static/admin/assets/media/pdf-thumbnail.png`
+        let pdfThumbnailURL = `/cms-static/common/media/pdf-thumbnail.png`
         axios
             .get(`/admin/cms/media/view/${targetId}`)
             .then(function (response) {
