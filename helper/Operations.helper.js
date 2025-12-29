@@ -115,6 +115,7 @@ const filteringScheduledCMSItems = async (items) => {
  */
 const encryptData = (text) => {
     try {
+        if (!envConfig.general.HAS_ENCRYPTION) return text
         const iv = crypto.randomBytes(IV_LENGTH) // Generate a random IV
         const cipher = crypto.createCipheriv(
             'aes-256-cbc',
@@ -137,6 +138,7 @@ const encryptData = (text) => {
  */
 const decryptData = (encryptedText) => {
     try {
+        if (!envConfig.general.HAS_ENCRYPTION) return encryptedText
         const [iv, encrypted] = encryptedText.split(':') // Split IV and encrypted data
         const decipher = crypto.createDecipheriv(
             'aes-256-cbc',

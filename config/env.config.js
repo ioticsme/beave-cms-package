@@ -6,6 +6,7 @@ const envConfig = {
         NODE_ENV: process.env.NODE_ENV || 'development',
         PORT: process.env.PORT || 8080,
         APP_KEY: process.env.APP_KEY || crypto.randomBytes(32).toString('hex'),
+        HAS_ENCRYPTION: process.env.HAS_ENCRYPTION == 'true',
         ENCRYPTION_KEY:
             process.env.APP_KEY?.length == 64
                 ? process.env.APP_KEY
