@@ -26,7 +26,7 @@ const envConfig = {
             process.env.ADMIN_LANDING_URL_PRIVILEGE_ID || 'dashboard.page',
         SESSION_STORAGE: process.env.SESSION_STORAGE || 'file',
         CAPTCHA_ENABLED: process.env.CAPTCHA_ENABLED || false,
-        HAS_PDF_UPLOAD: process.env.HAS_PDF_UPLOAD || false,
+        HAS_PDF_UPLOAD: process.env.HAS_PDF_UPLOAD !== 'false',
         SEND_SIGNUP_MAIL: process.env.SEND_SIGNUP_MAIL || false,
         HAS_DEV_AUTH: process.env.HAS_DEV_AUTH == 'true',
         HAS_ECOMMERCE: process.env.HAS_ECOMMERCE == 'true',
