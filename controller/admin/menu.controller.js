@@ -600,8 +600,8 @@ const saveMenu = async (req, res) => {
         const save = await Menu.findOneAndUpdate(
             {
                 nav_position: navName,
-                // brand: req.authUser?.brand?._id,
-                // country: req.authUser?.brand?.country,
+                brand: req.authUser?.brand?._id,
+                country: req.authUser?.brand?.country,
                 deleted: { $ne: true },
             },
             {

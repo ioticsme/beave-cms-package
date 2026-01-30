@@ -2,11 +2,11 @@
 
 {% block csslib %}
 	{# <link href='/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css' rel='stylesheet' type='text/css'/> #}
-	<link href='/cms-static/admin/assets/plugins/custom/jstree/jstree.bundle.css' rel='stylesheet' type='text/css'/>
+	<link href='/cms-static/admin/custom/plugins/jstree/jstree.bundle.css' rel='stylesheet' type='text/css'/>
 {% endblock %}
 
 {% block jslib %}
-	<script src="/cms-static/admin/assets/plugins/custom/jstree/jstree.bundle.js"></script>
+	<script src="/cms-static/admin/custom/plugins/jstree/jstree.bundle.js"></script>
 	<script src='/cms-static/common/js/custom-functions.js'></script>
 	<!-- Form Submission Script-->
 	<script src="/cms-static/common/js/form-data-json.min.js"></script>
@@ -189,7 +189,7 @@
 									<div class="jstree_dragdrop" id="nav_{{ nav._id }}" data-nav_position="{{ nav.nav_position }}">
 										<ul>
 											{% for menu in nav.nav_items %}
-												<li data-id="{{ menu._id }}" url="{{ menu.url | json }}" label="{{ menu.label | json }}" active="{{ menu.active }}" external="{{ menu.external }}" >{{ menu.label.en }}
+												<li data_id="{{ menu._id }}" url="{{ menu.url | json }}" label="{{ menu.label | json }}" active="{{ menu.active }}" external="{{ menu.external }}" >{{ menu.label.en }}
 													<span class="" id="{{ menu._id }}" nav_position="{{ nav.nav_position }}" level="0" onClick="deleteMenuItem(this)">
 														<i class="fa-solid fa-trash text-danger"></i>
 													</span>
@@ -200,7 +200,7 @@
 													<ul>
 														{%set parent_index = loop.index0%}
 														{% for first_level_child in menu.child %}
-															<li data-id="{{ first_level_child._id }}" url="{{ first_level_child.url | json }}" label="{{ first_level_child.label | json }}" active="{{ first_level_child.active }}" external="{{ first_level_child.external }}" >
+															<li data_id="{{ first_level_child._id }}" url="{{ first_level_child.url | json }}" label="{{ first_level_child.label | json }}" active="{{ first_level_child.active }}" external="{{ first_level_child.external }}" >
 																{{ first_level_child.label.en }}
 																{# <button class="btn btn-sm mx-1 btn-danger" id="{{ first_level_child._id }}" nav_position="{{ nav.nav_position }}" level="1" onClick="deleteMenuItem(this)">
 																	<i class="fa-solid fa-trash"></i>
@@ -218,7 +218,7 @@
 																<ul>
 																	{%set sec_parent_index = loop.index0%}
 																	{% for second_level_child in first_level_child.child %}
-																		<li data-id="{{ second_level_child._id }}" url="{{ second_level_child.url | json }}" label="{{ second_level_child.label | json }}" active="{{ second_level_child.active }}" external="{{ second_level_child.external }}" >
+																		<li data_id="{{ second_level_child._id }}" url="{{ second_level_child.url | json }}" label="{{ second_level_child.label | json }}" active="{{ second_level_child.active }}" external="{{ second_level_child.external }}" >
 																			{{ second_level_child.label.en }}
 																			{# <button class="btn btn-sm mx-1 btn-danger" id="{{ second_level_child._id }}" nav_position="{{ nav.nav_position }}" level="2" onClick="deleteMenuItem(this)">
 																				<i class="fa-solid fa-trash"></i>
