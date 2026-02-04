@@ -126,6 +126,7 @@ module.exports = {
         if (envConfig.general.NODE_ENV !== 'production') console.debug(msg)
         logger.debug(msg)
     },
+    logger,
 }
 
 // Handle uncaught errors
