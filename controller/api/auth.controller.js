@@ -277,18 +277,15 @@ const socialLoginSubmit = async (req, res) => {
                 .limit(4)
                 .select('content')
 
-            const mg_settings = envConfig?.mailgun
             sendEmail(
-                mg_settings.from,
                 req.body.email,
                 `Thank you for Registering`,
-                mg_settings.welcome_template,
+                envConfig.mailgun.TEMPLATE_WELCOME,
                 {
                     user: user,
                     packages: featured_packages,
                     promotions: promotions,
-                },
-                mg_settings
+                }
             )
         } else {
             user.first_name = profile.first_name
@@ -705,12 +702,10 @@ const signupSubmit = async (req, res) => {
             envConfig.general.SEND_SIGNUP_MAIL
         ) {
             sendEmail(
-                envConfig.mailgun.FROM,
                 user.email,
                 `Thank you for registering`,
                 envConfig.mailgun.TEMPLATE_WELCOME,
-                user,
-                envConfig.mailgun
+                user
             )
         }
 
@@ -1083,18 +1078,14 @@ const forgotCredentials = async (req, res) => {
         const otp = authenticator.generate(req.body.auth_key)
         // IF auth_key is email otp send via email o.w send via sms
         if (isEmail) {
-            // BEGIN:: Sending Email
-            let mg_settings = envConfig?.mailgun
             try {
                 sendEmail(
-                    mg_settings.from,
                     req.body.auth_key,
                     `Reset password request for - ${envConfig.general.CLIENT_NAME}`,
                     envConfig.mailgun.TEMPLATE_FORGOT_PASSWORD,
                     {
                         otp: otp,
-                    },
-                    mg_settings
+                    }
                 )
             } catch (error) {
                 console.log(error)

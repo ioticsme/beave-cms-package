@@ -5,6 +5,7 @@ const Mailgun = require('mailgun.js')
 const formData = require('form-data')
 const fs = require('fs')
 const { decryptData } = require('../../helper/Operations.helper')
+const { logInfo } = require('../../helper/Logger.helper')
 
 const sendMailGunEmail = async (
     to,
@@ -18,7 +19,7 @@ const sendMailGunEmail = async (
     try {
         const DOMAIN = mg_settings.domain
         const mailgun = new Mailgun(formData)
-        const api_key = await decryptData(mg_settings.api_key)
+        const api_key = decryptData(mg_settings.api_key)
         const mg = mailgun.client({
             username: 'api',
             key: api_key,
@@ -56,7 +57,10 @@ const sendMailGunEmail = async (
 
         // console.log(mailgunData)
 
-        return mg.messages.create(DOMAIN, mailgunData)
+        let response = await mg.messages.create(DOMAIN, mailgunData)
+        mailgunData.response = response
+        logInfo(JSON.stringify(mailgunData))
+        return response
     } catch (error) {
         console.log(error)
         return false
