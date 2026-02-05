@@ -2,6 +2,7 @@ const Mailgun = require('mailgun.js')
 const formData = require('form-data')
 const { decryptData } = require('../../helper/Operations.helper')
 const { logInfo, logError } = require('../../helper/Logger.helper')
+const envConfig = require('../../config/env.config')
 
 const sendMailGunEmail = async (
     to,
@@ -23,11 +24,14 @@ const sendMailGunEmail = async (
         const DOMAIN = mg_settings.domain
         const mailgun = new Mailgun(formData)
         const api_key = decryptData(mg_settings.api_key)
-        const mg = mailgun.client({
+        let options = {
             username: 'api',
             key: api_key,
-            // url: mg_settings.url,
-        })
+        }
+        if (envConfig.mailgun.URL) {
+            options.url = envConfig.mailgun.URL
+        }
+        const mg = mailgun.client(options)
 
         const mailgunData = {
             from: `${mg_settings.from}`,
