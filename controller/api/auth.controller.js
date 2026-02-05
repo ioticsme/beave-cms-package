@@ -1199,7 +1199,7 @@ const verifyForgotOTP = async (req, res) => {
         const otp = req.body.otp
         const auth_key = req.body.auth_key
         // verifying OTP
-        const isValid = await authenticator.check(otp, auth_key)
+        const isValid = authenticator.check(otp, auth_key)
         // If otp verified
         if (isValid) {
             let user

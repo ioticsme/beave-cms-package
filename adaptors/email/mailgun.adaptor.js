@@ -1,11 +1,7 @@
-const envConfig = require('../../config/env.config')
-const path = require('path')
-const axios = require('axios')
 const Mailgun = require('mailgun.js')
 const formData = require('form-data')
-const fs = require('fs')
 const { decryptData } = require('../../helper/Operations.helper')
-const { logInfo } = require('../../helper/Logger.helper')
+const { logInfo, logError } = require('../../helper/Logger.helper')
 
 const sendMailGunEmail = async (
     to,
@@ -17,6 +13,13 @@ const sendMailGunEmail = async (
     html = false
 ) => {
     try {
+        if (!template) {
+            logInfo(
+                `Template is not provided - subject: ${subject} - to: ${to}`
+            )
+            return false
+        }
+
         const DOMAIN = mg_settings.domain
         const mailgun = new Mailgun(formData)
         const api_key = decryptData(mg_settings.api_key)
@@ -25,7 +28,6 @@ const sendMailGunEmail = async (
             key: api_key,
             // url: mg_settings.url,
         })
-        // console.log(mg)
 
         const mailgunData = {
             from: `${mg_settings.from}`,
@@ -55,14 +57,20 @@ const sendMailGunEmail = async (
             mailgunData['h:X-Mailgun-Variables'] = JSON.stringify(payloads)
         }
 
-        // console.log(mailgunData)
-
         let response = await mg.messages.create(DOMAIN, mailgunData)
-        mailgunData.response = response
-        logInfo(JSON.stringify(mailgunData))
+        let logData = {
+            from: mg_settings.from,
+            to: to,
+            subject: subject,
+            template: template,
+            response: response,
+        }
+
+        logInfo(JSON.stringify(logData))
+
         return response
     } catch (error) {
-        console.log(error)
+        logError(error)
         return false
     }
 }

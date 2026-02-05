@@ -27,8 +27,8 @@ const sendEmail = async (
                 template,
                 payloads,
                 email_settings.email_settings.local,
-                (filePath = false),
-                (html = false)
+                filePath,
+                html
             )
         } else if (default_channel == 'mailgun') {
             await sendMailGunEmail(
@@ -37,8 +37,8 @@ const sendEmail = async (
                 template,
                 payloads,
                 email_settings.email_settings.mailgun,
-                (filePath = false),
-                (html = false)
+                filePath,
+                html
             )
         }
 
