@@ -56,7 +56,7 @@ const imageKitUploadMedia = async (media, folder, file, imagekitConfig) => {
                 return insertedMedia
             })
             .catch((error) => {
-                console.log('ERR', error)
+                logError(error)
                 return false
             })
 
@@ -89,7 +89,7 @@ const imageKitUploadProductMedia = async (media, folder, file) => {
             return result
         })
         .catch((error) => {
-            console.log('ERR', error)
+            logError(error)
             return false
         })
 

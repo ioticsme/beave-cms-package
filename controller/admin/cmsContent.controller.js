@@ -628,6 +628,8 @@ const savePageBuilderContent = async (req, res) => {
 
 const saveDefaultContent = async (req, res) => {
     try {
+        // console.log('req.body', req.body.en.branches)
+        // return
         // Data object to insert
         let type = req.contentType
         let body = req.body

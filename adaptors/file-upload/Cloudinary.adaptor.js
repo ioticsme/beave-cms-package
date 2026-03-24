@@ -57,7 +57,7 @@ const cloudinaryUploadMedia = async (media, folder, file, cloudinaryConfig) => {
 
         return insertedMedia
     } catch (error) {
-        console.log('ERR', error)
+        logError(error)
         return false
     }
 }

@@ -202,13 +202,21 @@
 																					<input disabled class="form-control  beaver-cms-form-field" data-hastime="false" data-daterange="false" id="beaver_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
-																				<select disabled class="form-select beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
-																					<option value=''>- Select {{cf.field_label}} -</option>
-																					{% for dropdown in cf.options[brandLanguage.prefix] %}
-																						<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
-																					{% endfor %}
-																				</select>
-
+																				{% if cf.multi_select %}
+																					<select disabled class="form-select beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]][]" data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple">
+																						<option value=''>- Select {{cf.field_label}} -</option>
+																						{% for dropdown in cf.options[brandLanguage.prefix] %}
+																							<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
+																						{% endfor %}
+																					</select>
+																				{% else %}
+																					<select disabled class="form-select beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																						<option value=''>- Select {{cf.field_label}} -</option>
+																						{% for dropdown in cf.options[brandLanguage.prefix] %}
+																							<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
+																						{% endfor %}
+																					</select>
+																				{% endif %}
 																			{% endif %}
 																			{% include './partials/_cms-field-info.njk' %}
 																			<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{brandLanguage.prefix}}_{{cfg.row_name}}_{{cf.field_name}}{{ '_0_url' if cf.field_type == 'media' }}"></div>
@@ -267,14 +275,23 @@
 																						<input class="form-control " data-hastime="false" data-daterange="false" id="beaver_daterangepicker_{{brandLanguage.prefix}}-{{ cfg.row_name }}-{{ cf.field_name }}-{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																					</div>
 																				{% elif cf.field_type === 'dropdown' %}
-																					<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
-																						<option value=''>- Select {{cf.field_label}} -</option>
-																						{% for dropdown in cf.options[brandLanguage.prefix] %}
-																							<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
-																						{% endfor %}
-																					</select>
-
+																					{% if cf.multi_select %}
+																						<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]][]" data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple">
+																							<option value=''>- Select {{cf.field_label}} -</option>
+																							{% for dropdown in cf.options[brandLanguage.prefix] %}
+																								<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
+																							{% endfor %}
+																						</select>
+																					{% else %}
+																						<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																							<option value=''>- Select {{cf.field_label}} -</option>
+																							{% for dropdown in cf.options[brandLanguage.prefix] %}
+																								<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
+																							{% endfor %}
+																						</select>
+																					{% endif %}
 																				{% endif %}
+
 																				{% include './partials/_cms-field-info.njk' %}
 																				<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{brandLanguage.prefix}}_{{cfg.row_name}}_{{cf.field_name}}{{ '_0_url' if cf.field_type == 'media' }}"></div>
 																			</div>
@@ -340,12 +357,21 @@
 																					<input class="form-control " data-hastime="false" data-daterange="false" id="beaver_daterangepicker_{{ brandLanguage.prefix }}-{{ cfg.row_name }}-{{ cf.field_name }}-{{ loop.index }}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																				</div>
 																			{% elif cf.field_type === 'dropdown' %}
-																				<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
-																					<option value=''>- Select {{cf.field_label}} -</option>
-																					{% for dropdown in cf.options[brandLanguage.prefix] %}
-																						<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
-																					{% endfor %}
-																				</select>
+																				{% if cf.multi_select %}
+																					<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]" data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple">
+																						<option value=''>- Select {{cf.field_label}} -</option>
+																						{% for dropdown in cf.options[brandLanguage.prefix] %}
+																							<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
+																						{% endfor %}
+																					</select>
+																				{% else %}
+																					<select class="form-select" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}]]">
+																						<option value=''>- Select {{cf.field_label}} -</option>
+																						{% for dropdown in cf.options[brandLanguage.prefix] %}
+																							<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
+																						{% endfor %}
+																					</select>
+																				{% endif %}
 																			{% endif %}
 																			{% include './partials/_cms-field-info.njk' %}
 																			<div class="fv-plugins-message-container invalid-feedback" id="field-error-{{brandLanguage.prefix}}_{{cfg.row_name}}_{{cf.field_name}}{{ '_url' if cf.field_type == 'media' }}"></div>
@@ -415,12 +441,21 @@
 																							<input disabled class="form-control  beaver-cms-form-field" id="beaver_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																						</div>
 																					{% elif cf.field_type === 'dropdown' %}
-																						<select disabled class="form-select beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
-																							<option value=''>- Select {{cf.field_label}} -</option>
-																							{% for dropdown in cf.options.en %}
-																								<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value}}>{{dropdown.label}}</option>
-																							{% endfor %}
-																						</select>
+																						{% if cf.multi_select %}
+																							<select disabled class="form-select beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
+																								<option value=''>- Select {{cf.field_label}} -</option>
+																								{% for dropdown in cf.options.en %}
+																									<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value}}>{{dropdown.label}}</option>
+																								{% endfor %}
+																							</select>
+																						{% else %}
+																							<select disabled class="form-select beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																								<option value=''>- Select {{cf.field_label}} -</option>
+																								{% for dropdown in cf.options.en %}
+																									<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value}}>{{dropdown.label}}</option>
+																								{% endfor %}
+																							</select>
+																						{% endif %}
 																					{% endif %}
 																					{% include './partials/_cms-field-info.njk' %}
 																					<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_{{cfg.row_name}}_{{cf.field_name}}{{ '_0_url' if cf.field_type == 'media' }}"></div>
@@ -478,12 +513,21 @@
 																								<input class="form-control " id="beaver_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																							</div>
 																						{% elif cf.field_type === 'dropdown' %}
-																							<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
-																								<option value=''>- Select {{cf.field_label}} -</option>
-																								{% for dropdown in cf.options.en %}
-																									<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value}}>{{dropdown.label}}</option>
-																								{% endfor %}
-																							</select>
+																							{% if cf.multi_select %}
+																								<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
+																									<option value=''>- Select {{cf.field_label}} -</option>
+																									{% for dropdown in cf.options.en %}
+																										<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value}}>{{dropdown.label}}</option>
+																									{% endfor %}
+																								</select>
+																							{% else %}
+																								<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]]">
+																									<option value=''>- Select {{cf.field_label}} -</option>
+																									{% for dropdown in cf.options.en %}
+																										<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value}}>{{dropdown.label}}</option>
+																									{% endfor %}
+																								</select>
+																							{% endif %}
 																						{% endif %}
 																						{% include './partials/_cms-field-info.njk' %}
 																						<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_{{cfg.row_name}}_{{cf.field_name}}{{ '_0_url' if cf.field_type == 'media' }}"></div>
@@ -547,12 +591,21 @@
 																						<input id="beaver_daterangepicker_{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" class="form-control mb-2" type="text" name="common[{{cfg.row_name}}[{{cf.field_name}}]]" placeholder="{{cf.placeholder}}" value="{{fieldValue}}">
 																					</div>
 																				{% elif cf.field_type === 'dropdown' %}
-																					<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}]]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
-																						<option value=''>- Select {{cf.field_label}} -</option>
-																						{% for dropdown in cf.options.en %}
-																							<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
-																						{% endfor %}
-																					</select>
+																					{% if cf.multi_select %}
+																						<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}[]]][]" {% if cf.multi_select %} data-control="select2" data-close-on-select="false" data-placeholder="Select {{ cf.field_label }}" multiple="multiple" {% endif %}>
+																							<option value=''>- Select {{cf.field_label}} -</option>
+																							{% for dropdown in cf.options.en %}
+																								<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
+																							{% endfor %}
+																						</select>
+																					{% else %}
+																						<select class="form-select" name="common[{{cfg.row_name}}[{{cf.field_name}}]]">
+																							<option value=''>- Select {{cf.field_label}} -</option>
+																							{% for dropdown in cf.options.en %}
+																								<option value="{{dropdown.value}}" {{'selected' if fieldValue == dropdown.value }}>{{dropdown.label}}</option>
+																							{% endfor %}
+																						</select>
+																					{% endif %}
 																				{% endif %}
 																				{% include './partials/_cms-field-info.njk' %}
 																				<div class="fv-plugins-message-container invalid-feedback" id="field-error-common_{{ cfg.row_name }}_{{ cf.field_name }}{{ '_url' if cf.field_type == 'media' }}">{{ cfg.field_errors.common[cf.field_name] }}</div>
