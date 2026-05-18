@@ -98,6 +98,11 @@
 						<li class="breadcrumb-item text-muted">Edit</li>
 					</ul>
 				</div>
+				{% if reqContentType.single_type %}
+					<div class="page-toolbar d-flex flex-column justify-content-center flex-wrap me-3">
+						<a class="btn btn-sm fw-bold btn-primary" href="/admin/cms/{{ reqContentType.slug }}/duplicate/{{ contentDetail._id }}">Duplicate {{ pluralToSingular(reqContentType.title) }}</a>
+					</div>
+				{% endif %}
 			</div>
 		</div>
 		<div id="beaver_app_content" class="app-content flex-column-fluid">
