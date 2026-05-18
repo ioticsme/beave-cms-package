@@ -33,7 +33,11 @@ const setCache = async (key, data, expiry = 300, checkActive = true) => {
 
 const removeCache = async (keys) => {
     try {
-        return await redis.del(...keys)
+        const keyList = Array.isArray(keys) ? keys : [keys]
+        if (keyList.length > 0) {
+            await Promise.all(keyList.map((key) => redis.del(key)))
+        }
+        return true
     } catch (error) {
         logError(error)
         return error
@@ -48,7 +52,7 @@ const clearCacheAll = async () => {
 
         for await (const chunk of iterator) {
             if (chunk.length > 0) {
-                await redis.del(chunk)
+                await Promise.all(chunk.map((key) => redis.del(key)))
             }
         }
 
