@@ -42,15 +42,17 @@ const removeCache = async (keys) => {
 
 const clearCacheAll = async () => {
     try {
-        const keys_to_remove = []
-        const iterator = await redis.scanStream({
+        const iterator = redis.scanStream({
             match: `${envConfig.cache.CACHE_KEY_PREFIX}-*`,
         })
 
-        for await (const key of iterator) {
-            keys_to_remove.push(key)
+        for await (const chunk of iterator) {
+            if (chunk.length > 0) {
+                await redis.del(chunk)
+            }
         }
-        return await redis.del(...keys_to_remove)
+
+        return true
     } catch (error) {
         logError(error)
         return error
