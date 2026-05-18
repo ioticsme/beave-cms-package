@@ -13,6 +13,9 @@
     },
     "author": "Iotics",
     "license": "ISC",
+    "overrides": {
+        "fast-uri": "^3.0.3"
+    },
     "dependencies": {
         "@mongoosejs/double": "^0.3.0",
         "agenda": "^5.0.0",
