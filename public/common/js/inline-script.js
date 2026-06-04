@@ -2,6 +2,7 @@
     BEGIN::Media Management
 */
 const mediaManagementPanel = document.querySelector('#media-management-panel')
+const pdfThumbnailURL = `/cms-static/common/media/pdf-thumbnail.png`
 if (mediaManagementPanel) {
     Dropzone.autoDiscover = false
     const dropZoneDiv = document.querySelector('#beaver_dropzonejs_example_1')
@@ -184,10 +185,10 @@ if (mediaManagementPanel) {
                                 element?.file?.name
                             }">
                                 <img data-mediaUrl="${element.url}" src="${
-                                element.url
-                            }?tr=w-150,h-150" data-mediaTitle="${
-                                element.meta?.title || ''
-                            }" data-altText="${element.meta?.alt_text || ''}"
+                                    element.url
+                                }?tr=w-150,h-150" data-mediaTitle="${
+                                    element.meta?.title || ''
+                                }" data-altText="${element.meta?.alt_text || ''}"
                                 data-localDrive="${
                                     element.meta?.local_drive || ''
                                 }"
@@ -301,9 +302,8 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
     document.querySelector('#media-modal-selected-media-alt').value = ''
     document.querySelector('#media-modal-selected-media-drive').value = ''
     document.querySelector('#media-modal-selected-media-link').value = ''
-    document.querySelector(
-        '#media-modal-selected-media-link-new-tab'
-    ).checked = false
+    document.querySelector('#media-modal-selected-media-link-new-tab').checked =
+        false
     document.querySelector('#media-modal-selected-preview-img').innerHTML = ''
     axios
         .get('/admin/cms/media/json')
@@ -311,28 +311,32 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
             // Handle the successful response
             var mediaList = `<div class="row">`
             response.data.forEach((element) => {
+                // console.log('element', element)
+                let mediaUrl = `${element.url}?tr=w-150,h-150`
+                if (element.file_type == 'pdf') {
+                    mediaUrl = pdfThumbnailURL
+                }
                 mediaList = `${mediaList} <div class="col-12 col-sm-3 col-md-2 p-2 media-list-item" data-name="${
                     element?.file?.name
                 }">
                     <img data-mediaUrl="${element.url}" src="${
-                    element.url
-                }?tr=w-150,h-150" data-mediaTitle="${
-                    element.meta?.title || ''
-                }" data-altText="${
-                    element.meta?.alt_text || ''
-                }" data-localDrive="${
-                    element.meta?.local_drive || ''
-                }" data-link="${
-                    element.link_url || ''
-                }" data-openLinkInNewTab="${
-                    element.open_link_in_new_tab || false
-                }" />
+                        mediaUrl
+                    }" data-mediaTitle="${
+                        element.meta?.title || ''
+                    }" data-altText="${
+                        element.meta?.alt_text || ''
+                    }" data-fileType="${element.file_type}" data-localDrive="${
+                        element.meta?.local_drive || ''
+                    }" data-link="${
+                        element.link_url || ''
+                    }" data-openLinkInNewTab="${
+                        element.open_link_in_new_tab || false
+                    }" />
                 </div>`
             })
             mediaList = `${mediaList}</div>`
             e.target.querySelector('#field_id').value =
                 e.relatedTarget.getAttribute('id')
-            // console.log(e.relatedTarget.getAttribute('id'))
             document.getElementById('modal-media-holder').innerHTML = mediaList
         })
         .catch(function (error) {
@@ -345,6 +349,7 @@ document
     .querySelector('#modal-media-holder')
     .addEventListener('click', function (event) {
         var mediaUrl = event.target.getAttribute('data-mediaUrl')
+        var fileType = event.target.getAttribute('data-fileType')
         var mediaTitle = event.target.getAttribute('data-mediaTitle')
         var altText = event.target.getAttribute('data-altText')
         var localDrive = event.target.getAttribute('data-localDrive')
@@ -353,9 +358,13 @@ document
             'data-openLinkInNewTab'
         )
         if (mediaUrl) {
+            let thumbnail = mediaUrl
+            if (fileType == 'pdf') {
+                thumbnail = pdfThumbnailURL
+            }
             document.querySelector(
                 '#media-modal-selected-preview-img'
-            ).innerHTML = `<img src="${mediaUrl}?tr=w-200" />`
+            ).innerHTML = `<img src="${thumbnail}?tr=w-200" />`
 
             document.querySelector('#media-modal-selected-media-url').value =
                 mediaUrl
@@ -363,6 +372,9 @@ document
                 mediaTitle
             document.querySelector('#media-modal-selected-media-alt').value =
                 altText
+            document.querySelector(
+                '#media-modal-selected-media-file-type'
+            ).value = fileType
             document.querySelector('#media-modal-selected-media-drive').value =
                 localDrive
             document.querySelector('#media-modal-selected-media-link').value =
@@ -390,6 +402,9 @@ document
         ).value
         var selectedMediaAltText = document.querySelector(
             '#media-modal-selected-media-alt'
+        ).value
+        var selectedMediaFileType = document.querySelector(
+            '#media-modal-selected-media-file-type'
         ).value
         var selectedMediaLocalDrive = document.querySelector(
             '#media-modal-selected-media-drive'
@@ -431,9 +446,12 @@ document
                 .querySelector(`#${attachButtonId}`)
                 .parentElement.querySelector(`.media_preview`)
             // console.log(imgHolderParent)
-            imgHolderParent.querySelector(
-                `.preview-holder`
-            ).innerHTML = `<img width="150px" src="${selectedMediaUrl}?tr=w-150" />`
+            let thumbnail = selectedMediaUrl
+            if (selectedMediaFileType == 'pdf') {
+                thumbnail = pdfThumbnailURL
+            }
+            imgHolderParent.querySelector(`.preview-holder`).innerHTML =
+                `<img width="150px" src="${thumbnail}?tr=w-150" />`
             imgHolderParent
                 .querySelector(`.image-preview-remove-btn`)
                 .classList.remove('d-none')
@@ -531,7 +549,6 @@ document.querySelectorAll('.media-list-item').forEach((eachMediaItem) => {
         })
         e.target.parentNode.classList.add('active')
 
-        let pdfThumbnailURL = `/cms-static/common/media/pdf-thumbnail.png`
         axios
             .get(`/admin/cms/media/view/${targetId}`)
             .then(function (response) {

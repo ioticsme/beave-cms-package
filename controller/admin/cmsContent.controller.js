@@ -321,6 +321,8 @@ const add = async (req, res) => {
         if (req.contentType?.page_builder) {
             template = `admin-njk/cms/content/html-builder/form`
         }
+
+        let hasPdfUpload = envConfig.general.HAS_PDF_UPLOAD // Check if PDF upload is enabled
         return res.render(template, {
             reqContentType: req.contentType,
             has_common_field_groups: has_common_field_groups ? true : false,
@@ -330,6 +332,7 @@ const add = async (req, res) => {
             allowed_content,
             metaFields,
             forms,
+            hasPdfUpload: hasPdfUpload,
         })
     } catch (error) {
         logError(error)
@@ -389,6 +392,7 @@ const edit = async (req, res) => {
             template = `admin-njk/cms/content/html-builder/form`
         }
 
+        let hasPdfUpload = envConfig.general.HAS_PDF_UPLOAD // Check if PDF upload is enabled
         return res.render(template, {
             reqContentType: req.contentType,
             has_common_field_groups: has_common_field_groups ? true : false,
@@ -399,6 +403,7 @@ const edit = async (req, res) => {
             allowed_content,
             forms,
             metaFields,
+            hasPdfUpload: hasPdfUpload,
         })
     } catch (error) {
         logError(error)

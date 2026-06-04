@@ -45,9 +45,7 @@ const jsonList = async (req, res) => {
             if (data) {
                 return JSON.parse(data)
             } else {
-                let liveData = await Media.find({
-                    file_type: { $ne: 'pdf' },
-                }).sort({ _id: -1 })
+                let liveData = await Media.find({}).sort({ _id: -1 })
                 // Set cache for 1 hour
                 await setCache(cacheKey, JSON.stringify(liveData), 3600)
 
