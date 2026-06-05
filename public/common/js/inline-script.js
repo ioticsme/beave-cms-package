@@ -192,6 +192,7 @@ if (mediaManagementPanel) {
                                 data-localDrive="${
                                     element.meta?.local_drive || ''
                                 }"
+                                data-fileType="${element.file_type || ''}"
                                 data-link="${element.link_url || ''}"
                                 data-openLinkInNewTab="${
                                     element.open_link_in_new_tab || false
@@ -321,7 +322,7 @@ mediaModal.addEventListener('show.bs.modal', function (e) {
                 }">
                     <img data-mediaUrl="${element.url}" src="${
                         mediaUrl
-                    }" data-mediaTitle="${
+                    }" data-mediaFileType="${element.file_type}" data-mediaTitle="${
                         element.meta?.title || ''
                     }" data-altText="${
                         element.meta?.alt_text || ''
@@ -429,6 +430,10 @@ document
                 .querySelector(`#${attachButtonId}`)
                 .parentElement.querySelector('.media_alt_text_field').value =
                 selectedMediaAltText
+            document
+                .querySelector(`#${attachButtonId}`)
+                .parentElement.querySelector('.media_file_type_field').value =
+                selectedMediaFileType
             document
                 .querySelector(`#${attachButtonId}`)
                 .parentElement.querySelector('.media_local_drive_field').value =
@@ -570,6 +575,9 @@ document.querySelectorAll('.media-list-item').forEach((eachMediaItem) => {
                 document.querySelector(
                     '#media-meta-panel input[name="alt_text"]'
                 ).value = response.data.meta?.alt_text || ''
+                document.querySelector(
+                    '#media-meta-panel input[name="file_type"]'
+                ).value = response.data?.file_type || ''
                 document.querySelector(
                     '#media-meta-panel input[name="link"]'
                 ).value = response.data?.link_url || ''

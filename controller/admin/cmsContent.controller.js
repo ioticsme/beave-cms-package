@@ -716,6 +716,7 @@ const saveDefaultContent = async (req, res) => {
                                         url: Joi.string()${required}.label('${field.field_label}'),
                                         title: Joi.string().allow(null, ''),
                                         alt_text: Joi.string().allow(null, ''),
+                                        file_type: Joi.string().allow(null, ''),
                                         link_url: Joi.string().allow(null, ''),
                                         open_link_in_new_tab: Joi.boolean().allow(null, ''),
                                         local_drive: Joi.boolean().allow(null, ''),
@@ -794,6 +795,10 @@ const saveDefaultContent = async (req, res) => {
                                         req.body[lang]?.[group.row_name]?.[
                                             field.field_name
                                         ]?.['alt_text']?.[i],
+                                    file_type:
+                                        req.body[lang]?.[group.row_name]?.[
+                                            field.field_name
+                                        ]?.['file_type']?.[i] ?? '',
                                     link_url:
                                         req.body[lang]?.[group.row_name]?.[
                                             field.field_name
@@ -821,6 +826,7 @@ const saveDefaultContent = async (req, res) => {
                                         url: Joi.string()${required}.label('${field.field_label}'),
                                         title: Joi.string().allow(null, ''),
                                         alt_text: Joi.string().allow(null, ''),
+                                        file_type: Joi.string().allow(null, ''),
                                         link_url: Joi.string().allow(null, ''),
                                         open_link_in_new_tab: Joi.boolean().allow(null, ''),
                                         local_drive: Joi.boolean().allow(null, ''),

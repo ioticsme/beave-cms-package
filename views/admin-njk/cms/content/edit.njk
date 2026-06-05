@@ -187,7 +187,11 @@
 																					<span class="media_preview">
 																						<span class="preview-holder">
 																							{% if fieldValue %}
-																								<img src="{{fieldValue.url}}" style="max-width: 200px;"/>
+																								{% if fieldValue.file_type == 'pdf' %}
+																									<img src="/cms-static/common/media/pdf-thumbnail.png" style="max-width: 200px;"/>
+																								{% else %}
+																									<img src="{{fieldValue.url}}" style="max-width: 200px;"/>
+																								{% endif %}
 																							{% endif %}
 																						</span>
 																						<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
@@ -197,6 +201,7 @@
 																					<input disabled type="hidden" class="media_url_field beaver-cms-form-field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
 																					<input disabled type="hidden" class="media_title_field beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
 																					<input disabled type="hidden" class="media_alt_text_field beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
+																					<input disabled type="hidden" class="media_file_type_field beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[file_type][]]]" value="{{fieldValue.file_type}}">
 																					<input disabled type="hidden" class="media_link_url_field beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[link_url][]]]" value="{{fieldValue.link_url}}">
 																					<input disabled type="hidden" class="media_open_link_in_new_tab_field beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[open_link_in_new_tab][]]]" value="{{fieldValue.open_link_in_new_tab}}">
 																					<input disabled type="hidden" class="media_local_drive_field beaver-cms-form-field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[local_drive][]]]" value="{{fieldValue.local_drive}}">
@@ -260,7 +265,11 @@
 																						<span class="media_preview">
 																							<span class="preview-holder">
 																								{% if fieldValue %}
-																									<img src="{{fieldValue.url}}" style="max-width: 200px;"/>
+																									{% if fieldValue.file_type == 'pdf' %}
+																										<img src="/cms-static/common/media/pdf-thumbnail.png" style="max-width: 200px;"/>
+																									{% else %}
+																										<img src="{{fieldValue.url}}" style="max-width: 200px;"/>
+																									{% endif %}
 																								{% endif %}
 																							</span>
 																							<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
@@ -270,6 +279,7 @@
 																						<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}_{{loop.index}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
 																						<input type="hidden" class="media_title_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
 																						<input type="hidden" class="media_alt_text_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
+																						<input type="hidden" class="media_file_type_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[file_type][]]]" value="{{fieldValue.file_type}}">
 																						<input type="hidden" class="media_link_url_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[link_url][]]]" value="{{fieldValue.link_url}}">
 																						<input type="hidden" class="media_open_link_in_new_tab_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[open_link_in_new_tab][]]]" value="{{fieldValue.open_link_in_new_tab}}">
 																						<input type="hidden" class="media_local_drive_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[local_drive][]]]" value="{{fieldValue.local_drive}}">
@@ -342,7 +352,11 @@
 																					<span class="media_preview">
 																						<span class="preview-holder">
 																							{% if fieldValue %}
-																								<img src="{{fieldValue.url}}" style="max-width: 200px;"/>
+																								{% if fieldValue.file_type == 'pdf' %}
+																									<img src="/cms-static/common/media/pdf-thumbnail.png" style="max-width: 200px;"/>
+																								{% else %}
+																									<img src="{{fieldValue.url}}" style="max-width: 200px;"/>
+																								{% endif %}
 																							{% endif %}
 																						</span>
 																						<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
@@ -352,6 +366,7 @@
 																					<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{brandLanguage.prefix}}" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[url]]]" value="{{fieldValue.url}}">
 																					<input type="hidden" class="media_title_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[title]]]" value="{{fieldValue.title}}">
 																					<input type="hidden" class="media_alt_text_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[alt_text]]]" value="{{fieldValue.alt_text}}">
+																					<input type="hidden" class="media_file_type_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[file_type]]]" value="{{fieldValue.file_type}}">
 																					<input type="hidden" class="media_link_url_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[link_url]]]" value="{{fieldValue.link_url}}">
 																					<input type="hidden" class="media_open_link_in_new_tab_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[open_link_in_new_tab]]]" value="{{fieldValue.open_link_in_new_tab}}">
 																					<input type="hidden" class="media_local_drive_field" name="{{brandLanguage.prefix}}[{{cfg.row_name}}[{{cf.field_name}}[local_drive]]]" value="{{fieldValue.local_drive}}">
@@ -427,7 +442,11 @@
 																						<span class='media-uploader-field'>
 																							<span class="media_preview">
 																								<span class="preview-holder">
-																									<img src="{{fieldValue.url}}" style="max-width: 150px;"/>
+																									{% if fieldValue.file_type == 'pdf' %}
+																										<img src="/cms-static/common/media/pdf-thumbnail.png" style="max-width: 200px;"/>
+																									{% else %}
+																										<img src="{{fieldValue.url}}" style="max-width: 150px;"/>
+																									{% endif %}
 																								</span>
 																								<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
 																									<i class="fa fa-trash" tabindex="-1"></i>
@@ -436,6 +455,7 @@
 																							<input disabled type="hidden" class="media_url_field beaver-cms-form-field" id="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
 																							<input disabled type="hidden" class="media_title_field beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
 																							<input disabled type="hidden" class="media_alt_text_field beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
+																							<input disabled type="hidden" class="media_file_type_field beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[file_type][]]]" value="{{fieldValue.file_type}}">
 																							<input disabled type="hidden" class="media_link_url_field beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[link_url][]]]" value="{{fieldValue.link_url}}">
 																							<input disabled type="hidden" class="media_open_link_in_new_tab_field beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[open_link_in_new_tab][]]]" value="{{fieldValue.open_link_in_new_tab}}">
 																							<input disabled type="hidden" class="media_local_drive_field beaver-cms-form-field" name="common[{{cfg.row_name}}[{{cf.field_name}}[local_drive][]]]" value="{{fieldValue.local_drive}}">
@@ -499,7 +519,11 @@
 																							<span class='media-uploader-field'>
 																								<span class="media_preview">
 																									<span class="preview-holder">
-																										<img src="{{fieldValue.url}}" style="max-width: 150px;"/>
+																										{% if fieldValue.file_type == 'pdf' %}
+																											<img src="/cms-static/common/media/pdf-thumbnail.png" style="max-width: 200px;"/>
+																										{% else %}
+																											<img src="{{fieldValue.url}}" style="max-width: 150px;"/>
+																										{% endif %}
 																									</span>
 																									<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {{'d-none'  if not fieldValue}}">
 																										<i class="fa fa-trash" tabindex="-1"></i>
@@ -508,6 +532,7 @@
 																								<input type="hidden" class="media_url_field" id="{{cfg.row_name}}_{{cf.field_name}}_{{loop.index}}" name="common[{{cfg.row_name}}[{{cf.field_name}}[url][]]]" value="{{fieldValue.url}}">
 																								<input type="hidden" class="media_title_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[title][]]]" value="{{fieldValue.title}}">
 																								<input type="hidden" class="media_alt_text_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[alt_text][]]]" value="{{fieldValue.alt_text}}">
+																								<input type="hidden" class="media_file_type_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[file_type][]]]" value="{{fieldValue.file_type}}">
 																								<input type="hidden" class="media_link_url_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[link_url][]]]" value="{{fieldValue.link_url}}">
 																								<input type="hidden" class="media_open_link_in_new_tab_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[open_link_in_new_tab][]]]" value="{{fieldValue.open_link_in_new_tab}}">
 																								<input type="hidden" class="media_local_drive_field" name="common[{{cfg.row_name}}[{{cf.field_name}}[local_drive][]]]" value="{{fieldValue.local_drive}}">
@@ -576,7 +601,11 @@
 																						<span class="media_preview">
 																							<span class="preview-holder">
 																								{% if fieldValue %}
-																									<img src="{{ fieldValue.url }}" style="max-width: 150px;"/>
+																									{% if fieldValue.file_type == 'pdf' %}
+																										<img src="/cms-static/common/media/pdf-thumbnail.png" style="max-width: 200px;"/>
+																									{% else %}
+																										<img src="{{ fieldValue.url }}" style="max-width: 150px;"/>
+																									{% endif %}
 																								{% endif %}
 																							</span>
 																							<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {% if not fieldValue %}d-none{% endif %}">
@@ -586,6 +615,7 @@
 																						<input type="hidden" class="media_url_field" id="{{ cfg.row_name }}_{{ cf.field_name }}_{{ loop.index }}" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[url]]]" value="{{ fieldValue.url }}">
 																						<input type="hidden" class="media_title_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[title]]]" value="{{fieldValue.title}}">
 																						<input type="hidden" class="media_alt_text_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[alt_text]]]" value="{{fieldValue.alt_text}}">
+																						<input type="hidden" class="media_file_type_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[file_type]]]" value="{{fieldValue.file_type}}">
 																						<input type="hidden" class="media_link_url_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[link_url]]]" value="{{fieldValue.link_url}}">
 																						<input type="hidden" class="media_open_link_in_new_tab_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[open_link_in_new_tab]]]" value="{{fieldValue.open_link_in_new_tab}}">
 																						<input type="hidden" class="media_local_drive_field" name="common[{{ cfg.row_name }}[{{ cf.field_name }}[local_drive]]]" value="{{fieldValue.local_drive}}">
@@ -663,7 +693,11 @@
 																							<span class="media_preview">
 																								<span class="preview-holder">
 																									{% if metaFieldValue.url %}
-																										<img src="{{ metaFieldValue.url }}" style="max-width: 150px;"/>
+																										{% if metaFieldValue.file_type == 'pdf' %}
+																											<img src="/cms-static/common/media/pdf-thumbnail.png" style="max-width: 200px;"/>
+																										{% else %}
+																											<img src="{{ metaFieldValue.url }}" style="max-width: 150px;"/>
+																										{% endif %}
 																									{% endif %}
 																								</span>
 																								<a class="btn btn-danger btn-icon image-preview-remove-btn my-1 {% if not metaFieldValue.url %}d-none{% endif %}">
@@ -673,6 +707,9 @@
 																							<input type="hidden" class="media_url_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][url]" value="{{ metaFieldValue[url] }}">
 																							<input type="hidden" class="media_title_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][title]" value="{{ metaFieldValue[title] }}">
 																							<input type="hidden" class="media_alt_text_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][alt_text]" value="{{ metaFieldValue[alt_text] }}">
+																							<input type="hidden" class="media_file_type_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][file_type]" value="{{ metaFieldValue[file_type] }}">
+																							<input type="hidden" class="media_link_url_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][link_url]" value="{{ metaFieldValue[link_url] }}">
+																							<input type="hidden" class="media_open_link_in_new_tab_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][open_link_in_new_tab]" value="{{ metaFieldValue[open_link_in_new_tab] }}">
 																							<input type="hidden" class="media_local_drive_field" name="meta[{{ brandLanguage.prefix }}][{{ meta_section.slug }}][{{ meta_field.name }}][local_drive]" value="{{ metaFieldValue[local_drive] }}">
 																							<a class="btn btn-success media-uploader-modal-btn" id="beaver-media-field-{{loop.index}}-{{range(100,10000)|random}}" data-bs-toggle='modal' data-bs-target='#beaver_modal_media_list'>Attach Media</a>
 																						</span>
