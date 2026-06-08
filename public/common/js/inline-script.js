@@ -245,28 +245,71 @@ if (mediaManagementPanel) {
         e.clearSelection()
     })
 
+    let currentFilterType = 'all'
+    let currentSearchValue = ''
+
+    function filterMediaItems() {
+        const items = document.querySelectorAll('#page-media-holder .media-list-item')
+        let visibleCount = 0
+
+        items.forEach(function (item) {
+            const divName = (item.getAttribute('data-name') || '').toLowerCase()
+            const fileType = item.getAttribute('data-file-type') || 'image'
+
+            // Tab filter check
+            let matchesTab = false
+            if (currentFilterType === 'all') {
+                matchesTab = true
+            } else {
+                matchesTab = (fileType === currentFilterType)
+            }
+
+            // Search query check
+            let matchesSearch = true
+            if (currentSearchValue) {
+                matchesSearch = divName.includes(currentSearchValue)
+            }
+
+            if (matchesTab && matchesSearch) {
+                item.classList.remove('d-none')
+                visibleCount++
+            } else {
+                item.classList.add('d-none')
+            }
+        })
+
+        // Handle the "No media available" placeholder if everything is hidden
+        let noMediaPlaceholder = document.getElementById('no-filtered-media-placeholder')
+        if (visibleCount === 0) {
+            if (!noMediaPlaceholder) {
+                noMediaPlaceholder = document.createElement('div')
+                noMediaPlaceholder.id = 'no-filtered-media-placeholder'
+                noMediaPlaceholder.className = 'col-12 text-center my-10'
+                noMediaPlaceholder.innerHTML = '<h4>No media files found matching the criteria</h4>'
+                document.getElementById('page-media-holder').appendChild(noMediaPlaceholder)
+            } else {
+                noMediaPlaceholder.classList.remove('d-none')
+            }
+        } else {
+            if (noMediaPlaceholder) {
+                noMediaPlaceholder.classList.add('d-none')
+            }
+        }
+    }
+
     // Media searching in media listing page
     $('#search-image-input').on('keyup', function (e) {
-        var value = e.target?.value?.toLowerCase()
-        if (value) {
-            document
-                .querySelectorAll('#page-media-holder .media-list-item')
-                .forEach(function (item) {
-                    let divName = item.getAttribute('data-name')
-                    // if search value is not included in the div name then add d-none to the classlist of div
-                    if (!divName.includes(value)) {
-                        item.classList.add('d-none')
-                    } else {
-                        item.classList.remove('d-none')
-                    }
-                })
-        } else {
-            document
-                .querySelectorAll('#page-media-holder .media-list-item')
-                .forEach(function (item) {
-                    item.classList.remove('d-none')
-                })
-        }
+        currentSearchValue = e.target?.value?.toLowerCase() || ''
+        filterMediaItems()
+    })
+
+    // Media type tab filtering
+    $('#media-filter-tabs .nav-link').on('click', function (e) {
+        e.preventDefault()
+        $('#media-filter-tabs .nav-link').removeClass('active')
+        $(this).addClass('active')
+        currentFilterType = $(this).attr('data-filter') || 'all'
+        filterMediaItems()
     })
 }
 

@@ -68,12 +68,27 @@
 						<input class="form-control form-control-sm " id="search-image-input" placeholder="Search images with name" />
 					</div>
 				</div>
+				<div class="row g-5 g-10 mb-5">
+					<div class="col-12 col-md-8 mx-auto text-center">
+						<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6 justify-content-center" id="media-filter-tabs">
+							<li class="nav-item">
+								<a class="nav-link active cursor-pointer" data-filter="all">All Media</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link cursor-pointer" data-filter="image">Images</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link cursor-pointer" data-filter="document">Documents</a>
+							</li>
+						</ul>
+					</div>
+				</div>
 				<div class="row g-5 g-10 mb-10">
 					<div class="col-12 col-sm-7 col-md-9">
 						<div class="row g-5 g-10 mb-10" id="page-media-holder">
 							{% for item in media %}
 								<input id="img-{{ loop.index }}" value="{{ item.url }}" hidden/>
-								<div class="col-12 col-sm-3 col-md-3 col-lg-2 col-xl-2 col-xxl-2 text-center mb-2 mb-xl-2 media-list-item" data-name="{{item.file.name}}" data-id="{{item._id}}">
+								<div class="col-12 col-sm-3 col-md-3 col-lg-2 col-xl-2 col-xxl-2 text-center mb-2 mb-xl-2 media-list-item" data-name="{{item.file.name}}" data-id="{{item._id}}" data-file-type="{% if item.file_type == 'pdf' %}document{% else %}image{% endif %}">
 									{%if item.file_type=='pdf'%}
 										<img class="lazy img-thumbnail cursor-pointer" src="/cms-static/common/media/blank-image.svg" data-src="/cms-static/common/media/pdf-thumbnail.png?tr=w-150,h-150" alt="image" srcset="" style="width: 100%; height:auto; object-fit: cover;">
 									{%else%}

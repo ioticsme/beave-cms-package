@@ -21,9 +21,9 @@ const { formatInTimeZone } = require('date-fns-tz')
 // Getting custom navigation from cms-wrapper config
 let customNavConfig
 try {
-    customNavConfig = require(`${path.dirname(
-        require.main.filename
-    )}/config/admin.config.js`)
+    customNavConfig = require(
+        `${path.dirname(require.main.filename)}/config/admin.config.js`
+    )
 } catch (error) {
     customNavConfig = []
 }
@@ -35,6 +35,7 @@ const baseConfig = async (req, res, next) => {
     res.locals.globalModuleConfig = globalModuleConfig
     res.locals.hasEcommerce = envConfig.general.HAS_ECOMMERCE
     res.locals.LANDING_URL = envConfig.general.ADMIN_LANDING_URL
+    res.locals.currentYear = new Date().getFullYear()
     next()
 }
 
