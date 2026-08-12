@@ -1,5 +1,9 @@
 {% extends "../layouts/master.njk" %}
 
+{% block csslib %}
+    <link href="/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
 {% block content %}
     {% block title %}
 		<title>Server Logs | {{browserTitle | upper()}} CMS</title>
@@ -48,69 +52,48 @@
             <div id="kt_app_content" class="app-content flex-column-fluid">
                 <!--begin::Content container-->
                 <div id="kt_app_content_container" class="app-container container-fluid">
-                    <!--begin::customer-->
+                    <!--begin::card-->
                     <div class="card card-flush">
                         <!--begin::Card header-->
                         <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                             <!--begin::Card title-->
                             <div class="card-title">
                                 <!--begin::Search-->
-                                <div class=" d-flex align-items-center position-relative my-1">
-                                    {# <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
-                                    <input type="text" data-kt-customer-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search customer"/> #}
-                                    {% for type in validTypes %}
-                                        <a href="/admin/logs/server?type={{ type }}" class="btn btn-sm {% if type == activeType %} btn-primary {% else %} btn-light-primary {% endif %} ms-2 text-capitalize">{{ type }}</a>
-                                    {% endfor %}
+                                <div class="d-flex align-items-center position-relative my-1 me-4">
+                                    <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
+                                    <input type="text" data-kt-server-log-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search logs..."/>
                                 </div>
                                 <!--end::Search-->
+                                <!--begin::Types-->
+                                <div class="d-flex align-items-center flex-wrap gap-2">
+                                    {% for type in validTypes %}
+                                        <a href="/admin/logs/server?type={{ type }}" class="btn btn-sm {% if type == activeType %} btn-primary {% else %} btn-light-primary {% endif %} text-capitalize">{{ type }}</a>
+                                    {% endfor %}
+                                </div>
+                                <!--end::Types-->
                             </div>
                             <!--end::Card title-->
-                            <!--begin::Card toolbar-->
-                            {# <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-                                <!--begin::Add customer-->
-                                <a href="/admin/customer/add" class="btn btn-primary">Add customer</a>
-                                <!--end::Add customer-->
-                            </div> #}
-                            <!--end::Card toolbar-->
                         </div>
                         <!--end::Card header-->
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <!--begin::Table-->
-                            <table class="table align-middle table-row-dashed fs-6 gy-5" id="kayfi_customers_datatable">
-                                {# <span class="badge badge-dark mb-2">
-                                    Total Number of Customers: {{ users | length }}
-                                </span> #}
+                            <table class="table align-middle table-row-dashed fs-6 gy-5" id="server_logs_datatable">
                                 <thead>
                                     <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
                                         <th class="min-w-150px">Date</th>
-                                        <th class="min-w-100px">Message</th>
-                                        <th class="">Action</th>
+                                        <th class="min-w-300px">Message</th>
+                                        <th class="min-w-100px text-end">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
-                                    {% for log in logs %}
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    {{ formatDateTimeInTimezone(log.timestamp,'Asia/Kolkata','dd-MM-yyyy HH:ii:ss') }}
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <code>{{ log.message }}</code>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-sm btn-light-primary"  data-bs-toggle="modal" data-value="{{log.stack}}" data-bs-target="#view_value_modal">View</button>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
                                 </tbody>
                             </table>
                             <!--end::Table-->
                         </div>
                         <!--end::Card body-->
                     </div>
-                    <!--end::customer-->
+                    <!--end::card-->
                 </div>
                 <!--end::Content container-->
             </div>
@@ -119,7 +102,7 @@
                 <div class="modal-dialog mw-1000px">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">View Details</h5>
+                            <h5 class="modal-title">View Log Details</h5>
             
                             <!--begin::Close-->
                             <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal">
@@ -139,22 +122,23 @@
         </div>
         <!--end::Content wrapper-->
         <!--begin::Footer-->
-        {# {% include 'admin-njk/partials/_footer-panel.njk' %} #}
+        {# {% include '../partials/_footer-panel.njk' %} #}
         <!--end::Footer-->
     </div>
 {% endblock %}
 
 {% block customScript %}
-    <script src="/admin/custom/customer-list.js"></script>
+    <script src="/cms-static/admin/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="/cms-static/admin/custom/server-log-list.js"></script>
     <script>
-		$("#view_value_modal").on('show.bs.modal', function (e) {
+        $("#view_value_modal").on('show.bs.modal', function (e) {
             const button = e.relatedTarget
             let value = button.getAttribute('data-value')
-            document.getElementById('space_for_show_value').innerHTML =`<pre><code>${value}</code></pre>`
+            document.getElementById('space_for_show_value').innerHTML = `<pre><code>${value}</code></pre>`
         });
 
         $("#view_value_modal").on('hide.bs.modal', function (e) {
-            document.getElementById('space_for_show_value').innerHTML =''
+            document.getElementById('space_for_show_value').innerHTML = ''
         });
-	</script>
+    </script>
 {% endblock %}

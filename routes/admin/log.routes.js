@@ -5,6 +5,7 @@ const logController = require('../../controller/admin/log.controller')
 
 router.group('/', (router) => {
     router.get('/server', logController.serverLogList)
+    router.get('/server/json', logController.serverLogJsonList)
     // router.get('/queue', logController.queueList)
 })
 // router.post('/', userController.verifyOtp)
