@@ -24,7 +24,7 @@ const ConfigSchema = new mongoose.Schema(
             default_drive: {
                 type: String,
                 default: 'local',
-                enum: ['local', 'imagekit', 'cloudinary'],
+                enum: ['local', 'imagekit', 'cloudinary', 'azure_blob', 's3'],
             },
             imagekit: {
                 public_key: String,
@@ -38,6 +38,22 @@ const ConfigSchema = new mongoose.Schema(
                 api_secret: String,
                 cloud_name: String,
                 folder: String,
+                active: Boolean,
+            },
+            azure_blob: {
+                connection_string: String,
+                container_name: String,
+                folder: String,
+                cdn_url: String,
+                active: Boolean,
+            },
+            s3: {
+                access_key_id: String,
+                secret_access_key: String,
+                bucket_name: String,
+                region: String,
+                folder: String,
+                cdn_url: String,
                 active: Boolean,
             },
         },

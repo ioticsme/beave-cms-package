@@ -126,6 +126,14 @@ function mediaConfigFormSwitching(element) {
         document
             .getElementById('cloudinary_config_form')
             .classList.remove('d-none')
+    } else if (element.value == 'azure_blob') {
+        document
+            .getElementById('azure_blob_config_form')
+            .classList.remove('d-none')
+    } else if (element.value == 's3') {
+        document
+            .getElementById('s3_config_form')
+            .classList.remove('d-none')
     }
 }
 function emailConfigFormSwitching(element) {

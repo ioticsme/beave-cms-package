@@ -14,6 +14,14 @@ const {
     localUploadMedia,
     localDeleteMedia,
 } = require('../adaptors/file-upload/localUpload.adaptor.js')
+const {
+    azureBlobUploadMedia,
+    azureBlobDeleteMedia,
+} = require('../adaptors/file-upload/AzureBlob.adaptor.js')
+const {
+    awsS3UploadMedia,
+    awsS3DeleteMedia,
+} = require('../adaptors/file-upload/AwsS3.adaptor.js')
 const { decryptData } = require('./Operations.helper.js')
 const { logError } = require('./Logger.helper.js')
 
@@ -21,7 +29,7 @@ const getDriveConfig = async () => {
     const config = await Config.findOne()
     return config?.media_drive
 }
-// Upload function internally uses the ImageKit.io javascript SDK
+// Upload function internally uses ImageKit, Cloudinary, Azure Blob, S3, or local storage
 const uploadMedia = async (media, folder, file) => {
     try {
         const media_drive_config = await getDriveConfig()
@@ -49,16 +57,52 @@ const uploadMedia = async (media, folder, file) => {
                     driveConfig
                 )
             } else if (media_drive_config.default_drive == 'cloudinary') {
-                const api_key = decryptData(media_drive_config?.api_key)
-                const api_secret = decryptData(media_drive_config?.api_secret)
+                const api_key = decryptData(media_drive_config?.cloudinary?.api_key)
+                const api_secret = decryptData(media_drive_config?.cloudinary?.api_secret)
                 let driveConfig = {
                     api_key: api_key,
                     api_secret: api_secret,
-                    cloud_name: media_drive_config?.cloud_name,
-                    folder: media_drive_config?.folder,
+                    cloud_name: media_drive_config?.cloudinary?.cloud_name,
+                    folder: media_drive_config?.cloudinary?.folder,
                 }
-                // TODO: Replace it with cloudinary
                 return await cloudinaryUploadMedia(
+                    media,
+                    folder,
+                    file,
+                    driveConfig
+                )
+            } else if (media_drive_config.default_drive == 'azure_blob') {
+                const connection_string = decryptData(
+                    media_drive_config?.azure_blob?.connection_string
+                )
+                let driveConfig = {
+                    connection_string: connection_string,
+                    container_name: media_drive_config?.azure_blob?.container_name,
+                    folder: media_drive_config?.azure_blob?.folder,
+                    cdn_url: media_drive_config?.azure_blob?.cdn_url,
+                }
+                return await azureBlobUploadMedia(
+                    media,
+                    folder,
+                    file,
+                    driveConfig
+                )
+            } else if (media_drive_config.default_drive == 's3') {
+                const access_key_id = decryptData(
+                    media_drive_config?.s3?.access_key_id
+                )
+                const secret_access_key = decryptData(
+                    media_drive_config?.s3?.secret_access_key
+                )
+                let driveConfig = {
+                    access_key_id: access_key_id,
+                    secret_access_key: secret_access_key,
+                    bucket_name: media_drive_config?.s3?.bucket_name,
+                    region: media_drive_config?.s3?.region,
+                    folder: media_drive_config?.s3?.folder,
+                    cdn_url: media_drive_config?.s3?.cdn_url,
+                }
+                return await awsS3UploadMedia(
                     media,
                     folder,
                     file,
@@ -83,6 +127,7 @@ const uploadMediaFromURL = async (media_url, folder, req = {}) => {
 }
 
 const deleteMediaFile = async (folder, mediaObj) => {
+    const media_drive_config = await getDriveConfig()
     if (mediaObj.drive == 'bunny_cdn') {
         // TODO: Delete file from storage should be done
         return true
@@ -92,6 +137,31 @@ const deleteMediaFile = async (folder, mediaObj) => {
     } else if (mediaObj.drive == 'cloudinary') {
         // TODO: Delete file from storage should be done
         return true
+    } else if (mediaObj.drive == 'azure_blob') {
+        const connection_string = decryptData(
+            media_drive_config?.azure_blob?.connection_string
+        )
+        let driveConfig = {
+            connection_string: connection_string,
+            container_name: media_drive_config?.azure_blob?.container_name,
+            folder: media_drive_config?.azure_blob?.folder,
+        }
+        return await azureBlobDeleteMedia(folder, mediaObj.file.name, driveConfig)
+    } else if (mediaObj.drive == 's3') {
+        const access_key_id = decryptData(
+            media_drive_config?.s3?.access_key_id
+        )
+        const secret_access_key = decryptData(
+            media_drive_config?.s3?.secret_access_key
+        )
+        let driveConfig = {
+            access_key_id: access_key_id,
+            secret_access_key: secret_access_key,
+            bucket_name: media_drive_config?.s3?.bucket_name,
+            region: media_drive_config?.s3?.region,
+            folder: media_drive_config?.s3?.folder,
+        }
+        return await awsS3DeleteMedia(folder, mediaObj.file.name, driveConfig)
     } else if (mediaObj.drive == 'local') {
         const res = await localDeleteMedia(folder, mediaObj.file.name)
         return res

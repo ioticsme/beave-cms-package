@@ -202,7 +202,7 @@ try {
             )
             $(select).on('change', (e) => {
                 let n = e.target.value.toLowerCase()
-                'all' === n && (n = ''), dt.column(3).search(n).draw()
+                ;('all' === n && (n = ''), dt.column(3).search(n).draw())
             })
 
             // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw

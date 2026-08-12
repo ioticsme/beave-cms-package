@@ -19,21 +19,36 @@ const list = async (req, res) => {
         //     console.log(configs.schema.path(p)?.instance || 'Mixed')
         // }
         configs.media_drive.imagekit = {
-            ...configs.media_drive.imagekit,
-            public_key: configs.media_drive.imagekit.public_key
+            ...configs.media_drive?.imagekit,
+            public_key: configs.media_drive?.imagekit?.public_key
                 ? await decryptData(configs.media_drive.imagekit.public_key)
                 : '',
-            private_key: configs.media_drive.imagekit.private_key
+            private_key: configs.media_drive?.imagekit?.private_key
                 ? await decryptData(configs.media_drive.imagekit.private_key)
                 : '',
         }
         configs.media_drive.cloudinary = {
-            ...configs.media_drive.cloudinary,
-            api_key: configs.media_drive.cloudinary.api_key
+            ...configs.media_drive?.cloudinary,
+            api_key: configs.media_drive?.cloudinary?.api_key
                 ? await decryptData(configs.media_drive.cloudinary.api_key)
                 : '',
-            api_secret: configs.media_drive.cloudinary.api_secret
+            api_secret: configs.media_drive?.cloudinary?.api_secret
                 ? await decryptData(configs.media_drive.cloudinary.api_secret)
+                : '',
+        }
+        configs.media_drive.azure_blob = {
+            ...configs.media_drive?.azure_blob,
+            connection_string: configs.media_drive?.azure_blob?.connection_string
+                ? await decryptData(configs.media_drive.azure_blob.connection_string)
+                : '',
+        }
+        configs.media_drive.s3 = {
+            ...configs.media_drive?.s3,
+            access_key_id: configs.media_drive?.s3?.access_key_id
+                ? await decryptData(configs.media_drive.s3.access_key_id)
+                : '',
+            secret_access_key: configs.media_drive?.s3?.secret_access_key
+                ? await decryptData(configs.media_drive.s3.secret_access_key)
                 : '',
         }
         configs.email_settings.local = {
@@ -72,7 +87,7 @@ const save = async (req, res) => {
             user_email_verification: Joi.boolean().optional().allow(null, ''),
             media_drive: Joi.string()
                 .required()
-                .valid('local', 'imagekit', 'cloudinary'),
+                .valid('local', 'imagekit', 'cloudinary', 'azure_blob', 's3'),
             ik_public_key: Joi.string().when('media_drive', {
                 is: 'imagekit',
                 then: Joi.required(),
@@ -113,6 +128,40 @@ const save = async (req, res) => {
                 then: Joi.required(),
                 otherwise: Joi.optional().allow(null, ''),
             }),
+            az_connection_string: Joi.string().when('media_drive', {
+                is: 'azure_blob',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            az_container_name: Joi.string().when('media_drive', {
+                is: 'azure_blob',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            az_folder: Joi.string().optional().allow(null, ''),
+            az_cdn_url: Joi.string().optional().allow(null, ''),
+            s3_access_key_id: Joi.string().when('media_drive', {
+                is: 's3',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            s3_secret_access_key: Joi.string().when('media_drive', {
+                is: 's3',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            s3_bucket_name: Joi.string().when('media_drive', {
+                is: 's3',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            s3_region: Joi.string().when('media_drive', {
+                is: 's3',
+                then: Joi.required(),
+                otherwise: Joi.optional().allow(null, ''),
+            }),
+            s3_folder: Joi.string().optional().allow(null, ''),
+            s3_cdn_url: Joi.string().optional().allow(null, ''),
             email_channel: Joi.string()
                 .required()
                 .valid('none', 'local', 'mailgun', 'sendgrid'),
@@ -189,6 +238,8 @@ const save = async (req, res) => {
         await Config.deleteMany()
         let imkit_config = {}
         let cldnry_config = {}
+        let az_config = {}
+        let s3_config = {}
         let local_mail_config = {}
         let mailgun_config = {}
         let sendgrid_config = {}
@@ -209,6 +260,25 @@ const save = async (req, res) => {
                 api_secret: api_secret,
                 cloud_name: req.body.cdry_cloud_name,
                 folder: req.body.cdry_folder,
+            }
+        } else if (req.body.media_drive == 'azure_blob') {
+            const connection_string = await encryptData(req.body.az_connection_string)
+            az_config = {
+                connection_string: connection_string,
+                container_name: req.body.az_container_name,
+                folder: req.body.az_folder,
+                cdn_url: req.body.az_cdn_url,
+            }
+        } else if (req.body.media_drive == 's3') {
+            const access_key_id = await encryptData(req.body.s3_access_key_id)
+            const secret_access_key = await encryptData(req.body.s3_secret_access_key)
+            s3_config = {
+                access_key_id: access_key_id,
+                secret_access_key: secret_access_key,
+                bucket_name: req.body.s3_bucket_name,
+                region: req.body.s3_region,
+                folder: req.body.s3_folder,
+                cdn_url: req.body.s3_cdn_url,
             }
         }
         if (req.body.email_channel == 'local') {
@@ -249,6 +319,8 @@ const save = async (req, res) => {
                 default_drive: req.body.media_drive,
                 imagekit: imkit_config,
                 cloudinary: cldnry_config,
+                azure_blob: az_config,
+                s3: s3_config,
             },
             email_settings: {
                 default_channel: req.body.email_channel,

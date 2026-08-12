@@ -146,6 +146,18 @@
 															Cloudinary
 														</label>
 													</div>
+													<div class="form-check form-check-custom form-check-solid me-10">
+														<input class="form-check-input h-30px w-30px" name="media_drive" {% if configs.media_drive.default_drive == 'azure_blob' %} checked {% endif %} type="radio" value="azure_blob" onChange="mediaConfigFormSwitching(this)" id="flexRadio30"/>
+														<label class="form-check-label" for="flexRadio30">
+															Azure Blob Storage
+														</label>
+													</div>
+													<div class="form-check form-check-custom form-check-solid me-10">
+														<input class="form-check-input h-30px w-30px" name="media_drive" {% if configs.media_drive.default_drive == 's3' %} checked {% endif %} type="radio" value="s3" onChange="mediaConfigFormSwitching(this)" id="flexRadio30"/>
+														<label class="form-check-label" for="flexRadio30">
+															AWS S3
+														</label>
+													</div>
 
 													{# <div class="form-check form-switch form-check-custom form-check-success form-check-solid">
 														<input id="beaver_flexSwitchCustomDefault_1_1" type="checkbox" class="form-check-input" name="local_upload" value="true" {{'checked' if configs.media_drive.local_upload}}>
@@ -235,7 +247,7 @@
 												</tr>
 												<tr>
 													<td>
-														<a class="text-gray-800 text-hover-primary mb-1">CLoud Name</a>
+														<a class="text-gray-800 text-hover-primary mb-1">Cloud Name</a>
 													</td>
 													<td>
 														<input type="text" class="form-control form-control-lg form-control-solid" name="cdry_cloud_name" placeholder="" value="{{configs.media_drive.cloudinary.cloud_name}}">
@@ -249,6 +261,122 @@
 													<td>
 														<input type="text" class="form-control form-control-lg form-control-solid" name="cdry_folder" placeholder="" value="{{configs.media_drive.cloudinary.folder}}">
 														<div class="fv-plugins-message-container invalid-feedback" id="field-error-cdry_folder"></div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div id="azure_blob_config_form" class="media-config-form {% if configs.media_drive.default_drive != 'azure_blob' %} d-none {% endif %}">
+										<h2 class="mt-5">Azure Blob Storage Config</h2>
+										<table id="beaver_subscriptions_table" class="table align-middle table-row-dashed fs-6 gy-5">
+											<thead>
+												<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+													<th class="min-w-125px">Key</th>
+													<th class="min-w-125px">Value</th>
+												</tr>
+											</thead>
+											<tbody class="text-gray-600 fw-semibold">
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Connection String</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="az_connection_string" placeholder="DefaultEndpointsProtocol=https;AccountName=...;AccountKey=..." value="{{configs.media_drive.azure_blob.connection_string}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-az_connection_string"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Container Name</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="az_container_name" placeholder="media" value="{{configs.media_drive.azure_blob.container_name}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-az_container_name"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Folder</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="az_folder" placeholder="cms" value="{{configs.media_drive.azure_blob.folder}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-az_folder"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">CDN URL (Optional)</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="az_cdn_url" placeholder="https://mycdn.azureedge.net" value="{{configs.media_drive.azure_blob.cdn_url}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-az_cdn_url"></div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div id="s3_config_form" class="media-config-form {% if configs.media_drive.default_drive != 's3' %} d-none {% endif %}">
+										<h2 class="mt-5">AWS S3 Config</h2>
+										<table id="beaver_subscriptions_table" class="table align-middle table-row-dashed fs-6 gy-5">
+											<thead>
+												<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+													<th class="min-w-125px">Key</th>
+													<th class="min-w-125px">Value</th>
+												</tr>
+											</thead>
+											<tbody class="text-gray-600 fw-semibold">
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Access Key ID</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="s3_access_key_id" placeholder="AKIA..." value="{{configs.media_drive.s3.access_key_id}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-s3_access_key_id"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Secret Access Key</a>
+													</td>
+													<td>
+														<input type="password" class="form-control form-control-lg form-control-solid" name="s3_secret_access_key" placeholder="" value="{{configs.media_drive.s3.secret_access_key}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-s3_secret_access_key"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Bucket Name</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="s3_bucket_name" placeholder="my-bucket" value="{{configs.media_drive.s3.bucket_name}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-s3_bucket_name"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Region</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="s3_region" placeholder="us-east-1" value="{{configs.media_drive.s3.region}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-s3_region"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">Folder</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="s3_folder" placeholder="cms" value="{{configs.media_drive.s3.folder}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-s3_folder"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="text-gray-800 text-hover-primary mb-1">CDN / CloudFront URL (Optional)</a>
+													</td>
+													<td>
+														<input type="text" class="form-control form-control-lg form-control-solid" name="s3_cdn_url" placeholder="https://d1111111111111.cloudfront.net" value="{{configs.media_drive.s3.cdn_url}}">
+														<div class="fv-plugins-message-container invalid-feedback" id="field-error-s3_cdn_url"></div>
 													</td>
 												</tr>
 											</tbody>
